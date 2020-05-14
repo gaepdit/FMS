@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FMS_API.Models;
-
+//****************************************************************************
+// This is here as an example ... not to go into finished project
+//****************************************************************************
 namespace FMS_API.Controllers
 {
     [Route("api/ToDoItems")]

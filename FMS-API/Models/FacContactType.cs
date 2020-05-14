@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FMS_API.Models
 {
-    public class Facility
+    public class FacContactType
     {
         #region Constructor
         // Constructor here
@@ -13,7 +13,11 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid FacilityID { get; set; }
+        public Guid FacContactID { get; set; }
+
+        public string FacContactTypeCode { get; set; }
+
+        public string FacContactTypeName { get; set; }
 
         #endregion
 
