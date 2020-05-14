@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+//****************************************************************************
+// This is here as an example ... not to go into finished project
+//****************************************************************************
 namespace FMS_API.Models
 {
     public class ToDoItem

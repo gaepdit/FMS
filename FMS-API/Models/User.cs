@@ -9,38 +9,42 @@ namespace FMS_API.Models
 {
     public class User
     {
-        public Guid UID { get; set; }
+        #region Constructor
+        // Constructor here
+        #endregion
 
-        [Display(Name = "UserName")]
+        #region Properties
+        // Unique Identifier for object instance
+        public Guid UserID { get; set; }
+
         [StringLength(25)]
         public string UserName { get; set; }
 
-        [Display(Name = "First Name")]
         [StringLength(25)]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last Name")]
         [StringLength(25)]
         public string LastName { get; set; }
 
-        [Display(Name = "Company Name")]
         [StringLength(50)]
         public string CompanyName { get; set; }
 
-        [Display(Name = "E-mail Address")]
         [EmailAddress]
         [StringLength(150)]
         [DataType(DataType.EmailAddress)]
         public string LoginEmail { get; set; }
 
-        [Display(Name = "EPD Program Name")]
         [StringLength(25)]
         public string ProgramName { get; set; }
 
-        [Display(Name = "Security Level")]
         public int SecurityRole { get; set; }
 
-        [Display(Name = "Is user active?")]
         public bool Active { get; set; }
+
+        #endregion
+
+        #region Methods
+        //Methods here
+        #endregion
     }
 }

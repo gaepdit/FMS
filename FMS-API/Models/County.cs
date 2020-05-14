@@ -9,12 +9,26 @@ namespace FMS_API.Models
 {
     public class County
     {
-        public int Id { get; set; }
+        #region Constructor
+        // Constructor here
+        #endregion
+
+        #region Properties
+        // Unique Identifier for object instance
+        public Guid CntyUID { get; set; }
+
+        public int CountyID { get; set; }
 
         [StringLength(20)]
         [DisplayFormat(
             NullDisplayText = FMS.NotEnteredDisplayText,
             ConvertEmptyStringToNull = true)]
-        public string Name { get; set; }
+        public string CountyName { get; set; }
+
+        #endregion
+
+        #region Methods
+        //Methods here
+        #endregion
     }
 }
