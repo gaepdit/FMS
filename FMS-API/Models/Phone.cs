@@ -14,7 +14,7 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid PhoneID { get; set; }
+        public Guid Id { get; set; }
 
         // Cell, office, etc.
         public PhoneType NumberType {get; set;}

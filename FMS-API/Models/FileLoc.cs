@@ -13,7 +13,11 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid FileLocID { get; set; }
+        public Guid Id { get; set; }
+
+        public string FileLocCode { get; set; }
+
+        public string FileLocName { get; set; }
 
         #endregion
 

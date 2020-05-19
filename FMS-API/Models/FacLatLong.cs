@@ -13,9 +13,9 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid FacLatLongID { get; set; }
+        public Guid Id { get; set; }
 
-        public Facility FacilityID { get; set; }
+        public long FacID { get; set; }
 
         public double Latitude { get; set; }
 

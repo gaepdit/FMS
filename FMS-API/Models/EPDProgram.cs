@@ -13,7 +13,11 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid ProgramID { get; set; }
+        public Guid Id { get; set; }
+
+        public string ProgramCode { get; set; }
+
+        public string ProgramName { get; set; }
 
         #endregion
 

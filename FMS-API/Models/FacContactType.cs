@@ -13,7 +13,7 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid FacContactID { get; set; }
+        public Guid Id { get; set; }
 
         public string FacContactTypeCode { get; set; }
 

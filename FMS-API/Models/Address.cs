@@ -14,7 +14,7 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid AddressID { get; set; }
+        public Guid Id { get; set; }
 
         [StringLength(50)]
         public string StreetLine1 {get; set;}

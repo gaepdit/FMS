@@ -15,7 +15,7 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid CntyUID { get; set; }
+        public Guid Id { get; set; }
 
         public int CountyID { get; set; }
 

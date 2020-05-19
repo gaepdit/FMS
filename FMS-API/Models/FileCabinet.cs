@@ -15,7 +15,7 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid FileCabinetID { get; set; }
+        public Guid Id { get; set; }
 
         [StringLength(5)]
         public string CabinetNum { get; set; }

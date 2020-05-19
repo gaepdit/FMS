@@ -13,8 +13,13 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid CompOfficerID { get; set; }
+        public Guid Id { get; set; }
 
+        public User UserObj { get; set; }
+
+        public EPDProgram Program { get; set; }
+
+        public EPDUnit Unit { get; set; }
         #endregion
 
         #region Methods

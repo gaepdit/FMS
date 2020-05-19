@@ -13,8 +13,12 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid BudgetID { get; set; }
+        public Guid Id { get; set; }
 
+        public string BudgetCode { get; set; }
+
+        public string BudgetCodeName { get; set; }
+            
         #endregion
 
         #region Methods

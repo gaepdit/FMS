@@ -13,7 +13,11 @@ namespace FMS_API.Models
 
         #region Properties
         // Unique Identifier for object instance
-        public Guid EmailID { get; set; }
+        public Guid Id { get; set; }
+
+        public User UserObj { get; set; }
+
+        public Email EmailObj { get; set; }
 
         #endregion
 
