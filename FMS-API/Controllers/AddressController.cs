@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FMS.Models;
 
-namespace FMS_API.Controllers
+namespace FMS.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Address")]
     [ApiController]
     public class AddressController : ControllerBase
     {

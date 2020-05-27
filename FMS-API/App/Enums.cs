@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FMS_API
+namespace FMS
 {
     public enum SecurityRole
     {
