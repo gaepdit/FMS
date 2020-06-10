@@ -50,13 +50,6 @@ namespace FMS.Models
         [StringLength(5)]
         public string Access { get; set; }
 
-        public bool Constrainable { get; set; }
-
-        public int Paygroup { get; set; }
-
-        public int JournalRequest { get; set; }
-
-        public int InternalBudget { get; set; }
         #endregion
 
         #region Methods

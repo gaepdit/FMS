@@ -1,24 +1,26 @@
 ﻿using FMS.Models.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Models
 {
-    public class FileLoc : BaseActiveModel
+    public class FacilityType : BaseActiveModel
     {
         #region Constructor
         // Constructor here
         #endregion
 
         #region Properties
+        // Existing numeric code
+        public int FacilityTypeCode { get; set; }
 
-        public string FileLocCode { get; set; }
-
-        public string FileLocName { get; set; }
+        [StringLength(20)]
+        public string FacilityTypeName { get; set; }
 
         #endregion
 
         #region Methods
         //Methods here
-        
+
         #endregion
     }
 }

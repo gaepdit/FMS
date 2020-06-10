@@ -1,26 +1,25 @@
 ﻿using FMS.Models.Models.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Models
 {
-    public class FacType : BaseActiveModel
+    public class ComplianceOfficer : BaseActiveModel
     {
         #region Constructor
         // Constructor here
         #endregion
 
         #region Properties
-        // Existing numeric code
-        public int FacTypeCode { get; set; }
 
-        [StringLength(20)]
-        public string FacTypeName { get; set; }
+        public string Officer { get; set; }
 
+        public EPDProgram Program { get; set; }
+
+        public EPDUnit Unit { get; set; }
         #endregion
 
         #region Methods
         //Methods here
-
+        
         #endregion
     }
 }

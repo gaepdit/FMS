@@ -11,17 +11,14 @@ namespace FMS.Models
         #endregion
 
         #region Properties
-        // Internal ID from the Programs
+        // Internal ID from the Programs, consisting of the 3-digit county number 
+        // and a 4-digit system-generated sequential number for each county (xxx-xxxx)
         [StringLength(50)]
-        public string FileID { get; set; }
+        public string FileLabel { get; set; }
 
-        public List<EPDProgram> Programs { get; set; }
+        public string FileLocCode { get; set; }
 
-        public List<EPDUnit> Units { get; set; }
-
-        public List<Budget> FacBudget { get; set; }
-
-        public List<FileLoc> FileLocation { get; set; }
+        public string FileLocName { get; set; }
 
         public List<FileCabinet> Cabinet { get; set; }
 

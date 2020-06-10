@@ -9,9 +9,11 @@ namespace FMS.Models
         #endregion
 
         #region Properties
-        public int UnitID { get; set; }
+        public int UnitNumber { get; set; }
 
         public string UnitName { get; set; }
+
+        public string Manager { get; set; }
         #endregion
 
         #region Methods

@@ -10,7 +10,7 @@ namespace FMS.Models
 
         #region Properties
         // This list will not change, so no need for "BaseActiveModel"
-        public int Id { get; set; }
+        public int CountyNumber { get; set; }
 
         [StringLength(10)]
         public string Code { get; set; }
