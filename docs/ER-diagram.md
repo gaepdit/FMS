@@ -3,69 +3,77 @@
 ```mermaid
 
 classDiagram
+    File <--> FileCabinet
     File <-- Facility
-
-    Facility --> County
-    Facility --> RiverBasin
-    Facility <-- FacilityProgram
         
-    Program <-- FacilityProgram
+    Facility <-- RetentionRecord
+    Facility --> BudgetCode
+    Facility --> EnvironmentalInterest
+    Facility --> ComplianceOfficer
+    Facility --> OrganizationalUnit
 
-    FacilityProgram --> ComplianceOfficer
-    FacilityProgram --> FacilityProgramStatus
-    FacilityProgram --> BudgetCode
-    FacilityProgram --> OrganizationalUnit
-    FacilityProgram <-- Record
+    BudgetCode --> EnvironmentalInterest
 
     OrganizationalUnit <-- ComplianceOfficer
-
-    Record --> Cabinet
 
 %% Classes
 
 class File {
-    string FileLabel
+    FileLabel
+    List~FileCabinets~
+    List~Facilities~
 }
 
 class Facility {
-    string Name
-    string Address1
-    string Address2
-    string City
-    string State
-    string PostalCode
-    decimal Latitude
-    decimal Longitude
+    File
+    FacilityLabel
+    EnvironmentalInterest
+    Name
+    FacilityStatus
+    County
+    LocationDescription
+    StreetLine1
+    StreetLine2
+    City
+    State
+    PostalCode
+    Latitude
+    Longitude
+    BudgetCode
+    ComplianceOfficer
+    OrganizationalUnit
+    List~RetentionRecords~
 }
 
-class FacilityProgram {
-    string FacilityProgramLabel
-    FacilityProgramStatus Status
-    bool RetainedOnsite
+class RetentionRecord {
+    Facility
+    BoxNumber
+    ConsignmentNumber
+    LocationNumber
+    StartYear
+    EndYear
 }
 
-class Record {
-    string BoxNumber
-    int StartYear
-    int EndYear
-    bool RetainedOnsite
+class EnvironmentalInterest {
+    Name
+    List~BudgetCodes~
 }
 
 %% Lookup tables
 
-class FacilityProgramStatus {
-    Program Program
-    string StatusText
-    bool Active
+class BudgetCode {
+    EnvironmentalInterest
+    OrganizationNumber
+    ProjectNumber
 }
 
-class BudgetCode {
-    Program Program
-    string Name
-    string Code?
-    string ParentCategory
-    string OrganizationNumber
-    string ProjectNumber
+class OrganizationalUnit {
+    List~ComplianceOfficers~
+}
+
+class ComplianceOfficer {
+    Name
+    OrganizationalUnit
 }
 
 ```
