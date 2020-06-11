@@ -15,19 +15,17 @@ namespace FMS.Models
 
         public DateTime EndDate { get; set; }
 
-        // Corresponds to "Accession Number" on 
+        // Corresponds to "Accession Number" on RC spreadsheet
         public string ConsignmentNumber { get; set; }
-
-        // Not sure if this is necessary
-        public string RecordNumber { get; set; }
 
         // Corresponds to "Item" on Request Form
         public string BoxNumber { get; set; }
 
-        public string OldBoxNumber { get; set; }
-
         // Corresponds to "Location Number" on Request Form
         public string ShelfNumber { get; set; }
+
+        // Retention Schedule Number DDDD-DDDD
+        public string RetentionSchedule { get; set; }
 
         #endregion
 

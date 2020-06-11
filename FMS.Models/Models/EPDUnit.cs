@@ -1,4 +1,5 @@
 ﻿using FMS.Models.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Models
 {
@@ -9,11 +10,13 @@ namespace FMS.Models
         #endregion
 
         #region Properties
+
+        // Existing ID for the Unit
         public int UnitNumber { get; set; }
 
+        [StringLength(50)]
         public string UnitName { get; set; }
 
-        public string Manager { get; set; }
         #endregion
 
         #region Methods

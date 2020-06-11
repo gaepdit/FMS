@@ -13,10 +13,10 @@ namespace FMS.Models
 
         #region Properties
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
-        public string FacilityID { get; set; }
+        public string FacilityNumber { get; set; }
 
-        // File Number where this Facility is located
-        public string FileLabel { get; set; }
+        // File label and Cabinet where this Facility is located
+        public File File { get; set; }
 
         // Environmental Interest/Program of this Facility
         public EPDProgram EnvironmentalProgram { get; set; }
@@ -24,12 +24,17 @@ namespace FMS.Models
         // Type of Facility
         public FacilityType FacType { get; set; }
 
-        public EPDUnit Unit { get; set; }
+        // Unit overseeing this Facility
+        public EPDUnit FacilityUnit { get; set; }
+
+        // Program Budget for this Facility
+        public Budget FacilityBudget { get; set; }
 
         // Facility Name
         [StringLength(50)]
         public string Name { get; set;}
 
+        // Compliance Officer assigned to this Facility
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
         // Facility Address
@@ -55,9 +60,6 @@ namespace FMS.Models
 
         // County for use to simplify queries, ease searching, etc.
         public County County { get; set; }
-
-        // List File Cabinets that contain this Facility File
-        public List<FileCabinet> Cabinets {get; set;}
 
         // List of retention records for this Facility File
         public List<RetentionInfo> RetentionRecords { get; set; }

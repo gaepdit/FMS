@@ -1,4 +1,5 @@
 ﻿using FMS.Models.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Models
 {
@@ -9,8 +10,10 @@ namespace FMS.Models
         #endregion
 
         #region Properties
-
-        public string Officer { get; set; }
+        // Unit and Program for the Compliance officer may be different
+        // from the Facilities that they are assigned. 
+        [StringLength(50)]
+        public string OfficerName { get; set; }
 
         public EPDProgram Program { get; set; }
 

@@ -11,6 +11,8 @@ namespace FMS.Models
 
         #region Properties
         // **** some of these Properties look to used for TMS and may not be necessary ****
+        // permutations of the properties from "Parent" to "Access" may only be used
+        // for TMS. May need further search through existing Java code to determine.
 
         // Internal Program code
         [StringLength(20)]
@@ -26,18 +28,11 @@ namespace FMS.Models
         [StringLength(20)]
         public string Parent { get; set; }
 
-        [StringLength(10)]
-        public string Branch { get; set; }
-
         [StringLength(20)]
         public string OrgNo { get; set; }
 
         [StringLength(20)]
         public string ProjNo { get; set; }
-
-        // properties from here down (and possibly some above) seem to be for Time Management
-        // and may not be necessary
-        // Check existing Application and with programs to see what they are used for
 
         public int OriginCode { get; set; }
 
