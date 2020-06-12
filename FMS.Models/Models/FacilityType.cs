@@ -1,26 +1,13 @@
-﻿using FMS.Models.Models.Base;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FMS.Models
+namespace FMS.Models.Models
 {
     public class FacilityType : BaseActiveModel
     {
-        #region Constructor
-        // Constructor here
-        #endregion
-
-        #region Properties
         // Existing numeric code
-        public int FacilityTypeCode { get; set; }
+        public int Code { get; set; }
 
         [StringLength(20)]
-        public string FacilityTypeName { get; set; }
-
-        #endregion
-
-        #region Methods
-        //Methods here
-
-        #endregion
+        public string Name { get; set; }
     }
 }

@@ -1,18 +1,12 @@
-﻿using FMS.Models.Models.Base;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FMS.Models
+namespace FMS.Models.Models
 {
     public class FileCabinet : BaseActiveModel
     {
-        #region Constructor
-        // Constructor here
-        #endregion
-
-        #region Properties
         // Existing Program Cabinet Numbers
         [StringLength(5)]
-        public string CabinetNum { get; set; }
+        public string Name { get; set; }
 
         public County StartCounty { get; set; }
 
@@ -23,12 +17,5 @@ namespace FMS.Models
         public int EndSequence { get; set; }
 
         // Collection of Files in Cabinet go here if necessary
-
-        #endregion
-
-        #region Methods
-        //Methods here
-
-        #endregion
     }
 }
