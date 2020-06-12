@@ -1,17 +1,10 @@
-﻿using FMS.Models.Models;
-using FMS.Models.Models.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FMS.Models
+namespace FMS.Models.Models
 {
     public class Facility : BaseActiveModel
     {
-        #region Constructor
-        // Constructor here
-        #endregion
-
-        #region Properties
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
         public string FacilityNumber { get; set; }
 
@@ -19,23 +12,27 @@ namespace FMS.Models
         public File File { get; set; }
 
         // Environmental Interest/Program of this Facility
-        public EPDProgram EnvironmentalProgram { get; set; }
+        public EnvironmentalInterest EnvironmentalInterest { get; set; }
 
         // Type of Facility
-        public FacilityType FacType { get; set; }
+        public FacilityType FacilityType { get; set; }
 
         // Unit overseeing this Facility
-        public EPDUnit FacilityUnit { get; set; }
+        public OrganizationalUnit OrganizationalUnit { get; set; }
 
         // Program Budget for this Facility
-        public Budget FacilityBudget { get; set; }
+        public BudgetCode BudgetCode { get; set; }
 
         // Facility Name
-        [StringLength(50)]
-        public string Name { get; set;}
+        public string Name { get; set; }
 
         // Compliance Officer assigned to this Facility
         public ComplianceOfficer ComplianceOfficer { get; set; }
+
+        public FacilityStatus FacilityStatus { get; set; }
+
+        // Location description distinct from mailing address
+        public string Location { get; set; }
 
         // Facility Address
         [StringLength(50)]
@@ -62,13 +59,6 @@ namespace FMS.Models
         public County County { get; set; }
 
         // List of retention records for this Facility File
-        public List<RetentionInfo> RetentionRecords { get; set; }
-
-        #endregion
-
-        #region Methods
-        //Methods here
-       
-        #endregion
+        public List<RetentionRecord> RetentionRecords { get; set; }
     }
 }

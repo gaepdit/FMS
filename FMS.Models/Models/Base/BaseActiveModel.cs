@@ -1,9 +1,6 @@
 ﻿using FMS.Models.Models.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace FMS.Models.Models.Base
+namespace FMS.Models.Models
 {
     public abstract class BaseActiveModel : BaseModel, IActive
     {
