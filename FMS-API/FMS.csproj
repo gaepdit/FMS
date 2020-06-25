@@ -29,5 +29,9 @@
     <ProjectReference Include="..\FMS.Models\FMS.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\graphics\" />
+  </ItemGroup>
+
 
 </Project>
