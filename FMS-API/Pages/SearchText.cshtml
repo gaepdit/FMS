@@ -5,6 +5,104 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Main File Search Page</h1>
-    <h3>Searching for files will take place here</h3>
+    <h4 style="color:white">Search for Files and Facilities</h4>
+    <div class="jumbotron jumbotron-fluid">
+        <form>
+            <div class="form-row">
+                <div class="col-4">
+                    <div class="input-group input-group">
+                        <span class="input-group-addon" id="basic-addon1"></span>
+                        <input id="FileID" type="text" class="form-control" placeholder="File ID" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group input-group">
+                        <input id="FacilityID" type="text" class="form-control" placeholder="Facility ID" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelectProgram">
+                            <option selected>Choose File Type (Program)...</option>
+                            <option value="1">File Type (Program) One</option>
+                            <option value="2">File Type (Program) Two</option>
+                            <option value="3">File Type (Program) Three</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="col-5">
+                    <div class="input-group input-group">
+                        <input id="FacilityName" type="text" class="form-control" placeholder="Facility Name" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelectCO">
+                            <option selected>Choose Compliance Officer...</option>
+                            <option value="1">CO One</option>
+                            <option value="2">CO Two</option>
+                            <option value="3">CO Three</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelectBudget">
+                            <option selected>Choose Budget Code...</option>
+                            <option value="1">Budget Code One</option>
+                            <option value="2">Budget Code Two</option>
+                            <option value="3">Budget Code Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="input-group input-group">
+                        <input id="Street" type="text" class="form-control" placeholder="Facility Street Address" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="col-6">
+                    <input type="text" class="form-control" placeholder="City">
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelectCounty">
+                            <option selected>Choose County...</option>
+                            <option value="1">County One</option>
+                            <option value="2">County Two</option>
+                            <option value="3">County Three</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <input id="State" type="text" class="form-control" placeholder="State">
+                </div>
+                <div class="col">
+                    <input id="Zip" type="text" class="form-control" placeholder="Zip">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary mb-2">Search</button>
+                </div>
+                <div class="col">
+                    <button type="reset" class="btn btn-primary mb-2">Reset Form</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <h4 style="color:white">Search Results</h4>
+    <div class="jumbotron jumbotron-fluid">
+        <h4 style="color:white">results here</h4>
+    </div>
 </div>

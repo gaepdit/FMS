@@ -5,18 +5,32 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">EPD File Management System</h1>
+    <h2 style="color:white">EPD File Management System</h2>
+    <h3 style="color:white">Please Login</h3>
 </div>
-<div class="jumbotron text-center align-content-md-center">
-    <div class="align-content-center">
-        <p>User Name</p>
-        <input id="UserID" type="text" title="User Name" l />
+<div class="jumbotron text-center align-content-sm-center">
+    <form class="align-content-center">
+        <div class="form-row  justify-content-center" >
+            <div class="col-4" >
+                <div class="input-group input-group">
+                    <input id="Username" type="text" class="form-control" placeholder="Enter Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="form-row justify-content-center">
+            <div class="col-4">
+                <div class="input-group input-group">
+                    <input id="Password" type="password" class="form-control" placeholder="Enter Password" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="basic-addon2"></span>
+                </div>
+            </div>
+        </div>
         <br />
-        <p></p>
-        <p>Password</p>
-        <input id="UserID" type="text" title="Password" />
-        <br />
-        <p></p>
-        <input id="Button1" type="button" value="Login" />
-    </div>
+        <div class="form-row justify-content-center">
+            <div class="col-4">
+                <button type="submit" class="btn btn-primary mb-2">Login</button>
+            </div>
+        </div>
+    </form>
 </div>

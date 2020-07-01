@@ -3,7 +3,58 @@
 @{
     ViewData["Title"] = "Home";
 }
-<div class="text-center">
-    <h1 class="display-4">Home Page</h1>
-    <h3>Where cards will have choices</h3>
+<div>
+    <div class="text-center">
+        <h4 style="color:white">Welcome to The EPD File Management System</h4>
+</div>
+    <div class="card-columns">
+        <div class="card">
+            <div class="card-img" style=" background-image: url('graphics/find_facility.png');"></div>
+            <div class="card-body">
+                <h5 class="card-title" style="color:white">Find a Facility</h5>
+                <p class="card-text" style="color:white">Search for Facilities and Files here</p>
+                <a href="SearchText" class="btn btn-primary align-content-lg-center">Go</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img" style="background-image: url('graphics/search_location.png');"></div>
+            <div class="card-body">
+                <h5 class="card-title" style="color:white">Search by Location</h5>
+                <p class="card-text" style="color:white">Search for Facilities using a Map</p>
+                <a href="SearchGIS" class="btn btn-primary">Go</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img" style="background-image: url('graphics/reports.png');"></div>
+            <div class="card-body">
+                <h5 class="card-title" style="color:white">Reports</h5>
+                <p class="card-text" style="color:white">Get Reports here</p>
+                <a href="Reports" class="btn btn-primary">Go</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img" style="background-image: url('graphics/modify_facility.png');"></div>
+            <div class="card-body">
+                <h5 class="card-title" style="color:white">Modify a Facility</h5>
+                <p class="card-text" style="color:white">Modify Facility Data here</p>
+                <a href="ModifyRecord" class="btn btn-primary">Go</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img" style="background-image: url('graphics/epd logo_final - transparent 220.png');"></div>
+            <div class="card-body">
+                <h5 class="card-title" style="color:white">Modify Drop-Down Menus</h5>
+                <p class="card-text" style="color:white">Add and Modify Drop-Down Menus here</p>
+                <a href="ModifyDropDown" class="btn btn-primary">Go</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img" style="background-image: url('graphics/epd logo_final - transparent 220.png');"></div>
+            <div class="card-body">
+                <h5 class="card-title" style="color:white">Administration</h5>
+                <p class="card-text" style="color:white">Add and Modify User Information here</p>
+                <a href="UserAdmin" class="btn btn-primary">Go</a>
+            </div>
+        </div>
+    </div>
 </div>
