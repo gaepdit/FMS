@@ -1,0 +1,62 @@
+﻿@page
+@model AddUserModel
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<div class="text-center">
+    <h5 style="color:white">User Administration</h5>
+    <div class="jumbotron">
+        <h4 style="color:white">Add a New User</h4>
+        <form>
+            <div class="form-row justify-content-center">
+                <div class="col-6">
+                    <div class="input-group input-group">
+                        <span class="input-group-addon" id="basic-addon1"></span>
+                        <input id="NewFirstName" type="text" aria-label="First name" class="form-control" placeholder="Enter First Name">
+                        <input id="NewLastName" type="text" aria-label="Last name" class="form-control" placeholder="Enter Last Name">
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-row justify-content-center">
+                <div class="col-3">
+                    <div class="input-group input-group">
+                        <input id="NewUserID" type="text" class="form-control" placeholder="Enter New User Name" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group input-group">
+                        <input id="NewPassword" type="password" class="form-control" placeholder="Enter New Password" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group input-group">
+                        <input id="RENewPassword" type="password" class="form-control" placeholder="Re-Enter New Password" aria-describedby="basic-addon2">
+                        <span class="input-group-addon" id="basic-addon2"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelectNewProgram">
+                            <option selected>New User's Program</option>
+                            <option value="1">Program One</option>
+                            <option value="2">Program Two</option>
+                            <option value="3">Program Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row justify-content-center">
+                <div class="col-3">
+                    <button id="Submit New User" type="submit" class="btn btn-primary mb-5">Submit Changes</button>
+                </div>
+                <div class="col-3">
+                    <button id="ResetNewUser" type="reset" class="btn btn-primary mb-2">Reset New User Form</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

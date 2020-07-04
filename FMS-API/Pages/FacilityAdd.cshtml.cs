@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS
 {
-    public class SearchGISModel : PageModel
+    public class FacilityAddModel : PageModel
     {
         public void OnGet()
         {

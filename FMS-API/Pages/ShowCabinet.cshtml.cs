@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS
 {
-    public class ModifyRecordModel : PageModel
+    public class ShowCabinetModel : PageModel
     {
         public void OnGet()
         {
