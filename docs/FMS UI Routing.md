@@ -2,43 +2,37 @@
 
 ## Publicly available pages
 
-### Public User
-
-All public pages are also available to authenticated users.
-Priviledged Users include all previous user priviledges.
-
-- `/` (Login - may bypass for Search only)
-- `/Home` (Card Menu)
-- `/Search` (File Search - Text and Map, including Results)
-  - `/ShowFacility/?` (Facility Details)
-  - `/ShowFile/?` (Show File Contents)
-  - `/ShowCabinet/?` (Show File Cabinet Contents)
+- `/` (Login)
 
 ### Standard Priviledge User
 
+- `/Search` (File Search - Text and Map, including Results)
+- `/Facility/?` (Facility Details)
+- `/File/?` (Show File Contents)
+- `/Cabinet/?` (Show File Cabinet Contents)
 - `/Reports` (Future Reports)
 
 ### Edit Priviledge User
 
-- `/FacilityAdd` (Add a new Facility)
-- `/FacilityEdit/?` (Edit Facility Details or Delete Facility)
+- `/Facility/Add` (Add a new Facility)
+- `/Facility/Edit/?` (Edit Facility Details or Delete Facility)
 
 ### Admin Priviledge User
 
-- `/AddUser` (Add Users)
-- `/EditUsers` (Edit/Delete Users)
-- `/EditDropDown` (Edit Drop-Down Menu Items, including Adding Cabinets)
+- `/Users` (List/Search Users)
+- `/Users/Add` (Add Users)
+- `/Users/Edit/?` (Edit/Delete User)
+- `/Maintenance` (Edit Drop-Down Menu Items, including Adding Cabinets)
 
-### Login Pages
+### User Account Pages
 
-- `/Account/ConfirmEmail`
-- `/Account/SetPassword`
+- `/Account` (Show current user account details)
+- `/Account/ChangePassword`
+- `/Account/ConfirmAccount`
+- `/Account/Edit`
 - `/Account/ForgotPassword`
-- `/Account/ForgotPasswordConfirmation`
-- `/Account/ResetPassword`
-- `/Account/AccessDenied`
 
 ### Misc
 
+- `/AccessDenied`
 - `/Error`
-- `/Privacy` (Privacy Policy)
