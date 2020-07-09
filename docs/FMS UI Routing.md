@@ -28,11 +28,13 @@
 
 - `/Account` (Show current user account details)
 - `/Account/ChangePassword`
-- `/Account/ConfirmAccount`
 - `/Account/Edit`
-- `/Account/ForgotPassword`
 
-### Misc
+- `/Account/ConfirmEmail` (Allow Anonymous)
+- `/Account/ForgotPassword` (Allow Anonymous)
+- `/Account/SetPassword` (Allow Anonymous)
+
+### Misc (publicly available)
 
 - `/AccessDenied`
 - `/Error`
