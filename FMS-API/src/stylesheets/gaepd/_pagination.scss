@@ -1,0 +1,137 @@
+// CSS for pagination navigation
+// From: https://github.com/department-of-veterans-affairs/vets-website
+
+.gaepd-pagination {
+  font-size: .9em;
+  overflow: hidden;
+  padding: 1rem 0 1rem;
+  position: relative;
+  text-align: center;
+  width: 100%;
+
+  > * {
+    display: inline-block;
+  }
+
+  &-prev,
+  &-first {
+    @media (max-width: $medium-screen) {
+      margin-left: -3rem;
+      padding: 0 1rem 0 0;
+    }
+
+    &:not(:empty) {
+      @media (min-width: $small-screen) {
+        &::before {
+          content: '\2039\a0';
+        }
+      }
+    }
+  }
+  
+  &-prev,
+  &-next {
+    @media (max-width: $medium-screen) {
+      display: none;
+    }
+  }
+
+  &-next,
+  &-last {
+    @media (max-width: $medium-screen) {
+      margin-right: -3rem;
+      padding: 0 0 0 1rem;
+    }
+
+    &:not(:empty) {
+      @media (min-width: $small-screen) {
+        &::after {
+          content: '\a0\203a';
+        }
+      }
+    }
+  }
+
+  &-first {
+    &:not(:empty) {
+      @media (min-width: $small-screen) {
+        &::before {
+          content: '\00ab\a0';
+        }
+      }
+    }
+  }
+
+  &-last {
+    &:not(:empty) {
+      @media (min-width: $small-screen) {
+        &::after {
+          content: '\a0\00bb';
+        }
+      }
+    }
+  }
+
+  &-prev,
+  &-next,
+  &-first,
+  &-last {
+    position: relative;
+    top: -1rem;
+    color: $color-primary;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+
+    @media (min-width: $medium-screen) {
+      padding: 0 1rem;
+    }
+  }
+
+  &-inner {
+    overflow: hidden;
+    white-space: nowrap;
+
+    @media (max-width: $medium-screen) {
+      width: 20rem;
+    }
+
+    @media (min-width: $large-screen) {
+      width: 40rem;
+    }
+
+    a {
+      border-radius: 1000px;
+      display: inline-block;
+      height: 3rem;
+      margin: 0 .5rem;
+      width: 3rem;
+      text-decoration: none;
+    }
+  }
+
+  a {
+    line-height: 2;
+    text-decoration: none;
+  }
+  
+  &-disabled { 
+      color: $color-gray; 
+      
+      &:hover, 
+      &:focus { 
+        text-decoration: none; 
+      } 
+  }
+
+  &-inner a:hover,
+  &-inner a:focus,
+  &-active,
+  &-active:visited {
+    background: $color-primary;
+    color: $color-white;
+  }
+}
+

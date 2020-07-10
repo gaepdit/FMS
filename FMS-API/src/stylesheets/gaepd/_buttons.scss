@@ -1,0 +1,60 @@
+// Buttons variables
+$button-stroke-thin: inset 0 0 0 1px;
+
+.gaepd-buttonrow {
+    .usa-button,
+    [type=button],
+    [type=submit] {
+        display: inline-block;
+        margin-bottom: 1.5em;
+        margin-top: 2.5rem;
+    }
+}
+
+.gaepd-button-inline-action {
+    padding: .4rem .8rem;
+    margin: .25rem .25rem .25rem 0;
+    font-weight: normal;
+
+    &.usa-button-outline {
+        box-shadow: $button-stroke-thin $color-primary;
+    }
+
+    &.usa-button-outline-inverse {
+        box-shadow: $button-stroke-thin $color-white;
+    }
+}
+
+// 
+.gaepd-button-closealert {
+    float: right;
+    width: auto !important;
+    padding: 1rem 1.5rem;
+}
+
+// Buttons embedded in site nav menu
+.usa-nav-primary {
+    .gaepd-nav-button {
+        @include media($nav-width) {
+            color: $color-white;
+            padding-left: 1.8rem;
+            padding-right: 2.7rem;
+        }
+
+        color: $color-base;
+        padding-right: 1.8rem;
+        padding-left: 2.7rem;
+
+        &:hover,
+        &:focus,
+        &:active {
+            @include media($nav-width) {
+                color: $color-white;
+                background: $color-primary-darker;
+            }
+            
+            color: $color-primary;
+            background-color: $color-gray-lighter;
+        }
+    }
+}

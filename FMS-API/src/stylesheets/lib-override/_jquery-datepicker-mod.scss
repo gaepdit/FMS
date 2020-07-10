@@ -1,0 +1,25 @@
+// jQuery UI Datepicker
+// https://jqueryui.com/datepicker/
+.ui-datepicker select {
+  font-weight: 400;
+  display: inline-block;
+  padding: 1px;
+  height: auto;
+}
+
+// jQuery Timepicker Addon 
+// http://trentrichardson.com/examples/timepicker/
+.ui-timepicker-select {
+  -moz-appearance: menulist;
+  -webkit-appearance: menulist;
+  appearance: menulist;
+}
+
+// jQuery Timepicker
+// http://timepicker.co/
+.ui-timepicker li {
+  line-height: 1;
+}
+.ui-timepicker-standard {
+  font-size: .9em;
+}

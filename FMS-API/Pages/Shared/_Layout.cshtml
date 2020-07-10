@@ -7,12 +7,26 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="background-image: url('graphics/DSCF0036.JPG');
-        background-repeat: repeat;
-        background-attachment: fixed">
-    <header style="background-color: #106717">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+@*<body style="background-image: url('graphics/DSCF0036.JPG');
+    background-repeat: repeat;
+    background-attachment: fixed">*@
+<body>
+    @*<a class="usa-skipnav" href="#main-content">Skip to main content</a>
+        <script type="text/javascript" src="http://www.georgia.gov/gagov_external_blocks/topper"></script>*@
+
+    @*<header style="background-color: #106717">*@
+    <header role="banner">
+        <div class="container">
+            <div id="logo" style="font-size: 28px">
+                <div>
+                    <a accesskey="1" title="Home" aria-label="Home" href="#" style="color:black">
+                        <img src="~/graphics/EPD Logo_FINAL - transparent 220.png" /><span>        File Management System</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-transparent border-bottom box-shadow mb-3">
+            <div class="container-fluid" style="background-color: #106717">
                 <div class="navbar-header">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -20,15 +34,10 @@
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item" style="background-color: azure">
-                                <div>
-                                    <a href="https://epd.georgia.gov/" target="_blank"><img src="~/graphics/EPD Logo_FINAL - transparent 220.png" /></a>
-                                </div>
-                            </li>
                             <li role="separator" class="divider"></li>
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-page="/Home">Home</a>
-                            </li>
+                            </li>*@
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-page="/Search">Search</a>
                             </li>
@@ -62,11 +71,14 @@
         <main role="main" class="pb-1">
             @RenderBody()
         </main>
+        <a href="#"><span style="color: green ">Return to top</span></a>
     </div>
 
     <footer class="border-top footer" style="background-color: #106717">
-        <div class="container" style="color:white">
-            &copy; 2020 - Environmental Protection Division IT - <a style="color:yellow" asp-area="" asp-page="/Privacy">Privacy</a>
+        <div class="container">
+            <div style="color: white ">
+                &copy; 2020 - Environmental Protection Division IT - <a style="color:yellow" href="http://georgia.gov/accessibility" target="_blank">Accessibility</a><span> | </span><a style="color:yellow" href="http://www.gadnr.org/ada" target="_blank">DNR Accessibility Notice</a><span> | </span><a style="color:yellow" href="http://georgia.gov/privacysecurity" target="_blank">Privacy/Security</a>
+            </div>
         </div>
     </footer>
 

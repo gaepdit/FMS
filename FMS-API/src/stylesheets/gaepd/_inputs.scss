@@ -1,0 +1,17 @@
+// Additional input size
+input {
+  &.gaepd-input-medium-large { /* stylelint-disable-line selector-no-qualifying-type */
+    @include media($medium-screen) {
+      max-width: 18rem;
+    }
+  }
+}
+
+// Disabled Select element
+
+select:disabled {
+  color: $color-gray-dark;
+  border-color: $color-gray-light;
+  background-color: $color-gray-lightest;
+  cursor: not-allowed;
+}

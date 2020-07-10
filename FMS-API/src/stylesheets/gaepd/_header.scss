@@ -1,0 +1,35 @@
+/* 
+GeorgiaGov Interactive 
+Web Standards and Guidelines » 6.0 Brand Standards » 6.1 Logo Usage
+http://portal.georgia.gov/interactive/web-standards/61-logo-usage
+*/
+
+.usa-header-basic {
+    .gaepd-logo {
+    @include media($nav-width) {
+      bottom: 0;
+      position: relative;
+    }
+  }
+
+  .gaepd-navbar {
+    @include media($nav-width) {
+      width: auto;
+    }
+  }
+}
+
+// Agency Cobranding
+.gaepd-logo-link {
+    display: flex;
+    align-items: center;
+}
+.gaepd-logo-link img {
+    width: 3rem;
+    margin-right: 1rem;
+
+    @include media($nav-width) {
+        width: 8rem; 
+        margin: 1rem 2rem 1rem 0;
+    }
+}

@@ -1,0 +1,49 @@
+/* 
+GeorgiaGov Interactive 
+Web Standards and Guidelines » 6.0 Brand Standards » 6.2 Shared Elements
+http://portal.georgia.gov/interactive/web-standards/62-shared-elements
+*/
+
+// Agency-specific footer menu in GeorgiaGov Shared Footer
+.gaepd-footer {
+    color: #fff;
+    border-top: 3px solid HSL(195, 2%, 32%);
+    background: hsl(34, 7%, 55%);
+    font-family: Verdana, sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+}
+.gaepd-footer-menu {
+    list-style: none;
+    margin: 10px auto 0;
+
+    li {
+        display: inline;
+        
+        &::before {
+            content: " | ";
+        }
+        
+        &:first-child::before {
+            content: "";
+        }
+    }
+
+    a {
+        color: #fff;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+// Override box-sizing for GeorgiaGov Shared Hat
+#gagov_external_blocks-topper {
+    box-sizing: content-box;
+}
+
+// Fix GeorgiaGov footer height
+#gagov_external_blocks-footer #zone-footer-wrapper {
+    min-height: 200px;
+}

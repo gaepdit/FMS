@@ -7,9 +7,8 @@
 All public pages are also available to authenticated users.
 Priviledged Users include all previous user priviledges.
 
-- `/` (Login - may bypass for Search only)
-- `/Home` (Card Menu)
-- `/Search` (File Search - Text and Map, including Results)
+- `/` (Login)
+- `/Search` (File Search - Initial Landing Page - Text and Map, including Results)
   - `/ShowFacility/?` (Facility Details)
   - `/ShowFile/?` (Show File Contents)
   - `/ShowCabinet/?` (Show File Cabinet Contents)
@@ -41,4 +40,3 @@ Priviledged Users include all previous user priviledges.
 ### Misc
 
 - `/Error`
-- `/Privacy` (Privacy Policy)

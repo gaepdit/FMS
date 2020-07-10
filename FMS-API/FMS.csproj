@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="src\**" />
+    <Content Remove="src\**" />
+    <EmbeddedResource Remove="src\**" />
+    <None Remove="src\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\AddressController.cs" />
   </ItemGroup>
 
@@ -32,6 +39,13 @@
   <ItemGroup>
     <Folder Include="Pages\Account\" />
     <Folder Include="wwwroot\graphics\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\favicon.ico">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 
