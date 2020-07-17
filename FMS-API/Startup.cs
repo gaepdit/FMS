@@ -4,7 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using FMS.Data;
+using FMS.Infrastructure;
+using System.Text.Json;
+using System.Collections;
+using Microsoft.AspNetCore.Http;
+using FMS.Infrastructure.Contexts;
 
 namespace FMS
 {
@@ -23,10 +27,11 @@ namespace FMS
             services.AddDbContext<FmsDbContext>(opt => opt.UseInMemoryDatabase("FMSdb"));
             services.AddControllers();
             services.AddRazorPages();
+            services.AddTransient<JsonSearchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, FmsDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -50,7 +55,26 @@ namespace FMS
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
+                //endpoints.MapGet("/Facility", (context) =>
+                //{
+                //    var facilities = app.ApplicationServices.GetService<JsonFacService>().GetFacilties();
+                //    var json = JsonSerializer.Serialize<IEnumerable>(facilities);
+                //    return context.Response.WriteAsync(json);
+                //});
             });
+
+            // Initialize database
+            if (env.IsDevelopment())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                //Infrastructure.SeedData.Dev
+            }
+            else
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
         }
     }
 }

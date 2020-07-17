@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS", "FMS-API\FMS.csproj", "{67EEBCCE-ACDD-435B-926B-1A2620D248C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F045FB7-6A52-48A2-9D2B-F898A4B73BC3} = {5F045FB7-6A52-48A2-9D2B-F898A4B73BC3}
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Models", "FMS.Models\FMS.Models.csproj", "{5F045FB7-6A52-48A2-9D2B-F898A4B73BC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Domain", "FMS.Models\FMS.Domain.csproj", "{5F045FB7-6A52-48A2-9D2B-F898A4B73BC3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Infrastructure", "FMS.Infrastructure\FMS.Infrastructure.csproj", "{11804CD6-8828-4B2B-9E37-84783942E53A}"
 EndProject

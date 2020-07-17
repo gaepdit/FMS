@@ -1,0 +1,642 @@
+[
+    {
+        "Id": 131,
+        "Name": "APPLING"
+    },
+    {
+        "Id": 122,
+        "Name": "ATKINSON"
+    },
+    {
+        "Id": 110,
+        "Name": "BACON"
+    },
+    {
+        "Id": 105,
+        "Name": "BAKER"
+    },
+    {
+        "Id": 213,
+        "Name": "BALDWIN"
+    },
+    {
+        "Id": 179,
+        "Name": "BANKS"
+    },
+    {
+        "Id": 217,
+        "Name": "BARROW"
+    },
+    {
+        "Id": 249,
+        "Name": "BARTOW"
+    },
+    {
+        "Id": 211,
+        "Name": "BEN HILL"
+    },
+    {
+        "Id": 194,
+        "Name": "BERRIEN"
+    },
+    {
+        "Id": 259,
+        "Name": "BIBB"
+    },
+    {
+        "Id": 145,
+        "Name": "BLECKLEY"
+    },
+    {
+        "Id": 108,
+        "Name": "BRANTLEY"
+    },
+    {
+        "Id": 158,
+        "Name": "BROOKS"
+    },
+    {
+        "Id": 111,
+        "Name": "BRYAN"
+    },
+    {
+        "Id": 159,
+        "Name": "BULLOCH"
+    },
+    {
+        "Id": 203,
+        "Name": "BURKE"
+    },
+    {
+        "Id": 188,
+        "Name": "BUTTS"
+    },
+    {
+        "Id": 112,
+        "Name": "CALHOUN"
+    },
+    {
+        "Id": 169,
+        "Name": "CAMDEN"
+    },
+    {
+        "Id": 113,
+        "Name": "CANDLER"
+    },
+    {
+        "Id": 241,
+        "Name": "CARROLL"
+    },
+    {
+        "Id": 225,
+        "Name": "CATOOSA"
+    },
+    {
+        "Id": 114,
+        "Name": "CHARLTON"
+    },
+    {
+        "Id": 242,
+        "Name": "CHATHAM"
+    },
+    {
+        "Id": 137,
+        "Name": "CHATTAHOOCHEE"
+    },
+    {
+        "Id": 174,
+        "Name": "CHATTOOGA"
+    },
+    {
+        "Id": 243,
+        "Name": "CHEROKEE"
+    },
+    {
+        "Id": 252,
+        "Name": "CLARKE"
+    },
+    {
+        "Id": 104,
+        "Name": "CLAY"
+    },
+    {
+        "Id": 204,
+        "Name": "CLAYTON"
+    },
+    {
+        "Id": 178,
+        "Name": "CLINCH"
+    },
+    {
+        "Id": 245,
+        "Name": "COBB"
+    },
+    {
+        "Id": 146,
+        "Name": "COFFEE"
+    },
+    {
+        "Id": 227,
+        "Name": "COLQUITT"
+    },
+    {
+        "Id": 232,
+        "Name": "COLUMBIA"
+    },
+    {
+        "Id": 212,
+        "Name": "COOK"
+    },
+    {
+        "Id": 250,
+        "Name": "COWETA"
+    },
+    {
+        "Id": 115,
+        "Name": "CRAWFORD"
+    },
+    {
+        "Id": 220,
+        "Name": "CRISP"
+    },
+    {
+        "Id": 170,
+        "Name": "DADE"
+    },
+    {
+        "Id": 180,
+        "Name": "DAWSON"
+    },
+    {
+        "Id": 244,
+        "Name": "DECATUR"
+    },
+    {
+        "Id": 218,
+        "Name": "DEKALB"
+    },
+    {
+        "Id": 175,
+        "Name": "DODGE"
+    },
+    {
+        "Id": 189,
+        "Name": "DOOLY"
+    },
+    {
+        "Id": 257,
+        "Name": "DOUGHERTY"
+    },
+    {
+        "Id": 253,
+        "Name": "DOUGLAS"
+    },
+    {
+        "Id": 195,
+        "Name": "EARLY"
+    },
+    {
+        "Id": 103,
+        "Name": "ECHOLS"
+    },
+    {
+        "Id": 123,
+        "Name": "EFFINGHAM"
+    },
+    {
+        "Id": 200,
+        "Name": "ELBERT"
+    },
+    {
+        "Id": 198,
+        "Name": "EMANUEL"
+    },
+    {
+        "Id": 109,
+        "Name": "EVANS"
+    },
+    {
+        "Id": 176,
+        "Name": "FANNIN"
+    },
+    {
+        "Id": 235,
+        "Name": "FAYETTE"
+    },
+    {
+        "Id": 246,
+        "Name": "FLOYD"
+    },
+    {
+        "Id": 238,
+        "Name": "FORSYTH"
+    },
+    {
+        "Id": 201,
+        "Name": "FRANKLIN"
+    },
+    {
+        "Id": 261,
+        "Name": "FULTON"
+    },
+    {
+        "Id": 165,
+        "Name": "GILMER"
+    },
+    {
+        "Id": 124,
+        "Name": "GLASCOCK"
+    },
+    {
+        "Id": 216,
+        "Name": "GLYNN"
+    },
+    {
+        "Id": 230,
+        "Name": "GORDON"
+    },
+    {
+        "Id": 208,
+        "Name": "GRADY"
+    },
+    {
+        "Id": 171,
+        "Name": "GREENE"
+    },
+    {
+        "Id": 226,
+        "Name": "GWINNETT"
+    },
+    {
+        "Id": 214,
+        "Name": "HABERSHAM"
+    },
+    {
+        "Id": 256,
+        "Name": "HALL"
+    },
+    {
+        "Id": 107,
+        "Name": "HANCOCK"
+    },
+    {
+        "Id": 209,
+        "Name": "HARALSON"
+    },
+    {
+        "Id": 138,
+        "Name": "HARRIS"
+    },
+    {
+        "Id": 190,
+        "Name": "HART"
+    },
+    {
+        "Id": 152,
+        "Name": "HEARD"
+    },
+    {
+        "Id": 248,
+        "Name": "HENRY"
+    },
+    {
+        "Id": 239,
+        "Name": "HOUSTON"
+    },
+    {
+        "Id": 139,
+        "Name": "IRWIN"
+    },
+    {
+        "Id": 222,
+        "Name": "JACKSON"
+    },
+    {
+        "Id": 147,
+        "Name": "JASPER"
+    },
+    {
+        "Id": 160,
+        "Name": "Jeff Davis"
+    },
+    {
+        "Id": 199,
+        "Name": "JEFFERSON"
+    },
+    {
+        "Id": 153,
+        "Name": "JENKINS"
+    },
+    {
+        "Id": 140,
+        "Name": "JOHNSON"
+    },
+    {
+        "Id": 161,
+        "Name": "JONES"
+    },
+    {
+        "Id": 181,
+        "Name": "LAMAR"
+    },
+    {
+        "Id": 141,
+        "Name": "LANIER"
+    },
+    {
+        "Id": 223,
+        "Name": "LAURENS"
+    },
+    {
+        "Id": 172,
+        "Name": "LEE"
+    },
+    {
+        "Id": 148,
+        "Name": "LIBERTY"
+    },
+    {
+        "Id": 125,
+        "Name": "LINCOLN"
+    },
+    {
+        "Id": 102,
+        "Name": "LONG"
+    },
+    {
+        "Id": 254,
+        "Name": "LOWNDES"
+    },
+    {
+        "Id": 192,
+        "Name": "LUMPKIN"
+    },
+    {
+        "Id": 182,
+        "Name": "MACON"
+    },
+    {
+        "Id": 166,
+        "Name": "MADISON"
+    },
+    {
+        "Id": 133,
+        "Name": "MARION"
+    },
+    {
+        "Id": 210,
+        "Name": "MCDUFFIE"
+    },
+    {
+        "Id": 126,
+        "Name": "MCINTOSH"
+    },
+    {
+        "Id": 196,
+        "Name": "MERIWETHER"
+    },
+    {
+        "Id": 154,
+        "Name": "MILLER"
+    },
+    {
+        "Id": 215,
+        "Name": "MITCHELL"
+    },
+    {
+        "Id": 184,
+        "Name": "MONROE"
+    },
+    {
+        "Id": 134,
+        "Name": "MONTGOMERY"
+    },
+    {
+        "Id": 197,
+        "Name": "MORGAN"
+    },
+    {
+        "Id": 205,
+        "Name": "MURRAY"
+    },
+    {
+        "Id": 258,
+        "Name": "MUSCOGEE"
+    },
+    {
+        "Id": 231,
+        "Name": "NEWTON"
+    },
+    {
+        "Id": 191,
+        "Name": "OCONEE"
+    },
+    {
+        "Id": 127,
+        "Name": "OGLETHORPE"
+    },
+    {
+        "Id": 99,
+        "Name": "OUT OF STATE"
+    },
+    {
+        "Id": 219,
+        "Name": "PAULDING"
+    },
+    {
+        "Id": 221,
+        "Name": "PEACH"
+    },
+    {
+        "Id": 185,
+        "Name": "PICKENS"
+    },
+    {
+        "Id": 116,
+        "Name": "PIERCE"
+    },
+    {
+        "Id": 149,
+        "Name": "PIKE"
+    },
+    {
+        "Id": 233,
+        "Name": "POLK"
+    },
+    {
+        "Id": 155,
+        "Name": "PULASKI"
+    },
+    {
+        "Id": 183,
+        "Name": "PUTNAM"
+    },
+    {
+        "Id": 100,
+        "Name": "QUITMAN"
+    },
+    {
+        "Id": 167,
+        "Name": "RABUN"
+    },
+    {
+        "Id": 156,
+        "Name": "RANDOLPH"
+    },
+    {
+        "Id": 260,
+        "Name": "RICHMOND"
+    },
+    {
+        "Id": 251,
+        "Name": "ROCKDALE"
+    },
+    {
+        "Id": 135,
+        "Name": "SCHLEY"
+    },
+    {
+        "Id": 157,
+        "Name": "SCREVEN"
+    },
+    {
+        "Id": 150,
+        "Name": "SEMINOLE"
+    },
+    {
+        "Id": 240,
+        "Name": "SPALDING"
+    },
+    {
+        "Id": 229,
+        "Name": "STEPHENS"
+    },
+    {
+        "Id": 117,
+        "Name": "STEWART"
+    },
+    {
+        "Id": 236,
+        "Name": "SUMTER"
+    },
+    {
+        "Id": 128,
+        "Name": "TALBOT"
+    },
+    {
+        "Id": 118,
+        "Name": "TALIAFERRO"
+    },
+    {
+        "Id": 136,
+        "Name": "TATTNALL"
+    },
+    {
+        "Id": 142,
+        "Name": "TAYLOR"
+    },
+    {
+        "Id": 164,
+        "Name": "TELFAIR"
+    },
+    {
+        "Id": 173,
+        "Name": "TERRELL"
+    },
+    {
+        "Id": 234,
+        "Name": "THOMAS"
+    },
+    {
+        "Id": 237,
+        "Name": "TIFT"
+    },
+    {
+        "Id": 151,
+        "Name": "TOOMBS"
+    },
+    {
+        "Id": 129,
+        "Name": "TOWNS"
+    },
+    {
+        "Id": 101,
+        "Name": "TREUTLEN"
+    },
+    {
+        "Id": 247,
+        "Name": "TROUP"
+    },
+    {
+        "Id": 186,
+        "Name": "TURNER"
+    },
+    {
+        "Id": 130,
+        "Name": "TWIGGS"
+    },
+    {
+        "Id": 168,
+        "Name": "UNION"
+    },
+    {
+        "Id": 202,
+        "Name": "UPSON"
+    },
+    {
+        "Id": 224,
+        "Name": "WALKER"
+    },
+    {
+        "Id": 228,
+        "Name": "WALTON"
+    },
+    {
+        "Id": 177,
+        "Name": "WARE"
+    },
+    {
+        "Id": 162,
+        "Name": "WARREN"
+    },
+    {
+        "Id": 206,
+        "Name": "WASHINGTON"
+    },
+    {
+        "Id": 143,
+        "Name": "WAYNE"
+    },
+    {
+        "Id": 120,
+        "Name": "WEBSTER"
+    },
+    {
+        "Id": 106,
+        "Name": "WHEELER"
+    },
+    {
+        "Id": 193,
+        "Name": "WHITE"
+    },
+    {
+        "Id": 255,
+        "Name": "WHITFIELD"
+    },
+    {
+        "Id": 144,
+        "Name": "WILCOX"
+    },
+    {
+        "Id": 163,
+        "Name": "WILKES"
+    },
+    {
+        "Id": 207,
+        "Name": "WILKINSON"
+    },
+    {
+        "Id": 187,
+        "Name": "WORTH"
+    }
+]

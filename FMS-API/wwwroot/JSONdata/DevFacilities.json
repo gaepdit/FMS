@@ -1,0 +1,42 @@
+[
+  {
+    "FacilityNumber": "GAD981282510",
+    "File": "180-0001",
+    "EnvironmentalInterest": "RCRA",
+    "FacilityType": "gen",
+    "OrganizationalUnit": "Org Unit",
+    "BudgetCode": "HWRCRA",
+    "Name": "BILL ELLIOT RACING TEAM",
+    "ComplianceOfficer": "360513",
+    "FacilityStatus": "ACTIVE",
+    "Location": "Description of Location",
+    "Address": "2367 ELLIOTT FAMILY PKWY BLDG5",
+    "City": "DAWSONVILLE",
+    "State": "GA",
+    "Postalcode": "0",
+    "Latitude": 34.421275,
+    "Longitude": -84.116939,
+    "County": "DAWSON",
+    "RententionRecords": "0"
+  },
+  {
+    "FacilityNumber": "56609",
+    "File": "180-0002",
+    "EnvironmentalInterest": "RCRA",
+    "FacilityType": "gen",
+    "OrganizationalUnit": "Org Unit",
+    "BudgetCode": "HWRCRA",
+    "Name": "DAWSON FOREST CITY OF ATLANTA TRACT",
+    "ComplianceOfficer": "360513",
+    "FacilityStatus": "NON-RCRA",
+    "Location": "Description of Location",
+    "Address": null,
+    "City": "DAWSONVILLE",
+    "State": "GA",
+    "Postalcode": "0",
+    "Latitude": 0,
+    "Longitude": 0,
+    "County": "DAWSON",
+    "RententionRecords": "0"
+  }
+]
