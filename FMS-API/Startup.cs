@@ -25,7 +25,7 @@ namespace FMS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FmsDbContext>(opt => opt.UseInMemoryDatabase("FMSdb"));
-            services.AddControllers();
+            //services.AddControllers();
             services.AddRazorPages();
             services.AddTransient<JsonSearchService>();
         }
@@ -45,6 +45,7 @@ namespace FMS
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -53,7 +54,7 @@ namespace FMS
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                //endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 //endpoints.MapGet("/Facility", (context) =>
                 //{
@@ -68,7 +69,7 @@ namespace FMS
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                //Infrastructure.SeedData.Dev
+                Infrastructure.SeedData.DevSeedData.SeedTestData(context);
             }
             else
             {

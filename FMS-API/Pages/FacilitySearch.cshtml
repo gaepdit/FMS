@@ -1,17 +1,20 @@
 ﻿@page
-@model SearchModel
+@model FacilitySearchModel
 @{
-    ViewData["Title"] = "File Search";
+    ViewData["Title"] = "Facility Search";
 }
 <div class="text-center">
     <h4>Search for Files and Facilities</h4>
     <div class="container-fluid">
-        <form method="post">
+        @*<form method="post">*@
+        @using (Html.BeginForm(FormMethod.Post))
+        { 
             <div class="form-row">
                 <div class="col-4">
                     <div class="input-group input-group">
                         <span class="input-group-addon" id="basic-addon1"></span>
                         <input id="FileID" type="text" class="form-control" placeholder="File ID" aria-describedby="basic-addon1">
+                        @*File ID: @Html.TextBox("File ID", new { @class = "searchText" })*@
                     </div>
                 </div>
                 <div class="col">
@@ -82,8 +85,8 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectCounty">
-                            <option selected></option>
-                            @foreach (var County in Model.Counties)
+                            <option selected>County...</option>
+                            @foreach (var County in Model.counties)
                             {
                                 <option value="@County.Id">@County.Name</option>
                             }
@@ -170,19 +173,10 @@
                 <div class="col">
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
                 </div>
-                <div class="col">
-                    <button type="reset" class="btn btn-primary mb-2">Reset Form</button>
-                </div>
+                
             </div>
-        </form>
+        }
+        @*</form>*@
     </div>
-
-
-    <div id="ResultMap" class="container-fluid">
-        <h4>Map of results here</h4>
-    </div>
-    <div id="ResultList" class="container-fluid">
-        <h4>Search Results</h4>
-        <h4>List of results here</h4>
-    </div>
+     
 </div>

@@ -1,8 +1,4 @@
-﻿using FMS.Infrastructure;
-using FMS.Infrastructure.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FMS.Infrastructure.Contexts;
 
 namespace FMS.Infrastructure.SeedData
 {
@@ -10,9 +6,18 @@ namespace FMS.Infrastructure.SeedData
     {
         public static void SeedTestData(this FmsDbContext context)
         {
-            //context.Facilities.AddRange(GetFacilities());
-            //context.savechanges();
-
+            context.AddRange(GetBudgetCodes());
+            context.AddRange(GetComplianceOfficers());
+            context.AddRange(GetCounties());
+            context.AddRange(GetEnvironmentalInterests());
+            context.AddRange(GetFacilities());
+            context.AddRange(GetFacilityStatuses());
+            context.AddRange(GetFacilityTypes());
+            context.AddRange(GetFileCabinets());
+            context.AddRange(GetFiles());
+            context.AddRange(GetOrganizationalUnits());
+            context.AddRange(GetRetentionRecords());
+            //context.SaveChanges();
         }
     }
 }

@@ -7,7 +7,8 @@ namespace FMS.Infrastructure.Contexts
 {
     public class FmsDbContext : DbContext
     {
-        public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) { }
+
+        public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) => options = new DbContextOptionsBuilder<FmsDbContext>().EnableSensitiveDataLogging(true).Options;
         DbSet<BudgetCode> BudgetCodes { get; set; }
         DbSet<ComplianceOfficer> ComplianceOfficers { get; set; }
         DbSet<County> Counties { get; set; }
@@ -24,10 +25,19 @@ namespace FMS.Infrastructure.Contexts
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
 
-            builder.Entity<County>().HasData(ProdSeedData.GetCounties());
-            //builder.Entity<LegalAuthority>().HasData(ProdSeedData.GetLegalAuthorities());
-            //builder.Entity<Address>().HasData(ProdSeedData.GetAddresses());
-            //builder.Entity<EpdContact>().HasData(ProdSeedData.GetEpdContacts());
+
+            builder.Entity<BudgetCode>().HasData(DevSeedData.GetBudgetCodes());
+            builder.Entity<ComplianceOfficer>().HasData(DevSeedData.GetComplianceOfficers());
+            builder.Entity<County>().HasData(DevSeedData.GetCounties());
+            builder.Entity<EnvironmentalInterest>().HasData(DevSeedData.GetEnvironmentalInterests());
+            builder.Entity<Facility>().HasData(DevSeedData.GetFacilities());
+            builder.Entity<FacilityStatus>().HasData(DevSeedData.GetFacilityStatuses());
+            builder.Entity<FacilityType>().HasData(DevSeedData.GetFacilityTypes());
+            builder.Entity<File>().HasData(DevSeedData.GetFiles());
+            builder.Entity<FileCabinet>().HasData(DevSeedData.GetFileCabinets());
+            builder.Entity<OrganizationalUnit>().HasData(DevSeedData.GetOrganizationalUnits());
+            builder.Entity<RetentionRecord>().HasData(DevSeedData.GetRetentionRecords());
+
 
             //builder.Entity<EnforcementOrder>()
             //    .HasIndex(b => b.OrderNumber).IsUnique();
