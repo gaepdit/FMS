@@ -19,16 +19,17 @@ namespace FMS
 
         private readonly FmsDbContext _context;
 
-        //public FacilitySearchModel(FmsDbContext context)
-        //{
-        //    _context = context;
-        //}
-
         public IEnumerable<Facility> facilities { get; private set; }
 
         public IEnumerable<County> counties { get; private set; }
 
         public IEnumerable<BudgetCode> budgetCodes { get; private set; }
+
+
+        //public FacilitySearchModel(FmsDbContext context)
+        //{
+        //    _context = context;
+        //}
 
         public FacilitySearchModel(
             ILogger<FacilitySearchModel> logger,

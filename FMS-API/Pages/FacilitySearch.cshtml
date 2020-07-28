@@ -6,7 +6,6 @@
 <div class="text-center">
     <h4>Search for Files and Facilities</h4>
     <div class="container-fluid">
-        @*<form method="post">*@
         @using (Html.BeginForm(FormMethod.Post))
         { 
             <div class="form-row">
@@ -14,7 +13,6 @@
                     <div class="input-group input-group">
                         <span class="input-group-addon" id="basic-addon1"></span>
                         <input id="FileID" type="text" class="form-control" placeholder="File ID" aria-describedby="basic-addon1">
-                        @*File ID: @Html.TextBox("File ID", new { @class = "searchText" })*@
                     </div>
                 </div>
                 <div class="col">
@@ -176,7 +174,6 @@
                 
             </div>
         }
-        @*</form>*@
     </div>
      
 </div>

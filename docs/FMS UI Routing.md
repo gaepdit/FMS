@@ -8,10 +8,10 @@ All public pages are also available to authenticated users.
 Priviledged Users include all previous user priviledges.
 
 - `/` (Login)
-- `/Search` (File Search - Initial Landing Page - Text and Map, including Results)
-  - `/ShowFacility/?` (Facility Details)
-  - `/ShowFile/?` (Show File Contents)
-  - `/ShowCabinet/?` (Show File Cabinet Contents)
+- `/Facility` (File Search - Initial Landing Page)
+- `/Facility/Results` (Facility Search Results - Text and Map)
+- `/Facility/File/?` (Show File Contents)
+- `/Facility/Cabinet/?` (Show File Cabinet Contents)
 
 ### Standard Priviledge User
 
@@ -19,14 +19,14 @@ Priviledged Users include all previous user priviledges.
 
 ### Edit Priviledge User
 
-- `/FacilityAdd` (Add a new Facility)
-- `/FacilityEdit/?` (Edit Facility Details or Delete Facility)
+- `/Facility/Add` (Add a new Facility)
+- `/Facility/Edit/?` (Edit Facility Details or Delete Facility)
 
 ### Admin Priviledge User
 
-- `/AddUser` (Add Users)
-- `/EditUsers` (Edit/Delete Users)
-- `/EditDropDown` (Edit Drop-Down Menu Items, including Adding Cabinets)
+- `/Account` (Search for User Account)
+- `/Account/Edit/?` (Edit/Delete User Account)
+- `/DropDown/Edit` (Edit Drop-Down Menu Items, including Adding Cabinets)
 
 ### Login Pages
 
