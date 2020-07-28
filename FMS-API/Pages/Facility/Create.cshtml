@@ -1,0 +1,79 @@
+﻿@page
+@model FMS.Pages.Facility.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Facility</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Facility.FacilityNumber" class="control-label"></label>
+                <input asp-for="Facility.FacilityNumber" class="form-control" />
+                <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.Name" class="control-label"></label>
+                <input asp-for="Facility.Name" class="form-control" />
+                <span asp-validation-for="Facility.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.Location" class="control-label"></label>
+                <input asp-for="Facility.Location" class="form-control" />
+                <span asp-validation-for="Facility.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.Address" class="control-label"></label>
+                <input asp-for="Facility.Address" class="form-control" />
+                <span asp-validation-for="Facility.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.City" class="control-label"></label>
+                <input asp-for="Facility.City" class="form-control" />
+                <span asp-validation-for="Facility.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.State" class="control-label"></label>
+                <input asp-for="Facility.State" class="form-control" />
+                <span asp-validation-for="Facility.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.PostalCode" class="control-label"></label>
+                <input asp-for="Facility.PostalCode" class="form-control" />
+                <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.Latitude" class="control-label"></label>
+                <input asp-for="Facility.Latitude" class="form-control" />
+                <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facility.Longitude" class="control-label"></label>
+                <input asp-for="Facility.Longitude" class="form-control" />
+                <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Facility.Active" /> @Html.DisplayNameFor(model => model.Facility.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
