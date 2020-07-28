@@ -13,7 +13,7 @@ namespace FMS.Infrastructure.SeedData
             {
                 new BudgetCode
                 {
-                    Id = new Guid("C982D5CC-B641-42ED-B8EB-208B5C36F191"),
+                    Id = new Guid("C982D5CC-B641-42ED-B8EB-208B5C36F192"),
                     Active = true,
                     EnvironmentalInterest = { },
                     Code = "CCLBRWN",

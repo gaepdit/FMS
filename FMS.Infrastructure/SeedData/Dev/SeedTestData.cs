@@ -6,17 +6,17 @@ namespace FMS.Infrastructure.SeedData
     {
         public static void SeedTestData(this FmsDbContext context)
         {
-            context.AddRange(GetBudgetCodes());
-            context.AddRange(GetComplianceOfficers());
-            context.AddRange(GetCounties());
-            context.AddRange(GetEnvironmentalInterests());
-            context.AddRange(GetFacilities());
-            context.AddRange(GetFacilityStatuses());
-            context.AddRange(GetFacilityTypes());
-            context.AddRange(GetFileCabinets());
-            context.AddRange(GetFiles());
-            context.AddRange(GetOrganizationalUnits());
-            context.AddRange(GetRetentionRecords());
+            context.BudgetCodes.AddRange(GetBudgetCodes());
+            context.ComplianceOfficers.AddRange(GetComplianceOfficers());
+            context.Counties.AddRange(GetCounties());
+            context.EnvironmentalInterests.AddRange(GetEnvironmentalInterests());
+            context.Facilities.AddRange(GetFacilities());
+            context.FacilityStatuses.AddRange(GetFacilityStatuses());
+            context.FacilityTypes.AddRange(GetFacilityTypes());
+            context.FileCabinets.AddRange(GetFileCabinets());
+            context.Files.AddRange(GetFiles());
+            context.OrganizationalUnits.AddRange(GetOrganizationalUnits());
+            context.RetentionRecords.AddRange(GetRetentionRecords());
             context.SaveChanges();
         }
     }

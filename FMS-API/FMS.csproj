@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Facility\**" />
+    <Content Remove="Pages\Facility\**" />
+    <EmbeddedResource Remove="Pages\Facility\**" />
+    <None Remove="Pages\Facility\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
@@ -26,6 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\File\" />
+    <Folder Include="Pages\Cabinet\" />
+    <Folder Include="Pages\Reports\" />
     <Folder Include="Resources\" />
     <Folder Include="QueryStrings\" />
     <Folder Include="Pages\Account\" />

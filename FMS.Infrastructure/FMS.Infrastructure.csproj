@@ -13,9 +13,4 @@
     <ProjectReference Include="..\FMS.Models\FMS.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="QueryingEvaluators\" />
-  </ItemGroup>
-
 </Project>
