@@ -1,12 +1,13 @@
 ﻿@page
-@model FacilityEditModel
+@model Pages.Facilities.AddModel
 @{
-    ViewData["Title"] = "Edit Facility";
+    ViewData["Title"] = "Add Facility";
 }
 <div class="text-center">
-    <h4 >Edit Facility</h4>
+    <h4>Add New Facility</h4>
     <div class="container-fluid">
-        <form>
+        @using (Html.BeginForm(FormMethod.Post))
+        {
             <div class="form-row">
                 <div class="col-4">
                     <div class="input-group input-group">
@@ -23,10 +24,17 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectProgram">
-                            <option selected>Choose File Type (Program)...</option>
-                            <option value="1">File Type (Program) One</option>
-                            <option value="2">File Type (Program) Two</option>
-                            <option value="3">File Type (Program) Three</option>
+                            <option selected>File Type (Program)...</option>
+                            <option value="1">generator</option>
+                            <option value="2">gfac</option>
+                            <option value="3">npl</option>
+                            <option value="4">dod</option>
+                            <option value="5">vrp</option>
+                            <option value="6">paf</option>
+                            <option value="7">hsra</option>
+                            <option value="8">tsd</option>
+                            <option value="9">brown</option>
+                            <option value="10">pasi</option>
                         </select>
                     </div>
                 </div>
@@ -42,7 +50,8 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectCO">
-                            <option selected>Choose Compliance Officer...</option>
+                            <option selected>Compliance Officer...</option>
+                            <option value=""></option>
                             <option value="1">CO One</option>
                             <option value="2">CO Two</option>
                             <option value="3">CO Three</option>
@@ -53,33 +62,23 @@
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectBudget">
                             <option selected>Choose Budget Code...</option>
-                            <option value="1">Budget Code One</option>
-                            <option value="2">Budget Code Two</option>
-                            <option value="3">Budget Code Three</option>
+                            @foreach (var Code in Model.BudgetCodes)
+                            {
+                                <option value="@Code.Id">@Code.Name</option>
+                            }
                         </select>
                     </div>
                 </div>
             </div>
             <div class="form-row">
-                <div class="col-8">
+                <div class="col-12">
                     <div class="input-group input-group">
                         <input id="Street" type="text" class="form-control" placeholder="Facility Street Address" aria-describedby="basic-addon2">
                         <span class="input-group-addon" id="basic-addon2"></span>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelectOrgUnit">
-                            <option selected>Organizational Unit...</option>
-                            <option value=""></option>
-                            <option value="1">Organizational Unit One</option>
-                            <option value="2">Organizational Unit Two</option>
-                            <option value="3">Organizational Unit Three</option>
-                        </select>
-                    </div>
-                </div>
             </div>
-            @*<br />*@
+            <br/>
             <div class="form-row">
                 <div class="col-6">
                     <input type="text" class="form-control" placeholder="City">
@@ -88,9 +87,10 @@
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectCounty">
                             <option selected>Choose County...</option>
-                            <option value="1">County One</option>
-                            <option value="2">County Two</option>
-                            <option value="3">County Three</option>
+                            @foreach (var County in Model.Counties)
+                            {
+                                <option value="@County.Id">@County.Name</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -154,20 +154,19 @@
                     <input id="Zip" type="text" class="form-control" placeholder="Zip">
                 </div>
             </div>
-            <div class="form-row">
+            <div class="form-group row">
                 <div class="col">
-                    <button id="btnSearch" type="submit" class="btn btn-primary mb-2">Search</button>
+                    <input id="Lat" type="text" class="form-control" placeholder="Latitude -- Decimal Format DD.DDDDDDD">
                 </div>
                 <div class="col">
-                    <button id="btnSave" type="submit" class="btn btn-primary mb-2">Save</button>
-                </div>
-                <div class="col">
-                    <button id="btnDelete" type="submit" class="btn btn-primary mb-2">Delete</button>
-                </div>
-                <div class="col">
-                    <button type="reset" class="btn btn-primary mb-2">Reset Form</button>
+                    <input id="Long" type="text" class="form-control" placeholder="Longitude -- Decimal Format -DD.DDDDDDD">
                 </div>
             </div>
-        </form>
+            <div class="form-row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary mb-2">Save New Facility</button>
+                </div>
+            </div>
+        }
     </div>
 </div>

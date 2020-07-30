@@ -1,13 +1,14 @@
 ﻿@page
-@model UserAdminModel
+@model Pages.Account.EditModel
 @{
     ViewData["Title"] = "User Admin";
 }
 <div class="text-center">
-    <h5 >User Administration</h5>
+    <h5>User Administration</h5>
     <div class="container-fluid">
-        <h4 >Edit User Information</h4>
-        <form>
+        <h4>Edit User Information</h4>
+        @using (Html.BeginForm(FormMethod.Post))
+        {
             <div class="form-row justify-content-center">
                 <div class="col-6">
                     <div class="input-group input-group">
@@ -53,6 +54,6 @@
                     <button id="DeleteUser" type="submit" class="btn btn-primary mb-2">Delete User</button>
                 </div>
             </div>
-        </form>
+        }
     </div>
 </div>

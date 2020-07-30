@@ -1,5 +1,5 @@
 ﻿@page
-@model FacilitySearchModel
+@model Pages.Facilities.IndexModel
 @{
     ViewData["Title"] = "Facility Search";
 }
@@ -7,7 +7,7 @@
     <h4>Search for Files and Facilities</h4>
     <div class="container-fluid">
         @using (Html.BeginForm(FormMethod.Post))
-        { 
+        {
             <div class="form-row">
                 <div class="col-4">
                     <div class="input-group input-group">
@@ -60,9 +60,10 @@
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectBudget">
                             <option selected>Budget Code...</option>
-                            <option value="1">Budget Code One</option>
-                            <option value="2">Budget Code Two</option>
-                            <option value="3">Budget Code Three</option>
+                            @foreach (var Code in Model.BudgetCodes)
+                            {
+                                <option value="@Code.Id">@Code.Name</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -84,7 +85,7 @@
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectCounty">
                             <option selected>County...</option>
-                            @foreach (var County in Model.counties)
+                            @foreach (var County in Model.Counties)
                             {
                                 <option value="@County.Id">@County.Name</option>
                             }
@@ -154,26 +155,40 @@
             <div class="form-group row">
                 <div class="col-sm-2">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="MapCheck">
+                        @*<input class="form-check-input" type="checkbox" id="MapCheck">*@
+                        @Html.CheckBoxFor(m => m.ShowMap)
                         <label class="form-check-label" for="MapCheck">
                             Show Map
                         </label>
                     </div>
                 </div>
                 <div class="col">
-                    <input id="Lat" type="text" class="form-control" placeholder="Latitude">
+                    <input id="Lat" type="text" class="form-control" placeholder="Latitude -- Decimal Format DD.DDDDDDD">
                 </div>
                 <div class="col">
-                    <input id="Long" type="text" class="form-control" placeholder="Longitude">
+                    <input id="Long" type="text" class="form-control" placeholder="Longitude -- Decimal Format -DD.DDDDDDD">
                 </div>
             </div>
             <div class="form-row">
                 <div class="col">
                     <button type="submit" class="btn btn-primary mb-2">Search</button>
                 </div>
-                
+
             </div>
         }
     </div>
-     
+    <div class="text-center" style="@(Model.ShowResults == false ? "display:none" : "display:block")">
+        <h4>Search Results</h4>
+        <div id="ResultMap" class="text-center" style="@(Model.ShowMap == false ? "display:none" : "display:block")">
+            <div class="container-fluid">
+                <h5>Map of results here</h5>
+            </div>
+        </div>
+        <div id="ResultList" class="text-center">
+            <div class="container-fluid">
+                <h5>List of results here</h5>
+            </div>
+        </div>
+    </div>
+    
 </div>

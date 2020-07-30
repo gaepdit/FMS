@@ -27,7 +27,7 @@ namespace FMS
             services.AddDbContext<FmsDbContext>(opt => opt.UseInMemoryDatabase("FMSdb"));
             //services.AddControllers();
             services.AddRazorPages();
-            services.AddTransient<JsonSearchService>();
+            //services.AddTransient<JsonSearchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

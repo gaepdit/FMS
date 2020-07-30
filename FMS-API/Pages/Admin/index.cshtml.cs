@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS
+namespace FMS.Pages.Admin
 {
-    public class UserSearchModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {
@@ -19,7 +15,7 @@ namespace FMS
             {
                 return Page();
             }
-            string url = "UserEdit";
+            string url = "/Admin/Index";
             return RedirectToPage(url);
         }
     }
