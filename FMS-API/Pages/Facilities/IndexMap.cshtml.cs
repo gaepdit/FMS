@@ -17,10 +17,12 @@ namespace FMS.Pages.Facilities
         private readonly FmsDbContext _context;
 
         [BindProperty]
-        public bool ShowMap { get; set; }
+        public bool ActiveOnly { get; set; }
 
         [BindProperty]
         public bool ShowResults { get; set; }
+
+        public bool ShowMap { get; set; }
 
         public IEnumerable<Facility> Facilities { get; private set; }
 
@@ -31,8 +33,10 @@ namespace FMS.Pages.Facilities
             _logger = logger;
             _context = context;
         }
-        public void OnGet(bool Map = false)
+        public void OnGet(bool Active = false, bool Result = false, bool Map = false)
         {
+            ActiveOnly = Active;
+            ShowResults = Result;
             ShowMap = Map;
         }
 
@@ -45,7 +49,7 @@ namespace FMS.Pages.Facilities
             ShowMap = true;
 
             string url = "/Facilities/IndexMap";
-            return RedirectToPage(url, new { Map = ShowMap });
+            return RedirectToPage(url, new { Active = ActiveOnly, Result = ShowResults, Map = ShowMap });
         }
     }
 }

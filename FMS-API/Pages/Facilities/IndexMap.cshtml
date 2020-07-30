@@ -103,16 +103,16 @@
                 <div class="form-row">
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="cbActive">
-                            <label class="form-check-label" for="defaultCheck1">
+                            @Html.CheckBoxFor(m => m.ActiveOnly)
+                            <label class="form-check-label" for="ActiveCheck">
                                 Show Active Sites Only
                             </label>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="cbList">
-                            <label class="form-check-label" for="defaultCheck1">
+                            @Html.CheckBoxFor(m => m.ShowResults)
+                            <label class="form-check-label" for="ListCheck">
                                 Also Show Results in a List
                             </label>
                         </div>
@@ -125,10 +125,20 @@
                 </div>
             }
         </div>
+        <div id="ResultList" class="text-center" style="@(Model.ActiveOnly == false ? "display:none" : "display:block")">
+            <div class="container-fluid">
+                <h5 style="color:red">Only Active Sites are being displayed</h5>
+            </div>
+        </div>
         <div id="ResultMap" class="text-center" style="@(Model.ShowMap == false ? "display:none" : "display:block")">
             <div class="container-fluid">
-                <h5>Map of results here</h5>
+                <h4>Map of results here</h4>
                 <img src="~/graphics/GOOGLEMAP.jpg" alt="Results Map" width="500" height="300" />
+            </div>
+        </div>
+        <div id="ResultList" class="text-center" style="@(Model.ShowResults == false ? "display:none" : "display:block")">
+            <div class="container-fluid">
+                <h4>List of results here</h4>
             </div>
         </div>
     </div>
