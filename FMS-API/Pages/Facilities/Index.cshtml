@@ -24,7 +24,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectProgram">
-                            <option selected>File Type (Program)...</option>
+                            <option selected value="0">File Type (Program)...</option>
                             <option value="1">generator</option>
                             <option value="2">gfac</option>
                             <option value="3">npl</option>
@@ -48,8 +48,8 @@
                 </div>
                 <div class="col">
                     <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelectCO">
-                            <option selected>Compliance Officer...</option>
+                        <select class="custom-select" id="inputGroupSelectCO" placeholder="">
+                            <option selected value="0">Compliance Officer...</option>
                             <option value="1">CO One</option>
                             <option value="2">CO Two</option>
                             <option value="3">CO Three</option>
@@ -59,7 +59,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <select class="custom-select" id="inputGroupSelectBudget">
-                            <option selected>Budget Code...</option>
+                            <option selected value="0">Budget Code...</option>
                             @foreach (var Code in Model.BudgetCodes)
                             {
                                 <option value="@Code.Id">@Code.Name</option>
@@ -153,15 +153,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-sm-2">
-                    <div class="form-check">
-                        @*<input class="form-check-input" type="checkbox" id="MapCheck">*@
-                        @Html.CheckBoxFor(m => m.ShowMap)
-                        <label class="form-check-label" for="MapCheck">
-                            Show Map
-                        </label>
-                    </div>
-                </div>
                 <div class="col">
                     <input id="Lat" type="text" class="form-control" placeholder="Latitude -- Decimal Format DD.DDDDDDD">
                 </div>
@@ -171,7 +162,7 @@
             </div>
             <div class="form-row">
                 <div class="col">
-                    <button type="submit" class="btn btn-primary mb-2">Search</button>
+                    <button type="submit" class="btn btn-primary mb-2">Search for Facilities</button>
                 </div>
 
             </div>
@@ -179,11 +170,6 @@
     </div>
     <div class="text-center" style="@(Model.ShowResults == false ? "display:none" : "display:block")">
         <h4>Search Results</h4>
-        <div id="ResultMap" class="text-center" style="@(Model.ShowMap == false ? "display:none" : "display:block")">
-            <div class="container-fluid">
-                <h5>Map of results here</h5>
-            </div>
-        </div>
         <div id="ResultList" class="text-center">
             <div class="container-fluid">
                 <h5>List of results here</h5>

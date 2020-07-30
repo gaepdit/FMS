@@ -16,10 +16,7 @@ namespace FMS.Pages.Facilities
 
         private readonly FmsDbContext _context;
 
-        public Boolean ShowResults { get; set; }
-
-        [BindProperty]
-        public Boolean ShowMap { get; set; }
+        public bool ShowResults { get; set; }
 
         public IEnumerable<Facility> Facilities { get; private set; }
 
@@ -35,9 +32,8 @@ namespace FMS.Pages.Facilities
             _context = context;
         }
 
-        public void OnGet(bool Map = true, bool Result = false)
+        public void OnGet(bool Result = false)
         {
-            ShowMap = Map;
             ShowResults = Result;
             PopulateSelects();
         }
@@ -53,7 +49,7 @@ namespace FMS.Pages.Facilities
             ShowResults = true;
 
             string url = "/Facilities/Index";
-            return RedirectToPage(url, new { Map = ShowMap, Result = ShowResults });
+            return RedirectToPage(url, new { Result = ShowResults });
         }
 
         private void PopulateSelects()

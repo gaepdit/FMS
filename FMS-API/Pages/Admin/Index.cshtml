@@ -3,12 +3,87 @@
 @{
     ViewData["Title"] = "Drop-Down Edit";
 }
-    <div class="text-center">
-        <h4>Modify Drop-Down Menus</h4>
-        <div class="container-fluid">
-            <form>
-                <h3>Modify Here</h3>
-            </form>
-            
+<div class="text-center">
+    <h4>Modify Drop-Down Menus</h4>
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                @using (Html.BeginForm(FormMethod.Post))
+                {
+                    <div class="form-row">
+                        <h5>Select Budget Code or leave blank to add new</h5>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-10">
+                            <div class="input-group mb-3">
+                                <select class="custom-select" id="inputGroupSelectBudget">
+                                    <option selected> </option>
+                                    @foreach (var Code in Model.BudgetCodes)
+                                    {
+                                        <option value="@Code.Id">@Code.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <h5>Add or Edit Selected Budget Code</h5>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-10">
+                            <div class="input-group input-group">
+                                <input id="BudgetCode" type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="basic-addon2"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-row">
+                        <div class="col-10">
+                            <button type="submit" class="btn btn-primary mb-2">Save Budget Code Changes</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col">
+                @using (Html.BeginForm(FormMethod.Post))
+                {
+                    <div class="form-row">
+                        <h5>Select File Cabinet or leave blank to add new</h5>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-10">
+                            <div class="input-group mb-3">
+                                <select class="custom-select" id="inputGroupSelectCabinet">
+                                    <option selected> </option>
+                                    @foreach (var Cabinet in Model.FileCabinets)
+                                    {
+                                        <option value="@Cabinet.Id">@Cabinet.Name | @Cabinet.StartSequence | @Cabinet.EndSequence</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <h5>Add or Edit Selected File Cabinets</h5>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-10">
+                            <div class="input-group input-group">
+                                <input id="BudgetCode" type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
+                                <span class="input-group-addon" id="basic-addon2"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-row">
+                        <div class="col-10">
+                            <button type="submit" class="btn btn-primary mb-2">Save File Cabinet Changes</button>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
+</div>

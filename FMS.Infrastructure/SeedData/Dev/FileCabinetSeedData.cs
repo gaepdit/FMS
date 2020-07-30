@@ -16,7 +16,7 @@ namespace FMS.Infrastructure.SeedData
                      Id = new Guid("06C4AE30-4FFB-4C6B-9E5E-577D088554A4"),
                     Active = true,
                     Name = "C008",
-                    StartCounty = { }, // new County { Id = 160, Name = "Jeff Davis" },
+                    StartCounty = { }, //{ Id = 160, Name = "Jeff Davis" },
                     EndCounty = { }, //  new County { Id = 167, Name = "Rabun" },
                     StartSequence = 6,
                     EndSequence = 5

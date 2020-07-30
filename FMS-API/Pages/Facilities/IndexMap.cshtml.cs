@@ -1,51 +1,51 @@
-﻿using FMS.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
-namespace FMS.Pages.Admin
+namespace FMS.Pages.Facilities
 {
-    public class IndexModel : PageModel
+    public class IndexMapModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
         private readonly FmsDbContext _context;
 
         [BindProperty]
-        public IEnumerable<BudgetCode> BudgetCodes { get; private set; }
+        public bool ShowMap { get; set; }
 
         [BindProperty]
-        public IEnumerable<FileCabinet> FileCabinets { get; set; }
+        public bool ShowResults { get; set; }
 
+        public IEnumerable<Facility> Facilities { get; private set; }
 
-        public IndexModel(
+        public IndexMapModel(
             ILogger<IndexModel> logger,
             FmsDbContext context)
         {
             _logger = logger;
             _context = context;
         }
-
-        public void OnGet()
+        public void OnGet(bool Map = false)
         {
-            PopulateListBoxes();
+            ShowMap = Map;
         }
+
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            string url = "/Admin/Index";
-            return RedirectToPage(url);
-        }
+            ShowMap = true;
 
-        private void PopulateListBoxes()
-        {
-            FileCabinets = _context.FileCabinets;
-            BudgetCodes = _context.BudgetCodes;
+            string url = "/Facilities/IndexMap";
+            return RedirectToPage(url, new { Map = ShowMap });
         }
     }
 }
