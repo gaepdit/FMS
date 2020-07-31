@@ -16,23 +16,23 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
                     Active = true,
-                    FacilityNumber = "",
-                    File = { },
+                    FacilityNumber = "BRF1211825",
+                    File = {  },   //FileLabel = "243-0001"
                     EnvironmentalInterest = { },
                     FacilityType = { },
                     OrganizationalUnit = { },
                     BudgetCode = { },
-                    Name = "",
+                    Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",
                     ComplianceOfficer = { },
                     FacilityStatus = { },
-                    Location = "",
-                    Address = "",
-                    City = "",
+                    Location = "Description of Location",
+                    Address = "102 THREE BRANCHES DR.",
+                    City = "WOODSTOCK",
                     State = "GA",
-                    PostalCode = 30099,
-                    Latitude = 25.37485,
-                    Longitude = -84.46729,
-                    County = { },
+                    PostalCode = 30188,
+                    Latitude = 34.114309,
+                    Longitude = -84.470057,
+                    County = {  },   //Id = 243, Name = "Cherokee"
                     RetentionRecords = { }
                 },
                 new Facility

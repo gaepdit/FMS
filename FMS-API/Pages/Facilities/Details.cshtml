@@ -3,9 +3,99 @@
 @{
     ViewData["Title"] = "Facility Details";
 }
-    <div class="text-center">
-        <h4 >Facility Information</h4>
-        <div class="container-fluid">
-            <h3>Facility Details Here</h3>
-        </div>
+<div class="text-center">
+    <h4>Facility Information</h4>
+    <div class="container-fluid">
+        <h5>Facility Name: &nbsp;&nbsp;&nbsp;&nbsp; <span style="color:red">@Model.Facility.Name</span></h5>
     </div>
+</div>
+<div class="container-fluid">
+    <hr />
+    <dl class="row">
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.FacilityNumber)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.FacilityNumber)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.BudgetCode.Name)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.BudgetCode.Name)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.OrganizationalUnit.Name)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.OrganizationalUnit.Name)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.ComplianceOfficer.Name)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.ComplianceOfficer.Name)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.Location)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.Location)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.Address)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.Address)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.City)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.City)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.County.Name)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.County.Name)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.State)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.State)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.PostalCode)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.PostalCode)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.Latitude)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.Latitude)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.Longitude)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.Longitude)
+        </dd>
+        <dt class="col-xl-3">
+            @Html.DisplayNameFor(model => model.Facility.Active)
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.Active)
+        </dd>
+        @*<dt class="col-xl-3">
+            <span>Retention Records</span>
+        </dt>
+        <dd class="col-xl-9">
+            @Html.DisplayFor(model => model.Facility.RetentionRecords.ForEach)
+        </dd>*@
+    </dl>
+    <hr />
+</div>

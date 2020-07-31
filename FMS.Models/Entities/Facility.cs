@@ -8,6 +8,7 @@ namespace FMS.Domain.Entities
     public class Facility : BaseActiveModel
     {
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
+        [Display(Name = "Facilty Number")]
         public string FacilityNumber { get; set; }
 
         // File label and Cabinet where this Facility is located
@@ -26,6 +27,7 @@ namespace FMS.Domain.Entities
         public BudgetCode BudgetCode { get; set; }
 
         // Facility Name
+        [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
         // Compliance Officer assigned to this Facility
@@ -34,14 +36,13 @@ namespace FMS.Domain.Entities
         public FacilityStatus FacilityStatus { get; set; }
 
         // Location description distinct from mailing address
+        [Display(Name = "Location Description")]
         public string Location { get; set; }
 
         // Facility Address
+        [Display(Name = "Street Address")]
         [StringLength(100)]
         public string Address { get; set; }
-
-        //[StringLength(50)]
-        //public string StreetLine2 { get; set; }
 
         [StringLength(30)]
         public string City { get; set; }
@@ -49,6 +50,7 @@ namespace FMS.Domain.Entities
         [StringLength(2)]
         public string State { get; set; } = "GA";
 
+        [Display(Name = "Zip Code")]
         [StringLength(10)]
         public int PostalCode { get; set; }
 
