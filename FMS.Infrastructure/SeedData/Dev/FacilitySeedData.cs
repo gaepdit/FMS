@@ -32,7 +32,7 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = 30188,
                     Latitude = 34.114309,
                     Longitude = -84.470057,
-                    County = {  },   //Id = 243, Name = "Cherokee"
+                    County =  { },   //Id = 243, Name = "Cherokee"
                     RetentionRecords = { }
                 },
                 new Facility

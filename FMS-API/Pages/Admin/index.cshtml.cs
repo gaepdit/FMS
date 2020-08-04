@@ -19,7 +19,7 @@ namespace FMS.Pages.Admin
         [BindProperty]
         public IEnumerable<FileCabinet> FileCabinets { get; set; }
 
-
+       
         public IndexModel(
             ILogger<IndexModel> logger,
             FmsDbContext context)

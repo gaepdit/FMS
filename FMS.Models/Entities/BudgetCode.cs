@@ -19,5 +19,15 @@ namespace FMS.Domain.Entities
 
         [StringLength(20)]
         public string ProjectNumber { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public string GetEnum()
+        {
+            return Code;
+        }
     }
 }

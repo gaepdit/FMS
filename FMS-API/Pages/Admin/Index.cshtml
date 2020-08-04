@@ -17,13 +17,14 @@
                     <div class="form-row">
                         <div class="col-10">
                             <div class="input-group mb-3">
-                                <select class="custom-select" id="inputGroupSelectBudget">
-                                    <option selected> </option>
+                                @Html.DropDownList("Budget Codes", new SelectList(Model.BudgetCodes),"",new { @class = "custom-select" })
+                                @*<select class="custom-select" id="inputGroupSelectBudget">
+                                    <option value="" selected> </option>
                                     @foreach (var Code in Model.BudgetCodes)
                                     {
                                         <option value="@Code.Id">@Code.Name</option>
                                     }
-                                </select>
+                                </select>*@
                             </div>
                         </div>
                     </div>
@@ -41,7 +42,7 @@
                     <br />
                     <div class="form-row">
                         <div class="col-10">
-                            <button type="submit" class="btn btn-primary mb-2">Save Budget Code Changes</button>
+                            <button id="BudgetCodeSubmit" type="submit" class="btn btn-primary mb-2">Save Budget Code Changes</button>
                         </div>
                     </div>
                 }
@@ -71,7 +72,7 @@
                     <div class="form-row">
                         <div class="col-10">
                             <div class="input-group input-group">
-                                <input id="BudgetCode" type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
+                                <input id="Cabinet" type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
                                 <span class="input-group-addon" id="basic-addon2"></span>
                             </div>
                         </div>
@@ -79,7 +80,7 @@
                     <br />
                     <div class="form-row">
                         <div class="col-10">
-                            <button type="submit" class="btn btn-primary mb-2">Save File Cabinet Changes</button>
+                            <button id="CabinetSubmit" type="submit" class="btn btn-primary mb-2">Save File Cabinet Changes</button>
                         </div>
                     </div>
                 }
