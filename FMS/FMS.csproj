@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FMS.Infrastructure\FMS.Infrastructure.csproj" />
-    <ProjectReference Include="..\FMS.Models\FMS.Domain.csproj" />
+    <ProjectReference Include="..\FMS.Domain\FMS.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

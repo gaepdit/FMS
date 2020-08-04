@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FMS.Models\FMS.Domain.csproj" />
+    <ProjectReference Include="..\FMS.Domain\FMS.Domain.csproj" />
   </ItemGroup>
 
 </Project>
