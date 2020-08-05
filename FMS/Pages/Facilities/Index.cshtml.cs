@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace FMS.Pages.Facilities
 {
@@ -16,9 +18,20 @@ namespace FMS.Pages.Facilities
 
         private readonly FmsDbContext _context;
 
+        private readonly Guid _nullguid = new Guid("00000000-0000-0000-0000-000000000000");
+
+        // true when checkbox is checked to show only active sites
+        [BindProperty]
+        public bool ActiveOnly { get; set; }
+
         public bool ShowResults { get; set; }
 
-        public IEnumerable<Facility> Facilities { get; private set; }
+        //Guid for Test facility for development
+        public Guid TestGuid { get; set; }
+
+        public Facility Facility { get; set; }
+
+        public IEnumerable<Facility> Facilities { get; set; }
 
         public IEnumerable<County> Counties { get; private set; }
 
@@ -32,24 +45,33 @@ namespace FMS.Pages.Facilities
             _context = context;
         }
 
-        public void OnGet(bool Result = false)
+        public async Task<IActionResult> OnGetAsync(Guid guid, bool Active = false, bool Result = false)
         {
-            ShowResults = Result;
-            PopulateSelects();
-        }
-
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
+            if (guid != _nullguid)
             {
-                return Page();
+                Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == guid);
+                Facilities = new Facility[] { Facility };
             }
 
+            ActiveOnly = Active;
+            ShowResults = Result;
             PopulateSelects();
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            // static data from SeedData for building and testing
+            TestGuid = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0");
+            // this is where the entity search will go
+
+            //Facilities = _context.Facilities;   //.FirstOrDefaultAsync(m => m.Id == TestGuid);
+            //Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == TestGuid);
             ShowResults = true;
 
             string url = "/Facilities/Index";
-            return RedirectToPage(url, new { Result = ShowResults });
+            return RedirectToPage(url, new { guid = TestGuid, Active = ActiveOnly, Result = ShowResults });
         }
 
         private void PopulateSelects()

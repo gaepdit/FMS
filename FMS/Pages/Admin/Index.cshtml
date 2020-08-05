@@ -9,43 +9,46 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                @using (Html.BeginForm(FormMethod.Post))
-                {
+                <form asp-page-handler="BudgetCodeDD" method="post">
                     <div class="form-row">
                         <h5>Select Budget Code or leave blank to add new</h5>
                     </div>
                     <div class="form-row">
                         <div class="col-10">
                             <div class="input-group mb-3">
-                                @Html.DropDownList("Budget Codes", new SelectList(Model.BudgetCodes),"",new { @class = "custom-select" })
+                                @Html.DropDownList("Budget Codes", new SelectList(Model.BudgetCodes), "", new { @id = "BudgetCodeDD", @class = "custom-select" })
                                 @*<select class="custom-select" id="inputGroupSelectBudget">
-                                    <option value="" selected> </option>
-                                    @foreach (var Code in Model.BudgetCodes)
-                                    {
-                                        <option value="@Code.Id">@Code.Name</option>
-                                    }
-                                </select>*@
+                        <option value="" selected> </option>
+                        @foreach (var Code in Model.BudgetCodes)
+                        {
+                            <option value="@Code.Id">@Code.Name</option>
+                        }
+                    </select>*@
+                              <input type="hidden" name="id" />  
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <h5>Add or Edit Selected Budget Code</h5>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-10">
-                            <div class="input-group input-group">
-                                <input id="BudgetCode" type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">
-                                <span class="input-group-addon" id="basic-addon2"></span>
-                            </div>
+                </form>
+            <form asp-page-handler="BudgetCode" method="post">
+                <div class="form-row">
+                    <h5>Add or Edit Selected Budget Code</h5>
+                </div>
+                <div class="form-row">
+                    <div class="col-10">
+                        <div class="input-group input-group">
+                            @Html.TextBox("Budget Code", Model.budgetCodeDD.Name, new { @class = "form-control", @id = "BudgetCodeTxt" })
+                            @*<input id="BudgetCode" type="text" class="form-control" placeholder="" aria-describedby="basic-addon2">*@
+                            <span class="input-group-addon" id="basic-addon2"></span>
                         </div>
                     </div>
-                    <br />
-                    <div class="form-row">
-                        <div class="col-10">
-                            <button id="BudgetCodeSubmit" type="submit" class="btn btn-primary mb-2">Save Budget Code Changes</button>
-                        </div>
+                </div>
+                <br />
+                <div class="form-row">
+                    <div class="col-10">
+                        <button id="BudgetCodeSubmit" type="submit" class="btn btn-primary mb-2">Save Budget Code Changes</button>
                     </div>
-                }
+                </div>
+            </form>
             </div>
             <div class="col">
                 @using (Html.BeginForm(FormMethod.Post))

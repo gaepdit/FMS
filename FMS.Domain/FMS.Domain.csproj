@@ -6,13 +6,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <Compile Remove="Repositories\**" />
+    <Compile Remove="Utils\**" />
+    <Compile Remove="Validation\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <EmbeddedResource Remove="Validation\**" />
+    <None Remove="Repositories\**" />
+    <None Remove="Utils\**" />
+    <None Remove="Validation\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validation\" />
-    <Folder Include="Utils\" />
-    <Folder Include="Repositories\" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

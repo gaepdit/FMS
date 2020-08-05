@@ -14,6 +14,9 @@ namespace FMS.Pages.Admin
         private readonly FmsDbContext _context;
 
         [BindProperty]
+        public BudgetCode budgetCodeDD { get; set; } = new BudgetCode();
+
+        [BindProperty]
         public IEnumerable<BudgetCode> BudgetCodes { get; private set; }
 
         [BindProperty]
@@ -33,6 +36,26 @@ namespace FMS.Pages.Admin
             PopulateListBoxes();
         }
         public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            string url = "/Admin/Index";
+            return RedirectToPage(url);
+        }
+
+        public IActionResult OnPostBudgetCodeDD()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            string url = "/Admin/Index";
+            return RedirectToPage(url);
+        }
+
+        public IActionResult OnPostBudgetCode()
         {
             if (!ModelState.IsValid)
             {
