@@ -1,42 +1,19 @@
-# File Management System - FMS UI Routing
+# File Management System Routing
 
-## Publicly available pages
-
-### Public User
-
-All public pages are also available to authenticated users.
-Priviledged Users include all previous user priviledges.
+## Standard User
 
 - `/` (Login)
-- `/Facility` (File Search - Initial Landing Page)
-- `/Facility/Results` (Facility Search Results - Text and Map)
-- `/Facility/File/?` (Show File Contents)
-- `/Facility/Cabinet/?` (Show File Cabinet Contents)
-
-### Standard Priviledge User
-
+- `/Account` (Edit account details)
+- `/Cabinet`
+- `/Facilities` (Facility search - Initial landing page)
+- `/File`
 - `/Reports` (Future Reports)
 
-### Edit Priviledge User
+## Admin User
 
-- `/Facility/Add` (Add a new Facility)
-- `/Facility/Edit/?` (Edit Facility Details or Delete Facility)
-
-### Admin Priviledge User
-
-- `/Account` (Search for User Account)
-- `/Account/Edit/?` (Edit/Delete User Account)
-- `/DropDown/Edit` (Edit Drop-Down Menu Items, including Adding Cabinets)
-
-### Login Pages
-
-- `/Account/ConfirmEmail`
-- `/Account/SetPassword`
-- `/Account/ForgotPassword`
-- `/Account/ForgotPasswordConfirmation`
-- `/Account/ResetPassword`
-- `/Account/AccessDenied`
-
-### Misc
-
-- `/Error`
+- `/Admin` (Edit lists, cabinets, etc.)
+- `/Facilities/Add` (Add a new facility)
+- `/Facilities/Delete/?` (Delete facility)
+- `/Facilities/Edit/?` (Edit facility details)
+- `/Users` (User search)
+- `/Users/Edit/?` (Edit user roles)

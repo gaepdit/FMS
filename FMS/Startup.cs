@@ -48,7 +48,12 @@ namespace FMS
                 opts.UseSqlServer(connectionString);
             });
 
-            services.AddRazorPages();
+
+            services.AddRazorPages(opts =>
+            {
+                //opts.Conventions.AuthorizeFolder("/Users");
+            });
+
 
             services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
         }
