@@ -1,8 +1,10 @@
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,6 +50,9 @@ namespace FMS
                 opts.UseSqlServer(connectionString);
             });
 
+            // Configure Identity
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>().AddEntityFrameworkStores<FmsDbContext>();
+
 
             services.AddRazorPages(opts =>
             {
@@ -78,6 +83,7 @@ namespace FMS
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => endpoints.MapRazorPages());
