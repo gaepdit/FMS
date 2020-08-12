@@ -1,0 +1,21 @@
+﻿@page
+@model Pages.Account.IndexModel
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<h1>My Account</h1>
+
+<div class="container-fluid bg-light py-3">
+    <p>
+        @Html.DisplayNameFor(m => m.FullName):
+        <b>@Html.DisplayFor(m => m.FullName)</b>
+    </p>
+    <p>
+        @Html.DisplayNameFor(m => m.Email):
+        <b>@Html.DisplayFor(m => m.Email)</b>
+    </p>
+    <p>
+        <a asp-page="Edit" class="btn btn-primary">Edit</a>
+    </p>
+</div>

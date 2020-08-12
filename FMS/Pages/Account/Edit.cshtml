@@ -1,0 +1,35 @@
+﻿@page
+@model Pages.Account.EditModel
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+@{
+    ViewData["Title"] = "Edit My Account";
+}
+
+<h1>Edit My Account</h1>
+
+<div class="container-fluid bg-light py-3">
+    <form method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="GivenName"></label>
+                <input asp-for="GivenName" class="form-control" />
+                <span asp-validation-for="GivenName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Surname"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" disabled>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

@@ -58,7 +58,7 @@ namespace FMS
 
             services.AddRazorPages(opts =>
             {
-                //opts.Conventions.AuthorizeFolder("/Users");
+                //opts.Conventions.AuthorizeFolder("/Account");
             });
 
             services.AddTransient<IUserService, UserService>();
