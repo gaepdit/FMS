@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Pages.Account.IndexModel
 @{
     ViewData["Title"] = "My Account";
@@ -6,16 +6,14 @@
 
 <h1>My Account</h1>
 
-<div class="container-fluid bg-light py-3">
-    <p>
-        @Html.DisplayNameFor(m => m.FullName):
-        <b>@Html.DisplayFor(m => m.FullName)</b>
-    </p>
-    <p>
-        @Html.DisplayNameFor(m => m.Email):
-        <b>@Html.DisplayFor(m => m.Email)</b>
-    </p>
-    <p>
-        <a asp-page="Edit" class="btn btn-primary">Edit</a>
-    </p>
+<div class="container">
+    <div class="row my-3">
+        <div class="mr-2">
+            <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
+        </div>
+        <div>
+            <h2>@Model.FullName <a asp-page="Edit" class="btn btn-outline-primary btn-sm">Edit</a></h2>
+            <p>@Model.Email</p>            
+        </div>
+    </div>
 </div>

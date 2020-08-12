@@ -2,7 +2,6 @@ using FMS.Domain.Entities.Users;
 using FMS.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
@@ -23,6 +22,7 @@ namespace FMS.Pages.Account
         [BindProperty, Required, StringLength(150), Display(Name = "Family Name")]
         public string Surname { get; set; }
 
+        [BindProperty]
         public string Email { get; set; }
 
         public async Task<IActionResult> OnGet()
@@ -46,27 +46,16 @@ namespace FMS.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = await _userService.UpdateCurrentUserAsync(GivenName, Surname);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToPage("Index");
-                }
+                return Page();
             }
 
-            var currentUser = await _userService.GetCurrentUserAsync()
-                ?? new ApplicationUser()
-                {
-                    Id = default,
-                    Email = "example.one@example.com",
-                    GivenName = "Sample",
-                    Surname = "User"
-                };
-            //?? throw new Exception("Current user not found");
-
-            Email = currentUser.Email;
+            var result = await _userService.UpdateCurrentUserAsync(GivenName, Surname);
+            if (result.Succeeded)
+            {
+                return RedirectToPage("Index", new { success = true });
+            }
 
             return Page();
         }

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Pages.Account.EditModel
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
@@ -23,13 +23,17 @@
                 <span asp-validation-for="Surname" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" disabled>
-            </div>
-        </div>
+        @Html.HiddenFor(m => m.Email)
         <button type="submit" class="btn btn-primary">Save Changes</button>
         <a asp-page="Index" class="btn btn-outline-secondary">Cancel</a>
     </form>
+</div>
+
+<div class="clearfix my-3">
+    <div class="mr-2 float-left">
+        <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
+    </div>
+    <p>
+        <em>To edit your account icon, create a <a href="https://gravatar.com">Gravatar</a> account using your email address:</em> @Model.Email
+    </p>
 </div>
