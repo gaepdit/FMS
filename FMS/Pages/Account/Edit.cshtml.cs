@@ -1,8 +1,11 @@
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Account
@@ -24,6 +27,8 @@ namespace FMS.Pages.Account
 
         [BindProperty]
         public string Email { get; set; }
+
+        public IEnumerable<IdentityError> Errors { get; set; }
 
         public async Task<IActionResult> OnGet()
         {
@@ -55,6 +60,11 @@ namespace FMS.Pages.Account
             if (result.Succeeded)
             {
                 return RedirectToPage("Index", new { success = true });
+            }
+
+            foreach (var err in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, err.Description);
             }
 
             return Page();

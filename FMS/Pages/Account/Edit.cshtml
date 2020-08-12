@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model Pages.Account.EditModel
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
@@ -11,6 +11,9 @@
 
 <div class="container-fluid bg-light py-3">
     <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
+            Account update failed:
+        </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="GivenName"></label>
