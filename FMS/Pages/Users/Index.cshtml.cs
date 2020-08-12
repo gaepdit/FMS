@@ -1,19 +1,21 @@
-﻿using FMS.Infrastructure.Contexts;
+﻿using FMS.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Users
 {
     public class IndexModel : PageModel
     {
-        private readonly FmsDbContext _context;
+        private readonly IUserService _userService;
 
-        public IndexModel(FmsDbContext context)
+        public IndexModel(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         public string Name { get; set; }
@@ -24,18 +26,29 @@ namespace FMS.Pages.Users
 
         public void OnGet() { }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            SearchResults = new List<UserSearchResult>
-            {
-                new UserSearchResult{ Id = default, Email = "example.one@example.com", Name = "Sample User" },
-                new UserSearchResult{ Id = default, Email = "example.two@example.net", Name = "Another Sample" }
-            };
+            var users = await _userService.GetUsersAsync(Name, Email);
+
+            SearchResults = users.Select(e =>
+                new UserSearchResult()
+                {
+                    Email = e.Email,
+                    Name = e.SortableFullName,
+                    Id = e.Id
+                }).ToList();
+
+            if (SearchResults == null || SearchResults.Count == 0)
+                SearchResults = new List<UserSearchResult>
+                {
+                    new UserSearchResult{ Id = default, Email = "example.one@example.com", Name = "Sample User" },
+                    new UserSearchResult{ Id = default, Email = "example.two@example.net", Name = "Another Sample" }
+                };
 
             return Page();
         }

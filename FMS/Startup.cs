@@ -1,7 +1,9 @@
 using FMS.Domain.Entities.Users;
+using FMS.Domain.Interfaces;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
+using FMS.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -58,6 +60,8 @@ namespace FMS
             {
                 //opts.Conventions.AuthorizeFolder("/Users");
             });
+
+            services.AddTransient<IUserService, UserService>();
 
 
             services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
