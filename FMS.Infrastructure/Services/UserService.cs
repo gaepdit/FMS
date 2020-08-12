@@ -43,13 +43,18 @@ namespace FMS.Infrastructure.Services
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return IdentityResult.Failed();
+                return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
             }
 
             user.GivenName = givenName;
             user.Surname = surname;
 
             return await _userManager.UpdateAsync(user);
+        }
+
+        public async Task<bool> UserExistsAsync(Guid id)
+        {
+            return await _context.Users.AnyAsync(e => e.Id == id);
         }
 
         public async Task<ApplicationUser> GetUserByIdAsync(Guid id)
@@ -62,7 +67,7 @@ namespace FMS.Infrastructure.Services
             var user = await GetUserByIdAsync(id);
             if (user == null)
             {
-                return IdentityResult.Failed();
+                return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
             }
 
             user.GivenName = givenName;

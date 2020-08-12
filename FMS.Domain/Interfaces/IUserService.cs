@@ -10,8 +10,11 @@ namespace FMS.Domain.Interfaces
     {
         public Task<ApplicationUser> GetCurrentUserAsync();
         public Task<IdentityResult> UpdateCurrentUserAsync(string givenName, string surname);
+        
+        public Task<bool> UserExistsAsync(Guid id);
         public Task<ApplicationUser> GetUserByIdAsync(Guid id);
         public Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string surname);
+
         public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter);
     }
 }
