@@ -18,8 +18,9 @@ namespace FMS.Pages.Account
         public string Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
+        public bool ShowSuccessMessage { get; set; } = false;
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(bool? success)
         {
             var currentUser = await _userService.GetCurrentUserAsync()
                 ?? new ApplicationUser()
@@ -34,6 +35,8 @@ namespace FMS.Pages.Account
             Id = currentUser.Id.ToString();
             FullName = currentUser.FullName;
             Email = currentUser.Email;
+
+            if (success.HasValue && success.Value) ShowSuccessMessage = true;
 
             return Page();
         }

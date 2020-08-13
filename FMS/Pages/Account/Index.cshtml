@@ -6,6 +6,13 @@
 
 <h1>My Account</h1>
 
+@if (Model.ShowSuccessMessage)
+{
+    <div class="alert alert-success" role="alert">
+        Account successfully updated.
+    </div>
+}
+
 <div class="container">
     <div class="row my-3">
         <div class="mr-2">
@@ -13,7 +20,7 @@
         </div>
         <div>
             <h2>@Model.FullName <a asp-page="Edit" class="btn btn-outline-primary btn-sm">Edit</a></h2>
-            <p>@Model.Email</p>            
+            <p>@Model.Email</p>
         </div>
     </div>
 </div>

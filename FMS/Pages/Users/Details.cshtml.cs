@@ -18,8 +18,9 @@ namespace FMS.Pages.Users
         public string Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
+        public bool ShowSuccessMessage { get; set; } = false;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id, bool? success)
         {
             if (id == null)
             {
@@ -43,6 +44,8 @@ namespace FMS.Pages.Users
             Id = user.Id.ToString();
             FullName = user.FullName;
             Email = user.Email;
+
+            if (success.HasValue && success.Value) ShowSuccessMessage = true;
 
             return Page();
         }
