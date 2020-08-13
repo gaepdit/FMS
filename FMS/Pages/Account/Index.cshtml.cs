@@ -23,9 +23,10 @@ namespace FMS.Pages.Account
         public async Task<IActionResult> OnGet(bool? success)
         {
             var currentUser = await _userService.GetCurrentUserAsync()
+                // TODO: remove in production
                 ?? new ApplicationUser()
                 {
-                    Id = default,
+                Id = default,
                     Email = "example.one@example.com",
                     GivenName = "Sample",
                     Surname = "User"

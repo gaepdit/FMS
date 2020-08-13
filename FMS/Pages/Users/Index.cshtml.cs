@@ -43,6 +43,7 @@ namespace FMS.Pages.Users
                     Id = e.Id
                 }).ToList();
 
+            // TODO: remove in production
             if (SearchResults == null || SearchResults.Count == 0)
                 SearchResults = new List<UserSearchResult>
                 {

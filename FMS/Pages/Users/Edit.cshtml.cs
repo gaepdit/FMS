@@ -41,6 +41,7 @@ namespace FMS.Pages.Users
             var user = await _userService.GetUserByIdAsync(id.Value);
             if (user == null)
             {
+                // TODO: remove in production
                 //return NotFound();
                 user = new Domain.Entities.Users.ApplicationUser()
                 {
@@ -74,6 +75,7 @@ namespace FMS.Pages.Users
 
             if (!await _userService.UserExistsAsync(Id))
             {
+                // TODO: remove in production
                 //return NotFound();
             }
 

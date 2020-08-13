@@ -31,6 +31,7 @@ namespace FMS.Pages.Users
 
             if (user == null)
             {
+                // TODO: remove in production
                 //return NotFound();
                 user = new Domain.Entities.Users.ApplicationUser()
                 {
