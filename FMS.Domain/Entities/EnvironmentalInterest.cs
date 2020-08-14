@@ -11,5 +11,9 @@ namespace FMS.Domain.Entities
 
         public List<BudgetCode> BudgetCodes { get; set; }
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -28,5 +28,10 @@ namespace FMS.Domain.Entities
         // Retention Schedule Number DDDD-DDDD
         [Display(Name = "Retention Schedule Number")]
         public string RetentionSchedule { get; set; }
+
+        public override string ToString()
+        {
+            return BoxNumber;
+        }
     }
 }

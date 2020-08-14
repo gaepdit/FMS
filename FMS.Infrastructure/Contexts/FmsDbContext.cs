@@ -8,7 +8,8 @@ namespace FMS.Infrastructure.Contexts
     public class FmsDbContext : DbContext
     {
 
-        public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) => options = new DbContextOptionsBuilder<FmsDbContext>().EnableSensitiveDataLogging(true).Options;
+        public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) { }
+            //=> options = new DbContextOptionsBuilder<FmsDbContext>().EnableSensitiveDataLogging(true).Options;
         public DbSet<BudgetCode> BudgetCodes { get; set; }
         public DbSet<ComplianceOfficer> ComplianceOfficers { get; set; }
         public DbSet<County> Counties { get; set; }

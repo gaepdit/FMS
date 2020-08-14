@@ -8,7 +8,7 @@ namespace FMS.Domain.Entities
     public class Facility : BaseActiveModel
     {
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
-        [Display(Name = "Facilty Number")]
+        [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
         // File label and Cabinet where this Facility is located
@@ -52,17 +52,22 @@ namespace FMS.Domain.Entities
 
         [Display(Name = "Zip Code")]
         [StringLength(10)]
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
 
         // site Coordinates
-        public double Latitude { get; set; }
+        public string Latitude { get; set; }
 
-        public double Longitude { get; set; }
+        public string Longitude { get; set; }
 
         // County for use to simplify queries, ease searching, etc.
         public County County { get; set; }
 
         // List of retention records for this Facility File
         public List<RetentionRecord> RetentionRecords { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

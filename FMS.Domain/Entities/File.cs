@@ -15,5 +15,10 @@ namespace FMS.Domain.Entities
         public List<FileCabinet> FileCabinets { get; set; }
 
         public List<Facility> Facilities { get; set; }
+
+        public override string ToString()
+        {
+            return FileLabel;
+        }
     }
 }

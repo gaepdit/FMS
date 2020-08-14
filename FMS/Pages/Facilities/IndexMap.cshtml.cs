@@ -36,7 +36,7 @@ namespace FMS.Pages.Facilities
         //Facility Object
         public Facility Facility { get; set; }
 
-        public IEnumerable<Facility> Facilities { get; private set; }
+        public IEnumerable<Facility> Facilities { get; set; }
 
         public IndexMapModel(
             ILogger<IndexModel> logger,
@@ -46,17 +46,37 @@ namespace FMS.Pages.Facilities
             _context = context;
         }
 
+        //public void OnGet(Guid guid, bool Active = false, bool Result = false, bool Map = false)
+        //{
+        //    if (guid != _nullguid)
+        //    {
+        //        Facilities = new Facility[] { };
+        //        Facilities = _context.Facilities;
+        //    }
+        //    //if (guid != _nullguid)
+        //    //{
+        //    //    Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == guid);
+        //    //    Facilities = new Facility[] { Facility };
+        //    //}
+
+        //    ActiveOnly = Active;
+        //    ShowResults = Result;
+        //    ShowMap = Map;
+        //    TestGuid = guid;
+        //    //return Page();
+        //}
+
         public async Task<IActionResult> OnGetAsync(Guid guid, bool Active = false, bool Result = false, bool Map = false)
         {
+            if (guid != _nullguid)
+            {
+                Facilities = _context.Facilities;
+            }
             //if (guid != _nullguid)
             //{
             //    Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == guid);
+            //    Facilities = new Facility[] { Facility };
             //}
-            if (guid != _nullguid)
-            {
-                Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == guid);
-                Facilities = new Facility[] { Facility };
-            }
 
             ActiveOnly = Active;
             ShowResults = Result;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS.Pages.File
+namespace FMS.Pages.Files
 {
     public class IndexModel : PageModel
     {

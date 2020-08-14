@@ -22,6 +22,10 @@ namespace FMS.Domain.Entities
         [Display(Name = "Ending Sequence Number")]
         public int EndSequence { get; set; }
 
+        public override string ToString()
+        {
+            return Name;
+        }
         // Collection of Files in Cabinet go here if necessary
     }
 }

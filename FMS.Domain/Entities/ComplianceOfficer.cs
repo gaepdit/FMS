@@ -9,5 +9,10 @@ namespace FMS.Domain.Entities
         public string Name { get; set; }
 
         public OrganizationalUnit Unit { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

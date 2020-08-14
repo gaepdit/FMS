@@ -10,5 +10,10 @@ namespace FMS.Domain.Entities
         public string Name { get; set; }
 
         public List<ComplianceOfficer> ComplianceOfficers { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

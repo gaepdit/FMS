@@ -9,5 +9,10 @@ namespace FMS.Domain.Entities
         public string Status { get; set; }
 
         public EnvironmentalInterest EnvironmentalInterest { get; set; }
+
+        public override string ToString()
+        {
+            return Status;
+        }
     }
 }

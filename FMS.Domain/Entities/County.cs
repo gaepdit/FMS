@@ -10,5 +10,10 @@ namespace FMS.Domain.Entities
         [Display(Name = "County")]
         [StringLength(20)]
         public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
