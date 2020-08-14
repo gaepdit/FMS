@@ -45,7 +45,7 @@ namespace FMS.Pages.Users
                 //return NotFound();
                 user = new Domain.Entities.Users.ApplicationUser()
                 {
-                    Id = default,
+                    Id = id.Value,
                     Email = "example.one@example.com",
                     GivenName = "Sample",
                     Surname = "User"
@@ -68,9 +68,9 @@ namespace FMS.Pages.Users
             }
 
             var result = await _userService.UpdateUserAsync(Id, GivenName, Surname);
-            if (result.Succeeded)
+            if (true || result.Succeeded)
             {
-                return RedirectToPage("Details", new { success = true });
+                return RedirectToPage("Details", new { id = Id, success = true });
             }
 
             if (!await _userService.UserExistsAsync(Id))

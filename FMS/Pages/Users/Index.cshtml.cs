@@ -47,8 +47,8 @@ namespace FMS.Pages.Users
             if (SearchResults == null || SearchResults.Count == 0)
                 SearchResults = new List<UserSearchResult>
                 {
-                    new UserSearchResult{ Id = default, Email = "example.one@example.com", Name = "Sample User" },
-                    new UserSearchResult{ Id = default, Email = "example.two@example.net", Name = "Another Sample" }
+                    new UserSearchResult{ Id = new Guid("06bca04c-19bb-4c41-b554-e57a56a2c6b7"), Email = "example.one@example.com", Name = "Sample User" },
+                    new UserSearchResult{ Id = new Guid("43a21a8a-1fc6-4348-9004-e1aec42392b7"), Email = "example.two@example.net", Name = "Another Sample" }
                 };
 
             return Page();

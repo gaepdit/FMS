@@ -35,7 +35,7 @@ namespace FMS.Pages.Users
                 //return NotFound();
                 user = new Domain.Entities.Users.ApplicationUser()
                 {
-                    Id = default,
+                    Id = id.Value,
                     Email = "example.one@example.com",
                     GivenName = "Sample",
                     Surname = "User"
