@@ -9,12 +9,16 @@ using System;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
 using System.Linq;
+using FMS.Domain.Repositories;
+using FMS.Domain.Dto;
 
 namespace FMS.Pages.Facilities
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+
+        private readonly IFacilityRepository _repository;
 
         private readonly FmsDbContext _context;
 
@@ -39,24 +43,17 @@ namespace FMS.Pages.Facilities
 
         public IndexModel(
             ILogger<IndexModel> logger,
+            IFacilityRepository repository,
             FmsDbContext context)
         {
             _logger = logger;
+            _repository = repository;
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid guid, bool Active = false, bool Result = false)
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (guid != _nullguid)
-            {
-                Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == guid);
-                Facilities = new Facility[] { Facility };
-            }
-
-            ActiveOnly = Active;
-            ShowResults = Result;
-            PopulateSelects();
-
+            await PopulateSelectsAsync();
             return Page();
         }
 
@@ -66,18 +63,25 @@ namespace FMS.Pages.Facilities
             TestGuid = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0");
             // this is where the entity search will go
 
-            //Facilities = _context.Facilities;   //.FirstOrDefaultAsync(m => m.Id == TestGuid);
-            //Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == TestGuid);
-            ShowResults = true;
+            Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == TestGuid);
+            Facilities = new List<Facility> { Facility };
 
-            string url = "/Facilities/Index";
-            return RedirectToPage(url, new { guid = TestGuid, Active = ActiveOnly, Result = ShowResults });
+            // Change to use Facility DTO instead of domain entity
+            // Populate spec from Search fields or add Spec property to this page and bind fields directly to it.
+            var spec = new FacilitySpec() { Active = true };
+            var FacilityList = await _repository.GetFacilityListAsync(spec);
+
+            ShowResults = true;
+            ActiveOnly = true;
+
+            await PopulateSelectsAsync();
+            return Page();
         }
 
-        private void PopulateSelects()
+        private async Task PopulateSelectsAsync()
         {
-            Counties = _context.Counties;
-            BudgetCodes = _context.BudgetCodes;
+            Counties = await _context.Counties.ToListAsync();
+            BudgetCodes = await _context.BudgetCodes.ToListAsync();
         }
     }
 }

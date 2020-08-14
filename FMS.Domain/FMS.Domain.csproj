@@ -6,13 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Repositories\**" />
     <Compile Remove="Utils\**" />
     <Compile Remove="Validation\**" />
-    <EmbeddedResource Remove="Repositories\**" />
     <EmbeddedResource Remove="Utils\**" />
     <EmbeddedResource Remove="Validation\**" />
-    <None Remove="Repositories\**" />
     <None Remove="Utils\**" />
     <None Remove="Validation\**" />
   </ItemGroup>

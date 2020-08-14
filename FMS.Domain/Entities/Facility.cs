@@ -60,7 +60,8 @@ namespace FMS.Domain.Entities
         public string Longitude { get; set; }
 
         // County for use to simplify queries, ease searching, etc.
-        public County County { get; set; }
+        public int CountyId { get; set; }
+        public virtual County County { get; set; }
 
         // List of retention records for this Facility File
         public List<RetentionRecord> RetentionRecords { get; set; }

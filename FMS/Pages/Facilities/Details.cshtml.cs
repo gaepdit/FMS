@@ -1,30 +1,18 @@
-﻿using FMS.Domain.Entities;
-using FMS.Infrastructure.Contexts;
+using FMS.Domain.Dto;
+using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Facilities
 {
     public class DetailsModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IFacilityRepository _repository;
+        public DetailsModel(IFacilityRepository repository) => _repository = repository;
 
-        private readonly FmsDbContext _context;
-
-        public DetailsModel(
-            ILogger<IndexModel> logger,
-            FmsDbContext context)
-        {
-            _logger = logger;
-            _context = context;
-        }
-
-        public Facility Facility { get; set; }
+        public FacilityDetailDto FacilityDetail { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -33,12 +21,13 @@ namespace FMS.Pages.Facilities
                 return NotFound();
             }
 
-            Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == id);
+            FacilityDetail = await _repository.GetFacilityAsync(id.Value);
 
-            if (Facility == null)
+            if (FacilityDetail == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
     }

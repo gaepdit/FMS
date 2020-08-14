@@ -1,14 +1,12 @@
+using FMS.Domain.Repositories;
+using FMS.Infrastructure.Contexts;
+using FMS.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using FMS.Infrastructure;
-using System.Text.Json;
-using System.Collections;
-using Microsoft.AspNetCore.Http;
-using FMS.Infrastructure.Contexts;
 
 namespace FMS
 {
@@ -28,6 +26,8 @@ namespace FMS
             //services.AddControllers();
             services.AddRazorPages();
             //services.AddTransient<JsonSearchService>();
+
+            services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
