@@ -49,9 +49,20 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateFacilityAsync(Guid id, FacilityEditDto facility)
+        public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
-            throw new NotImplementedException();
+            var facility = await _context.Facilities.FindAsync(id);
+            if (facility == null)
+            {
+                throw new ArgumentException("Facility ID not found", nameof(id));
+            }
+
+            facility.Active = facilityUpdates.Active;
+            facility.CountyId = facilityUpdates.CountyId;
+            facility.FacilityNumber = facilityUpdates.FacilityNumber;
+            facility.Name = facilityUpdates.Name;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

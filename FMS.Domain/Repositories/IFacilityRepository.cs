@@ -14,6 +14,6 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilitySpec spec);
 
         Task<bool> CreateFacilityAsync(FacilityCreateDto facility);
-        Task<bool> UpdateFacilityAsync(Guid id, FacilityEditDto facility);
+        Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates);
     }
 }

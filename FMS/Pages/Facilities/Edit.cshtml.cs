@@ -1,11 +1,12 @@
-﻿using FMS.Domain.Entities;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
@@ -13,131 +14,76 @@ namespace FMS.Pages.Facilities
     public class EditModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly IFacilityRepository _repository;
 
+        // TODO: Remove _context after moving data access to repositories
         private readonly FmsDbContext _context;
 
-        // For Dev
-        private readonly Guid _nullguid = new Guid("00000000-0000-0000-0000-000000000000");
+        [BindProperty]
+        public FacilityEditDto Facility { get; set; }
 
         [BindProperty]
-        public Guid FormGuid { get; set; }
+        public Guid Id { get; set; }
 
-        [BindProperty]
-        public Facility Facility { get; set; }
+        // TODO: Move all these properties (as needed) to the Edit DTO:
 
-        [BindProperty]
-        public string FileID { get; set; }
+        //public string FileID { get; set; }
+        //public string FacilityID { get; set; }
+        //public string FacilityType { get; set; }
+        //public string FacilityStatus { get; set; }
+        //public string OrganizationalUnit { get; set; }
+        //public bool FacilityActive { get; set; } = true;
+        //public string FacilityName { get; set; }
+        //public string EnvironnmentalInterest { get; set; }
+        //public string ComplianceOfficer { get; set; }
+        //public string BudgetCode { get; set; }
+        //public string Location { get; set; }
+        //public string Street { get; set; }
+        //public string City { get; set; }
+        //public string County { get; set; }
+        //public string State { get; set; }
+        //public string ZipCode { get; set; }
+        //public string Latitude { get; set; }
+        //public string Longitude { get; set; }
 
-        [BindProperty]
-        public string FacilityID { get; set; }
+        public SelectList Counties { get; private set; }
 
-        [BindProperty]
-        public string FacilityType { get; set; }
+        // TODO: Restore these after the DTOs are fully built:
 
-        [BindProperty]
-        public string FacilityStatus { get; set; }
-
-        [BindProperty]
-        public string OrganizationalUnit { get; set; }
-
-        [BindProperty]
-        public bool FacilityActive { get; set; } = true;
-
-        [BindProperty]
-        public string FacilityName { get; set; }
-
-        [BindProperty]
-        public string EnvironnmentalInterest { get; set; }
-
-        [BindProperty]
-        public string ComplianceOfficer { get; set; }
-
-        [BindProperty]
-        public string BudgetCode { get; set; }
-
-        [BindProperty]
-        public string Location { get; set; }
-
-        [BindProperty]
-        public string Street { get; set; }
-
-        [BindProperty]
-        public string City { get; set; }
-
-        [BindProperty]
-        public string County { get; set; }
-
-        [BindProperty]
-        public string State { get; set; }
-
-        [BindProperty]
-        public string ZipCode { get; set; }
-
-        [BindProperty]
-        public string Latitude { get; set; }
-
-        [BindProperty]
-        public string Longitude { get; set; }
-
-        public IEnumerable<County> Counties { get; private set; }
-
-        public IEnumerable<BudgetCode> BudgetCodes { get; private set; }
-
-        public IEnumerable<EnvironmentalInterest> EnvironmentalInterests { get; set; }
-
-        public IEnumerable<ComplianceOfficer> ComplianceOfficers { get; set; }
-
-        public IEnumerable<FacilityType> FacilityTypes { get; set; }
-
-        public IEnumerable<FacilityStatus> FacilityStatuses { get; set; }
-
-        public IEnumerable<FileCabinet> FileCabinets { get; set; }
-
-        public IEnumerable<OrganizationalUnit> OrganizationalUnits { get; set; }
+        //public IEnumerable<BudgetCode> BudgetCodes { get; private set; }
+        //public IEnumerable<EnvironmentalInterest> EnvironmentalInterests { get; set; }
+        //public IEnumerable<ComplianceOfficer> ComplianceOfficers { get; set; }
+        //public IEnumerable<FacilityType> FacilityTypes { get; set; }
+        //public IEnumerable<FacilityStatus> FacilityStatuses { get; set; }
+        //public IEnumerable<FileCabinet> FileCabinets { get; set; }
+        //public IEnumerable<OrganizationalUnit> OrganizationalUnits { get; set; }
 
         public EditModel(
             ILogger<IndexModel> logger,
+            IFacilityRepository repository,
             FmsDbContext context)
         {
             _logger = logger;
+            _repository = repository;
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid Id)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            if (Id == null)
+            if (id == null)
             {
-                throw new ArgumentNullException(nameof(Id));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            if (Id != _nullguid)
-            {
-                Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == Id);
-            }
-
-            // set hidden form value for Id
-            FormGuid = Id;
+            Id = id;
+            Facility = new FacilityEditDto(await _repository.GetFacilityAsync(id));
 
             if (Facility == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Facility.Id = FormGuid;
-                Facility.BudgetCode = new BudgetCode { };
-                Facility.ComplianceOfficer = new ComplianceOfficer { };
-                Facility.County = new County { };
-                Facility.EnvironmentalInterest = new EnvironmentalInterest { };
-                Facility.FacilityStatus = new FacilityStatus { };
-                Facility.FacilityType = new FacilityType { };
-                Facility.File = new File { };
-                Facility.OrganizationalUnit = new OrganizationalUnit { };
-                Facility.RetentionRecords = new List<RetentionRecord> { };
-            }
 
-            PopulateSelects();
-
+            await PopulateSelectsAsync();
             return Page();
         }
 
@@ -145,48 +91,46 @@ namespace FMS.Pages.Facilities
         {
             if (!ModelState.IsValid)
             {
+                await PopulateSelectsAsync();
                 return Page();
             }
 
-            // populate Facility values
-            // "Name" values will be used to search for correct DTO object
-            Facility.Id = FormGuid;
-            Facility.BudgetCode = new BudgetCode { Name = BudgetCode };
-            Facility.ComplianceOfficer = new ComplianceOfficer { Name = ComplianceOfficer }; 
-            Facility.County = new County { Name = County }; 
-            Facility.EnvironmentalInterest = new EnvironmentalInterest { Name = EnvironnmentalInterest };
-            Facility.OrganizationalUnit = new OrganizationalUnit { Name = OrganizationalUnit };
-            Facility.FacilityStatus = new FacilityStatus { Status = "Active" };
-            Facility.FacilityType = new FacilityType { Name = FacilityType };
-            Facility.File = new File { FileLabel = FileID };
-            Facility.FacilityNumber = FacilityID;
-            Facility.Name = FacilityName;
-            Facility.Location = Location;
-            Facility.Address = Street;
-            Facility.City = City;
-            Facility.State = State;
-            Facility.PostalCode = ZipCode;
-            Facility.Latitude = Latitude;
-            Facility.Longitude = Longitude;
-            Facility.RetentionRecords = new List<RetentionRecord> { };
+            // TODO: If editing facility number, make sure the new number doesn't already exist
+            // before trying to save.
+            // Alternatively, prohibit editing facility number on this page, and add a separate
+            // page to edit facility number.
 
-            PopulateSelects();
+            try
+            {
+                await _repository.UpdateFacilityAsync(Id, Facility);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await _repository.FacilityExistsAsync(Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            //SetSelected();
-
-            string url = "/Facilities/EditConfirm";
-            return RedirectToPage(url, Facility);   //new { Facility = Facility }
+            return RedirectToPage("Details", new { id = Id, success = true });
         }
 
-        private void PopulateSelects()
+        private async Task PopulateSelectsAsync()
         {
-            Counties = _context.Counties;
-            BudgetCodes = _context.BudgetCodes;
-            EnvironmentalInterests = _context.EnvironmentalInterests;
-            ComplianceOfficers = _context.ComplianceOfficers;
-            FacilityTypes = _context.FacilityTypes;
-            FacilityStatuses = _context.FacilityStatuses;
-            OrganizationalUnits = _context.OrganizationalUnits;
+            Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
+
+            // TODO: add await & .ToListAsync() to each of these
+
+            //BudgetCodes = _context.BudgetCodes;
+            //EnvironmentalInterests = _context.EnvironmentalInterests;
+            //ComplianceOfficers = _context.ComplianceOfficers;
+            //FacilityTypes = _context.FacilityTypes;
+            //FacilityStatuses = _context.FacilityStatuses;
+            //OrganizationalUnits = _context.OrganizationalUnits;
         }
     }
 }

@@ -1,4 +1,4 @@
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,8 +13,9 @@ namespace FMS.Pages.Facilities
         public DetailsModel(IFacilityRepository repository) => _repository = repository;
 
         public FacilityDetailDto FacilityDetail { get; set; }
+        public bool ShowSuccessMessage { get; set; } = false;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id, bool? success)
         {
             if (id == null)
             {
@@ -28,6 +29,7 @@ namespace FMS.Pages.Facilities
                 return NotFound();
             }
 
+            if (success.HasValue && success.Value) ShowSuccessMessage = true;
             return Page();
         }
     }
