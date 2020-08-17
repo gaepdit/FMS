@@ -17,14 +17,14 @@ namespace FMS.Infrastructure.SeedData
                     Id = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
                     Active = true,
                     FacilityNumber = "BRF1211825",
-                    File = new File{ },   //FileLabel = "243-0001"
-                    EnvironmentalInterest = new EnvironmentalInterest{ },   //RCRA
-                    FacilityType = new FacilityType{ },   //gen
-                    OrganizationalUnit = new OrganizationalUnit{ },   //Org Unit
-                    BudgetCode = new BudgetCode{ },   //HWRCRA
+                    File = null, // new File{ },   //FileLabel = "243-0001"
+                    EnvironmentalInterest = null, // new EnvironmentalInterest{ },   //RCRA
+                    FacilityType = null, // new  FacilityType{ },   //gen
+                    OrganizationalUnit = null, // new  OrganizationalUnit{ },   //Org Unit
+                    BudgetCode = null, // new  BudgetCode{ },   //HWRCRA
                     Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",
-                    ComplianceOfficer = new ComplianceOfficer{ },   //00360513
-                    FacilityStatus = new FacilityStatus{ },   //NON-RCRA
+                    ComplianceOfficer = null, // new  ComplianceOfficer{ },   //00360513
+                    FacilityStatus = null, // new  FacilityStatus{ },   //NON-RCRA
                     Location = "Description of Location",
                     Address = "102 THREE BRANCHES DR.",
                     City = "WOODSTOCK",
@@ -33,21 +33,21 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = "34.114309",
                     Longitude = "-84.470057",
                     CountyId =  243,   //Id = 243, Name = "Cherokee"
-                    RetentionRecords = new List<RetentionRecord>{ }   //0
+                    RetentionRecords = null, // new  List<RetentionRecord>{ }   //0
                 },
                 new Facility
                 {
                     Id = new Guid("AB44F9C7-C2EC-47BC-8886-60D72B5BD5EB"),
                     Active = true,
                     FacilityNumber = "BRF3191858",
-                    File = new File{ },   //243-0084
-                    EnvironmentalInterest = new EnvironmentalInterest{ },   //BROWN
-                    FacilityType = new FacilityType{ },   //BROWN
-                    OrganizationalUnit = new OrganizationalUnit{ },   //Org Unit
-                    BudgetCode = new BudgetCode{ },   //HWBRVRP
+                    File = null, // new  File{ },   //243-0084
+                    EnvironmentalInterest = null, // new  EnvironmentalInterest{ },   //BROWN
+                    FacilityType = null, // new  FacilityType{ },   //BROWN
+                    OrganizationalUnit = null, // new  OrganizationalUnit{ },   //Org Unit
+                    BudgetCode = null, // new  BudgetCode{ },   //HWBRVRP
                     Name = "TOONIGH VILLAGE BUILDING C",
-                    ComplianceOfficer = new ComplianceOfficer{ },   //01049142
-                    FacilityStatus = new FacilityStatus{ },   //ACTIVE
+                    ComplianceOfficer = null, // new  ComplianceOfficer{ },   //01049142
+                    FacilityStatus = null, // new  FacilityStatus{ },   //ACTIVE
                     Location = "Some location description here",
                     Address = "5335 HOLLY SPRINGS PARKWAY",
                     City = "WOODSTOCK",
@@ -55,8 +55,8 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = "30188",
                     Latitude = "34.1416484",
                     Longitude = "-84.5047357",
-                    County = new County{ },  // CHEROKEE
-                    RetentionRecords = new List<RetentionRecord>{ }   //1
+                    CountyId = 261, // new County{ },  // CHEROKEE
+                    RetentionRecords = null, // new  List<RetentionRecord>{ }   //1
                 },
                 new Facility
                 {
@@ -78,7 +78,7 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = "30188",
                     Latitude = "34.084926",
                     Longitude = "-84.521794",
-                    County = { },  // CHEROKEE
+                    CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
                 new Facility
@@ -101,7 +101,7 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = "30188",
                     Latitude = "34.100926",
                     Longitude = "-84.516605",
-                    County = { },  // CHEROKEE
+                    CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
                 new Facility
@@ -124,7 +124,7 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = "30188",
                     Latitude = "34.086774",
                     Longitude = "-84.485922",
-                    County = { },   // CHEROKEE
+                    CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }  //1
                 },
                 new Facility
@@ -147,7 +147,7 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = "30188",
                     Latitude = "34.0887669",
                     Longitude = "-84.4851441",
-                    County = { },   //CHEROKEE
+                    CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
                 new Facility
@@ -170,7 +170,7 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = "30188",
                     Latitude = "34.0877275",
                     Longitude = "-84.4858512",
-                    County = { },   //CHEROKEE
+                    CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
                 new Facility
@@ -193,7 +193,7 @@ namespace FMS.Infrastructure.SeedData
                     PostalCode = "30188",
                     Latitude = "34.141353",
                     Longitude = "-84.505629",
-                    County = { },   //CHEROKEE
+                    CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 }
             }.ToArray();

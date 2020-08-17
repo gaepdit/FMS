@@ -1,0 +1,25 @@
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
+using FMS.Infrastructure.SeedData;
+using System;
+
+namespace FMS.Infrastructure.Tests.DataHelpers
+{
+    internal static class FacilityDataHelpers
+    {
+        public static Facility[] Facilities = DevSeedData.GetFacilities();
+        public static County[] Counties = ProdSeedData.GetCounties();
+
+        public static FacilityDetailDto GetFacilityDetail(Guid id)
+        {
+            var facility = Array.Find(Facilities, e => e.Id == id);
+
+            return new FacilityDetailDto(facility)
+            {
+                County = GetCounty(facility.CountyId)
+            };
+        }
+
+        public static County GetCounty(int id) => Array.Find(Counties, e => e.Id == id);
+    }
+}

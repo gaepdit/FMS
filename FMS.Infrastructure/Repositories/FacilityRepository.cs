@@ -1,4 +1,4 @@
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +25,11 @@ namespace FMS.Infrastructure.Repositories
             var facility = await _context.Facilities.AsNoTracking()
                 .Include(e => e.County)
                 .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (facility == null)
+            {
+                return null;
+            }
 
             return new FacilityDetailDto(facility);
         }
