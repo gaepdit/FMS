@@ -8,7 +8,6 @@ namespace FMS.Infrastructure.SeedData
         {
             context.BudgetCodes.AddRange(GetBudgetCodes());
             context.ComplianceOfficers.AddRange(GetComplianceOfficers());
-            context.Counties.AddRange(GetCounties());
             context.EnvironmentalInterests.AddRange(GetEnvironmentalInterests());
             context.Facilities.AddRange(GetFacilities());
             context.FacilityStatuses.AddRange(GetFacilityStatuses());
