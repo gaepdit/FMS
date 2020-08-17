@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IFacilityRepository
+    public interface IFacilityRepository : IDisposable
     {
         Task<bool> FacilityExistsAsync(Guid id);
         Task<FacilityDetailDto> GetFacilityAsync(Guid id);
