@@ -16,9 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B456828C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Tests", "tests\FMS.Tests\FMS.Tests.csproj", "{F32C87EE-4FD0-4A13-87B3-50D7A90B959A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMS.Domain.Tests", "tests\FMS.Domain.Tests\FMS.Domain.Tests.csproj", "{EAF76D32-9E34-4B5B-A16B-79DCA21A701E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Domain.Tests", "tests\FMS.Domain.Tests\FMS.Domain.Tests.csproj", "{EAF76D32-9E34-4B5B-A16B-79DCA21A701E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMS.Infrastructure.Tests", "tests\FMS.Infrastructure.Tests\FMS.Infrastructure.Tests.csproj", "{700C1091-2F42-43FA-9342-EA56C520C6A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Infrastructure.Tests", "tests\FMS.Infrastructure.Tests\FMS.Infrastructure.Tests.csproj", "{700C1091-2F42-43FA-9342-EA56C520C6A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHelpers", "tests\TestHelpers\TestHelpers.csproj", "{3F455AB9-E598-4AE5-A326-DA840B532E33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{700C1091-2F42-43FA-9342-EA56C520C6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{700C1091-2F42-43FA-9342-EA56C520C6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{700C1091-2F42-43FA-9342-EA56C520C6A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F455AB9-E598-4AE5-A326-DA840B532E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F455AB9-E598-4AE5-A326-DA840B532E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F455AB9-E598-4AE5-A326-DA840B532E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F455AB9-E598-4AE5-A326-DA840B532E33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{F32C87EE-4FD0-4A13-87B3-50D7A90B959A} = {B456828C-98AB-467C-86AC-882FD61691E5}
 		{EAF76D32-9E34-4B5B-A16B-79DCA21A701E} = {B456828C-98AB-467C-86AC-882FD61691E5}
 		{700C1091-2F42-43FA-9342-EA56C520C6A4} = {B456828C-98AB-467C-86AC-882FD61691E5}
+		{3F455AB9-E598-4AE5-A326-DA840B532E33} = {B456828C-98AB-467C-86AC-882FD61691E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E772DD6-32FE-4515-9813-3EDB398508F9}

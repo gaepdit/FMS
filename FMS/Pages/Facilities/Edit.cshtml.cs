@@ -13,7 +13,6 @@ namespace FMS.Pages.Facilities
 {
     public class EditModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
         private readonly IFacilityRepository _repository;
 
         // TODO: Remove _context after moving data access to repositories
@@ -59,24 +58,22 @@ namespace FMS.Pages.Facilities
         //public IEnumerable<OrganizationalUnit> OrganizationalUnits { get; set; }
 
         public EditModel(
-            ILogger<IndexModel> logger,
             IFacilityRepository repository,
             FmsDbContext context)
         {
-            _logger = logger;
             _repository = repository;
             _context = context;
         }
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                return NotFound();
             }
 
-            Id = id;
-            Facility = new FacilityEditDto(await _repository.GetFacilityAsync(id));
+            Id = id.Value;
+            Facility = new FacilityEditDto(await _repository.GetFacilityAsync(id.Value));
 
             if (Facility == null)
             {

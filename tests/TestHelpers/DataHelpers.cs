@@ -3,9 +3,9 @@ using FMS.Domain.Entities;
 using FMS.Infrastructure.SeedData;
 using System;
 
-namespace FMS.Infrastructure.Tests.DataHelpers
+namespace TestHelpers
 {
-    internal static class FacilityDataHelpers
+    public static class DataHelpers
     {
         public static Facility[] Facilities = DevSeedData.GetFacilities();
         public static County[] Counties = ProdSeedData.GetCounties();

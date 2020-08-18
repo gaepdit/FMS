@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EfCore.TestSupport" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FMS.Domain\FMS.Domain.csproj" />
+    <ProjectReference Include="..\..\FMS.Infrastructure\FMS.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,10 +1,9 @@
 using FluentAssertions;
 using FMS.Domain.Dto;
-using FMS.Infrastructure.Tests.DataHelpers;
-using FMS.Infrastructure.Tests.RepositoryHelpers;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -17,15 +16,15 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task ExistingFacilityExists()
         {
-            using var repository = new FacilityRepositoryHelper().GetFacilityRepository();
-            var result = await repository.FacilityExistsAsync(FacilityDataHelpers.Facilities[0].Id);
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var result = await repository.FacilityExistsAsync(DataHelpers.Facilities[0].Id);
             result.ShouldBeTrue();
         }
 
         [Fact]
         public async Task NonexistantFacilityDoesNotExist()
         {
-            using var repository = new FacilityRepositoryHelper().GetFacilityRepository();
+            using var repository = new RepositoryHelper().GetFacilityRepository();
             var result = await repository.FacilityExistsAsync(default);
             result.ShouldBeFalse();
         }
@@ -35,10 +34,10 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetFacilityReturnsCorrectFacility()
         {
-            using var repository = new FacilityRepositoryHelper().GetFacilityRepository();
-            Guid facilityId = FacilityDataHelpers.Facilities[0].Id;
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            Guid facilityId = DataHelpers.Facilities[0].Id;
 
-            var expected = FacilityDataHelpers.GetFacilityDetail(facilityId);
+            var expected = DataHelpers.GetFacilityDetail(facilityId);
             var result = await repository.GetFacilityAsync(facilityId);
 
             result.Should().BeEquivalentTo(expected);
@@ -47,7 +46,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetNonexistantFacilityReturnsNull()
         {
-            using var repository = new FacilityRepositoryHelper().GetFacilityRepository();
+            using var repository = new RepositoryHelper().GetFacilityRepository();
             var result = await repository.GetFacilityAsync(default);
             result.ShouldBeNull();
         }
@@ -57,19 +56,19 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task DefaultFacilityCountReturnsCountOfAll()
         {
-            using var repository = new FacilityRepositoryHelper().GetFacilityRepository();
+            using var repository = new RepositoryHelper().GetFacilityRepository();
             var result = await repository.CountAsync(new FacilitySpec());
-            result.Should().Be(FacilityDataHelpers.Facilities.Length);
+            result.Should().Be(DataHelpers.Facilities.Length);
         }
 
         [Fact]
         public async Task FacilityCountWithSpecReturnsCorrectCount()
         {
-            using var repository = new FacilityRepositoryHelper().GetFacilityRepository();
+            using var repository = new RepositoryHelper().GetFacilityRepository();
             int countyId = 243;
             var spec = new FacilitySpec() { CountyId = countyId };
 
-            var expected = FacilityDataHelpers.Facilities.Count(e => e.CountyId == countyId);
+            var expected = DataHelpers.Facilities.Count(e => e.CountyId == countyId);
             var result = await repository.CountAsync(spec);
 
             result.Should().Be(expected);
@@ -84,13 +83,13 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFacilitySucceeds()
         {
-            var repositoryHelper = new FacilityRepositoryHelper();
+            var repositoryHelper = new RepositoryHelper();
             int newCountyId = 99;
-            Guid facilityId = FacilityDataHelpers.Facilities[0].Id;
+            Guid facilityId = DataHelpers.Facilities[0].Id;
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var facility = FacilityDataHelpers.GetFacilityDetail(facilityId);
+                var facility = DataHelpers.GetFacilityDetail(facilityId);
                 var updates = new FacilityEditDto(facility) { CountyId = newCountyId };
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
@@ -98,8 +97,8 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var expected = FacilityDataHelpers.GetFacilityDetail(facilityId);
-                expected.County = FacilityDataHelpers.GetCounty(newCountyId);
+                var expected = DataHelpers.GetFacilityDetail(facilityId);
+                expected.County = DataHelpers.GetCounty(newCountyId);
 
                 var updatedFacility = await repository.GetFacilityAsync(expected.Id);
 
@@ -110,7 +109,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateNonexistantFacilityThrowsException()
         {
-            using var repository = new FacilityRepositoryHelper().GetFacilityRepository();
+            using var repository = new RepositoryHelper().GetFacilityRepository();
             var updates = new FacilityEditDto() { CountyId = 99 };
 
             Func<Task> action = async () =>

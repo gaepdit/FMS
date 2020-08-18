@@ -4,13 +4,13 @@ using FMS.Infrastructure.SeedData;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
 
-namespace FMS.Infrastructure.Tests.RepositoryHelpers
+namespace TestHelpers
 {
-    internal class FacilityRepositoryHelper
+    public class RepositoryHelper
     {
         private readonly DbContextOptions<FmsDbContext> _options = SqliteInMemory.CreateOptions<FmsDbContext>();
 
-        public FacilityRepositoryHelper()
+        public RepositoryHelper()
         {
             var context = new FmsDbContext(_options);
 
