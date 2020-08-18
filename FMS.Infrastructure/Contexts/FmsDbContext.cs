@@ -1,5 +1,6 @@
 ﻿using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
+using FMS.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
