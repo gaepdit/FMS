@@ -13,6 +13,7 @@ namespace FMS.Domain.Dto
             Name = facility.Name;
             Active = facility.Active;
             County = facility.County;
+            FacilityStatus = facility.FacilityStatus;
         }          
 
         public Guid Id;
@@ -28,5 +29,8 @@ namespace FMS.Domain.Dto
         
         [Display(Name = "County")]
         public County County { get; set; }
+
+        [Display(Name="Facility Status")]
+        public FacilityStatus FacilityStatus { get; set; }
     }
 }

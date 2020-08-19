@@ -24,11 +24,12 @@ namespace FMS.Infrastructure.Repositories
         {
             var facility = await _context.Facilities.AsNoTracking()
                 .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null)
             {
-                return null;
+                //return null;
             }
 
             return new FacilityDetailDto(facility);
@@ -45,6 +46,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
                 .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
                 .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)
+                .Where(e => !spec.FacilityStatusId.Equals(Guid.Empty) || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
         }
@@ -66,6 +68,7 @@ namespace FMS.Infrastructure.Repositories
             facility.CountyId = facilityUpdates.CountyId;
             facility.FacilityNumber = facilityUpdates.FacilityNumber;
             facility.Name = facilityUpdates.Name;
+            facility.FacilityStatusId = facilityUpdates.FacilityStatusId;
 
             await _context.SaveChangesAsync();
         }

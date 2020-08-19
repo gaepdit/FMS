@@ -9,6 +9,7 @@ namespace TestHelpers
     {
         public static Facility[] Facilities = DevSeedData.GetFacilities();
         public static County[] Counties = ProdSeedData.GetCounties();
+        public static FacilityStatus[] FacilityStatuses = DevSeedData.GetFacilityStatuses();
 
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
@@ -16,10 +17,12 @@ namespace TestHelpers
 
             return new FacilityDetailDto(facility)
             {
-                County = GetCounty(facility.CountyId)
+                County = GetCounty(facility.CountyId),
+                FacilityStatus = GetFacilityStatus(facility.FacilityStatusId)
             };
         }
 
         public static County GetCounty(int id) => Array.Find(Counties, e => e.Id == id);
+        public static FacilityStatus GetFacilityStatus(Guid id) => Array.Find(FacilityStatuses, e => e.Id == id);
     }
 }

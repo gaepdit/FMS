@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -11,6 +12,7 @@ namespace FMS.Domain.Dto
             Name = facility.Name;
             Active = facility.Active;
             CountyId = facility.County.Id;
+            FacilityStatusId = facility.FacilityStatus.Id;
         }
 
         [Display(Name = "Facility Number"), Required]
@@ -24,5 +26,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "County"), Required]
         public int CountyId { get; set; }
+
+        [Display(Name = "Facility Status")]
+        public Guid FacilityStatusId { get; set; }
     }
 }

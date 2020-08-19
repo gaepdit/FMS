@@ -24,7 +24,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCode = null, // new  BudgetCode{ },   //HWRCRA
                     Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",
                     ComplianceOfficer = null, // new  ComplianceOfficer{ },   //00360513
-                    FacilityStatus = null, // new  FacilityStatus{ },   //NON-RCRA
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // // new  FacilityStatus{ },   //NON-RCRA
                     Location = "Description of Location",
                     Address = "102 THREE BRANCHES DR.",
                     City = "WOODSTOCK",

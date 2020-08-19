@@ -33,7 +33,8 @@ namespace FMS.Domain.Entities
         // Compliance Officer assigned to this Facility
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
-        public FacilityStatus FacilityStatus { get; set; }
+        public Guid FacilityStatusId { get; set; }
+        public virtual FacilityStatus FacilityStatus { get; set; }
 
         // Location description distinct from mailing address
         [Display(Name = "Location Description")]

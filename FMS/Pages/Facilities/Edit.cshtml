@@ -37,24 +37,27 @@
                 <span asp-validation-for="Facility.Name" class="text-danger"></span>
             </div>
         </div>
-        @*<div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="ComplianceOfficer">Compliance Officer</label>
-                    @Html.DropDownList("ComplianceOfficer", new SelectList(Model.ComplianceOfficers), "Select Compliance Officer...", new { @name = "ComplianceOfficer", @class = "custom-select" })
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="BudgetCode">Budget Code</label>
-                    @Html.DropDownList("BudgetCode", new SelectList(Model.BudgetCodes), "Select Budget Code...", new { @name = "BudgetCode", @class = "custom-select" })
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="EnvironnmentalInterest">Environmental Interest</label>
-                    @Html.DropDownList("EnvironnmentalInterest", new SelectList(Model.EnvironmentalInterests), "Select EI Type...", new { @name = "EnvironnmentalInterest", @class = "custom-select" })
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="FacilityStatus">Facility Status</label>
-                    @Html.DropDownList("FacilityStatus", new SelectList(Model.FacilityStatuses), "Select Facility Status...", new { @name = "FacilityStatus", @class = "custom-select" })
-                </div>
-            </div>*@
+        <div class="form-row">
+            @*<div class="form-group col-md-3">
+            <label for="ComplianceOfficer">Compliance Officer</label>
+            @Html.DropDownList("ComplianceOfficer", new SelectList(Model.ComplianceOfficers), "Select Compliance Officer...", new { @name = "ComplianceOfficer", @class = "custom-select" })
+        </div>
+        <div class="form-group col-md-3">
+            <label for="BudgetCode">Budget Code</label>
+            @Html.DropDownList("BudgetCode", new SelectList(Model.BudgetCodes), "Select Budget Code...", new { @name = "BudgetCode", @class = "custom-select" })
+        </div>
+        <div class="form-group col-md-3">
+            <label for="EnvironnmentalInterest">Environmental Interest</label>
+            @Html.DropDownList("EnvironnmentalInterest", new SelectList(Model.EnvironmentalInterests), "Select EI Type...", new { @name = "EnvironnmentalInterest", @class = "custom-select" })
+        </div>*@
+            <div class="form-group col">
+                <label asp-for="Facility.FacilityStatusId"></label>
+                <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
+                    <option value="">Select Facility Status...</option>
+                </select>
+                <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
+            </div>
+        </div>
         @*<div class="form-row">
                 <div class="form-group col-md-12">
                     <label for="Location">Location Description</label>

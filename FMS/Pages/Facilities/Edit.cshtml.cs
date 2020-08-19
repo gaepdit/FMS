@@ -46,16 +46,19 @@ namespace FMS.Pages.Facilities
         //public string Longitude { get; set; }
 
         public SelectList Counties { get; private set; }
+        public SelectList FacilityStatuses { get; private set; }
 
         // TODO: Restore these after the DTOs are fully built:
 
-        //public IEnumerable<BudgetCode> BudgetCodes { get; private set; }
-        //public IEnumerable<EnvironmentalInterest> EnvironmentalInterests { get; set; }
+        //public SelectList BudgetCodes { get; private set; }
+        //public SelectList EnvironmentalInterests { get; private set; }
+        //public SelectList FacilityTypes { get; private set; }
+        //public SelectList FileCabinets { get; private set; }
+        //public SelectList OrganizationalUnits { get; private set; }
+
+        // todo: Add a name property to COs
+
         //public IEnumerable<ComplianceOfficer> ComplianceOfficers { get; set; }
-        //public IEnumerable<FacilityType> FacilityTypes { get; set; }
-        //public IEnumerable<FacilityStatus> FacilityStatuses { get; set; }
-        //public IEnumerable<FileCabinet> FileCabinets { get; set; }
-        //public IEnumerable<OrganizationalUnit> OrganizationalUnits { get; set; }
 
         public EditModel(
             IFacilityRepository repository,
@@ -120,14 +123,22 @@ namespace FMS.Pages.Facilities
         {
             Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 
-            // TODO: add await & .ToListAsync() to each of these
+            FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
 
-            //BudgetCodes = _context.BudgetCodes;
-            //EnvironmentalInterests = _context.EnvironmentalInterests;
+            //todo: Uncomment as added to DTOs
+
+            //BudgetCodes = new SelectList(await _context.BudgetCodes.ToListAsync(), "Id", "Name");
+
+            //EnvironmentalInterests = new SelectList(await _context.EnvironmentalInterests.ToListAsync(), "Id", "Name");
+
+            //FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Code", "Name");
+
+            //OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
+
+            // TODO: add await & .ToListAsync() to COs. 
+            // need to get a Name property instead of Empl. Id. to Populate DropDown
+
             //ComplianceOfficers = _context.ComplianceOfficers;
-            //FacilityTypes = _context.FacilityTypes;
-            //FacilityStatuses = _context.FacilityStatuses;
-            //OrganizationalUnits = _context.OrganizationalUnits;
         }
     }
 }

@@ -24,5 +24,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Active Site")]
         public bool Active { get; set; } = true;
+
     }
 }
