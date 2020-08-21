@@ -30,8 +30,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.114309,
-                    Longitude = -84.470057,
+                    Latitude = 34.114309m,
+                    Longitude = -84.470057m,
                     CountyId =  243,   //Id = 243, Name = "Cherokee"
                     RetentionRecords = null, // new  List<RetentionRecord>{ }   //0
                 },
@@ -53,8 +53,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.1416484,
-                    Longitude = -84.5047357,
+                    Latitude = 34.1416484m,
+                    Longitude = -84.5047357m,
                     CountyId = 261, // new County{ },  // CHEROKEE
                     RetentionRecords = null, // new  List<RetentionRecord>{ }   //1
                 },
@@ -76,8 +76,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.084926,
-                    Longitude = -84.521794,
+                    Latitude = 34.084926m,
+                    Longitude = -84.521794m,
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
@@ -99,8 +99,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.100926,
-                    Longitude = -84.516605,
+                    Latitude = 34.100926m,
+                    Longitude = -84.516605m,
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
@@ -122,8 +122,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.086774,
-                    Longitude = -84.485922,
+                    Latitude = 34.086774m,
+                    Longitude = -84.485922m,
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }  //1
                 },
@@ -145,8 +145,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.0887669,
-                    Longitude = -84.4851441,
+                    Latitude = 34.0887669m,
+                    Longitude = -84.4851441m,
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
@@ -168,8 +168,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.0877275,
-                    Longitude = -84.4858512,
+                    Latitude = 34.0877275m,
+                    Longitude = -84.4858512m,
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 },
@@ -191,8 +191,8 @@ namespace FMS.Infrastructure.SeedData
                     City = "WOODSTOCK",
                     State = "GA",
                     PostalCode = "30188",
-                    Latitude = 34.141353,
-                    Longitude = -84.505629,
+                    Latitude = 34.141353m,
+                    Longitude = -84.505629m,
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 }

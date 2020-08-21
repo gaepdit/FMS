@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FMS.Domain.Entities
 {
@@ -62,9 +63,11 @@ namespace FMS.Domain.Entities
         public string PostalCode { get; set; }
 
         // site Coordinates
-        public double Latitude { get; set; }
+        [Column(TypeName = "decimal(8, 6)")]
+        public decimal Latitude { get; set; }
 
-        public double Longitude { get; set; }
+        [Column(TypeName = "decimal(9, 6)")]
+        public decimal Longitude { get; set; }
 
         // County for use to simplify queries, ease searching, etc.
         public int CountyId { get; set; }
