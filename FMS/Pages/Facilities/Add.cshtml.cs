@@ -2,52 +2,103 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
+using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace FMS.Pages.Facilities
 {
     public class AddModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IFacilityRepository _repository;
 
+        // TODO: Remove _context after moving data access to repositories
         private readonly FmsDbContext _context;
 
-        public IEnumerable<Facility> Facilities { get; private set; }
+        [BindProperty]
+        public FacilityCreateDto Facility { get; set; }
 
-        public IEnumerable<County> Counties { get; private set; }
+        [BindProperty]
+        public Guid Id { get; set; }
 
-        public IEnumerable<BudgetCode> BudgetCodes { get; private set; }
+        public SelectList Counties { get; private set; }
+        public SelectList FacilityStatuses { get; private set; }
+        public SelectList FacilityTypes { get; private set; }
+        public SelectList BudgetCodes { get; private set; }
+        public SelectList OrganizationalUnits { get; private set; }
+        public SelectList EnvironmentalInterests { get; private set; }
+
+        // todo: Add a name property to COs
+        public SelectList ComplianceOfficers { get; set; }
+
+        // TODO: Restore these after the DTOs are fully built:
+
+        //public SelectList FileCabinets { get; private set; }
 
         public AddModel(
-            ILogger<IndexModel> logger,
+           IFacilityRepository repository,
             FmsDbContext context)
         {
-            _logger = logger;
+            _repository = repository;
             _context = context;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            PopulateSelects();
+            await PopulateSelectsAsync();
+            return Page();
         }
-        public IActionResult OnPost()
+
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                await PopulateSelectsAsync();
                 return Page();
             }
-            PopulateSelects();
-            string url = "/Facilities/Add";
-            return RedirectToPage(url);
+
+
+            try
+            {
+                await _repository.CreateFacilityAsync(Facility);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await _repository.FacilityExistsAsync(Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToPage("Details", new { id = Id, success = true });
         }
-        private void PopulateSelects()
+        private async Task PopulateSelectsAsync()
         {
-            Counties = _context.Counties;
-            BudgetCodes = _context.BudgetCodes;
+            Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
+
+            FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
+
+            FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Id", "Name");
+
+            BudgetCodes = new SelectList(await _context.BudgetCodes.ToListAsync(), "Id", "Name");
+
+            OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
+
+            EnvironmentalInterests = new SelectList(await _context.EnvironmentalInterests.ToListAsync(), "Id", "Name");
+
+            // TODO: add await & .ToListAsync() to COs. 
+            // need to get a Name property instead of Empl. Id. to Populate DropDown
+            ComplianceOfficers = new SelectList(await _context.ComplianceOfficers.ToListAsync(), "Id", "Name");
         }
     }
 }

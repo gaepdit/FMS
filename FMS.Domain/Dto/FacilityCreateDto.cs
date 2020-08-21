@@ -11,6 +11,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Active Facility")]
+        public bool Active { get; set; }
+
         [Display(Name = "County")]
         public int CountyId { get; set; }
 
@@ -43,6 +46,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "City")]
         public string City { get; set; }
+
+        [Display(Name = "State")]
+        public string State { get; set; }
 
         [Display(Name = "Zip Code")]
         public string PostalCode { get; set; }
