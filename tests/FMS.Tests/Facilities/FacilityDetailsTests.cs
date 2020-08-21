@@ -13,11 +13,8 @@ namespace FMS.Tests.Facilities
 {
     public class FacilityDetailsTests
     {
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        [InlineData(null)]
-        public async Task OnGet_PopulatesThePageModel(bool? success)
+        [Fact]
+        public async Task OnGet_PopulatesThePageModel()
         {
             Guid facilityId = DataHelpers.Facilities[0].Id;
             var facility = DataHelpers.GetFacilityDetail(facilityId);
@@ -29,10 +26,10 @@ namespace FMS.Tests.Facilities
 
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(facility.Id, success).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ShowSuccessMessage.Should().Be(success ?? false);
+            pageModel.ShowSuccessMessage.Should().BeFalse();
             pageModel.FacilityDetail.Should().BeEquivalentTo(facility);
         }
 
@@ -42,10 +39,9 @@ namespace FMS.Tests.Facilities
             var mockRepo = new Mock<IFacilityRepository>();
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(default, default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.ShowSuccessMessage.Should().BeFalse();
             pageModel.FacilityDetail.Should().BeNull();
         }
 
@@ -55,10 +51,9 @@ namespace FMS.Tests.Facilities
             var mockRepo = new Mock<IFacilityRepository>();
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(null, null).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.ShowSuccessMessage.Should().BeFalse();
             pageModel.FacilityDetail.Should().BeNull();
         }
     }

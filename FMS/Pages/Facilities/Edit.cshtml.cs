@@ -64,6 +64,9 @@ namespace FMS.Pages.Facilities
 
         //public SelectList FileCabinets { get; private set; }
 
+        [TempData]
+        public bool ShowSuccessMessage { get; set; }
+
         public EditModel(
             IFacilityRepository repository,
             FmsDbContext context)
@@ -125,7 +128,8 @@ namespace FMS.Pages.Facilities
                 }
             }
 
-            return RedirectToPage("Details", new { id = Id, success = true });
+            ShowSuccessMessage = true;
+            return RedirectToPage("Details", new { id = Id });
         }
 
         private async Task PopulateSelectsAsync()

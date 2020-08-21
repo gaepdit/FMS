@@ -4,6 +4,7 @@
     ViewData["Title"] = $"Facility Details: {Model.FacilityDetail.FacilityNumber}";
 }
 <h1 id="details">@ViewData["Title"]</h1>
+<hr />
 
 @if (Model.ShowSuccessMessage)
 {
@@ -11,7 +12,7 @@
         Facility successfully updated.
     </div>
 }
-<hr />
+
 <div class="container-fluid">
     <dl class="row">
         <dt class="col-xl-3">

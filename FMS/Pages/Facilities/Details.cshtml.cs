@@ -13,9 +13,11 @@ namespace FMS.Pages.Facilities
         public DetailsModel(IFacilityRepository repository) => _repository = repository;
 
         public FacilityDetailDto FacilityDetail { get; set; }
-        public bool ShowSuccessMessage { get; set; } = false;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, bool? success)
+        [TempData]
+        public bool ShowSuccessMessage { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
@@ -29,7 +31,6 @@ namespace FMS.Pages.Facilities
                 return NotFound();
             }
 
-            if (success.HasValue && success.Value) ShowSuccessMessage = true;
             return Page();
         }
     }
