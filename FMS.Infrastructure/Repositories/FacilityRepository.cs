@@ -35,7 +35,7 @@ namespace FMS.Infrastructure.Repositories
 
             if (facility == null)
             {
-                //return null;
+                return null;
             }
 
             return new FacilityDetailDto(facility);

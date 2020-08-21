@@ -16,7 +16,7 @@ namespace FMS.Tests.Facilities
 {
     public class FacilityEditTests
     {
-        [Fact]
+        [Fact(Skip = "Not implemented yet")]
         public async Task OnGet_PopulatesThePageModel()
         {
             // Remove after FmsDbContext in Page has been replaced with repositories

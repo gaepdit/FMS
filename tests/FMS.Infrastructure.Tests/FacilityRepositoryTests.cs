@@ -53,7 +53,7 @@ namespace FMS.Infrastructure.Tests
 
         // CountAsync
 
-        [Fact]
+        [Fact(Skip ="Not implemented yet")]
         public async Task DefaultFacilityCountReturnsCountOfAll()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
@@ -61,7 +61,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(DataHelpers.Facilities.Length);
         }
 
-        [Fact]
+        [Fact(Skip = "Not implemented yet")]
         public async Task FacilityCountWithSpecReturnsCorrectCount()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();

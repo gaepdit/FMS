@@ -2,7 +2,6 @@
 using FMS.Domain.Entities;
 using FMS.Infrastructure.SeedData;
 using System;
-using System.IO;
 
 namespace TestHelpers
 {
@@ -16,6 +15,7 @@ namespace TestHelpers
         public static OrganizationalUnit[] OrganizationalUnits = DevSeedData.GetOrganizationalUnits();
         public static EnvironmentalInterest[] EnvironmentalInterests = DevSeedData.GetEnvironmentalInterests();
         public static ComplianceOfficer[] ComplianceOfficers = DevSeedData.GetComplianceOfficers();
+        public static File[] Files = DevSeedData.GetFiles();
 
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
@@ -29,7 +29,8 @@ namespace TestHelpers
                 BudgetCode = GetBudgetCode(facility.BudgetCodeId),
                 OrganizationalUnit = GetOrganizationalUnit(facility.OrganizationalUnitId),
                 EnvironmentalInterest = GetEnvironmentalInterest(facility.EnvironmentalInterestId),
-                ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId)
+                ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId),
+                File = GetFile(facility.FileId)
             };
         }
 
@@ -40,5 +41,6 @@ namespace TestHelpers
         public static OrganizationalUnit GetOrganizationalUnit(Guid id) => Array.Find(OrganizationalUnits, e => e.Id == id);
         public static EnvironmentalInterest GetEnvironmentalInterest(Guid id) => Array.Find(EnvironmentalInterests, e => e.Id == id);
         public static ComplianceOfficer GetComplianceOfficer(Guid id) => Array.Find(ComplianceOfficers, e => e.Id == id);
+        public static File GetFile(Guid id) => Array.Find(Files, e => e.Id == id);
     }
 }
