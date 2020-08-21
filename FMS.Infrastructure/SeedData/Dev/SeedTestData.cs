@@ -1,4 +1,5 @@
 ﻿using FMS.Infrastructure.Contexts;
+using System.Linq;
 
 namespace FMS.Infrastructure.SeedData
 {
@@ -6,16 +7,17 @@ namespace FMS.Infrastructure.SeedData
     {
         public static void SeedTestData(this FmsDbContext context)
         {
-            context.BudgetCodes.AddRange(GetBudgetCodes());
-            context.ComplianceOfficers.AddRange(GetComplianceOfficers());
-            context.EnvironmentalInterests.AddRange(GetEnvironmentalInterests());
-            context.Facilities.AddRange(GetFacilities());
-            context.FacilityStatuses.AddRange(GetFacilityStatuses());
-            context.FacilityTypes.AddRange(GetFacilityTypes());
-            context.FileCabinets.AddRange(GetFileCabinets());
-            context.Files.AddRange(GetFiles());
-            context.OrganizationalUnits.AddRange(GetOrganizationalUnits());
-            context.RetentionRecords.AddRange(GetRetentionRecords());
+            if (!context.BudgetCodes.Any()) context.BudgetCodes.AddRange(GetBudgetCodes());
+            if (!context.ComplianceOfficers.Any()) context.ComplianceOfficers.AddRange(GetComplianceOfficers());
+            if (!context.EnvironmentalInterests.Any()) context.EnvironmentalInterests.AddRange(GetEnvironmentalInterests());
+            if (!context.Facilities.Any()) context.Facilities.AddRange(GetFacilities());
+            if (!context.FacilityStatuses.Any()) context.FacilityStatuses.AddRange(GetFacilityStatuses());
+            if (!context.FacilityTypes.Any()) context.FacilityTypes.AddRange(GetFacilityTypes());
+            if (!context.FileCabinets.Any()) context.FileCabinets.AddRange(GetFileCabinets());
+            if (!context.Files.Any()) context.Files.AddRange(GetFiles());
+            if (!context.OrganizationalUnits.Any()) context.OrganizationalUnits.AddRange(GetOrganizationalUnits());
+            if (!context.RetentionRecords.Any()) context.RetentionRecords.AddRange(GetRetentionRecords());
+
             context.SaveChanges();
         }
     }

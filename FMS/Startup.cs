@@ -7,22 +7,47 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace FMS
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
+        private readonly IWebHostEnvironment _env;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FmsDbContext>(opt => opt.UseInMemoryDatabase("FMSdb"));
+            // Configure database
+            services.AddDbContext<FmsDbContext>(opts =>
+            {
+                string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+                if (_env.IsDevelopment())
+                {
+                    if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
+                    {
+                        // The "IISX-TempDb" launch profile must use LocalDB
+                        connectionString = "Server=(localdb)\\mssqllocaldb;Database=fms-temp;Trusted_Connection=True;MultipleActiveResultSets=true";
+                    }
+                    else
+                    {
+                        // In dev environment, use LocalDB if no connection string specified.
+                        // (In prod environment, connection string is required.)
+                        connectionString ??= "Server=(localdb)\\mssqllocaldb;Database=fms-local;Trusted_Connection=True;MultipleActiveResultSets=true";
+                    }
+                }
+
+                opts.UseSqlServer(connectionString);
+            });
+
             //services.AddControllers();
             services.AddRazorPages();
             //services.AddTransient<JsonSearchService>();
@@ -65,16 +90,20 @@ namespace FMS
             });
 
             // Initialize database
-            if (env.IsDevelopment())
+            if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
             {
+                // Using "IISX-TempDb" launch profile causes the database to be recreated on launch 
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                Infrastructure.SeedData.DevSeedData.SeedTestData(context);
             }
             else
             {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
+                context.Database.Migrate();
+            }
+
+            if (env.IsDevelopment())
+            {
+                Infrastructure.SeedData.DevSeedData.SeedTestData(context);
             }
         }
     }
