@@ -11,7 +11,6 @@ namespace FMS.Domain.Entities
         [StringLength(20)]
         public string Code { get; set; }
 
-        [Display(Name = "Budget Code")]
         public string Name { get; set; }
 
         [StringLength(20)]
@@ -19,15 +18,5 @@ namespace FMS.Domain.Entities
 
         [StringLength(20)]
         public string ProjectNumber { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        public string GetEnum()
-        {
-            return Code;
-        }
     }
 }

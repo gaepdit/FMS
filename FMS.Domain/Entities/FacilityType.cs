@@ -8,13 +8,7 @@ namespace FMS.Domain.Entities
         // Existing numeric code
         public int Code { get; set; }
 
-        [Display(Name = "Facility Type")]
         [StringLength(20)]
         public string Name { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 }

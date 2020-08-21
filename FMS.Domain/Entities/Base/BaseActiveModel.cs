@@ -1,11 +1,7 @@
-﻿using FMS.Domain.Entities.Interfaces;
-using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Entities.Base
+﻿namespace FMS.Domain.Entities.Base
 {
-    public abstract class BaseActiveModel : BaseModel, IActive
+    public abstract class BaseActiveModel : BaseModel
     {
-        [Display(Name = "Active Site")]
         public bool Active { get; set; } = true;
     }
 }
