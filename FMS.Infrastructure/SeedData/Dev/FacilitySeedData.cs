@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Entities;
+using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,7 +47,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"),   //HWBRVRP
                     Name = "TOONIGH VILLAGE BUILDING C",
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),  //00943668
-                    FacilityStatus = null, // new  FacilityStatus{ },   //ACTIVE
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Some location description here",
                     Address = "5335 HOLLY SPRINGS PARKWAY",
                     City = "WOODSTOCK",
@@ -70,7 +70,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"),   //HWBRVRP
                     Name = "WOODSTOCK SHOPPING CENTER",
                     ComplianceOfficerId = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),   //00945102
-                    FacilityStatus = { },   //ACTIVE
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Description of Location in Woodstock",
                     Address = "9980, 10010 AND 10020 HIGHWAY 92 AND 1906 PROFESSIONAL WAY",
                     City = "WOODSTOCK",
@@ -93,7 +93,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"),   //HWBRVRP
                     Name = "106 ARNOLD MILL ROAD",
                     ComplianceOfficerId = new Guid("255ACC97-1C23-4621-A08A-FE77B500BDD0"),   //00285148
-                    FacilityStatus = { },   //ACTIVE
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Somewhere in Woodstock",
                     Address = "106 ARNOLD MILL RD.",
                     City = "WOODSTOCK",
@@ -116,7 +116,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"),   //HWBRVRP
                     Name = "WOODSTOCK CROSSING",
                     ComplianceOfficerId = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"),   //01080246
-                    FacilityStatus = { },    //ACTIVE
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Some place in Woodstock",
                     Address = "12050 HWY 92",
                     City = "WOODSTOCK",
@@ -139,7 +139,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"),   //HWRCRA
                     Name = "RITE AID #11757",
                     ComplianceOfficerId = new Guid("63B66867-0961-4ADE-99D2-85D6D4FED985"),   //00945809
-                    FacilityStatus = { },   //ACTIVE
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Highway 92 Woodstock",
                     Address = "12075 HWY 92",
                     City = "WOODSTOCK",
@@ -162,7 +162,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"),   //HWRCRA
                     Name = "KROGER #011-419",
                     ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"),   //01069946
-                    FacilityStatus = { },   //ACTIVE
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Kroger Plaza, Woodstock",
                     Address = "12050 HWY 92 SUITE 112",
                     City = "WOODSTOCK",
@@ -185,7 +185,7 @@ namespace FMS.Infrastructure.SeedData
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"),   //HWRCRA
                     Name = "RITE AID #11758",
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),   //00943668
-                    FacilityStatus = { },   //ACTIVE
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Shopping center parking lot",
                     Address = "5329 OLD HWY 5",
                     City = "WOODSTOCK",
