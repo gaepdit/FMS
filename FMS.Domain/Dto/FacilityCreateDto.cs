@@ -16,5 +16,41 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Facility Status")]
         public Guid FacilityStatusId { get; set; }
+
+        [Display(Name = "Facility Type")]
+        public Guid FacilityTypeId { get; set; }
+
+        [Display(Name = "Budget Code")]
+        public Guid BudgetCodeId { get; set; }
+
+        [Display(Name = "Organizational Unit")]
+        public Guid OrganizationalUnitId { get; set; }
+
+        [Display(Name = "Environmental Interest")]
+        public Guid EnvironmentalInterestId { get; set; }
+
+        [Display(Name = "Compliance Officer")]
+        public Guid ComplianceOfficerId { get; set; }
+
+        [Display(Name = "File Label")]
+        public Guid FileId { get; set; }
+
+        [Display(Name = "Location Description")]
+        public string Location { get; set; }
+
+        [Display(Name = "Street Address")]
+        public string Address { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "Zip Code")]
+        public string PostalCode { get; set; }
+
+        [Display(Name = "Latitude")]
+        public double Latitude { get; set; }
+
+        [Display(Name = "Longitude")]
+        public double Longitude { get; set; }
     }
 }

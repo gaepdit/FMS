@@ -12,26 +12,32 @@ namespace FMS.Domain.Entities
         public string FacilityNumber { get; set; }
 
         // File label and Cabinet where this Facility is located
-        public File File { get; set; }
+        public Guid FileId { get; set; }
+        public virtual File File { get; set; }
 
         // Environmental Interest/Program of this Facility
-        public EnvironmentalInterest EnvironmentalInterest { get; set; }
+        public Guid EnvironmentalInterestId { get; set; }
+        public virtual EnvironmentalInterest EnvironmentalInterest { get; set; }
 
         // Type of Facility
-        public FacilityType FacilityType { get; set; }
+        public Guid FacilityTypeId { get; set; }
+        public virtual FacilityType FacilityType { get; set; }
 
         // Unit overseeing this Facility
-        public OrganizationalUnit OrganizationalUnit { get; set; }
+        public Guid OrganizationalUnitId { get; set; }
+        public virtual OrganizationalUnit OrganizationalUnit { get; set; }
 
         // Program Budget for this Facility
-        public BudgetCode BudgetCode { get; set; }
+        public Guid BudgetCodeId { get; set; }
+        public virtual BudgetCode BudgetCode { get; set; }
 
         // Facility Name
         [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
         // Compliance Officer assigned to this Facility
-        public ComplianceOfficer ComplianceOfficer { get; set; }
+        public Guid ComplianceOfficerId { get; set; }
+        public virtual ComplianceOfficer ComplianceOfficer { get; set; }
 
         public Guid FacilityStatusId { get; set; }
         public virtual FacilityStatus FacilityStatus { get; set; }
@@ -56,9 +62,9 @@ namespace FMS.Domain.Entities
         public string PostalCode { get; set; }
 
         // site Coordinates
-        public string Latitude { get; set; }
+        public double Latitude { get; set; }
 
-        public string Longitude { get; set; }
+        public double Longitude { get; set; }
 
         // County for use to simplify queries, ease searching, etc.
         public int CountyId { get; set; }
