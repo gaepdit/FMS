@@ -1,98 +1,79 @@
 ﻿@page
 @model Pages.Facilities.IndexModel
+@*@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
 @{
     ViewData["Title"] = "Facility Search";
 }
 <h1>@ViewData["Title"]</h1>
+<hr />
 <div class="container-fluid">
-    @using (Html.BeginForm(FormMethod.Post))
-    {
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
-            <div class="col-4">
-                <div class="input-group input-group">
-                    <span class="input-group-addon" id="basic-addon1"></span>
-                    <input id="FileID" type="text" class="form-control" placeholder="File ID" aria-describedby="basic-addon1">
-                </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Facility.FileId"></label>
+                <input asp-for="Facility.FileId" class="form-control" placeholder="File ID (XXX-XXXX)" />
+               @* <span asp-validation-for="Facility.FileId" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <div class="input-group input-group">
-                    <input id="FacilityID" type="text" class="form-control" placeholder="Facility ID" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2"></span>
-                </div>
+            <div class="form-group col">
+                <label asp-for="Facility.FacilityNumber"></label>
+                <input asp-for="Facility.FacilityNumber" class="form-control" placeholder="Facility ID" />
+                @*<span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelectProgram">
-                        <option selected value="0">File Type (Program)...</option>
-                        <option value="1">generator</option>
-                        <option value="2">gfac</option>
-                        <option value="3">npl</option>
-                        <option value="4">dod</option>
-                        <option value="5">vrp</option>
-                        <option value="6">paf</option>
-                        <option value="7">hsra</option>
-                        <option value="8">tsd</option>
-                        <option value="9">brown</option>
-                        <option value="10">pasi</option>
-                    </select>
-                </div>
+            <div class="form-group col">
+                <label asp-for="Facility.FacilityTypeId"></label>
+                <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
+                    <option value="">Select Facility Type...</option>
+                </select>
+                @*<span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>*@
             </div>
         </div>
         <div class="form-row">
-            <div class="col-5">
-                <div class="input-group input-group">
-                    <input id="FacilityName" type="text" class="form-control" placeholder="Facility Name" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2"></span>
-                </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Facility.Name"></label>
+                <input asp-for="Facility.Name" class="form-control" placeholder="Facility Name"/>
+                @*<span asp-validation-for="Facility.Name" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelectCO" placeholder="">
-                        <option selected value="0">Compliance Officer...</option>
-                        <option value="1">CO One</option>
-                        <option value="2">CO Two</option>
-                        <option value="3">CO Three</option>
-                    </select>
-                </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.ComplianceOfficerId"></label>
+                <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
+                    <option value="">Select Compliance Officer...</option>
+                </select>
+                @*<span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelectBudget">
-                        <option selected value="0">Budget Code...</option>
-                        @foreach (var Code in Model.BudgetCodes)
-                        {
-                            <option value="@Code.Id">@Code.Name</option>
-                        }
-                    </select>
-                </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.BudgetCodeId"></label>
+                <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
+                    <option value="">Select Budget Code...</option>
+                </select>
+                @*<span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>*@
             </div>
         </div>
         <div class="form-row">
-            <div class="col">
-                <div class="input-group input-group">
-                    <input id="Street" type="text" class="form-control" placeholder="Facility Street Address" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2"></span>
-                </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Facility.Address"></label>
+                <input asp-for="Facility.Address" class="form-control" placeholder="Facility Street Address" />
+                @*<span asp-validation-for="Facility.Address" class="text-danger"></span>*@
             </div>
         </div>
-        <br />
         <div class="form-row">
-            <div class="col-6">
-                <input type="text" class="form-control" placeholder="City">
+            <div class="form-group col-md-6">
+                <label asp-for="Facility.City"></label>
+                <input asp-for="Facility.City" class="form-control" placeholder="City" />
+                @*<span asp-validation-for="Facility.City" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <div class="input-group mb-3">
-                    <select class="custom-select" id="inputGroupSelectCounty">
-                        <option selected>County...</option>
-                        @foreach (var County in Model.Counties)
-                        {
-                            <option value="@County.Id">@County.Name</option>
-                        }
-                    </select>
-                </div>
+            <div class="form-group col">
+                <label asp-for="Facility.CountyId"></label>
+                <select asp-for="Facility.CountyId" asp-items="Model.Counties" class="custom-select">
+                    <option value="">Select County...</option>
+                </select>
+                @*<span asp-validation-for="Facility.CountyId" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <select class="custom-select" id="inputGroupSelectState">
+            <div class="form-group col">
+                <label asp-for="Facility.State"></label>
+                <select asp-for="Facility.State" class="custom-select">
                     <option value=""></option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
@@ -146,38 +127,46 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
+                @*<span asp-validation-for="Facility.State" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <input id="Zip" type="text" class="form-control" placeholder="Zip">
+            <div class="form-group col">
+                <label asp-for="Facility.PostalCode"></label>
+                <input asp-for="Facility.PostalCode" class="form-control" placeholder="ZIP Code"/>
+                @*<span asp-validation-for="Facility.PostalCode" class="text-danger"></span>*@
             </div>
         </div>
         <div class="form-group row">
-            <div class="col">
-                <input id="Lat" type="text" class="form-control" placeholder="Latitude -- Decimal Format DD.DDDDDDD">
+            <div class="form-group col-md-6">
+                <label asp-for="Facility.Latitude"></label>
+                <input asp-for="Facility.Latitude" class="form-control" placeholder="DD.DDDDDDD"/>
+                @*<span asp-validation-for="Facility.Latitude" class="text-danger"></span>*@
             </div>
-            <div class="col">
-                <input id="Long" type="text" class="form-control" placeholder="Longitude -- Decimal Format -DD.DDDDDDD">
+            <div class="form-group col-md-6">
+                <label asp-for="Facility.Longitude"></label>
+                <input asp-for="Facility.Longitude" class="form-control" placeholder="-DD.DDDDDDD"/>
+                @*<span asp-validation-for="Facility.Longitude" class="text-danger"></span>*@
             </div>
         </div>
-        <div class="form-row">
-            <div class="col">
+        <div class="form-group row">
+            <div class="form-group col">
                 <div class="form-check">
                     @Html.CheckBoxFor(m => m.ActiveOnly)
                     <label class="form-check-label" for="ActiveCheck">
                         Show Active Sites Only
                     </label>
+                    @*<label class="form-check-label" asp-for="Facility.Active"></label>
+                        <input asp-for="Facility.Active" />*@
                 </div>
             </div>
         </div>
         <div class="form-row">
-            <div class="col">
+            <div class="form-group col">
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary mb-2">Search for Facilities</button>
                 </div>
             </div>
-
         </div>
-    }
+    </form>
 </div>
 <hr />
 <div id="ResultActive" class="text-center" style="@(Model.ActiveOnly == false ? "display:none" : "display:block")">
@@ -231,40 +220,40 @@
                     {
                         @foreach (var item in Model.Facilities)
                         {
-                    <tr>
-                        <td>
-                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
-                                @Html.DisplayFor(modelItem => item.FacilityNumber)
-                            </a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        @*<td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.City)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.State)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PostalCode)
-                        </td>
-                        @*<td>
-            @Html.DisplayFor(modelItem => item.Latitude)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Longitude)
-        </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Active)
-                        </td>
-                    </tr>
+                            <tr>
+                                <td>
+                                    <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                        @Html.DisplayFor(modelItem => item.FacilityNumber)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.Location)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.City)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.State)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PostalCode)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.Latitude)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Longitude)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Active)
+                                </td>
+                            </tr>
                         }
                     }
                 </tbody>

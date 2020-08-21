@@ -104,14 +104,14 @@
                 <input asp-for="Facility.City" class="form-control" />
                 <span asp-validation-for="Facility.City" class="text-danger"></span>
             </div>
-            <div class="col">
+            <div class="form-group col">
                 <label asp-for="Facility.CountyId"></label>
                 <select asp-for="Facility.CountyId" asp-items="Model.Counties" class="custom-select">
                     <option value="">Select County...</option>
                 </select>
                 <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
             </div>
-            <div class="col">
+            <div class="form-group col">
                 <label asp-for="Facility.State"></label>
                 <select asp-for="Facility.State" class="custom-select">
                     <option value=""></option>
@@ -169,26 +169,26 @@
                 </select>
                 <span asp-validation-for="Facility.State" class="text-danger"></span>
             </div>
-            <div class="col">
+            <div class="form-group col">
                 <label asp-for="Facility.PostalCode"></label>
                 <input asp-for="Facility.PostalCode" class="form-control" />
                 <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
+        <div class="form-group row">
             <div class="form-group col-md-6">
                 <label asp-for="Facility.Latitude"></label>
                 <input asp-for="Facility.Latitude" class="form-control" />
                 <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col">
                 <label asp-for="Facility.Longitude"></label>
                 <input asp-for="Facility.Longitude" class="form-control" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="col">
+        <div class="form-group row">
+            <div class="form-group col">
                 <div class="form-check">
                     <label class="form-check-label" asp-for="Facility.Active"></label>
                     <input asp-for="Facility.Active" />

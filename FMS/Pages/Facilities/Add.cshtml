@@ -1,172 +1,206 @@
 ﻿@page
 @model Pages.Facilities.AddModel
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
 @{
     ViewData["Title"] = "Add Facility";
 }
-<div class="text-center">
-    <h4>Add New Facility</h4>
-    <div class="container-fluid">
-        @using (Html.BeginForm(FormMethod.Post))
-        {
-            <div class="form-row">
-                <div class="col-4">
-                    <div class="input-group input-group">
-                        <span class="input-group-addon" id="basic-addon1"></span>
-                        <input id="FileID" type="text" class="form-control" placeholder="File ID" aria-describedby="basic-addon1">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="input-group input-group">
-                        <input id="FacilityID" type="text" class="form-control" placeholder="Facility ID" aria-describedby="basic-addon2">
-                        <span class="input-group-addon" id="basic-addon2"></span>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelectProgram">
-                            <option selected>File Type (Program)...</option>
-                            <option value="1">generator</option>
-                            <option value="2">gfac</option>
-                            <option value="3">npl</option>
-                            <option value="4">dod</option>
-                            <option value="5">vrp</option>
-                            <option value="6">paf</option>
-                            <option value="7">hsra</option>
-                            <option value="8">tsd</option>
-                            <option value="9">brown</option>
-                            <option value="10">pasi</option>
-                        </select>
-                    </div>
-                </div>
-
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="container-fluid">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.FileId"></label>
+                <input asp-for="Facility.FileId" class="form-control" placeholder="File Id (XXX-XXXX)" />
+                <span asp-validation-for="Facility.FileId" class="text-danger"></span>
             </div>
-            <div class="form-row">
-                <div class="col-5">
-                    <div class="input-group input-group">
-                        <input id="FacilityName" type="text" class="form-control" placeholder="Facility Name" aria-describedby="basic-addon2">
-                        <span class="input-group-addon" id="basic-addon2"></span>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelectCO">
-                            <option selected>Compliance Officer...</option>
-                            <option value=""></option>
-                            <option value="1">CO One</option>
-                            <option value="2">CO Two</option>
-                            <option value="3">CO Three</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelectBudget">
-                            <option selected>Choose Budget Code...</option>
-                            @foreach (var Code in Model.BudgetCodes)
-                            {
-                                <option value="@Code.Id">@Code.Name</option>
-                            }
-                        </select>
-                    </div>
+            @*<div class="form-group col-md-3">
+                <label asp-for="File.FileLabel"></label>
+                <input asp-for="File.FileLabel" class="form-control" />
+                <span asp-validation-for="File.FileLabel" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group col-md-2">
+                <label for="File">File Label</label>
+                @Html.TextBox("File", Model.File.FileLabel, new { @name = "File", @class = "form-control", @placeholder = "File Label" })
+                <span asp-validation-for="File.FileLabel" class="text-danger"></span>
+            </div>*@
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.FacilityNumber"></label>
+                <input asp-for="Facility.FacilityNumber" class="form-control" placeholder="Facility Number" />
+                <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.FacilityTypeId"></label>
+                <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
+                    <option value="">Select Facility Type...</option>
+                </select>
+                <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.OrganizationalUnitId"></label>
+                <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
+                    <option value="">Select Organizational Unit...</option>
+                </select>
+                <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.ComplianceOfficerId"></label>
+                <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
+                    <option value="">Select Compliance Officer...</option>
+                </select>
+                <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.BudgetCodeId"></label>
+                <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
+                    <option value="">Select Budget Code...</option>
+                </select>
+                <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Facility.EnvironmentalInterestId"></label>
+                <select asp-for="Facility.EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
+                    <option value="">Select EI Type...</option>
+                </select>
+                <span asp-validation-for="Facility.EnvironmentalInterestId" class="text-danger"></span>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Facility.FacilityStatusId"></label>
+                <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
+                    <option value="">Select Facility Status...</option>
+                </select>
+                <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Facility.Name"></label>
+                <input asp-for="Facility.Name" class="form-control" placeholder="Name of Facility" />
+                <span asp-validation-for="Facility.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Facility.Location"></label>
+                <input asp-for="Facility.Location" class="form-control" placeholder="Description of Facility Location"/>
+                <span asp-validation-for="Facility.Location" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Facility.Address"></label>
+                <input asp-for="Facility.Address" class="form-control" placeholder="Street Address of Facility"/>
+                <span asp-validation-for="Facility.Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Facility.City"></label>
+                <input asp-for="Facility.City" class="form-control" placeholder="City"/>
+                <span asp-validation-for="Facility.City" class="text-danger"></span>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Facility.CountyId"></label>
+                <select asp-for="Facility.CountyId" asp-items="Model.Counties" class="custom-select">
+                    <option value="">Select County...</option>
+                </select>
+                <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Facility.
+State"></label>
+                <select asp-for="Facility.State" class="custom-select">
+                    <option value=""></option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option selected value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+                <span asp-validation-for="Facility.State" class="text-danger"></span>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Facility.PostalCode"></label>
+                <input asp-for="Facility.PostalCode" class="form-control" placeholder="ZIP Code"/>
+                <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label asp-for="Facility.Latitude"></label>
+                <input asp-for="Facility.Latitude" class="form-control" placeholder="DD.DDDDDDD"/>
+                <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Facility.Longitude"></label>
+                <input asp-for="Facility.Longitude" class="form-control" placeholder="-DD.DDDDDDD"/>
+                <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col">
+                <div class="form-check">
+                    <label class="form-check-label" asp-for="Facility.Active"></label>
+                    <input asp-for="Facility.Active" />
                 </div>
             </div>
-            <div class="form-row">
-                <div class="col-12">
-                    <div class="input-group input-group">
-                        <input id="Street" type="text" class="form-control" placeholder="Facility Street Address" aria-describedby="basic-addon2">
-                        <span class="input-group-addon" id="basic-addon2"></span>
-                    </div>
-                </div>
+        </div>
+        <hr />
+        <div class="form-row">
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary mb-2">Create New Facility</button>
             </div>
-            <br/>
-            <div class="form-row">
-                <div class="col-6">
-                    <input type="text" class="form-control" placeholder="City">
-                </div>
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="inputGroupSelectCounty">
-                            <option selected>Choose County...</option>
-                            @foreach (var County in Model.Counties)
-                            {
-                                <option value="@County.Id">@County.Name</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-                <div class="col">
-                    <select class="custom-select" id="inputGroupSelectState">
-                        <option value=""></option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option selected value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input id="Zip" type="text" class="form-control" placeholder="Zip">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col">
-                    <input id="Lat" type="text" class="form-control" placeholder="Latitude -- Decimal Format DD.DDDDDDD">
-                </div>
-                <div class="col">
-                    <input id="Long" type="text" class="form-control" placeholder="Longitude -- Decimal Format -DD.DDDDDDD">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary mb-2">Save New Facility</button>
-                </div>
-            </div>
-        }
-    </div>
+        </div>
+    </form>
 </div>
