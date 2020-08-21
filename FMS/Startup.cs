@@ -48,9 +48,7 @@ namespace FMS
                 opts.UseSqlServer(connectionString);
             });
 
-            //services.AddControllers();
             services.AddRazorPages();
-            //services.AddTransient<JsonSearchService>();
 
             services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
         }
@@ -77,17 +75,7 @@ namespace FMS
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                //endpoints.MapControllers();
-                endpoints.MapRazorPages();
-                //endpoints.MapGet("/Facility", (context) =>
-                //{
-                //    var facilities = app.ApplicationServices.GetService<JsonFacService>().GetFacilties();
-                //    var json = JsonSerializer.Serialize<IEnumerable>(facilities);
-                //    return context.Response.WriteAsync(json);
-                //});
-            });
+            app.UseEndpoints(endpoints => endpoints.MapRazorPages());
 
             // Initialize database
             if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
