@@ -1,7 +1,9 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Infrastructure.SeedData;
 using System;
+using System.Collections.Generic;
 
 namespace TestHelpers
 {
@@ -42,5 +44,25 @@ namespace TestHelpers
         public static EnvironmentalInterest GetEnvironmentalInterest(Guid id) => Array.Find(EnvironmentalInterests, e => e.Id == id);
         public static ComplianceOfficer GetComplianceOfficer(Guid id) => Array.Find(ComplianceOfficers, e => e.Id == id);
         public static File GetFile(Guid id) => Array.Find(Files, e => e.Id == id);
+
+        public static List<ApplicationUser> GetApplicationUsers()
+        {
+            return new List<ApplicationUser> {
+                new ApplicationUser
+                {
+                    Id = new Guid("06bca04c-19bb-4c41-b554-e57a56a2c6b7"),
+                    Email = "example.one@example.com",
+                    GivenName = "Sample",
+                    FamilyName = "User"
+                },
+                new ApplicationUser
+                {
+                    Id = new Guid("43a21a8a-1fc6-4348-9004-e1aec42392b7"),
+                    Email = "example.two@example.com",
+                    GivenName = "Another",
+                    FamilyName = "Sample"
+                }
+            };
+        }
     }
 }

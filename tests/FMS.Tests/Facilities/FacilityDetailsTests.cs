@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using FMS.Domain.Repositories;
-using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
@@ -24,7 +23,7 @@ namespace FMS.Tests.Facilities
                 .ReturnsAsync(facility)
                 .Verifiable();
 
-            var pageModel = new DetailsModel(mockRepo.Object);
+            var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
@@ -37,7 +36,7 @@ namespace FMS.Tests.Facilities
         public async Task OnGet_NonexistantIdReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
-            var pageModel = new DetailsModel(mockRepo.Object);
+            var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
@@ -49,7 +48,7 @@ namespace FMS.Tests.Facilities
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
-            var pageModel = new DetailsModel(mockRepo.Object);
+            var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
