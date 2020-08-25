@@ -6,20 +6,13 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if (Model.ShowSuccessMessage)
-{
-    <div class="alert alert-success" role="alert">
-        Account successfully updated.
-    </div>
-}
-
 <div class="container">
     <div class="row my-3">
         <div class="mr-2">
             <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
         </div>
         <div>
-            <h2>@Model.DisplayName @*<a asp-page="./Edit" class="btn btn-outline-primary btn-sm">Edit</a>*@</h2>
+            <h2>@Model.DisplayName</h2>
             <p>@Model.Email</p>
             <form asp-page="./Logout" asp-route-returnUrl="@Url.Page("/")" method="post">
                 <button type="submit" class="btn btn-danger">Sign out</button>

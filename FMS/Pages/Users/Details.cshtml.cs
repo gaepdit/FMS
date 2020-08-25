@@ -1,4 +1,4 @@
-using FMS.Domain.Interfaces;
+using FMS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -16,7 +16,7 @@ namespace FMS.Pages.Users
         }
 
         public string Id { get; set; }
-        public string FullName { get; set; }
+        public string DisplayName { get; set; }
         public string Email { get; set; }
         public bool ShowSuccessMessage { get; set; } = false;
 
@@ -43,7 +43,7 @@ namespace FMS.Pages.Users
             }
 
             Id = user.Id.ToString();
-            FullName = user.DisplayName;
+            DisplayName = user.DisplayName;
             Email = user.Email;
 
             ShowSuccessMessage = success ?? false;

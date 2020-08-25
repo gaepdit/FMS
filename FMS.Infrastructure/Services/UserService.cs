@@ -1,5 +1,5 @@
 ﻿using FMS.Domain.Entities.Users;
-using FMS.Domain.Interfaces;
+using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -62,19 +62,19 @@ namespace FMS.Infrastructure.Services
             return await _userManager.FindByIdAsync(id.ToString());
         }
 
-        public async Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName)
-        {
-            var user = await GetUserByIdAsync(id);
-            if (user == null)
-            {
-                return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
-            }
+        //public async Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName)
+        //{
+        //    var user = await GetUserByIdAsync(id);
+        //    if (user == null)
+        //    {
+        //        return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
+        //    }
 
-            user.GivenName = givenName;
-            user.FamilyName = familyName;
+        //    user.GivenName = givenName;
+        //    user.FamilyName = familyName;
 
-            return await _userManager.UpdateAsync(user);
-        }
+        //    return await _userManager.UpdateAsync(user);
+        //}
 
         public async Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter)
         {

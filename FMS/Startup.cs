@@ -1,5 +1,5 @@
 using FMS.Domain.Entities.Users;
-using FMS.Domain.Interfaces;
+using FMS.Domain.Services;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;

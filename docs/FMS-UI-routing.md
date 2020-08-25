@@ -21,11 +21,12 @@
 ## User pages
 
 - `/Account` (View account details)
-<!-- - `/Account/Edit` (Edit account details) -->
 - `/Account/ExternalLogin` (Set up account)
 - `/Account/Login` (Log in)
+- `/Account/Logout` (Log out) *POST only*
+- `/Account/Lockout` (Locked out alert)
 
 ## User admin pages
 
 - `/Users` (Search Users)
-- `/Users/Edit/?` (Edit user details and roles)
+- `/Users/Edit/?` (Edit user roles)

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FMS.Domain.Interfaces
+namespace FMS.Domain.Services
 {
     public interface IUserService
     {
@@ -13,7 +13,9 @@ namespace FMS.Domain.Interfaces
         
         public Task<bool> UserExistsAsync(Guid id);
         public Task<ApplicationUser> GetUserByIdAsync(Guid id);
-        public Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName);
+        
+        // TODO: replace with role edit methods
+        //public Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName);
 
         public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter);
     }

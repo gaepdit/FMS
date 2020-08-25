@@ -1,5 +1,5 @@
 using FMS.Domain.Entities.Users;
-using FMS.Domain.Interfaces;
+using FMS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
@@ -18,9 +18,8 @@ namespace FMS.Pages.Account
         public string Id { get; set; }
         public string DisplayName { get; set; }
         public string Email { get; set; }
-        public bool ShowSuccessMessage { get; set; }
 
-        public async Task<IActionResult> OnGet(bool? success)
+        public async Task<IActionResult> OnGetAsync()
         {
             var currentUser = await _userService.GetCurrentUserAsync()
                 // TODO: remove in production
@@ -37,7 +36,6 @@ namespace FMS.Pages.Account
             DisplayName = currentUser.DisplayName;
             Email = currentUser.Email;
 
-            ShowSuccessMessage = success ?? false;
             return Page();
         }
     }
