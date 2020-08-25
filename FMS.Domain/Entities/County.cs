@@ -8,6 +8,7 @@ namespace FMS.Domain.Entities
         public int Id { get; set; }
 
         [StringLength(20)]
+        [Display(Name = "County")]
         public string Name { get; set; }
     }
 }

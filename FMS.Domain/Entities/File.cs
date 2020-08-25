@@ -9,6 +9,7 @@ namespace FMS.Domain.Entities
         // Internal ID from the Programs, consisting of the 3-digit county number 
         // and a 4-digit system-generated sequential number for each county (xxx-xxxx)
         [StringLength(9)]
+        [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
         public List<FileCabinet> FileCabinets { get; set; }

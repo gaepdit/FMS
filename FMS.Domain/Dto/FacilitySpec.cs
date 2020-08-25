@@ -5,6 +5,9 @@ namespace FMS.Domain.Dto
 {
     public class FacilitySpec
     {
+        [Display(Name = "Facility Number")]
+        public string FacilityNumber { get; set; }
+
         [Display(Name = "Facility Name")]
         public string Name { get; set; }
 

@@ -1,143 +1,154 @@
 ﻿@page
 @model Pages.Facilities.IndexMapModel
 @{
-    ViewData["Title"] = "Map Search";
+    ViewData["Title"] = "Facility Map Search";
 }
-<div class="text-center">
-    <h4>Search Map for Facilities</h4>
-    <div class="container-fluid">
-        @using (Html.BeginForm(FormMethod.Post))
-        {
-            <div class="form-row">
-                <div class="col">
-                    <div class="input-group input-group">
-                        <input id="Street" type="text" class="form-control" placeholder="Facility Street Address" aria-describedby="basic-addon2">
-                        <span class="input-group-addon" id="basic-addon2"></span>
-                    </div>
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="container-fluid">
+    <form method="post">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Spec.Address"></label>
+                <input asp-for="Spec.Address" class="form-control" placeholder="Facility Street Address" />
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Spec.City"></label>
+                <input asp-for="Spec.City" class="form-control" placeholder="City" />
+            </div>
+            <div class="col">
+                <label asp-for="Spec.State"></label>
+                <select asp-for="Spec.State" class="custom-select">
+                    <option value=""></option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option selected value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Spec.PostalCode"></label>
+                <input asp-for="Spec.PostalCode" class="form-control" placeholder="ZIP Code" />
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="@Model.SearchRadius"></label>
+                <select asp-for="@Model.SearchRadius" class="custom-select">
+                    <option selected value="1">Search radius 1/4 Mile</option>
+                    <option value="2">Search radius 1/2 Mile</option>
+                    <option value="3">Search radius 1 Mile</option>
+                    <option value="4">Search radius 3 Miles</option>
+                    <option value="5">Search radius 5 Miles</option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Spec.Latitude"></label>
+                <input asp-for="Spec.Latitude" class="form-control" placeholder="DD.DDDDDDD" />
+            </div>
+            <div class="form-group col">
+                <label asp-for="Spec.Longitude"></label>
+                <input asp-for="Spec.Longitude" class="form-control" placeholder="-DD.DDDDDDD" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <div class="form-check">
+                    @Html.CheckBoxFor(m => m.ActiveOnly)
+                    <label class="form-check-label" for="ActiveCheck">
+                        Show Active Sites Only
+                    </label>
                 </div>
             </div>
-            <br />
-            <div class="form-row">
-                <div class="col-6">
-                    <input type="text" class="form-control" placeholder="City">
-                </div>
-                <div class="col">
-                    <select class="custom-select" id="inputGroupSelectState">
-                        <option value=""></option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option selected value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <input id="Zip" type="text" class="form-control" placeholder="Zip">
+            <div class="col">
+                <div class="form-check">
+                    @Html.CheckBoxFor(m => m.ShowResults)
+                    <label class="form-check-label" for="ListCheck">
+                        Also Show Results in a List
+                    </label>
                 </div>
             </div>
-            <br />
-            <div class="form-group row">
-                <div class="col-3">
-                    <select class="custom-select" id="inputGroupSelectRadius">
-                        <option selected value="1">Search radius 1/4 Mile</option>
-                        <option value="2">Search radius 1/2 Mile</option>
-                        <option value="3">Search radius 1 Mile</option>
-                        <option value="4">Search radius 3 Miles</option>
-                        <option value="5">Search radius 5 Miles</option>
-                    </select>
-                </div>
-
-                <div class="col">
-                    <input id="Lat" type="text" class="form-control" placeholder="Latitude -- Decimal Format DD.DDDDDDD">
-                </div>
-                <div class="col">
-                    <input id="Long" type="text" class="form-control" placeholder="Longitude -- Decimal Format -DD.DDDDDDD">
-                </div>
+        </div>
+        <br/>
+        <div class="form-row text-center">
+            <div class="col">
+                <button type="submit" class="btn btn-primary mb-2">Search Map</button>
             </div>
-            <div class="form-row">
-                <div class="col">
-                    <div class="form-check">
-                        @Html.CheckBoxFor(m => m.ActiveOnly)
-                        <label class="form-check-label" for="ActiveCheck">
-                            Show Active Sites Only
-                        </label>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-check">
-                        @Html.CheckBoxFor(m => m.ShowResults)
-                        <label class="form-check-label" for="ListCheck">
-                            Also Show Results in a List
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary mb-2">Search Map</button>
-                </div>
-            </div>
-        }
-    </div>
+        </div>
+    </form>
 </div>
+<hr/>
 <div id="ResultActive" class="text-center" style="@(Model.ActiveOnly == false ? "display:none" : "display:block")">
     <div class="container-fluid">
         <h5 style="color:red">Only Active Sites are being displayed</h5>
     </div>
+    <hr/>
 </div>
 <div id="ResultMap" class="text-center" style="@(Model.ShowMap == false ? "display:none" : "display:block")">
     <div class="container-fluid">
+        @*Map HTML in this div*@
         <h4>Map of results here</h4>
         <img src="~/graphics/GOOGLEMAP.jpg" alt="Results Map" width="500" height="300" />
     </div>
 </div>
+<div class="text-center" style="@(Model.ShowNone == false ? "display:none" : "display:block")">
+    <div class="container-fluid">
+        <h5 style="color:red">Search Found No Matching Facilities</h5>
+    </div>
+</div>
 <div id="ResultList" style="@(Model.ShowResults == false ? "display:none" : "display:block")">
+    <hr/>
     <div class="text-center">
         <h4>Search Results</h4>
     </div>
@@ -147,25 +158,25 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Facility.FacilityNumber)
+                            @Html.DisplayNameFor(model => model.Spec.FacilityNumber)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Facility.Name)
+                            @Html.DisplayNameFor(model => model.Spec.Name)
                         </th>
                         @*<th>
                                 @Html.DisplayNameFor(model => model.Facility.Location)
                             </th>*@
                         <th>
-                            @Html.DisplayNameFor(model => model.Facility.Address)
+                            @Html.DisplayNameFor(model => model.Spec.Address)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Facility.City)
+                            @Html.DisplayNameFor(model => model.Spec.City)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Facility.State)
+                            @Html.DisplayNameFor(model => model.Spec.State)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Facility.PostalCode)
+                            @Html.DisplayNameFor(model => model.Spec.PostalCode)
                         </th>
                         @*<th>
                                 @Html.DisplayNameFor(model => model.Facility.Latitude)
@@ -174,7 +185,7 @@
                                 @Html.DisplayNameFor(model => model.Facility.Longitude)
                             </th>*@
                         <th>
-                            @Html.DisplayNameFor(model => model.Facility.Active)
+                            @Html.DisplayNameFor(model => model.Spec.Active)
                         </th>
                         <th></th>
                     </tr>
@@ -182,45 +193,85 @@
                 <tbody>
                     @if (Model.ShowResults)
                     {
-                        @foreach (var item in Model.Facilities)
+                        @foreach (var item in Model.FacilityList)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FacilityNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.Location)
-                                    </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Address)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.City)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.State)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PostalCode)
-                                </td>
-                                @*<td>
-                                        @Html.DisplayFor(modelItem => item.Latitude)
+                            if (Model.ActiveOnly)
+                            {
+                                if (item.Active)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                                @Html.DisplayFor(modelItem => item.FacilityNumber)
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        @*<td>
+                                                @Html.DisplayFor(modelItem => item.Location)
+                                            </td>*@
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Address)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.City)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.State)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PostalCode)
+                                        </td>
+                                        @*<td>
+                                                @Html.DisplayFor(modelItem => item.Latitude)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Longitude)
+                                            </td>*@
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Active)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                            @Html.DisplayFor(modelItem => item.FacilityNumber)
+                                        </a>
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Longitude)
-                                    </td>*@
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Active)
-                                </td>
-                                <td>
-                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                                </td>
-                            </tr>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.Location)
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.City)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.State)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PostalCode)
+                                    </td>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.Latitude)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Longitude)
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Active)
+                                    </td>
+                                </tr>
+                            }
                         }
                     }
                 </tbody>

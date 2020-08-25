@@ -9,6 +9,7 @@ namespace FMS.Domain.Entities
 
         // File Cabinet Number
         [StringLength(5)]
+        [Display(Name = "File Cabinet Number")]
         public string Name { get; set; }
 
         // Starting County

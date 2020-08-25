@@ -13,6 +13,7 @@ namespace FMS.Domain.Entities
 
         // File label and Cabinet where this Facility is located
         public Guid FileId { get; set; }
+
         public virtual File File { get; set; }
 
         // Environmental Interest/Program of this Facility

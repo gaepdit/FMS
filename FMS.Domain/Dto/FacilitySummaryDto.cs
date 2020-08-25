@@ -12,6 +12,10 @@ namespace FMS.Domain.Dto
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
+            Address = facility.Address;
+            City = facility.City;
+            State = facility.State;
+            PostalCode = facility.PostalCode;
         }          
 
         public Guid Id;
@@ -25,5 +29,16 @@ namespace FMS.Domain.Dto
         [Display(Name = "Active Site")]
         public bool Active { get; set; } = true;
 
+        [Display(Name = "Street Address")]
+        public string Address { get; set; }
+
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+        [Display(Name = "State")]
+        public string State { get; set; }
+
+        [Display(Name = "ZIP Code")]
+        public string PostalCode { get; set; }
     }
 }

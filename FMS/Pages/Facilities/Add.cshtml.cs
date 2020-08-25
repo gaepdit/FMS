@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace FMS.Pages.Facilities
 {
@@ -52,6 +48,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetAsync()
         {
             await PopulateSelectsAsync();
+
             return Page();
         }
 
@@ -62,7 +59,6 @@ namespace FMS.Pages.Facilities
                 await PopulateSelectsAsync();
                 return Page();
             }
-
 
             try
             {

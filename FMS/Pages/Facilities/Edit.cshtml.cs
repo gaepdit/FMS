@@ -1,12 +1,10 @@
 ﻿using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -23,7 +21,7 @@ namespace FMS.Pages.Facilities
         public FacilityEditDto Facility { get; set; }
 
         [BindProperty]
-        public FileEditDto File { get; set; }
+        public new FileEditDto File { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }

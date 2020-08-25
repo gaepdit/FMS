@@ -23,10 +23,10 @@
                 <span asp-validation-for="File.FileLabel" class="text-danger"></span>
             </div>
             @*<div class="form-group col-md-2">
-                    <label for="File">File Label</label>
-                    @Html.TextBox("File", Model.File.FileLabel, new { @name = "File", @class = "form-control", @placeholder = "File Label" })
-                    <span asp-validation-for="File.FileLabel" class="text-danger"></span>
-                </div>*@
+                <label for="File">File Label</label>
+                @Html.TextBox("File", Model.File.FileLabel, new { @name = "File", @class = "form-control", @placeholder = "File Label" })
+                <span asp-validation-for="File.FileLabel" class="text-danger"></span>
+            </div>*@
             <div class="form-group col-md-2">
                 <label asp-for="Facility.FacilityNumber"></label>
                 <input asp-for="Facility.FacilityNumber" class="form-control" />
@@ -45,13 +45,6 @@
                     <option value="">Select Organizational Unit...</option>
                 </select>
                 <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label asp-for="Facility.Name"></label>
-                <input asp-for="Facility.Name" class="form-control" />
-                <span asp-validation-for="Facility.Name" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
@@ -82,6 +75,13 @@
                     <option value="">Select Facility Status...</option>
                 </select>
                 <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Facility.Name"></label>
+                <input asp-for="Facility.Name" class="form-control" />
+                <span asp-validation-for="Facility.Name" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">

@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
-using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
 using System.Linq;
 using FMS.Domain.Repositories;
@@ -22,26 +18,24 @@ namespace FMS.Pages.Facilities
         // TODO: Remove _context after moving data access to repositories
         private readonly FmsDbContext _context;
 
-        //private readonly Guid _nullguid = new Guid("00000000-0000-0000-0000-000000000000");
+        // "Spec" is the Facility DTO bound to the HTML Page elements
         [BindProperty]
-        public FacilityCreateDto DtoFacility { get; set; }
+        public FacilitySpec Spec { get; set; }
 
-        [BindProperty]
-        public Guid Id { get; set; }
+        // List of facilities resulting from the search
+        public IReadOnlyList<FacilitySummaryDto> FacilityList {get; set;}
 
         // true when checkbox is checked to show only active sites
         [BindProperty]
         public bool ActiveOnly { get; set; }
 
+        // Shows text results <div> if any results return
         [BindProperty]
         public bool ShowResults { get; set; }
 
-        //Guid for Test facility for development
-        public Guid TestGuid { get; set; }
-
-        public Facility Facility { get; set; }
-
-        public IEnumerable<Facility> Facilities { get; set; }
+        // Shows if no results in result set
+        [BindProperty]
+        public bool ShowNone { get; set; }
 
         public SelectList Counties { get; private set; }
         public SelectList FacilityStatuses { get; private set; }
@@ -67,28 +61,27 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetAsync()
         {
+           
             await PopulateSelectsAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // static data from SeedData for building and testing
-            TestGuid = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0");
-            // this is where the entity search will go
-
-            Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == TestGuid);
-            Facilities = new List<Facility> { Facility };
-            // clear the Form Fields
-            Facility = null;
-
-            // Change to use Facility DTO instead of domain entity
-            // Populate spec from Search fields or add Spec property to this page and bind fields directly to it.
-            var spec = new FacilitySpec() { Active = true };
-            var FacilityList = await _repository.GetFacilityListAsync(spec);
-
-            ShowResults = true;
-            //ActiveOnly = true;
+            // Get the list of facilities matching the "Spec" criteria
+            FacilityList = await _repository.GetFacilityListAsync(Spec);
+            
+            // Set "divs" based on search results
+            if(FacilityList.Count() > 0)
+            {
+                ShowResults = true;
+                ShowNone = false;
+            }
+            else
+            {
+                ShowResults = false;
+                ShowNone = true;
+            }
 
             await PopulateSelectsAsync();
             return Page();
@@ -96,6 +89,8 @@ namespace FMS.Pages.Facilities
 
         private async Task PopulateSelectsAsync()
         {
+            // TODO: change to DTOs from direct entity context
+
             Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 
             FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
