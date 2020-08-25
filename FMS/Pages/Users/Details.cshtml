@@ -1,4 +1,4 @@
-﻿@page "{id:Guid?}"
+@page "{id:Guid?}"
 @model Pages.Users.DetailsModel
 @{
     ViewData["Title"] = "User Admin";
@@ -19,7 +19,7 @@
             <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
         </div>
         <div>
-            <h2>@Model.FullName <a asp-page="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a></h2>
+            <h2>@Model.FullName <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a></h2>
             <p>@Model.Email</p>
         </div>
     </div>

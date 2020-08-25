@@ -4,8 +4,12 @@ using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -53,14 +57,31 @@ namespace FMS
             });
 
             // Configure Identity
-            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>().AddEntityFrameworkStores<FmsDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddEntityFrameworkStores<FmsDbContext>();
 
+            // Configure cookies
+            services.Configure<CookiePolicyOptions>(opts => opts.MinimumSameSitePolicy = SameSiteMode.None);
+
+            // Configure authentication
+            services.AddAuthentication()
+                .AddAzureAD(opts => Configuration.Bind(AzureADDefaults.AuthenticationScheme, opts));
+
+            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, opts =>
+            {
+                opts.Authority += "/v2.0/";
+                opts.TokenValidationParameters.ValidateIssuer = true;
+                opts.UsePkce = true;
+            });
+
+            // Configure Razor pages 
 
             services.AddRazorPages(opts =>
             {
-                //opts.Conventions.AuthorizeFolder("/Account");
+                opts.Conventions.AuthorizeFolder("/Users");
             });
 
+            // Configure dependencies
             services.AddTransient<IUserService, UserService>();
 
 
@@ -82,11 +103,10 @@ namespace FMS
             }
 
             app.UseHttpsRedirection();
-
             app.UseStaticFiles();
-
             app.UseRouting();
 
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
 

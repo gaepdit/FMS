@@ -1,10 +1,10 @@
 @page
 @model Pages.Account.IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Account Profile";
 }
 
-<h1>Profile</h1>
+<h1>@ViewData["Title"]</h1>
 
 @if (Model.ShowSuccessMessage)
 {
@@ -19,11 +19,11 @@
             <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
         </div>
         <div>
-            <h2>@Model.FullName <a asp-page="Edit" class="btn btn-outline-primary btn-sm">Edit</a></h2>
+            <h2>@Model.DisplayName @*<a asp-page="./Edit" class="btn btn-outline-primary btn-sm">Edit</a>*@</h2>
             <p>@Model.Email</p>
+            <form asp-page="./Logout" asp-route-returnUrl="@Url.Page("/")" method="post">
+                <button type="submit" class="btn btn-danger">Sign out</button>
+            </form>
         </div>
     </div>
 </div>
-<form asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/")" method="post">
-    <button type="submit" class="btn btn-danger">Sign out</button>
-</form>

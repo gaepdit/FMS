@@ -13,21 +13,16 @@ namespace FMS.Domain.Entities.Users
 
         [ProtectedPersonalData]
         [StringLength(150)]
-        public string Surname { get; set; }
+        public string FamilyName { get; set; }
 
-        public string FullName
-        {
-            get
-            {
-                return string.Join(" ", new string[] { GivenName, Surname }.Where(s => !string.IsNullOrEmpty(s)));
-            }
-        }
-        public string SortableFullName
-        {
-            get
-            {
-                return string.Join(", ", new string[] { Surname, GivenName }.Where(s => !string.IsNullOrEmpty(s)));
-            }
-        }
+        [PersonalData]
+        public string SubjectId { get; set; }
+
+        [PersonalData]
+        public string ObjectId { get; set; }
+
+        public string DisplayName => string.Join(" ", new string[] { GivenName, FamilyName }.Where(s => !string.IsNullOrEmpty(s)));
+
+        public string SortableFullName => string.Join(", ", new string[] { FamilyName, GivenName }.Where(s => !string.IsNullOrEmpty(s)));
     }
 }

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Pages.Account.EditModel
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
@@ -7,36 +7,38 @@
     ViewData["Title"] = "Edit Profile";
 }
 
-<h1>Edit Profile</h1>
+<h1>@ViewData["Title"]</h1>
 
-<div class="container-fluid bg-light py-3">
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
-            Account update failed:
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="GivenName"></label>
-                <input asp-for="GivenName" class="form-control" />
-                <span asp-validation-for="GivenName" class="text-danger"></span>
+@*
+    <div class="container-fluid bg-light py-3">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
+                Account update failed.
             </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Surname"></label>
-                <input asp-for="Surname" class="form-control" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Input.GivenName"></label>
+                    <input asp-for="Input.GivenName" class="form-control" />
+                    <span asp-validation-for="Input.GivenName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Input.FamilyName"></label>
+                    <input asp-for="Input.FamilyName" class="form-control" />
+                    <span asp-validation-for="Input.FamilyName" class="text-danger"></span>
+                </div>
             </div>
-        </div>
-        @Html.HiddenFor(m => m.Email)
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a asp-page="Index" class="btn btn-outline-secondary">Cancel</a>
-    </form>
-</div>
+            @Html.HiddenFor(m => m.Input.Email)
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a asp-page="./Index" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
 
-<div class="clearfix my-3">
+    <div class="clearfix my-3">
     <div class="mr-2 float-left">
         <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
-    </div>
-    <p>
+        </div>
+        <p>
         <em>To edit your account icon, create a <a href="https://gravatar.com">Gravatar</a> account using your email address:</em> @Model.Email
-    </p>
-</div>
+        </p>
+    </div>
+*@

@@ -38,16 +38,15 @@ namespace FMS.Pages.Users
                     Id = id.Value,
                     Email = "example.one@example.com",
                     GivenName = "Sample",
-                    Surname = "User"
+                    FamilyName = "User"
                 };
             }
 
             Id = user.Id.ToString();
-            FullName = user.FullName;
+            FullName = user.DisplayName;
             Email = user.Email;
 
-            if (success.HasValue && success.Value) ShowSuccessMessage = true;
-
+            ShowSuccessMessage = success ?? false;
             return Page();
         }
     }

@@ -1,90 +1,93 @@
-using FMS.Domain.Interfaces;
-using Microsoft.AspNetCore.Identity;
+//using FMS.Domain.Interfaces;
+//using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+//using System;
+//using System.Collections.Generic;
+//using System.ComponentModel.DataAnnotations;
+//using System.Threading.Tasks;
 
 namespace FMS.Pages.Users
 {
     public class EditModel : PageModel
     {
-        private readonly IUserService _userService;
+        // TODO: All user info comes from SOG work account, so only roles can be edited
+        public IActionResult OnGet() => LocalRedirect("~/Users");
 
-        public EditModel(IUserService userService)
-        {
-            _userService = userService;
-        }
+        //    private readonly IUserService _userService;
 
-        [BindProperty, Required, StringLength(150), Display(Name = "Given Name")]
-        public string GivenName { get; set; }
+        //    public EditModel(IUserService userService)
+        //    {
+        //        _userService = userService;
+        //    }
 
-        [BindProperty, Required, StringLength(150), Display(Name = "Family Name")]
-        public string Surname { get; set; }
+        //    [BindProperty, Required, StringLength(150), Display(Name = "Given Name")]
+        //    public string GivenName { get; set; }
 
-        [BindProperty]
-        public Guid Id { get; set; }
-        [BindProperty]
-        public string Email { get; set; }
+        //    [BindProperty, Required, StringLength(150), Display(Name = "Family Name")]
+        //    public string FamilyName { get; set; }
 
-        public IEnumerable<IdentityError> Errors { get; set; }
+        //    [BindProperty]
+        //    public Guid Id { get; set; }
+        //    [BindProperty]
+        //    public string Email { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //    public IEnumerable<IdentityError> Errors { get; set; }
 
-            var user = await _userService.GetUserByIdAsync(id.Value);
-            if (user == null)
-            {
-                // TODO: remove in production
-                //return NotFound();
-                user = new Domain.Entities.Users.ApplicationUser()
-                {
-                    Id = id.Value,
-                    Email = "example.one@example.com",
-                    GivenName = "Sample",
-                    Surname = "User"
-                };
-            }
+        //    public async Task<IActionResult> OnGetAsync(Guid? id)
+        //    {
+        //        if (id == null)
+        //        {
+        //            return NotFound();
+        //        }
 
-            GivenName = user.GivenName;
-            Surname = user.Surname;
-            Id = id.Value;
-            Email = user.Email;
+        //        var user = await _userService.GetUserByIdAsync(id.Value);
+        //        if (user == null)
+        //        {
+        //            // TODO: remove in production
+        //            //return NotFound();
+        //            user = new Domain.Entities.Users.ApplicationUser()
+        //            {
+        //                Id = id.Value,
+        //                Email = "example.one@example.com",
+        //                GivenName = "Sample",
+        //                FamilyName = "User"
+        //            };
+        //        }
 
-            return Page();
-        }
+        //        GivenName = user.GivenName;
+        //        FamilyName = user.FamilyName;
+        //        Id = id.Value;
+        //        Email = user.Email;
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //        return Page();
+        //    }
 
-            var result = await _userService.UpdateUserAsync(Id, GivenName, Surname);
-            if (true || result.Succeeded)
-            {
-                return RedirectToPage("Details", new { id = Id, success = true });
-            }
+        //    public async Task<IActionResult> OnPostAsync()
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return Page();
+        //        }
 
-            if (!await _userService.UserExistsAsync(Id))
-            {
-                // TODO: remove in production
-                //return NotFound();
-            }
+        //        var result = await _userService.UpdateUserAsync(Id, GivenName, FamilyName);
+        //        if (true || result.Succeeded)
+        //        {
+        //            return RedirectToPage("./Details", new { id = Id, success = true });
+        //        }
 
-            foreach (var err in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, err.Description);
-            }
+        //        if (!await _userService.UserExistsAsync(Id))
+        //        {
+        //            // TODO: remove in production
+        //            //return NotFound();
+        //        }
 
-            return Page();
-        }
+        //        foreach (var err in result.Errors)
+        //        {
+        //            ModelState.AddModelError(string.Empty, err.Description);
+        //        }
+
+        //        return Page();
+        //    }
     }
 }

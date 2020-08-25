@@ -38,7 +38,7 @@ namespace FMS.Infrastructure.Services
             return await _userManager.GetUserAsync(principal);
         }
 
-        public async Task<IdentityResult> UpdateCurrentUserAsync(string givenName, string surname)
+        public async Task<IdentityResult> UpdateCurrentUserAsync(string givenName, string familyName)
         {
             var user = await GetCurrentUserAsync();
             if (user == null)
@@ -47,7 +47,7 @@ namespace FMS.Infrastructure.Services
             }
 
             user.GivenName = givenName;
-            user.Surname = surname;
+            user.FamilyName = familyName;
 
             return await _userManager.UpdateAsync(user);
         }
@@ -62,7 +62,7 @@ namespace FMS.Infrastructure.Services
             return await _userManager.FindByIdAsync(id.ToString());
         }
 
-        public async Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string surname)
+        public async Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName)
         {
             var user = await GetUserByIdAsync(id);
             if (user == null)
@@ -71,7 +71,7 @@ namespace FMS.Infrastructure.Services
             }
 
             user.GivenName = givenName;
-            user.Surname = surname;
+            user.FamilyName = familyName;
 
             return await _userManager.UpdateAsync(user);
         }
@@ -79,7 +79,7 @@ namespace FMS.Infrastructure.Services
         public async Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter)
         {
             return await _context.Users.AsNoTracking()
-                .Where(m => (string.IsNullOrEmpty(nameFilter) || m.GivenName.Contains(nameFilter) || m.Surname.Contains(nameFilter))
+                .Where(m => (string.IsNullOrEmpty(nameFilter) || m.GivenName.Contains(nameFilter) || m.FamilyName.Contains(nameFilter))
                     || (string.IsNullOrEmpty(emailFilter) || m.Email.Contains(emailFilter)))
                 .ToListAsync();
         }

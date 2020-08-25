@@ -1,73 +1,82 @@
-using FMS.Domain.Entities.Users;
-using FMS.Domain.Interfaces;
-using Microsoft.AspNetCore.Identity;
+//using FMS.Domain.Entities.Users;
+//using FMS.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+//using System.ComponentModel.DataAnnotations;
+//using System.Threading.Tasks;
 
 namespace FMS.Pages.Account
 {
     public class EditModel : PageModel
     {
-        private readonly IUserService _userService;
+        // All user info comes from SOG work account, so no editing needed
+        public IActionResult OnGet() => LocalRedirect("~/Account");
 
-        public EditModel(IUserService userService)
-        {
-            _userService = userService;
-        }
+        //private readonly IUserService _userService;
 
-        [BindProperty, Required, StringLength(150), Display(Name = "Given Name")]
-        public string GivenName { get; set; }
+        //public EditModel(IUserService userService)
+        //{
+        //    _userService = userService;
+        //}
 
-        [BindProperty, Required, StringLength(150), Display(Name = "Family Name")]
-        public string Surname { get; set; }
+        //[BindProperty]
+        //public InputModel Input { get; set; }
 
-        [BindProperty]
-        public string Email { get; set; }
+        //public class InputModel
+        //{
+        //    [Required, EmailAddress]
+        //    public string Email { get; set; }
 
-        public IEnumerable<IdentityError> Errors { get; set; }
+        //    [Required, StringLength(150), Display(Name = "Given Name")]
+        //    public string GivenName { get; set; }
 
-        public async Task<IActionResult> OnGet()
-        {
-            var currentUser = await _userService.GetCurrentUserAsync()
-                // TODO: remove in production
-                ?? new ApplicationUser()
-                {
-                    Id = default,
-                    Email = "example.one@example.com",
-                    GivenName = "Sample",
-                    Surname = "User"
-                };
-            //?? throw new Exception("Current user not found");
+        //    [Required, StringLength(150), Display(Name = "Family Name")]
+        //    public string FamilyName { get; set; }
+        //}
 
-            GivenName = currentUser.GivenName;
-            Surname = currentUser.Surname;
-            Email = currentUser.Email;
+        //    public async Task<IActionResult> OnGet()
+        //    {
+        //        var currentUser = await _userService.GetCurrentUserAsync()
+        //            // TODO: remove in production
+        //            ?? new ApplicationUser()
+        //            {
+        //                Id = default,
+        //                Email = "example.one@example.com",
+        //                GivenName = "Sample",
+        //                FamilyName = "User"
+        //            };
+        //        //?? throw new Exception("Current user not found");
 
-            return Page();
-        }
+        //        Input = new InputModel
+        //        {
+        //            GivenName = currentUser.GivenName,
+        //            FamilyName = currentUser.FamilyName,
+        //            Email = currentUser.Email
+        //        };
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //        return Page();
+        //    }
 
-            var result = await _userService.UpdateCurrentUserAsync(GivenName, Surname);
-            if (result.Succeeded)
-            {
-                return RedirectToPage("Index", new { success = true });
-            }
+        //    public async Task<IActionResult> OnPostAsync()
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return Page();
+        //        }
 
-            foreach (var err in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, err.Description);
-            }
+        //        var result = await _userService.UpdateCurrentUserAsync(Input.GivenName, Input.FamilyName);
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToPage("./Index", new { success = true });
+        //        }
 
-            return Page();
-        }
+        //        foreach (var err in result.Errors)
+        //        {
+        //            ModelState.AddModelError(string.Empty, err.Description);
+        //        }
+
+        //        return Page();
+        //    }
+        //}
     }
 }

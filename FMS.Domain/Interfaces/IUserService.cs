@@ -9,11 +9,11 @@ namespace FMS.Domain.Interfaces
     public interface IUserService
     {
         public Task<ApplicationUser> GetCurrentUserAsync();
-        public Task<IdentityResult> UpdateCurrentUserAsync(string givenName, string surname);
+        public Task<IdentityResult> UpdateCurrentUserAsync(string givenName, string familyName);
         
         public Task<bool> UserExistsAsync(Guid id);
         public Task<ApplicationUser> GetUserByIdAsync(Guid id);
-        public Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string surname);
+        public Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName);
 
         public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter);
     }

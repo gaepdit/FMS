@@ -129,7 +129,7 @@ namespace FMS.Pages.Facilities
             }
 
             ShowSuccessMessage = true;
-            return RedirectToPage("Details", new { id = Id });
+            return RedirectToPage("./Details", new { id = Id });
         }
 
         private async Task PopulateSelectsAsync()

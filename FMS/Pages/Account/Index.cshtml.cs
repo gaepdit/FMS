@@ -16,9 +16,9 @@ namespace FMS.Pages.Account
         }
 
         public string Id { get; set; }
-        public string FullName { get; set; }
+        public string DisplayName { get; set; }
         public string Email { get; set; }
-        public bool ShowSuccessMessage { get; set; } = false;
+        public bool ShowSuccessMessage { get; set; }
 
         public async Task<IActionResult> OnGet(bool? success)
         {
@@ -26,19 +26,18 @@ namespace FMS.Pages.Account
                 // TODO: remove in production
                 ?? new ApplicationUser()
                 {
-                Id = default,
+                    Id = default,
                     Email = "example.one@example.com",
                     GivenName = "Sample",
-                    Surname = "User"
+                    FamilyName = "User"
                 };
             //?? throw new Exception("Current user not found");
 
             Id = currentUser.Id.ToString();
-            FullName = currentUser.FullName;
+            DisplayName = currentUser.DisplayName;
             Email = currentUser.Email;
 
-            if (success.HasValue && success.Value) ShowSuccessMessage = true;
-
+            ShowSuccessMessage = success ?? false;
             return Page();
         }
     }
