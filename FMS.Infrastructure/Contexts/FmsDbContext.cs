@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using FMS.Domain.Entities;
+﻿using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Infrastructure.SeedData;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace FMS.Infrastructure.Contexts
 {
-    public class FmsDbContext : DbContext
+    public class FmsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
 
         public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) { }
@@ -27,6 +30,15 @@ namespace FMS.Infrastructure.Contexts
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
             
             builder.Entity<County>().HasData(ProdSeedData.GetCounties());
+
+            // Identity Tables
+            builder.Entity<ApplicationUser>().ToTable("AppUsers");
+            builder.Entity<IdentityRole<Guid>>().ToTable("AppRoles");
+            builder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
+            builder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
+            builder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins");
+            builder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles");
+            builder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens");
         }
     }
 }

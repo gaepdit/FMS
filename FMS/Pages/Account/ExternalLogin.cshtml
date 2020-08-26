@@ -1,0 +1,54 @@
+﻿@page
+@model Pages.Account.ExternalLoginModel
+@{
+    ViewData["Title"] = "FMS Account Error";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p class="text-danger">
+    There was an error creating your FMS account.
+</p>
+
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+<p>Data received from work account (for diagnostic purposes):</p>
+
+<dl class="row">
+    <dt class="col-xl-3">
+        @Html.DisplayNameFor(m => m.DisplayUser.Email)
+    </dt>
+    <dd class="col-xl-9">
+        @Html.DisplayFor(m => m.DisplayUser.Email)
+    </dd>
+    <dt class="col-xl-3">
+        @Html.DisplayNameFor(m => m.DisplayUser.UserName)
+    </dt>
+    <dd class="col-xl-9">
+        @Html.DisplayFor(m => m.DisplayUser.UserName)
+    </dd>
+    <dt class="col-xl-3">
+        @Html.DisplayNameFor(m => m.DisplayUser.FamilyName)
+    </dt>
+    <dd class="col-xl-9">
+        @Html.DisplayFor(m => m.DisplayUser.FamilyName)
+    </dd>
+    <dt class="col-xl-3">
+        @Html.DisplayNameFor(m => m.DisplayUser.GivenName)
+    </dt>
+    <dd class="col-xl-9">
+        @Html.DisplayFor(m => m.DisplayUser.GivenName)
+    </dd>
+    <dt class="col-xl-3">
+        @Html.DisplayNameFor(m => m.DisplayUser.SubjectId)
+    </dt>
+    <dd class="col-xl-9">
+        @Html.DisplayFor(m => m.DisplayUser.SubjectId)
+    </dd>
+    <dt class="col-xl-3">
+        @Html.DisplayNameFor(m => m.DisplayUser.ObjectId)
+    </dt>
+    <dd class="col-xl-9">
+        @Html.DisplayFor(m => m.DisplayUser.ObjectId)
+    </dd>
+</dl>

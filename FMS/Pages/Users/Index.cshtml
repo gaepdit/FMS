@@ -1,0 +1,54 @@
+﻿@page
+@model Pages.Users.IndexModel
+@{
+    ViewData["Title"] = "User Admin";
+}
+
+<h1>User Admin</h1>
+
+<div class="container-fluid bg-light py-3">
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="First or last name" />
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="Whole or partial email" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    }
+</div>
+
+@if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+{
+    <table class="table table-borderless">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in Model.SearchResults)
+            {
+                <tr>
+                    <td>@u.Name</td>
+                    <td>@u.Email</td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@u.Id" class="btn btn-outline-primary btn-sm">View</a>
+                        <a asp-page="./Edit" asp-route-id="@u.Id" class="btn btn-outline-dark btn-sm">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No search results found.</p>
+}

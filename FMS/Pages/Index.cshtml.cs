@@ -1,31 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FMS.Domain.Entities.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace FMS
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(SignInManager<ApplicationUser> signInManager)
         {
-            _logger = logger;
+            _signInManager = signInManager;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
-        }
-
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
+            if (_signInManager.IsSignedIn(User))
             {
-                return Page();
+                return LocalRedirect("~/Facilities");
             }
-            string url = "/Facilities/Index";
-            return RedirectToPage(url);
+
+            return LocalRedirect("~/Account/Login");
         }
     }
 }

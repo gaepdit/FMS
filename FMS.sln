@@ -20,7 +20,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Domain.Tests", "tests\F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Infrastructure.Tests", "tests\FMS.Infrastructure.Tests\FMS.Infrastructure.Tests.csproj", "{700C1091-2F42-43FA-9342-EA56C520C6A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHelpers", "tests\TestHelpers\TestHelpers.csproj", "{3F455AB9-E598-4AE5-A326-DA840B532E33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHelpers", "tests\TestHelpers\TestHelpers.csproj", "{3F455AB9-E598-4AE5-A326-DA840B532E33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{58D1F541-EE0C-432F-A090-27FB31E4463B}"
+	ProjectSection(SolutionItems) = preProject
+		docs\ER-diagram.md = docs\ER-diagram.md
+		docs\FMS-UI-routing.md = docs\FMS-UI-routing.md
+		docs\User-accounts.md = docs\User-accounts.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

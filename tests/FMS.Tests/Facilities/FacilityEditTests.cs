@@ -2,7 +2,6 @@ using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
-using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +31,7 @@ namespace FMS.Tests.Facilities
                 .ReturnsAsync(facility)
                 .Verifiable();
 
-            var pageModel = new EditModel(mockRepo.Object, mockContext.Object);
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockContext.Object);
 
             // This fails because FmsDbContext.Counties not fully mocked
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
@@ -56,7 +55,7 @@ namespace FMS.Tests.Facilities
                 .ReturnsAsync((FacilityDetailDto)null)
                 .Verifiable();
 
-            var pageModel = new EditModel(mockRepo.Object, mockContext.Object);
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockContext.Object);
 
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
@@ -74,7 +73,7 @@ namespace FMS.Tests.Facilities
             var mockContext = new Mock<FmsDbContext>(optionsBuilder.Options);
 
             var mockRepo = new Mock<IFacilityRepository>();
-            var pageModel = new EditModel(mockRepo.Object, mockContext.Object);
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockContext.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

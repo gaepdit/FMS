@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,6 +29,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
                         <ul class="navbar-nav flex-grow-1">
                             <li role="separator" class="divider"></li>
                             <li class="nav-item">
@@ -46,13 +47,11 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" href="#" id="AdminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                                 <div class="dropdown-menu" aria-labelledby="FacDropdown">
-                                    <a class="dropdown-item" asp-area="" asp-page="/Account/Index">Edit User Account</a>
-                                    <a class="dropdown-item" asp-area="" asp-page="/Admin/Index">Edit Drop-Downs</a>
+                                    <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
+                                    <a class="dropdown-item" asp-page="/Admin/Index">Site Maintenance</a>
                                 </div>
                             </li>
                         </ul>
-                        @*<partial name="_LoginPartial" />*@
-                        @*@Html.PartialAsync("_LoginPartial")*@
                     </div>
                 </div>
             </div>
