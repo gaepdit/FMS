@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,66 +8,62 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    <a class="skipnav" href="#main-content">Skip to main content</a>
     <header role="banner">
-        <div class="container">
-            <div id="logo" style="font-size: 28px">
-                <div>
-                    <a accesskey="1" title="DNR EPD Home" aria-label="DNR EPD Home" href="https://epd.georgia.gov/" style="color:black" target="_blank">
-                        <img src="~/graphics/EPD Logo_FINAL - transparent 220.png" /> &nbsp;&nbsp;&nbsp;&nbsp;
-                    </a>
-                    <a accesskey="1" title="Home" aria-label="Home" href="/Facilities" style="color:black">
-                        <span>File Management System</span>
-                    </a>
-                </div>
-            </div>
+        <div class="container h3 my-2">
+            <img src="~/graphics/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
+            File Management System
         </div>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-transparent border-bottom box-shadow mb-3">
-            <div class="container-fluid" style="background-color: #106717">
-                <div class="navbar-header">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
-                        <ul class="navbar-nav flex-grow-1">
-                            <li role="separator" class="divider"></li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Facilities/Index">Search Facilities</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Facilities/IndexMap">Search Map</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Facilities/Add">Add Facilities</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Reports/Index">Reports</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" href="#" id="AdminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                                <div class="dropdown-menu" aria-labelledby="FacDropdown">
-                                    <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
-                                    <a class="dropdown-item" asp-page="/Admin/Index">Site Maintenance</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-brand border-bottom box-shadow mb-3">
+            <div class="container">
+                @*<a class="navbar-brand" asp-page="/Index">FMS</a>*@
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/Facilities/Index">Search Facilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/Facilities/IndexMap">Search Map</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/Facilities/Add">Add Facilities</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/Reports/Index">Reports</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="AdminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                            <div class="dropdown-menu" aria-labelledby="FacDropdown">
+                                <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
+                                <a class="dropdown-item" asp-page="/Admin/Index">Site Maintenance</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-1">
+        <main id="main-content" role="main" class="pb-3">
             @RenderBody()
         </main>
-        <a href="#"><span style="color: green ">Return to top</span></a>
     </div>
 
-    <footer class="border-top footer" style="background-color: #106717">
-        <div class="container">
-            <div style="color: white ">
-                &copy; 2020 - Environmental Protection Division IT - <a style="color:yellow" href="http://georgia.gov/accessibility" target="_blank">Accessibility</a><span> | </span><a style="color:yellow" href="http://www.gadnr.org/ada" target="_blank">DNR Accessibility Notice</a><span> | </span><a style="color:yellow" href="http://georgia.gov/privacysecurity" target="_blank">Privacy/Security</a>
+    <footer class="border-top footer">
+        <div class="container text-brand">
+            <a href="#">Return to top</a>
+        </div>
+        <div class="bg-brand text-light">
+            <div class="container">
+                &copy; @DateTime.Now.Year Environmental Protection Division IT -
+                <a href="http://georgia.gov/accessibility" target="_blank">Accessibility</a> |
+                <a href="http://www.gadnr.org/ada" target="_blank">DNR Accessibility Notice</a> |
+                <a href="http://georgia.gov/privacysecurity" target="_blank">Privacy/Security</a>
             </div>
         </div>
     </footer>
@@ -75,7 +71,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

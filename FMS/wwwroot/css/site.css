@@ -1,11 +1,10 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
-  border: 10px solid black;
 }
 
 /* Provide sufficient contrast against white background */
@@ -71,56 +70,75 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-/* card sizing and positioning*/
-.card-columns .card:hover .card-img {
-    opacity: 1;
-    -webkit-transform-style: preserve-3d;
-}
-.card-columns .card-body {
-    height: 200px;
-    font-family: Arial;
-    background: #106717;
-}
-.card-columns .card-img {
-    height: 100px;
-    width: 200px;
-    vertical-align: bottom;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: .8;
-}
-.modal .card-img {
-    height: 80px;
-    vertical-align: bottom;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-.card-columns .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(37,33,82,.12), 0 4px 8px rgba(37,33,82,.06);
+/* Fix missing a:focus style
+-------------------------------------------------- */
+a:focus {
+    color: #0056b3;
+    text-decoration: underline;
 }
 
-.card-footer {
-    background: #fbfafd;
-}
-
-.container .jumbotron,
-.container-fluid .jumbotron {
-    border-radius: 30px;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-
-.jumbotron {
-    padding-top: 30px;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    color: inherit;
-    /*width: 1400px;*/
+/* Branding
+-------------------------------------------------- */
+.bg-brand {
     background-color: #106717;
-    background-color: rgba(10, 67, 17, 0.56);
-    border-radius: 30px;
 }
+
+/* Header logo */
+.img-logo {
+    height: 60px;
+}
+
+body {
+    margin-bottom: 120px; /* Sticky footer correction */
+}
+
+.footer a {
+    color: #008000;
+}
+
+    .footer a:hover, .footer a:focus {
+        color: #106717;
+    }
+
+.footer .bg-brand a {
+    color: #ffff00;
+}
+
+    .footer .bg-brand a:hover, .footer .bg-brand a:focus {
+        color: #d9d900;
+    }
+
+/* Skip to content link
+-------------------------------------------------- */
+.skipnav {
+    background: transparent;
+    color: #212121;
+    text-decoration: underline;
+    left: 0;
+    padding: 1rem 1.5rem;
+    position: absolute;
+    top: -4.2rem;
+    transition: all 0.2s ease-in-out;
+    z-index: 100;
+}
+
+    .skipnav:focus {
+        background: #ffffff;
+        left: 0;
+        outline: 0;
+        box-shadow: 0 0 3px #1B98CA, 0 0 7px #1B98CA;
+        position: absolute;
+        top: 0;
+        transition: all 0.2s ease-in-out;
+    }
+
+/* Login button 
+-------------------------------------------------- */
+.btn-img {
+    line-height: 1;
+}
+
+    .btn-img img {
+        height: 25px;
+    }
 
