@@ -15,7 +15,7 @@ namespace FMS.Pages.Facilities
         // This the FacilityObject used for the search function
         // It's properties are bound to the HTML elements
         [BindProperty]
-        public FacilitySpec Spec { get; set; }
+        public FacilityMapSpec Spec { get; set; }
 
         // this is the list of facilities returned from the search
         public IReadOnlyList<FacilitySummaryDto> FacilityList { get; set; }
@@ -36,7 +36,7 @@ namespace FMS.Pages.Facilities
         public bool ShowNone { get; set; }
 
         // search radius for map, bound to radius drop-down
-        public string SearchRadius { get; set; }
+        //public string SearchRadius { get; set; }
 
         public IndexMapModel(IFacilityRepository repository)
         {

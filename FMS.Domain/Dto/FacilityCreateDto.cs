@@ -54,9 +54,9 @@ namespace FMS.Domain.Dto
         public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]
-        public decimal Latitude { get; set; }
+        public decimal? Latitude { get; set; }
 
         [Display(Name = "Longitude")]
-        public decimal Longitude { get; set; }
+        public decimal? Longitude { get; set; }
     }
 }

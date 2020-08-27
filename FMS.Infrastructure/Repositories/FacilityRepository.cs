@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -52,28 +53,46 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
                 .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
                 .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)
-                .Where(e => spec.FacilityStatusId.Equals(Guid.Empty) || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-                .Where(e => spec.FacilityTypeId.Equals(Guid.Empty) || e.FacilityType.Id.Equals(spec.FacilityTypeId))
-                .Where(e => spec.BudgetCodeId.Equals(Guid.Empty) || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-                .Where(e => spec.OrganizationalUnitId.Equals(Guid.Empty) || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => spec.EnvironmentalInterestId.Equals(Guid.Empty) || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
-                .Where(e => spec.ComplianceOfficerId.Equals(Guid.Empty) || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
-                .Where(e => spec.FileId.Equals(Guid.Empty) || e.File.Id.Equals(spec.FileId))
+                .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
+                .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
+                .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
+                .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.FileId.HasValue || e.File.Id.Equals(spec.FileId))
                 .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
                 .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
-                .Where(e => spec.Latitude.Equals(0) || e.Latitude.ToString().Contains(spec.Latitude.ToString()))
-                .Where(e => spec.Longitude.Equals(0) || e.Longitude.ToString().Contains(spec.Longitude.ToString()))
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
 
         }
 
-        public Task<bool> CreateFacilityAsync(FacilityCreateDto facility)
+        public async Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
-            throw new NotImplementedException();
-            
+            return await _context.Facilities.AsNoTracking()
+                .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
+                .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)
+                .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
+                .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
+                .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
+                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
+                .Where(e => !spec.Latitude.HasValue || e.Latitude.ToString().Contains(spec.Latitude.ToString()))
+                .Where(e => !spec.Longitude.HasValue || e.Longitude.ToString().Contains(spec.Longitude.ToString()))
+                .Select(e => new FacilitySummaryDto(e))
+                .ToListAsync();
+        }
+
+        public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
+        {
+            //throw new NotImplementedException();
+
+            Facility newFac = new Facility(newFacility);
+            _context.Facilities.Add(newFac);
+            _context.SaveChanges();
+                       
+            return Task.FromResult(newFac.Id);
         }
 
         public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)

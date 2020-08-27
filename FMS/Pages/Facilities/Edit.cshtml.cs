@@ -46,8 +46,8 @@ namespace FMS.Pages.Facilities
         //public string ZipCode { get; set; }
         //public string Latitude { get; set; }
         //public string Longitude { get; set; }
-       
 
+        public SelectList Files { get; set; }
         public SelectList Counties { get; private set; }
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
@@ -89,7 +89,7 @@ namespace FMS.Pages.Facilities
             }
 
             await PopulateSelectsAsync();
-            await PopulateObjectsAsync();
+            //await PopulateObjectsAsync();
             return Page();
         }
 
@@ -98,7 +98,7 @@ namespace FMS.Pages.Facilities
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
-                await PopulateObjectsAsync();
+                //await PopulateObjectsAsync();
                 return Page();
             }
 
@@ -132,6 +132,8 @@ namespace FMS.Pages.Facilities
 
         private async Task PopulateSelectsAsync()
         {
+            Files = new SelectList(await _context.Files.ToListAsync(), "Id", "FileLabel");
+
             Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 
             FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
@@ -149,9 +151,9 @@ namespace FMS.Pages.Facilities
             ComplianceOfficers = new SelectList(await _context.ComplianceOfficers.ToListAsync(), "Id", "Name");
         }
 
-        private async Task PopulateObjectsAsync()
-        {
-            File = new FileEditDto(await _context.Files.FindAsync(Facility.FileId));
-        }
+        //private async Task PopulateObjectsAsync()
+        //{
+        //    File = new FileEditDto(await _context.Files.FindAsync(Facility.FileId));
+        //}
     }
 }

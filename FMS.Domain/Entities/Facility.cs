@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Entities.Base;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,12 @@ namespace FMS.Domain.Entities
 {
     public class Facility : BaseActiveModel
     {
+        public Facility() { }
+        public Facility(FacilityCreateDto newFacility)
+        {
+
+        }
+
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
         public string FacilityNumber { get; set; }
 

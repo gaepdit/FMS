@@ -14,7 +14,9 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FileId"></label>
-                <input asp-for="Spec.FileId" class="form-control" placeholder="File ID (XXX-XXXX)" />
+                <select asp-for="Spec.FileId" asp-items="Model.Files" class="custom-select">
+                    <option value="">Select File ID (XXX-XXXX)...</option>
+                </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FacilityNumber"></label>
@@ -146,16 +148,6 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="form-group col-md-6">
-                <label asp-for="Spec.Latitude"></label>
-                <input asp-for="Spec.Latitude" class="form-control" placeholder="DD.DDDDDDD" />
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Spec.Longitude"></label>
-                <input asp-for="Spec.Longitude" class="form-control" placeholder="-DD.DDDDDDD" />
-            </div>
-        </div>
-        <div class="form-group row">
             <div class="form-group col">
                 <div class="form-check">
                     @Html.CheckBoxFor(m => m.ActiveOnly)
@@ -200,9 +192,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.Name)
                         </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.Facility.Location)
-                            </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.Address)
                         </th>
@@ -215,12 +204,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.PostalCode)
                         </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.Facility.Latitude)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Facility.Longitude)
-                            </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.Active)
                         </th>
@@ -244,9 +227,6 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Name)
                                         </td>
-                                        @*<td>
-                                @Html.DisplayFor(modelItem => item.Location)
-                            </td>*@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Address)
                                         </td>
@@ -259,12 +239,6 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.PostalCode)
                                         </td>
-                                        @*<td>
-                                @Html.DisplayFor(modelItem => item.Latitude)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Longitude)
-                            </td>*@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Active)
                                         </td>
@@ -282,9 +256,6 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
-                                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Location)
-                        </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Address)
                                     </td>
@@ -297,12 +268,6 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.PostalCode)
                                     </td>
-                                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Latitude)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Longitude)
-                        </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Active)
                                     </td>

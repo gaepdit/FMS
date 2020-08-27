@@ -28,7 +28,7 @@ namespace FMS.Domain.Dto
             Longitude = facility.Longitude;
         }
 
-        [Display(Name = "Facility Number"), Required]
+        [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
         [Display(Name = "Facility Name"), Required]
@@ -77,9 +77,11 @@ namespace FMS.Domain.Dto
         public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]
+        [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Latitude { get; set; }
 
         [Display(Name = "Longitude")]
+        [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; set; }
     }
 }

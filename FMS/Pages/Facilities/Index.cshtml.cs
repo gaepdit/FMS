@@ -37,6 +37,7 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public bool ShowNone { get; set; }
 
+        public SelectList Files { get; set; }
         public SelectList Counties { get; private set; }
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
@@ -90,6 +91,7 @@ namespace FMS.Pages.Facilities
         private async Task PopulateSelectsAsync()
         {
             // TODO: change to DTOs from direct entity context
+            Files = new SelectList(await _context.Files.ToListAsync(), "Id", "FileLabel");
 
             Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 

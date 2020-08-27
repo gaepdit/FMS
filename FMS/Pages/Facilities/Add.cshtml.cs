@@ -6,6 +6,7 @@ using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Facilities
@@ -23,6 +24,7 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public Guid Id { get; set; }
 
+        public SelectList Files { get; set; }
         public SelectList Counties { get; private set; }
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
@@ -60,26 +62,14 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            try
-            {
-                await _repository.CreateFacilityAsync(Facility);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!await _repository.FacilityExistsAsync(Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _repository.CreateFacilityAsync(Facility);
 
             return RedirectToPage("Details", new { id = Id, success = true });
         }
         private async Task PopulateSelectsAsync()
         {
+            Files = new SelectList(await _context.Files.ToListAsync(), "Id", "FileLabel");
+
             Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 
             FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");

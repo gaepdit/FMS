@@ -14,32 +14,24 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Facility.FileId"></label>
-                <input asp-for="Facility.FileId" class="form-control" />
+                <select asp-for="Facility.FileId" asp-items="Model.Files" class="custom-select">
+                    <option value="">Select File ID (XXX-XXXX)...</option>
+                </select>
                 <span asp-validation-for="Facility.FileId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
-                <label asp-for="File.FileLabel"></label>
-                <input asp-for="File.FileLabel" class="form-control" />
-                <span asp-validation-for="File.FileLabel" class="text-danger"></span>
-            </div>
-            @*<div class="form-group col-md-2">
-                <label for="File">File Label</label>
-                @Html.TextBox("File", Model.File.FileLabel, new { @name = "File", @class = "form-control", @placeholder = "File Label" })
-                <span asp-validation-for="File.FileLabel" class="text-danger"></span>
-            </div>*@
-            <div class="form-group col-md-2">
                 <label asp-for="Facility.FacilityNumber"></label>
                 <input asp-for="Facility.FacilityNumber" class="form-control" />
                 <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <label asp-for="Facility.FacilityTypeId"></label>
                 <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
                     <option value="">Select Facility Type...</option>
                 </select>
                 <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-3">
                 <label asp-for="Facility.OrganizationalUnitId"></label>
                 <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
                     <option value="">Select Organizational Unit...</option>
@@ -82,13 +74,6 @@
                 <label asp-for="Facility.Name"></label>
                 <input asp-for="Facility.Name" class="form-control" />
                 <span asp-validation-for="Facility.Name" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <label asp-for="Facility.Location"></label>
-                <input asp-for="Facility.Location" class="form-control" />
-                <span asp-validation-for="Facility.Location" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
@@ -173,6 +158,13 @@
                 <label asp-for="Facility.PostalCode"></label>
                 <input asp-for="Facility.PostalCode" class="form-control" />
                 <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Facility.Location"></label>
+                <input asp-for="Facility.Location" class="form-control" />
+                <span asp-validation-for="Facility.Location" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group row">

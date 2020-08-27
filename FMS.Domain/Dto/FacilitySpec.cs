@@ -6,10 +6,10 @@ namespace FMS.Domain.Dto
     public class FacilitySpec
     {
         [Display(Name = "Facility Number")]
-        public string FacilityNumber { get; set; }
+        public string? FacilityNumber { get; set; }
 
         [Display(Name = "Facility Name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Display(Name = "Active Site")]
         public bool? Active { get; set; }
@@ -18,45 +18,40 @@ namespace FMS.Domain.Dto
         public int? CountyId { get; set; }
 
         [Display(Name = "Facility Status")]
-        public Guid FacilityStatusId { get; set; }
+        public Guid? FacilityStatusId { get; set; }
 
         [Display(Name = "Facility Type")]
-        public Guid FacilityTypeId { get; set; }
+        public Guid? FacilityTypeId { get; set; }
 
         [Display(Name = "Budget Code")]
-        public Guid BudgetCodeId { get; set; }
+        public Guid? BudgetCodeId { get; set; }
 
         [Display(Name = "Organizational Unit")]
-        public Guid OrganizationalUnitId { get; set; }
+        public Guid? OrganizationalUnitId { get; set; }
 
         [Display(Name = "Environmental Interest")]
-        public Guid EnvironmentalInterestId { get; set; }
+        public Guid? EnvironmentalInterestId { get; set; }
 
         [Display(Name = "Compliance Officer")]
-        public Guid ComplianceOfficerId { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
 
         [Display(Name = "File Id")]
-        public Guid FileId { get; set; }
+        public Guid? FileId { get; set; }
 
         [Display(Name = "Location Description")]
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
         [Display(Name = "Street Address")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         [Display(Name = "City")]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         [Display(Name = "State")]
-        public string State { get; set; }
+        public string? State { get; set; }
 
         [Display(Name = "Zip Code")]
-        public string PostalCode { get; set; }
+        public string? PostalCode { get; set; }
 
-        [Display(Name = "Latitude")]
-        public decimal Latitude { get; set; }
-
-        [Display(Name = "Longitude")]
-        public decimal Longitude { get; set; }
     }
 }

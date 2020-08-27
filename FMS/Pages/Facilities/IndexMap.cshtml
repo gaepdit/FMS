@@ -84,8 +84,8 @@
         <br />
         <div class="form-group row">
             <div class="col-md-3">
-                <label asp-for="@Model.SearchRadius"></label>
-                <select asp-for="@Model.SearchRadius" class="custom-select">
+                <label asp-for="Spec.SearchRadius"></label>
+                <select asp-for="Spec.SearchRadius" class="custom-select">
                     <option selected value="1">Search radius 1/4 Mile</option>
                     <option value="2">Search radius 1/2 Mile</option>
                     <option value="3">Search radius 1 Mile</option>
@@ -163,9 +163,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.Name)
                         </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.Facility.Location)
-                            </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.Address)
                         </th>
@@ -178,12 +175,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.PostalCode)
                         </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.Facility.Latitude)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Facility.Longitude)
-                            </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.Spec.Active)
                         </th>
@@ -208,9 +199,6 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Name)
                                         </td>
-                                        @*<td>
-                                                @Html.DisplayFor(modelItem => item.Location)
-                                            </td>*@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Address)
                                         </td>
@@ -223,12 +211,6 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.PostalCode)
                                         </td>
-                                        @*<td>
-                                                @Html.DisplayFor(modelItem => item.Latitude)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Longitude)
-                                            </td>*@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Active)
                                         </td>
@@ -246,9 +228,6 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.Location)
-                                        </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Address)
                                     </td>
@@ -261,12 +240,6 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.PostalCode)
                                     </td>
-                                    @*<td>
-                                            @Html.DisplayFor(modelItem => item.Latitude)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Longitude)
-                                        </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Active)
                                     </td>
