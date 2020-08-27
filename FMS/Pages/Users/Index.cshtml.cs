@@ -18,10 +18,14 @@ namespace FMS.Pages.Users
             _userService = userService;
         }
 
+        [BindProperty]
         public string Name { get; set; }
+        
+        [BindProperty]
         [UIHint("EmailAddress")]
         public string Email { get; set; }
 
+        public bool Searched { get; set; }
         public List<UserSearchResult> SearchResults { get; set; }
 
         public void OnGet() { }
@@ -35,6 +39,7 @@ namespace FMS.Pages.Users
 
             var users = await _userService.GetUsersAsync(Name, Email);
 
+            Searched = true;
             SearchResults = users.Select(e =>
                 new UserSearchResult()
                 {
@@ -42,14 +47,6 @@ namespace FMS.Pages.Users
                     Name = e.SortableFullName,
                     Id = e.Id
                 }).ToList();
-
-            // TODO: remove in production
-            if (SearchResults == null || SearchResults.Count == 0)
-                SearchResults = new List<UserSearchResult>
-                {
-                    new UserSearchResult{ Id = new Guid("06bca04c-19bb-4c41-b554-e57a56a2c6b7"), Email = "example.one@example.com", Name = "Sample User" },
-                    new UserSearchResult{ Id = new Guid("43a21a8a-1fc6-4348-9004-e1aec42392b7"), Email = "example.two@example.net", Name = "Another Sample" }
-                };
 
             return Page();
         }
