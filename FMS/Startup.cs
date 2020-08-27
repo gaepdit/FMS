@@ -89,7 +89,7 @@ namespace FMS
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, FmsDbContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -113,6 +113,7 @@ namespace FMS
             app.UseEndpoints(endpoints => endpoints.MapRazorPages());
 
             // Initialize database
+            var context = serviceProvider.GetService<FmsDbContext>();
             if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
             {
                 // Using "IISX-TempDb" launch profile causes the database to be recreated on launch 
