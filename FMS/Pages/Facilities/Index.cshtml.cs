@@ -19,7 +19,6 @@ namespace FMS.Pages.Facilities
         private readonly FmsDbContext _context;
 
         // "Spec" is the Facility DTO bound to the HTML Page elements
-        [BindProperty]
         public FacilitySpec Spec { get; set; }
 
         // List of facilities resulting from the search
@@ -30,11 +29,9 @@ namespace FMS.Pages.Facilities
         public bool ActiveOnly { get; set; }
 
         // Shows text results <div> if any results return
-        [BindProperty]
         public bool ShowResults { get; set; }
 
         // Shows if no results in result set
-        [BindProperty]
         public bool ShowNone { get; set; }
 
         public SelectList Files { get; set; }
@@ -67,10 +64,10 @@ namespace FMS.Pages.Facilities
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec)
         {
             // Get the list of facilities matching the "Spec" criteria
-            FacilityList = await _repository.GetFacilityListAsync(Spec);
+            FacilityList = await _repository.GetFacilityListAsync(spec);
             
             // Set "divs" based on search results
             if(FacilityList.Count() > 0)

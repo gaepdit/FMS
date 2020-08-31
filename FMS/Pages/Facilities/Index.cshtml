@@ -1,15 +1,16 @@
 ﻿@page
 @model Pages.Facilities.IndexModel
-@*@section Scripts {
-        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }*@
 @{
     ViewData["Title"] = "Facility Search";
 }
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_SearchFormScriptsPartial"); }
+}
+
 <h1>@ViewData["Title"]</h1>
 <hr />
 <div class="container-fluid">
-    <form method="post">
+    <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <div class="form-group col-md-3">
@@ -36,7 +37,6 @@
             </div>
         </div>
         <div class="form-row">
-
             <div class="form-group col-md-3">
                 <label asp-for="Spec.ComplianceOfficerId"></label>
                 <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
@@ -160,13 +160,15 @@
         <div class="form-row">
             <div class="form-group col">
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary mb-2">Search for Facilities</button>
+                    <input type="hidden" name="handler" value="search" />
+                    <button id="SearchButton" type="submit" class="btn btn-primary mb-2">Search for Facilities</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
 <hr />
+<a name="SearchResults"></a>
 <div id="ResultActive" class="text-center" style="@(Model.ActiveOnly == false ? "display:none" : "display:block")">
     <div class="container-fluid">
         <h5 style="color:red">Only Active Sites are being displayed</h5>
@@ -280,5 +282,3 @@
         </div>
     </div>
 </div>
-
-
