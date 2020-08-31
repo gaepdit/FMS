@@ -4,7 +4,7 @@
     ViewData["Title"] = "Facility Search";
 }
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_SearchFormScriptsPartial"); }
+    <partial name="_SearchFormScriptsPartial" />
 }
 
 <h1>@ViewData["Title"]</h1>

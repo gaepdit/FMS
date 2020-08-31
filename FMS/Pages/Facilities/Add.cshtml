@@ -1,7 +1,7 @@
-﻿@page
+@page
 @model Pages.Facilities.AddModel
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <partial name="_ValidationScriptsPartial" />
 }
 @{
     ViewData["Title"] = "Add Facility";
