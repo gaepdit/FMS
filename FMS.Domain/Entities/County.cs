@@ -6,9 +6,6 @@ namespace FMS.Domain.Entities
     {
         // This list will not change, so no need for "BaseActiveModel"
         public int Id { get; set; }
-
-        [StringLength(20)]
-        [Display(Name = "County")]
         public string Name { get; set; }
     }
 }

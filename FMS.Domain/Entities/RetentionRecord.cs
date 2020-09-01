@@ -1,10 +1,12 @@
 ﻿using FMS.Domain.Entities.Base;
+using System;
 
 namespace FMS.Domain.Entities
 {
     public class RetentionRecord : BaseActiveModel
     {
-        public Facility Facility { get; set; }
+        //public Guid FacilityId { get; set; }
+        public  Facility Facility { get; set; }   //virtual
 
         // Starting Year
         public int StartYear { get; set; }

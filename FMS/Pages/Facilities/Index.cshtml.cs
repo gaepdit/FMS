@@ -8,12 +8,27 @@ using System.Linq;
 using FMS.Domain.Repositories;
 using FMS.Domain.Dto;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using FMS.Infrastructure.Repositories;
 
 namespace FMS.Pages.Facilities
 {
     public class IndexModel : PageModel
     {
         private readonly IFacilityRepository _repository;
+
+        private readonly IFileRepository _fileRepository;
+
+        private readonly ICountyRepository _countyRepository;
+
+        private readonly IBudgetCodeRepository _budgetCodeRepository;
+
+        private readonly IComplianceOfficerRepository _complianceOfficerRepository;
+
+        private readonly IEnvironmentalInterestRepository _environmentalInterestRepository;
+
+        private readonly IFacilityStatusRepository _facilityStatusRepository;
+
+        private readonly IFacilityTypeRepository _facilityTypeRepository;
 
         // TODO: Remove _context after moving data access to repositories
         private readonly FmsDbContext _context;
@@ -24,6 +39,8 @@ namespace FMS.Pages.Facilities
 
         // List of facilities resulting from the search
         public IReadOnlyList<FacilitySummaryDto> FacilityList {get; set;}
+
+        public int? CountyArg { get; set; }
 
         // true when checkbox is checked to show only active sites
         [BindProperty]
@@ -54,21 +71,38 @@ namespace FMS.Pages.Facilities
 
         public IndexModel(
             IFacilityRepository repository,
+            IFileRepository fileRepository,
+            ICountyRepository countyRepository,
+            IBudgetCodeRepository budgetCodeRepository,
+            IComplianceOfficerRepository complianceOfficerRepository,
+            IEnvironmentalInterestRepository environmentalInterestRepository,
+            IFacilityStatusRepository facilityStatusRepository,
+            IFacilityTypeRepository facilityTypeRepository,
             FmsDbContext context)
         {
             _repository = repository;
+            _fileRepository = fileRepository;
+            _countyRepository = countyRepository;
+            _budgetCodeRepository = budgetCodeRepository;
+            _complianceOfficerRepository = complianceOfficerRepository;
+            _environmentalInterestRepository = environmentalInterestRepository;
+            _facilityStatusRepository = facilityStatusRepository;
+            _facilityTypeRepository = facilityTypeRepository;
             _context = context;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-           
+            //Spec = new FacilitySpec() { };
             await PopulateSelectsAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // TODO: check File number versus County ID number
+
+
             // Get the list of facilities matching the "Spec" criteria
             FacilityList = await _repository.GetFacilityListAsync(Spec);
             
@@ -90,24 +124,32 @@ namespace FMS.Pages.Facilities
 
         private async Task PopulateSelectsAsync()
         {
-            // TODO: change to DTOs from direct entity context
+            //Files = new SelectList(await _fileRepository.GetFileListAsync(CountyArg), "Id", "FileLabel");
             Files = new SelectList(await _context.Files.ToListAsync(), "Id", "FileLabel");
 
-            Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
+            Counties = new SelectList(await _countyRepository.GetCountyListAsync(), "Id", "Name");
+            //Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 
-            FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
-
-            FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Id", "Name");
-
+            //BudgetCodes = new SelectList(await _budgetCodeRepository.GetBudgetCodeListAsync(), "Id", "Name");
             BudgetCodes = new SelectList(await _context.BudgetCodes.ToListAsync(), "Id", "Name");
 
-            OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
+            // need to get a Name property instead of Empl. Id. to Populate DropDown
+            //ComplianceOfficers = new SelectList(await _complianceOfficerRepository.GetComplianceOfficerListAsync(), "Id", "Name");
+            ComplianceOfficers = new SelectList(await _context.ComplianceOfficers.ToListAsync(), "Id", "Name");
 
+            //EnvironmentalInterests = new SelectList(await _environmentalInterestRepository.GetEnvironmentalInterestListAsync(), "Id", "Name");
             EnvironmentalInterests = new SelectList(await _context.EnvironmentalInterests.ToListAsync(), "Id", "Name");
 
-            // TODO: add await & .ToListAsync() to COs. 
-            // need to get a Name property instead of Empl. Id. to Populate DropDown
-            ComplianceOfficers = new SelectList(await _context.ComplianceOfficers.ToListAsync(), "Id", "Name");
+            //FacilityStatuses = new SelectList(await _facilityStatusRepository.GetFacilityStatusListAsync(), "Id", "Status");
+            FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
+
+            //FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
+            FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Id", "Name");
+
+            // TODO: change to DTOs from direct entity context
+
+            OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
+    
         }
     }
 }

@@ -1,4 +1,5 @@
 using FMS.Domain.Entities.Base;
+using System;
 
 namespace FMS.Domain.Entities
 {
@@ -6,6 +7,7 @@ namespace FMS.Domain.Entities
     {
         public string Status { get; set; }
 
-        public EnvironmentalInterest EnvironmentalInterest { get; set; }
+        //public Guid EnvironmentalInterestId { get; set; }
+        public  EnvironmentalInterest EnvironmentalInterest { get; set; }  //
     }
 }

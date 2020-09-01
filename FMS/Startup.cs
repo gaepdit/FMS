@@ -86,6 +86,13 @@ namespace FMS
 
 
             services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
+            services.AddScoped(typeof(IFileRepository), typeof(FileRepository));
+            services.AddScoped(typeof(ICountyRepository), typeof(CountyRepository));
+            services.AddScoped(typeof(IBudgetCodeRepository), typeof(BudgetCodeRepository));
+            services.AddScoped(typeof(IComplianceOfficerRepository), typeof(ComplianceOfficerRepository));
+            services.AddScoped(typeof(IEnvironmentalInterestRepository), typeof(EnvironmentalInterestRepository));
+            services.AddScoped(typeof(IFacilityStatusRepository), typeof(FacilityStatusRepository));
+            services.AddScoped(typeof(IFacilityTypeRepository), typeof(FacilityTypeRepository));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

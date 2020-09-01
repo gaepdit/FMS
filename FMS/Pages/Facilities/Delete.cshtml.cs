@@ -17,6 +17,8 @@ namespace FMS.Pages.Facilities
 
         private readonly FmsDbContext _context;
 
+        public Guid? ID { get; set; }
+
         public DeleteModel(
             ILogger<IndexModel> logger,
             FmsDbContext context)
@@ -35,6 +37,8 @@ namespace FMS.Pages.Facilities
             }
 
             Facility = await _context.Facilities.FirstOrDefaultAsync(m => m.Id == id);
+
+            ID = id;
 
             if (Facility == null)
             {

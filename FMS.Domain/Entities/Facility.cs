@@ -12,7 +12,24 @@ namespace FMS.Domain.Entities
         public Facility() { }
         public Facility(FacilityCreateDto newFacility)
         {
-
+            FacilityNumber = newFacility.FacilityNumber;
+            Name = newFacility.Name;
+            Active = newFacility.Active;
+            County.Id = newFacility.CountyId;
+            FacilityStatus.Id = newFacility.FacilityStatusId;
+            FacilityType.Id = newFacility.FacilityTypeId;
+            BudgetCode.Id = newFacility.BudgetCodeId;
+            OrganizationalUnit.Id = newFacility.OrganizationalUnitId;
+            EnvironmentalInterest.Id = newFacility.EnvironmentalInterestId;
+            ComplianceOfficer.Id = newFacility.ComplianceOfficerId;
+            File.Id = (Guid)newFacility.FileId;
+            Location = newFacility.Location;
+            Address = newFacility.Address;
+            City = newFacility.City;
+            State = newFacility.State;
+            PostalCode = newFacility.PostalCode;
+            Latitude = (decimal)newFacility.Latitude;
+            Longitude = (decimal)newFacility.Longitude; 
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
@@ -20,7 +37,6 @@ namespace FMS.Domain.Entities
 
         // File label and Cabinet where this Facility is located
         public Guid FileId { get; set; }
-
         public virtual File File { get; set; }
 
         // Environmental Interest/Program of this Facility

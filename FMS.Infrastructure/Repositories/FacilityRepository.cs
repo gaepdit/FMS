@@ -66,7 +66,6 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
-
         }
 
         public async Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
@@ -84,15 +83,13 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
+        public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
-            //throw new NotImplementedException();
-
             Facility newFac = new Facility(newFacility);
             _context.Facilities.Add(newFac);
             _context.SaveChanges();
                        
-            return Task.FromResult(newFac.Id);
+            return await Task.FromResult(newFac.Id);
         }
 
         public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
@@ -113,7 +110,7 @@ namespace FMS.Infrastructure.Repositories
             facility.OrganizationalUnitId = facilityUpdates.OrganizationalUnitId;
             facility.EnvironmentalInterestId = facilityUpdates.EnvironmentalInterestId;
             facility.ComplianceOfficerId = facilityUpdates.ComplianceOfficerId;
-            facility.FileId = facilityUpdates.FileId;
+            facility.FileId = (Guid)facilityUpdates.FileId;
             facility.Location = facilityUpdates.Location;
             facility.Address = facilityUpdates.Address;
             facility.City = facilityUpdates.City;
@@ -121,6 +118,14 @@ namespace FMS.Infrastructure.Repositories
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> DeleteFacilityAsync(FacilityDetailDto facility)
+        {
+            _context.Remove(facility);
+            int success = await _context.SaveChangesAsync();
+
+            return await Task.FromResult(success);
         }
 
         #region IDisposable Support

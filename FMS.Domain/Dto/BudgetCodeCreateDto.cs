@@ -1,13 +1,12 @@
-﻿using FMS.Domain.Entities.Base;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FMS.Domain.Entities
+namespace FMS.Domain.Dto
 {
-    public class BudgetCode : BaseActiveModel
+    public class BudgetCodeCreateDto
     {
+        public bool Active { get; set; }
+
         //public Guid EnvironmentalInterestId { get; set; }
-        public  EnvironmentalInterest EnvironmentalInterest { get; set; }   //virtual
 
         [StringLength(20)]
         public string Code { get; set; }

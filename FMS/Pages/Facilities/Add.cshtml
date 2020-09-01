@@ -15,26 +15,26 @@
             <div class="form-group col-md-3">
                 <label asp-for="Facility.FileId">File ID -  Leave Blank to add new</label>
                 <select asp-for="Facility.FileId" asp-items="Model.Files" class="custom-select">
-                    <option value="">Select File ID (or leave blank)</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FileId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.FacilityNumber"></label>
-                <input asp-for="Facility.FacilityNumber" class="form-control" placeholder="Facility Number" />
+                <input asp-for="Facility.FacilityNumber" class="form-control" />
                 <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.FacilityTypeId"></label>
                 <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
-                    <option value="">Select Facility Type...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.OrganizationalUnitId"></label>
                 <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
-                    <option value="">Select Organizational Unit...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
             </div>
@@ -43,28 +43,28 @@
             <div class="form-group col-md-3">
                 <label asp-for="Facility.ComplianceOfficerId"></label>
                 <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
-                    <option value="">Select Compliance Officer...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.BudgetCodeId"></label>
                 <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
-                    <option value="">Select Budget Code...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.EnvironmentalInterestId"></label>
                 <select asp-for="Facility.EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
-                    <option value="">Select EI Type...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.EnvironmentalInterestId" class="text-danger"></span>
             </div>
             <div class="form-group col">
                 <label asp-for="Facility.FacilityStatusId"></label>
                 <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
-                    <option value="">Select Facility Status...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
             </div>
@@ -72,27 +72,27 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Facility.Name"></label>
-                <input asp-for="Facility.Name" class="form-control" placeholder="Name of Facility" />
+                <input asp-for="Facility.Name" class="form-control" />
                 <span asp-validation-for="Facility.Name" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Facility.Address"></label>
-                <input asp-for="Facility.Address" class="form-control" placeholder="Street Address of Facility" />
+                <input asp-for="Facility.Address" class="form-control" />
                 <span asp-validation-for="Facility.Address" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Facility.City"></label>
-                <input asp-for="Facility.City" class="form-control" placeholder="City" />
+                <input asp-for="Facility.City" class="form-control" />
                 <span asp-validation-for="Facility.City" class="text-danger"></span>
             </div>
             <div class="form-group col">
                 <label asp-for="Facility.CountyId"></label>
                 <select asp-for="Facility.CountyId" asp-items="Model.Counties" class="custom-select">
-                    <option value="">Select County...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
             </div>
@@ -100,7 +100,6 @@
                 <label asp-for="Facility.
 State"></label>
                 <select asp-for="Facility.State" class="custom-select">
-                    <option value=""></option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -157,26 +156,26 @@ State"></label>
             </div>
             <div class="form-group col">
                 <label asp-for="Facility.PostalCode"></label>
-                <input asp-for="Facility.PostalCode" class="form-control" placeholder="ZIP Code" />
+                <input asp-for="Facility.PostalCode" class="form-control" />
                 <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Facility.Location"></label>
-                <input asp-for="Facility.Location" class="form-control" placeholder="Description of Facility Location" />
+                <input asp-for="Facility.Location" class="form-control" />
                 <span asp-validation-for="Facility.Location" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group row">
             <div class="form-group col-md-6">
                 <label asp-for="Facility.Latitude"></label>
-                <input asp-for="Facility.Latitude" class="form-control" placeholder="DD.DDDDDDD" />
+                <input asp-for="Facility.Latitude" class="form-control" />
                 <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
             </div>
             <div class="form-group col">
                 <label asp-for="Facility.Longitude"></label>
-                <input asp-for="Facility.Longitude" class="form-control" placeholder="-DD.DDDDDDD" />
+                <input asp-for="Facility.Longitude" class="form-control" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
             </div>
         </div>
@@ -190,7 +189,7 @@ State"></label>
         </div>
         <hr />
         <div class="form-row">
-            <div class="col-12 text-center">
+            <div class="col">
                 <button type="submit" class="btn btn-primary mb-2">Create New Facility</button>
             </div>
         </div>

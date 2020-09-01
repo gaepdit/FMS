@@ -20,8 +20,8 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public FacilityEditDto Facility { get; set; }
 
-        [BindProperty]
-        public new FileEditDto File { get; set; }
+        //[BindProperty]
+        //public new FileEditDto File { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }

@@ -15,7 +15,6 @@
             <div class="form-group col-md-3">
                 <label asp-for="Facility.FileId"></label>
                 <select asp-for="Facility.FileId" asp-items="Model.Files" class="custom-select">
-                    <option value="">Select File ID (XXX-XXXX)...</option>
                 </select>
                 <span asp-validation-for="Facility.FileId" class="text-danger"></span>
             </div>
@@ -27,14 +26,14 @@
             <div class="form-group col-md-3">
                 <label asp-for="Facility.FacilityTypeId"></label>
                 <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
-                    <option value="">Select Facility Type...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.OrganizationalUnitId"></label>
                 <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
-                    <option value="">Select Organizational Unit...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
             </div>
@@ -43,28 +42,28 @@
             <div class="form-group col-md-3">
                 <label asp-for="Facility.ComplianceOfficerId"></label>
                 <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
-                    <option value="">Select Compliance Officer...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.BudgetCodeId"></label>
                 <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
-                    <option value="">Select Budget Code...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.EnvironmentalInterestId"></label>
                 <select asp-for="Facility.EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
-                    <option value="">Select EI Type...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.EnvironmentalInterestId" class="text-danger"></span>
             </div>
             <div class="form-group col">
                 <label asp-for="Facility.FacilityStatusId"></label>
                 <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
-                    <option value="">Select Facility Status...</option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
             </div>
@@ -92,14 +91,12 @@
             <div class="form-group col">
                 <label asp-for="Facility.CountyId"></label>
                 <select asp-for="Facility.CountyId" asp-items="Model.Counties" class="custom-select">
-                    <option value="">Select County...</option>
                 </select>
                 <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
             </div>
             <div class="form-group col">
                 <label asp-for="Facility.State"></label>
                 <select asp-for="Facility.State" class="custom-select">
-                    <option value=""></option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -188,11 +185,9 @@
             </div>
         </div>
         <hr />
-        <div class="form-row text-center">
-            <div class="col-md-6">
+        <div class="form-row">
+            <div class="col">
                 <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-            <div class="col-md-6">
                 <a asp-page="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
             </div>
         </div>

@@ -59,21 +59,21 @@ namespace FMS.Domain.Dto
         public Guid ComplianceOfficerId { get; set; }
 
         [Display(Name = "File Label")]
-        public Guid FileId { get; set; }
+        public Guid? FileId { get; set; }
 
         [Display(Name = "Location Description")]
         public string Location { get; set; }
 
-        [Display(Name = "Street Address")]
+        [Display(Name = "Street Address"), Required]
         public string Address { get; set; }
 
-        [Display(Name = "City")]
+        [Display(Name = "City"), Required]
         public string City { get; set; }
 
         [Display(Name = "State")]
         public string State { get; set; }
 
-        [Display(Name = "Zip Code")]
+        [Display(Name = "Zip Code"), Required]
         public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]

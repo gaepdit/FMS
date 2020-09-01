@@ -10,14 +10,14 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Spec.Address"></label>
-                <input asp-for="Spec.Address" class="form-control" placeholder="Facility Street Address" />
+                <input asp-for="Spec.Address" class="form-control" />
             </div>
         </div>
         <br />
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Spec.City"></label>
-                <input asp-for="Spec.City" class="form-control" placeholder="City" />
+                <input asp-for="Spec.City" class="form-control" />
             </div>
             <div class="col">
                 <label asp-for="Spec.State"></label>
@@ -78,7 +78,7 @@
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.PostalCode"></label>
-                <input asp-for="Spec.PostalCode" class="form-control" placeholder="ZIP Code" />
+                <input asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
         <br />
@@ -95,60 +95,61 @@
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.Latitude"></label>
-                <input asp-for="Spec.Latitude" class="form-control" placeholder="DD.DDDDDDD" />
+                <input asp-for="Spec.Latitude" class="form-control" />
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.Longitude"></label>
-                <input asp-for="Spec.Longitude" class="form-control" placeholder="-DD.DDDDDDD" />
+                <input asp-for="Spec.Longitude" class="form-control" />
             </div>
         </div>
         <div class="form-row">
-            <div class="col">
+            <div class="col-3">
                 <div class="form-check">
-                    @Html.CheckBoxFor(m => m.ActiveOnly)
-                    <label class="form-check-label" for="ActiveCheck">
-                        Show Active Sites Only
-                    </label>
+                    <label class="form-check-label" asp-for="ActiveOnly">Show Active Sites Only</label>
+                    <input asp-for="ActiveOnly" checked="checked" />
                 </div>
             </div>
             <div class="col">
                 <div class="form-check">
-                    @Html.CheckBoxFor(m => m.ShowResults)
-                    <label class="form-check-label" for="ListCheck">
-                        Also Show Results in a List
-                    </label>
+                    <label class="form-check-label" asp-for="ShowResults">Also Show Results as List</label>
+                    <input asp-for="ShowResults" />
                 </div>
             </div>
         </div>
-        <br/>
-        <div class="form-row text-center">
+        <br />
+        <div class="form-row">
             <div class="col">
                 <button type="submit" class="btn btn-primary mb-2">Search Map</button>
+                <a asp-page="#" class="btn btn-outline-secondary mb-2">Clear Form</a>
             </div>
         </div>
     </form>
 </div>
-<hr/>
-<div id="ResultActive" class="text-center" style="@(Model.ActiveOnly == false ? "display:none" : "display:block")">
-    <div class="container-fluid">
+<hr />
+@if (Model.ActiveOnly)
+{
+    <div class="container-fluid text-center">
         <h5 style="color:red">Only Active Sites are being displayed</h5>
     </div>
-    <hr/>
-</div>
-<div id="ResultMap" class="text-center" style="@(Model.ShowMap == false ? "display:none" : "display:block")">
-    <div class="container-fluid">
+    <hr />
+}
+@if (Model.ShowMap)
+{
+    <div class="container-fluid text-center">
         @*Map HTML in this div*@
         <h4>Map of results here</h4>
         <img src="~/graphics/GOOGLEMAP.jpg" alt="Results Map" width="500" height="300" />
     </div>
-</div>
-<div class="text-center" style="@(Model.ShowNone == false ? "display:none" : "display:block")">
-    <div class="container-fluid">
+}
+@if (Model.ShowNone)
+{
+    <div class="container-fluid text-center">
         <h5 style="color:red">Search Found No Matching Facilities</h5>
     </div>
-</div>
-<div id="ResultList" style="@(Model.ShowResults == false ? "display:none" : "display:block")">
-    <hr/>
+}
+@if (Model.ShowResults)
+{
+    <hr />
     <div class="text-center">
         <h4>Search Results</h4>
     </div>
@@ -251,7 +252,6 @@
             </table>
         </div>
     </div>
-    <hr />
-</div>
+}
 
 

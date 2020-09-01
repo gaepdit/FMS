@@ -1,8 +1,5 @@
 ﻿@page
 @model Pages.Facilities.IndexModel
-@*@section Scripts {
-        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }*@
 @{
     ViewData["Title"] = "Facility Search";
 }
@@ -15,23 +12,23 @@
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FileId"></label>
                 <select asp-for="Spec.FileId" asp-items="Model.Files" class="custom-select">
-                    <option value="">Select File ID (XXX-XXXX)...</option>
+                    <option value=""></option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FacilityNumber"></label>
-                <input asp-for="Spec.FacilityNumber" class="form-control" placeholder="Facility ID" />
+                <input asp-for="Spec.FacilityNumber" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FacilityTypeId"></label>
                 <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
-                    <option value="">Select Facility Type...</option>
+                    <option value=""></option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.OrganizationalUnitId"></label>
                 <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
-                    <option value="">Select Organizational Unit...</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -40,55 +37,54 @@
             <div class="form-group col-md-3">
                 <label asp-for="Spec.ComplianceOfficerId"></label>
                 <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
-                    <option value="">Select Compliance Officer...</option>
+                    <option value=""></option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.BudgetCodeId"></label>
                 <select asp-for="Spec.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
-                    <option value="">Select Budget Code...</option>
+                    <option value=""></option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.EnvironmentalInterestId"></label>
                 <select asp-for="Spec.EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
-                    <option value="">Select Environmental Interest...</option>
+                    <option value=""></option>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FacilityStatusId"></label>
                 <select asp-for="Spec.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
-                    <option value="">Select Facility Status...</option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Spec.Name"></label>
-                <input asp-for="Spec.Name" class="form-control" placeholder="Facility Name" />
+                <input asp-for="Spec.Name" class="form-control" />
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Spec.Address"></label>
-                <input asp-for="Spec.Address" class="form-control" placeholder="Facility Street Address" />
+                <input asp-for="Spec.Address" class="form-control" />
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Spec.City"></label>
-                <input asp-for="Spec.City" class="form-control" placeholder="City" />
+                <input asp-for="Spec.City" class="form-control" />
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.CountyId"></label>
                 <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="custom-select">
-                    <option value="">Select County...</option>
+                    <option value=""></option>
                 </select>
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.State"></label>
                 <select asp-for="Spec.State" class="custom-select">
-                    <option value=""></option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -144,40 +140,40 @@
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.PostalCode"></label>
-                <input asp-for="Spec.PostalCode" class="form-control" placeholder="ZIP Code" />
+                <input asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
         <div class="form-group row">
             <div class="form-group col">
                 <div class="form-check">
-                    @Html.CheckBoxFor(m => m.ActiveOnly)
-                    <label class="form-check-label" for="ActiveCheck">
-                        Show Active Sites Only
-                    </label>
+                    <label class="form-check-label" asp-for="ActiveOnly">Show Active Sites Only</label>
+                    <input asp-for="ActiveOnly" />
                 </div>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col">
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary mb-2">Search for Facilities</button>
-                </div>
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                <a asp-page="#" class="btn btn-outline-secondary mb-2">Clear Form</a>
             </div>
         </div>
     </form>
 </div>
 <hr />
-<div id="ResultActive" class="text-center" style="@(Model.ActiveOnly == false ? "display:none" : "display:block")">
-    <div class="container-fluid">
+@if (Model.ActiveOnly)
+{
+    <div class="container-fluid text-center">
         <h5 style="color:red">Only Active Sites are being displayed</h5>
     </div>
-</div>
-<div class="text-center" style="@(Model.ShowNone == false ? "display:none" : "display:block")">
-    <div class="container-fluid">
+}
+@if (Model.ShowNone)
+{
+    <div class="container-fluid text-center">
         <h5 style="color:red">Search Found No Matching Facilities</h5>
     </div>
-</div>
-<div style="@(Model.ShowResults == false ? "display:none" : "display:block")">
+}
+@if (Model.ShowResults)
+{
     <div class="text-center">
         <h4>Search Results</h4>
     </div>
@@ -279,6 +275,6 @@
             </table>
         </div>
     </div>
-</div>
+}
 
 
