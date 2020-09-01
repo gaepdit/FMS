@@ -1,4 +1,5 @@
 <ul class="navbar-nav">
+    @* To do: Only show menu if logged in *@
     @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item dropdown text-dark">
@@ -15,6 +16,7 @@
         </li>
     }
     else
+    @* To do: Remove in production *@
     {
         <li class="nav-item">
             <a class="nav-link text-white" asp-page="/Account/Login">Sign in</a>

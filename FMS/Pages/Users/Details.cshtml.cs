@@ -28,18 +28,9 @@ namespace FMS.Pages.Users
             }
 
             var user = await _userService.GetUserByIdAsync(id.Value);
-
             if (user == null)
             {
-                // TODO: remove in production
-                //return NotFound();
-                user = new Domain.Entities.Users.ApplicationUser()
-                {
-                    Id = id.Value,
-                    Email = "example.one@example.com",
-                    GivenName = "Sample",
-                    FamilyName = "User"
-                };
+                return NotFound();
             }
 
             Id = user.Id.ToString();

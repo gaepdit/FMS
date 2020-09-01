@@ -1,7 +1,7 @@
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Account
@@ -22,15 +22,7 @@ namespace FMS.Pages.Account
         public async Task<IActionResult> OnGetAsync()
         {
             var currentUser = await _userService.GetCurrentUserAsync()
-                // TODO: remove in production
-                ?? new ApplicationUser()
-                {
-                    Id = default,
-                    Email = "example.one@example.com",
-                    GivenName = "Sample",
-                    FamilyName = "User"
-                };
-            //?? throw new Exception("Current user not found");
+                ?? throw new Exception("Current user not found");
 
             Id = currentUser.Id.ToString();
             DisplayName = currentUser.DisplayName;
