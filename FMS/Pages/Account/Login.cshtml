@@ -4,13 +4,6 @@
     ViewData["Title"] = "Login";
 }
 
-@if (Model.LoggedOut)
-{
-    <div class="alert alert-success" role="alert">
-        You have successfully logged out.
-    </div>
-}
-
 <h1>Sign in using your work account</h1>
 
 <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">

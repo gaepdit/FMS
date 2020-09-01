@@ -61,11 +61,16 @@ namespace FMS
                 .AddEntityFrameworkStores<FmsDbContext>();
 
             // Configure cookies
+            // SameSiteMode.None is needed to get single sign-out to work
             services.Configure<CookiePolicyOptions>(opts => opts.MinimumSameSitePolicy = SameSiteMode.None);
 
             // Configure authentication
             services.AddAuthentication()
-                .AddAzureAD(opts => Configuration.Bind(AzureADDefaults.AuthenticationScheme, opts));
+                .AddAzureAD(opts => { 
+                    Configuration.Bind(AzureADDefaults.AuthenticationScheme, opts);
+                    opts.CallbackPath = "/signin-oidc";
+                    opts.CookieSchemeName = "Identity.External";
+                });
 
             services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, opts =>
             {
@@ -75,7 +80,6 @@ namespace FMS
             });
 
             // Configure Razor pages 
-
             services.AddRazorPages(opts =>
             {
                 opts.Conventions.AuthorizeFolder("/Users");
@@ -83,8 +87,6 @@ namespace FMS
 
             // Configure dependencies
             services.AddTransient<IUserService, UserService>();
-
-
             services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
         }
 

@@ -7,8 +7,6 @@
                 <img src="https://www.gravatar.com/avatar/@User.Identity.Name.MD5Hash()?s=31&r=pg&d=identicon" alt="Account menu" title="View account menu" class="rounded" />
             </a>
             <div class="dropdown-menu" aria-labelledby="accountDropdownMenuLink">
-                <div class="dropdown-item-text">Signed in as @User.Identity.Name</div>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" asp-page="/Account/Index">Your profile</a>
                 <form class="form-inline dropdown-item p-0" asp-page="/Account/Logout" method="post">
                     <button type="submit" class="nav-link text-dark btn btn-link dropdown-item px-4 py-2">Sign out</button>
