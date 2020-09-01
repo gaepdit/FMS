@@ -23,8 +23,10 @@ namespace FMS.Tests.Users
                 Id = e.Id
             }).ToList();
 
-        [Fact]
-        public async Task OnPost_IfValidModel_ReturnPage()
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData("a", "b")]
+        public async Task OnSearch_IfValidModel_ReturnPage(string name, string email)
         {
             var mockUserService = new Mock<IUserService>();
             mockUserService.Setup(l => l.GetUsersAsync(It.IsAny<string>(), It.IsAny<string>()))
@@ -32,7 +34,7 @@ namespace FMS.Tests.Users
                 .Verifiable();
             var pageModel = new Pages.Users.IndexModel(mockUserService.Object);
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+            var result = await pageModel.OnGetSearchAsync(name, email).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.Should().BeTrue();
@@ -40,15 +42,14 @@ namespace FMS.Tests.Users
         }
 
         [Fact]
-        public async Task OnPost_IfInvalidModel_ReturnBadRequestAsync()
+        public async Task OnSearch_IfInvalidModel_ReturnBadRequestAsync()
         {
             var mockUserService = new Mock<IUserService>();
             var pageModel = new Pages.Users.IndexModel(mockUserService.Object);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+            var result = await pageModel.OnGetSearchAsync(null, null).ConfigureAwait(false);
 
-            //assert
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.Should().BeFalse();
         }
