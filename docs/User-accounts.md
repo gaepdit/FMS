@@ -24,13 +24,10 @@ Add the following section to `appsettings.{Environment}.json`:
 ```json
   "AzureAd": {
     "Instance": "https://login.microsoftonline.com/",
-    "Domain": "[Enter domain].onmicrosoft.com",
+    "Domain": "gets.onmicrosoft.com",
     "TenantId": "[Enter the Directory/Tenant ID from the Azure portal]",
     "ClientId": "[Enter the Application/Client ID from the Azure portal]",
-    "ClientSecret": "[Enter a Client Secret from the Azure portal]",
-    "CallbackPath": "/signin-oidc",
-    "SignedOutCallbackPath ": "/signout-oidc",
-    "CookieSchemeName": "Identity.External"
+    "ClientSecret": "[Enter a Client Secret from the Azure portal]"
   },
 ```
 

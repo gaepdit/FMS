@@ -1,7 +1,7 @@
 ﻿@page "{id:Guid?}"
 @model Pages.Facilities.EditModel
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <partial name="_ValidationScriptsPartial" />
 }
 @{
     ViewData["Title"] = $"Edit Facility: {Model.Facility.FacilityNumber}";

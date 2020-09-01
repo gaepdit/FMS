@@ -3,10 +3,14 @@
 @{
     ViewData["Title"] = "Facility Search";
 }
+@section Scripts {
+    <partial name="_SearchFormScriptsPartial" />
+}
+
 <h1>@ViewData["Title"]</h1>
 <hr />
 <div class="container-fluid">
-    <form method="post">
+    <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <div class="form-group col-md-3">
@@ -33,7 +37,6 @@
             </div>
         </div>
         <div class="form-row">
-
             <div class="form-group col-md-3">
                 <label asp-for="Spec.ComplianceOfficerId"></label>
                 <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
@@ -153,13 +156,15 @@
         </div>
         <div class="form-row">
             <div class="form-group col">
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                <input type="hidden" name="handler" value="search" />
+                <button id="SearchButton" type="submit" class="btn btn-primary mb-2">Search</button>
                 <a asp-page="#" class="btn btn-outline-secondary mb-2">Clear Form</a>
             </div>
         </div>
     </form>
 </div>
 <hr />
+<a name="SearchResults"></a>
 @if (Model.ActiveOnly)
 {
     <div class="container-fluid text-center">
@@ -276,5 +281,3 @@
         </div>
     </div>
 }
-
-

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 
 namespace FMS
 {
@@ -15,5 +16,9 @@ namespace FMS
                 .ComputeHash(System.Text.Encoding.ASCII.GetBytes(value.Trim().ToLower()))
                 .Select(s => s.ToString("x2")));
         }
+
+        [DebuggerStepThrough]
+        public static string ForceToString(this object input) =>
+            input == null || string.IsNullOrEmpty(input.ToString()) ? "" : input.ToString();
     }
 }

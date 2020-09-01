@@ -1,33 +1,19 @@
-using FMS.Domain.Entities.Users;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Account
 {
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
-        [TempData]
-        public bool LoggedOut { get; set; }
+        public LogoutModel() { }
 
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        public IActionResult OnGet() => 
+            SignOut("Identity.Application", "Identity.External", AzureADDefaults.OpenIdScheme);
 
-        public LogoutModel(SignInManager<ApplicationUser> signInManager) => _signInManager = signInManager;
-
-        public IActionResult OnGet() => LocalRedirect("~/Account");
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (_signInManager.IsSignedIn(User))
-            {
-                await _signInManager.SignOutAsync();
-                LoggedOut = true;
-            }
-
-            return LocalRedirect("~/");
-        }
+        public IActionResult OnPost() =>
+            SignOut("Identity.Application", "Identity.External", AzureADDefaults.OpenIdScheme);
     }
 }

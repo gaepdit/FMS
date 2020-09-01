@@ -3,12 +3,14 @@
 @{
     ViewData["Title"] = "User Admin";
 }
+@section Scripts {
+    <partial name="_SearchFormScriptsPartial" />
+}
 
 <h1>User Admin</h1>
 
 <div class="container-fluid bg-light py-3">
-    @using (Html.BeginForm(FormMethod.Post))
-    {
+    <form method="get" asp-fragment="SearchResults">
         <div class="form-row justify-content-center">
             <div class="form-group col-md-6">
                 <label asp-for="Name"></label>
@@ -20,37 +22,43 @@
                 <input asp-for="Email" class="form-control" />
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <input type="hidden" name="handler" value="search" />
+        <button id="SearchButton" type="submit" class="btn btn-primary">Search</button>
         <a asp-page="./Index" class="btn btn-outline-secondary">Clear search form</a>
-    }
+    </form>
 </div>
 
-@if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+@if (Model.Searched)
 {
-    <table class="table table-borderless">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var u in Model.SearchResults)
-            {
+    <a name="SearchResults"></a>
+
+    @if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+    {
+        <table class="table table-borderless">
+            <thead class="thead-light">
                 <tr>
-                    <td>@u.Name</td>
-                    <td>@u.Email</td>
-                    <td>
-                        <a asp-page="./Details" asp-route-id="@u.Id" class="btn btn-outline-primary btn-sm">View</a>
-                        <a asp-page="./Edit" asp-route-id="@u.Id" class="btn btn-outline-dark btn-sm">Edit</a>
-                    </td>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-else if(Model.Searched)
-{
-    <p class="text-info">No search results found.</p>
+            </thead>
+            <tbody>
+                @foreach (var u in Model.SearchResults)
+                {
+                    <tr>
+                        <td>@u.Name</td>
+                        <td>@u.Email</td>
+                        <td>
+                            <a asp-page="./Details" asp-route-id="@u.Id" class="btn btn-outline-primary btn-sm">View</a>
+                            <a asp-page="./Edit" asp-route-id="@u.Id" class="btn btn-outline-dark btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-info">No search results found.</p>
+    }
 }

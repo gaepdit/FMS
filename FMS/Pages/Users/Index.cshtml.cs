@@ -18,10 +18,8 @@ namespace FMS.Pages.Users
             _userService = userService;
         }
 
-        [BindProperty]
         public string Name { get; set; }
         
-        [BindProperty]
         [UIHint("EmailAddress")]
         public string Email { get; set; }
 
@@ -30,14 +28,14 @@ namespace FMS.Pages.Users
 
         public void OnGet() { }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnGetSearchAsync(string name, string email)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var users = await _userService.GetUsersAsync(Name, Email);
+            var users = await _userService.GetUsersAsync(name, email);
 
             Searched = true;
             SearchResults = users.Select(e =>

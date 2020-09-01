@@ -1,0 +1,17 @@
+﻿<script type="text/javascript">
+    $(document).ready(function domReady() {
+        // Don't submit empty form fields
+        $('#SearchButton').click(function OnSearchSubmit() {
+            $('input').each(function (i) {
+                var $input = $(this);
+                if ($input.val() == '')
+                    $input.attr('disabled', 'disabled');
+            });
+            $('select').each(function (i) {
+                var $input = $(this);
+                if ($input.val() == '')
+                    $input.attr('disabled', 'disabled');
+            });
+        });
+    });
+</script>
