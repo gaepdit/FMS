@@ -101,6 +101,7 @@ namespace FMS
             services.AddScoped(typeof(IEnvironmentalInterestRepository), typeof(EnvironmentalInterestRepository));
             services.AddScoped(typeof(IFacilityStatusRepository), typeof(FacilityStatusRepository));
             services.AddScoped(typeof(IFacilityTypeRepository), typeof(FacilityTypeRepository));
+            services.AddScoped(typeof(IOrganizationalUnitRepository), typeof(OrganizationalUnitRepository));
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

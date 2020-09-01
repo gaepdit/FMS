@@ -30,6 +30,8 @@ namespace FMS.Pages.Facilities
 
         private readonly IFacilityTypeRepository _facilityTypeRepository;
 
+        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
+
         // TODO: Remove _context after moving data access to repositories
         private readonly FmsDbContext _context;
 
@@ -75,6 +77,7 @@ namespace FMS.Pages.Facilities
             IEnvironmentalInterestRepository environmentalInterestRepository,
             IFacilityStatusRepository facilityStatusRepository,
             IFacilityTypeRepository facilityTypeRepository,
+            IOrganizationalUnitRepository organizationalUnitRepository,
             FmsDbContext context)
         {
             _repository = repository;
@@ -85,6 +88,7 @@ namespace FMS.Pages.Facilities
             _environmentalInterestRepository = environmentalInterestRepository;
             _facilityStatusRepository = facilityStatusRepository;
             _facilityTypeRepository = facilityTypeRepository;
+            _organizationalUnitRepository = organizationalUnitRepository;
             _context = context;
         }
 
@@ -143,10 +147,8 @@ namespace FMS.Pages.Facilities
             //FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
             FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Id", "Name");
 
-            // TODO: change to DTOs from direct entity context
-
+            //OrganizationalUnits = new SelectList(await _organizationalUnitRepository.GetOrganizationalUnitListAsync(), "Id", "Name");
             OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
-    
         }
     }
 }
