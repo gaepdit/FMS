@@ -1,6 +1,6 @@
 using FMS.Domain.Entities.Users;
-using FMS.Domain.Services;
 using FMS.Domain.Repositories;
+using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.IO;
 
 namespace FMS
 {
@@ -25,10 +27,13 @@ namespace FMS
         {
             Configuration = configuration;
             _env = env;
+            CreateFolders();
         }
 
         public IConfiguration Configuration { get; }
+
         private readonly IWebHostEnvironment _env;
+        private string _dataProtectionKeysFolder;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -65,19 +70,19 @@ namespace FMS
             services.Configure<CookiePolicyOptions>(opts => opts.MinimumSameSitePolicy = SameSiteMode.None);
 
             // Configure authentication
-            services.AddAuthentication()
-                .AddAzureAD(opts => { 
-                    Configuration.Bind(AzureADDefaults.AuthenticationScheme, opts);
-                    opts.CallbackPath = "/signin-oidc";
-                    opts.CookieSchemeName = "Identity.External";
-                });
-
+            services.AddAuthentication().AddAzureAD(opts =>
+            {
+                Configuration.Bind(AzureADDefaults.AuthenticationScheme, opts);
+                opts.CallbackPath = "/signin-oidc";
+                opts.CookieSchemeName = "Identity.External";
+            });
             services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, opts =>
             {
                 opts.Authority += "/v2.0/";
                 opts.TokenValidationParameters.ValidateIssuer = true;
                 opts.UsePkce = true;
             });
+            services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(_dataProtectionKeysFolder));
 
             // Configure Razor pages 
             services.AddRazorPages(opts =>
@@ -131,6 +136,16 @@ namespace FMS
             {
                 Infrastructure.SeedData.DevSeedData.SeedTestData(context);
             }
+        }
+        private void CreateFolders()
+        {
+            // Base path for persisted files
+            var BasePath = string.IsNullOrWhiteSpace(Configuration["PersistedFilesBasePath"])
+                ? "../_GeneratedFiles" : Configuration["PersistedFilesBasePath"].ForceToString();
+
+            // Data protection keys folder
+            _dataProtectionKeysFolder = Path.Combine(BasePath, "DataProtectionKeys");
+            Directory.CreateDirectory(_dataProtectionKeysFolder);
         }
     }
 }
