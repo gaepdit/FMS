@@ -14,38 +14,30 @@ namespace FMS.Pages.Facilities
     {
         private readonly IFacilityRepository _repository;
 
+        private readonly IFileRepository _fileRepository;
+
+        private readonly ICountyRepository _countyRepository;
+
+        private readonly IBudgetCodeRepository _budgetCodeRepository;
+
+        private readonly IComplianceOfficerRepository _complianceOfficerRepository;
+
+        private readonly IEnvironmentalInterestRepository _environmentalInterestRepository;
+
+        private readonly IFacilityStatusRepository _facilityStatusRepository;
+
+        private readonly IFacilityTypeRepository _facilityTypeRepository;
+
+        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
         // TODO: Remove _context after moving data access to repositories
         private readonly FmsDbContext _context;
 
         [BindProperty]
         public FacilityEditDto Facility { get; set; }
 
-        //[BindProperty]
-        //public new FileEditDto File { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
-
-        // TODO: Move all these properties (as needed) to the Edit DTO:
-
-        //public string FileID { get; set; }
-        //public string FacilityID { get; set; }
-        //public string FacilityType { get; set; }
-        //public string FacilityStatus { get; set; }
-        //public string OrganizationalUnit { get; set; }
-        //public bool FacilityActive { get; set; } = true;
-        //public string FacilityName { get; set; }
-        //public string EnvironnmentalInterest { get; set; }
-        //public string ComplianceOfficer { get; set; }
-        //public string BudgetCode { get; set; }
-        //public string Location { get; set; }
-        //public string Street { get; set; }
-        //public string City { get; set; }
-        //public string County { get; set; }
-        //public string State { get; set; }
-        //public string ZipCode { get; set; }
-        //public string Latitude { get; set; }
-        //public string Longitude { get; set; }
 
         public SelectList Files { get; set; }
         public SelectList Counties { get; private set; }
@@ -67,9 +59,25 @@ namespace FMS.Pages.Facilities
 
         public EditModel(
             IFacilityRepository repository,
+            IFileRepository fileRepository,
+            ICountyRepository countyRepository,
+            IBudgetCodeRepository budgetCodeRepository,
+            IComplianceOfficerRepository complianceOfficerRepository,
+            IEnvironmentalInterestRepository environmentalInterestRepository,
+            IFacilityStatusRepository facilityStatusRepository,
+            IFacilityTypeRepository facilityTypeRepository,
+            IOrganizationalUnitRepository organizationalUnitRepository,
             FmsDbContext context)
         {
             _repository = repository;
+            _fileRepository = fileRepository;
+            _countyRepository = countyRepository;
+            _budgetCodeRepository = budgetCodeRepository;
+            _complianceOfficerRepository = complianceOfficerRepository;
+            _environmentalInterestRepository = environmentalInterestRepository;
+            _facilityStatusRepository = facilityStatusRepository;
+            _facilityTypeRepository = facilityTypeRepository;
+            _organizationalUnitRepository = organizationalUnitRepository;
             _context = context;
         }
 
@@ -132,28 +140,30 @@ namespace FMS.Pages.Facilities
 
         private async Task PopulateSelectsAsync()
         {
+            //Files = new SelectList(await _fileRepository.GetFileListAsync(CountyArg), "Id", "FileLabel");
             Files = new SelectList(await _context.Files.ToListAsync(), "Id", "FileLabel");
 
-            Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
+            Counties = new SelectList(await _countyRepository.GetCountyListAsync(), "Id", "Name");
+            //Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 
-            FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
-
-            FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Id", "Name");
-
+            //BudgetCodes = new SelectList(await _budgetCodeRepository.GetBudgetCodeListAsync(), "Id", "Name");
             BudgetCodes = new SelectList(await _context.BudgetCodes.ToListAsync(), "Id", "Name");
 
-            OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
+            // need to get a Name property instead of Empl. Id. to Populate DropDown
+            //ComplianceOfficers = new SelectList(await _complianceOfficerRepository.GetComplianceOfficerListAsync(), "Id", "Name");
+            ComplianceOfficers = new SelectList(await _context.ComplianceOfficers.ToListAsync(), "Id", "Name");
 
+            //EnvironmentalInterests = new SelectList(await _environmentalInterestRepository.GetEnvironmentalInterestListAsync(), "Id", "Name");
             EnvironmentalInterests = new SelectList(await _context.EnvironmentalInterests.ToListAsync(), "Id", "Name");
 
-            // TODO: add await & .ToListAsync() to COs. 
-            // need to get a Name property instead of Empl. Id. to Populate DropDown
-            ComplianceOfficers = new SelectList(await _context.ComplianceOfficers.ToListAsync(), "Id", "Name");
-        }
+            //FacilityStatuses = new SelectList(await _facilityStatusRepository.GetFacilityStatusListAsync(), "Id", "Status");
+            FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
 
-        //private async Task PopulateObjectsAsync()
-        //{
-        //    File = new FileEditDto(await _context.Files.FindAsync(Facility.FileId));
-        //}
+            //FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
+            FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Id", "Name");
+
+            //OrganizationalUnits = new SelectList(await _organizationalUnitRepository.GetOrganizationalUnitListAsync(), "Id", "Name");
+            OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
+        }
     }
 }
