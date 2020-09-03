@@ -1,3 +1,4 @@
+using FMS.App;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
@@ -52,7 +53,7 @@ namespace FMS
                     }
                     else
                     {
-                        // In dev environment, use LocalDB if no connection string specified.
+                        // In dev environment, use connection string if specified; otherwise, use LocalDB.
                         // (In prod environment, connection string is required.)
                         connectionString ??= "Server=(localdb)\\mssqllocaldb;Database=fms-local;Trusted_Connection=True;MultipleActiveResultSets=true";
                     }
@@ -100,6 +101,9 @@ namespace FMS
             services.AddScoped(typeof(IEnvironmentalInterestRepository), typeof(EnvironmentalInterestRepository));
             services.AddScoped(typeof(IFacilityStatusRepository), typeof(FacilityStatusRepository));
             services.AddScoped(typeof(IFacilityTypeRepository), typeof(FacilityTypeRepository));
+
+            // Set up database
+            services.AddHostedService<MigratorHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,25 +129,8 @@ namespace FMS
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => endpoints.MapRazorPages());
-
-            // Initialize database
-            var context = serviceProvider.GetService<FmsDbContext>();
-            if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
-            {
-                // Using "IISX-TempDb" launch profile causes the database to be recreated on launch 
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-            }
-            else
-            {
-                context.Database.Migrate();
-            }
-
-            if (env.IsDevelopment())
-            {
-                Infrastructure.SeedData.DevSeedData.SeedTestData(context);
-            }
         }
+
         private void CreateFolders()
         {
             // Base path for persisted files

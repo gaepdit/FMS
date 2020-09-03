@@ -2,6 +2,7 @@ using FMS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Users
@@ -9,15 +10,13 @@ namespace FMS.Pages.Users
     public class DetailsModel : PageModel
     {
         private readonly IUserService _userService;
-
-        public DetailsModel(IUserService userService)
-        {
-            _userService = userService;
-        }
+        public DetailsModel(IUserService userService) => _userService = userService;
 
         public string Id { get; set; }
         public string DisplayName { get; set; }
         public string Email { get; set; }
+        public IList<string> Roles { get; set; }
+
         public bool ShowSuccessMessage { get; set; } = false;
 
         public async Task<IActionResult> OnGetAsync(Guid? id, bool? success)
@@ -36,6 +35,7 @@ namespace FMS.Pages.Users
             Id = user.Id.ToString();
             DisplayName = user.DisplayName;
             Email = user.Email;
+            Roles = await _userService.GetUserRolesAsync(user.Id);
 
             ShowSuccessMessage = success ?? false;
             return Page();

@@ -27,6 +27,7 @@ namespace FMS.Infrastructure.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
+        // Current user
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
             var principal = _httpContextAccessor?.HttpContext?.User;
@@ -38,20 +39,13 @@ namespace FMS.Infrastructure.Services
             return await _userManager.GetUserAsync(principal);
         }
 
-        public async Task<IdentityResult> UpdateCurrentUserAsync(string givenName, string familyName)
+        public async Task<IList<string>> GetCurrentUserRolesAsync()
         {
             var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
-            }
-
-            user.GivenName = givenName;
-            user.FamilyName = familyName;
-
-            return await _userManager.UpdateAsync(user);
+            return await _userManager.GetRolesAsync(user);
         }
 
+        // Any user        
         public async Task<bool> UserExistsAsync(Guid id)
         {
             return await _context.Users.AnyAsync(e => e.Id == id);
@@ -62,20 +56,36 @@ namespace FMS.Infrastructure.Services
             return await _userManager.FindByIdAsync(id.ToString());
         }
 
-        //public async Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName)
-        //{
-        //    var user = await GetUserByIdAsync(id);
-        //    if (user == null)
-        //    {
-        //        return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
-        //    }
+        public async Task<IList<string>> GetUserRolesAsync(Guid id)
+        {
+            var user = await GetUserByIdAsync(id);
+            return await _userManager.GetRolesAsync(user);
+        }
 
-        //    user.GivenName = givenName;
-        //    user.FamilyName = familyName;
+        public async Task<IdentityResult> UpdateUserRoleAsync(Guid id, string role, bool addToRole)
+        {
+            var user = await GetUserByIdAsync(id);
+            if (user == null)
+            {
+                return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
+            }
 
-        //    return await _userManager.UpdateAsync(user);
-        //}
+            var isInRole = await _userManager.IsInRoleAsync(user, role);
 
+            if (addToRole && !isInRole)
+            {
+                return await _userManager.AddToRoleAsync(user, role);
+            }
+
+            if (!addToRole && isInRole)
+            {
+                return await _userManager.RemoveFromRoleAsync(user, role);
+            }
+
+            return IdentityResult.Success;
+        }
+
+        // User search
         public async Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter)
         {
             return await _context.Users.AsNoTracking()

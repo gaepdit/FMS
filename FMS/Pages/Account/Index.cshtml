@@ -14,6 +14,16 @@
         <div>
             <h2>@Model.DisplayName</h2>
             <p>@Model.Email</p>
+            @if (Model.Roles != null && Model.Roles.Count > 0)
+            {
+                <h3>Roles</h3>
+                <ul>
+                    @foreach (var role in Model.Roles)
+                    {
+                        <li>@role</li>
+                    }
+                </ul>
+            }
             <form asp-page="./Logout" asp-route-returnUrl="@Url.Page("/")" method="post">
                 <button type="submit" class="btn btn-danger">Sign out</button>
             </form>
