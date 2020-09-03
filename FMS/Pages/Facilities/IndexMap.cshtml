@@ -1,26 +1,28 @@
 ﻿@page
 @model Pages.Facilities.IndexMapModel
 @{
-    ViewData["Title"] = "Facility Map Search";
+    ViewData["Title"] = "Search a Location";
 }
-<h1>@ViewData["Title"]</h1>
-<hr />
+<div class="text-center">
+    <h4><b>@ViewData["Title"]</b></h4>
+    <label>(See what's near any address)</label>
+</div>
 <div class="container-fluid">
     <form method="post">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <label asp-for="Spec.Address"></label>
+                <b> <label asp-for="Spec.Address"></label></b>
                 <input asp-for="Spec.Address" class="form-control" />
             </div>
         </div>
-        <br />
+
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="Spec.City"></label>
+                <b><label asp-for="Spec.City"></label></b>
                 <input asp-for="Spec.City" class="form-control" />
             </div>
             <div class="col">
-                <label asp-for="Spec.State"></label>
+                <b><label asp-for="Spec.State"></label></b>
                 <select asp-for="Spec.State" class="custom-select">
                     <option value=""></option>
                     <option value="AL">Alabama</option>
@@ -77,52 +79,54 @@
                 </select>
             </div>
             <div class="form-group col">
-                <label asp-for="Spec.PostalCode"></label>
+                <b><label asp-for="Spec.PostalCode"></label></b>
                 <input asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
-        <br />
+
         <div class="form-group row">
             <div class="col-md-3">
-                <label asp-for="Spec.SearchRadius"></label>
-                <select asp-for="Spec.SearchRadius" class="custom-select">
-                    <option selected value="1">Search radius 1/4 Mile</option>
-                    <option value="2">Search radius 1/2 Mile</option>
-                    <option value="3">Search radius 1 Mile</option>
-                    <option value="4">Search radius 3 Miles</option>
-                    <option value="5">Search radius 5 Miles</option>
+                <b><label asp-for="Spec.Radius"></label></b>
+                <select asp-for="Spec.Radius" class="custom-select">
+                    <option selected value="1">1/4 Mile (default)</option>
+                    <option value="2">1/2 Mile</option>
+                    <option value="3">1 Mile</option>
+                    <option value="4">3 Miles</option>
+                    <option value="5">5 Miles</option>
                 </select>
             </div>
             <div class="form-group col">
-                <label asp-for="Spec.Latitude"></label>
-                <input asp-for="Spec.Latitude" class="form-control" />
+                <b><label asp-for="Spec.Latitude"></label></b>
+                <input asp-for="Spec.Latitude" class="form-control" placeholder="0.000000       Example: 33.748550" />
             </div>
             <div class="form-group col">
-                <label asp-for="Spec.Longitude"></label>
-                <input asp-for="Spec.Longitude" class="form-control" />
+                <b><label asp-for="Spec.Longitude"></label></b>
+                <input asp-for="Spec.Longitude" class="form-control" placeholder="-0.000000       Example: -84.391502" />
             </div>
         </div>
-        <div class="form-row">
-            <div class="col-3">
+        <div class="form-group row">
+            <div class="col-md-3">                
+                    <b><label class="form-check-label" asp-for="ShowResults">Output</label></b>
+                    @*<input asp-for="ShowResults" />*@
+                    <select asp-for="ShowResults" class="custom-select">
+                        <option selected value="1">Map</option>
+                        <option value="2">Table</option>
+                    </select>                
+            </div>
+            <div class="form-group col">
                 <div class="form-check">
                     <label class="form-check-label" asp-for="ActiveOnly">Show Active Sites Only</label>
-                    <input asp-for="ActiveOnly" checked="checked" />
+                    <input asp-for="ActiveOnly"   />
                 </div>
             </div>
-            <div class="col">
-                <div class="form-check">
-                    <label class="form-check-label" asp-for="ShowResults">Also Show Results as List</label>
-                    <input asp-for="ShowResults" />
+        </div>     
+            <br />
+            <div class="form-row">
+                <div class="col" style="text-align:center;">
+                    <button type="submit" class="btn btn-primary mb-2" style="text-align: center;width:100px; height:38px; margin-right:30px; line-height:1.1em; font-size:1.1em;">Search</button>
+                    <a asp-page="#" class="btn btn-primary mb-2">Clear Form</a>
                 </div>
             </div>
-        </div>
-        <br />
-        <div class="form-row">
-            <div class="col">
-                <button type="submit" class="btn btn-primary mb-2">Search Map</button>
-                <a asp-page="#" class="btn btn-outline-secondary mb-2">Clear Form</a>
-            </div>
-        </div>
     </form>
 </div>
 <hr />

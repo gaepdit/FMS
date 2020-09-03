@@ -13,7 +13,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Active Site")]
         public bool? Active { get; set; }
 
-        [Display(Name = "Street Address")]
+        [Display(Name = "Address")]
         public string? Address { get; set; }
 
         [Display(Name = "City")]
@@ -31,7 +31,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "Longitude")]
         public decimal? Longitude { get; set; }
 
-        [Display(Name = "Search Radius")]
-        public string? SearchRadius { get; set; }
+        [Display(Name = "Radius")]
+        public string? Radius { get; set; }
+        
+        [Display(Name = "Distance")]
+        public decimal? Distance { get; set; }
     }
 }
