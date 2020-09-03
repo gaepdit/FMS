@@ -1,0 +1,55 @@
+﻿<script src="~/js/jquery.min.js"></script>
+<script src="~/js/map.js"></script>
+<script src="~/js/searchaddress.js"></script>
+<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyC2JM1NocrjlGoHid3-j2jMWUmKTN7WXpI" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript" ></script>
+
+    <script type="text/javascript">
+        $(document).ready(function domReady() {
+
+            $('#Search').click(function OnSearchSubmit() {
+                $('input').each(function (i) {
+                    var $input = $(this);
+                    if ($input.val() == '')
+                        $input.attr('disabled', 'disabled');
+                });
+                $('select').each(function (i) {
+                    var $input = $(this);
+                    if ($input.val() == '')
+                        $input.attr('disabled', 'disabled');
+                });
+            });
+    });
+
+
+    var lat = 0; //33.879807;
+    var lng = 0; //-84.306964;
+    var radius = 5;
+    var address;
+
+    function getLatLong() {
+        var addr = document.getElementById('address').value;
+        var city = document.getElementById('city').value;
+        var zip = document.getElementById('zip').value;
+
+        address = addr + " " + city + ", GA " + zip;
+        // Create new geocoding object
+        geocoder = new GClientGeocoder();
+
+        // Retrieve location information, pass it to addToMap()
+        geocoder.getLocations(address, addToForm);
+    }
+
+    function addToForm(response) {
+            // Retrieve the object
+            place = response.Placemark[0];
+        // Retrieve the latitude and longitude and set values
+        lat = place.Point.coordinates[1];
+        lng = place.Point.coordinates[0];
+        radius = document.getElementById('radius').value;
+        format = document.getElementById('outFormat').value;
+        if (format == 'map') window.location.href = 'displayMap.jsp?lat=' + lat + '&lng=' + lng + '&radius=' + radius + '&fulladdr=' + address;
+        else window.location.href = 'displayFacilityTable.jsp?lat=' + lat + '&lng=' + lng + '&radius=' + radius + '&fulladdr=' + address;
+
+    }
+</script>
