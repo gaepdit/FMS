@@ -1,93 +1,91 @@
-//using FMS.Domain.Interfaces;
-//using Microsoft.AspNetCore.Identity;
+using FMS.Domain.Entities.Users;
+using FMS.Domain.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-//using System;
-//using System.Collections.Generic;
-//using System.ComponentModel.DataAnnotations;
-//using System.Threading.Tasks;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Users
 {
+    // TODO: Add authorize attribute in production
+    //[Authorize(Roles = UserConstants.EditorRole)]
     public class EditModel : PageModel
     {
-        // TODO: All user info comes from SOG work account, so only roles can be edited
-        public IActionResult OnGet() => LocalRedirect("~/Users");
+        private readonly IUserService _userService;
+        public EditModel(IUserService userService) => _userService = userService;
 
-        //    private readonly IUserService _userService;
+        [BindProperty]
+        public Guid Id { get; set; }
 
-        //    public EditModel(IUserService userService)
-        //    {
-        //        _userService = userService;
-        //    }
+        [BindProperty]
+        [DisplayName("Editor Role")]
+        public bool HasEditorRole { get; set; }
 
-        //    [BindProperty, Required, StringLength(150), Display(Name = "Given Name")]
-        //    public string GivenName { get; set; }
+        public string DisplayName { get; set; }
+        public string Email { get; set; }
 
-        //    [BindProperty, Required, StringLength(150), Display(Name = "Family Name")]
-        //    public string FamilyName { get; set; }
+        public IEnumerable<IdentityError> Errors { get; set; }
 
-        //    [BindProperty]
-        //    public Guid Id { get; set; }
-        //    [BindProperty]
-        //    public string Email { get; set; }
+        public async Task<IActionResult> OnGetAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    public IEnumerable<IdentityError> Errors { get; set; }
+            var user = await _userService.GetUserByIdAsync(id.Value);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    public async Task<IActionResult> OnGetAsync(Guid? id)
-        //    {
-        //        if (id == null)
-        //        {
-        //            return NotFound();
-        //        }
+            Id = id.Value;
+            DisplayName = user.DisplayName;
+            Email = user.Email;
 
-        //        var user = await _userService.GetUserByIdAsync(id.Value);
-        //        if (user == null)
-        //        {
-        //            // TODO: remove in production
-        //            //return NotFound();
-        //            user = new Domain.Entities.Users.ApplicationUser()
-        //            {
-        //                Id = id.Value,
-        //                Email = "example.one@example.com",
-        //                GivenName = "Sample",
-        //                FamilyName = "User"
-        //            };
-        //        }
+            IList<string> roles = await _userService.GetUserRolesAsync(Id);
+            HasEditorRole = roles.Contains(UserConstants.EditorRole);
 
-        //        GivenName = user.GivenName;
-        //        FamilyName = user.FamilyName;
-        //        Id = id.Value;
-        //        Email = user.Email;
+            return Page();
+        }
 
-        //        return Page();
-        //    }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-        //    public async Task<IActionResult> OnPostAsync()
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return Page();
-        //        }
+            var result = await _userService.UpdateUserRoleAsync(Id, UserConstants.EditorRole, HasEditorRole);
 
-        //        var result = await _userService.UpdateUserAsync(Id, GivenName, FamilyName);
-        //        if (true || result.Succeeded)
-        //        {
-        //            return RedirectToPage("./Details", new { id = Id, success = true });
-        //        }
+            if (result.Succeeded)
+            {
+                return RedirectToPage("./Details", new { id = Id, success = true });
+            }
 
-        //        if (!await _userService.UserExistsAsync(Id))
-        //        {
-        //            // TODO: remove in production
-        //            //return NotFound();
-        //        }
+            if (!await _userService.UserExistsAsync(Id))
+            {
+                return NotFound();
+            }
 
-        //        foreach (var err in result.Errors)
-        //        {
-        //            ModelState.AddModelError(string.Empty, err.Description);
-        //        }
+            var user = await _userService.GetUserByIdAsync(Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //        return Page();
-        //    }
+            DisplayName = user.DisplayName;
+            Email = user.Email;
+
+            foreach (var err in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, err.Description);
+            }
+
+            return Page();
+        }
     }
 }

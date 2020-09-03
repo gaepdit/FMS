@@ -1,36 +1,22 @@
 ﻿@page "{id:Guid?}"
 @model Pages.Users.EditModel
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
 @{
     ViewData["Title"] = "Edit User Roles";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-@*
-    <p>@Model.Email</p>
-
-    <div class="container-fluid bg-light py-3">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
-                User update failed:
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label asp-for="GivenName"></label>
-                    <input asp-for="GivenName" class="form-control" />
-                    <span asp-validation-for="GivenName" class="text-danger"></span>
-                </div>
-                <div class="form-group col-md-6">
-                    <label asp-for="FamilyName"></label>
-                    <input asp-for="FamilyName" class="form-control" />
-                    <span asp-validation-for="FamilyName" class="text-danger"></span>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-            <a asp-page="./Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
-        </form>
-    </div>
-*@
+<div class="container-fluid bg-light py-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
+            User update failed:
+        </div>
+        <p>Roles for: @Model.DisplayName &lt;@Model.Email&gt;</p>
+        <div class="form-check mb-3">
+            <input asp-for="HasEditorRole" class="form-check-input">
+            <label asp-for="HasEditorRole" class="form-check-label"></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="./Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

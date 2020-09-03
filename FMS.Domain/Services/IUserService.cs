@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Services
 {
+    /// <summary>
+    /// Provide methods for interacting with application user accounts
+    /// </summary>
     public interface IUserService
     {
+        // Current user
         public Task<ApplicationUser> GetCurrentUserAsync();
-        public Task<IdentityResult> UpdateCurrentUserAsync(string givenName, string familyName);
-        
+        public Task<IList<string>> GetCurrentUserRolesAsync();
+
+        // Any user        
         public Task<bool> UserExistsAsync(Guid id);
         public Task<ApplicationUser> GetUserByIdAsync(Guid id);
-        
-        // TODO: replace with role edit methods
-        //public Task<IdentityResult> UpdateUserAsync(Guid id, string givenName, string familyName);
+        public Task<IList<string>> GetUserRolesAsync(Guid id);
+        public Task<IdentityResult> UpdateUserRoleAsync(Guid id, string role, bool addToRole);
 
+        // User search
         public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter);
     }
 }

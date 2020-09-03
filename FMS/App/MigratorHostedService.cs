@@ -1,4 +1,5 @@
-﻿using FMS.Infrastructure.Contexts;
+﻿using FMS.Domain.Entities.Users;
+using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace FMS.App
             // Create a new scope to retrieve scoped services
             using var scope = _serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<FmsDbContext>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
             // Initialize database
@@ -44,6 +46,12 @@ namespace FMS.App
             {
                 // Test data: will not run in production
                 Infrastructure.SeedData.DevSeedData.SeedTestData(context);
+            }
+
+            // Initialize Admin role           
+            if (!await context.Roles.AnyAsync(e => e.Name == UserConstants.EditorRole))
+            {
+                await roleManager.CreateAsync(new IdentityRole<Guid>(UserConstants.EditorRole));
             }
         }
 
