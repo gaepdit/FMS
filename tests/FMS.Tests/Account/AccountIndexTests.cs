@@ -1,12 +1,9 @@
 ﻿using FluentAssertions;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System;
 using System.Threading.Tasks;
-using TestHelpers;
 using Xunit;
 
 namespace FMS.Tests.Account
@@ -33,7 +30,6 @@ namespace FMS.Tests.Account
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.Id.Should().Be(_user.Id.ToString());
             pageModel.Email.Should().Be(_user.Email);
             pageModel.DisplayName.Should().Be(_user.DisplayName);
         }
