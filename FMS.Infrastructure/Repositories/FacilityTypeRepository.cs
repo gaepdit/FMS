@@ -25,11 +25,6 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteFacilityTypeAsync(FacilityTypeDetailDto deletedFacilityType)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<bool> FacilityTypeExistsAsync(Guid id)
         {
             throw new NotImplementedException();

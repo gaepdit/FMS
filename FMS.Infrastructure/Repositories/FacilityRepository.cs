@@ -115,7 +115,7 @@ namespace FMS.Infrastructure.Repositories
             facility.Location = facilityUpdates.Location;
             facility.Address = facilityUpdates.Address;
             facility.City = facilityUpdates.City;
-            facility.State = facilityUpdates.Address;
+            facility.State = facilityUpdates.State;
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
             await _context.SaveChangesAsync();

@@ -29,15 +29,14 @@ namespace FMS.Pages.Facilities
         private readonly IFacilityTypeRepository _facilityTypeRepository;
 
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
-        // TODO: Remove _context after moving data access to repositories
-        private readonly FmsDbContext _context;
 
         [BindProperty]
         public FacilityEditDto Facility { get; set; }
 
-
         [BindProperty]
         public Guid Id { get; set; }
+
+        public int? CountyArg { get; set; }
 
         public SelectList Files { get; set; }
         public SelectList Counties { get; private set; }
@@ -66,8 +65,7 @@ namespace FMS.Pages.Facilities
             IEnvironmentalInterestRepository environmentalInterestRepository,
             IFacilityStatusRepository facilityStatusRepository,
             IFacilityTypeRepository facilityTypeRepository,
-            IOrganizationalUnitRepository organizationalUnitRepository,
-            FmsDbContext context)
+            IOrganizationalUnitRepository organizationalUnitRepository)
         {
             _repository = repository;
             _fileRepository = fileRepository;
@@ -78,7 +76,6 @@ namespace FMS.Pages.Facilities
             _facilityStatusRepository = facilityStatusRepository;
             _facilityTypeRepository = facilityTypeRepository;
             _organizationalUnitRepository = organizationalUnitRepository;
-            _context = context;
         }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
@@ -97,7 +94,7 @@ namespace FMS.Pages.Facilities
             }
 
             await PopulateSelectsAsync();
-            //await PopulateObjectsAsync();
+
             return Page();
         }
 
@@ -106,7 +103,6 @@ namespace FMS.Pages.Facilities
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
-                //await PopulateObjectsAsync();
                 return Page();
             }
 
@@ -114,9 +110,7 @@ namespace FMS.Pages.Facilities
             // before trying to save.
             // Alternatively, prohibit editing facility number on this page, and add a separate
             // page to edit facility number.
-            
 
-            //Facility.FileId = File.Id;
 
             try
             {
@@ -140,30 +134,22 @@ namespace FMS.Pages.Facilities
 
         private async Task PopulateSelectsAsync()
         {
-            //Files = new SelectList(await _fileRepository.GetFileListAsync(CountyArg), "Id", "FileLabel");
-            Files = new SelectList(await _context.Files.ToListAsync(), "Id", "FileLabel");
+            Files = new SelectList(await _fileRepository.GetFileListAsync(CountyArg), "Id", "FileLabel");
 
             Counties = new SelectList(await _countyRepository.GetCountyListAsync(), "Id", "Name");
-            //Counties = new SelectList(await _context.Counties.ToListAsync(), "Id", "Name");
 
-            //BudgetCodes = new SelectList(await _budgetCodeRepository.GetBudgetCodeListAsync(), "Id", "Name");
-            BudgetCodes = new SelectList(await _context.BudgetCodes.ToListAsync(), "Id", "Name");
+            BudgetCodes = new SelectList(await _budgetCodeRepository.GetBudgetCodeListAsync(), "Id", "Name");
 
             // need to get a Name property instead of Empl. Id. to Populate DropDown
-            //ComplianceOfficers = new SelectList(await _complianceOfficerRepository.GetComplianceOfficerListAsync(), "Id", "Name");
-            ComplianceOfficers = new SelectList(await _context.ComplianceOfficers.ToListAsync(), "Id", "Name");
+            ComplianceOfficers = new SelectList(await _complianceOfficerRepository.GetComplianceOfficerListAsync(), "Id", "Name");
 
-            //EnvironmentalInterests = new SelectList(await _environmentalInterestRepository.GetEnvironmentalInterestListAsync(), "Id", "Name");
-            EnvironmentalInterests = new SelectList(await _context.EnvironmentalInterests.ToListAsync(), "Id", "Name");
+            EnvironmentalInterests = new SelectList(await _environmentalInterestRepository.GetEnvironmentalInterestListAsync(), "Id", "Name");
 
-            //FacilityStatuses = new SelectList(await _facilityStatusRepository.GetFacilityStatusListAsync(), "Id", "Status");
-            FacilityStatuses = new SelectList(await _context.FacilityStatuses.ToListAsync(), "Id", "Status");
+            FacilityStatuses = new SelectList(await _facilityStatusRepository.GetFacilityStatusListAsync(), "Id", "Status");
 
-            //FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
-            FacilityTypes = new SelectList(await _context.FacilityTypes.ToListAsync(), "Id", "Name");
+            FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
 
-            //OrganizationalUnits = new SelectList(await _organizationalUnitRepository.GetOrganizationalUnitListAsync(), "Id", "Name");
-            OrganizationalUnits = new SelectList(await _context.OrganizationalUnits.ToListAsync(), "Id", "Name");
+            OrganizationalUnits = new SelectList(await _organizationalUnitRepository.GetOrganizationalUnitListAsync(), "Id", "Name");
         }
     }
 }

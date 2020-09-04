@@ -18,7 +18,7 @@ namespace FMS.Domain.Dto
             //ComplianceOfficerId = organizationalUnit.ComplianceOfficer.Id;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

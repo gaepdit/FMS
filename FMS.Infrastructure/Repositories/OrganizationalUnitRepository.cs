@@ -25,11 +25,6 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteOrganizationalUnitAsync(OrganizationalUnitDetailDto deletedOrganizationalUnit)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<OrganizationalUnitDetailDto> GetOrganizationalUnitAsync(Guid id)
         {
             throw new NotImplementedException();

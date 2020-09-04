@@ -14,12 +14,12 @@ namespace FMS.Domain.Dto
             //EnvironmentalInterestId = facilityStatus.EnvironmentalInterest.Id;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         [Display(Name = "Facility Status")]
-        public string? Status { get; set; }
+        public string Status { get; set; }
 
         //public Guid EnvironmentalInterestId { get; set; }
     }

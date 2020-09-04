@@ -18,7 +18,7 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
         }          
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }

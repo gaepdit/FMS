@@ -31,11 +31,6 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteComplianceOfficerAsync(ComplianceOfficerDetailDto deletedComplianceOfficer)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(Guid id)
         {
             throw new NotImplementedException();

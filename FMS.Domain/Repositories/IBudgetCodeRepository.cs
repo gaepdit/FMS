@@ -14,6 +14,5 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<BudgetCodeSummaryDto>> GetBudgetCodeListAsync();
         Task<Guid> CreateBudgetCodeAsync(BudgetCodeCreateDto budgetCode);
         Task UpdateBudgetCodeAsync(Guid id, BudgetCodeEditDto budgetCodeUpdates);
-        Task<int> DeleteBudgetCodeAsync(BudgetCodeDetailDto deletedBudgetCode);
     }
 }

@@ -15,6 +15,6 @@ namespace FMS.Domain.Dto
 
         [StringLength(20)]
         [Display(Name = "County")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
     }
 }

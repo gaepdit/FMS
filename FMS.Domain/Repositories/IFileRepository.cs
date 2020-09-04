@@ -13,6 +13,5 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<FileSummaryDto>> GetFileListAsync(int? Cnty);
         Task<Guid> CreateFileAsync(FileCreateDto file);
         Task UpdateFileAsync(Guid id, FileEditDto fileUpdates);
-        Task<int> DeleteFileAsync(FileDetailDto deletedFile);
     }
 }

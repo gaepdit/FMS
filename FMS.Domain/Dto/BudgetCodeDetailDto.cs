@@ -17,7 +17,7 @@ namespace FMS.Domain.Dto
             ProjectNumber = budgetCode.ProjectNumber;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

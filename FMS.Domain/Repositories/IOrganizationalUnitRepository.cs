@@ -13,6 +13,5 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<OrganizationalUnitSummaryDto>> GetOrganizationalUnitListAsync();
         Task<Guid> CreateOrganizationalUnitAsync(OrganizationalUnitCreateDto organizationalUnit);
         Task UpdateOrganizationalUnitAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates);
-        Task<int> DeleteOrganizationalUnitAsync(OrganizationalUnitDetailDto deletedOrganizationalUnit);
     }
 }

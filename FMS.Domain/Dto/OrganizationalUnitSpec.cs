@@ -7,11 +7,11 @@ namespace FMS.Domain.Dto
 {
     public class OrganizationalUnitSpec
     {
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         [Display(Name = "Organizational Unit")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
-        //public Guid? ComplianceOfficerId { get; set; }
+        //public Guid ComplianceOfficerId { get; set; }
     }
 }

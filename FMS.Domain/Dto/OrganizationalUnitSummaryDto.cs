@@ -16,12 +16,12 @@ namespace FMS.Domain.Dto
             //ComplianceOfficerId = organizationalUnit.ComplianceOfficer.Id;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         [Display(Name = "Facility Type")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         //public Guid ComplianceOfficerId { get; set; }
     }

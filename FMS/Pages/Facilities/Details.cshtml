@@ -25,7 +25,9 @@
             @Html.DisplayNameFor(model => model.FacilityDetail.File.FileLabel)
         </dt>
         <dd class="col-xl-9">
-            @Html.DisplayFor(model => model.FacilityDetail.File.FileLabel)
+            <a asp-page="../Files/Index" asp-route-id="@Model.FacilityDetail.File.Id" class="btn btn-outline-primary btn-sm col-md-2">
+                @Html.DisplayFor(model => model.FacilityDetail.File.FileLabel)
+            </a>
         </dd>
         <dt class="col-xl-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
@@ -128,10 +130,8 @@
 <hr />
 <div class="row">
     <div class="col">
-        <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-outline-primary">Edit Facility</a>
-        <a asp-page="Delete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-outline-danger">Delete Facility</a>
+        <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-primary col-md-2">Edit Facility</a>
+        <a asp-page="Delete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-outline-danger col-md-2">Delete Facility</a>
+        <a href="javascript: history.go(-1)" class="btn btn-outline-secondary col-md-2">Back</a>
     </div>
-    @*<div class="col">
-        <a asp-page="Delete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-outline-danger">Delete Facility</a>
-    </div>*@
 </div>

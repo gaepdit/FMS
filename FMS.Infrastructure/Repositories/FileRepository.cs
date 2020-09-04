@@ -73,14 +73,6 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteFileAsync(FileDetailDto deletedFile)
-        {
-            _context.Remove(deletedFile);
-            int success = await _context.SaveChangesAsync();
-
-            return await Task.FromResult(success);
-        }
-
         #region IDisposable Support
 
         private bool _disposedValue;

@@ -76,7 +76,7 @@
 
     <form method="post">
         <input type="hidden" asp-for="Facility.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-page="Details" asp-route-id="@Model.ID" class="btn btn-outline-secondary">Cancel</a>
+        <input type="submit" value="Delete" class="btn btn-danger col-md-2" />
+        <a href="javascript: history.go(-1)" class="btn btn-outline-secondary col-md-2">Cancel</a>
     </form>
 </div>

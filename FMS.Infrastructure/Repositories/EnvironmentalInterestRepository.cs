@@ -25,11 +25,6 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteEnvironmentalInterestAsync(EnvironmentalInterestDetailDto deletedEnvironmentalInterest)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<bool> EnvironmentalInterestExistsAsync(Guid id)
         {
             throw new NotImplementedException();

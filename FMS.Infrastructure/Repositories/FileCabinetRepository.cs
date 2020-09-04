@@ -25,11 +25,6 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteFileCabinetAsync(FileCabinetDetailDto deletedFileCabinet)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> FileCabinetExistsAsync(Guid id)
         {
             return await _context.FileCabinets.AnyAsync(e => e.Id == id);

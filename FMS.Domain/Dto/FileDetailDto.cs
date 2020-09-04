@@ -12,7 +12,7 @@ namespace FMS.Domain.Dto
             FileLabel = file.FileLabel;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

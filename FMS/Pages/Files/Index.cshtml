@@ -1,11 +1,70 @@
-﻿@page
+﻿@page "{id:Guid?}"
 @model Pages.Files.IndexModel
 @{
-    ViewData["Title"] = "File Contents";
+    ViewData["Title"] = $"File Details: {Model.FileDetail.FileLabel}";
 }
-    <div class="text-center">
-        <h4 >File Contents</h4>
-        <div class="container-fluid">
-            <h3 >File Contents here</h3>
-        </div>
+<h1 id="details">@ViewData["Title"]</h1>
+
+<div id="ResultList">
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FacilitySpec.FacilityNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FacilitySpec.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FacilitySpec.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FacilitySpec.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FacilitySpec.State)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FacilitySpec.PostalCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FacilitySpec.Active)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FacilityList)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="../Facilities/Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                @Html.DisplayFor(modelItem => item.FacilityNumber)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PostalCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Active)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <hr />
+        <a href="javascript: history.go(-1)" class="btn btn-primary btn-sm col-md-2">Previous Page</a>
     </div>
+</div>

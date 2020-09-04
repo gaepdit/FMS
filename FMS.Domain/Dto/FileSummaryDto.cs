@@ -13,12 +13,12 @@ namespace FMS.Domain.Dto
             Active = file.Active;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
+
+        public bool Active { get; set; }
 
         [StringLength(9)]
         [Display(Name = "File Label")]
-        public string? FileLabel { get; set; }
-
-        public bool? Active { get; set; }
+        public string FileLabel { get; set; }
     }
 }

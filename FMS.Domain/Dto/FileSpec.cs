@@ -6,8 +6,8 @@ namespace FMS.Domain.Dto
     {
         [StringLength(9)]
         [Display(Name = "File Label")]
-        public string? FileLabel { get; set; }
+        public string FileLabel { get; set; }
 
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
     }
 }

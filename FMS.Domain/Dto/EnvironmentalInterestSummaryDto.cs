@@ -16,9 +16,9 @@ namespace FMS.Domain.Dto
             //BudgetCode = environmentalInterest.BudgetCode.Id;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         [Display(Name = "Environmental Interest")]
         public string Name { get; set; }

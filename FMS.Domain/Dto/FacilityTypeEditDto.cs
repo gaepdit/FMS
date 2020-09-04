@@ -16,7 +16,7 @@ namespace FMS.Domain.Dto
             Name = facilityType.Name;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

@@ -14,6 +14,5 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync();
         Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer);
         Task UpdateComplianceOfficerAsync(Guid id, ComplianceOfficerEditDto complianceOfficerUpdates);
-        Task<int> DeleteComplianceOfficerAsync(ComplianceOfficerDetailDto deletedComplianceOfficer);
     }
 }

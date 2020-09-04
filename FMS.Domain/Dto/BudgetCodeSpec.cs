@@ -4,20 +4,20 @@ namespace FMS.Domain.Dto
 {
     public class BudgetCodeSpec
     {
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         //public Guid? EnvironmentalInterestId { get; set; }
 
         [StringLength(20)]
-        public string? Code { get; set; }
+        public string Code { get; set; }
 
         [Display(Name = "Budget Code")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [StringLength(20)]
-        public string? OrganizationNumber { get; set; }
+        public string OrganizationNumber { get; set; }
 
         [StringLength(20)]
-        public string? ProjectNumber { get; set; }
+        public string ProjectNumber { get; set; }
     }
 }

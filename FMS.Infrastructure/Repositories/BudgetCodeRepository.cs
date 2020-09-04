@@ -42,11 +42,6 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteBudgetCodeAsync(BudgetCodeDetailDto deletedBudgetCode)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task UpdateBudgetCodeAsync(Guid id, BudgetCodeEditDto budgetCodeUpdates)
         {
             throw new NotImplementedException();

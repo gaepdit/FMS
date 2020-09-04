@@ -18,7 +18,7 @@ namespace FMS.Domain.Dto
             //EnvironmentalInterestId = facilityStatus.EnvironmentalInterest.Id;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

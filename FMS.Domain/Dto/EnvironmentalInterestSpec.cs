@@ -4,11 +4,11 @@ namespace FMS.Domain.Dto
 {
     public class EnvironmentalInterestSpec
     {
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         [Display(Name = "Environmental Interest")]
         public string Name { get; set; }
 
-        //public Guid? BudgetCodeId { get; set; }
+        //public Guid BudgetCodeId { get; set; }
     }
 }

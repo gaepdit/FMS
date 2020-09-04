@@ -1,74 +1,118 @@
-﻿using FMS.Domain.Entities;
+﻿using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Admin
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IFileRepository _fileRepository;
 
-        private readonly FmsDbContext _context;
+        private readonly IBudgetCodeRepository _budgetCodeRepository;
 
-        [BindProperty]
-        public BudgetCode budgetCodeDD { get; set; } = new BudgetCode();
+        private readonly IComplianceOfficerRepository _complianceOfficerRepository;
 
-        [BindProperty]
-        public IEnumerable<BudgetCode> BudgetCodes { get; private set; }
+        private readonly IEnvironmentalInterestRepository _environmentalInterestRepository;
 
-        [BindProperty]
-        public IEnumerable<FileCabinet> FileCabinets { get; set; }
+        private readonly IFacilityStatusRepository _facilityStatusRepository;
 
-       
+        private readonly IFacilityTypeRepository _facilityTypeRepository;
+
+        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
+
+        private readonly IFileCabinetRepository _fileCabinetRepository;
+
+        public SelectList Files { get; set; }
+        public SelectList FacilityStatuses { get; private set; }
+        public SelectList FacilityTypes { get; private set; }
+        public SelectList BudgetCodes { get; private set; }
+        public SelectList OrganizationalUnits { get; private set; }
+        public SelectList EnvironmentalInterests { get; private set; }
+        public SelectList ComplianceOfficers { get; set; }
+        public SelectList FileCabinets { get; set; }
+
+        public Guid FileId { get; set; }
+        public Guid FacilityStatusId { get; private set; }
+        public Guid FacilityTypeId { get; private set; }
+        public Guid BudgetCodeId { get; private set; }
+        public Guid OrganizationalUnitId { get; private set; }
+        public Guid EnvironmentalInterestId { get; private set; }
+        public Guid ComplianceOfficerId { get; set; }
+        public Guid FileCabinetId { get; set; }
+
+
+        [Display(Name = "Select a Drop-Down Menu to Edit")]
+        [BindProperty(SupportsGet =true)]
+        public int DropDownSelection { get; set; }
+
         public IndexModel(
-            ILogger<IndexModel> logger,
-            FmsDbContext context)
+            IFileRepository fileRepository,
+            IBudgetCodeRepository budgetCodeRepository,
+            IComplianceOfficerRepository complianceOfficerRepository,
+            IEnvironmentalInterestRepository environmentalInterestRepository,
+            IFacilityStatusRepository facilityStatusRepository,
+            IFacilityTypeRepository facilityTypeRepository,
+            IOrganizationalUnitRepository organizationalUnitRepository,
+            IFileCabinetRepository fileCabinetRepository)
         {
-            _logger = logger;
-            _context = context;
+            _fileRepository = fileRepository;
+            _budgetCodeRepository = budgetCodeRepository;
+            _complianceOfficerRepository = complianceOfficerRepository;
+            _environmentalInterestRepository = environmentalInterestRepository;
+            _facilityStatusRepository = facilityStatusRepository;
+            _facilityTypeRepository = facilityTypeRepository;
+            _organizationalUnitRepository = organizationalUnitRepository;
+            _fileCabinetRepository = fileCabinetRepository;
         }
 
         public void OnGet()
         {
-            PopulateListBoxes();
-        }
-        public IActionResult OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            string url = "/Admin/Index";
-            return RedirectToPage(url);
+            //PopulateListBoxes();
+            DropDownSelection = 0;
         }
 
-        public IActionResult OnPostBudgetCodeDD()
+        public async Task<IActionResult> OnGetSearchAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            string url = "/Admin/Index";
-            return RedirectToPage(url);
+            await PopulateResultAsync();
+            return Page();
         }
 
-        public IActionResult OnPostBudgetCode()
+        private async Task PopulateResultAsync()
         {
-            if (!ModelState.IsValid)
+            switch (DropDownSelection)
             {
-                return Page();
+                case 1:
+                    BudgetCodes = new SelectList(await _budgetCodeRepository.GetBudgetCodeListAsync(), "Id", "Name");
+                    break;
+                case 2:
+                    ComplianceOfficers = new SelectList(await _complianceOfficerRepository.GetComplianceOfficerListAsync(), "Id", "Name");
+                    break;
+                case 3:
+                    EnvironmentalInterests = new SelectList(await _environmentalInterestRepository.GetEnvironmentalInterestListAsync(), "Id", "Name");
+                    break;
+                case 4:
+                    FacilityStatuses = new SelectList(await _facilityStatusRepository.GetFacilityStatusListAsync(), "Id", "Status");
+                    break;
+                case 5:
+                    FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
+                    break;
+                case 6:
+                    FileCabinets = new SelectList(await _fileCabinetRepository.GetFileCabinetListAsync(), "Id", "Name");
+                    break;
+                case 7:
+                    Files = new SelectList(await _fileRepository.GetFileListAsync(null), "Id", "FileLabel");
+                    break;
+                case 8:
+                    OrganizationalUnits = new SelectList(await _organizationalUnitRepository.GetOrganizationalUnitListAsync(), "Id", "Name");
+                    break;
+                default:
+                    break;
             }
-            string url = "/Admin/Index";
-            return RedirectToPage(url);
-        }
-
-        private void PopulateListBoxes()
-        {
-            FileCabinets = _context.FileCabinets;
-            BudgetCodes = _context.BudgetCodes;
         }
     }
 }

@@ -13,6 +13,5 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<EnvironmentalInterestSummaryDto>> GetEnvironmentalInterestListAsync();
         Task<Guid> CreateEnvironmentalInterestAsync(EnvironmentalInterestCreateDto environmentalInterest);
         Task UpdateEnvironmentalInterestAsync(Guid id, EnvironmentalInterestEditDto environmentalInterestUpdates);
-        Task<int> DeleteEnvironmentalInterestAsync(EnvironmentalInterestDetailDto deletedEnvironmentalInterest);
     }
 }

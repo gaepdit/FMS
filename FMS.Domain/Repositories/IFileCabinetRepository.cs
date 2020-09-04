@@ -13,6 +13,5 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<FileCabinetSummaryDto>> GetFileCabinetListAsync();
         Task<Guid> CreateFileCabinetAsync(FileCabinetCreateDto fileCabinet);
         Task UpdateFileCabinetAsync(Guid id, FileCabinetEditDto fileCabinetUpdates);
-        Task<int> DeleteFileCabinetAsync(FileCabinetDetailDto deletedFileCabinet);
     }
 }

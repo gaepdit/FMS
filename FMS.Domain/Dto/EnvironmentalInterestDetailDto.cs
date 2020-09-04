@@ -14,7 +14,7 @@ namespace FMS.Domain.Dto
             //BudgetCodeId = environmentalInterest.BudgetCode.Id;
         }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 
