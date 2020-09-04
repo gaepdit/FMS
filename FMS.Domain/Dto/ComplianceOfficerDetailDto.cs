@@ -10,8 +10,8 @@ namespace FMS.Domain.Dto
         {
             Id = complianceOfficer.Id;
             Active = complianceOfficer.Active;
-            FirstName = complianceOfficer.FirstName;
-            LastName = complianceOfficer.LastName;
+            GivenName = complianceOfficer.GivenName;
+            FamilyName = complianceOfficer.FamilyName;
             //OrganizationalUnitId = complianceOfficer.OrganizationalUnit.Id;
         }
 
@@ -19,9 +19,9 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
-        public string FirstName { get; set; }
+        public string GivenName { get; set; }
 
-        public string LastName { get; set; }
+        public string FamilyName { get; set; }
 
         //public Guid OrganizationalUnitId { get; set; }
     }

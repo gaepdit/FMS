@@ -15,48 +15,48 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"),
                     Active = true,
-                    FirstName = "Antonia",
-                    LastName = "Beavers",
+                    GivenName = "Antonia",
+                    FamilyName = "Beavers",
                     Unit = { }
                 },
                 new ComplianceOfficer
                 {
                     Id = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     Active = true,
-                    FirstName = "Tom",
-                    LastName = "Brodell",
+                    GivenName = "Tom",
+                    FamilyName = "Brodell",
                     Unit = { }
                 },
                 new ComplianceOfficer
                 {
                     Id = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),
                     Active = true,
-                    FirstName = "David",
-                    LastName = "Brownlee",
+                    GivenName = "David",
+                    FamilyName = "Brownlee",
                     Unit = { }
                 },
                 new ComplianceOfficer
                 {
                     Id = new Guid("255ACC97-1C23-4621-A08A-FE77B500BDD0"),
                     Active = true,
-                    FirstName = "Jacob",
-                    LastName = "Carpenter",
+                    GivenName = "Jacob",
+                    FamilyName = "Carpenter",
                     Unit = { }
                 },
                 new ComplianceOfficer
                 {
                     Id = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"),
                     Active = true,
-                    FirstName = "Kevin",
-                    LastName = "Collins",
+                    GivenName = "Kevin",
+                    FamilyName = "Collins",
                     Unit = { }
                 },
                 new ComplianceOfficer
                 {
                     Id = new Guid("63B66867-0961-4ADE-99D2-85D6D4FED985"),
                     Active = true,
-                    FirstName = "Gary",
-                    LastName = "Davis",
+                    GivenName = "Gary",
+                    FamilyName = "Davis",
                     Unit = { }
                 }
             }.ToArray();
