@@ -4,10 +4,12 @@ namespace FMS.Domain.Dto
 {
     public class ComplianceOfficerSpec
     {
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
-        [Display(Name = "Compliance Officer")]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
 
         //public Guid? OrganizationalUnitId { get; set; }
     }

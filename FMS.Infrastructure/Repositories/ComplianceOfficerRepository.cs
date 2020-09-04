@@ -39,7 +39,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync()
         {
             return await _context.ComplianceOfficers.AsNoTracking()
-                .OrderBy(e => e.Name)
+                .OrderBy(e => e.LastName)
                 .Select(e => new ComplianceOfficerSummaryDto(e))
                 .ToListAsync();
         }

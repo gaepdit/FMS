@@ -60,10 +60,10 @@
             @Html.DisplayFor(model => model.FacilityDetail.EnvironmentalInterest.Name)
         </dd>
         <dt class="col-xl-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer.Name)
+            @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer.FirstName)
         </dt>
         <dd class="col-xl-9">
-            @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name)
+            @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.FirstName + " " + model.FacilityDetail.ComplianceOfficer.LastName)
         </dd>
         <dt class="col-xl-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.Location)
