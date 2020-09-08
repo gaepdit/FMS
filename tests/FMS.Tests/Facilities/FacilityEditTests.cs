@@ -1,10 +1,9 @@
 using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
-using FMS.Infrastructure.Contexts;
+using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Threading.Tasks;
@@ -15,14 +14,9 @@ namespace FMS.Tests.Facilities
 {
     public class FacilityEditTests
     {
-        [Fact(Skip = "Not implemented yet")]
+        [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            // Remove after FmsDbContext in Page has been replaced with repositories
-            var optionsBuilder = new DbContextOptionsBuilder<FmsDbContext>()
-               .UseInMemoryDatabase("InMemoryDb");
-            var mockContext = new Mock<FmsDbContext>(optionsBuilder.Options);
-
             Guid facilityId = DataHelpers.Facilities[0].Id;
             var facility = DataHelpers.GetFacilityDetail(facilityId);
 
@@ -31,9 +25,9 @@ namespace FMS.Tests.Facilities
                 .ReturnsAsync(facility)
                 .Verifiable();
 
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockContext.Object);
+            var mockSelectListHelper = new Mock<ISelectListHelper>();
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
 
-            // This fails because FmsDbContext.Counties not fully mocked
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
@@ -45,17 +39,13 @@ namespace FMS.Tests.Facilities
         [Fact]
         public async Task OnGet_NonexistantIdReturnsNotFound()
         {
-            // Remove after FmsDbContext in Page has been replaced with repositories
-            var optionsBuilder = new DbContextOptionsBuilder<FmsDbContext>()
-               .UseInMemoryDatabase("InMemoryDb");
-            var mockContext = new Mock<FmsDbContext>(optionsBuilder.Options);
-
             var mockRepo = new Mock<IFacilityRepository>();
             mockRepo.Setup(l => l.GetFacilityAsync(It.IsAny<Guid>()))
                 .ReturnsAsync((FacilityDetailDto)null)
                 .Verifiable();
 
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockContext.Object);
+            var mockSelectListHelper = new Mock<ISelectListHelper>();
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
 
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
@@ -67,13 +57,9 @@ namespace FMS.Tests.Facilities
         [Fact]
         public async Task OnGet_MissingIdReturnsNotFound()
         {
-            // Remove after FmsDbContext in Page has been replaced with repositories
-            var optionsBuilder = new DbContextOptionsBuilder<FmsDbContext>()
-               .UseInMemoryDatabase("InMemoryDb");
-            var mockContext = new Mock<FmsDbContext>(optionsBuilder.Options);
-
             var mockRepo = new Mock<IFacilityRepository>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockContext.Object);
+            var mockSelectListHelper = new Mock<ISelectListHelper>();
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

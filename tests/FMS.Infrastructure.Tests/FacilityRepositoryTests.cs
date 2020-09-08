@@ -55,7 +55,7 @@ namespace FMS.Infrastructure.Tests
 
         // CountAsync
 
-        [Fact(Skip = "Not implemented yet")]
+        [Fact(Skip = "CountAsync not implemented yet")]
         public async Task FacilityCount_DefaultSpec_ReturnsCorrectCount()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
@@ -63,7 +63,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(DataHelpers.Facilities.Length);
         }
 
-        [Theory(Skip = "Not implemented yet")]
+        [Theory(Skip = "CountAsync not implemented yet")]
         [InlineData(243)]
         [InlineData(131)]
         public async Task FacilityCount_ByCounty_ReturnsCorrectCount(int countyId)
@@ -77,7 +77,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(expected);
         }
 
-        [Theory(Skip = "Not implemented yet")]
+        [Theory(Skip = "CountAsync not implemented yet")]
         [InlineData("00")]
         [InlineData("BRF")]
         public async Task FacilityCount_ByFacilityNumber_ReturnsCorrectCount(string facilityNumber)
