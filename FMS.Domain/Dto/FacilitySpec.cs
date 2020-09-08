@@ -35,7 +35,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Compliance Officer")]
         public Guid? ComplianceOfficerId { get; set; }
 
-        [Display(Name = "File Id")]
+        [Display(Name = "File Label")]
         public Guid? FileId { get; set; }
 
         [Display(Name = "Location Description")]

@@ -14,15 +14,14 @@ namespace FMS.Domain.Entities
         {
             FacilityNumber = newFacility.FacilityNumber;
             Name = newFacility.Name;
-            Active = newFacility.Active;
-            County.Id = newFacility.CountyId;
-            FacilityStatus.Id = newFacility.FacilityStatusId;
-            FacilityType.Id = newFacility.FacilityTypeId;
-            BudgetCode.Id = newFacility.BudgetCodeId;
-            OrganizationalUnit.Id = newFacility.OrganizationalUnitId;
-            EnvironmentalInterest.Id = newFacility.EnvironmentalInterestId;
-            ComplianceOfficer.Id = newFacility.ComplianceOfficerId;
-            File.Id = (Guid)newFacility.FileId;
+            CountyId = newFacility.CountyId;
+            FacilityStatusId = newFacility.FacilityStatusId;
+            FacilityTypeId = newFacility.FacilityTypeId;
+            BudgetCodeId = newFacility.BudgetCodeId;
+            OrganizationalUnitId = newFacility.OrganizationalUnitId;
+            EnvironmentalInterestId = newFacility.EnvironmentalInterestId;
+            ComplianceOfficerId = newFacility.ComplianceOfficerId;
+            FileId = (Guid)newFacility.FileId;
             Location = newFacility.Location;
             Address = newFacility.Address;
             City = newFacility.City;

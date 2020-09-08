@@ -1,11 +1,10 @@
-﻿using FMS.Domain.Data;
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
@@ -18,9 +17,6 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public FacilityCreateDto Facility { get; set; }
 
-        [BindProperty]
-        public Guid Id { get; set; }
-
         public int? CountyArg { get; set; }
 
         // Select Lists
@@ -32,13 +28,7 @@ namespace FMS.Pages.Facilities
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList EnvironmentalInterests { get; private set; }
-
-        // todo: Add a name property to COs
         public SelectList ComplianceOfficers { get; private set; }
-
-        // TODO: Restore these after the DTOs are fully built:
-
-        //public SelectList FileCabinets { get; private set; }
 
         public AddModel(
             IFacilityRepository repository,
@@ -64,10 +54,13 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            await _repository.CreateFacilityAsync(Facility);
+            // TODO: When adding a new facility number, make sure the number doesn't already exist
+            // before trying to save.
 
-            return RedirectToPage("Details", new { id = Id, success = true });
+            var newFacilityId = await _repository.CreateFacilityAsync(Facility);
+            return RedirectToPage("Details", new { id = newFacilityId, success = true });
         }
+
         private async Task PopulateSelectsAsync()
         {
             Files = await _listHelper.FilesSelectListAsync();

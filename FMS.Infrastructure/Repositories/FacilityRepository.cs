@@ -1,4 +1,4 @@
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
@@ -86,11 +86,13 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
+            // TODO: Generate new File ID if newFacility.FileId is null
+
             Facility newFac = new Facility(newFacility);
-            _context.Facilities.Add(newFac);
-            _context.SaveChanges();
-                       
-            return await Task.FromResult(newFac.Id);
+            await _context.Facilities.AddAsync(newFac);
+            await _context.SaveChangesAsync();
+
+            return newFac.Id;
         }
 
         public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)

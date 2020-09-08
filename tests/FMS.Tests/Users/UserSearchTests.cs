@@ -42,7 +42,7 @@ namespace FMS.Tests.Users
         }
 
         [Fact]
-        public async Task OnSearch_IfInvalidModel_ReturnBadRequestAsync()
+        public async Task OnSearch_IfInvalidModel_ReturnPageWithInvalidModelState()
         {
             var mockUserService = new Mock<IUserService>();
             var pageModel = new Pages.Users.IndexModel(mockUserService.Object);

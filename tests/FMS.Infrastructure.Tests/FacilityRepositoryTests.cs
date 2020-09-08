@@ -123,12 +123,52 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeEquivalentTo(expected);
         }
 
-        // TODO: CreateFacilityAsync
+        // CreateFacilityAsync
+
+        [Fact]
+        public async Task CreateFacility_Succeeds()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+
+            Guid facilityId = DataHelpers.Facilities[0].Id;
+            var sampleFacility = await repository.GetFacilityAsync(facilityId);
+            var newFacility = new FacilityCreateDto()
+            {
+                Address = sampleFacility.Address,
+                BudgetCodeId = sampleFacility.BudgetCode.Id,
+                City = sampleFacility.City,
+                ComplianceOfficerId = sampleFacility.ComplianceOfficer.Id,
+                CountyId = sampleFacility.County.Id,
+                EnvironmentalInterestId = sampleFacility.EnvironmentalInterest.Id,
+                FacilityNumber = sampleFacility.FacilityNumber,
+                FacilityStatusId = sampleFacility.FacilityStatus.Id,
+                FacilityTypeId = sampleFacility.FacilityType.Id,
+                FileId = sampleFacility.File.Id,
+                Latitude = sampleFacility.Latitude,
+                Location = sampleFacility.Location,
+                Longitude = sampleFacility.Longitude,
+                Name = sampleFacility.Name,
+                OrganizationalUnitId = sampleFacility.OrganizationalUnit.Id,
+                PostalCode = sampleFacility.PostalCode,
+                State = sampleFacility.State
+            };
+
+            var result = await repository.CreateFacilityAsync(newFacility);
+            var createdFacility = await repository.GetFacilityAsync(result);
+
+            // Clear File.Facilities sub-property since it is cyclic
+            createdFacility.File.Facilities = null;
+            sampleFacility.File.Facilities = null;
+
+            // Set sample facility properties to match
+            sampleFacility.Id = result;
+            createdFacility.Should().BeEquivalentTo(sampleFacility);
+        }
 
         // UpdateFacilityAsync
 
         [Fact]
-        public async Task UpdateFacilityCountySucceeds()
+        public async Task UpdateFacilityCounty_Succeeds()
         {
             var repositoryHelper = new RepositoryHelper();
             int newCountyId = 99;
@@ -156,7 +196,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task UpdateFacilityStateSucceeds()
+        public async Task UpdateFacilityState_Succeeds()
         {
             var repositoryHelper = new RepositoryHelper();
             string newState = "Alabama";
@@ -184,7 +224,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task UpdateNonexistantFacilityThrowsException()
+        public async Task UpdateNonexistantFacility_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var updates = new FacilityEditDto() { CountyId = 99 };
