@@ -1,9 +1,10 @@
 ﻿using FMS.Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace FMS.Domain.Entities
 {
-    public class ComplianceOfficer : BaseActiveModel
+    public class ComplianceOfficer : BaseActiveModel, INamedModel
     {
         [Display(Name = "Compliance Officer")]
         public string GivenName { get; set; }
@@ -11,6 +12,8 @@ namespace FMS.Domain.Entities
         public string FamilyName { get; set; }
 
         //public Guid UnitId { get; set; }
-        public  OrganizationalUnit Unit { get; set; }   //virtual
+        public OrganizationalUnit Unit { get; set; }   //virtual
+
+        public string Name => string.Join(", ", new string[] { FamilyName, GivenName }.Where(s => !string.IsNullOrEmpty(s)));
     }
 }

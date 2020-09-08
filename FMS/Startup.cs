@@ -2,6 +2,7 @@ using FMS.App;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
+using FMS.Helpers;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
@@ -92,16 +93,18 @@ namespace FMS
             });
 
             // Configure dependencies
-            services.AddTransient<IUserService, UserService>();
-            services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
-            services.AddScoped(typeof(IFileRepository), typeof(FileRepository));
-            services.AddScoped(typeof(IBudgetCodeRepository), typeof(BudgetCodeRepository));
-            services.AddScoped(typeof(IComplianceOfficerRepository), typeof(ComplianceOfficerRepository));
-            services.AddScoped(typeof(IEnvironmentalInterestRepository), typeof(EnvironmentalInterestRepository));
-            services.AddScoped(typeof(IFacilityStatusRepository), typeof(FacilityStatusRepository));
-            services.AddScoped(typeof(IFacilityTypeRepository), typeof(FacilityTypeRepository));
-            services.AddScoped(typeof(IOrganizationalUnitRepository), typeof(OrganizationalUnitRepository));
-            services.AddScoped(typeof(IFileCabinetRepository), typeof(FileCabinetRepository));
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFacilityRepository, FacilityRepository>();
+            services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IBudgetCodeRepository, BudgetCodeRepository>();
+            services.AddScoped<IComplianceOfficerRepository, ComplianceOfficerRepository>();
+            services.AddScoped<IEnvironmentalInterestRepository, EnvironmentalInterestRepository>();
+            services.AddScoped<IFacilityStatusRepository, FacilityStatusRepository>();
+            services.AddScoped<IFacilityTypeRepository, FacilityTypeRepository>();
+            services.AddScoped<IOrganizationalUnitRepository, OrganizationalUnitRepository>();
+            services.AddScoped<IFileCabinetRepository, FileCabinetRepository>();
+            services.AddScoped<IItemsListRepository, ItemsListRepository>();
+            services.AddScoped<ISelectListHelper, SelectListHelper>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

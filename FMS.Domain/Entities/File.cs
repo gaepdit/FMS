@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
-    public class File : BaseActiveModel
+    public class File : BaseActiveModel, INamedModel
     {
         public File() { }
 
@@ -25,5 +25,7 @@ namespace FMS.Domain.Entities
         public List<FileCabinet> FileCabinets { get; set; }
 
         public List<Facility> Facilities { get; set; }
+
+        public string Name => FileLabel;
     }
 }

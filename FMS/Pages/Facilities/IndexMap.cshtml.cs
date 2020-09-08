@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Data;
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +19,7 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public FacilityMapSpec Spec { get; set; }
 
+        // Select Lists
         public SelectList States => new SelectList(Data.States);
 
         // this is the list of facilities returned from the search

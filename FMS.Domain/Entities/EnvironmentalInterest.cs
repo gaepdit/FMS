@@ -1,13 +1,12 @@
 using FMS.Domain.Entities.Base;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
-    public class EnvironmentalInterest : BaseActiveModel
+    public class EnvironmentalInterest : BaseActiveNamedModel
     {
-        [Display(Name = "Environmental Interest")]
-        public string Name { get; set; }
+        //[Display(Name = "Environmental Interest")]
+        //public string Name { get; set; }
 
         public List<BudgetCode> BudgetCodes { get; set; }
     }

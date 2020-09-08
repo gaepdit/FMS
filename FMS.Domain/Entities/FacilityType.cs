@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
-    public class FacilityType : BaseActiveModel
+    public class FacilityType : BaseActiveModel, INamedModel
     {
         // Existing numeric code
         public int Code { get; set; }
