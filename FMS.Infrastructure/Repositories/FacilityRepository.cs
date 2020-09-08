@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
@@ -119,14 +119,6 @@ namespace FMS.Infrastructure.Repositories
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<int> DeleteFacilityAsync(FacilityDetailDto facility)
-        {
-            _context.Remove(facility);
-            int success = await _context.SaveChangesAsync();
-
-            return await Task.FromResult(success);
         }
 
         #region IDisposable Support

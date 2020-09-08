@@ -15,7 +15,6 @@
 
 - `/Maintenance` (Edit lists, cabinets, etc.)
 - `/Facilities/Add` (Add a new facility)
-- `/Facilities/Delete/?` (Delete facility)
 - `/Facilities/Edit/?` (Edit facility details)
 
 ## User pages
