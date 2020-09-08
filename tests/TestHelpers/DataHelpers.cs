@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Dto;
+﻿using FMS.Domain.Data;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Infrastructure.SeedData;
@@ -10,7 +11,7 @@ namespace TestHelpers
     public static class DataHelpers
     {
         public static Facility[] Facilities = DevSeedData.GetFacilities();
-        public static County[] Counties = ProdSeedData.GetCounties();
+        public static List<County> Counties = Data.Counties;
         public static FacilityStatus[] FacilityStatuses = DevSeedData.GetFacilityStatuses();
         public static FacilityType[] FacilityTypes = DevSeedData.GetFacilityTypes();
         public static BudgetCode[] BudgetCodes = DevSeedData.GetBudgetCodes();
@@ -36,7 +37,7 @@ namespace TestHelpers
             };
         }
 
-        public static County GetCounty(int id) => Array.Find(Counties, e => e.Id == id);
+        public static County GetCounty(int id) => Counties.Find(e => e.Id == id);
         public static FacilityStatus GetFacilityStatus(Guid id) => Array.Find(FacilityStatuses, e => e.Id == id);
         public static FacilityType GetFacilityType(Guid id) => Array.Find(FacilityTypes, e => e.Id == id);
         public static BudgetCode GetBudgetCode(Guid id) => Array.Find(BudgetCodes, e => e.Id == id);

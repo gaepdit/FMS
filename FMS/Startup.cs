@@ -95,7 +95,6 @@ namespace FMS
             services.AddTransient<IUserService, UserService>();
             services.AddScoped(typeof(IFacilityRepository), typeof(FacilityRepository));
             services.AddScoped(typeof(IFileRepository), typeof(FileRepository));
-            services.AddScoped(typeof(ICountyRepository), typeof(CountyRepository));
             services.AddScoped(typeof(IBudgetCodeRepository), typeof(BudgetCodeRepository));
             services.AddScoped(typeof(IComplianceOfficerRepository), typeof(ComplianceOfficerRepository));
             services.AddScoped(typeof(IEnvironmentalInterestRepository), typeof(EnvironmentalInterestRepository));

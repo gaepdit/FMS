@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.Linq;
-using FMS.Domain.Repositories;
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
+using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
@@ -14,8 +15,6 @@ namespace FMS.Pages.Facilities
         private readonly IFacilityRepository _repository;
 
         private readonly IFileRepository _fileRepository;
-
-        private readonly ICountyRepository _countyRepository;
 
         private readonly IBudgetCodeRepository _budgetCodeRepository;
 
@@ -33,7 +32,7 @@ namespace FMS.Pages.Facilities
         public FacilitySpec Spec { get; set; }
 
         // List of facilities resulting from the search
-        public IReadOnlyList<FacilitySummaryDto> FacilityList {get; set;}
+        public IReadOnlyList<FacilitySummaryDto> FacilityList { get; set; }
 
         public int? CountyArg { get; set; }
 
@@ -48,7 +47,7 @@ namespace FMS.Pages.Facilities
         public bool ShowNone { get; set; }
 
         public SelectList Files { get; set; }
-        public SelectList Counties { get; private set; }
+        public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }
@@ -65,7 +64,6 @@ namespace FMS.Pages.Facilities
         public IndexModel(
             IFacilityRepository repository,
             IFileRepository fileRepository,
-            ICountyRepository countyRepository,
             IBudgetCodeRepository budgetCodeRepository,
             IComplianceOfficerRepository complianceOfficerRepository,
             IEnvironmentalInterestRepository environmentalInterestRepository,
@@ -75,7 +73,6 @@ namespace FMS.Pages.Facilities
         {
             _repository = repository;
             _fileRepository = fileRepository;
-            _countyRepository = countyRepository;
             _budgetCodeRepository = budgetCodeRepository;
             _complianceOfficerRepository = complianceOfficerRepository;
             _environmentalInterestRepository = environmentalInterestRepository;
@@ -97,9 +94,9 @@ namespace FMS.Pages.Facilities
 
             // Get the list of facilities matching the "Spec" criteria
             FacilityList = await _repository.GetFacilityListAsync(spec);
-            
+
             // Set "divs" based on search results
-            if(FacilityList.Count() > 0)
+            if (FacilityList.Count() > 0)
             {
                 ShowResults = true;
                 ShowNone = false;
@@ -117,8 +114,6 @@ namespace FMS.Pages.Facilities
         private async Task PopulateSelectsAsync()
         {
             Files = new SelectList(await _fileRepository.GetFileListAsync(CountyArg), "Id", "FileLabel");
-
-            Counties = new SelectList(await _countyRepository.GetCountyListAsync(), "Id", "Name");
 
             BudgetCodes = new SelectList(await _budgetCodeRepository.GetBudgetCodeListAsync(), "Id", "Name");
 

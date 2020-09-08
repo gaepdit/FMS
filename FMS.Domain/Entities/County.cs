@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Entities
+﻿namespace FMS.Domain.Entities
 {
     public class County
     {

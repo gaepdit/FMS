@@ -1,6 +1,6 @@
-﻿using FMS.Domain.Dto;
+﻿using FMS.Domain.Data;
+using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
-using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,8 +15,6 @@ namespace FMS.Pages.Facilities
         private readonly IFacilityRepository _repository;
 
         private readonly IFileRepository _fileRepository;
-
-        private readonly ICountyRepository _countyRepository;
 
         private readonly IBudgetCodeRepository _budgetCodeRepository;
 
@@ -39,7 +37,7 @@ namespace FMS.Pages.Facilities
         public int? CountyArg { get; set; }
 
         public SelectList Files { get; set; }
-        public SelectList Counties { get; private set; }
+        public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }
@@ -59,7 +57,6 @@ namespace FMS.Pages.Facilities
         public EditModel(
             IFacilityRepository repository,
             IFileRepository fileRepository,
-            ICountyRepository countyRepository,
             IBudgetCodeRepository budgetCodeRepository,
             IComplianceOfficerRepository complianceOfficerRepository,
             IEnvironmentalInterestRepository environmentalInterestRepository,
@@ -69,7 +66,6 @@ namespace FMS.Pages.Facilities
         {
             _repository = repository;
             _fileRepository = fileRepository;
-            _countyRepository = countyRepository;
             _budgetCodeRepository = budgetCodeRepository;
             _complianceOfficerRepository = complianceOfficerRepository;
             _environmentalInterestRepository = environmentalInterestRepository;
@@ -135,8 +131,6 @@ namespace FMS.Pages.Facilities
         private async Task PopulateSelectsAsync()
         {
             Files = new SelectList(await _fileRepository.GetFileListAsync(CountyArg), "Id", "FileLabel");
-
-            Counties = new SelectList(await _countyRepository.GetCountyListAsync(), "Id", "Name");
 
             BudgetCodes = new SelectList(await _budgetCodeRepository.GetBudgetCodeListAsync(), "Id", "Name");
 

@@ -1,6 +1,6 @@
-﻿using FMS.Domain.Entities;
+﻿using FMS.Domain.Data;
+using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
-using FMS.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ namespace FMS.Infrastructure.Contexts
     {
 
         public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) { }
-            //=> options = new DbContextOptionsBuilder<FmsDbContext>().EnableSensitiveDataLogging(true).Options;
+        //=> options = new DbContextOptionsBuilder<FmsDbContext>().EnableSensitiveDataLogging(true).Options;
         public DbSet<BudgetCode> BudgetCodes { get; set; }
         public DbSet<ComplianceOfficer> ComplianceOfficers { get; set; }
         public DbSet<County> Counties { get; set; }
@@ -28,8 +28,9 @@ namespace FMS.Infrastructure.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
-            
-            builder.Entity<County>().HasData(ProdSeedData.GetCounties());
+
+            // Data
+            builder.Entity<County>().HasData(Data.Counties);
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers");
