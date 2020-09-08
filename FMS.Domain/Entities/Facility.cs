@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
@@ -75,8 +75,8 @@ namespace FMS.Domain.Entities
         [StringLength(30)]
         public string City { get; set; }
 
-        [StringLength(2)]
-        public string State { get; set; } = "GA";
+        [StringLength(20)]
+        public string State { get; set; }
 
         [StringLength(10)]
         public string PostalCode { get; set; }

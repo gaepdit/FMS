@@ -159,7 +159,7 @@ namespace FMS.Infrastructure.Tests
         public async Task UpdateFacilityStateSucceeds()
         {
             var repositoryHelper = new RepositoryHelper();
-            string newState = "AL";
+            string newState = "Alabama";
             Guid facilityId = DataHelpers.Facilities[0].Id;
 
             using (var repository = repositoryHelper.GetFacilityRepository())

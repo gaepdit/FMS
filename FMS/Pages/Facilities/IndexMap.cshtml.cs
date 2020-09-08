@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
@@ -16,6 +18,8 @@ namespace FMS.Pages.Facilities
         // It's properties are bound to the HTML elements
         [BindProperty]
         public FacilityMapSpec Spec { get; set; }
+
+        public SelectList States => new SelectList(Data.States);
 
         // this is the list of facilities returned from the search
         public IReadOnlyList<FacilitySummaryDto> FacilityList { get; set; }
@@ -66,7 +70,7 @@ namespace FMS.Pages.Facilities
                 ShowMap = false;
                 ShowNone = true;
             }
-           
+
             return Page();
         }
     }

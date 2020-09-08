@@ -48,6 +48,7 @@ namespace FMS.Pages.Facilities
 
         public SelectList Files { get; set; }
         public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
+        public SelectList States => new SelectList(Data.States);
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }
@@ -83,6 +84,7 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetAsync()
         {
+            //Spec = new FacilitySpec() { State = "Georgia" };
             await PopulateSelectsAsync();
             return Page();
         }
