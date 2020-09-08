@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Entities.Base;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
@@ -10,10 +9,8 @@ namespace FMS.Domain.Entities
         [Display(Name = "File Cabinet Number")]
         public string Name { get; set; }
 
-        public Guid StartCountyId { get; set; }
         public virtual County StartCounty { get; set; }
 
-        public Guid EndCountyId { get; set; }
         public virtual County EndCounty { get; set; }
 
         public int StartSequence { get; set; }
