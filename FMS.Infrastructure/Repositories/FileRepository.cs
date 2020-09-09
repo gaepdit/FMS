@@ -24,7 +24,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<FileDetailDto> GetFileAsync(Guid id)
         {
             var file = await _context.Files.AsNoTracking()
-                //.Include(e => e.FileCabinets)
+                //.Include(e => e.Cabinets)
                 //.Include(e => e.Facilities)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
@@ -69,7 +69,7 @@ namespace FMS.Infrastructure.Repositories
 
             file.Active = fileUpdates.Active;
             file.FileLabel = fileUpdates.FileLabel;
-            // TODO: Add FileCabinets and Facilities
+            // TODO: Add Cabinets and Facilities
             await _context.SaveChangesAsync();
         }
 

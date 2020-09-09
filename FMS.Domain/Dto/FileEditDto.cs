@@ -14,7 +14,7 @@ namespace FMS.Domain.Dto
             Id = file.Id;
             Active = file.Active;
             FileLabel = file.FileLabel;
-            FileCabinets = file.FileCabinets;
+            Cabinets = file.Cabinets;
             Facilities = file.Facilities;
         }
         public Guid Id { get; set; }
@@ -25,7 +25,7 @@ namespace FMS.Domain.Dto
         [StringLength(9)]
         public string FileLabel { get; set; }
 
-        public List<FileCabinet> FileCabinets { get; set; }
+        public List<Cabinet> Cabinets { get; set; }
 
         public List<Facility> Facilities { get; set; }
     }

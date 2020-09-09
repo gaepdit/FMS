@@ -9,51 +9,44 @@ using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
-    public class FileCabinetRepository : IFileCabinetRepository
+    public class CabinetRepository : ICabinetRepository
     {
         private readonly FmsDbContext _context;
 
-        public FileCabinetRepository(FmsDbContext context) => _context = context;
+        public CabinetRepository(FmsDbContext context) => _context = context;
 
-        public Task<int> CountAsync(FileCabinetSpec spec)
+        public async Task<bool> CabinetExistsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Cabinets.AnyAsync(e => e.Id == id);
         }
 
-        public Task<Guid> CreateFileCabinetAsync(FileCabinetCreateDto fileCabinet)
+        public async Task<CabinetDetailDto> GetCabinetAsync(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> FileCabinetExistsAsync(Guid id)
-        {
-            return await _context.FileCabinets.AnyAsync(e => e.Id == id);
-        }
-
-        public async Task<FileCabinetDetailDto> GetFileCabinetAsync(Guid id)
-        {
-            var fileCabinet = await _context.FileCabinets.AsNoTracking()
-                .Include(e => e.StartCounty)
-                .Include(e => e.EndCounty)
+            var cabinet = await _context.Cabinets.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            if (fileCabinet == null)
+            if (cabinet == null)
             {
                 return null;
             }
 
-            return new FileCabinetDetailDto(fileCabinet);
+            return new CabinetDetailDto(cabinet);
         }
 
-        public async Task<IReadOnlyList<FileCabinetSummaryDto>> GetFileCabinetListAsync()
+        public async Task<IReadOnlyList<CabinetDetailDto>> GetCabinetListAsync()
         {
-            return await _context.FileCabinets.AsNoTracking()
+            return await _context.Cabinets.AsNoTracking()
                 .OrderBy(e => e.Name)
-                .Select(e => new FileCabinetSummaryDto(e))
+                .Select(e => new CabinetDetailDto(e))
                 .ToListAsync();
         }
 
-        public Task UpdateFileCabinetAsync(Guid id, FileCabinetEditDto fileCabinetUpdates)
+        public Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinet)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinet)
         {
             throw new NotImplementedException();
         }
@@ -79,7 +72,7 @@ namespace FMS.Infrastructure.Repositories
         }
 
         // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        ~FileCabinetRepository()
+        ~CabinetRepository()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: false);

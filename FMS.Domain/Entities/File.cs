@@ -22,7 +22,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
-        public List<FileCabinet> FileCabinets { get; set; }
+        public List<Cabinet> Cabinets { get; set; }
 
         public List<Facility> Facilities { get; set; }
 

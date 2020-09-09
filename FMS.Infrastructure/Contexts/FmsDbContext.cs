@@ -21,7 +21,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<FacilityStatus> FacilityStatuses { get; set; }
         public DbSet<FacilityType> FacilityTypes { get; set; }
         public DbSet<File> Files { get; set; }
-        public DbSet<FileCabinet> FileCabinets { get; set; }
+        public DbSet<Cabinet> Cabinets { get; set; }
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
 

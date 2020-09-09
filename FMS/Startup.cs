@@ -102,7 +102,7 @@ namespace FMS
             services.AddScoped<IFacilityStatusRepository, FacilityStatusRepository>();
             services.AddScoped<IFacilityTypeRepository, FacilityTypeRepository>();
             services.AddScoped<IOrganizationalUnitRepository, OrganizationalUnitRepository>();
-            services.AddScoped<IFileCabinetRepository, FileCabinetRepository>();
+            services.AddScoped<ICabinetRepository, CabinetRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
 

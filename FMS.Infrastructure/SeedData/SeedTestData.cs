@@ -13,7 +13,7 @@ namespace FMS.Infrastructure.SeedData
             if (!context.Facilities.Any()) context.Facilities.AddRange(GetFacilities());
             if (!context.FacilityStatuses.Any()) context.FacilityStatuses.AddRange(GetFacilityStatuses());
             if (!context.FacilityTypes.Any()) context.FacilityTypes.AddRange(GetFacilityTypes());
-            if (!context.FileCabinets.Any()) context.FileCabinets.AddRange(GetFileCabinets());
+            if (!context.Cabinets.Any()) context.Cabinets.AddRange(GetCabinets());
             if (!context.Files.Any()) context.Files.AddRange(GetFiles());
             if (!context.OrganizationalUnits.Any()) context.OrganizationalUnits.AddRange(GetOrganizationalUnits());
             if (!context.RetentionRecords.Any()) context.RetentionRecords.AddRange(GetRetentionRecords());
