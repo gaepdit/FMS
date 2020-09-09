@@ -23,18 +23,16 @@ namespace TestHelpers
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
             var facility = Array.Find(Facilities, e => e.Id == id);
+            facility.File = GetFile(facility.FileId);
+            facility.County = GetCounty(facility.CountyId);
+            facility.FacilityStatus = GetFacilityStatus(facility.FacilityStatusId);
+            facility.FacilityType = GetFacilityType(facility.FacilityTypeId);
+            facility.BudgetCode = GetBudgetCode(facility.BudgetCodeId);
+            facility.OrganizationalUnit = GetOrganizationalUnit(facility.OrganizationalUnitId);
+            facility.EnvironmentalInterest = GetEnvironmentalInterest(facility.EnvironmentalInterestId);
+            facility.ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId);
 
-            return new FacilityDetailDto(facility)
-            {
-                County = GetCounty(facility.CountyId),
-                FacilityStatus = GetFacilityStatus(facility.FacilityStatusId),
-                FacilityType = GetFacilityType(facility.FacilityTypeId),
-                BudgetCode = GetBudgetCode(facility.BudgetCodeId),
-                OrganizationalUnit = GetOrganizationalUnit(facility.OrganizationalUnitId),
-                EnvironmentalInterest = GetEnvironmentalInterest(facility.EnvironmentalInterestId),
-                ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId),
-                File = GetFile(facility.FileId)
-            };
+            return new FacilityDetailDto(facility);
         }
 
         public static County GetCounty(int id) => Counties.Find(e => e.Id == id);

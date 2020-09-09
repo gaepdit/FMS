@@ -16,11 +16,11 @@
             @Html.DisplayFor(model => model.FacilityDetail.FacilityNumber)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.File.FileLabel)
+            @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
         </dt>
         <dd class="col-sm-9">
-            <a asp-page="../Files/Index" asp-route-id="@Model.FacilityDetail.File.Id" class="btn btn-outline-primary btn-sm col-md-2">
-                @Html.DisplayFor(model => model.FacilityDetail.File.FileLabel)
+            <a asp-page="../Files/Index" asp-route-id="@Model.FacilityDetail.FileId" class="btn btn-outline-primary btn-sm col-md-2">
+                @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
             </a>
         </dd>
         <dt class="col-sm-3">

@@ -91,7 +91,7 @@ namespace FMS.Domain.Entities
         public int CountyId { get; set; }
         public virtual County County { get; set; }
 
-        // List of retention records for this Facility File
+        // List of retention records for this Facility
         public List<RetentionRecord> RetentionRecords { get; set; }
     }
 }

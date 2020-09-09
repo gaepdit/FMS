@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Entities;
+using FMS.Domain.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,7 +9,8 @@ namespace FMS.Domain.Dto
         public FacilityDetailDto(Facility facility)
         {
             Id = facility.Id;
-            File = facility.File;
+            FileLabel = facility.File.FileLabel;
+            FileId = facility.File.Id;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
@@ -27,9 +28,9 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
-        }          
+        }
 
-        public Guid Id;
+        public Guid Id { get; set; }
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
@@ -38,12 +39,12 @@ namespace FMS.Domain.Dto
         public string Name { get; set; }
 
         [Display(Name = "Active Site")]
-        public bool Active { get; set; } = true;
-        
+        public bool Active { get; set; }
+
         [Display(Name = "County")]
         public County County { get; set; }
 
-        [Display(Name="Facility Status")]
+        [Display(Name = "Facility Status")]
         public FacilityStatus FacilityStatus { get; set; }
 
         [Display(Name = "Facility Type")]
@@ -62,7 +63,8 @@ namespace FMS.Domain.Dto
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [Display(Name = "File Label")]
-        public File File { get; set; }
+        public string FileLabel { get; set; }
+        public Guid FileId { get; set; }
 
         [Display(Name = "Location Description")]
         public string Location { get; set; }
@@ -79,7 +81,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Zip Code")]
         public string PostalCode { get; set; }
 
-        [Display(Name ="Latitude")]
+        [Display(Name = "Latitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Latitude { get; set; }
 

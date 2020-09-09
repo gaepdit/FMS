@@ -39,8 +39,6 @@ namespace FMS.Infrastructure.Tests
 
             var expected = DataHelpers.GetFacilityDetail(facilityId);
             var result = await repository.GetFacilityAsync(facilityId);
-            // TODO: Following line makes test work, but need to decide whether child property should be returned or not
-            result.File.Facilities = null;
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -184,7 +182,7 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = sampleFacility.FacilityNumber,
                 FacilityStatusId = sampleFacility.FacilityStatus.Id,
                 FacilityTypeId = sampleFacility.FacilityType.Id,
-                FileId = sampleFacility.File.Id,
+                FileId = sampleFacility.FileId,
                 Latitude = sampleFacility.Latitude,
                 Location = sampleFacility.Location,
                 Longitude = sampleFacility.Longitude,
@@ -196,10 +194,6 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.CreateFacilityAsync(newFacility);
             var createdFacility = await repository.GetFacilityAsync(result);
-
-            // Clear File.Facilities sub-property since it is cyclic
-            createdFacility.File.Facilities = null;
-            sampleFacility.File.Facilities = null;
 
             // Set sample facility properties to match
             sampleFacility.Id = result;
@@ -229,8 +223,6 @@ namespace FMS.Infrastructure.Tests
                 expected.County = DataHelpers.GetCounty(newCountyId);
 
                 var updatedFacility = await repository.GetFacilityAsync(expected.Id);
-                // TODO: Following line makes test work, but need to decide whether child property should be returned or not
-                updatedFacility.File.Facilities = null;
 
                 updatedFacility.Should().BeEquivalentTo(expected);
             }
@@ -257,8 +249,6 @@ namespace FMS.Infrastructure.Tests
                 expected.State = newState;
 
                 var updatedFacility = await repository.GetFacilityAsync(expected.Id);
-                // TODO: Following line makes test work, but need to decide whether child property should be returned or not
-                updatedFacility.File.Facilities = null;
 
                 updatedFacility.Should().BeEquivalentTo(expected);
             }

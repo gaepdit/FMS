@@ -8,7 +8,7 @@ namespace FMS.Domain.Dto
         public FacilityEditDto() { }
         public FacilityEditDto(FacilityDetailDto facility)
         {
-            FileId = facility.File.Id;
+            FileId = facility.FileId;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
