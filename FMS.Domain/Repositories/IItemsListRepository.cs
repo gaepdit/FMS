@@ -16,6 +16,7 @@ namespace FMS.Domain.Repositories
         Task<IEnumerable<ListItem>> GetFacilityTypesItemListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetFilesItemListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetCabinetsItemListAsync(bool includeInactive = false);
     }
 
     public class ListItem

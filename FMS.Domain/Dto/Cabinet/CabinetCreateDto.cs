@@ -4,7 +4,7 @@ namespace FMS.Domain.Dto
 {
     public class CabinetCreateDto
     {
-        // File Cabinet Number
+        [Required]
         [StringLength(5)]
         [Display(Name = "File Cabinet Number")]
         public string Name { get; set; }

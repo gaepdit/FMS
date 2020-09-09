@@ -6,7 +6,7 @@ namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static Cabinet[] GetCabinets()
+        public static List<Cabinet> GetCabinets()
         {
             return new List<Cabinet>
             {
@@ -41,7 +41,7 @@ namespace FMS.Infrastructure.SeedData
                     Id = new Guid("C8124DAF-D088-4B67-B846-AF5622FA4D9E"),
                     Name = "C006",
                 }
-            }.ToArray();
+            };
         }
     }
 }

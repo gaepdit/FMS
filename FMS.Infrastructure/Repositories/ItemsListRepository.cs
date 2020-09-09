@@ -69,6 +69,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<OrganizationalUnit>(includeInactive);
 
+        public async Task<IEnumerable<ListItem>> GetCabinetsItemListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<Cabinet>(includeInactive);
+
         #region IDisposable Support
 
         private bool _disposedValue;

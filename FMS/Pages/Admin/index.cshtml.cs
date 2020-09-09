@@ -25,8 +25,7 @@ namespace FMS.Pages.Admin
 
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
 
-        private readonly ICabinetRepository _cabinetRepository;
-
+        
         public SelectList Files { get; set; }
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
@@ -34,8 +33,7 @@ namespace FMS.Pages.Admin
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList EnvironmentalInterests { get; private set; }
         public SelectList ComplianceOfficers { get; set; }
-        public SelectList Cabinets { get; set; }
-
+        
         public Guid FileId { get; set; }
         public Guid FacilityStatusId { get; private set; }
         public Guid FacilityTypeId { get; private set; }
@@ -43,9 +41,7 @@ namespace FMS.Pages.Admin
         public Guid OrganizationalUnitId { get; private set; }
         public Guid EnvironmentalInterestId { get; private set; }
         public Guid ComplianceOfficerId { get; set; }
-        public Guid CabinetId { get; set; }
-
-
+        
         [Display(Name = "Select a Drop-Down Menu to Edit")]
         [BindProperty(SupportsGet =true)]
         public int DropDownSelection { get; set; }
@@ -57,8 +53,7 @@ namespace FMS.Pages.Admin
             IEnvironmentalInterestRepository environmentalInterestRepository,
             IFacilityStatusRepository facilityStatusRepository,
             IFacilityTypeRepository facilityTypeRepository,
-            IOrganizationalUnitRepository organizationalUnitRepository,
-            ICabinetRepository cabinetRepository)
+            IOrganizationalUnitRepository organizationalUnitRepository)
         {
             _fileRepository = fileRepository;
             _budgetCodeRepository = budgetCodeRepository;
@@ -67,7 +62,6 @@ namespace FMS.Pages.Admin
             _facilityStatusRepository = facilityStatusRepository;
             _facilityTypeRepository = facilityTypeRepository;
             _organizationalUnitRepository = organizationalUnitRepository;
-            _cabinetRepository = cabinetRepository;
         }
 
         public void OnGet()
@@ -102,12 +96,9 @@ namespace FMS.Pages.Admin
                     FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
                     break;
                 case 6:
-                    Cabinets = new SelectList(await _cabinetRepository.GetCabinetListAsync(), "Id", "Name");
-                    break;
-                case 7:
                     Files = new SelectList(await _fileRepository.GetFileListAsync(null), "Id", "FileLabel");
                     break;
-                case 8:
+                case 7:
                     OrganizationalUnits = new SelectList(await _organizationalUnitRepository.GetOrganizationalUnitListAsync(), "Id", "Name");
                     break;
                 default:

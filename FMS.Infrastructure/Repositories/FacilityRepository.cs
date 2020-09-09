@@ -116,7 +116,7 @@ namespace FMS.Infrastructure.Repositories
             var facility = await _context.Facilities.FindAsync(id);
             if (facility == null)
             {
-                throw new ArgumentException("Facility ID not found", nameof(id));
+                throw new ArgumentException("Facility ID not found.", nameof(id));
             }
 
             facility.Active = facilityUpdates.Active;

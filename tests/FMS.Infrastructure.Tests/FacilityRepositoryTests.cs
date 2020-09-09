@@ -167,37 +167,46 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateFacility_Succeeds()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-
+            var repositoryHelper = new RepositoryHelper();
             Guid facilityId = DataHelpers.Facilities[0].Id;
-            var sampleFacility = await repository.GetFacilityAsync(facilityId);
-            var newFacility = new FacilityCreateDto()
+            FacilityDetailDto sampleFacility;
+            Guid newFacilityId;
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                Address = sampleFacility.Address,
-                BudgetCodeId = sampleFacility.BudgetCode.Id,
-                City = sampleFacility.City,
-                ComplianceOfficerId = sampleFacility.ComplianceOfficer.Id,
-                CountyId = sampleFacility.County.Id,
-                EnvironmentalInterestId = sampleFacility.EnvironmentalInterest.Id,
-                FacilityNumber = sampleFacility.FacilityNumber,
-                FacilityStatusId = sampleFacility.FacilityStatus.Id,
-                FacilityTypeId = sampleFacility.FacilityType.Id,
-                FileId = sampleFacility.FileId,
-                Latitude = sampleFacility.Latitude,
-                Location = sampleFacility.Location,
-                Longitude = sampleFacility.Longitude,
-                Name = sampleFacility.Name,
-                OrganizationalUnitId = sampleFacility.OrganizationalUnit.Id,
-                PostalCode = sampleFacility.PostalCode,
-                State = sampleFacility.State
-            };
+                sampleFacility = await repository.GetFacilityAsync(facilityId);
+                var newFacility = new FacilityCreateDto()
+                {
+                    Address = sampleFacility.Address,
+                    BudgetCodeId = sampleFacility.BudgetCode.Id,
+                    City = sampleFacility.City,
+                    ComplianceOfficerId = sampleFacility.ComplianceOfficer.Id,
+                    CountyId = sampleFacility.County.Id,
+                    EnvironmentalInterestId = sampleFacility.EnvironmentalInterest.Id,
+                    FacilityNumber = sampleFacility.FacilityNumber,
+                    FacilityStatusId = sampleFacility.FacilityStatus.Id,
+                    FacilityTypeId = sampleFacility.FacilityType.Id,
+                    FileId = sampleFacility.FileId,
+                    Latitude = sampleFacility.Latitude,
+                    Location = sampleFacility.Location,
+                    Longitude = sampleFacility.Longitude,
+                    Name = sampleFacility.Name,
+                    OrganizationalUnitId = sampleFacility.OrganizationalUnit.Id,
+                    PostalCode = sampleFacility.PostalCode,
+                    State = sampleFacility.State
+                };
 
-            var result = await repository.CreateFacilityAsync(newFacility);
-            var createdFacility = await repository.GetFacilityAsync(result);
+                newFacilityId = await repository.CreateFacilityAsync(newFacility);
+            }
 
-            // Set sample facility properties to match
-            sampleFacility.Id = result;
-            createdFacility.Should().BeEquivalentTo(sampleFacility);
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var createdFacility = await repository.GetFacilityAsync(newFacilityId);
+
+                // Set sample facility properties to match for comparison
+                sampleFacility.Id = newFacilityId;
+                createdFacility.Should().BeEquivalentTo(sampleFacility);
+            }
         }
 
         // UpdateFacilityAsync
@@ -266,7 +275,7 @@ namespace FMS.Infrastructure.Tests
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage("Facility ID not found (Parameter 'id')");
+                .WithMessage("Facility ID not found. (Parameter 'id')");
         }
     }
 }

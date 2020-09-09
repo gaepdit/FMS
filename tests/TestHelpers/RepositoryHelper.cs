@@ -18,9 +18,13 @@ namespace TestHelpers
             context.SeedTestData();
         }
 
-        public FacilityRepository GetFacilityRepository()
-        {
-            return new FacilityRepository(new FmsDbContext(_options));
-        }
+        public ItemsListRepository GetItemsListRepository() =>
+            new ItemsListRepository(new FmsDbContext(_options));
+
+        public FacilityRepository GetFacilityRepository() =>
+            new FacilityRepository(new FmsDbContext(_options));
+
+        public CabinetRepository GetCabinetRepository() =>
+            new CabinetRepository(new FmsDbContext(_options));
     }
 }

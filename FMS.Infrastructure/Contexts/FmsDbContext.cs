@@ -29,8 +29,8 @@ namespace FMS.Infrastructure.Contexts
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
 
-            // Data
-            builder.Entity<County>().HasData(Data.Counties);
+            // Additional model properties
+            builder.Entity<Cabinet>().HasIndex(e => e.Name).IsUnique();
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers");
@@ -40,6 +40,9 @@ namespace FMS.Infrastructure.Contexts
             builder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins");
             builder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles");
             builder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens");
+
+            // Data
+            builder.Entity<County>().HasData(Data.Counties);
         }
     }
 }

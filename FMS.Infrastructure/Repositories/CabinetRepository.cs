@@ -1,10 +1,9 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
@@ -12,13 +11,14 @@ namespace FMS.Infrastructure.Repositories
     public class CabinetRepository : ICabinetRepository
     {
         private readonly FmsDbContext _context;
-
         public CabinetRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> CabinetExistsAsync(Guid id)
-        {
-            return await _context.Cabinets.AnyAsync(e => e.Id == id);
-        }
+        public async Task<bool> CabinetExistsAsync(Guid id) =>
+            await _context.Cabinets.AnyAsync(e => e.Id == id);
+
+        public async Task<bool> CabinetNameExistsAsync(string name, Guid? ignoreId = null) =>
+            await _context.Cabinets.AnyAsync(e => e.Name == name &&
+                    (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<CabinetDetailDto> GetCabinetAsync(Guid id)
         {
@@ -33,22 +33,48 @@ namespace FMS.Infrastructure.Repositories
             return new CabinetDetailDto(cabinet);
         }
 
-        public async Task<IReadOnlyList<CabinetDetailDto>> GetCabinetListAsync()
+        public async Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)
         {
-            return await _context.Cabinets.AsNoTracking()
-                .OrderBy(e => e.Name)
-                .Select(e => new CabinetDetailDto(e))
-                .ToListAsync();
+            if (string.IsNullOrWhiteSpace(cabinetCreate.Name))
+            {
+                throw new ArgumentException("Cabinet Name can not be null or empty.");
+            }
+
+            if (await CabinetNameExistsAsync(cabinetCreate.Name))
+            {
+                throw new ArgumentException($"Cabinet Name '{cabinetCreate.Name}' already exists.");
+            }
+
+            Cabinet cabinet = new Cabinet() { Name = cabinetCreate.Name };
+            await _context.Cabinets.AddAsync(cabinet);
+            await _context.SaveChangesAsync();
+
+            return cabinet.Id;
         }
 
-        public Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinet)
+        public async Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit)
         {
-            throw new NotImplementedException();
-        }
+            var cabinet = await _context.Cabinets.FindAsync(id);
 
-        public Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinet)
-        {
-            throw new NotImplementedException();
+            if (cabinet == null)
+            {
+                throw new ArgumentException("Cabinet ID not found.");
+            }
+
+            if (string.IsNullOrWhiteSpace(cabinetEdit.Name))
+            {
+                throw new ArgumentException("Cabinet Name can not be null or empty.");
+            }
+
+            if (await CabinetNameExistsAsync(cabinetEdit.Name, id))
+            {
+                throw new ArgumentException($"Cabinet Name '{cabinetEdit.Name}' already exists.");
+            }
+
+            cabinet.Active = cabinetEdit.Active;
+            cabinet.Name = cabinetEdit.Name;
+
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Support
