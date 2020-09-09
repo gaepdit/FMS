@@ -33,13 +33,7 @@ namespace FMS.Pages.Facilities
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList EnvironmentalInterests { get; private set; }
-
-        // todo: Add a name property to COs
         public SelectList ComplianceOfficers { get; private set; }
-
-        // TODO: Restore these after the DTOs are fully built:
-
-        //public SelectList FileCabinets { get; private set; }
 
         public EditModel(
             IFacilityRepository repository,

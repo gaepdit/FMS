@@ -6,13 +6,13 @@ namespace FMS.Domain.Dto
     public class FacilitySpec
     {
         [Display(Name = "Facility Number")]
-        public string? FacilityNumber { get; set; }
+        public string FacilityNumber { get; set; }
 
         [Display(Name = "Facility Name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
-        [Display(Name = "Active Site")]
-        public bool? Active { get; set; }
+        [Display(Name = "Show Active Sites Only")]
+        public bool ActiveOnly { get; set; } = true;
 
         [Display(Name = "County")]
         public int? CountyId { get; set; }
@@ -39,19 +39,19 @@ namespace FMS.Domain.Dto
         public Guid? FileId { get; set; }
 
         [Display(Name = "Location Description")]
-        public string? Location { get; set; }
+        public string Location { get; set; }
 
         [Display(Name = "Street Address")]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         [Display(Name = "City")]
-        public string? City { get; set; }
+        public string City { get; set; }
 
         [Display(Name = "State")]
-        public string? State { get; set; }
+        public string State { get; set; }
 
         [Display(Name = "Zip Code")]
-        public string? PostalCode { get; set; }
+        public string PostalCode { get; set; }
 
     }
 }

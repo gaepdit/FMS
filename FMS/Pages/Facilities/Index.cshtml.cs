@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
@@ -24,15 +23,8 @@ namespace FMS.Pages.Facilities
 
         public int? CountyArg { get; set; }
 
-        // true when checkbox is checked to show only active sites
-        [BindProperty]
-        public bool ActiveOnly { get; set; }
-
-        // Shows text results <div> if any results return
+        // Shows results section after searching
         public bool ShowResults { get; set; }
-
-        // Shows if no results in result set
-        public bool ShowNone { get; set; }
 
         // Select Lists
         public SelectList Files { get; private set; }
@@ -43,12 +35,7 @@ namespace FMS.Pages.Facilities
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList EnvironmentalInterests { get; private set; }
-        // todo: Add a name property to COs
         public SelectList ComplianceOfficers { get; private set; }
-
-        // TODO: Restore these after the DTOs are fully built:
-
-        //public SelectList FileCabinets { get; private set; }
 
         public IndexModel(
             IFacilityRepository repository,
@@ -60,7 +47,7 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetAsync()
         {
-            //Spec = new FacilitySpec() { State = "Georgia" };
+            Spec = new FacilitySpec();
             await PopulateSelectsAsync();
             return Page();
         }
@@ -70,18 +57,7 @@ namespace FMS.Pages.Facilities
             // Get the list of facilities matching the "Spec" criteria
             FacilityList = await _repository.GetFacilityListAsync(spec);
 
-            // Set "divs" based on search results
-            if (FacilityList.Count() > 0)
-            {
-                ShowResults = true;
-                ShowNone = false;
-            }
-            else
-            {
-                ShowResults = false;
-                ShowNone = true;
-            }
-
+            ShowResults = true;
             await PopulateSelectsAsync();
             return Page();
         }

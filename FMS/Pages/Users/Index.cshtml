@@ -23,12 +23,12 @@
             </div>
         </div>
         <input type="hidden" name="handler" value="search" />
-        <button id="SearchButton" type="submit" class="btn btn-primary">Search</button>
-        <a asp-page="./Index" class="btn btn-outline-secondary">Clear search form</a>
+        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
+        <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear form</a>
     </form>
 </div>
 
-@if (Model.Searched)
+@if (Model.ShowResults)
 {
     <a name="SearchResults"></a>
 
@@ -37,20 +37,20 @@
         <table class="table table-borderless">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Email)</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var u in Model.SearchResults)
+                @foreach (var item in Model.SearchResults)
                 {
                     <tr>
-                        <td>@u.Name</td>
-                        <td>@u.Email</td>
+                        <td>@Html.DisplayFor(m => item.Name)</td>
+                        <td>@Html.DisplayFor(m => item.Email)</td>
                         <td>
-                            <a asp-page="./Details" asp-route-id="@u.Id" class="btn btn-outline-primary btn-sm">View</a>
-                            <a asp-page="./Edit" asp-route-id="@u.Id" class="btn btn-outline-dark btn-sm">Edit</a>
+                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">View</a>
+                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-dark btn-sm">Edit</a>
                         </td>
                     </tr>
                 }
@@ -59,6 +59,8 @@
     }
     else
     {
-        <p class="text-info">No search results found.</p>
+        <div class="container mt-2">
+            <p class="lead text-info">No search results found.</p>
+        </div>
     }
 }

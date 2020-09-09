@@ -19,11 +19,11 @@ namespace FMS.Pages.Users
         }
 
         public string Name { get; set; }
-        
+
         [UIHint("EmailAddress")]
         public string Email { get; set; }
 
-        public bool Searched { get; set; }
+        public bool ShowResults { get; set; }
         public List<UserSearchResult> SearchResults { get; set; }
 
         public void OnGet() { }
@@ -37,7 +37,7 @@ namespace FMS.Pages.Users
 
             var users = await _userService.GetUsersAsync(name, email);
 
-            Searched = true;
+            ShowResults = true;
             SearchResults = users.Select(e =>
                 new UserSearchResult()
                 {

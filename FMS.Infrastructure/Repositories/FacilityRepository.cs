@@ -52,7 +52,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Facilities.AsNoTracking()
                 .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
                 .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
-                .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)
+                .Where(e => !spec.ActiveOnly || e.Active)
                 .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
                 .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))

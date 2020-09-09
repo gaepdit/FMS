@@ -8,8 +8,8 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<hr />
-<div class="container-fluid">
+
+<div class="container-fluid bg-light py-3">
     <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
@@ -97,137 +97,59 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="form-group col">
-                <div class="form-check">
-                    <label class="form-check-label" asp-for="ActiveOnly">Show Active Sites Only</label>
-                    <input asp-for="ActiveOnly" />
-                </div>
+            <div class="form-check">
+                <input asp-for="Spec.ActiveOnly" />
+                <label asp-for="Spec.ActiveOnly" class="form-check-label"></label>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="hidden" name="handler" value="search" />
-                <button id="SearchButton" type="submit" class="btn btn-primary col-md-2">Search</button>
-                <a asp-page="./index" class="btn btn-outline-secondary col-md-2">Clear Form</a>
-            </div>
-        </div>
+        <input type="hidden" name="handler" value="search" />
+        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
+        <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear form</a>
     </form>
 </div>
-<hr />
-<a name="SearchResults"></a>
-@if (Model.ActiveOnly)
-{
-    <div class="container-fluid text-center">
-        <h5 style="color:red">Only Active Sites are being displayed</h5>
-    </div>
-}
-@if (Model.ShowNone)
-{
-    <div class="container-fluid text-center">
-        <h5 style="color:red">Search Found No Matching Facilities</h5>
-    </div>
-}
+
 @if (Model.ShowResults)
 {
-    <div class="text-center">
-        <h4>Search Results</h4>
-    </div>
-    <div id="ResultList">
-        <div class="container-fluid">
-            <table class="table">
-                <thead>
+    <a name="SearchResults"></a>
+
+    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
+    {
+        <table class="table table-borderless">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.FacilityNumber)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.Name)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.Address)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.City)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.State)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.PostalCode)</th>
+                    <th scope="col" class="text-center">Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FacilityList)
+                {
                     <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Spec.FacilityNumber)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Spec.Name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Spec.Address)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Spec.City)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Spec.State)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Spec.PostalCode)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Spec.Active)
-                        </th>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                @Html.DisplayFor(modelItem => item.FacilityNumber)
+                            </a>
+                        </td>
+                        <td>@Html.DisplayFor(m => item.Name)</td>
+                        <td>@Html.DisplayFor(m => item.Address)</td>
+                        <td>@Html.DisplayFor(m => item.City)</td>
+                        <td>@Html.DisplayFor(m => item.State)</td>
+                        <td>@Html.DisplayFor(m => item.PostalCode)</td>
+                        <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @if (Model.ShowResults)
-                    {
-                        @foreach (var item in Model.FacilityList)
-                        {
-                            if (Model.ActiveOnly)
-                            {
-                                if (item.Active)
-                                {
-                                    <tr>
-                                        <td>
-                                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
-                                                @Html.DisplayFor(modelItem => item.FacilityNumber)
-                                            </a>
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Address)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.City)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.State)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PostalCode)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Active)
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td>
-                                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
-                                            @Html.DisplayFor(modelItem => item.FacilityNumber)
-                                        </a>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Address)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.City)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.State)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.PostalCode)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Active)
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    }
-                </tbody>
-            </table>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="container mt-2">
+            <p class="lead text-info">No matching facilities found.</p>
         </div>
-    </div>
+    }
 }

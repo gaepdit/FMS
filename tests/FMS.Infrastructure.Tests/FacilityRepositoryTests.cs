@@ -56,11 +56,27 @@ namespace FMS.Infrastructure.Tests
         // CountAsync
 
         [Fact(Skip = "CountAsync not implemented yet")]
-        public async Task FacilityCount_DefaultSpec_ReturnsCorrectCount()
+        public async Task FacilityCount_DefaultSpec_ReturnsCountOfActiveFacilities()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var result = await repository.CountAsync(new FacilitySpec());
-            result.Should().Be(DataHelpers.Facilities.Length);
+            var spec = new FacilitySpec();
+
+            var result = await repository.CountAsync(spec);
+            var expected = DataHelpers.Facilities.Count(e => e.Active);
+
+            result.Should().Be(expected);
+        }
+
+        [Fact(Skip = "CountAsync not implemented yet")]
+        public async Task FacilityCount_WithInactive_ReturnsCountOfAll()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() { ActiveOnly = false };
+
+            var result = await repository.CountAsync(spec);
+            var expected = DataHelpers.Facilities.Length;
+
+            result.Should().Be(expected);
         }
 
         [Theory(Skip = "CountAsync not implemented yet")]
@@ -71,8 +87,8 @@ namespace FMS.Infrastructure.Tests
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() { CountyId = countyId };
 
-            var expected = DataHelpers.Facilities.Count(e => e.CountyId == countyId);
             var result = await repository.CountAsync(spec);
+            var expected = DataHelpers.Facilities.Count(e => e.CountyId == countyId && e.Active);
 
             result.Should().Be(expected);
         }
@@ -85,13 +101,38 @@ namespace FMS.Infrastructure.Tests
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() { FacilityNumber = facilityNumber };
 
-            var expected = DataHelpers.Facilities.Count(e => e.FacilityNumber.Contains(facilityNumber));
             var result = await repository.CountAsync(spec);
+            var expected = DataHelpers.Facilities.Count(e => e.FacilityNumber.Contains(facilityNumber) && e.Active);
 
             result.Should().Be(expected);
         }
 
         // GetFacilityListAsync
+
+        [Fact]
+        public async Task FacilitySearch_Default_ReturnsActiveFacilities()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+
+            var result = await repository.GetFacilityListAsync(new FacilitySpec());
+            var expected = DataHelpers.Facilities.Where(e => e.Active)
+                .Select(e => new FacilitySummaryDto(e));
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task FacilitySearch_WithInactive_ReturnsAllFacilities()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() { ActiveOnly = false };
+
+            var result = await repository.GetFacilityListAsync(spec);
+            var expected = DataHelpers.Facilities
+                .Select(e => new FacilitySummaryDto(e));
+
+            result.Should().BeEquivalentTo(expected);
+        }
 
         [Theory]
         [InlineData(243)]
@@ -101,9 +142,9 @@ namespace FMS.Infrastructure.Tests
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() { CountyId = countyId };
 
-            var expected = DataHelpers.Facilities.Where(e => e.CountyId == countyId)
-                .Select(e => new FacilitySummaryDto(e));
             var result = await repository.GetFacilityListAsync(spec);
+            var expected = DataHelpers.Facilities.Where(e => e.CountyId == countyId && e.Active)
+                .Select(e => new FacilitySummaryDto(e));
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -116,9 +157,9 @@ namespace FMS.Infrastructure.Tests
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() { FacilityNumber = facilityNumber };
 
-            var expected = DataHelpers.Facilities.Where(e => e.FacilityNumber.Contains(facilityNumber))
-                .Select(e => new FacilitySummaryDto(e));
             var result = await repository.GetFacilityListAsync(spec);
+            var expected = DataHelpers.Facilities.Where(e => e.FacilityNumber.Contains(facilityNumber) && e.Active)
+                .Select(e => new FacilitySummaryDto(e));
 
             result.Should().BeEquivalentTo(expected);
         }
