@@ -76,6 +76,7 @@ namespace FMS.Infrastructure.Repositories
         #region IDisposable Support
 
         private bool _disposedValue;
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -86,11 +87,13 @@ namespace FMS.Infrastructure.Repositories
                     _context.Dispose();
                 }
 
+                // free unmanaged resources (unmanaged objects) and override finalizer
+                // set large fields to null
                 _disposedValue = true;
             }
         }
-        
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+
+        // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
         ~FileRepository()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
