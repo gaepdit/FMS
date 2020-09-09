@@ -9,8 +9,7 @@ namespace FMS.Pages.Account
     {
         public string ReturnUrl { get; set; }
 
-        [TempData]
-        public string ErrorMessage { get; set; }
+        public DisplayMessage Message { get; set; }
 
         public IActionResult OnGet(string returnUrl = null)
         {
@@ -19,10 +18,7 @@ namespace FMS.Pages.Account
                 return LocalRedirect("~/");
             }
 
-            if (!string.IsNullOrEmpty(ErrorMessage))
-            {
-                ModelState.AddModelError(string.Empty, ErrorMessage);
-            }
+            Message = TempData?.GetDisplayMessage();
 
             ReturnUrl = returnUrl ?? Url.Content("~/");
             return Page();

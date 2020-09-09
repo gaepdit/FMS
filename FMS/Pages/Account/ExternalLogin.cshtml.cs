@@ -27,9 +27,6 @@ namespace FMS.Pages.Account
 
         public string ReturnUrl { get; set; }
 
-        [TempData]
-        public string ErrorMessage { get; set; }
-
         [BindProperty]
         public ApplicationUser DisplayUser { get; set; }
 
@@ -51,7 +48,7 @@ namespace FMS.Pages.Account
         {
             if (remoteError != null)
             {
-                ErrorMessage = $"Error from work account provider: {remoteError}";
+                TempData?.SetDisplayMessage(Context.Danger, $"Error from work account provider: {remoteError}");
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 
@@ -61,7 +58,7 @@ namespace FMS.Pages.Account
                 || !info.Principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier)
                 || !info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
             {
-                ErrorMessage = "Error loading work account information.";
+                TempData?.SetDisplayMessage(Context.Danger, "Error loading work account information.");
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 

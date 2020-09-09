@@ -5,13 +5,7 @@
 }
 <h1 id="details">@ViewData["Title"]</h1>
 <hr />
-
-@if (Model.ShowSuccessMessage)
-{
-    <div class="alert alert-success" role="alert">
-        Facility successfully updated.
-    </div>
-}
+<partial name="_AlertPartial" for="Message" />
 
 <div class="container-fluid">
     <dl class="row">
@@ -61,7 +55,7 @@
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer.GivenName)
-        </dt> 
+        </dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.GivenName)
         </dd>
@@ -120,11 +114,11 @@
             @Html.DisplayFor(model => model.FacilityDetail.Active)
         </dd>
         @*<dt class="col-sm-3">
-            <span>Retention Records</span>
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Facility.RetentionRecords.ForEach)
-        </dd>*@
+                <span>Retention Records</span>
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Facility.RetentionRecords.ForEach)
+            </dd>*@
     </dl>
 </div>
 <hr />

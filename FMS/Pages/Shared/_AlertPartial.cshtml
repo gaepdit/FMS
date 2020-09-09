@@ -1,0 +1,12 @@
+﻿@model DisplayMessage
+
+@if (Model != null)
+{
+    <div class="alert @Model.AlertClass alert-dismissible fade show" role="alert">
+        @Model.Message
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}

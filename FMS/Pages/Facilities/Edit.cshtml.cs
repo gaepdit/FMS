@@ -41,9 +41,6 @@ namespace FMS.Pages.Facilities
 
         //public SelectList FileCabinets { get; private set; }
 
-        [TempData]
-        public bool ShowSuccessMessage { get; set; }
-
         public EditModel(
             IFacilityRepository repository,
             ISelectListHelper listHelper)
@@ -85,7 +82,6 @@ namespace FMS.Pages.Facilities
             // Alternatively, prohibit editing facility number on this page, and add a separate
             // page to edit facility number.
 
-
             try
             {
                 await _repository.UpdateFacilityAsync(Id, Facility);
@@ -102,7 +98,7 @@ namespace FMS.Pages.Facilities
                 }
             }
 
-            ShowSuccessMessage = true;
+            TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
             return RedirectToPage("./Details", new { id = Id });
         }
 

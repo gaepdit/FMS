@@ -63,7 +63,8 @@ namespace FMS.Pages.Users
 
             if (result.Succeeded)
             {
-                return RedirectToPage("./Details", new { id = Id, success = true });
+                TempData?.SetDisplayMessage(Context.Success, "User account successfully updated.");
+                return RedirectToPage("./Details", new { id = Id });
             }
 
             if (!await _userService.UserExistsAsync(Id))

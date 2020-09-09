@@ -31,7 +31,6 @@ namespace FMS.Tests.Facilities
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ShowSuccessMessage.Should().BeFalse();
             pageModel.Id.Should().Be(facility.Id);
             pageModel.Facility.Should().BeEquivalentTo(new FacilityEditDto(facility));
         }

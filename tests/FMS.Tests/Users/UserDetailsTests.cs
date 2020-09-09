@@ -12,11 +12,8 @@ namespace FMS.Tests.Users
 {
     public class UserDetailsTests
     {
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        [InlineData(null)]
-        public async Task OnGet_PopulatesThePageModel(bool? success)
+        [Fact]
+        public async Task OnGet_PopulatesThePageModel()
         {
             var user = DataHelpers.GetApplicationUsers()[0];
 
@@ -27,10 +24,9 @@ namespace FMS.Tests.Users
 
             var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);
 
-            var result = await pageModel.OnGetAsync(user.Id, success).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(user.Id).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ShowSuccessMessage.Should().Be(success ?? false);
             pageModel.Id.Should().Be(user.Id.ToString());
             pageModel.Email.Should().Be(user.Email);
             pageModel.DisplayName.Should().Be(user.DisplayName);
@@ -42,10 +38,9 @@ namespace FMS.Tests.Users
             var mockUserService = new Mock<IUserService>();
             var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);
 
-            var result = await pageModel.OnGetAsync(default, default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.ShowSuccessMessage.Should().BeFalse();
             pageModel.Email.Should().BeNull();
             pageModel.DisplayName.Should().BeNull();
         }
@@ -56,10 +51,9 @@ namespace FMS.Tests.Users
             var mockUserService = new Mock<IUserService>();
             var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);
 
-            var result = await pageModel.OnGetAsync(null, null).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.ShowSuccessMessage.Should().BeFalse();
             pageModel.Email.Should().BeNull();
             pageModel.DisplayName.Should().BeNull();
         }

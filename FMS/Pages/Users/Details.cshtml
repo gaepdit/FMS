@@ -6,12 +6,7 @@
 
 <h1>User Admin</h1>
 
-@if (Model.ShowSuccessMessage)
-{
-    <div class="alert alert-success" role="alert">
-        User account successfully updated.
-    </div>
-}
+<partial name="_AlertPartial" for="Message" />
 
 <div class="container">
     <div class="row my-3">
@@ -21,7 +16,7 @@
         <div>
             <h2>@Model.DisplayName <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a></h2>
             <p>@Model.Email</p>
-            @if(Model.Roles != null && Model.Roles.Count > 0)
+            @if (Model.Roles != null && Model.Roles.Count > 0)
             {
                 <h3>Roles</h3>
                 <ul>

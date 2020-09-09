@@ -16,10 +16,9 @@ namespace FMS.Pages.Users
         public string DisplayName { get; set; }
         public string Email { get; set; }
         public IList<string> Roles { get; set; }
+        public DisplayMessage Message { get; set; }
 
-        public bool ShowSuccessMessage { get; set; } = false;
-
-        public async Task<IActionResult> OnGetAsync(Guid? id, bool? success)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
@@ -37,7 +36,7 @@ namespace FMS.Pages.Users
             Email = user.Email;
             Roles = await _userService.GetUserRolesAsync(user.Id);
 
-            ShowSuccessMessage = success ?? false;
+            Message = TempData?.GetDisplayMessage();
             return Page();
         }
     }

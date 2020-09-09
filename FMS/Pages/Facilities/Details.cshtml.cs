@@ -14,8 +14,7 @@ namespace FMS.Pages.Facilities
 
         public FacilityDetailDto FacilityDetail { get; set; }
 
-        [TempData]
-        public bool ShowSuccessMessage { get; set; }
+        public DisplayMessage Message { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -31,6 +30,7 @@ namespace FMS.Pages.Facilities
                 return NotFound();
             }
 
+            Message = TempData?.GetDisplayMessage();
             return Page();
         }
     }
