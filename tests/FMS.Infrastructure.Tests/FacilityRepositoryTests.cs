@@ -55,7 +55,7 @@ namespace FMS.Infrastructure.Tests
 
         // CountAsync
 
-        [Fact(Skip = "CountAsync not implemented yet")]
+        [Fact]
         public async Task FacilityCount_DefaultSpec_ReturnsCountOfActiveFacilities()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
@@ -67,7 +67,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(expected);
         }
 
-        [Fact(Skip = "CountAsync not implemented yet")]
+        [Fact]
         public async Task FacilityCount_WithInactive_ReturnsCountOfAll()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
@@ -79,7 +79,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(expected);
         }
 
-        [Theory(Skip = "CountAsync not implemented yet")]
+        [Theory]
         [InlineData(243)]
         [InlineData(131)]
         public async Task FacilityCount_ByCounty_ReturnsCorrectCount(int countyId)
@@ -93,7 +93,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(expected);
         }
 
-        [Theory(Skip = "CountAsync not implemented yet")]
+        [Theory]
         [InlineData("00")]
         [InlineData("BRF")]
         public async Task FacilityCount_ByFacilityNumber_ReturnsCorrectCount(string facilityNumber)

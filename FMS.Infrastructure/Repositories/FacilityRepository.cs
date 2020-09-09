@@ -42,9 +42,25 @@ namespace FMS.Infrastructure.Repositories
             return new FacilityDetailDto(facility);
         }
 
-        public Task<int> CountAsync(FacilitySpec spec)
+        public async Task<int> CountAsync(FacilitySpec spec)
         {
-            throw new NotImplementedException();
+            return await _context.Facilities.AsNoTracking()
+                .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
+                .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
+                .Where(e => !spec.ActiveOnly || e.Active)
+                .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
+                .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
+                .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
+                .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
+                .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.FileId.HasValue || e.File.Id.Equals(spec.FileId))
+                .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
+                .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
+                .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
+                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
+                .CountAsync();
         }
 
         public async Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilitySpec spec)
