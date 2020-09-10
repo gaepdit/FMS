@@ -19,7 +19,7 @@
             @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
         </dt>
         <dd class="col-sm-9">
-            <a asp-page="../Files/Index" asp-route-id="@Model.FacilityDetail.FileId" class="btn btn-outline-primary btn-sm col-md-2">
+            <a asp-page="~/Files/Index" asp-route-id="@Model.FacilityDetail.FileId" class="btn btn-outline-info btn-sm col-md-2">
                 @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
             </a>
         </dd>
@@ -124,7 +124,7 @@
 <hr />
 <div class="row">
     <div class="col">
-        <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-primary col-md-2">Edit Facility</a>
+        <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-outline-primary col-md-2">Edit Facility</a>
         <a href="javascript: history.go(-1)" class="btn btn-outline-secondary col-md-2">Back</a>
     </div>
 </div>
