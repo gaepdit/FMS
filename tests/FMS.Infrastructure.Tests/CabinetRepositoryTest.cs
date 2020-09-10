@@ -178,7 +178,11 @@ namespace FMS.Infrastructure.Tests
 
             var cabinet = DataHelpers.Cabinets[0];
             var newName = "C000";
-            var cabinetEdit = new CabinetEditDto(cabinet) { Name = newName };
+            var cabinetEdit = new CabinetEditDto()
+            {
+                Active = cabinet.Active,
+                Name = newName
+            };
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
@@ -199,7 +203,11 @@ namespace FMS.Infrastructure.Tests
             var repositoryHelper = new RepositoryHelper();
 
             var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto(cabinet) { Active = !cabinet.Active };
+            var cabinetEdit = new CabinetEditDto()
+            {
+                Active = !cabinet.Active,
+                Name = cabinet.Name
+            };
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
@@ -220,7 +228,11 @@ namespace FMS.Infrastructure.Tests
             var repositoryHelper = new RepositoryHelper();
 
             var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto(cabinet);
+            var cabinetEdit = new CabinetEditDto()
+            {
+                Active = cabinet.Active,
+                Name = cabinet.Name
+            };
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
@@ -241,7 +253,11 @@ namespace FMS.Infrastructure.Tests
             using var repository = new RepositoryHelper().GetCabinetRepository();
 
             var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto(cabinet) { Name = "" };
+            var cabinetEdit = new CabinetEditDto()
+            {
+                Active = cabinet.Active,
+                Name = ""
+            };
 
             Func<Task> action = async () =>
             {
@@ -259,7 +275,11 @@ namespace FMS.Infrastructure.Tests
             var existingName = DataHelpers.Cabinets[1].Name;
 
             var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto(cabinet) { Name = existingName };
+            var cabinetEdit = new CabinetEditDto()
+            {
+                Active = cabinet.Active,
+                Name = existingName
+            };
 
             Func<Task> action = async () =>
             {
