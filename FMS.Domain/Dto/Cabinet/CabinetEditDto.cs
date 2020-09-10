@@ -1,12 +1,11 @@
-﻿using FMS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
     public class CabinetEditDto
     {
         public CabinetEditDto() { }
-        public CabinetEditDto(Cabinet cabinet)
+        public CabinetEditDto(CabinetSummaryDto cabinet)
         {
             Active = cabinet.Active;
             Name = cabinet.Name;
@@ -16,7 +15,7 @@ namespace FMS.Domain.Dto
 
         [Required]
         [StringLength(5)]
-        [Display(Name = "File Cabinet Number")]
+        [Display(Name = "Cabinet Number")]
         public string Name { get; set; }
     }
 }

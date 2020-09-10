@@ -1,0 +1,51 @@
+﻿@page
+@model Pages.Cabinet.IndexModel
+@{
+    ViewData["Title"] = "Cabinets";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<partial name="_AlertPartial" for="Message" />
+
+<div class="container-fluid mb-3">
+    <form method="get">
+        <div class="form-check">
+            <input type="hidden" name="handler" value="search" />
+            <input type="checkbox" id="ShowInactive" name="ShowInactive" checked="@Model.ShowInactive" value="true">
+            <label for="ShowInactive" class="form-check-label">Show inactive</label>
+            <button id="SearchButton" type="submit" class="btn btn-sm btn-outline-secondary">Load</button>
+        </div>
+    </form>
+</div>
+
+@if (Model.Cabinets != null && Model.Cabinets.Count > 0)
+{
+    <div class="container mt-2">
+        @foreach (var c in Model.Cabinets)
+        {
+            <a asp-page="Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
+                @c.Name @(c.Active ? "" : "(Inactive)") @(c.Id==Model.NewCabinetId ? "(New)" : "")
+            </a>
+        }
+    </div>
+}
+else
+{
+    <div class="container mt-2">
+        <p class="lead text-info">No cabinets found.</p>
+    </div>
+}
+
+<div class="container-fluid bg-light pt-3 mt-5">
+    <form method="post" class="form-inline">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <label asp-for="CabinetCreate.Name" class="sr-only"></label>
+        <input asp-for="CabinetCreate.Name" class="form-control mb-2 mr-sm-2" />
+        <div class="form-check mb-2 mr-sm-2">
+            <span asp-validation-for="CabinetCreate.Name" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2">Create New Cabinet</button>
+    </form>
+</div>

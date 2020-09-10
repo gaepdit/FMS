@@ -6,7 +6,7 @@ namespace FMS.Domain.Dto
     {
         [Required]
         [StringLength(5)]
-        [Display(Name = "File Cabinet Number")]
+        [Display(Name = "Cabinet Number")]
         public string Name { get; set; }
     }
 }

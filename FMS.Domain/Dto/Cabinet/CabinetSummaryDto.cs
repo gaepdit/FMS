@@ -16,7 +16,7 @@ namespace FMS.Domain.Dto
         public Guid Id { get; set; }
         public bool Active { get; set; }
 
-        [Display(Name = "File Cabinet Number")]
+        [Display(Name = "Cabinet Number")]
         public string Name { get; set; }
     }
 }

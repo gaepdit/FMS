@@ -1,0 +1,30 @@
+﻿@page "{id}"
+@model Pages.Cabinets.DetailsModel
+@{
+    ViewData["Title"] = $"Cabinet {Model.Cabinet.Name}";
+}
+<h1 id="details">
+    @ViewData["Title"]
+    @if (!Model.Cabinet.Active)
+    {
+        <span class="text-muted">(Inactive)</span>
+    }
+</h1>
+<hr />
+<partial name="_AlertPartial" for="Message" />
+
+<div class="container-fluid">
+    <dl class="row">
+        <dt class="col-md-3">
+            @Html.DisplayNameFor(model => model.Cabinet.Active)
+        </dt>
+        <dd class="col-md-9">
+            @Html.DisplayFor(model => model.Cabinet.Active)
+        </dd>
+    </dl>
+</div>
+<div class="row">
+    <div class="col">
+        <a asp-page="Edit" asp-route-id="@Model.Cabinet.Id" class="btn btn-outline-primary col-md-2">Edit Cabinet</a>
+    </div>
+</div>

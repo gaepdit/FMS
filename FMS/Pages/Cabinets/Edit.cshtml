@@ -1,0 +1,37 @@
+﻿@page "{id:Guid?}"
+@model Pages.Cabinets.EditModel
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@{
+    ViewData["Title"] = $"Edit Cabinet: {Model.OriginalCabinetName}";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="container-fluid">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="CabinetEdit.Name"></label>
+                <input asp-for="CabinetEdit.Name" class="form-control" />
+                <span asp-validation-for="CabinetEdit.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col">
+                <div class="form-check">
+                    <input asp-for="CabinetEdit.Active" />
+                    <label asp-for="CabinetEdit.Active" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+                <a asp-page="Details" asp-route-id="@Model.CabinetEdit.Name" class="btn btn-outline-secondary col-md-2">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
