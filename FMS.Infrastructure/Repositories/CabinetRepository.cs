@@ -4,6 +4,8 @@ using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
@@ -20,7 +22,14 @@ namespace FMS.Infrastructure.Repositories
             await _context.Cabinets.AnyAsync(e => e.Name == name &&
                     (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<CabinetDetailDto> GetCabinetAsync(Guid id)
+        public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false) => 
+            await _context.Cabinets.AsNoTracking()
+                .Where(e => e.Active == true || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new CabinetSummaryDto(e))
+                .ToListAsync();
+
+        public async Task<CabinetSummaryDto> GetCabinetAsync(Guid id)
         {
             var cabinet = await _context.Cabinets.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
@@ -30,7 +39,20 @@ namespace FMS.Infrastructure.Repositories
                 return null;
             }
 
-            return new CabinetDetailDto(cabinet);
+            return new CabinetSummaryDto(cabinet);
+        }
+
+        public async Task<CabinetSummaryDto> GetCabinetByNameAsync(string name)
+        {
+            var cabinet = await _context.Cabinets.AsNoTracking()
+            .SingleOrDefaultAsync(e => e.Name == name);
+
+            if (cabinet == null)
+            {
+                return null;
+            }
+
+            return new CabinetSummaryDto(cabinet);
         }
 
         public async Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)

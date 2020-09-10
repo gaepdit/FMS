@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using FMS.Domain.Dto;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
@@ -13,7 +14,7 @@ namespace FMS.Infrastructure.Tests
         // CabinetExistsAsync
 
         [Fact]
-        public async Task ExistingCabinet_Exists_ReturnsTrue()
+        public async Task CabinetExists_Exists_ReturnsTrue()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var result = await repository.CabinetExistsAsync(DataHelpers.Cabinets[0].Id);
@@ -21,11 +22,51 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task NonexistantCabinet_Exists_ReturnsFalse()
+        public async Task CabinetExists_NotExists_ReturnsFalse()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var result = await repository.CabinetExistsAsync(default);
             result.ShouldBeFalse();
+        }
+
+        // CabinetNameExistsAsync
+
+        [Fact]
+        public async Task CabinetNameExists_Exists_ReturnsTrue()
+        {
+            using var repository = new RepositoryHelper().GetCabinetRepository();
+            var result = await repository.CabinetNameExistsAsync(DataHelpers.Cabinets[0].Name);
+            result.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task CabinetNameExists_NotExists_ReturnsFalse()
+        {
+            using var repository = new RepositoryHelper().GetCabinetRepository();
+            var result = await repository.CabinetNameExistsAsync("0");
+            result.ShouldBeFalse();
+        }
+
+        // GetCabinetListAsync
+
+        [Fact]
+        public async Task GetCabinetList_ReturnsAllActive()
+        {
+            using var repository = new RepositoryHelper().GetCabinetRepository();
+            var result = await repository.GetCabinetListAsync(false);
+            var expected = DataHelpers.Cabinets.Where(e => e.Active)
+                .Select(e => new CabinetSummaryDto(e));
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task GetCabinetList_WithInactive_ReturnsAll()
+        {
+            using var repository = new RepositoryHelper().GetCabinetRepository();
+            var result = await repository.GetCabinetListAsync(true);
+            var expected = DataHelpers.Cabinets
+                .Select(e => new CabinetSummaryDto(e));
+            result.Should().BeEquivalentTo(expected);
         }
 
         // GetCabinetAsync
@@ -43,10 +84,32 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetNonexistantCabinet_ReturnsNull()
+        public async Task GetCabinet_Nonexistant_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var result = await repository.GetCabinetAsync(default);
+            result.ShouldBeNull();
+        }
+
+        // GetCabinetByNameAsync
+
+        [Fact]
+        public async Task GetCabinetByName_ReturnsCorrectCabinet()
+        {
+            using var repository = new RepositoryHelper().GetCabinetRepository();
+            var cabinet = DataHelpers.Cabinets[0];
+
+            var expected = DataHelpers.GetCabinet(cabinet.Id);
+            var result = await repository.GetCabinetByNameAsync(cabinet.Name);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task GetCabinetByName_Nonexistant_ReturnsNull()
+        {
+            using var repository = new RepositoryHelper().GetCabinetRepository();
+            var result = await repository.GetCabinetByNameAsync(null);
             result.ShouldBeNull();
         }
 

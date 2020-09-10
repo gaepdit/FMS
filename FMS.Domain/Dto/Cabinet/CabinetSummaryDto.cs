@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
-    public class CabinetDetailDto
+    public class CabinetSummaryDto
     {
-        public CabinetDetailDto(Cabinet cabinet)
+        public CabinetSummaryDto(Cabinet cabinet)
         {
             Id = cabinet.Id;
             Active = cabinet.Active;
