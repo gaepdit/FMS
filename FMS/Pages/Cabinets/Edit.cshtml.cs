@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Cabinets
 {
+    // TODO #38: Add authorize attribute in production 
     public class EditModel : PageModel
     {
         [BindProperty]

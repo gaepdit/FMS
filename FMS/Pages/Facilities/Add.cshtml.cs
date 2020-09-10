@@ -54,8 +54,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            // TODO: When adding a new facility number, make sure the number doesn't already exist
-            // before trying to save.
+            // TODO #19: When adding a new facility number, make sure the number doesn't already exist before trying to save. 
 
             var newFacilityId = await _repository.CreateFacilityAsync(Facility);
 

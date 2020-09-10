@@ -99,7 +99,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
-            // TODO: Generate new File ID if newFacility.FileId is null
+            // TODO #19: Generate new File ID if newFacility.FileId is null
 
             Facility newFac = new Facility(newFacility);
             await _context.Facilities.AddAsync(newFac);

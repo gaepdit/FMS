@@ -71,10 +71,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            // TODO: If editing facility number, make sure the new number doesn't already exist
-            // before trying to save.
-            // Alternatively, prohibit editing facility number on this page, and add a separate
-            // page to edit facility number.
+            // TODO #19: If editing facility number, make sure the new number doesn't already exist before trying to save. 
 
             try
             {
