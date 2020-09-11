@@ -22,14 +22,9 @@ namespace FMS.Pages.Cabinet
         private readonly ICabinetRepository _repository;
         public IndexModel(ICabinetRepository repository) => _repository = repository;
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(bool showInactive = false)
         {
             Message = TempData?.GetDisplayMessage();
-            Cabinets = await _repository.GetCabinetListAsync();
-        }
-
-        public async Task OnGetSearchAsync(bool showInactive)
-        {
             ShowInactive = showInactive;
             Cabinets = await _repository.GetCabinetListAsync(showInactive);
         }

@@ -4,20 +4,19 @@
     ViewData["Title"] = "Cabinets";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>
+    @ViewData["Title"]
+    @if (Model.ShowInactive)
+    {
+        <a asp-page="Index" class="btn btn-sm btn-outline-secondary">Hide inactive</a>
+    }
+    else
+    {
+        <a asp-page="Index" asp-route-showInactive="true" class="btn btn-sm btn-outline-secondary">Show inactive</a>
+    }
+</h1>
 <hr />
 <partial name="_AlertPartial" for="Message" />
-
-<div class="container-fluid mb-3">
-    <form method="get">
-        <div class="form-check">
-            <input type="hidden" name="handler" value="search" />
-            <input type="checkbox" id="ShowInactive" name="ShowInactive" checked="@Model.ShowInactive" value="true">
-            <label for="ShowInactive" class="form-check-label">Show inactive</label>
-            <button id="SearchButton" type="submit" class="btn btn-sm btn-outline-secondary">Load</button>
-        </div>
-    </form>
-</div>
 
 @if (Model.Cabinets != null && Model.Cabinets.Count > 0)
 {
