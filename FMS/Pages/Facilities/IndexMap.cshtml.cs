@@ -1,18 +1,20 @@
-using FMS.Domain.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Data;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace FMS.Pages.Facilities
 {
     public class IndexMapModel : PageModel
     {
-        private readonly IFacilityRepository _repository;
+        private readonly IFacilityRepository _repository;        
 
         // This the FacilityObject used for the search function
         // It's properties are bound to the HTML elements
@@ -20,10 +22,10 @@ namespace FMS.Pages.Facilities
         public FacilityMapSpec Spec { get; set; }
 
         // Select Lists
-        public SelectList States => new SelectList(Data.States);
+        //public SelectList States => new SelectList(Data.States);
 
         // this is the list of facilities returned from the search
-        public IReadOnlyList<FacilitySummaryDto> FacilityList { get; set; }
+        public IReadOnlyList<FacilityMapSummaryDto> FacilityList { get; set; }
 
         // true when checkbox is checked to show only active sites
         [BindProperty]
@@ -40,6 +42,16 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public bool ShowNone { get; set; }
 
+        [BindProperty]
+        public string Output { get; set; }
+
+        [BindProperty]
+        public string LocalLat { get; set; }
+
+        [BindProperty]
+        public string LocalLng { get; set; }
+
+
         // search radius for map, bound to radius drop-down
         //public string SearchRadius { get; set; }
 
@@ -55,15 +67,43 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // this is the entity search
-            // Spec is the FacilitySummaryDto that is bound to this search page
-            FacilityList = await _repository.GetFacilityListAsync(Spec);
+
+            if (!String.IsNullOrEmpty(LocalLat) || !String.IsNullOrEmpty(LocalLng))
+            {
+                if (LocalLat.Length > 0 && LocalLng.Length > 0)
+                {
+                    if (float.Parse(LocalLat) > 0 && float.Parse(LocalLng) < 0)
+                    {
+                        Spec.Latitude = decimal.Parse(LocalLat);
+                        Spec.Longitude = decimal.Parse(LocalLng);                       
+                    }
+                }
+            }
+            if (Spec.Latitude > 0 && Spec.Longitude < 0)
+            {
+                FacilityList = await _repository.GetFacilityListAsync(Spec);
+            }
+            else 
+            {
+                FacilityList = await _repository.GetFacilityListAsync(Spec);
+            
+            }
 
             // logic to show different "divs" depending if search finds results
-            if (FacilityList.Count() > 0)
+            if (FacilityList != null && FacilityList.Count() > 0)
             {
-                ShowMap = true;
-                ShowNone = false;
+               if (Output == "1")
+                {
+                    ShowMap = true;
+                    ShowNone = false;
+                    ShowResults = false;
+                }
+                if (Output == "2")
+                {
+                    ShowMap = false;
+                    ShowNone = false;
+                    ShowResults = true;
+                }
             }
             else
             {
@@ -71,8 +111,9 @@ namespace FMS.Pages.Facilities
                 ShowMap = false;
                 ShowNone = true;
             }
-
+            
             return Page();
-        }
+        }      
+        
     }
 }

@@ -36,5 +36,14 @@ namespace FMS.Domain.Dto
         
         [Display(Name = "Distance")]
         public decimal? Distance { get; set; }
+
+        [Display(Name = "Facility Status")]
+        public string FacilityStatus { get; set; }
+
+        [Display(Name = "Facility Type")]
+        public string FacilityType { get; set; }
+
+        [Display(Name = "File Label")]
+        public string FileLabel { get; set; }
     }
 }

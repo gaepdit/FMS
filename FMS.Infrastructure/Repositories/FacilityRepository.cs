@@ -85,18 +85,15 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
+        public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
             return await _context.Facilities.AsNoTracking()
-                .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
-                .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)
-                .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
-                .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
-                .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
-                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
-                .Where(e => !spec.Latitude.HasValue || e.Latitude.ToString().Contains(spec.Latitude.ToString()))
-                .Where(e => !spec.Longitude.HasValue || e.Longitude.ToString().Contains(spec.Longitude.ToString()))
-                .Select(e => new FacilitySummaryDto(e))
+                 .Include(e => e.File)
+                  .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)              
+               // .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)             
+                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))                
+                .Select(e => new FacilityMapSummaryDto(e))
                 .ToListAsync();
         }
 
