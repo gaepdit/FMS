@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FMS.Pages.Cabinet
+namespace FMS.Pages.Cabinets
 {
     public class IndexModel : PageModel
     {
@@ -22,11 +22,12 @@ namespace FMS.Pages.Cabinet
         private readonly ICabinetRepository _repository;
         public IndexModel(ICabinetRepository repository) => _repository = repository;
 
-        public async Task OnGetAsync(bool showInactive = false)
+        public async Task<IActionResult> OnGetAsync(bool showInactive = false)
         {
             Message = TempData?.GetDisplayMessage();
             ShowInactive = showInactive;
             Cabinets = await _repository.GetCabinetListAsync(showInactive);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
