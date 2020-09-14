@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Infrastructure", "FMS.I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B456828C-98AB-467C-86AC-882FD61691E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Tests", "tests\FMS.Tests\FMS.Tests.csproj", "{F32C87EE-4FD0-4A13-87B3-50D7A90B959A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.App.Tests", "tests\FMS.App.Tests\FMS.App.Tests.csproj", "{F32C87EE-4FD0-4A13-87B3-50D7A90B959A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMS.Domain.Tests", "tests\FMS.Domain.Tests\FMS.Domain.Tests.csproj", "{EAF76D32-9E34-4B5B-A16B-79DCA21A701E}"
 EndProject
