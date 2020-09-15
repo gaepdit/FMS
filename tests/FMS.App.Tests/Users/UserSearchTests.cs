@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using FMS.Domain.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using TestHelpers;
 using Xunit;
 using static FMS.Pages.Users.IndexModel;
 
-namespace FMS.Tests.Users
+namespace FMS.App.Tests.Users
 {
     public class UserSearchTests
     {

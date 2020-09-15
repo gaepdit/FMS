@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 
-namespace FMS.Tests.Cabinets
+namespace FMS.App.Tests.Cabinets
 {
     public class CabinetDetailsTests
     {
@@ -32,7 +32,7 @@ namespace FMS.Tests.Cabinets
             var result = await pageModel.OnGetAsync(name).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.Cabinet.Should().BeEquivalentTo(item);
+            pageModel.CabinetDetail.Should().BeEquivalentTo(item);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace FMS.Tests.Cabinets
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Cabinet.Should().BeNull();
+            pageModel.CabinetDetail.Should().BeNull();
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace FMS.Tests.Cabinets
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Cabinet.Should().BeNull();
+            pageModel.CabinetDetail.Should().BeNull();
         }
     }
 }

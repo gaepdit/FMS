@@ -1,18 +1,18 @@
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
-namespace FMS.Pages.Cabinets
+namespace FMS.Pages.Files
 {
     public class DetailsModel : PageModel
     {
-        public CabinetSummaryDto CabinetDetail { get; set; }
-        public DisplayMessage Message { get; set; }
+        private readonly IFileRepository _repository;
+        public DetailsModel(IFileRepository repository) => _repository = repository;
 
-        private readonly ICabinetRepository _repository;
-        public DetailsModel(ICabinetRepository repository) => _repository = repository;
+        public FileDetailDto FileDetail { get; set; }
+        public DisplayMessage Message { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
@@ -21,9 +21,9 @@ namespace FMS.Pages.Cabinets
                 return NotFound();
             }
 
-            CabinetDetail = await _repository.GetCabinetByNameAsync(id);
+            FileDetail = await _repository.GetFileAsync(id);
 
-            if (CabinetDetail == null)
+            if (FileDetail == null)
             {
                 return NotFound();
             }

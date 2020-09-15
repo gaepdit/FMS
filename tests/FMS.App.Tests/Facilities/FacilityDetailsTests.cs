@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 
-namespace FMS.Tests.Facilities
+namespace FMS.App.Tests.Facilities
 {
     public class FacilityDetailsTests
     {

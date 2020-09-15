@@ -1,14 +1,16 @@
 ﻿@page "{id}"
 @model Pages.Cabinets.DetailsModel
 @{
-    ViewData["Title"] = $"Cabinet {Model.Cabinet.Name}";
+    ViewData["Title"] = $"Cabinet {Model.CabinetDetail.Name}";
 }
-<h1 id="details">
+<h1>
     @ViewData["Title"]
-    @if (!Model.Cabinet.Active)
+    @if (!Model.CabinetDetail.Active)
     {
         <span class="text-muted">(Inactive)</span>
     }
+    @* TODO #38: Add authorize check in production *@
+    <a asp-page="Edit" asp-route-id="@Model.CabinetDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
 </h1>
 <hr />
 <partial name="_AlertPartial" for="Message" />
@@ -16,15 +18,10 @@
 <div class="container-fluid">
     <dl class="row">
         <dt class="col-md-3">
-            @Html.DisplayNameFor(model => model.Cabinet.Active)
+            @Html.DisplayNameFor(model => model.CabinetDetail.Active)
         </dt>
         <dd class="col-md-9">
-            @Html.DisplayFor(model => model.Cabinet.Active)
+            @Html.DisplayFor(model => model.CabinetDetail.Active)
         </dd>
     </dl>
-</div>
-<div class="row">
-    <div class="col">
-        <a asp-page="Edit" asp-route-id="@Model.Cabinet.Id" class="btn btn-outline-primary col-md-2">Edit Cabinet</a>
-    </div>
 </div>

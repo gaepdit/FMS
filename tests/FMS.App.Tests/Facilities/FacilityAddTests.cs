@@ -9,7 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FMS.Tests.Facilities
+namespace FMS.App.Tests.Facilities
 {
     public class FacilityAddTests
     {
@@ -27,21 +27,7 @@ namespace FMS.Tests.Facilities
         }
 
         [Fact]
-        public async Task OnPost_IfInvalidModel_ReturnPageWithInvalidModelState()
-        {
-            var mockRepo = new Mock<IFacilityRepository>();
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object);
-            pageModel.ModelState.AddModelError("Error", "Sample error description");
-
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
-
-            result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
-        }
-
-        [Fact]
-        public async Task OnPost_IfValidModel_ReturnDetailsPage()
+        public async Task OnPost_IfValidModel_ReturnsDetailsPage()
         {
             var newId = Guid.NewGuid();
             var mockRepo = new Mock<IFacilityRepository>();
@@ -55,8 +41,22 @@ namespace FMS.Tests.Facilities
 
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.Should().BeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("Details");
+            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
             ((RedirectToPageResult)result).RouteValues["id"].Should().Be(newId);
+        }
+
+        [Fact]
+        public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
+        {
+            var mockRepo = new Mock<IFacilityRepository>();
+            var mockSelectListHelper = new Mock<ISelectListHelper>();
+            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            pageModel.ModelState.AddModelError("Error", "Sample error description");
+
+            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+
+            result.Should().BeOfType<PageResult>();
+            pageModel.ModelState.IsValid.Should().BeFalse();
         }
     }
 }

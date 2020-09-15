@@ -1,25 +1,27 @@
 ﻿@page "{id:Guid?}"
 @model Pages.Facilities.DetailsModel
 @{
-    ViewData["Title"] = $"Facility Details: {Model.FacilityDetail.FacilityNumber}";
+    ViewData["Title"] = $"Facility {Model.FacilityDetail.FacilityNumber}";
 }
-<h1 id="details">@ViewData["Title"]</h1>
+<h1>
+    @ViewData["Title"]
+    @if (!Model.FacilityDetail.Active)
+    {
+        <span class="text-muted">(Inactive)</span>
+    }
+    @* TODO #38: Add authorize check in production *@
+    <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+</h1>
 <hr />
 <partial name="_AlertPartial" for="Message" />
 
 <div class="container-fluid">
     <dl class="row">
-        <dt class="col-md-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FacilityNumber)
-        </dt>
-        <dd class="col-md-9">
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityNumber)
-        </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
         </dt>
         <dd class="col-sm-9">
-            <a asp-page="~/Files/Index" asp-route-id="@Model.FacilityDetail.FileId" class="btn btn-outline-info btn-sm col-md-2">
+            <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileId" class="btn btn-outline-info btn-sm col-md-2">
                 @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
             </a>
         </dd>
@@ -124,7 +126,6 @@
 <hr />
 <div class="row">
     <div class="col">
-        <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-outline-primary col-md-2">Edit Facility</a>
         <a href="javascript: history.go(-1)" class="btn btn-outline-secondary col-md-2">Back</a>
     </div>
 </div>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 
-namespace FMS.Tests.Users
+namespace FMS.App.Tests.Users
 {
     public class UserEditTests
     {

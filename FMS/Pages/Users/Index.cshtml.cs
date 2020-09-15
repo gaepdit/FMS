@@ -12,11 +12,7 @@ namespace FMS.Pages.Users
     public class IndexModel : PageModel
     {
         private readonly IUserService _userService;
-
-        public IndexModel(IUserService userService)
-        {
-            _userService = userService;
-        }
+        public IndexModel(IUserService userService) => _userService = userService;
 
         public string Name { get; set; }
 

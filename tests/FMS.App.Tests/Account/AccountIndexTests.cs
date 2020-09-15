@@ -6,7 +6,7 @@ using Moq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace FMS.Tests.Account
+namespace FMS.App.Tests.Account
 {
     public class AccountIndexTests
     {

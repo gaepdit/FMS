@@ -18,23 +18,21 @@
 <hr />
 <partial name="_AlertPartial" for="Message" />
 
-@if (Model.Cabinets != null && Model.Cabinets.Count > 0)
-{
-    <div class="container mt-2">
+<div class="container mt-2">
+    @if (Model.Cabinets != null && Model.Cabinets.Count > 0)
+    {
         @foreach (var c in Model.Cabinets)
         {
             <a asp-page="Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
                 @c.Name @(c.Active ? "" : "(Inactive)") @(c.Id==Model.NewCabinetId ? "(New)" : "")
             </a>
         }
-    </div>
-}
-else
-{
-    <div class="container mt-2">
+    }
+    else
+    {
         <p class="lead text-info">No cabinets found.</p>
-    </div>
-}
+    }
+</div>
 
 <div class="container-fluid bg-light pt-3 mt-5">
     <form method="post" class="form-inline">

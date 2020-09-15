@@ -59,7 +59,7 @@ namespace FMS.Pages.Facilities
             var newFacilityId = await _repository.CreateFacilityAsync(Facility);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully created.");
-            return RedirectToPage("Details", new { id = newFacilityId });
+            return RedirectToPage("./Details", new { id = newFacilityId });
         }
 
         private async Task PopulateSelectsAsync()
