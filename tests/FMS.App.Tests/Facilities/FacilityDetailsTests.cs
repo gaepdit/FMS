@@ -32,7 +32,7 @@ namespace FMS.Tests.Facilities
         }
 
         [Fact]
-        public async Task OnGet_NonexistantIdReturnsNotFound()
+        public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);

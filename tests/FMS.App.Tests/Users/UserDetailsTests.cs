@@ -33,7 +33,7 @@ namespace FMS.Tests.Users
         }
 
         [Fact]
-        public async Task OnGet_NonexistantIdReturnsNotFound()
+        public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockUserService = new Mock<IUserService>();
             var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);

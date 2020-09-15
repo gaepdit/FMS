@@ -84,7 +84,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetCabinet_Nonexistant_ReturnsNull()
+        public async Task GetCabinet_Nonexistent_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var result = await repository.GetCabinetAsync(default);
@@ -106,7 +106,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetCabinetByName_Nonexistant_ReturnsNull()
+        public async Task GetCabinetByName_Nonexistent_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var result = await repository.GetCabinetByNameAsync(null);
@@ -291,7 +291,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task UpdateNonexistantCabinet_ThrowsException()
+        public async Task UpdateNonexistentCabinet_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var cabinetEdit = new CabinetEditDto() { Name = "C000" };

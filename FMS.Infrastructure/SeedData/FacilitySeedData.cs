@@ -6,7 +6,7 @@ namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static Facility[] GetFacilities()
+        public static List<Facility> GetFacilities()
         {
             return new List<Facility>
             {
@@ -194,7 +194,7 @@ namespace FMS.Infrastructure.SeedData
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 }
-            }.ToArray();
+            };
         }
     }
 }

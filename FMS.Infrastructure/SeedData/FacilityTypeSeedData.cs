@@ -1,13 +1,12 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static FacilityType[] GetFacilityTypes()
+        public static List<FacilityType> GetFacilityTypes()
         {
             return new List<FacilityType>
             {
@@ -60,7 +59,7 @@ namespace FMS.Infrastructure.SeedData
                     Code = 7,
                     Name = "NONGEN"
                 }
-            }.ToArray();
+            };
         }
     }
 }

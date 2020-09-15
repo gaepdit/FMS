@@ -1,13 +1,12 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static FacilityStatus[] GetFacilityStatuses()
+        public static List<FacilityStatus> GetFacilityStatuses()
         {
             return new List<FacilityStatus>
             {
@@ -53,7 +52,7 @@ namespace FMS.Infrastructure.SeedData
                     Status = "DELISTED",
                     EnvironmentalInterest = { }
                 }
-            }.ToArray();
+            };
         }
     }
 }

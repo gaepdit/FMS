@@ -8,6 +8,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
-        public bool Active { get; set; }
+        [Display(Name = "County")]
+        public int? CountyId { get; set; }
+
+        [Display(Name = "Show inactive")]
+        public bool ShowInactive { get; set; }
     }
 }

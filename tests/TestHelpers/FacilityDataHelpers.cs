@@ -7,7 +7,7 @@ namespace TestHelpers
     {
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
-            var facility = Array.Find(Facilities, e => e.Id == id);
+            var facility = Facilities.Find(e => e.Id == id);
             facility.File = GetFile(facility.FileId);
             facility.County = GetCounty(facility.CountyId);
             facility.FacilityStatus = GetFacilityStatus(facility.FacilityStatusId);
