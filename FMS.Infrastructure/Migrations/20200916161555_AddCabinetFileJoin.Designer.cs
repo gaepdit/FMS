@@ -4,14 +4,16 @@ using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FmsDbContext))]
-    partial class FmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200916161555_AddCabinetFileJoin")]
+    partial class AddCabinetFileJoin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

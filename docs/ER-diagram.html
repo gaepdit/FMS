@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ER-diagram</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="fms-entity-relationship-diagram">FMS entity relationship diagram</h1>
+<pre class="mermaid">
+classDiagram
+    File &lt;--&gt; CabinetFile
+    CabinetFile &lt;--&gt; Cabinet
+    File &lt;-- Facility
+        
+    Facility &lt;-- RetentionRecord
+    Facility --&gt; BudgetCode
+    Facility --&gt; EnvironmentalInterest
+    Facility --&gt; ComplianceOfficer
+    Facility --&gt; OrganizationalUnit
+
+    BudgetCode --&gt; EnvironmentalInterest
+
+    OrganizationalUnit &lt;-- ComplianceOfficer
+
+%% Classes
+
+class File {
+    FileLabel
+    List~Cabinets~
+    List~Facilities~
+}
+
+class CabinetFile{
+    File
+    Cabinet
+}
+
+class Cabinet {
+    List~File~
+}
+
+class Facility {
+    File
+    FacilityLabel
+    EnvironmentalInterest
+    Name
+    FacilityStatus
+    County
+    LocationDescription
+    StreetLine1
+    StreetLine2
+    City
+    State
+    PostalCode
+    Latitude
+    Longitude
+    BudgetCode
+    ComplianceOfficer
+    OrganizationalUnit
+    List~RetentionRecords~
+}
+
+class RetentionRecord {
+    Facility
+    BoxNumber
+    ConsignmentNumber
+    LocationNumber
+    StartYear
+    EndYear
+}
+
+class EnvironmentalInterest {
+    Name
+    List~BudgetCodes~
+}
+
+%% Lookup tables
+
+class BudgetCode {
+    EnvironmentalInterest
+    OrganizationNumber
+    ProjectNumber
+}
+
+class OrganizationalUnit {
+    List~ComplianceOfficers~
+}
+
+class ComplianceOfficer {
+    Name
+    OrganizationalUnit
+}
+</pre>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+
+</body>
+</html>

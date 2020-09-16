@@ -13,14 +13,18 @@ namespace FMS.Domain.Entities
         public File(int countyNum, int sequence) =>
             FileLabel = string.Concat(CountyString(countyNum), "-", SequenceString(sequence));
 
-        // Internal ID from the Programs, consisting of the 3-digit county number (with possible leading zero)
-        // and a 4-digit system-generated sequential number for each county (xxx-xxxx)
+        /// <summary>
+        /// Internal ID from the Programs, consisting of the 3-digit county number (with possible leading zero)
+        /// and a 4-digit system-generated sequential number for each county (xxx-xxxx)
+        /// </summary>
         [StringLength(9)]
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
-        public List<Cabinet> Cabinets { get; set; }
-        public List<Facility> Facilities { get; set; }
+        public ICollection<Facility> Facilities { get; set; }
+
+        // Files and Cabinets have a many-to-many relationship
+        public ICollection<CabinetFile> CabinetFiles { get; set; }
 
         public string Name => FileLabel;
         public int CountyNumber => int.Parse(FileLabel.Substring(0, 3));
