@@ -19,6 +19,7 @@ namespace TestHelpers
         public static List<ComplianceOfficer> ComplianceOfficers = DevSeedData.GetComplianceOfficers();
         public static List<File> Files = DevSeedData.GetFiles();
         public static List<Cabinet> Cabinets = DevSeedData.GetCabinets();
+        public static List<CabinetFile> CabinetFiles = DevSeedData.GetCabinetFiles();
 
         // Item retrieval
         public static County GetCounty(int id) => Counties.Find(e => e.Id == id);
@@ -29,6 +30,5 @@ namespace TestHelpers
         public static EnvironmentalInterest GetEnvironmentalInterest(Guid id) => EnvironmentalInterests.Find(e => e.Id == id);
         public static ComplianceOfficer GetComplianceOfficer(Guid id) => ComplianceOfficers.Find(e => e.Id == id);
         public static File GetFile(Guid id) => Files.Find(e => e.Id == id);
-        public static Cabinet GetCabinet(Guid id) => Cabinets.Find(e => e.Id == id);
     }
 }

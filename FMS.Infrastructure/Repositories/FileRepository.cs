@@ -23,6 +23,7 @@ namespace FMS.Infrastructure.Repositories
         {
             var file = await _context.Files.AsNoTracking()
                 .Include(e => e.Facilities)
+                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (file == null)
@@ -37,6 +38,7 @@ namespace FMS.Infrastructure.Repositories
         {
             var file = await _context.Files.AsNoTracking()
                 .Include(e => e.Facilities)
+                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .SingleOrDefaultAsync(e => e.FileLabel == id);
 
             if (file == null)
@@ -67,6 +69,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<FileDetailDto>> GetFileListAsync(FileSpec spec) =>
             await _context.Files.AsNoTracking()
             .Include(e => e.Facilities)
+            .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
             .Where(e => e.Active || spec.ShowInactive)
             .Where(e => string.IsNullOrWhiteSpace(spec.FileLabel) || e.FileLabel.Contains(spec.FileLabel))
             .Where(e => !spec.CountyId.HasValue || e.FileLabel.StartsWith(File.CountyString(spec.CountyId.Value)))

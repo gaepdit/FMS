@@ -19,7 +19,7 @@ namespace FMS.App.Tests.Cabinets
             var cabinet = DataHelpers.Cabinets[0];
             var expected = new CabinetSummaryDto(cabinet);
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetAsync(cabinet.Id))
+            mockRepo.Setup(l => l.GetCabinetSummaryAsync(cabinet.Id))
                 .ReturnsAsync(expected)
                 .Verifiable();
             var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object);
@@ -36,7 +36,7 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnGet_NonexistentId_ReturnsNotFound()
         {
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetAsync(It.IsAny<Guid>()))
+            mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<Guid>()))
                 .ReturnsAsync((CabinetSummaryDto)null)
                 .Verifiable();
 
@@ -108,7 +108,7 @@ namespace FMS.App.Tests.Cabinets
             var cabinet = new CabinetSummaryDto(DataHelpers.Cabinets[0]);
 
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetAsync(It.IsAny<Guid>()))
+            mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(cabinet);
             mockRepo.Setup(l => l.CabinetNameExistsAsync(It.IsAny<string>(), It.IsAny<Guid>()))
                 .ReturnsAsync(true)

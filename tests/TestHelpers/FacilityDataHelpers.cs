@@ -17,7 +17,10 @@ namespace TestHelpers
             facility.EnvironmentalInterest = GetEnvironmentalInterest(facility.EnvironmentalInterestId);
             facility.ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId);
 
-            return new FacilityDetailDto(facility);
+            return new FacilityDetailDto(facility)
+            {
+                Cabinets = GetCabinetsForFile(facility.FileId)
+            };
         }
     }
 }

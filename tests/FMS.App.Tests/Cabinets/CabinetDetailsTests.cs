@@ -18,18 +18,16 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnGet_PopulatesThePageModel()
         {
             Guid id = DataHelpers.Cabinets[0].Id;
-            string name = DataHelpers.Cabinets[0].Name;
-            var item = DataHelpers.GetCabinet(id);
+            var item = DataHelpers.GetCabinetDetail(id);
 
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetByNameAsync(name))
-                .ReturnsAsync(new CabinetSummaryDto(DataHelpers.Cabinets
-                    .Single(e => e.Name == name)))
+            mockRepo.Setup(l => l.GetCabinetDetailsAsync(It.IsAny<string>()))
+                .ReturnsAsync(item)
                 .Verifiable();
 
             var pageModel = new Pages.Cabinets.DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(name).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(item.Name).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.CabinetDetail.Should().BeEquivalentTo(item);

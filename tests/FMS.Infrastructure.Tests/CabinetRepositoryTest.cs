@@ -69,16 +69,18 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeEquivalentTo(expected);
         }
 
-        // GetCabinetAsync
+        // GetCabinetSummaryAsync
+
+        // GetCabinetDetailsAsync (by Guid)
 
         [Fact]
         public async Task GetCabinet_ReturnsCorrectCabinet()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
-            Guid CabinetId = DataHelpers.Cabinets[0].Id;
-
-            var expected = DataHelpers.GetCabinet(CabinetId);
-            var result = await repository.GetCabinetAsync(CabinetId);
+            var cabinet = DataHelpers.Cabinets[0];
+            
+            var expected = DataHelpers.GetCabinetDetail(cabinet.Id);
+            var result = await repository.GetCabinetDetailsAsync(cabinet.Id);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -87,11 +89,11 @@ namespace FMS.Infrastructure.Tests
         public async Task GetCabinet_Nonexistent_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.GetCabinetAsync(default);
+            var result = await repository.GetCabinetDetailsAsync((Guid)default);
             result.ShouldBeNull();
         }
 
-        // GetCabinetByNameAsync
+        // GetCabinetDetailsAsync (by name)
 
         [Fact]
         public async Task GetCabinetByName_ReturnsCorrectCabinet()
@@ -99,8 +101,8 @@ namespace FMS.Infrastructure.Tests
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var cabinet = DataHelpers.Cabinets[0];
 
-            var expected = DataHelpers.GetCabinet(cabinet.Id);
-            var result = await repository.GetCabinetByNameAsync(cabinet.Name);
+            var expected = DataHelpers.GetCabinetDetail(cabinet.Id);
+            var result = await repository.GetCabinetDetailsAsync(cabinet.Name);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -109,7 +111,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetCabinetByName_Nonexistent_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.GetCabinetByNameAsync(null);
+            var result = await repository.GetCabinetDetailsAsync(null);
             result.ShouldBeNull();
         }
 
@@ -130,7 +132,7 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var cabinet = await repository.GetCabinetAsync(newId);
+                var cabinet = await repository.GetCabinetDetailsAsync(newId);
 
                 cabinet.Id.Should().Be(newId);
                 cabinet.Name.Should().Be(newName);
@@ -191,7 +193,7 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var updatedCabinet = await repository.GetCabinetAsync(cabinet.Id);
+                var updatedCabinet = await repository.GetCabinetDetailsAsync(cabinet.Id);
                 updatedCabinet.Name.Should().Be(newName);
                 updatedCabinet.Active.ShouldBeTrue();
             }
@@ -216,7 +218,7 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var updatedCabinet = await repository.GetCabinetAsync(cabinet.Id);
+                var updatedCabinet = await repository.GetCabinetDetailsAsync(cabinet.Id);
                 updatedCabinet.Name.Should().Be(cabinet.Name);
                 updatedCabinet.Active.Should().Be(!cabinet.Active);
             }
@@ -241,7 +243,7 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var updatedCabinet = await repository.GetCabinetAsync(cabinet.Id);
+                var updatedCabinet = await repository.GetCabinetDetailsAsync(cabinet.Id);
                 updatedCabinet.Name.Should().Be(cabinet.Name);
                 updatedCabinet.Active.Should().Be(cabinet.Active);
             }

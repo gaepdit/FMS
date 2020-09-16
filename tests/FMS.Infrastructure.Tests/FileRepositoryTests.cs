@@ -109,8 +109,8 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetFacilies_UnusedFile_ReturnsEmptyList()
         {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            Guid fileId = DataHelpers.Files[2].Id;
+            using var repository = SimpleFileRepository();
+            var fileId = (await repository.GetFileAsync("099-0001")).Id;
 
             var result = await repository.GetFacilitiesForFileAsync(fileId);
 
@@ -231,12 +231,15 @@ namespace FMS.Infrastructure.Tests
             var expected = DataHelpers.Files
                 .Where(e => e.Active)
                 .Select(e => new FileDetailDto(e)).ToList();
+
             foreach (var file in expected)
             {
                 file.Facilities = DataHelpers.Facilities
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => new FacilitySummaryDto(e)).ToList();
+
+                file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
             }
 
             result.Should().BeEquivalentTo(expected);
@@ -257,6 +260,7 @@ namespace FMS.Infrastructure.Tests
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => new FacilitySummaryDto(e)).ToList();
+                file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
             }
 
             result.Should().BeEquivalentTo(expected);
@@ -281,6 +285,7 @@ namespace FMS.Infrastructure.Tests
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => new FacilitySummaryDto(e)).ToList();
+                file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
             }
 
             result.Should().BeEquivalentTo(expected);
@@ -305,6 +310,7 @@ namespace FMS.Infrastructure.Tests
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => new FacilitySummaryDto(e)).ToList();
+                file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
             }
 
             result.Should().BeEquivalentTo(expected);

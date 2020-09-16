@@ -31,7 +31,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.EnvironmentalInterest)
                 .Include(e => e.ComplianceOfficer)
-                .Include(e => e.File)
+                .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null)
