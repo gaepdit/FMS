@@ -2,7 +2,6 @@
 @model Pages.Files.IndexModel
 @{
     ViewData["Title"] = "File Search";
-    bool first;
 }
 @section Scripts {
     <partial name="_SearchFormScriptsPartial" />
@@ -40,7 +39,7 @@
 
     @if (Model.Files != null && Model.Files.Count > 0)
     {
-        <table class="table table-borderless">
+        <table class="table">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">File Label</th>
@@ -57,35 +56,9 @@
                                 @item.FileLabel @(item.Active ? "" : "(Inactive)")
                             </a>
                         </td>
+                        <td>@item.Cabinets.ConcatNonEmpty(", ")</td>
                         <td>
-                            @{
-                                first = true;
-                                if (item.Cabinets != null && item.Cabinets.Count > 0)
-                                {
-                                    @foreach (var c in item.Cabinets)
-                                    {
-                                        @if (!first)
-                                        {<span class="text-muted">|</span>}
-                                        <a asp-page="/Cabinets/Details" asp-route-id="@c" class="text-info">@c</a>
-                                        first = false;
-                                    }
-                                }
-                            }
-                        </td>
-                        <td>
-                            @{
-                                first = true;
-                                if (item.Facilities != null && item.Facilities.Count > 0)
-                                {
-                                    @foreach (var fac in item.Facilities)
-                                    {
-                                        @if (!first)
-                                        {<span class="text-muted">|</span>}
-                                        <a asp-page="/Facilities/Details" asp-route-id="@fac.Id" class="text-info">@fac.FacilityNumber</a>
-                                        first = false;
-                                    }
-                                }
-                            }
+                            @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
                         </td>
                     </tr>
                 }

@@ -114,15 +114,14 @@
 
     @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
     {
-        <table class="table table-borderless">
+        <table class="table ">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.FacilityNumber)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.Name)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.Address)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.City)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.State)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Spec.PostalCode)</th>
+                    <th scope="col">Facility</th>
+                    <th scope="col">File</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Cabinets</th>
                     <th scope="col" class="text-center">Active</th>
                 </tr>
             </thead>
@@ -135,11 +134,17 @@
                                 @Html.DisplayFor(m => item.FacilityNumber)
                             </a>
                         </td>
+                        <td>@Html.DisplayFor(m => item.FileLabel)</td>
                         <td>@Html.DisplayFor(m => item.Name)</td>
-                        <td>@Html.DisplayFor(m => item.Address)</td>
-                        <td>@Html.DisplayFor(m => item.City)</td>
-                        <td>@Html.DisplayFor(m => item.State)</td>
-                        <td>@Html.DisplayFor(m => item.PostalCode)</td>
+                        <td>
+                            @Html.DisplayFor(m => item.Address)<br />
+                            @Html.DisplayFor(m => item.City),
+                            @Html.DisplayFor(m => item.State)
+                            @Html.DisplayFor(m => item.PostalCode)
+                        </td>
+                        <td>
+                            @item.Cabinets.ConcatNonEmpty(", ")
+                        </td>
                         <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
                     </tr>
                 }

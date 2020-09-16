@@ -1,13 +1,13 @@
 ﻿@page
 @model Pages.Users.IndexModel
 @{
-    ViewData["Title"] = "User Admin";
+    ViewData["Title"] = "Users";
 }
 @section Scripts {
     <partial name="_SearchFormScriptsPartial" />
 }
 
-<h1>ViewData["Title"]</h1>
+<h1>FMS @ViewData["Title"]</h1>
 
 <div class="container-fluid bg-light py-3">
     <form method="get" asp-fragment="SearchResults">

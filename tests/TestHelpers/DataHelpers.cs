@@ -29,6 +29,5 @@ namespace TestHelpers
         public static OrganizationalUnit GetOrganizationalUnit(Guid id) => OrganizationalUnits.Find(e => e.Id == id);
         public static EnvironmentalInterest GetEnvironmentalInterest(Guid id) => EnvironmentalInterests.Find(e => e.Id == id);
         public static ComplianceOfficer GetComplianceOfficer(Guid id) => ComplianceOfficers.Find(e => e.Id == id);
-        public static File GetFile(Guid id) => Files.Find(e => e.Id == id);
     }
 }

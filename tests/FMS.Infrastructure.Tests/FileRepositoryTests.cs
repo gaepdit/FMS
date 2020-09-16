@@ -49,8 +49,6 @@ namespace FMS.Infrastructure.Tests
                 .Where(e => e.Active)
                 .Where(e => e.FileId == expected.Id)
                 .Select(e => new FacilitySummaryDto(e)).ToList();
-            // TODO #49: Cabinets relationship
-            //expected.Cabinets = new List<string>();
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -76,9 +74,7 @@ namespace FMS.Infrastructure.Tests
                 .Where(e => e.Active)
                 .Where(e => e.FileId == expected.Id)
                 .Select(e => new FacilitySummaryDto(e)).ToList();
-            // TODO #49: Cabinets relationship
-            //expected.Cabinets = new List<string>();
-
+            
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -102,7 +98,8 @@ namespace FMS.Infrastructure.Tests
 
             var expected = DataHelpers.Facilities
                 .Where(e => e.FileId == fileId)
-                .Select(e => new FacilitySummaryDto(e)).ToList();
+                .Select(e => DataHelpers.GetFacilitySummary(e.Id))
+                .ToList();
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -237,7 +234,8 @@ namespace FMS.Infrastructure.Tests
                 file.Facilities = DataHelpers.Facilities
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
-                    .Select(e => new FacilitySummaryDto(e)).ToList();
+                    .Select(e => DataHelpers.GetFacilitySummary(e.Id))
+                    .ToList();
 
                 file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
             }
@@ -259,7 +257,8 @@ namespace FMS.Infrastructure.Tests
                 file.Facilities = DataHelpers.Facilities
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
-                    .Select(e => new FacilitySummaryDto(e)).ToList();
+                    .Select(e => DataHelpers.GetFacilitySummary(e.Id))
+                    .ToList();
                 file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
             }
 
@@ -284,7 +283,8 @@ namespace FMS.Infrastructure.Tests
                 file.Facilities = DataHelpers.Facilities
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
-                    .Select(e => new FacilitySummaryDto(e)).ToList();
+                    .Select(e => DataHelpers.GetFacilitySummary(e.Id))
+                    .ToList();
                 file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
             }
 
@@ -303,15 +303,7 @@ namespace FMS.Infrastructure.Tests
             var result = await repository.GetFileListAsync(spec);
             var expected = DataHelpers.Files
                 .Where(e => e.FileLabel.Contains(fileLabel) && e.Active)
-                .Select(e => new FileDetailDto(e)).ToList();
-            foreach (var file in expected)
-            {
-                file.Facilities = DataHelpers.Facilities
-                    .Where(e => e.Active)
-                    .Where(e => e.FileId == file.Id)
-                    .Select(e => new FacilitySummaryDto(e)).ToList();
-                file.Cabinets = DataHelpers.GetCabinetsForFile(file.Id);
-            }
+                .Select(e => DataHelpers.GetFileDetail(e.Id)).ToList();
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -420,8 +412,6 @@ namespace FMS.Infrastructure.Tests
             using (var repository = repositoryHelper.GetFileRepository())
             {
                 var createdFile = await repository.GetFileAsync(expectedFileLabel);
-                // TODO #49: Remove after implementing Cabinets relationship 
-                createdFile.Cabinets = new List<string>();
 
                 createdFile.Active.Should().BeTrue();
                 createdFile.FileLabel.Should().Be(expectedFileLabel);

@@ -15,13 +15,17 @@
 <hr />
 <partial name="_AlertPartial" for="Message" />
 
-<div class="container-fluid">
-    <dl class="row">
-        <dt class="col-md-3">
-            @Html.DisplayNameFor(model => model.CabinetDetail.Active)
-        </dt>
-        <dd class="col-md-9">
-            @Html.DisplayFor(model => model.CabinetDetail.Active)
-        </dd>
-    </dl>
+<div class="my-3">
+    <h2>Files</h2>
+    @if (Model.CabinetDetail.Files != null && Model.CabinetDetail.Files.Count > 0)
+    {
+        @foreach (var c in Model.CabinetDetail.Files)
+        {
+            <a asp-page="/Files/Details" asp-route-id="@c.FileLabel" class="btn btn-sm btn-outline-info m-1">@c.FileLabel</a>
+        }
+    }
+    else
+    {
+        <p class="lead text-info">No Files found for this Cabinet.</p>
+    }
 </div>

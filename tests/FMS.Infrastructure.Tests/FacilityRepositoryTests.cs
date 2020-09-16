@@ -114,7 +114,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.GetFacilityListAsync(new FacilitySpec());
             var expected = DataHelpers.Facilities.Where(e => e.Active)
-                .Select(e => new FacilitySummaryDto(e));
+                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -127,7 +127,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.GetFacilityListAsync(spec);
             var expected = DataHelpers.Facilities
-                .Select(e => new FacilitySummaryDto(e));
+                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -141,8 +141,9 @@ namespace FMS.Infrastructure.Tests
             var spec = new FacilitySpec() { CountyId = countyId };
 
             var result = await repository.GetFacilityListAsync(spec);
-            var expected = DataHelpers.Facilities.Where(e => e.CountyId == countyId && e.Active)
-                .Select(e => new FacilitySummaryDto(e));
+            var expected = DataHelpers.Facilities
+                .Where(e => e.CountyId == countyId && e.Active)
+                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -156,8 +157,9 @@ namespace FMS.Infrastructure.Tests
             var spec = new FacilitySpec() { FacilityNumber = facilityNumber };
 
             var result = await repository.GetFacilityListAsync(spec);
-            var expected = DataHelpers.Facilities.Where(e => e.FacilityNumber.Contains(facilityNumber) && e.Active)
-                .Select(e => new FacilitySummaryDto(e));
+            var expected = DataHelpers.Facilities
+                .Where(e => e.FacilityNumber.Contains(facilityNumber) && e.Active)
+                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
 
             result.Should().BeEquivalentTo(expected);
         }

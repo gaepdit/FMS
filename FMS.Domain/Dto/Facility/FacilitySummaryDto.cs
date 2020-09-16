@@ -1,6 +1,8 @@
 ﻿using FMS.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace FMS.Domain.Dto
 {
@@ -9,6 +11,7 @@ namespace FMS.Domain.Dto
         public FacilitySummaryDto(Facility facility)
         {
             Id = facility.Id;
+            FileLabel = facility.File.FileLabel;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
@@ -16,9 +19,15 @@ namespace FMS.Domain.Dto
             City = facility.City;
             State = facility.State;
             PostalCode = facility.PostalCode;
-        }          
+            Cabinets = facility.File.CabinetFiles?
+                .Select(c => c.Cabinet.Name).ToList()
+                ?? new List<string>();
+        }
 
         public Guid Id { get; set; }
+
+        [Display(Name = "File")]
+        public string FileLabel { get; set; }
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
@@ -40,5 +49,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
+
+        public List<string> Cabinets { get; set; }
     }
 }

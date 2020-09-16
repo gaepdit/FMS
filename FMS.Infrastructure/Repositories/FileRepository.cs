@@ -52,6 +52,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<List<FacilitySummaryDto>> GetFacilitiesForFileAsync(Guid id) =>
             await _context.Facilities.AsNoTracking()
             .Where(e => e.FileId == id)
+            .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
             .Select(e => new FacilitySummaryDto(e))
             .ToListAsync();
 
@@ -118,11 +119,6 @@ namespace FMS.Infrastructure.Repositories
         }
 
         // TODO #49: Add Cabinets relationship 
-
-        public Task<List<string>> GetCabinetsForFileAsync(Guid fileId)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task AddCabinetToFileAsync(Guid fileId, Guid cabinetId)
         {

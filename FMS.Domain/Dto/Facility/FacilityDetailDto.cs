@@ -74,7 +74,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Location Description")]
         public string Location { get; set; }
 
-        [Display(Name = "Street Address")]
+        [Display(Name = "Address")]
         public string Address { get; set; }
 
         [Display(Name = "City")]

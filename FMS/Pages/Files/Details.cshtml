@@ -15,61 +15,59 @@
 <hr />
 <partial name="_AlertPartial" for="Message" />
 
-
-<h2>Cabinets</h2>
-<div class="container mt-2">
+<div class="my-3">
+    <h2>Cabinets</h2>
     @if (Model.FileDetail.Cabinets != null && Model.FileDetail.Cabinets.Count > 0)
     {
         @foreach (var c in Model.FileDetail.Cabinets)
         {
-            <a asp-page="/Cabinets/Details" asp-route-id="@c" class="btn btn-sm m-1">@c</a>
+            <a asp-page="/Cabinets/Details" asp-route-id="@c" class="btn btn-sm btn-outline-info m-1">@c</a>
         }
     }
     else
     {
         <p class="lead text-info">No cabinets found for this File.</p>
     }
-    @*Todo #49: Add/remove cabinets*@
 </div>
 
-<h2>Facilities</h2>
+<div class="my-3">
+    <h2>Facilities</h2>
 
-@if (Model.FileDetail.Facilities != null && Model.FileDetail.Facilities.Count > 0)
-{
-    <table class="table table-borderless">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Facility</th>
-                <th scope="col">Name</th>
-                <th scope="col">Location</th>
-                <th scope="col" class="text-center">Active</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.FileDetail.Facilities)
-            {
+    @if (Model.FileDetail.Facilities != null && Model.FileDetail.Facilities.Count > 0)
+    {
+        <table class="table table-borderless">
+            <thead class="thead-light">
                 <tr>
-                    <td>
-                        <a asp-page="/Facilities/Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
-                            @Html.DisplayFor(m => item.FacilityNumber)
-                        </a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.Address)<br />
-                        @Html.DisplayFor(m => item.City), @Html.DisplayFor(m => item.State) @Html.DisplayFor(m => item.PostalCode)
-                    </td>
-                    <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
+                    <th scope="col">Facility</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" class="text-center">Active</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <div class="container mt-2">
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FileDetail.Facilities)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                                @Html.DisplayFor(m => item.FacilityNumber)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Address)<br />
+                            @Html.DisplayFor(m => item.City), @Html.DisplayFor(m => item.State) @Html.DisplayFor(m => item.PostalCode)
+                        </td>
+                        <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
         <p class="lead text-info">No facilities found for this File.</p>
-    </div>
-}
+    }
+</div>

@@ -81,6 +81,8 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
                 .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
+                .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
         }

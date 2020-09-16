@@ -22,5 +22,16 @@ namespace TestHelpers
                 Cabinets = GetCabinetsForFile(facility.FileId)
             };
         }
+
+        public static FacilitySummaryDto GetFacilitySummary(Guid id)
+        {
+            var facility = Facilities.Find(e => e.Id == id);
+            facility.File = GetFile(facility.FileId);
+
+            return new FacilitySummaryDto(facility)
+            {
+                Cabinets = GetCabinetsForFile(facility.FileId)
+            };
+        }
     }
 }
