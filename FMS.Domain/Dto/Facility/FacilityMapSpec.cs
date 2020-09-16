@@ -45,5 +45,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
+
+        [Display(Name = "CirRadius")]
+        public float? CirRadius { get; set; }
     }
 }

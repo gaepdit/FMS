@@ -79,7 +79,13 @@ namespace FMS.Pages.Facilities
                     }
                 }
             }
-            if (Spec.Latitude > 0 && Spec.Longitude < 0)
+           
+            if (!String.IsNullOrEmpty(Spec.Radius) && float.Parse(Spec.Radius) > 0)
+            {
+                Spec.CirRadius = await GetCirRadiusAsync(Spec.Radius);
+            }
+
+                if (Spec.Latitude > 0 && Spec.Longitude < 0)
             {
                 FacilityList = await _repository.GetFacilityListAsync(Spec);
             }
@@ -111,9 +117,41 @@ namespace FMS.Pages.Facilities
                 ShowMap = false;
                 ShowNone = true;
             }
-            
+
+         
             return Page();
-        }      
-        
+        }
+
+        private async Task <float> GetCirRadiusAsync(string Radius)
+        {
+            float cirRad;
+            int cirConst = 1609;
+            var userRadius = float.Parse(Radius);
+
+            switch (true)
+            {
+                 case var expression when (userRadius >= 0 && userRadius < 0.5):
+                    cirRad = cirConst * userRadius;                   
+                    break;
+                case var expression when (userRadius >= 0.5 && userRadius < 1):
+                    cirRad = cirConst * userRadius;                    
+                    break;
+                case var expression when (userRadius >= 1 && userRadius < 1.5):
+                    cirRad = cirConst * userRadius;                   
+                    break;
+                case var expression when (userRadius >= 1.5 &&  userRadius < 3):
+                    cirRad = cirConst * userRadius;                   
+                    break;
+                case var expression when (userRadius >= 3 && userRadius < 10):
+                    cirRad = cirConst * userRadius;                   
+                    break;
+                default:
+                    cirRad = 402;
+                    break;
+            }
+            return cirRad;
+        }
+
+
     }
 }

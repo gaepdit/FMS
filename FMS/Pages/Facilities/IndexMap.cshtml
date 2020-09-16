@@ -58,7 +58,6 @@
                 <input id="Longitude" asp-for="Spec.Longitude" class="form-control" />
                 <label>(Example: -84.391502)</label>
                 <input id="LocalLng" asp-for="LocalLng" type="hidden" />
-
             </div>
             <div class="col-md-3">
                 <label class="form-check-label" asp-for="Output">Output</label>
@@ -70,7 +69,6 @@
             </div>
         </div>
         <div class="form-group row">
-
             <div class="form-group col">
                 <div class="form-check">
                     <label class="form-check-label" asp-for="ActiveOnly">Show Active Sites Only</label>
@@ -78,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <br />
+      
         <div class="form-row">
             <div class="col" style="text-align:center;">
                 <button id="Search" type="submit" class="btn btn-primary mb-2" style="text-align: center;width:100px; height:38px; margin-right:30px; line-height:1.1em; font-size:1.1em;">Search</button>
@@ -101,7 +99,7 @@
     <table width=760 border="0" align="center">
         <tr>
             <td colspan="2" valign="top">
-                <div id="map" style="height:600px;width:100%"></div>
+                <div id="dvMap" style="height:600px;width:100%"></div>               
             </td>
     </table>
 

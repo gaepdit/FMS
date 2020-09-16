@@ -87,12 +87,18 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
+            var latLongDelta = 5m;
             return await _context.Facilities.AsNoTracking()
                  .Include(e => e.File)
                   .Include(e => e.FacilityStatus)
-                .Include(e => e.FacilityType)              
-               // .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)             
-                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))                
+                .Include(e => e.FacilityType)
+                // .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)             
+                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
+                .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)
+                .Where(e => e.Latitude > spec.Latitude - latLongDelta && e.Latitude < spec.Latitude + latLongDelta)
+                .Where(e => e.Latitude > spec.Longitude - latLongDelta && e.Longitude < spec.Longitude + latLongDelta)
+                .OrderBy(e => Math.Pow((double)spec.Longitude.Value - (double)e.Longitude, 2) + Math.Pow((double)spec.Latitude.Value - (double)e.Latitude, 2))
+                //.Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))                
                 .Select(e => new FacilityMapSummaryDto(e))
                 .ToListAsync();
         }

@@ -1,51 +1,53 @@
 
-function mapInitialize(lat, lng, radius, markers) {
+function mapInitialize(lat, lng, inputRadius, markers) {
     var lat = lat;
     var lng = lng;
-    var radius = parseFloat(radius);
+    var myradius = parseFloat(inputRadius);
     //debugger;
     var cirRad;
     var cirConst = 1609;
     var zoomLevel;
     switch (true) {
-        case (radius >= 0 && radius < 0.5):
-            cirRad = cirConst * radius;
+        case (myradius >= 0 && myradius < 0.5):
+            cirRad = cirConst * myradius;
             zoomLevel = 16;
             break;
-        case (radius >= 0.5 && radius < 1):
-            cirRad = cirConst * radius;
+        case (myradius >= 0.5 && myradius < 1):
+            cirRad = cirConst * myradius;
             zoomLevel = 15;
             break;
-        case (radius >= 1 && radius < 1.5):
-            cirRad = cirConst * radius;
+        case (myradius >= 1 && myradius < 1.5):
+            cirRad = cirConst * myradius;
             zoomLevel = 14;
             break;
-        case (radius >= 1.5 && radius < 3):
+        case (myradius >= 1.5 && myradius < 3):
             cirRad = cirConst * radius;
             zoomLevel = 13;
             break;
-        case (radius >= 3 && radius < 10):
-            cirRad = cirConst * radius;
+        case (myradius >= 3 && myradius < 10):
+            cirRad = cirConst * myradius;
             zoomLevel = 12;
             break;
 
         default:
             cirRad = 402;
-            zoomLevel = 16;
+            zoomLevel = 12;
     }
 
-    var Latlng = new google.maps.LatLng(lat, lng);
-    var myOptions = {
+    var myLatlng = new google.maps.LatLng(lat, lng);
+    var mapOptions = {
         zoom: zoomLevel,
-        center: Latlng,
+        center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    var map = new google.maps.Map(document.getElementById("map"), myOptions);
+   
+    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
+     
     var centermarker = new google.maps.Marker({
-        position: Latlng,
+        position: myLatlng,
         map: map,
-        icon: 'center.png'
+        icon: '/images/center.png'       
     });
 
     var circle = new google.maps.Circle({
@@ -55,69 +57,74 @@ function mapInitialize(lat, lng, radius, markers) {
     });
     circle.bindTo('center', centermarker, 'position');
 
-    var infowindow = new google.maps.InfoWindow();
-
-    var marker, i;
 
     for (i = 0; i < markers.length; i++) {
+        var data = markers[i];
         //determine marker image
-        var imageName = 'icon_mix.png';
-        var type = markers[i].ftype;
-        switch (type) {
-            case 'gen':
-                imageName = 'icon_gen.png';
+        var imageName = '/images/icon_mix.png';
+        var Ftype = (data.facilityType.name).toUpperCase();
+        switch (Ftype) {
+            case 'GEN':
+                imageName = '/images/icon_gen.png';
                 break;
-            case 'nongen':
-                imageName = 'icon_nongen.png';
+            case 'NONGEN':
+                imageName = '/images/icon_nongen.png';
                 break;
-            case 'brown':
-                imageName = 'icon_bf.png';
+            case 'BROWN':
+                imageName = '/images/icon_bf.png';
                 break;
-            case 'npl':
-                imageName = 'icon_npl.png';
+            case 'NPL':
+                imageName = '/images/icon_npl.png';
                 break;
-            case 'dod':
-                imageName = 'icon_dod.png';
+            case 'DOD':
+                imageName = '/images/icon_dod.png';
                 break;
-            case 'pasi':
-                imageName = 'icon_pasi.png';
+            case 'PASI':
+                imageName = '/images/icon_pasi.png';
                 break;
-            case 'hsra':
-                imageName = 'icon_hsra.png';
+            case 'HSRA':
+                imageName = '/images/icon_hsra.png';
                 break;
-            case 'vrp':
-                imageName = 'icon_vrp.png';
+            case 'VRP':
+                imageName = '/images/icon_vrp.png';
                 break;
-            case 'paf':
-                imageName = 'icon_paf.png';
+            case 'PAF':
+                imageName = '/images/icon_paf.png';
                 break;
-            case 'scraptire':
-                imageName = 'icon_scraptire.png';
+            case 'SCRAPTIRE':
+                imageName = '/images/icon_scraptire.png';
                 break;
             default:
-                imageName = 'icon_mix.png';
+                imageName = '/images/icon_mix.png';
         }
 
-
-        marker = new google.maps.Marker({
-            position: new google.maps.LatLng(markers[i].latitude, markers[i].longitude),
+        var infowindow = new google.maps.InfoWindow();
+        var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
+        var marker = new google.maps.Marker({
+            position: myLatlng,
             map: map,
-            icon: imageName
+            icon: imageName            
         });
 
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-                zip = markers[i].zip;
-                if (zip == undefined) zip = ""
-                if (markers[i].ftype == 'scraptire')
-                    infowindow.setContent('<span class="address1"><a href=\"/prod/hwmb/search/facilityDetail.jsp?facilityID=' + markers[i].id + '&facilityName=' + markers[i].name + '\">' + markers[i].name + '</span><br><span class="address2">' + markers[i].address + '</span><br><span class="address2">Estimate # tires: ' + markers[i].numtires + '</span><br><span class="address2">lat: ' + markers[i].latitude + ' lng:' + markers[i].longitude + '</span>');
-                else {
-                    //infowindow.setContent('<span class="address1"><a href=\"/prod/hwmb/search/facilityDetail.jsp?facilityID='+markers[i].id+'&facilityName='+markers[i].name+'\">'+markers[i].name +'</span><br><span class="address2">'+ markers[i].address+'</span><br><span class="address2">'+ markers[i].city +', GA '+ markers[i].zip+'</span><br><span class="fileID">FILE ID: ' + markers[i].fileID+'</span>');
-                    infowindow.setContent('<h5>' + markers[i].name + '</h5><div class="address2"><b>' + markers[i].address + '</b></div><div class="address2"><b>' + markers[i].city + ', GA ' + zip + '</b></div><div class="fileID"><b>FILE ID: ' + markers[i].fileID + '</b></div><div class="address2"><b>STATUS: ' + markers[i].status + '</b></div>');
+        (function (marker, data) {
+            google.maps.event.addListener(marker, "click", function (e) {
+                var zip = data.postalCode;
+                if (zip == undefined) {
+                    zip = ""
                 }
+                if (data.facilityType.name == 'SCRAPTIRE') {
+                    infowindow.setContent('<span style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #333;"><a href=\"/prod/hwmb/search/facilityDetail.jsp?facilityID=' + data.facilityNumber + '&facilityName=' + data.name + '\">' + data.name + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">' + data.address + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">Estimate # tires: ' + data.numtires + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">lat: ' + data.latitude + ' lng:' + data.longitude + '</span>');
+                }
+                else {
+                    var hyplink = "./Details/" + data.id;
+                    var hyplink2 = "../Files/Index/" + data.fileId;
+                    infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus.name + '</b></div>');
+                }
+                //infowindow.setContent(data.name);
                 infowindow.open(map, marker);
-            }
-        })(marker, i));
+            });
+        })(marker, data);
+       
     }
 
 
@@ -165,4 +172,30 @@ function getLatLongs(addr, city, zip) {
 
 }
 
+function mapInitialize1(lat, lng, radius, markers) {
+    debugger;
+    var mapOptions = {
+        center: new google.maps.LatLng(lat, lng),
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var infoWindow = new google.maps.InfoWindow();
+    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
+
+    for (i = 0; i < markers.length; i++) {
+        var data = markers[i]
+        var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: data.facilityNumber
+        });
+        (function (marker, data) {
+            google.maps.event.addListener(marker, "click", function (e) {
+                infoWindow.setContent(data.name);
+                infoWindow.open(map, marker);
+            });
+        })(marker, data);
+    }
+}

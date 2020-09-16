@@ -71,10 +71,18 @@
 
         $('#Search').click(function OnSearchSubmit() {
             var output = $('#Output').val();
-            var UserLatitude = 33.879807; // $('#Latitude').val();
-            var UserLongitude = -87.306964; //$('#Longitude').val();
+            //TO DO: Need to vomment in UAT/Production
+            //var lat = 34.101318; // $('#Latitude').val();
+            //var lng = -84.519379; //$('#Longitude').val();
+            //$('#Latitude').val(parseFloat(lat).toFixed(4));
+            //$('#Longitude').val(parseFloat(lng).toFixed(4));
+
+            //TO DO: Need to uncomment in UAT/Production
+            var lat =  $('#Latitude').val();
+            var lng = $('#Longitude').val();
+
             //debugger;
-            if (UserLatitude != "" && UserLongitude != "") {
+            if (lat != "" && lng != "") {
                 return true;
             }
             if (output != "" && (output == "1" || output == "2" )) {
