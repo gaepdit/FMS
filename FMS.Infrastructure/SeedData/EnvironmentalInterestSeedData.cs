@@ -1,7 +1,6 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FMS.Infrastructure.SeedData
 {
@@ -21,7 +20,7 @@ namespace FMS.Infrastructure.SeedData
                 new EnvironmentalInterest
                 {
                     Id = new Guid("258117AE-4E08-428D-BA0F-F5DEBF9834E2"),
-                    Active = false,
+                    Active = true,
                     Name = "HSRA",
                     BudgetCodes = {}
                 },
