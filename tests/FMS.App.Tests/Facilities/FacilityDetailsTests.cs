@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -40,7 +41,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FacilityDetail.Should().BeNull();
+            pageModel.FacilityDetail.ShouldBeNull();
         }
 
         [Fact]
@@ -52,7 +53,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FacilityDetail.Should().BeNull();
+            pageModel.FacilityDetail.ShouldBeNull();
         }
     }
 }

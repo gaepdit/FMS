@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Cabinets
 {
@@ -33,8 +34,8 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<PageResult>();
             pageModel.Cabinets.Should().BeEquivalentTo(_cabinets.Where(e => e.Active));
-            pageModel.ShowInactive.Should().BeFalse();
-            pageModel.NewCabinetId.Should().BeNull();
+            pageModel.ShowInactive.ShouldBeFalse();
+            pageModel.NewCabinetId.ShouldBeNull();
         }
 
         [Fact]
@@ -51,7 +52,7 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<PageResult>();
             pageModel.Cabinets.Should().BeEquivalentTo(_cabinets);
-            pageModel.ShowInactive.Should().BeTrue();
+            pageModel.ShowInactive.ShouldBeTrue();
         }
 
         [Fact]
@@ -77,8 +78,8 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<RedirectToPageResult>();
             ((RedirectToPageResult)result).PageName.Should().Be("./Index");
-            pageModel.ModelState.IsValid.Should().BeTrue();
-            pageModel.ShowInactive.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ShowInactive.ShouldBeFalse();
             pageModel.NewCabinetId.Should().Be(newGuid);
         }
 
@@ -94,10 +95,10 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.Cabinets.Should().BeEquivalentTo(_cabinets.Where(e => e.Active));
-            pageModel.ShowInactive.Should().BeFalse();
-            pageModel.NewCabinetId.Should().BeNull();
+            pageModel.ShowInactive.ShouldBeFalse();
+            pageModel.NewCabinetId.ShouldBeNull();
         }
 
         [Fact]
@@ -117,11 +118,11 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["CabinetCreate.Name"].Errors[0].ErrorMessage.Should().Be("There is already a Cabinet with that name.");
             pageModel.Cabinets.Should().BeEquivalentTo(_cabinets.Where(e => e.Active));
-            pageModel.ShowInactive.Should().BeFalse();
-            pageModel.NewCabinetId.Should().BeNull();
+            pageModel.ShowInactive.ShouldBeFalse();
+            pageModel.NewCabinetId.ShouldBeNull();
         }
     }
 }

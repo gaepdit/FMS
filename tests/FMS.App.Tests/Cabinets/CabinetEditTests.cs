@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Cabinets
 {
@@ -46,7 +47,7 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(default(Guid));
-            pageModel.OriginalCabinetName.Should().BeNull();
+            pageModel.OriginalCabinetName.ShouldBeNull();
             pageModel.CabinetEdit.Should().Be(default);
         }
 
@@ -60,7 +61,7 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(default(Guid));
-            pageModel.OriginalCabinetName.Should().BeNull();
+            pageModel.OriginalCabinetName.ShouldBeNull();
             pageModel.CabinetEdit.Should().Be(default);
         }
 
@@ -83,7 +84,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
             ((RedirectToPageResult)result).PageName.Should().Be("./Details");
             ((RedirectToPageResult)result).RouteValues["id"].Should().Be(newName);
         }
@@ -98,7 +99,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
 
@@ -123,7 +124,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["CabinetEdit.Name"].Errors[0].ErrorMessage.Should().Be("There is already a Cabinet with that name.");
             pageModel.OriginalCabinetName.Should().Be(cabinet.Name);
         }

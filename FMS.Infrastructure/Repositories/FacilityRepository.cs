@@ -121,6 +121,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
             var facility = await _context.Facilities.FindAsync(id);
+
             if (facility == null)
             {
                 throw new ArgumentException("Facility ID not found.", nameof(id));
@@ -143,6 +144,50 @@ namespace FMS.Infrastructure.Repositories
             facility.State = facilityUpdates.State;
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> RetentionRecordExistsAsync(Guid id) =>
+            await _context.RetentionRecords.AnyAsync(e => e.Id == id);
+
+        public async Task<RetentionRecordDetailDto> GetRetentionRecordAsync(Guid id)
+        {
+            var record = await _context.RetentionRecords.FindAsync(id);
+
+            if (record == null)
+            {
+                return null;
+            }
+
+            return new RetentionRecordDetailDto(record);
+        }
+
+        public async Task<Guid> CreateRetentionRecordAsync(RetentionRecordCreateDto create)
+        {
+            RetentionRecord record = new RetentionRecord(create);
+            await _context.RetentionRecords.AddAsync(record);
+            await _context.SaveChangesAsync();
+            return record.Id;
+        }
+
+        public async Task UpdateRetentionRecordAsync(Guid id, RetentionRecordEditDto edit)
+        {
+            var record = await _context.RetentionRecords.FindAsync(id);
+
+            if (record == null)
+            {
+                throw new ArgumentException("Retention Record ID not found.", nameof(id));
+            }
+
+            record.Active = edit.Active;
+            record.BoxNumber = edit.BoxNumber;
+            record.ConsignmentNumber = edit.ConsignmentNumber;
+            record.EndYear = edit.EndYear;
+            record.RetentionSchedule = edit.RetentionSchedule;
+            record.ShelfNumber = edit.ShelfNumber;
+            record.StartYear = edit.StartYear;
+
             await _context.SaveChangesAsync();
         }
 

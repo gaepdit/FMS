@@ -14,5 +14,11 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec);
         Task<Guid> CreateFacilityAsync(FacilityCreateDto facility);
         Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates);
+
+        // Retention Records
+        Task<bool> RetentionRecordExistsAsync(Guid id);
+        Task<RetentionRecordDetailDto> GetRetentionRecordAsync(Guid id);
+        Task<Guid> CreateRetentionRecordAsync(RetentionRecordCreateDto create);
+        Task UpdateRetentionRecordAsync(Guid id, RetentionRecordEditDto edit);
     }
 }

@@ -96,7 +96,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.FileHasActiveFacilities(id);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.FileHasActiveFacilities(id);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.FileHasActiveFacilities(id);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         // CountAsync
@@ -407,7 +407,7 @@ namespace FMS.Infrastructure.Tests
             {
                 var createdFile = await repository.GetFileAsync(expectedFileLabel);
 
-                createdFile.Active.Should().BeTrue();
+                createdFile.Active.ShouldBeTrue();
                 createdFile.FileLabel.Should().Be(expectedFileLabel);
                 createdFile.Id.Should().Be(newFileId);
                 createdFile.Facilities.Should().BeEquivalentTo(new List<FacilitySummaryDto>());

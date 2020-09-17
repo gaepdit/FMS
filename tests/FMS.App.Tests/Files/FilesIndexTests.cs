@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Files
 {
@@ -29,8 +30,8 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetSearchAsync(spec).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
-            pageModel.ShowResults.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ShowResults.ShouldBeTrue();
             pageModel.Files.Should().BeEquivalentTo(expected);
         }
 
@@ -46,8 +47,8 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetSearchAsync(spec).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
-            pageModel.ShowResults.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ShowResults.ShouldBeTrue();
             pageModel.Files.Should().BeEquivalentTo(new List<FileDetailDto>());
         }
 
@@ -61,7 +62,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetSearchAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
         }
     }
 }

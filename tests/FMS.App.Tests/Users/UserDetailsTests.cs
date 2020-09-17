@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Users
 {
@@ -41,8 +42,8 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Email.Should().BeNull();
-            pageModel.DisplayName.Should().BeNull();
+            pageModel.Email.ShouldBeNull();
+            pageModel.DisplayName.ShouldBeNull();
         }
 
         [Fact]
@@ -54,8 +55,8 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Email.Should().BeNull();
-            pageModel.DisplayName.Should().BeNull();
+            pageModel.Email.ShouldBeNull();
+            pageModel.DisplayName.ShouldBeNull();
         }
     }
 }

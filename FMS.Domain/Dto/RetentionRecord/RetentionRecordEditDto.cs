@@ -1,14 +1,11 @@
-﻿using FMS.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
-    public class RetentionRecordDetailDto
+    public class RetentionRecordEditDto
     {
-        public RetentionRecordDetailDto(RetentionRecord record)
+        public RetentionRecordEditDto(RetentionRecordDetailDto record)
         {
-            Id = record.Id;
             Active = record.Active;
             StartYear = record.StartYear;
             EndYear = record.EndYear;
@@ -18,7 +15,6 @@ namespace FMS.Domain.Dto
             RetentionSchedule = record.RetentionSchedule;
         }
 
-        public Guid Id { get; set; }
         public bool Active { get; set; }
 
         [Display(Name = "Start year")]
