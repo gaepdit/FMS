@@ -86,46 +86,6 @@ namespace FMS.Infrastructure.Tests
             result.ShouldBeNull();
         }
 
-        // GetFacilitiesForFileAsync
-
-        [Fact]
-        public async Task GetFacilies_ReturnsCorrectList()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            Guid fileId = DataHelpers.Files[1].Id;
-
-            var result = await repository.GetFacilitiesForFileAsync(fileId);
-
-            var expected = DataHelpers.Facilities
-                .Where(e => e.FileId == fileId)
-                .Select(e => DataHelpers.GetFacilitySummary(e.Id))
-                .ToList();
-            result.Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public async Task GetFacilies_UnusedFile_ReturnsEmptyList()
-        {
-            using var repository = SimpleFileRepository();
-            var fileId = (await repository.GetFileAsync("099-0001")).Id;
-
-            var result = await repository.GetFacilitiesForFileAsync(fileId);
-
-            var expected = new List<FacilitySummaryDto>();
-            result.Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public async Task GetFacilies_NonexistentFile_ReturnsEmptyList()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-
-            var result = await repository.GetFacilitiesForFileAsync(default);
-
-            var expected = new List<FacilitySummaryDto>();
-            result.Should().BeEquivalentTo(expected);
-        }
-
         // FileHasActiveFacilities
 
         [Fact]
