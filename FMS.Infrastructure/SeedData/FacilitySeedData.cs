@@ -6,7 +6,7 @@ namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static Facility[] GetFacilities()
+        public static List<Facility> GetFacilities()
         {
             return new List<Facility>
             {
@@ -153,7 +153,7 @@ namespace FMS.Infrastructure.SeedData
                     Id = new Guid("D6C596EA-0530-460F-A105-2FB772F8F0B2"),
                     Active = true,
                     FacilityNumber = "GAR000077271",
-                    FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"),   //243-0079
+                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
                     EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"),   //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"),   //gen
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"),   //Org Unit
@@ -176,7 +176,7 @@ namespace FMS.Infrastructure.SeedData
                     Id = new Guid("309436BC-F7E7-4BFD-8455-E868129D6F45"),
                     Active = true,
                     FacilityNumber = "GAR000068759",
-                    FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"),   //243-0071
+                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
                     EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"),   //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"),   //gen
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"),   //Org Unit
@@ -194,7 +194,7 @@ namespace FMS.Infrastructure.SeedData
                     CountyId = 243,  // CHEROKEE
                     RetentionRecords = { }   //1
                 }
-            }.ToArray();
+            };
         }
     }
 }

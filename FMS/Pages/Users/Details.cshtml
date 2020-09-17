@@ -1,10 +1,9 @@
 @page "{id:Guid?}"
 @model Pages.Users.DetailsModel
 @{
-    ViewData["Title"] = "User Admin";
+    ViewData["Title"] = "User: " + Model.DisplayName;
 }
-
-<h1>User Admin</h1>
+<h1>FMS User</h1>
 
 <partial name="_AlertPartial" for="Message" />
 

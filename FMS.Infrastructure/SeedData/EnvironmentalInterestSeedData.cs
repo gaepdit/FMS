@@ -6,7 +6,7 @@ namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static EnvironmentalInterest[] GetEnvironmentalInterests()
+        public static List<EnvironmentalInterest> GetEnvironmentalInterests()
         {
             return new List<EnvironmentalInterest>
             {
@@ -45,7 +45,7 @@ namespace FMS.Infrastructure.SeedData
                     Name = "DOD",
                     BudgetCodes = {}
                 }
-            }.ToArray();
+            };
         }
     }
 }

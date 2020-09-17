@@ -6,7 +6,7 @@ namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static File[] GetFiles()
+        public static List<File> GetFiles()
         {
             return new List<File>
             {
@@ -27,6 +27,17 @@ namespace FMS.Infrastructure.SeedData
                 },
                 new File
                 {
+                    Id = new Guid("b0e978c5-e2e5-43df-a3a2-c64e34273673"),
+                    FileLabel = "180-0002",     //dawson
+                },
+                new File
+                {
+                    Id = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"),
+                    FileLabel = "180-0003",
+                    Active = false,
+                },
+                new File
+                {
                     Id = new Guid("015A39B3-A522-4C13-9479-B17626247313"),
                     FileLabel = "170-0001",     //dade
                 },
@@ -36,7 +47,7 @@ namespace FMS.Infrastructure.SeedData
                     Active = false,
                     FileLabel = "164-0001",     //telfair
                 }
-            }.ToArray();
+            };
         }
     }
 }

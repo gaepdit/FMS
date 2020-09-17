@@ -7,7 +7,7 @@ namespace TestHelpers
     {
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
-            var facility = Array.Find(Facilities, e => e.Id == id);
+            var facility = Facilities.Find(e => e.Id == id);
             facility.File = GetFile(facility.FileId);
             facility.County = GetCounty(facility.CountyId);
             facility.FacilityStatus = GetFacilityStatus(facility.FacilityStatusId);
@@ -17,7 +17,21 @@ namespace TestHelpers
             facility.EnvironmentalInterest = GetEnvironmentalInterest(facility.EnvironmentalInterestId);
             facility.ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId);
 
-            return new FacilityDetailDto(facility);
+            return new FacilityDetailDto(facility)
+            {
+                Cabinets = GetCabinetsForFile(facility.FileId)
+            };
+        }
+
+        public static FacilitySummaryDto GetFacilitySummary(Guid id)
+        {
+            var facility = Facilities.Find(e => e.Id == id);
+            facility.File = GetFile(facility.FileId);
+
+            return new FacilitySummaryDto(facility)
+            {
+                Cabinets = GetCabinetsForFile(facility.FileId)
+            };
         }
     }
 }

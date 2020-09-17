@@ -66,7 +66,7 @@ namespace FMS.Pages.Account
             var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true, bypassTwoFactor: true);
             if (signInResult.Succeeded)
             {
-                // TODO: Compare incoming claims with stored claims and update if needed.
+                // TODO #28: Compare incoming claims with stored claims and update if needed. 
                 // (Use user service for this.)
                 return LocalRedirect(returnUrl);
             }
@@ -89,7 +89,7 @@ namespace FMS.Pages.Account
                 FamilyName = info.Principal.FindFirstValue(ClaimConstants.FamilyName)
             };
 
-            // TODO: Move account creation to user service.
+            // TODO #28: Move account creation to user service. 
             // Create the user in the backing store.
             var userResult = await _userManager.CreateAsync(user);
             if (userResult.Succeeded)
@@ -106,7 +106,7 @@ namespace FMS.Pages.Account
                     // Sign in the user.
                     await _signInManager.SignInAsync(user, isPersistent: true);
 
-                    // TODO: Add user to Compliance Officers list.
+                    // TODO #28: Add user to Compliance Officers list. 
 
                     return LocalRedirect(returnUrl);
                 }

@@ -1,17 +1,17 @@
 ﻿@page
 @model Pages.Users.IndexModel
 @{
-    ViewData["Title"] = "User Admin";
+    ViewData["Title"] = "Users";
 }
 @section Scripts {
     <partial name="_SearchFormScriptsPartial" />
 }
 
-<h1>User Admin</h1>
+<h1>FMS @ViewData["Title"]</h1>
 
 <div class="container-fluid bg-light py-3">
     <form method="get" asp-fragment="SearchResults">
-        <div class="form-row justify-content-center">
+        <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" aria-describedby="nameHelpBlock" />
@@ -49,8 +49,8 @@
                         <td>@Html.DisplayFor(m => item.Name)</td>
                         <td>@Html.DisplayFor(m => item.Email)</td>
                         <td>
-                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">View</a>
-                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-dark btn-sm">Edit</a>
+                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">View</a>
+                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
                         </td>
                     </tr>
                 }

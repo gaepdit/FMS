@@ -1,6 +1,8 @@
 using FMS.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace FMS.Domain.Dto
 {
@@ -28,6 +30,9 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
+            Cabinets = facility.File.CabinetFiles?
+                .Select(c => c.Cabinet.Name).ToList()
+                ?? new List<string>();
         }
 
         public Guid Id { get; set; }
@@ -69,7 +74,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Location Description")]
         public string Location { get; set; }
 
-        [Display(Name = "Street Address")]
+        [Display(Name = "Address")]
         public string Address { get; set; }
 
         [Display(Name = "City")]
@@ -88,5 +93,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; set; }
+ 
+        public List<string> Cabinets { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace FMS.Infrastructure.SeedData
             if (!context.Files.Any()) context.Files.AddRange(GetFiles());
             if (!context.OrganizationalUnits.Any()) context.OrganizationalUnits.AddRange(GetOrganizationalUnits());
             if (!context.RetentionRecords.Any()) context.RetentionRecords.AddRange(GetRetentionRecords());
+            if (!context.CabinetFileJoin.Any()) context.CabinetFileJoin.AddRange(GetCabinetFiles());
 
             context.SaveChanges();
         }

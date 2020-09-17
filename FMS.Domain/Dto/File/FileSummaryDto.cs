@@ -9,15 +9,13 @@ namespace FMS.Domain.Dto
         public FileSummaryDto(File file)
         {
             Id = file.Id;
-            FileLabel = file.FileLabel;
             Active = file.Active;
+            FileLabel = file.FileLabel;
         }
 
         public Guid Id { get; set; }
-
         public bool Active { get; set; }
 
-        [StringLength(9)]
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
     }

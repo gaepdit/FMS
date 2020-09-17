@@ -1,13 +1,12 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static BudgetCode[] GetBudgetCodes()
+        public static List<BudgetCode> GetBudgetCodes()
         {
             return new List<BudgetCode>
             {
@@ -61,7 +60,7 @@ namespace FMS.Infrastructure.SeedData
                     OrganizationNumber = "4620740201",
                     ProjectNumber = "46207900217"
                 }
-            }.ToArray();
+            };
         }
     }
 }

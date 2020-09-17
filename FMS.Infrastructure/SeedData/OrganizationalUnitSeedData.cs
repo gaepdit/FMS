@@ -1,13 +1,12 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FMS.Infrastructure.SeedData
 {
     public static partial class DevSeedData
     {
-        public static OrganizationalUnit[] GetOrganizationalUnits()
+        public static List<OrganizationalUnit> GetOrganizationalUnits()
         {
             return new List<OrganizationalUnit>
             {
@@ -137,7 +136,7 @@ namespace FMS.Infrastructure.SeedData
                     Name = "NA",
                     ComplianceOfficers = { }
                 }
-            }.ToArray();
+            };
         }
     }
 }

@@ -10,8 +10,10 @@ namespace FMS.Domain.Repositories
         Task<bool> CabinetExistsAsync(Guid id);
         Task<bool> CabinetNameExistsAsync(string name, Guid? ignoreId = null);
         Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false);
-        Task<CabinetSummaryDto> GetCabinetAsync(Guid id);
-        Task<CabinetSummaryDto> GetCabinetByNameAsync(string name);
+        Task<CabinetSummaryDto> GetCabinetSummaryAsync(Guid id);
+        Task<CabinetSummaryDto> GetCabinetSummaryAsync(string name);
+        Task<CabinetDetailDto> GetCabinetDetailsAsync(Guid id);
+        Task<CabinetDetailDto> GetCabinetDetailsAsync(string name);
         Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate);
         Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit);
     }

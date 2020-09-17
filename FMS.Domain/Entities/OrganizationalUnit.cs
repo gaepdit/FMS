@@ -8,6 +8,6 @@ namespace FMS.Domain.Entities
         //[Display(Name = "Organizational Unit")]
         //public string Name { get; set; }
 
-        public List<ComplianceOfficer> ComplianceOfficers { get; set; }
+        public ICollection<ComplianceOfficer> ComplianceOfficers { get; set; }
     }
 }

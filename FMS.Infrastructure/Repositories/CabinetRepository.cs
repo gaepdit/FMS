@@ -24,12 +24,12 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false) => 
             await _context.Cabinets.AsNoTracking()
-                .Where(e => e.Active == true || includeInactive)
+                .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
                 .Select(e => new CabinetSummaryDto(e))
                 .ToListAsync();
 
-        public async Task<CabinetSummaryDto> GetCabinetAsync(Guid id)
+        public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(Guid id)
         {
             var cabinet = await _context.Cabinets.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
@@ -42,10 +42,10 @@ namespace FMS.Infrastructure.Repositories
             return new CabinetSummaryDto(cabinet);
         }
 
-        public async Task<CabinetSummaryDto> GetCabinetByNameAsync(string name)
+        public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(string name)
         {
             var cabinet = await _context.Cabinets.AsNoTracking()
-            .SingleOrDefaultAsync(e => e.Name == name);
+                .SingleOrDefaultAsync(e => e.Name == name);
 
             if (cabinet == null)
             {
@@ -53,6 +53,34 @@ namespace FMS.Infrastructure.Repositories
             }
 
             return new CabinetSummaryDto(cabinet);
+        }
+
+        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(Guid id)
+        {
+            var cabinet = await _context.Cabinets.AsNoTracking()
+                .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (cabinet == null)
+            {
+                return null;
+            }
+
+            return new CabinetDetailDto(cabinet);
+        }
+
+        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(string name)
+        {
+            var cabinet = await _context.Cabinets.AsNoTracking()
+                .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
+                .SingleOrDefaultAsync(e => e.Name == name);
+
+            if (cabinet == null)
+            {
+                return null;
+            }
+
+            return new CabinetDetailDto(cabinet);
         }
 
         public async Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)

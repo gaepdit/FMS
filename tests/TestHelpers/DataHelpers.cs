@@ -9,26 +9,25 @@ namespace TestHelpers
     public static partial class DataHelpers
     {
         // Data collections
-        public static Facility[] Facilities = DevSeedData.GetFacilities();
+        public static List<Facility> Facilities = DevSeedData.GetFacilities();
         public static List<County> Counties = Data.Counties;
-        public static FacilityStatus[] FacilityStatuses = DevSeedData.GetFacilityStatuses();
-        public static FacilityType[] FacilityTypes = DevSeedData.GetFacilityTypes();
-        public static BudgetCode[] BudgetCodes = DevSeedData.GetBudgetCodes();
-        public static OrganizationalUnit[] OrganizationalUnits = DevSeedData.GetOrganizationalUnits();
-        public static EnvironmentalInterest[] EnvironmentalInterests = DevSeedData.GetEnvironmentalInterests();
-        public static ComplianceOfficer[] ComplianceOfficers = DevSeedData.GetComplianceOfficers();
-        public static File[] Files = DevSeedData.GetFiles();
+        public static List<FacilityStatus> FacilityStatuses = DevSeedData.GetFacilityStatuses();
+        public static List<FacilityType> FacilityTypes = DevSeedData.GetFacilityTypes();
+        public static List<BudgetCode> BudgetCodes = DevSeedData.GetBudgetCodes();
+        public static List<OrganizationalUnit> OrganizationalUnits = DevSeedData.GetOrganizationalUnits();
+        public static List<EnvironmentalInterest> EnvironmentalInterests = DevSeedData.GetEnvironmentalInterests();
+        public static List<ComplianceOfficer> ComplianceOfficers = DevSeedData.GetComplianceOfficers();
+        public static List<File> Files = DevSeedData.GetFiles();
         public static List<Cabinet> Cabinets = DevSeedData.GetCabinets();
+        public static List<CabinetFile> CabinetFiles = DevSeedData.GetCabinetFiles();
 
         // Item retrieval
         public static County GetCounty(int id) => Counties.Find(e => e.Id == id);
-        public static FacilityStatus GetFacilityStatus(Guid id) => Array.Find(FacilityStatuses, e => e.Id == id);
-        public static FacilityType GetFacilityType(Guid id) => Array.Find(FacilityTypes, e => e.Id == id);
-        public static BudgetCode GetBudgetCode(Guid id) => Array.Find(BudgetCodes, e => e.Id == id);
-        public static OrganizationalUnit GetOrganizationalUnit(Guid id) => Array.Find(OrganizationalUnits, e => e.Id == id);
-        public static EnvironmentalInterest GetEnvironmentalInterest(Guid id) => Array.Find(EnvironmentalInterests, e => e.Id == id);
-        public static ComplianceOfficer GetComplianceOfficer(Guid id) => Array.Find(ComplianceOfficers, e => e.Id == id);
-        public static File GetFile(Guid id) => Array.Find(Files, e => e.Id == id);
-        public static Cabinet GetCabinet(Guid id) => Cabinets.Find(e => e.Id == id);
+        public static FacilityStatus GetFacilityStatus(Guid id) => FacilityStatuses.Find(e => e.Id == id);
+        public static FacilityType GetFacilityType(Guid id) => FacilityTypes.Find(e => e.Id == id);
+        public static BudgetCode GetBudgetCode(Guid id) => BudgetCodes.Find(e => e.Id == id);
+        public static OrganizationalUnit GetOrganizationalUnit(Guid id) => OrganizationalUnits.Find(e => e.Id == id);
+        public static EnvironmentalInterest GetEnvironmentalInterest(Guid id) => EnvironmentalInterests.Find(e => e.Id == id);
+        public static ComplianceOfficer GetComplianceOfficer(Guid id) => ComplianceOfficers.Find(e => e.Id == id);
     }
 }

@@ -1,0 +1,102 @@
+﻿@page "{id}"
+@model Pages.Files.DetailsModel
+@{
+    ViewData["Title"] = $"File {Model.FileDetail.FileLabel}";
+}
+<h1>
+    @ViewData["Title"]
+    @if (!Model.FileDetail.Active)
+    {
+        <span class="text-muted">(Inactive)</span>
+    }
+    @* TODO #38: Add authorize check in production *@
+    <a asp-page="Edit" asp-route-id="@Model.FileDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+</h1>
+<hr />
+<partial name="_AlertPartial" for="Message" />
+
+<div class="my-3">
+    <h2>Cabinets</h2>
+    @if (Model.FileDetail.Cabinets != null && Model.FileDetail.Cabinets.Count > 0)
+    {
+        @foreach (var c in Model.FileDetail.Cabinets)
+        {
+            <a asp-page="/Cabinets/Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
+                @c.Name @(c.Active ? "" : "(Inactive)")
+            </a>
+        }
+    }
+    else
+    {
+        <p class="lead text-info">No cabinets found for this File.</p>
+    }
+</div>
+
+@* TODO #38: only allow if authorized *@
+<div class="container-fluid bg-light pt-3 mt-5">
+    <form method="post" class="form-inline">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <label asp-for="CabinetToAdd" class="sr-only"></label>
+        <select asp-for="CabinetToAdd" asp-items="Model.CabinetsAvailableForFile" class="custom-select mb-sm-2 mr-sm-2">
+            <option value="">[Select]</option>
+        </select>
+        <div class="form-check mb-sm-2 mr-sm-2">
+            <span asp-validation-for="CabinetToAdd" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 mb-sm-2 mr-5" asp-page-handler="AddCabinet">Add to File</button>
+
+        <label asp-for="CabinetToRemove" class="sr-only"></label>
+        <select asp-for="CabinetToRemove" asp-items="Model.CabinetsWithFile" class="custom-select mb-sm-2 mr-sm-2">
+            <option value="">[Select]</option>
+        </select>
+        <div class="form-check mb-sm-2 mr-sm-2">
+            <span asp-validation-for="CabinetToRemove" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-danger mb-sm-2" asp-page-handler="RemoveCabinet">Remove from File</button>
+
+        <input asp-for="FileId" />
+    </form>
+</div>
+
+<div class="my-3">
+    <h2>Facilities</h2>
+
+    @if (Model.FileDetail.Facilities != null && Model.FileDetail.Facilities.Count > 0)
+    {
+        <table class="table table-borderless">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Facility</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" class="text-center">Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FileDetail.Facilities)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                                @Html.DisplayFor(m => item.FacilityNumber)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Address)<br />
+                            @Html.DisplayFor(m => item.City), @Html.DisplayFor(m => item.State) @Html.DisplayFor(m => item.PostalCode)
+                        </td>
+                        <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="lead text-info">No facilities found for this File.</p>
+    }
+</div>

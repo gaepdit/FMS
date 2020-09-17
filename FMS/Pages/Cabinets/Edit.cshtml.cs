@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Cabinets
 {
+    // TODO #38: Add authorize attribute in production 
     public class EditModel : PageModel
     {
         [BindProperty]
@@ -31,7 +30,7 @@ namespace FMS.Pages.Cabinets
             }
 
             Id = id.Value;
-            CabinetEdit = new CabinetEditDto(await _repository.GetCabinetAsync(id.Value));
+            CabinetEdit = new CabinetEditDto(await _repository.GetCabinetSummaryAsync(id.Value));
 
             if (CabinetEdit == null)
             {
@@ -52,7 +51,7 @@ namespace FMS.Pages.Cabinets
             if (await _repository.CabinetNameExistsAsync(CabinetEdit.Name, Id))
             {
                 ModelState.AddModelError("CabinetEdit.Name", "There is already a Cabinet with that name.");
-                OriginalCabinetName = (await _repository.GetCabinetAsync(Id)).Name;
+                OriginalCabinetName = (await _repository.GetCabinetSummaryAsync(Id)).Name;
                 return Page();
             }
 

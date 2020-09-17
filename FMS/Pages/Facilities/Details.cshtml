@@ -1,27 +1,35 @@
 ﻿@page "{id:Guid?}"
 @model Pages.Facilities.DetailsModel
 @{
-    ViewData["Title"] = $"Facility Details: {Model.FacilityDetail.FacilityNumber}";
+    ViewData["Title"] = $"Facility {Model.FacilityDetail.FacilityNumber}";
 }
-<h1 id="details">@ViewData["Title"]</h1>
+<h1>
+    @ViewData["Title"]
+    @if (!Model.FacilityDetail.Active)
+    {
+        <span class="text-muted">(Inactive)</span>
+    }
+    @* TODO #38: Add authorize check in production *@
+    <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+</h1>
 <hr />
 <partial name="_AlertPartial" for="Message" />
 
 <div class="container-fluid">
     <dl class="row">
-        <dt class="col-md-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FacilityNumber)
-        </dt>
-        <dd class="col-md-9">
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityNumber)
-        </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
         </dt>
         <dd class="col-sm-9">
-            <a asp-page="../Files/Index" asp-route-id="@Model.FacilityDetail.FileId" class="btn btn-outline-primary btn-sm col-md-2">
+            <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
                 @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
             </a>
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
+        </dt>
+        <dd class="col-sm-9">
+            @Model.FacilityDetail.Cabinets.ConcatNonEmpty(", ")
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
@@ -36,28 +44,28 @@
             @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode.Name)
+            @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
         </dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit.Name)
+            @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
         </dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.EnvironmentalInterest.Name)
+            @Html.DisplayNameFor(model => model.FacilityDetail.EnvironmentalInterest)
         </dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.FacilityDetail.EnvironmentalInterest.Name)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer.GivenName)
+            @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.GivenName)
+            @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name)
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.Location)
@@ -69,13 +77,10 @@
             @Html.DisplayNameFor(model => model.FacilityDetail.Address)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Address)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.City)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.City)
+            @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
+            @Html.DisplayFor(model => model.FacilityDetail.City), 
+            @Html.DisplayFor(model => model.FacilityDetail.State)
+            @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.County)
@@ -84,47 +89,23 @@
             @Html.DisplayFor(model => model.FacilityDetail.County.Name)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.State)
+            @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.State)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.PostalCode)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Latitude)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
-        </dt>
-        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.FacilityDetail.Latitude),
             @Html.DisplayFor(model => model.FacilityDetail.Longitude)
         </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Active)
+        @*<dt class="col-sm-3">
+            <span>Retention Records</span>
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Active)
-        </dd>
-        @*<dt class="col-sm-3">
-                <span>Retention Records</span>
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Facility.RetentionRecords.ForEach)
-            </dd>*@
+            @Html.DisplayFor(model => model.Facility.RetentionRecords.ForEach)
+        </dd>*@
     </dl>
 </div>
-<hr />
+
 <div class="row">
     <div class="col">
-        <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-primary col-md-2">Edit Facility</a>
         <a href="javascript: history.go(-1)" class="btn btn-outline-secondary col-md-2">Back</a>
     </div>
 </div>

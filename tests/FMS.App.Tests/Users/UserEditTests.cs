@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 
-namespace FMS.Tests.Users
+namespace FMS.App.Tests.Users
 {
     public class UserEditTests
     {
-        // TODO with User Edit functionality
+        // TODO #21: Add User Edit unit tests
     }
 }

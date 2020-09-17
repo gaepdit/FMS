@@ -62,22 +62,32 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("FileId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(5)")
                         .HasMaxLength(5);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FileId");
-
                     b.HasIndex("Name")
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL");
 
-                    b.ToTable("FileCabinets");
+                    b.ToTable("Cabinets");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.CabinetFile", b =>
+                {
+                    b.Property<Guid>("CabinetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CabinetId", "FileId");
+
+                    b.HasIndex("FileId");
+
+                    b.ToTable("CabinetFileJoin");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.ComplianceOfficer", b =>
@@ -1082,6 +1092,10 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FileLabel")
+                        .IsUnique()
+                        .HasFilter("[FileLabel] IS NOT NULL");
+
                     b.ToTable("Files");
                 });
 
@@ -1355,11 +1369,19 @@ namespace FMS.Infrastructure.Migrations
                         .HasForeignKey("EnvironmentalInterestId");
                 });
 
-            modelBuilder.Entity("FMS.Domain.Entities.Cabinet", b =>
+            modelBuilder.Entity("FMS.Domain.Entities.CabinetFile", b =>
                 {
-                    b.HasOne("FMS.Domain.Entities.File", null)
-                        .WithMany("Cabinets")
-                        .HasForeignKey("FileId");
+                    b.HasOne("FMS.Domain.Entities.Cabinet", "Cabinet")
+                        .WithMany("CabinetFiles")
+                        .HasForeignKey("CabinetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.File", "File")
+                        .WithMany("CabinetFiles")
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.ComplianceOfficer", b =>

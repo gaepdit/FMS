@@ -26,5 +26,8 @@ namespace TestHelpers
 
         public CabinetRepository GetCabinetRepository() =>
             new CabinetRepository(new FmsDbContext(_options));
+
+        public FileRepository GetFileRepository() =>
+            new FileRepository(new FmsDbContext(_options));
     }
 }

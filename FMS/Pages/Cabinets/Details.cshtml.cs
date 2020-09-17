@@ -8,7 +8,7 @@ namespace FMS.Pages.Cabinets
 {
     public class DetailsModel : PageModel
     {
-        public CabinetSummaryDto Cabinet { get; set; }
+        public CabinetDetailDto CabinetDetail { get; set; }
         public DisplayMessage Message { get; set; }
 
         private readonly ICabinetRepository _repository;
@@ -21,9 +21,9 @@ namespace FMS.Pages.Cabinets
                 return NotFound();
             }
 
-            Cabinet = await _repository.GetCabinetByNameAsync(id);
+            CabinetDetail = await _repository.GetCabinetDetailsAsync(id);
 
-            if (Cabinet == null)
+            if (CabinetDetail == null)
             {
                 return NotFound();
             }

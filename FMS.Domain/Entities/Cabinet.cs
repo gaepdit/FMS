@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Entities.Base;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
@@ -8,10 +9,7 @@ namespace FMS.Domain.Entities
         [StringLength(5)]
         public string Name { get; set; }
 
-        // TODO: These properties are unused; remove from database if no use for them is found
-        //public virtual County StartCounty { get; set; }
-        //public virtual County EndCounty { get; set; }
-        //public int? StartSequence { get; set; }
-        //public int? EndSequence { get; set; }
+        // Files and Cabinets have a many-to-many relationship
+        public ICollection<CabinetFile> CabinetFiles { get; set; }
     }
 }

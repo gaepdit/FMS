@@ -1,0 +1,29 @@
+﻿@page "{id:Guid?}"
+@model Pages.Files.EditModel
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@{
+    ViewData["Title"] = $"Edit File: {Model.FileLabel}";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="container-fluid">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <div class="form-group row">
+            <div class="form-group col">
+                <div class="form-check">
+                    <input asp-for="Active" />
+                    <label asp-for="Active" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+                <a asp-page="Details" asp-route-id="@Model.FileLabel" class="btn btn-outline-secondary col-md-2">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -3,7 +3,8 @@
 ```mermaid
 
 classDiagram
-    File <--> Cabinet
+    File <--> CabinetFile
+    CabinetFile <--> Cabinet
     File <-- Facility
         
     Facility <-- RetentionRecord
@@ -22,6 +23,11 @@ class File {
     FileLabel
     List~Cabinets~
     List~Facilities~
+}
+
+class CabinetFile{
+    File
+    Cabinet
 }
 
 class Cabinet {

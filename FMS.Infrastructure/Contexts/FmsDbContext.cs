@@ -10,9 +10,8 @@ namespace FMS.Infrastructure.Contexts
 {
     public class FmsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-
         public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) { }
-        //=> options = new DbContextOptionsBuilder<FmsDbContext>().EnableSensitiveDataLogging(true).Options;
+
         public DbSet<BudgetCode> BudgetCodes { get; set; }
         public DbSet<ComplianceOfficer> ComplianceOfficers { get; set; }
         public DbSet<County> Counties { get; set; }
@@ -24,14 +23,18 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<Cabinet> Cabinets { get; set; }
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
+        public DbSet<CabinetFile> CabinetFileJoin { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
 
+            // Configure many-to-many relationships
+            builder.Entity<CabinetFile>().HasKey(e => new { e.CabinetId, e.FileId });
+
             // Additional model properties
+            builder.Entity<File>().HasIndex(e => e.FileLabel).IsUnique();
             builder.Entity<Cabinet>().HasIndex(e => e.Name).IsUnique();
-            builder.Entity<Cabinet>().ToTable("FileCabinets");
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers");
@@ -45,5 +48,7 @@ namespace FMS.Infrastructure.Contexts
             // Data
             builder.Entity<County>().HasData(Data.Counties);
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.EnableSensitiveDataLogging();
     }
 }

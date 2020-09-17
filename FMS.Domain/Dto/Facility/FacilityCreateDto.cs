@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
+    // TODO #56 reconsider mandatory fields
     public class FacilityCreateDto
     {
         [Display(Name = "Facility Number"), Required]

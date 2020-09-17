@@ -8,6 +8,6 @@ namespace FMS.Domain.Entities
         //[Display(Name = "Environmental Interest")]
         //public string Name { get; set; }
 
-        public List<BudgetCode> BudgetCodes { get; set; }
+        public ICollection<BudgetCode> BudgetCodes { get; set; }
     }
 }

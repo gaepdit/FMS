@@ -1,0 +1,81 @@
+using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
+
+namespace FMS.Pages.Files
+{
+    // TODO #38: Add authorize attribute in production 
+    public class EditModel : PageModel
+    {
+        [BindProperty]
+        public bool Active { get; set; }
+
+        [BindProperty]
+        public Guid Id { get; set; }
+
+        public string FileLabel { get; set; }
+
+        public readonly IFileRepository _repository;
+        public EditModel(IFileRepository repository) => _repository = repository;
+
+        public async Task<IActionResult> OnGetAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var file = await _repository.GetFileAsync(id.Value);
+
+            if (file == null)
+            {
+                return NotFound();
+            }
+
+            Id = file.Id;
+            FileLabel = file.FileLabel;
+            Active = file.Active;
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                FileLabel = (await _repository.GetFileAsync(Id)).FileLabel;
+                return Page();
+            }
+
+            if (await _repository.FileHasActiveFacilities(Id))
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "File has active Facilities and cannot be made inactive.");
+                FileLabel = (await _repository.GetFileAsync(Id)).FileLabel;
+                return RedirectToPage("./Details", new { id = FileLabel });
+            }
+
+            try
+            {
+                await _repository.UpdateFileAsync(Id, Active);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await _repository.FileExistsAsync(Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            TempData?.SetDisplayMessage(Context.Success, "File successfully updated.");
+            FileLabel = (await _repository.GetFileAsync(Id)).FileLabel;
+            return RedirectToPage("./Details", new { id = FileLabel });
+        }
+    }
+}

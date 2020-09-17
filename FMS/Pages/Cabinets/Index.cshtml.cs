@@ -47,7 +47,7 @@ namespace FMS.Pages.Cabinets
 
             NewCabinetId = await _repository.CreateCabinetAsync(CabinetCreate);
             TempData?.SetDisplayMessage(Context.Success, $"Cabinet {CabinetCreate.Name} successfully created.");
-            return RedirectToPage("Index");
+            return RedirectToPage("./Index");
         }
     }
 }

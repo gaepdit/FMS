@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 
-namespace FMS.Tests.Facilities
+namespace FMS.App.Tests.Facilities
 {
     public class FacilityEditTests
     {
@@ -36,7 +36,7 @@ namespace FMS.Tests.Facilities
         }
 
         [Fact]
-        public async Task OnGet_NonexistantIdReturnsNotFound()
+        public async Task OnGet_NonexistentId_ReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
             mockRepo.Setup(l => l.GetFacilityAsync(It.IsAny<Guid>()))
@@ -54,7 +54,7 @@ namespace FMS.Tests.Facilities
         }
 
         [Fact]
-        public async Task OnGet_MissingIdReturnsNotFound()
+        public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var mockSelectListHelper = new Mock<ISelectListHelper>();
@@ -65,6 +65,43 @@ namespace FMS.Tests.Facilities
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(default(Guid));
             pageModel.Facility.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task OnPost_IfValidModel_ReturnsDetailsPage()
+        {
+            var id = Guid.NewGuid();
+            var mockRepo = new Mock<IFacilityRepository>();
+            mockRepo.Setup(l => l.UpdateFacilityAsync(It.IsAny<Guid>(), It.IsAny<FacilityEditDto>()));
+
+            var mockSelectListHelper = new Mock<ISelectListHelper>();
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object)
+            {
+                Id = id,
+                Facility = new FacilityEditDto()
+            };
+
+            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+
+            result.Should().BeOfType<RedirectToPageResult>();
+            pageModel.ModelState.IsValid.Should().BeTrue();
+            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
+        }
+
+        [Fact]
+        public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
+        {
+            var mockRepo = new Mock<IFacilityRepository>();
+            var mockSelectListHelper = new Mock<ISelectListHelper>();
+            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            pageModel.ModelState.AddModelError("Error", "Sample error description");
+
+            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+
+            result.Should().BeOfType<PageResult>();
+            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
     }
 }

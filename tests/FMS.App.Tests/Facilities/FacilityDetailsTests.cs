@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 
-namespace FMS.Tests.Facilities
+namespace FMS.App.Tests.Facilities
 {
     public class FacilityDetailsTests
     {
@@ -32,7 +32,7 @@ namespace FMS.Tests.Facilities
         }
 
         [Fact]
-        public async Task OnGet_NonexistantIdReturnsNotFound()
+        public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);

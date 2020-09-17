@@ -31,7 +31,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.EnvironmentalInterest)
                 .Include(e => e.ComplianceOfficer)
-                .Include(e => e.File)
+                .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null)
@@ -81,6 +81,8 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
                 .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
+                .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
         }
@@ -105,7 +107,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
-            // TODO: Generate new File ID if newFacility.FileId is null
+            // TODO #19: Generate new File ID if newFacility.FileId is null
 
             Facility newFac = new Facility(newFacility);
             await _context.Facilities.AddAsync(newFac);

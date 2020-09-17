@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 
-namespace FMS.Tests.Cabinets
+namespace FMS.App.Tests.Cabinets
 {
     public class CabinetIndexTests
     {
@@ -76,7 +76,7 @@ namespace FMS.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            ((RedirectToPageResult)result).PageName.Should().Be("Index");
+            ((RedirectToPageResult)result).PageName.Should().Be("./Index");
             pageModel.ModelState.IsValid.Should().BeTrue();
             pageModel.ShowInactive.Should().BeFalse();
             pageModel.NewCabinetId.Should().Be(newGuid);

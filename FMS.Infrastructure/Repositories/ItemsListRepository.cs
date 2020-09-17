@@ -29,7 +29,7 @@ namespace FMS.Infrastructure.Repositories
             where TEntity : BaseActiveModel, INamedModel
         {
             return await _context.Set<TEntity>().AsNoTracking()
-                .Where(e => e.Active == true || includeInactive)
+                .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
                 .Select(e => new ListItem { Id = e.Id, Name = e.Name })
                 .ToListAsync();
@@ -40,7 +40,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IEnumerable<ListItem>> GetComplianceOfficersItemListAsync(bool includeInactive = false) =>
             await _context.ComplianceOfficers.AsNoTracking()
-                .Where(e => e.Active == true || includeInactive)
+                .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.FamilyName)
                 .ThenBy(e => e.GivenName)
                 .Select(e => new ListItem() { Id = e.Id, Name = e.FamilyName + ", " + e.GivenName })
@@ -51,7 +51,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IEnumerable<ListItem>> GetFacilityStatusesItemListAsync(bool includeInactive = false) =>
             await _context.FacilityStatuses.AsNoTracking()
-                .Where(e => e.Active == true || includeInactive)
+                .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Status)
                 .Select(e => new ListItem() { Id = e.Id, Name = e.Status })
                 .ToListAsync();
@@ -61,7 +61,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IEnumerable<ListItem>> GetFilesItemListAsync(bool includeInactive = false) =>
             await _context.Files.AsNoTracking()
-                .Where(e => e.Active == true || includeInactive)
+                .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.FileLabel)
                 .Select(e => new ListItem() { Id = e.Id, Name = e.FileLabel })
                 .ToListAsync();
