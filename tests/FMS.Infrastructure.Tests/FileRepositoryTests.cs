@@ -197,6 +197,11 @@ namespace FMS.Infrastructure.Tests
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
                     .ToList();
 
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
                 file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
             }
 
@@ -219,6 +224,12 @@ namespace FMS.Infrastructure.Tests
                     .Where(e => e.FileId == file.Id)
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
                     .ToList();
+
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
                 file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
             }
 
@@ -245,6 +256,12 @@ namespace FMS.Infrastructure.Tests
                     .Where(e => e.FileId == file.Id)
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
                     .ToList();
+
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
                 file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
             }
 
@@ -264,6 +281,23 @@ namespace FMS.Infrastructure.Tests
             var expected = DataHelpers.Files
                 .Where(e => e.FileLabel.Contains(fileLabel) && e.Active)
                 .Select(e => DataHelpers.GetFileDetail(e.Id)).ToList();
+
+            foreach (var file in expected)
+            {
+                file.Facilities = DataHelpers.Facilities
+                    .Where(e => e.Active)
+                    .Where(e => e.FileId == file.Id)
+                    .Select(e => DataHelpers.GetFacilitySummary(e.Id))
+                    .ToList();
+
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
+                file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
+            }
+
 
             result.Should().BeEquivalentTo(expected);
         }

@@ -32,6 +32,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EnvironmentalInterest)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Include(e => e.RetentionRecords)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null)
@@ -82,6 +83,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
                 .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Include(e => e.RetentionRecords)
                 .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();

@@ -1,6 +1,7 @@
 using FluentAssertions;
 using FMS.Domain.Dto;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
@@ -207,12 +208,14 @@ namespace FMS.Infrastructure.Tests
 
                 // Set sample facility properties to match for comparison
                 sampleFacility.Id = newFacilityId;
+                sampleFacility.RetentionRecords = new List<RetentionRecordDetailDto>();
+
                 createdFacility.Should().BeEquivalentTo(sampleFacility);
             }
         }
 
         // TODO #19: Generate new File ID if newFacility.FileId is null
-        [Fact(Skip ="Not implemented yet")]
+        [Fact(Skip = "Not implemented yet")]
         public async Task CreateFacility_EmptyFileID_SucceedsAndCreatesNewFile()
         {
             var repositoryHelper = new RepositoryHelper();
@@ -258,7 +261,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         // TODO #56: Implement required fields
-        [Fact(Skip ="Not implemented yet")]
+        [Fact(Skip = "Not implemented yet")]
         public async Task CreateFacility_WithEmptyNumber_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();

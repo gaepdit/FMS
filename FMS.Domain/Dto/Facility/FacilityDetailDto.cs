@@ -33,6 +33,9 @@ namespace FMS.Domain.Dto
             Cabinets = facility.File.CabinetFiles?
                 .Select(c => c.Cabinet.Name).ToList()
                 ?? new List<string>();
+            RetentionRecords = facility.RetentionRecords?
+                .Select(e => new RetentionRecordDetailDto(e)).ToList()
+                ?? new List<RetentionRecordDetailDto>();
         }
 
         public Guid Id { get; set; }
@@ -95,5 +98,7 @@ namespace FMS.Domain.Dto
         public decimal Longitude { get; set; }
  
         public List<string> Cabinets { get; set; }
+
+        public List<RetentionRecordDetailDto> RetentionRecords { get; set; }
     }
 }

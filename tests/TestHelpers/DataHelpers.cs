@@ -20,6 +20,7 @@ namespace TestHelpers
         public static List<File> Files = DevSeedData.GetFiles();
         public static List<Cabinet> Cabinets = DevSeedData.GetCabinets();
         public static List<CabinetFile> CabinetFiles = DevSeedData.GetCabinetFiles();
+        public static List<RetentionRecord> RetentionRecords = DevSeedData.GetRetentionRecords();
 
         // Item retrieval
         public static County GetCounty(int id) => Counties.Find(e => e.Id == id);
