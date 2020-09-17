@@ -134,7 +134,9 @@
                                 @Html.DisplayFor(m => item.FacilityNumber)
                             </a>
                         </td>
-                        <td>@Html.DisplayFor(m => item.FileLabel)</td>
+                        <td>
+                            @item.FileLabel.Replace('-', '‑')
+                        </td>
                         <td>@Html.DisplayFor(m => item.Name)</td>
                         <td>
                             @Html.DisplayFor(m => item.Address)<br />
@@ -143,7 +145,14 @@
                             @Html.DisplayFor(m => item.PostalCode)
                         </td>
                         <td>
-                            @item.Cabinets.ConcatNonEmpty(", ")
+                            @if (item.Cabinets.Count > 0)
+                            {
+                                @item.Cabinets.ConcatNonEmpty(", ");
+                            }
+                            else
+                            {
+                                <span class="text-muted">none</span>
+                            }
                         </td>
                         <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
                     </tr>
