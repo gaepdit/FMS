@@ -58,5 +58,10 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<NotFoundResult>();
             pageModel.FileDetail.Should().BeNull();
         }
+
+        // Todo #49: OnPostAddCabinetAsync tests
+
+        // Todo #49: OnPostRemoveCabinetAsync tests
+
     }
 }
