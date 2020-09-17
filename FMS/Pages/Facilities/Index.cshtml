@@ -122,6 +122,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Cabinets</th>
+                    <th scope="col">Retention Records</th>
                     <th scope="col" class="text-center">Active</th>
                 </tr>
             </thead>
@@ -148,6 +149,21 @@
                             @if (item.Cabinets.Count > 0)
                             {
                                 @item.Cabinets.ConcatNonEmpty(", ");
+                            }
+                            else
+                            {
+                                <span class="text-muted">none</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.RetentionRecords.Count > 0)
+                            {
+                                <ul class="list-unstyled">
+                                    @foreach (var r in item.RetentionRecords)
+                                    {
+                                    <li>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear: @r.BoxNumber</li>
+                                    }
+                                </ul>
                             }
                             else
                             {

@@ -85,7 +85,7 @@
         </dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
-            @Html.DisplayFor(model => model.FacilityDetail.City), 
+            @Html.DisplayFor(model => model.FacilityDetail.City),
             @Html.DisplayFor(model => model.FacilityDetail.State)
             @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
         </dd>
@@ -102,13 +102,44 @@
             @Html.DisplayFor(model => model.FacilityDetail.Latitude),
             @Html.DisplayFor(model => model.FacilityDetail.Longitude)
         </dd>
-        @*<dt class="col-sm-3">
-            <span>Retention Records</span>
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Facility.RetentionRecords.ForEach)
-        </dd>*@
     </dl>
+
+    <h2>Retention Records</h2>
+    @if (Model.FacilityDetail.RetentionRecords.Count > 0)
+    {
+        <table class="table table-borderless">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Years</th>
+                    <th scope="col">Box Number</th>
+                    <th scope="col">Consignment Number</th>
+                    <th scope="col">Shelf Number</th>
+                    <th scope="col">Retention Schedule Number</th>
+                    <th scope="col" class="text-center">Active</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.FacilityDetail.RetentionRecords)
+                {
+                    <tr>
+                        <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
+                        <td>@r.BoxNumber</td>
+                        <td>@r.ConsignmentNumber</td>
+                        <td>@r.ShelfNumber</td>
+                        <td>@r.RetentionSchedule</td>
+                        <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
+                        <td>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <span class="text-muted">none</span>
+    }
 </div>
 
 <div class="row">
