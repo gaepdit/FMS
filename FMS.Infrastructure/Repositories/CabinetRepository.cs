@@ -24,7 +24,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false) => 
             await _context.Cabinets.AsNoTracking()
-                .Where(e => e.Active == true || includeInactive)
+                .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
                 .Select(e => new CabinetSummaryDto(e))
                 .ToListAsync();

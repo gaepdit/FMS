@@ -17,8 +17,9 @@ namespace FMS.Domain.Dto
                 .Where(e => e.Active)
                 .Select(e => new FacilitySummaryDto(e)).ToList()
                 ?? new List<FacilitySummaryDto>();
-            Cabinets = file.CabinetFiles?.Select(c => c.Cabinet.Name).ToList()
-                ?? new List<string>();
+            Cabinets = file.CabinetFiles?
+                .Select(c => new CabinetSummaryDto(c.Cabinet)).ToList()
+                ?? new List<CabinetSummaryDto>();
         }
 
         public Guid Id { get; set; }
@@ -27,7 +28,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
-        public List<string> Cabinets { get; set; }
+        public List<CabinetSummaryDto> Cabinets { get; set; }
         public List<FacilitySummaryDto> Facilities { get; set; }
     }
 }

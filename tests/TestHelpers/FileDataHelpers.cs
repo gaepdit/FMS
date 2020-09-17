@@ -18,7 +18,7 @@ namespace TestHelpers
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => GetFacilitySummary(e.Id)).ToList(),
-                Cabinets = GetCabinetsForFile(id)
+                Cabinets = GetCabinetSummariesForFile(id)
             };
         }
     }

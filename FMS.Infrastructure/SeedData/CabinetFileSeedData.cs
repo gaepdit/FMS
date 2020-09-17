@@ -42,7 +42,7 @@ namespace FMS.Infrastructure.SeedData
                 },
                 new CabinetFile
                 {
-                    CabinetId = new Guid("20FDB0C9-F173-414F-96DA-9CA63EB4065F"),
+                    CabinetId = new Guid("20FDB0C9-F173-414F-96DA-9CA63EB4065F"), // C005
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"),
                 }
             };

@@ -16,7 +16,15 @@ namespace TestHelpers
 
         public static List<string> GetCabinetsForFile(Guid fileId) =>
             GetCabinetFileJoinsForFile(fileId)
-            .Select(c => GetCabinetSummary(c.CabinetId).Name)
+            .Select(c => GetCabinetSummary(c.CabinetId))
+            .Select(e => e.Name)
+            .OrderBy(e => e)
+            .ToList();
+
+        public static List<CabinetSummaryDto> GetCabinetSummariesForFile(Guid fileId) =>
+            GetCabinetFileJoinsForFile(fileId)
+            .Select(c => GetCabinetSummary(c.CabinetId))
+            .OrderBy(e => e.Name)
             .ToList();
 
         public static CabinetSummaryDto GetCabinetSummary(Guid id) =>

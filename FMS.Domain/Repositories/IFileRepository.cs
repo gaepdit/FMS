@@ -19,7 +19,9 @@ namespace FMS.Domain.Repositories
         Task UpdateFileAsync(Guid id, bool active);
 
         // TODO #49: Add Cabinets relationship
-        Task AddCabinetToFileAsync(Guid fileId, Guid cabinetId);
-        Task RemoveCabinetFromFileAsync(Guid fileId, Guid cabinetId);
+        Task<List<CabinetSummaryDto>> GetCabinetsForFileAsync(Guid id);
+        Task<List<CabinetSummaryDto>> GetCabinetsAvailableForFileAsync(Guid id);
+        Task AddCabinetToFileAsync(Guid cabinetId, Guid fileId);
+        Task RemoveCabinetFromFileAsync(Guid cabinetId, Guid fileId);
     }
 }

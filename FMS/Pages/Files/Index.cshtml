@@ -56,7 +56,7 @@
                                 @item.FileLabel @(item.Active ? "" : "(Inactive)")
                             </a>
                         </td>
-                        <td>@item.Cabinets.ConcatNonEmpty(", ")</td>
+                        <td>@item.Cabinets.Select(e => e.Name).ConcatNonEmpty(", ")</td>
                         <td>
                             @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
                         </td>

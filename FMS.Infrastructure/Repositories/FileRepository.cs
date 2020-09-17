@@ -118,16 +118,58 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        // TODO #49: Add Cabinets relationship 
-
-        public Task AddCabinetToFileAsync(Guid fileId, Guid cabinetId)
+        public async Task<List<CabinetSummaryDto>> GetCabinetsForFileAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var file = await _context.Files.AsNoTracking()
+                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (file == null)
+            {
+                throw new ArgumentException("File ID not found.");
+            }
+
+            return file.CabinetFiles.Select(e => new CabinetSummaryDto(e.Cabinet)).ToList();
         }
 
-        public Task RemoveCabinetFromFileAsync(Guid fileId, Guid cabinetId)
+        public async Task<List<CabinetSummaryDto>> GetCabinetsAvailableForFileAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var cabinetsForFile = await _context.CabinetFileJoin.AsNoTracking()
+                .Where(e => e.FileId == id)
+                .Select(e => e.CabinetId)
+                .ToArrayAsync();
+
+            return await _context.Cabinets.AsNoTracking()
+                .Where(e => e.Active)
+                .Where(e => !cabinetsForFile.Contains(e.Id))
+                .OrderBy(e => e.Name)
+                .Select(e => new CabinetSummaryDto(e))
+                .ToListAsync();
+        }
+
+        public async Task AddCabinetToFileAsync(Guid cabinetId, Guid fileId)
+        {
+            if(await _context.CabinetFileJoin.AnyAsync(e => e.CabinetId==cabinetId && e.FileId == fileId))
+            {
+                return;
+            }
+
+            var cf = new CabinetFile() { CabinetId = cabinetId, FileId = fileId };
+            await _context.CabinetFileJoin.AddAsync(cf);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveCabinetFromFileAsync(Guid cabinetId, Guid fileId)
+        {
+            var cf = await _context.CabinetFileJoin
+                .Where(e => e.CabinetId == cabinetId && e.FileId == fileId)
+                .FirstOrDefaultAsync();
+
+            if (cf != null)
+            {
+                _context.CabinetFileJoin.Remove(cf);
+                await _context.SaveChangesAsync();
+            }
         }
 
         #region IDisposable Support

@@ -21,13 +21,42 @@
     {
         @foreach (var c in Model.FileDetail.Cabinets)
         {
-            <a asp-page="/Cabinets/Details" asp-route-id="@c" class="btn btn-sm btn-outline-info m-1">@c</a>
+            <a asp-page="/Cabinets/Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
+                @c.Name @(c.Active ? "" : "(Inactive)")
+            </a>
         }
     }
     else
     {
         <p class="lead text-info">No cabinets found for this File.</p>
     }
+</div>
+
+@* TODO #38: only allow if authorized *@
+<div class="container-fluid bg-light pt-3 mt-5">
+    <form method="post" class="form-inline">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <label asp-for="CabinetToAdd" class="sr-only"></label>
+        <select asp-for="CabinetToAdd" asp-items="Model.CabinetsAvailableForFile" class="custom-select mb-sm-2 mr-sm-2">
+            <option value="">[Select]</option>
+        </select>
+        <div class="form-check mb-sm-2 mr-sm-2">
+            <span asp-validation-for="CabinetToAdd" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 mb-sm-2 mr-5" asp-page-handler="AddCabinet">Add to File</button>
+
+        <label asp-for="CabinetToRemove" class="sr-only"></label>
+        <select asp-for="CabinetToRemove" asp-items="Model.CabinetsWithFile" class="custom-select mb-sm-2 mr-sm-2">
+            <option value="">[Select]</option>
+        </select>
+        <div class="form-check mb-sm-2 mr-sm-2">
+            <span asp-validation-for="CabinetToRemove" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-danger mb-sm-2" asp-page-handler="RemoveCabinet">Remove from File</button>
+
+        <input asp-for="FileId" />
+    </form>
 </div>
 
 <div class="my-3">
