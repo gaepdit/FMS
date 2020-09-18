@@ -191,6 +191,27 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<FacilityBasicDto> GetFacilityForRetentionRecord(Guid recordId)
+        {
+            var record = await _context.RetentionRecords.FindAsync(recordId);
+
+            if (record == null)
+            {
+                throw new ArgumentException("Retention Record ID not found.", nameof(recordId));
+            }
+
+            var facility = await _context.Facilities.AsNoTracking()
+                .Include(e => e.File)
+                .SingleOrDefaultAsync(e => e.Id == record.FacilityId);
+
+            if (facility == null)
+            {
+                throw new ArgumentException("Facility not found for Retention Record.");
+            }
+
+            return new FacilityBasicDto(facility);
+        }
+
         #region IDisposable Support
 
         private bool _disposedValue;

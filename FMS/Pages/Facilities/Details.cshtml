@@ -1,4 +1,4 @@
-﻿@page "{id:Guid?}"
+@page "{id:Guid?}"
 @model Pages.Facilities.DetailsModel
 @{
     ViewData["Title"] = $"Facility {Model.FacilityDetail.FacilityNumber}";
@@ -104,10 +104,10 @@
         </dd>
     </dl>
 
-    <h2>Retention Records</h2>
+    <h2 id="retention-records">Retention Records</h2>
     @if (Model.FacilityDetail.RetentionRecords.Count > 0)
     {
-        <table class="table table-borderless">
+        <table class="table table-sm">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Years</th>
@@ -122,7 +122,7 @@
             <tbody>
                 @foreach (var r in Model.FacilityDetail.RetentionRecords)
                 {
-                    <tr>
+                    <tr class="@(r.Id==Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "table-secondary" : "") ">
                         <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
                         <td>@r.BoxNumber</td>
                         <td>@r.ConsignmentNumber</td>
@@ -130,6 +130,7 @@
                         <td>@r.RetentionSchedule</td>
                         <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
                         <td>
+                            <a asp-page="EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                         </td>
                     </tr>
                 }

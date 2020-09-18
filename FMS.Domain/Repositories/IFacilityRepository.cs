@@ -20,5 +20,6 @@ namespace FMS.Domain.Repositories
         Task<RetentionRecordDetailDto> GetRetentionRecordAsync(Guid id);
         Task<Guid> CreateRetentionRecordAsync(RetentionRecordCreateDto create);
         Task UpdateRetentionRecordAsync(Guid id, RetentionRecordEditDto edit);
+        Task<FacilityBasicDto> GetFacilityForRetentionRecord(Guid recordId);
     }
 }

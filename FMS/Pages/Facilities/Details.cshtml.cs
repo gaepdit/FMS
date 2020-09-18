@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,7 +16,10 @@ namespace FMS.Pages.Facilities
 
         public DisplayMessage Message { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        [TempData]
+        public Guid HighlightRecord { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
             if (id == null)
             {
@@ -28,6 +31,11 @@ namespace FMS.Pages.Facilities
             if (FacilityDetail == null)
             {
                 return NotFound();
+            }
+
+            if (hr.HasValue)
+            {
+                HighlightRecord = hr.Value;
             }
 
             Message = TempData?.GetDisplayMessage();

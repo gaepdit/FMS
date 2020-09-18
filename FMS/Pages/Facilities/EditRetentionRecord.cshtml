@@ -1,0 +1,86 @@
+﻿@page "{id:Guid?}"
+@model Pages.Facilities.EditRetentionRecordModel
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@{
+    ViewData["Title"] = $"Edit Retention Record";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    For Facility @Html.DisplayFor(e => e.Facility.FacilityNumber): @Html.DisplayFor(e => e.Facility.Name)
+</p>
+<hr />
+
+<div class="container-fluid">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="form-group row">
+            <label asp-for="RecordEdit.StartYear" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input asp-for="RecordEdit.StartYear" class="form-control" />
+                <span asp-validation-for="RecordEdit.StartYear" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="RecordEdit.EndYear" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input asp-for="RecordEdit.EndYear" class="form-control" />
+                <span asp-validation-for="RecordEdit.EndYear" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="RecordEdit.BoxNumber" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input asp-for="RecordEdit.BoxNumber" class="form-control" />
+                <span asp-validation-for="RecordEdit.BoxNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="RecordEdit.ConsignmentNumber" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input asp-for="RecordEdit.ConsignmentNumber" class="form-control" />
+                <span asp-validation-for="RecordEdit.ConsignmentNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="RecordEdit.ShelfNumber" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input asp-for="RecordEdit.ShelfNumber" class="form-control" />
+                <span asp-validation-for="RecordEdit.ShelfNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="RecordEdit.RetentionSchedule" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input asp-for="RecordEdit.RetentionSchedule" class="form-control" />
+                <span asp-validation-for="RecordEdit.RetentionSchedule" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">
+                <div class="form-check">
+                    <input asp-for="RecordEdit.Active" class="form-check-input" />
+                    <label asp-for="RecordEdit.Active" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="form-row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+                <a asp-page="Details" asp-route-id="@Model.Facility.Id" class="btn btn-outline-secondary col-md-2">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
