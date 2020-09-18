@@ -86,46 +86,6 @@ namespace FMS.Infrastructure.Tests
             result.ShouldBeNull();
         }
 
-        // GetFacilitiesForFileAsync
-
-        [Fact]
-        public async Task GetFacilies_ReturnsCorrectList()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            Guid fileId = DataHelpers.Files[1].Id;
-
-            var result = await repository.GetFacilitiesForFileAsync(fileId);
-
-            var expected = DataHelpers.Facilities
-                .Where(e => e.FileId == fileId)
-                .Select(e => DataHelpers.GetFacilitySummary(e.Id))
-                .ToList();
-            result.Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public async Task GetFacilies_UnusedFile_ReturnsEmptyList()
-        {
-            using var repository = SimpleFileRepository();
-            var fileId = (await repository.GetFileAsync("099-0001")).Id;
-
-            var result = await repository.GetFacilitiesForFileAsync(fileId);
-
-            var expected = new List<FacilitySummaryDto>();
-            result.Should().BeEquivalentTo(expected);
-        }
-
-        [Fact]
-        public async Task GetFacilies_NonexistentFile_ReturnsEmptyList()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-
-            var result = await repository.GetFacilitiesForFileAsync(default);
-
-            var expected = new List<FacilitySummaryDto>();
-            result.Should().BeEquivalentTo(expected);
-        }
-
         // FileHasActiveFacilities
 
         [Fact]
@@ -136,7 +96,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.FileHasActiveFacilities(id);
 
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Fact]
@@ -147,7 +107,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.FileHasActiveFacilities(id);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -158,7 +118,7 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.FileHasActiveFacilities(id);
 
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         // CountAsync
@@ -237,6 +197,11 @@ namespace FMS.Infrastructure.Tests
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
                     .ToList();
 
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
                 file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
             }
 
@@ -259,6 +224,12 @@ namespace FMS.Infrastructure.Tests
                     .Where(e => e.FileId == file.Id)
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
                     .ToList();
+
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
                 file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
             }
 
@@ -285,6 +256,12 @@ namespace FMS.Infrastructure.Tests
                     .Where(e => e.FileId == file.Id)
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
                     .ToList();
+
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
                 file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
             }
 
@@ -304,6 +281,23 @@ namespace FMS.Infrastructure.Tests
             var expected = DataHelpers.Files
                 .Where(e => e.FileLabel.Contains(fileLabel) && e.Active)
                 .Select(e => DataHelpers.GetFileDetail(e.Id)).ToList();
+
+            foreach (var file in expected)
+            {
+                file.Facilities = DataHelpers.Facilities
+                    .Where(e => e.Active)
+                    .Where(e => e.FileId == file.Id)
+                    .Select(e => DataHelpers.GetFacilitySummary(e.Id))
+                    .ToList();
+
+                foreach (var facility in file.Facilities)
+                {
+                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                }
+
+                file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
+            }
+
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -413,7 +407,7 @@ namespace FMS.Infrastructure.Tests
             {
                 var createdFile = await repository.GetFileAsync(expectedFileLabel);
 
-                createdFile.Active.Should().BeTrue();
+                createdFile.Active.ShouldBeTrue();
                 createdFile.FileLabel.Should().Be(expectedFileLabel);
                 createdFile.Id.Should().Be(newFileId);
                 createdFile.Facilities.Should().BeEquivalentTo(new List<FacilitySummaryDto>());

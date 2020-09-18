@@ -32,6 +32,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EnvironmentalInterest)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Include(e => e.RetentionRecords)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null)
@@ -82,6 +83,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
                 .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Include(e => e.RetentionRecords)
                 .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
@@ -119,6 +121,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
             var facility = await _context.Facilities.FindAsync(id);
+
             if (facility == null)
             {
                 throw new ArgumentException("Facility ID not found.", nameof(id));
@@ -141,7 +144,72 @@ namespace FMS.Infrastructure.Repositories
             facility.State = facilityUpdates.State;
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
+
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> RetentionRecordExistsAsync(Guid id) =>
+            await _context.RetentionRecords.AnyAsync(e => e.Id == id);
+
+        public async Task<RetentionRecordDetailDto> GetRetentionRecordAsync(Guid id)
+        {
+            var record = await _context.RetentionRecords.FindAsync(id);
+
+            if (record == null)
+            {
+                return null;
+            }
+
+            return new RetentionRecordDetailDto(record);
+        }
+
+        public async Task<Guid> CreateRetentionRecordAsync(Guid facilityId, RetentionRecordCreateDto create)
+        {
+            RetentionRecord record = new RetentionRecord(facilityId, create);
+            await _context.RetentionRecords.AddAsync(record);
+            await _context.SaveChangesAsync();
+            return record.Id;
+        }
+
+        public async Task UpdateRetentionRecordAsync(Guid id, RetentionRecordEditDto edit)
+        {
+            var record = await _context.RetentionRecords.FindAsync(id);
+
+            if (record == null)
+            {
+                throw new ArgumentException("Retention Record ID not found.", nameof(id));
+            }
+
+            record.Active = edit.Active;
+            record.BoxNumber = edit.BoxNumber;
+            record.ConsignmentNumber = edit.ConsignmentNumber;
+            record.EndYear = edit.EndYear;
+            record.RetentionSchedule = edit.RetentionSchedule;
+            record.ShelfNumber = edit.ShelfNumber;
+            record.StartYear = edit.StartYear;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<FacilityBasicDto> GetFacilityForRetentionRecord(Guid recordId)
+        {
+            var record = await _context.RetentionRecords.FindAsync(recordId);
+
+            if (record == null)
+            {
+                throw new ArgumentException("Retention Record ID not found.", nameof(recordId));
+            }
+
+            var facility = await _context.Facilities.AsNoTracking()
+                .Include(e => e.File)
+                .SingleOrDefaultAsync(e => e.Id == record.FacilityId);
+
+            if (facility == null)
+            {
+                throw new ArgumentException("Facility not found for Retention Record.");
+            }
+
+            return new FacilityBasicDto(facility);
         }
 
         #region IDisposable Support

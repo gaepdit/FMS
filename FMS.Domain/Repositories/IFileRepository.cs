@@ -10,7 +10,6 @@ namespace FMS.Domain.Repositories
         Task<bool> FileExistsAsync(Guid id);
         Task<FileDetailDto> GetFileAsync(Guid id);
         Task<FileDetailDto> GetFileAsync(string id);
-        Task<List<FacilitySummaryDto>> GetFacilitiesForFileAsync(Guid id);
         Task<bool> FileHasActiveFacilities(Guid id);
         Task<int> CountAsync(FileSpec spec);
         Task<IReadOnlyList<FileDetailDto>> GetFileListAsync(FileSpec spec);

@@ -1,6 +1,8 @@
 using FluentAssertions;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
@@ -14,7 +16,7 @@ namespace FMS.Infrastructure.Tests
         // FacilityExistsAsync
 
         [Fact]
-        public async Task ExistingFacility_Exists_ReturnsTrue()
+        public async Task FacilityExists_Exists_ReturnsTrue()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var result = await repository.FacilityExistsAsync(DataHelpers.Facilities[0].Id);
@@ -22,7 +24,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task NonexistentFacility_Exists_ReturnsFalse()
+        public async Task FacilityExists_NotExists_ReturnsFalse()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var result = await repository.FacilityExistsAsync(default);
@@ -207,12 +209,14 @@ namespace FMS.Infrastructure.Tests
 
                 // Set sample facility properties to match for comparison
                 sampleFacility.Id = newFacilityId;
+                sampleFacility.RetentionRecords = new List<RetentionRecordDetailDto>();
+
                 createdFacility.Should().BeEquivalentTo(sampleFacility);
             }
         }
 
         // TODO #19: Generate new File ID if newFacility.FileId is null
-        [Fact(Skip ="Not implemented yet")]
+        [Fact(Skip = "Not implemented yet")]
         public async Task CreateFacility_EmptyFileID_SucceedsAndCreatesNewFile()
         {
             var repositoryHelper = new RepositoryHelper();
@@ -258,7 +262,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         // TODO #56: Implement required fields
-        [Fact(Skip ="Not implemented yet")]
+        [Fact(Skip = "Not implemented yet")]
         public async Task CreateFacility_WithEmptyNumber_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
@@ -358,5 +362,83 @@ namespace FMS.Infrastructure.Tests
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
         }
+
+        // RetentionRecordExistsAsync
+
+        [Fact]
+        public async Task RetentionRecord_Exists_ReturnsTrue()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var result = await repository.RetentionRecordExistsAsync(DataHelpers.RetentionRecords[0].Id);
+            result.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task RetentionRecord_NotExists_ReturnsFalse()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var result = await repository.RetentionRecordExistsAsync(default);
+            result.ShouldBeFalse();
+        }
+
+        // GetRetentionRecordAsync
+
+        [Fact]
+        public async Task GetRetentionRecord_ReturnsCorrectItem()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var expected = new RetentionRecordDetailDto(DataHelpers.RetentionRecords[0]);
+
+            var result = await repository.GetRetentionRecordAsync(expected.Id);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task GetNonexistentRetentionRecord_ReturnsNull()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var result = await repository.GetRetentionRecordAsync(default);
+            result.ShouldBeNull();
+        }
+
+        // CreateRetentionRecordAsync
+
+        [Fact]
+        public async Task CreateRecord_Succeeds()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            var record = new RetentionRecord()
+            {
+                Active = true,
+                BoxNumber = "NewBox",
+                ConsignmentNumber = "CN",
+                EndYear = 2020,
+                FacilityId = DataHelpers.Facilities[0].Id,
+                RetentionSchedule = "RS",
+                ShelfNumber = "SN",
+                StartYear = 2000,
+            };
+            var newRecord = new RetentionRecordCreateDto()
+            {
+                BoxNumber = record.BoxNumber,
+                ConsignmentNumber = record.ConsignmentNumber,
+                EndYear = record.EndYear,
+                RetentionSchedule = record.RetentionSchedule,
+                ShelfNumber = record.ShelfNumber,
+                StartYear = record.StartYear
+
+            };
+
+            record.Id = await repository.CreateRetentionRecordAsync(record.FacilityId, newRecord);
+            var result = await repository.GetRetentionRecordAsync(record.Id);
+
+            result.Should().BeEquivalentTo(new RetentionRecordDetailDto(record));
+        }
+
+        // UpdateRetentionRecordAsync
+
+        // GetFacilityForRetentionRecord
+
     }
 }

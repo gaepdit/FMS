@@ -7,6 +7,7 @@ using System;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -25,7 +26,7 @@ namespace FMS.App.Tests.Facilities
 
             var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(facility.Id, null).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.FacilityDetail.Should().BeEquivalentTo(facility);
@@ -37,10 +38,10 @@ namespace FMS.App.Tests.Facilities
             var mockRepo = new Mock<IFacilityRepository>();
             var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(default, null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FacilityDetail.Should().BeNull();
+            pageModel.FacilityDetail.ShouldBeNull();
         }
 
         [Fact]
@@ -49,10 +50,10 @@ namespace FMS.App.Tests.Facilities
             var mockRepo = new Mock<IFacilityRepository>();
             var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(null, null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FacilityDetail.Should().BeNull();
+            pageModel.FacilityDetail.ShouldBeNull();
         }
     }
 }

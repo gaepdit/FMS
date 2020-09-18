@@ -16,6 +16,7 @@ namespace FMS.Pages.Cabinets
 
         [BindProperty]
         public CabinetCreateDto CabinetCreate { get; set; }
+
         [TempData]
         public Guid? NewCabinetId { get; set; }
 

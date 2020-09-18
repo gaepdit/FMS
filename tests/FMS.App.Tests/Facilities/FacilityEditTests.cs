@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -50,7 +51,7 @@ namespace FMS.App.Tests.Facilities
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(default(Guid));
-            pageModel.Facility.Should().BeNull();
+            pageModel.Facility.ShouldBeNull();
         }
 
         [Fact]
@@ -64,7 +65,7 @@ namespace FMS.App.Tests.Facilities
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(default(Guid));
-            pageModel.Facility.Should().BeNull();
+            pageModel.Facility.ShouldBeNull();
         }
 
         [Fact]
@@ -84,7 +85,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
             ((RedirectToPageResult)result).PageName.Should().Be("./Details");
             ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
         }
@@ -100,7 +101,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
     }

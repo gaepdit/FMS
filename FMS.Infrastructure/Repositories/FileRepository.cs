@@ -49,13 +49,6 @@ namespace FMS.Infrastructure.Repositories
             return new FileDetailDto(file);
         }
 
-        public async Task<List<FacilitySummaryDto>> GetFacilitiesForFileAsync(Guid id) =>
-            await _context.Facilities.AsNoTracking()
-            .Where(e => e.FileId == id)
-            .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
-            .Select(e => new FacilitySummaryDto(e))
-            .ToListAsync();
-
         public async Task<bool> FileHasActiveFacilities(Guid id) =>
             await _context.Facilities.AsNoTracking()
             .AnyAsync(e => e.FileId == id && e.Active);
@@ -149,7 +142,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task AddCabinetToFileAsync(Guid cabinetId, Guid fileId)
         {
-            if(await _context.CabinetFileJoin.AnyAsync(e => e.CabinetId==cabinetId && e.FileId == fileId))
+            if (await _context.CabinetFileJoin.AnyAsync(e => e.CabinetId == cabinetId && e.FileId == fileId))
             {
                 return;
             }

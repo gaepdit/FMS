@@ -1,12 +1,25 @@
-﻿using FMS.Domain.Entities.Base;
+using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System;
 
 namespace FMS.Domain.Entities
 {
     public class RetentionRecord : BaseActiveModel
     {
-        //public Guid FacilityId { get; set; }
-        public  Facility Facility { get; set; }   //virtual
+        public RetentionRecord() { }
+        public RetentionRecord(Guid facilityId, RetentionRecordCreateDto create)
+        {
+            FacilityId = facilityId;
+            StartYear = create.StartYear;
+            EndYear = create.EndYear;
+            BoxNumber = create.BoxNumber;
+            ConsignmentNumber = create.ConsignmentNumber;
+            ShelfNumber = create.ShelfNumber;
+            RetentionSchedule = create.RetentionSchedule;
+        }
+
+        public Guid FacilityId { get; set; }
+        public Facility Facility { get; set; }
 
         // Starting Year
         public int StartYear { get; set; }

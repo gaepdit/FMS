@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Files
 {
@@ -45,7 +46,7 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be((Guid)default);
             pageModel.FileLabel.Should().Be(default);
-            pageModel.Active.Should().BeFalse();
+            pageModel.Active.ShouldBeFalse();
         }
 
         [Fact]
@@ -59,7 +60,7 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(default(Guid));
             pageModel.FileLabel.Should().Be(default);
-            pageModel.Active.Should().BeFalse();
+            pageModel.Active.ShouldBeFalse();
         }
 
         [Fact]
@@ -82,7 +83,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
             ((RedirectToPageResult)result).PageName.Should().Be("./Details");
             ((RedirectToPageResult)result).RouteValues["id"].Should().Be(file.FileLabel);
         }
@@ -104,7 +105,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
 
@@ -128,7 +129,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
             ((RedirectToPageResult)result).PageName.Should().Be("./Details");
             ((RedirectToPageResult)result).RouteValues["id"].Should().Be(file.FileLabel);
         }

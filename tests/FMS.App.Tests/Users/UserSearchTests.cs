@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 using static FMS.Pages.Users.IndexModel;
 
 namespace FMS.App.Tests.Users
@@ -36,7 +37,7 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetSearchAsync(name, email).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
             pageModel.SearchResults.Should().BeEquivalentTo(_searchResults);
         }
 
@@ -50,7 +51,7 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetSearchAsync(null, null).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
         }
     }
 }

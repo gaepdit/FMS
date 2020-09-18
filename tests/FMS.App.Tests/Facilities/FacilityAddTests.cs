@@ -8,6 +8,7 @@ using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -40,7 +41,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
             ((RedirectToPageResult)result).PageName.Should().Be("./Details");
             ((RedirectToPageResult)result).RouteValues["id"].Should().Be(newId);
         }
@@ -56,7 +57,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
         }
     }
 }

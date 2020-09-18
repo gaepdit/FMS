@@ -1,5 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TestHelpers
 {
@@ -19,7 +21,8 @@ namespace TestHelpers
 
             return new FacilityDetailDto(facility)
             {
-                Cabinets = GetCabinetsForFile(facility.FileId)
+                Cabinets = GetCabinetsForFile(facility.FileId),
+                RetentionRecords = GetRetentionRecordDetailsForFacility(id)
             };
         }
 
@@ -30,8 +33,18 @@ namespace TestHelpers
 
             return new FacilitySummaryDto(facility)
             {
-                Cabinets = GetCabinetsForFile(facility.FileId)
+                Cabinets = GetCabinetsForFile(facility.FileId),
+                RetentionRecords = GetRetentionRecordSummaryForFacility(id)
             };
         }
+
+        public static List<RetentionRecordSummaryDto> GetRetentionRecordSummaryForFacility(Guid id) =>
+            RetentionRecords.Where(e => e.FacilityId == id)
+            .Select(e => new RetentionRecordSummaryDto(e)).ToList();
+
+        public static List<RetentionRecordDetailDto> GetRetentionRecordDetailsForFacility(Guid id) =>
+            RetentionRecords.Where(e => e.FacilityId == id)
+            .Select(e => new RetentionRecordDetailDto(e)).ToList();
+
     }
 }

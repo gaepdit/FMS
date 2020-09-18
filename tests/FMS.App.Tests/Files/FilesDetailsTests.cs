@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Files
 {
@@ -44,7 +45,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FileDetail.Should().BeNull();
+            pageModel.FileDetail.ShouldBeNull();
         }
 
         [Fact]
@@ -56,7 +57,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FileDetail.Should().BeNull();
+            pageModel.FileDetail.ShouldBeNull();
         }
 
         // Todo #49: OnPostAddCabinetAsync tests
