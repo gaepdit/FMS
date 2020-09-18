@@ -6,31 +6,38 @@ namespace FMS.Domain.Dto
     // TODO #56 reconsider mandatory fields
     public class FacilityCreateDto
     {
-        [Display(Name = "Facility Number"), Required]
+        [Required]
+        [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
-        [Display(Name = "Facility Name"), Required]
+        [Required]
+        [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
         [Display(Name = "County")]
         public int CountyId { get; set; }
 
-        [Display(Name = "Facility Status"), Required]
+        [Required]
+        [Display(Name = "Facility Status")]
         public Guid FacilityStatusId { get; set; }
 
-        [Display(Name = "Facility Type"), Required]
+        [Required]
+        [Display(Name = "Facility Type")]
         public Guid FacilityTypeId { get; set; }
 
-        [Display(Name = "Budget Code"), Required]
+        [Required]
+        [Display(Name = "Budget Code")]
         public Guid BudgetCodeId { get; set; }
 
-        [Display(Name = "Organizational Unit"), Required]
+        [Required]
+        [Display(Name = "Organizational Unit")]
         public Guid OrganizationalUnitId { get; set; }
 
         [Display(Name = "Environmental Interest")]
-        public Guid EnvironmentalInterestId { get; set; }
+        public Guid? EnvironmentalInterestId { get; set; }
 
-        [Display(Name = "Compliance Officer"), Required]
+        [Required]
+        [Display(Name = "Compliance Officer")]
         public Guid ComplianceOfficerId { get; set; }
 
         [Display(Name = "File Label")]
@@ -39,16 +46,19 @@ namespace FMS.Domain.Dto
         [Display(Name = "Location Description")]
         public string Location { get; set; }
 
-        [Display(Name = "Street Address"), Required]
+        [Required]
+        [Display(Name = "Street Address")]
         public string Address { get; set; }
 
-        [Display(Name = "City"), Required]
+        [Required]
+        [Display(Name = "City")]
         public string City { get; set; }
 
         [Display(Name = "State")]
         public string State { get; set; }
 
-        [Display(Name = "Zip Code"), Required]
+        [Required]
+        [Display(Name = "Zip Code")]
         public string PostalCode { get; set; }
 
         [Required]
