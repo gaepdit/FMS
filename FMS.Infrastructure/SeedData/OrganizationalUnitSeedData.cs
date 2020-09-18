@@ -47,9 +47,30 @@ namespace FMS.Infrastructure.SeedData
                 },
                 new OrganizationalUnit
                 {
+                    Id = new Guid("A8FDECB3-DD12-4985-B6CE-7BAAC7B246A4"),
+                    Active = true,
+                    Name = "Government Facilities",
+                    ComplianceOfficers = { }
+                },
+                new OrganizationalUnit
+                {
+                    Id = new Guid("7ABBD134-3792-4374-8AE5-D2B5E6FE6E2B"),
+                    Active = true,
+                    Name = "Lead/Asbestos",
+                    ComplianceOfficers = { }
+                },
+                new OrganizationalUnit
+                {
                     Id = new Guid("6B86B16E-F2FA-4AF2-9468-A45EE5F62E3D"),
                     Active = true,
                     Name = "PA/SI Sub-Unit under Release Notification",
+                    ComplianceOfficers = { }
+                },
+                new OrganizationalUnit
+                {
+                    Id = new Guid("0989C0BC-C3CE-4A77-83C6-F86E3BB70B9F"),
+                    Active = true,
+                    Name = "Regulatory Compliance ",
                     ComplianceOfficers = { }
                 },
                 new OrganizationalUnit
@@ -110,6 +131,13 @@ namespace FMS.Infrastructure.SeedData
                 },
                 new OrganizationalUnit
                 {
+                    Id = new Guid("B37FBE15-DC40-47E5-9AB1-953B46F20498"),
+                    Active = true,
+                    Name = "PIRT",
+                    ComplianceOfficers = { }
+                },
+                new OrganizationalUnit
+                {
                     Id = new Guid("49BCBE4B-3E98-47ED-A31C-147399153A48"),
                     Active = true,
                     Name = "Risk Assessment",
@@ -120,6 +148,13 @@ namespace FMS.Infrastructure.SeedData
                     Id = new Guid("4CCBE72A-09E6-4EE4-9E6B-381D2F18EDC2"),
                     Active = true,
                     Name = "Superfund Management",
+                    ComplianceOfficers = { }
+                },
+                new OrganizationalUnit
+                {
+                    Id = new Guid("628F1EE7-3B14-45CB-80E6-316F7CF0E11F"),
+                    Active = true,
+                    Name = "Surface Mining",
                     ComplianceOfficers = { }
                 },
                 new OrganizationalUnit
