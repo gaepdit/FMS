@@ -15,22 +15,22 @@ namespace FMS.Domain.Dto
         [Display(Name = "County")]
         public int CountyId { get; set; }
 
-        [Display(Name = "Facility Status")]
+        [Display(Name = "Facility Status"), Required]
         public Guid FacilityStatusId { get; set; }
 
-        [Display(Name = "Facility Type")]
+        [Display(Name = "Facility Type"), Required]
         public Guid FacilityTypeId { get; set; }
 
-        [Display(Name = "Budget Code")]
+        [Display(Name = "Budget Code"), Required]
         public Guid BudgetCodeId { get; set; }
 
-        [Display(Name = "Organizational Unit")]
+        [Display(Name = "Organizational Unit"), Required]
         public Guid OrganizationalUnitId { get; set; }
 
         [Display(Name = "Environmental Interest")]
         public Guid EnvironmentalInterestId { get; set; }
 
-        [Display(Name = "Compliance Officer")]
+        [Display(Name = "Compliance Officer"), Required]
         public Guid ComplianceOfficerId { get; set; }
 
         [Display(Name = "File Label")]

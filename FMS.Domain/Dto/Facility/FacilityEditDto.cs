@@ -29,7 +29,7 @@ namespace FMS.Domain.Dto
             Longitude = facility.Longitude;
         }
 
-        [Display(Name = "Facility Number")]
+        [Display(Name = "Facility Number"), Required]
         public string FacilityNumber { get; set; }
 
         [Display(Name = "Facility Name"), Required]
@@ -41,25 +41,25 @@ namespace FMS.Domain.Dto
         [Display(Name = "County"), Required]
         public int CountyId { get; set; }
 
-        [Display(Name = "Facility Status")]
+        [Display(Name = "Facility Status"), Required]
         public Guid FacilityStatusId { get; set; }
 
-        [Display(Name = "Facility Type")]
+        [Display(Name = "Facility Type"), Required]
         public Guid FacilityTypeId { get; set; }
 
-        [Display(Name = "Budget Code")]
+        [Display(Name = "Budget Code"), Required]
         public Guid BudgetCodeId { get; set; }
 
-        [Display(Name = "Organizational Unit")]
+        [Display(Name = "Organizational Unit"), Required]
         public Guid OrganizationalUnitId { get; set; }
 
         [Display(Name = "Environmental Interest")]
         public Guid EnvironmentalInterestId { get; set; }
 
-        [Display(Name = "Compliance Officer")]
+        [Display(Name = "Compliance Officer"), Required]
         public Guid ComplianceOfficerId { get; set; }
 
-        [Display(Name = "File Label")]
+        [Display(Name = "File Label"), Required]
         public Guid? FileId { get; set; }
 
         [Display(Name = "Location Description")]
@@ -77,11 +77,11 @@ namespace FMS.Domain.Dto
         [Display(Name = "Zip Code"), Required]
         public string PostalCode { get; set; }
 
-        [Display(Name = "Latitude")]
+        [Display(Name = "Latitude"), Required]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Latitude { get; set; }
 
-        [Display(Name = "Longitude")]
+        [Display(Name = "Longitude"), Required]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; set; }
     }
