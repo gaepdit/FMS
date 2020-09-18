@@ -1,4 +1,4 @@
-@page "{id:Guid?}"
+﻿@page "{id:Guid?}"
 @model Pages.Facilities.DetailsModel
 @{
     ViewData["Title"] = $"Facility {Model.FacilityDetail.FacilityNumber}";
@@ -141,6 +141,56 @@
     {
         <span class="text-muted">none</span>
     }
+
+    <div class="container-fluid bg-light pt-3 mt-5">
+        <h3 class="h5">Add a Retention Record</h3>
+        <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label asp-for="RecordCreate.StartYear"></label>
+                    <input asp-for="RecordCreate.StartYear" class="form-control" />
+                    <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="RecordCreate.EndYear"></label>
+                    <input asp-for="RecordCreate.EndYear" class="form-control" />
+                    <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="RecordCreate.BoxNumber"></label>
+                    <input asp-for="RecordCreate.BoxNumber" class="form-control" />
+                    <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4">
+                    <label asp-for="RecordCreate.ConsignmentNumber"></label>
+                    <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
+                    <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="RecordCreate.ShelfNumber"></label>
+                    <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
+                    <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-sm-4">
+                    <label asp-for="RecordCreate.RetentionSchedule"></label>
+                    <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
+                    <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>
+                </div>
+            </div>
+
+            <input asp-for="FacilityId" />
+            <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
+        </form>
+    </div>
 </div>
 
 <div class="row">

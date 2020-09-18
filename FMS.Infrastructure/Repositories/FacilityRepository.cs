@@ -163,9 +163,9 @@ namespace FMS.Infrastructure.Repositories
             return new RetentionRecordDetailDto(record);
         }
 
-        public async Task<Guid> CreateRetentionRecordAsync(RetentionRecordCreateDto create)
+        public async Task<Guid> CreateRetentionRecordAsync(Guid facilityId, RetentionRecordCreateDto create)
         {
-            RetentionRecord record = new RetentionRecord(create);
+            RetentionRecord record = new RetentionRecord(facilityId, create);
             await _context.RetentionRecords.AddAsync(record);
             await _context.SaveChangesAsync();
             return record.Id;

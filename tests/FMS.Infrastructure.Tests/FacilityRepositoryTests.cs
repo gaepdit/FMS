@@ -424,14 +424,13 @@ namespace FMS.Infrastructure.Tests
                 BoxNumber = record.BoxNumber,
                 ConsignmentNumber = record.ConsignmentNumber,
                 EndYear = record.EndYear,
-                FacilityId = record.FacilityId,
                 RetentionSchedule = record.RetentionSchedule,
                 ShelfNumber = record.ShelfNumber,
                 StartYear = record.StartYear
 
             };
 
-            record.Id = await repository.CreateRetentionRecordAsync(newRecord);
+            record.Id = await repository.CreateRetentionRecordAsync(record.FacilityId, newRecord);
             var result = await repository.GetRetentionRecordAsync(record.Id);
 
             result.Should().BeEquivalentTo(new RetentionRecordDetailDto(record));

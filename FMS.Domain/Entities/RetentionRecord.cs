@@ -7,9 +7,9 @@ namespace FMS.Domain.Entities
     public class RetentionRecord : BaseActiveModel
     {
         public RetentionRecord() { }
-        public RetentionRecord(RetentionRecordCreateDto create)
+        public RetentionRecord(Guid facilityId, RetentionRecordCreateDto create)
         {
-            FacilityId = create.FacilityId;
+            FacilityId = facilityId;
             StartYear = create.StartYear;
             EndYear = create.EndYear;
             BoxNumber = create.BoxNumber;

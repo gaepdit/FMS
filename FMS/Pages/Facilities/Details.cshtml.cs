@@ -1,4 +1,4 @@
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,6 +9,13 @@ namespace FMS.Pages.Facilities
 {
     public class DetailsModel : PageModel
     {
+        [BindProperty]
+        public RetentionRecordCreateDto RecordCreate { get; set; }
+
+        [BindProperty]
+        [HiddenInput]
+        public Guid FacilityId { get; set; }
+
         private readonly IFacilityRepository _repository;
         public DetailsModel(IFacilityRepository repository) => _repository = repository;
 
@@ -38,7 +45,38 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
+            FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostRetentionRecordAsync()
+        {
+            if (FacilityId == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
+
+                if (FacilityDetail == null)
+                {
+                    return NotFound();
+                }
+
+                return Page();
+            }
+
+            HighlightRecord = await _repository.CreateRetentionRecordAsync(FacilityId, RecordCreate);
+            FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
+
+            if (FacilityDetail == null)
+            {
+                return NotFound();
+            }
+
             return Page();
         }
     }

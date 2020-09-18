@@ -6,10 +6,6 @@ namespace FMS.Domain.Dto
     public class RetentionRecordCreateDto
     {
         [Required]
-        [Display(Name = "Facility")]
-        public Guid FacilityId { get; set; }
-
-        [Required]
         [Display(Name = "Start year")]
         public int StartYear { get; set; }
 
