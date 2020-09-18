@@ -39,29 +39,29 @@ namespace FMS.Domain.Entities
         public virtual File File { get; set; }
 
         // Environmental Interest/Program of this Facility
-        public Guid EnvironmentalInterestId { get; set; }
+        public Guid? EnvironmentalInterestId { get; set; }
         public virtual EnvironmentalInterest EnvironmentalInterest { get; set; }
 
         // Type of Facility
-        public Guid FacilityTypeId { get; set; }
+        public Guid? FacilityTypeId { get; set; }
         public virtual FacilityType FacilityType { get; set; }
 
         // Unit overseeing this Facility
-        public Guid OrganizationalUnitId { get; set; }
+        public Guid? OrganizationalUnitId { get; set; }
         public virtual OrganizationalUnit OrganizationalUnit { get; set; }
 
         // Program Budget for this Facility
-        public Guid BudgetCodeId { get; set; }
+        public Guid? BudgetCodeId { get; set; }
         public virtual BudgetCode BudgetCode { get; set; }
 
         // Facility Name
         public string Name { get; set; }
 
         // Compliance Officer assigned to this Facility
-        public Guid ComplianceOfficerId { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
         public virtual ComplianceOfficer ComplianceOfficer { get; set; }
 
-        public Guid FacilityStatusId { get; set; }
+        public Guid? FacilityStatusId { get; set; }
         public virtual FacilityStatus FacilityStatus { get; set; }
 
         // Location description distinct from mailing address

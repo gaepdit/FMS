@@ -23,12 +23,19 @@ namespace TestHelpers
         public static List<RetentionRecord> RetentionRecords = DevSeedData.GetRetentionRecords();
 
         // Item retrieval
-        public static County GetCounty(int id) => Counties.Find(e => e.Id == id);
-        public static FacilityStatus GetFacilityStatus(Guid id) => FacilityStatuses.Find(e => e.Id == id);
-        public static FacilityType GetFacilityType(Guid id) => FacilityTypes.Find(e => e.Id == id);
-        public static BudgetCode GetBudgetCode(Guid id) => BudgetCodes.Find(e => e.Id == id);
-        public static OrganizationalUnit GetOrganizationalUnit(Guid id) => OrganizationalUnits.Find(e => e.Id == id);
-        public static EnvironmentalInterest GetEnvironmentalInterest(Guid id) => EnvironmentalInterests.Find(e => e.Id == id);
-        public static ComplianceOfficer GetComplianceOfficer(Guid id) => ComplianceOfficers.Find(e => e.Id == id);
+        public static County GetCounty(int id) =>
+            Counties.Find(e => e.Id == id);
+        public static FacilityStatus GetFacilityStatus(Guid? id) =>
+            !id.HasValue ? null : FacilityStatuses.Find(e => e.Id == id);
+        public static FacilityType GetFacilityType(Guid? id) =>
+            !id.HasValue ? null : FacilityTypes.Find(e => e.Id == id);
+        public static BudgetCode GetBudgetCode(Guid? id) =>
+            !id.HasValue ? null : BudgetCodes.Find(e => e.Id == id);
+        public static OrganizationalUnit GetOrganizationalUnit(Guid? id) =>
+            !id.HasValue ? null : OrganizationalUnits.Find(e => e.Id == id);
+        public static EnvironmentalInterest GetEnvironmentalInterest(Guid? id) =>
+            !id.HasValue ? null : EnvironmentalInterests.Find(e => e.Id == id);
+        public static ComplianceOfficer GetComplianceOfficer(Guid? id) =>
+            !id.HasValue ? null : ComplianceOfficers.Find(e => e.Id == id);
     }
 }
