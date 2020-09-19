@@ -71,16 +71,8 @@
 
         $('#Search').click(function OnSearchSubmit() {
             var output = $('#Output').val();
-            //TO DO: Need to vomment in UAT/Production
-            //var lat = 34.101318; // $('#Latitude').val();
-            //var lng = -84.519379; //$('#Longitude').val();
-            //$('#Latitude').val(parseFloat(lat).toFixed(4));
-            //$('#Longitude').val(parseFloat(lng).toFixed(4));
-
-            //TO DO: Need to uncomment in UAT/Production
-            var lat =  $('#Latitude').val();
+            var lat = $('#Latitude').val();
             var lng = $('#Longitude').val();
-
             //debugger;
             if (lat != "" && lng != "") {
                 return true;
@@ -90,6 +82,12 @@
                     bool = true;
                     return true;
                 }
+                //TO DO: Need to vomment in UAT/Production
+               // var lat = 34.101318; // $('#Latitude').val();
+                //var lng = -84.519379; //$('#Longitude').val();
+                //$('#LocalLat').val(parseFloat(lat).toFixed(4));
+               // $('#LocalLng').val(parseFloat(lng).toFixed(4));
+
                 var addr = $('#Address').val();
                 var city = $('#City').val();
                 var zip = $('#PostalCode').val();
@@ -114,6 +112,11 @@
             {
                 var lat = $('#Latitude').val();
                 var lng = $('#Longitude').val();
+                if (lat == "" || lng == "")
+                {
+                    var lat = $('#LocalLat').val();
+                    var lng = $('#LocalLng').val();
+                }                
                 var radius = $('#Radius').val();
                 mapInitialize(lat, lng, radius, markers);
             }

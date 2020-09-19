@@ -4,6 +4,8 @@ using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data;
+using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -91,20 +93,15 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
-            var latLongDelta = 5m;
-            return await _context.Facilities.AsNoTracking()
-                 .Include(e => e.File)
-                  .Include(e => e.FacilityStatus)
-                .Include(e => e.FacilityType)
-                // .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)             
-                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
-                .Where(e => !spec.Active.HasValue || e.Active == spec.Active.Value)
-                .Where(e => e.Latitude > spec.Latitude - latLongDelta && e.Latitude < spec.Latitude + latLongDelta)
-                .Where(e => e.Latitude > spec.Longitude - latLongDelta && e.Longitude < spec.Longitude + latLongDelta)
-                .OrderBy(e => Math.Pow((double)spec.Longitude.Value - (double)e.Longitude, 2) + Math.Pow((double)spec.Latitude.Value - (double)e.Latitude, 2))
-                //.Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))                
-                .Select(e => new FacilityMapSummaryDto(e))
-                .ToListAsync();
+            var myFacilityList = new List<Facility>();
+            var FacilityList1 = new List<FacilityMapSummaryDto>();
+            var active = new SqlParameter("@active", Convert.ToDouble(spec.ActiveOnly));
+            var Lat = new SqlParameter("@Lat", Convert.ToDouble(spec.Latitude));
+            var Long = new SqlParameter("@Lng", Convert.ToDouble(spec.Longitude));
+            var radius = new SqlParameter("@radius", Convert.ToDouble(spec.Radius));
+
+            return await _context.FacilityList.FromSqlRaw("EXEC dbo.getNearbyFacilities @Lat={0},@Lng={1},@radius={2}, @active={3}", Lat, Long, radius,active)
+                  .ToListAsync<FacilityMapSummaryDto>();
         }
 
         public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)

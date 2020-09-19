@@ -4,14 +4,16 @@ using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FmsDbContext))]
-    partial class FmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200918183304_getNearbyFacilities")]
+    partial class getNearbyFacilities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Distance")
+                    b.Property<decimal?>("Distance")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("FacilityNumber")

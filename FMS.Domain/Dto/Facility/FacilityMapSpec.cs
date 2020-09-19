@@ -10,8 +10,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Name")]
         public string? Name { get; set; }
 
-        [Display(Name = "Active Site")]
-        public bool? Active { get; set; }
+        [Display(Name = "Show Active Sites Only")]
+        public bool ActiveOnly { get; set; } = false;
 
         [Display(Name = "Address")]
         public string? Address { get; set; }
@@ -46,7 +46,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
-        [Display(Name = "CirRadius")]
-        public float? CirRadius { get; set; }
+        [Display(Name = "Output")]
+        public string? Output { get; set; }   
+        public string GeocodeLat { get; set; }
+        public string GeocodeLng { get; set; }
     }
 }

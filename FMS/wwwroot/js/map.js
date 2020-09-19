@@ -62,7 +62,7 @@ function mapInitialize(lat, lng, inputRadius, markers) {
         var data = markers[i];
         //determine marker image
         var imageName = '/images/icon_mix.png';
-        var Ftype = (data.facilityType.name).toUpperCase();
+        var Ftype = (data.facilityType).toUpperCase();
         switch (Ftype) {
             case 'GEN':
                 imageName = '/images/icon_gen.png';
@@ -112,13 +112,13 @@ function mapInitialize(lat, lng, inputRadius, markers) {
                 if (zip == undefined) {
                     zip = ""
                 }
-                if (data.facilityType.name == 'SCRAPTIRE') {
+                if (data.facilityType == 'SCRAPTIRE') {
                     infowindow.setContent('<span style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #333;"><a href=\"/prod/hwmb/search/facilityDetail.jsp?facilityID=' + data.facilityNumber + '&facilityName=' + data.name + '\">' + data.name + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">' + data.address + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">Estimate # tires: ' + data.numtires + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">lat: ' + data.latitude + ' lng:' + data.longitude + '</span>');
                 }
                 else {
                     var hyplink = "./Details/" + data.id;
-                    var hyplink2 = "../Files/Index/" + data.fileId;
-                    infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus.name + '</b></div>');
+                    var hyplink2 = "../Files/Details/" + data.fileLabel;
+                    infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
                 }
                 //infowindow.setContent(data.name);
                 infowindow.open(map, marker);
@@ -141,21 +141,14 @@ function getLatLongs(addr, city, zip) {
             country: 'US'
         }
     }
-
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode(request, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             lat = results[0].geometry.location.lat();
-            lng = results[0].geometry.location.lng();
-            //$('#UserLatitude').val(results[0].geometry.location.lat());
-            //$('#UserLongitude').val(results[0].geometry.location.lng());
-            //$('#localLat').val(results[0].geometry.location.lat());
-            //$('#localLng').val(results[0].geometry.location.lng());
-            //alert("Latitude: " + results[0].geometry.location.lat());
-            //alert("Longitude: " + results[0].geometry.location.lng());
+            lng = results[0].geometry.location.lng();         
 
-            $('#Latitude').val(parseFloat(lat).toFixed(4));
-            $('#Longitude').val(parseFloat(lng).toFixed(4));
+            //$('#Latitude').val(parseFloat(lat).toFixed(4));
+            //$('#Longitude').val(parseFloat(lng).toFixed(4));
             $('#LocalLat').val(parseFloat(lat).toFixed(4));
             $('#LocalLng').val(parseFloat(lng).toFixed(4));
 
@@ -173,7 +166,7 @@ function getLatLongs(addr, city, zip) {
 }
 
 function mapInitialize1(lat, lng, radius, markers) {
-    debugger;
+    //debugger;
     var mapOptions = {
         center: new google.maps.LatLng(lat, lng),
         zoom: 10,

@@ -1,5 +1,6 @@
 ﻿using FMS.Domain.Data;
 using FMS.Domain.Entities;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -24,7 +25,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<CabinetFile> CabinetFileJoin { get; set; }
-
+        public DbSet<FacilityMapSummaryDto> FacilityList { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
