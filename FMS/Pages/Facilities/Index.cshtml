@@ -161,7 +161,7 @@
                                 <ul class="list-unstyled">
                                     @foreach (var r in item.RetentionRecords)
                                     {
-                                    <li>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear: @r.BoxNumber</li>
+                                    <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
                                     }
                                 </ul>
                             }
