@@ -11,7 +11,7 @@ namespace FMS.Domain.Dto
         public string? Name { get; set; }
 
         [Display(Name = "Show Active Sites Only")]
-        public bool ActiveOnly { get; set; } = false;
+        public bool ActiveOnly { get; set; } = true;
 
         [Display(Name = "Address")]
         public string? Address { get; set; }

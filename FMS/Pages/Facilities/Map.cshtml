@@ -6,11 +6,10 @@
 @section Scripts {
     <partial name="_MapSearchScriptsPartial" />
 }
-<div class="text-center">
-    <h4><b>Search a Location</b></h4>
-    <label>(See what's near any address)</label>
-</div>
-<div class="container-fluid">
+<h1>Search a Location</h1>
+<p>(See what's near any address)</p>
+
+<div class="container bg-light py-3">
     <form id="LocationSearch" method="get" asp-fragment="SearchResults">
         <div class="form-row">
             <div class="form-group col-md-12">
@@ -49,18 +48,18 @@
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.Latitude"></label>
-                <input id="Latitude" asp-for="Spec.Latitude" class="form-control" />
-                <label>(Example: 34.101318)</label>
+                <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
+                <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.101318)</small>
                 <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.Longitude"></label>
-                <input id="Longitude" asp-for="Spec.Longitude" class="form-control" />
-                <label>(Example: -84.519379)</label>
+                <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
+                <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.519379)</small>
                 <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
             </div>
             <div class="col-md-3">
-                <label class="form-check-label" asp-for="Spec.Output"></label>                
+                <label class="form-check-label" asp-for="Spec.Output"></label>
                 <select id="Output" asp-for="Spec.Output" class="custom-select">
                     <option selected value="1">Map</option>
                     <option value="2">Table</option>
@@ -78,27 +77,20 @@
         <a asp-page="./Map" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
     </form>
 </div>
-<hr />
+
 <a name="SearchResults"></a>
 @if (Model.ShowMap)
 {
-    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
-    {
-        <div id="wrapper" class="container-fluid text-center">
-            <table width=760 border="0" align="center">
-                <tr>
-                    <td colspan="2" valign="top">
-                        <div id="dvMap" style="height:600px;width:100%"></div>
-                    </td>
-            </table>
-        </div>
-    }
-    else
-    {
-        <div class="container mt-2">
+    <div class="container mt-2">
+        @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
+        {
+            <div id="dvMap" style="height:600px;width:760px" class="mx-auto"></div>
+        }
+        else
+        {
             <p class="lead text-info">No matching facilities found.</p>
-        </div>
-    }
+        }
+    </div>
 
 }
 @if (Model.ShowResults)
@@ -144,7 +136,7 @@
                                         @Html.DisplayFor(m => item.City),
                                         @Html.DisplayFor(m => item.State)
                                         @Html.DisplayFor(m => item.PostalCode)
-                                    </td>                                  
+                                    </td>
                                     <td>
                                         @Html.DisplayFor(m => item.FacilityType)
                                     </td>
@@ -156,7 +148,7 @@
                                         @Html.DisplayFor(m => item.Active)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(m => item.Distance) MI                                       
+                                        @Html.DisplayFor(m => item.Distance) Mi
                                     </td>
                                 </tr>
                             }
@@ -176,9 +168,9 @@
 }
 @if (Model.ShowNone)
 {
-<div class="container-fluid text-center">
-    <h5 style="color:red">No matching facilities found.</h5>
-</div>
+    <div class="container-fluid text-center">
+        <h5 style="color:red">No matching facilities found.</h5>
+    </div>
 }
 
 
