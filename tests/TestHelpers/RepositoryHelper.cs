@@ -2,6 +2,7 @@
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.SeedData;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using TestSupport.EfHelpers;
 
 namespace TestHelpers
@@ -16,6 +17,9 @@ namespace TestHelpers
 
             context.Database.EnsureCreated();
             context.SeedTestData();
+
+            if (!context.RetentionRecords.Any()) context.RetentionRecords.AddRange(DevSeedData.GetRetentionRecords());
+            context.SaveChanges();
         }
 
         public ItemsListRepository GetItemsListRepository() =>
