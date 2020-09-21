@@ -129,49 +129,49 @@
             <tbody>
                 @foreach (var item in Model.FacilityList)
                 {
-                    <tr>
-                        <td>
-                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
-                                @Html.DisplayFor(m => item.FacilityNumber)
-                            </a>
-                        </td>
-                        <td>
-                            @item.FileLabel.Replace('-', '‑')
-                        </td>
-                        <td>@Html.DisplayFor(m => item.Name)</td>
-                        <td>
-                            @Html.DisplayFor(m => item.Address)<br />
-                            @Html.DisplayFor(m => item.City),
-                            @Html.DisplayFor(m => item.State)
-                            @Html.DisplayFor(m => item.PostalCode)
-                        </td>
-                        <td>
-                            @if (item.Cabinets.Count > 0)
-                            {
-                                @item.Cabinets.ConcatNonEmpty(", ");
-                            }
-                            else
-                            {
-                                <span class="text-muted">none</span>
-                            }
-                        </td>
-                        <td>
-                            @if (item.RetentionRecords.Count > 0)
-                            {
-                                <ul class="list-unstyled">
-                                    @foreach (var r in item.RetentionRecords)
-                                    {
+                <tr>
+                    <td>
+                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                            @Html.DisplayFor(m => item.FacilityNumber)
+                        </a>
+                    </td>
+                    <td class="text-nowrap">
+                        @item.FileLabel
+                    </td>
+                    <td>@Html.DisplayFor(m => item.Name)</td>
+                    <td>
+                        @Html.DisplayFor(m => item.Address)<br />
+                        @Html.DisplayFor(m => item.City),
+                        @Html.DisplayFor(m => item.State)
+                        @Html.DisplayFor(m => item.PostalCode)
+                    </td>
+                    <td>
+                        @if (item.Cabinets.Count > 0)
+                        {
+                            @item.Cabinets.ConcatNonEmpty(", ");
+                        }
+                        else
+                        {
+                            <span class="text-muted">none</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.RetentionRecords.Count > 0)
+                        {
+                            <ul class="list-unstyled">
+                                @foreach (var r in item.RetentionRecords)
+                                {
                                     <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
-                                    }
-                                </ul>
-                            }
-                            else
-                            {
-                                <span class="text-muted">none</span>
-                            }
-                        </td>
-                        <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
-                    </tr>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">none</span>
+                        }
+                    </td>
+                    <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
+                </tr>
                 }
             </tbody>
         </table>

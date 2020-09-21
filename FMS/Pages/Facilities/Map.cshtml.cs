@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using FMS.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
@@ -21,14 +21,14 @@ namespace FMS.Pages.Facilities
         public IReadOnlyList<FacilityMapSummaryDto> FacilityList { get; set; }
 
         // true to show the <div> for Results(after post)
-        [BindProperty]
         public bool ShowResults { get; set; }
 
         //true to show the map (after post)
         public bool ShowMap { get; set; }
 
+        public SelectList States => new SelectList(Data.States);
+
         // Shows if there are no results in result set
-        [BindProperty]
         public bool ShowNone { get; set; }
 
         public MapModel(IFacilityRepository repository)
@@ -36,7 +36,7 @@ namespace FMS.Pages.Facilities
             _repository = repository;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGet()
         {
             Spec = new FacilityMapSpec();
             return Page();
@@ -45,7 +45,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {
 
-            if (!String.IsNullOrEmpty(spec.GeocodeLat) || !String.IsNullOrEmpty(spec.GeocodeLng))
+            if (!string.IsNullOrEmpty(spec.GeocodeLat) || !string.IsNullOrEmpty(spec.GeocodeLng))
             {
                 if (spec.GeocodeLat.Length > 0 && spec.GeocodeLng.Length > 0)
                 {
@@ -77,17 +77,14 @@ namespace FMS.Pages.Facilities
                 else
                 {
                     ShowNone = true;
-
                 }
             }
             else
             {
                 ShowNone = true;
-
             }
 
             return Page();
         }
-
     }
 }

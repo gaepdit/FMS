@@ -5,25 +5,25 @@ namespace FMS.Domain.Dto
     public class FacilityMapSpec
     {
         [Display(Name = "Facility Number")]
-        public string? FacilityNumber { get; set; }
+        public string FacilityNumber { get; set; }
 
         [Display(Name = "Facility Name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [Display(Name = "Show Active Sites Only")]
         public bool ActiveOnly { get; set; } = true;
 
         [Display(Name = "Address")]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         [Display(Name = "City")]
-        public string? City { get; set; }
+        public string City { get; set; }
 
         [Display(Name = "State")]
-        public string? State { get; set; }
+        public string State { get; set; } = "Georgia";
 
         [Display(Name = "Zip Code")]
-        public string? PostalCode { get; set; }
+        public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]
         public decimal? Latitude { get; set; }
@@ -32,8 +32,8 @@ namespace FMS.Domain.Dto
         public decimal? Longitude { get; set; }
 
         [Display(Name = "Radius")]
-        public string? Radius { get; set; }
-        
+        public string Radius { get; set; }
+
         [Display(Name = "Distance")]
         public decimal? Distance { get; set; }
 
@@ -47,7 +47,7 @@ namespace FMS.Domain.Dto
         public string FileLabel { get; set; }
 
         [Display(Name = "Output")]
-        public string? Output { get; set; }   
+        public string Output { get; set; }
         public string GeocodeLat { get; set; }
         public string GeocodeLng { get; set; }
     }

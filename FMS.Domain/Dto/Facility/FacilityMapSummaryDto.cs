@@ -1,8 +1,6 @@
-﻿using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FMS.Domain.Dto
 {
@@ -14,8 +12,8 @@ namespace FMS.Domain.Dto
         public string FacilityNumber { get; set; }
 
         [Display(Name = "Facility Name")]
-        public string Name { get; set; }       
-       
+        public string Name { get; set; }
+
         [Display(Name = "Active Site")]
         public bool Active { get; set; } = true;
 
@@ -50,7 +48,9 @@ namespace FMS.Domain.Dto
         public decimal Longitude { get; set; }
 
         [Display(Name = "Distance")]
+        [DisplayFormat(DataFormatString = "{0:G}")]
         public decimal Distance { get; set; }
-        public string FullAddress { get { return Address + ", " + City + ", " + State + " " + PostalCode; } }
+
+        public string FullAddress => Address + ", " + City + ", " + State + " " + PostalCode;
     }
 }
