@@ -7,7 +7,7 @@
 - `/Cabinets/Details/?` (Cabinet details)
 - `/Facilities` (Facilities search)
 - `/Facilities/Details/?` (Facility details)
-- `/Facilities/IndexMap` (Facilities location search)
+- `/Facilities/Map` (Facilities location search)
 - `/Files` (Files search)
 - `/Files/Details/?` (File details)
 - `/Reports` (View reports)

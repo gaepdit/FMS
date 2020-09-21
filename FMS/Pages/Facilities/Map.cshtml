@@ -1,5 +1,5 @@
 ﻿@page
-@model Pages.Facilities.IndexMapModel
+@model Pages.Facilities.MapModel
 @{
     ViewData["Title"] = "Search Facilities By Address";
 }
@@ -75,7 +75,7 @@
         </div>
         <input type="hidden" name="handler" value="search" />
         <button id="Search" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
-        <a asp-page="./IndexMap" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
+        <a asp-page="./Map" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
     </form>
 </div>
 <hr />
