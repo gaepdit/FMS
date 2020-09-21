@@ -48,9 +48,9 @@ namespace FMS.Domain.Dto
         public decimal Longitude { get; set; }
 
         [Display(Name = "Distance")]
-        [DisplayFormat(DataFormatString = "{0:G}")]
-        public decimal Distance { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}")]
+        public double Distance { get; set; }
 
-        public string FullAddress => Address + ", " + City + ", " + State + " " + PostalCode;
+        public string FullAddress { get; set; }
     }
 }

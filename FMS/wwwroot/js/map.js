@@ -133,8 +133,8 @@ function mapInitialize(lat, lng, inputRadius, markers) {
 function getLatLongs(addr, city, zip) {
     var lat = 0;// 33.879807;
     var lng = 0;// -87.306964;
-    var address = addr + " " + city + ", GA " + zip;   
-    var address = $('#Address').val();    
+    var address = addr + " " + city + ", GA " + zip;        
+   // var address = $('#Address').val();    
     var request = {
         address: address + ' GA ' + zip,
         componentRestrictions: {
