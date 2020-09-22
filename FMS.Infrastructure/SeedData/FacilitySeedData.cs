@@ -31,7 +31,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.114309m,
                     Longitude = -84.470057m,
                     CountyId =  243,   //Id = 243, Name = "Cherokee"
-                    RetentionRecords = null, // new  List<RetentionRecord>{ }   //0
                 },
                 new Facility
                 {
@@ -54,7 +53,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.1416484m,
                     Longitude = -84.5047357m,
                     CountyId = 261, // new County{ },  // CHEROKEE
-                    RetentionRecords = null, // new  List<RetentionRecord>{ }   //1
                 },
                 new Facility
                 {
@@ -77,7 +75,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.084926m,
                     Longitude = -84.521794m,
                     CountyId = 243,  // CHEROKEE
-                    RetentionRecords = { }   //1
                 },
                 new Facility
                 {
@@ -100,7 +97,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.100926m,
                     Longitude = -84.516605m,
                     CountyId = 243,  // CHEROKEE
-                    RetentionRecords = { }   //1
                 },
                 new Facility
                 {
@@ -123,7 +119,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.485922m,
                     CountyId = 243,  // CHEROKEE
-                    RetentionRecords = { }  //1
                 },
                 new Facility
                 {
@@ -146,7 +141,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.0887669m,
                     Longitude = -84.4851441m,
                     CountyId = 243,  // CHEROKEE
-                    RetentionRecords = { }   //1
                 },
                 new Facility
                 {
@@ -169,7 +163,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.0877275m,
                     Longitude = -84.4858512m,
                     CountyId = 243,  // CHEROKEE
-                    RetentionRecords = { }   //1
                 },
                 new Facility
                 {
@@ -192,7 +185,6 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.141353m,
                     Longitude = -84.505629m,
                     CountyId = 243,  // CHEROKEE
-                    RetentionRecords = { }   //1
                 }
             };
         }

@@ -16,7 +16,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Antonia",
                     FamilyName = "Beavers",
-                    Unit = { }
                 },
                 new ComplianceOfficer
                 {
@@ -24,7 +23,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Tom",
                     FamilyName = "Brodell",
-                    Unit = { }
                 },
                 new ComplianceOfficer
                 {
@@ -32,7 +30,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "David",
                     FamilyName = "Brownlee",
-                    Unit = { }
                 },
                 new ComplianceOfficer
                 {
@@ -40,7 +37,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Jacob",
                     FamilyName = "Carpenter",
-                    Unit = { }
                 },
                 new ComplianceOfficer
                 {
@@ -48,7 +44,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Kevin",
                     FamilyName = "Collins",
-                    Unit = { }
                 },
                 new ComplianceOfficer
                 {
@@ -56,7 +51,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Gary",
                     FamilyName = "Davis",
-                    Unit = { }
                 }
             };
         }

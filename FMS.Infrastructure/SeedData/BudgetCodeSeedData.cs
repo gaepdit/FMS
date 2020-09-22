@@ -14,7 +14,6 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("C982D5CC-B641-42ED-B8EB-208B5C36F192"),
                     Active = true,
-                    EnvironmentalInterest = { },
                     Code = "CCLBRWN",
                     Name = "CERCLA Brownfields",
                     OrganizationNumber = "4620740209",
@@ -24,7 +23,6 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("13CD2CA4-9F9C-4CC9-B05A-DDB838A3D4DD"),
                     Active = true,
-                    EnvironmentalInterest = { },
                     Code = "CCLREMED",
                     Name = "CERCLA Remedial H.W.",
                     OrganizationNumber = "462070207",
@@ -34,7 +32,6 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"),
                     Active = true,
-                    EnvironmentalInterest = { },
                     Code = "HWBRVRP",
                     Name = "HW VRP-Brownfield",
                     OrganizationNumber = "4620740600",
@@ -44,7 +41,6 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("5B4D0049-3AA3-4FC7-A8FE-59A771D0F7F8"),
                     Active = true,
-                    EnvironmentalInterest = { },
                     Code = "HWHSRA",
                     Name = "HSRA All Sites",
                     OrganizationNumber = "4620740900",
@@ -54,7 +50,6 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"),
                     Active = true,
-                    EnvironmentalInterest = { },
                     Code = "HWRCRA",
                     Name = "HW RCRA",
                     OrganizationNumber = "4620740201",
