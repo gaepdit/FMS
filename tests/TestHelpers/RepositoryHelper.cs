@@ -26,7 +26,7 @@ namespace TestHelpers
             new ItemsListRepository(new FmsDbContext(_options));
 
         public FacilityRepository GetFacilityRepository() =>
-            new FacilityRepository(new FmsDbContext(_options));
+            new FacilityRepository(new FmsDbContext(_options), GetFileRepository());
 
         public CabinetRepository GetCabinetRepository() =>
             new CabinetRepository(new FmsDbContext(_options));

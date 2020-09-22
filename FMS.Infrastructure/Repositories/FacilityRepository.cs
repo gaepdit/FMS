@@ -1,3 +1,4 @@
+﻿using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
@@ -15,8 +16,13 @@ namespace FMS.Infrastructure.Repositories
     public class FacilityRepository : IFacilityRepository
     {
         private readonly FmsDbContext _context;
+        private readonly IFileRepository _fileRepository;
 
-        public FacilityRepository(FmsDbContext context) => _context = context;
+        public FacilityRepository(FmsDbContext context, IFileRepository fileRepository)
+        {
+            _context = context;
+            _fileRepository = fileRepository;
+        }
 
         public async Task<bool> FacilityExistsAsync(Guid id)
         {
@@ -105,9 +111,42 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
-            // TODO #19: Generate new File ID if newFacility.FileId is null
+            if (string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
+            {
+                throw new ArgumentException("Facility Number is required.");
+            }
 
-            Facility newFac = new Facility(newFacility);
+            File file;
+
+            if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
+            {
+                // Generate new File if File Label is empty
+                if (!Data.Counties.Any(e => e.Id == newFacility.CountyId))
+                {
+                    throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
+                }
+
+                var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(newFacility.CountyId);
+                file = new File(newFacility.CountyId, nextSequence);
+
+                await _context.Files.AddAsync(file);
+            }
+            else
+            {
+                // Otherwise, if File Label is provided, make sure it exists
+                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel);
+
+                if (file == null)
+                {
+                    throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
+                }
+            }
+
+            Facility newFac = new Facility(newFacility)
+            {
+                File = file
+            };
+
             await _context.Facilities.AddAsync(newFac);
             await _context.SaveChangesAsync();
 
@@ -143,6 +182,12 @@ namespace FMS.Infrastructure.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> FileLabelExists(string fileLabel) =>
+            await _context.Files.AnyAsync(e => e.FileLabel == fileLabel);
+
+
+        // Retention Records
 
         public async Task<bool> RetentionRecordExistsAsync(Guid id) =>
             await _context.RetentionRecords.AnyAsync(e => e.Id == id);

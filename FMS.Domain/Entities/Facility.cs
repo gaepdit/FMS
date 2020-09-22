@@ -21,7 +21,6 @@ namespace FMS.Domain.Entities
             OrganizationalUnitId = newFacility.OrganizationalUnitId;
             EnvironmentalInterestId = newFacility.EnvironmentalInterestId;
             ComplianceOfficerId = newFacility.ComplianceOfficerId;
-            FileId = (Guid)newFacility.FileId;
             Location = newFacility.Location;
             Address = newFacility.Address;
             City = newFacility.City;
