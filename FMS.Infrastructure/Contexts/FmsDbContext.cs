@@ -25,7 +25,10 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<CabinetFile> CabinetFileJoin { get; set; }
+        // FacilityList only needed for retrieving results from [dbo].[getNearbyFacilities] stored procedure
+        // This should not be needed in .NET Core 5
         public DbSet<FacilityMapSummaryDto> FacilityList { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));

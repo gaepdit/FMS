@@ -97,7 +97,7 @@ namespace FMS.Infrastructure.Repositories
             var lat = new SqlParameter("@Lat", spec.Latitude);
             var lng = new SqlParameter("@Lng", spec.Longitude);
             var radius = new SqlParameter("@radius", spec.Radius);
-             
+
             return await _context.FacilityList
                 .FromSqlRaw("EXEC dbo.getNearbyFacilities @Lat={0}, @Lng={1}, @radius={2}, @active={3}", lat, lng, radius, active)
                 .ToListAsync();

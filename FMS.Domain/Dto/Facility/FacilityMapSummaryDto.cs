@@ -50,7 +50,5 @@ namespace FMS.Domain.Dto
         [Display(Name = "Distance")]
         [DisplayFormat(DataFormatString = "{0:N2}")]
         public double Distance { get; set; }
-
-        public string FullAddress { get; set; }
     }
 }
