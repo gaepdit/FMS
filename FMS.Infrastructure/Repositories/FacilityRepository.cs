@@ -117,7 +117,6 @@ namespace FMS.Infrastructure.Repositories
             }
 
             File file;
-
             if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
             {
                 // Generate new File if File Label is empty
@@ -134,12 +133,8 @@ namespace FMS.Infrastructure.Repositories
             else
             {
                 // Otherwise, if File Label is provided, make sure it exists
-                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel);
-
-                if (file == null)
-                {
-                    throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
-                }
+                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel)
+                    ?? throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
             Facility newFac = new Facility(newFacility)
@@ -155,11 +150,39 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
-            var facility = await _context.Facilities.FindAsync(id);
+            var facility = await _context.Facilities.FindAsync(id)
+                ?? throw new ArgumentException("Facility ID not found.", nameof(id));
 
-            if (facility == null)
+            if (string.IsNullOrWhiteSpace(facilityUpdates.FacilityNumber))
             {
-                throw new ArgumentException("Facility ID not found.", nameof(id));
+                throw new ArgumentException("Facility Number is required.");
+            }
+
+            File file;
+            if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
+            {
+                // Generate new File if File Label is empty
+                if (!Data.Counties.Any(e => e.Id == facilityUpdates.CountyId))
+                {
+                    throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
+                }
+
+                var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(facilityUpdates.CountyId);
+                file = new File(facilityUpdates.CountyId, nextSequence);
+
+                await _context.Files.AddAsync(file);
+                facility.File = file;
+            }
+            else
+            {
+                // Otherwise, if File Label is provided and different from existing label, make sure it exists
+                var oldFile = await _context.Files.FindAsync(facility.FileId);
+                if (facilityUpdates.FileLabel != oldFile.FileLabel)
+                {
+                    file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
+                    facility.File = file
+                        ?? throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
+                }
             }
 
             facility.Active = facilityUpdates.Active;
@@ -172,7 +195,6 @@ namespace FMS.Infrastructure.Repositories
             facility.OrganizationalUnitId = facilityUpdates.OrganizationalUnitId;
             facility.EnvironmentalInterestId = facilityUpdates.EnvironmentalInterestId;
             facility.ComplianceOfficerId = facilityUpdates.ComplianceOfficerId;
-            facility.FileId = (Guid)facilityUpdates.FileId;
             facility.Location = facilityUpdates.Location;
             facility.Address = facilityUpdates.Address;
             facility.City = facilityUpdates.City;

@@ -9,7 +9,7 @@ namespace FMS.Domain.Dto
         public FacilityEditDto() { }
         public FacilityEditDto(FacilityDetailDto facility)
         {
-            FileId = facility.FileId;
+            FileLabel = facility.FileLabel;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
@@ -18,7 +18,7 @@ namespace FMS.Domain.Dto
             FacilityTypeId = facility.FacilityType.Id;
             BudgetCodeId = facility.BudgetCode.Id;
             OrganizationalUnitId = facility.OrganizationalUnit.Id;
-            EnvironmentalInterestId = facility.EnvironmentalInterest.Id;
+            EnvironmentalInterestId = facility.EnvironmentalInterest?.Id;
             ComplianceOfficerId = facility.ComplianceOfficer.Id;
             Location = facility.Location;
             Address = facility.Address;
@@ -67,9 +67,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Compliance Officer")]
         public Guid ComplianceOfficerId { get; set; }
 
-        [Required]
         [Display(Name = "File Label")]
-        public Guid? FileId { get; set; }
+        public string FileLabel { get; set; }
 
         [Display(Name = "Location Description")]
         public string Location { get; set; }

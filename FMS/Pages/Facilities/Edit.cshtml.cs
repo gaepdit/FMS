@@ -25,7 +25,6 @@ namespace FMS.Pages.Facilities
         public int? CountyArg { get; set; }
 
         // Select Lists
-        public SelectList Files { get; private set; }
         public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
         public SelectList States => new SelectList(Data.States);
         public SelectList FacilityStatuses { get; private set; }
@@ -71,7 +70,20 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            // TODO #19: If editing facility number, make sure the new number doesn't already exist before trying to save. 
+            // If new File Label is provided, make sure it exists
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
+                !await _repository.FileLabelExists(Facility.FileLabel))
+            {
+                ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
+            }
+
+            // TODO #66: If editing facility number, make sure the new number doesn't already exist before trying to save. 
+
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
 
             try
             {
@@ -95,7 +107,6 @@ namespace FMS.Pages.Facilities
 
         private async Task PopulateSelectsAsync()
         {
-            Files = await _listHelper.FilesSelectListAsync();
             BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
             EnvironmentalInterests = await _listHelper.EnvironmentalInterestsSelectListAsync();

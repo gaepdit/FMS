@@ -2,7 +2,6 @@ using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
@@ -257,7 +256,7 @@ namespace FMS.Infrastructure.Tests
         public async Task CreateFacility_WithEmptyFacilityNumber_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-        
+
             var newFacility = new FacilityCreateDto()
             {
                 FacilityNumber = " ",
@@ -387,7 +386,7 @@ namespace FMS.Infrastructure.Tests
         // UpdateFacilityAsync
 
         [Fact]
-        public async Task UpdateFacilityCounty_Succeeds()
+        public async Task UpdateFacility_County_Succeeds()
         {
             var repositoryHelper = new RepositoryHelper();
             int newCountyId = 99;
@@ -406,14 +405,14 @@ namespace FMS.Infrastructure.Tests
                 var expected = DataHelpers.GetFacilityDetail(facilityId);
                 expected.County = DataHelpers.GetCounty(newCountyId);
 
-                var updatedFacility = await repository.GetFacilityAsync(expected.Id);
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
 
                 updatedFacility.Should().BeEquivalentTo(expected);
             }
         }
 
         [Fact]
-        public async Task UpdateFacilityState_Succeeds()
+        public async Task UpdateFacility_State_Succeeds()
         {
             var repositoryHelper = new RepositoryHelper();
             string newState = "Alabama";
@@ -432,14 +431,61 @@ namespace FMS.Infrastructure.Tests
                 var expected = DataHelpers.GetFacilityDetail(facilityId);
                 expected.State = newState;
 
-                var updatedFacility = await repository.GetFacilityAsync(expected.Id);
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
 
                 updatedFacility.Should().BeEquivalentTo(expected);
             }
         }
 
         [Fact]
-        public async Task UpdateNonexistentFacility_ThrowsException()
+        public async Task UpdateFacility_ChangeFile_Succeeds()
+        {
+            var repositoryHelper = new RepositoryHelper();
+            Guid facilityId = DataHelpers.Facilities[0].Id;
+            File newFile = DataHelpers.Files.Single(e => e.FileLabel == "248-0001");
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var updates = new FacilityEditDto(facility) { FileLabel = newFile.FileLabel };
+
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            }
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
+
+                updatedFacility.FileLabel.Should().Be(newFile.FileLabel);
+                updatedFacility.FileId.Should().Be(newFile.Id);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateFacility_WithBlankFile_SucceedsAndCreatesNewFile()
+        {
+            var repositoryHelper = new RepositoryHelper();
+            Guid facilityId = DataHelpers.Facilities[0].Id;
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var updates = new FacilityEditDto(facility) { FileLabel = "" };
+
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            }
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
+
+                updatedFacility.FileLabel.ShouldNotBeNull();
+                updatedFacility.FileLabel.Should().StartWith(DataHelpers.Facilities[0].CountyId.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task UpdateFacility_NonexistentId_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var updates = new FacilityEditDto() { CountyId = 99 };
@@ -451,6 +497,25 @@ namespace FMS.Infrastructure.Tests
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
+        }
+
+        [Fact]
+        public async Task UpdateFacility_WithNonexistentFile_ThrowsException()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            string newFileLabel = "999-9999";
+
+            Guid facilityId = DataHelpers.Facilities[0].Id;
+            var facility = DataHelpers.GetFacilityDetail(facilityId);
+            var updates = new FacilityEditDto(facility) { FileLabel = newFileLabel };
+
+            Func<Task> action = async () =>
+            {
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"File Label {newFileLabel} does not exist.");
         }
 
         // RetentionRecordExistsAsync

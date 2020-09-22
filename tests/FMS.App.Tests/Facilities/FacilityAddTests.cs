@@ -35,8 +35,14 @@ namespace FMS.App.Tests.Facilities
             mockRepo.Setup(l => l.CreateFacilityAsync(It.IsAny<FacilityCreateDto>()))
                 .ReturnsAsync(newId)
                 .Verifiable();
+            mockRepo.Setup(l => l.FileLabelExists(It.IsAny<string>()))
+                .ReturnsAsync(true);
+
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object)
+            {
+                Facility = new FacilityCreateDto { State = "Georgia" }
+            };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
