@@ -19,15 +19,14 @@ namespace FMS.Pages.Facilities
         public FacilitySpec Spec { get; set; }
 
         // List of facilities resulting from the search
-        public IReadOnlyList<FacilitySummaryDto> FacilityList { get; set; }
+        public IReadOnlyList<FacilitySummaryDto> FacilityList { get; private set; }
 
         public int? CountyArg { get; set; }
 
         // Shows results section after searching
-        public bool ShowResults { get; set; }
+        public bool ShowResults { get; private set; }
 
         // Select Lists
-        public SelectList Files { get; private set; }
         public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
         public SelectList States => new SelectList(Data.States);
         public SelectList FacilityStatuses { get; private set; }
@@ -64,7 +63,6 @@ namespace FMS.Pages.Facilities
 
         private async Task PopulateSelectsAsync()
         {
-            Files = await _listHelper.FilesSelectListAsync();
             BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
             EnvironmentalInterests = await _listHelper.EnvironmentalInterestsSelectListAsync();

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Pages.Facilities.IndexModel
 @{
     ViewData["Title"] = "Facility Search";
@@ -14,10 +14,9 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label asp-for="Spec.FileId"></label>
-                <select asp-for="Spec.FileId" asp-items="Model.Files" class="custom-select">
-                    <option value=""></option>
-                </select>
+                <label asp-for="Spec.FileLabel"></label>
+                <input asp-for="Spec.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" />
+                <small id="FileIdHelpBlock" class="form-text text-muted">Partial match is okay.</small>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FacilityNumber"></label>
@@ -110,7 +109,7 @@
 
 @if (Model.ShowResults)
 {
-    <a name="SearchResults"></a>
+    <a id="SearchResults"></a>
 
     @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
     {

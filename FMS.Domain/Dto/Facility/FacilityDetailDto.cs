@@ -96,7 +96,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; set; }
- 
+
         public List<string> Cabinets { get; set; }
 
         public List<RetentionRecordDetailDto> RetentionRecords { get; set; }

@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Dto;
+﻿using FMS.Domain.Data;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
@@ -15,8 +16,13 @@ namespace FMS.Infrastructure.Repositories
     public class FacilityRepository : IFacilityRepository
     {
         private readonly FmsDbContext _context;
+        private readonly IFileRepository _fileRepository;
 
-        public FacilityRepository(FmsDbContext context) => _context = context;
+        public FacilityRepository(FmsDbContext context, IFileRepository fileRepository)
+        {
+            _context = context;
+            _fileRepository = fileRepository;
+        }
 
         public async Task<bool> FacilityExistsAsync(Guid id)
         {
@@ -58,7 +64,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
                 .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
                 .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
-                .Where(e => !spec.FileId.HasValue || e.File.Id.Equals(spec.FileId))
+                .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
                 .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
@@ -79,7 +85,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
                 .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
                 .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
-                .Where(e => !spec.FileId.HasValue || e.File.Id.Equals(spec.FileId))
+                .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
                 .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
@@ -105,9 +111,37 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
-            // TODO #19: Generate new File ID if newFacility.FileId is null
+            if (string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
+            {
+                throw new ArgumentException("Facility Number is required.");
+            }
 
-            Facility newFac = new Facility(newFacility);
+            File file;
+            if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
+            {
+                // Generate new File if File Label is empty
+                if (!Data.Counties.Any(e => e.Id == newFacility.CountyId))
+                {
+                    throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
+                }
+
+                var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(newFacility.CountyId);
+                file = new File(newFacility.CountyId, nextSequence);
+
+                await _context.Files.AddAsync(file);
+            }
+            else
+            {
+                // Otherwise, if File Label is provided, make sure it exists
+                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel)
+                    ?? throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
+            }
+
+            Facility newFac = new Facility(newFacility)
+            {
+                File = file
+            };
+
             await _context.Facilities.AddAsync(newFac);
             await _context.SaveChangesAsync();
 
@@ -116,11 +150,39 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
-            var facility = await _context.Facilities.FindAsync(id);
+            var facility = await _context.Facilities.FindAsync(id)
+                ?? throw new ArgumentException("Facility ID not found.", nameof(id));
 
-            if (facility == null)
+            if (string.IsNullOrWhiteSpace(facilityUpdates.FacilityNumber))
             {
-                throw new ArgumentException("Facility ID not found.", nameof(id));
+                throw new ArgumentException("Facility Number is required.");
+            }
+
+            File file;
+            if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
+            {
+                // Generate new File if File Label is empty
+                if (!Data.Counties.Any(e => e.Id == facilityUpdates.CountyId))
+                {
+                    throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
+                }
+
+                var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(facilityUpdates.CountyId);
+                file = new File(facilityUpdates.CountyId, nextSequence);
+
+                await _context.Files.AddAsync(file);
+                facility.File = file;
+            }
+            else
+            {
+                // Otherwise, if File Label is provided and different from existing label, make sure it exists
+                var oldFile = await _context.Files.FindAsync(facility.FileId);
+                if (facilityUpdates.FileLabel != oldFile.FileLabel)
+                {
+                    file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
+                    facility.File = file
+                        ?? throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
+                }
             }
 
             facility.Active = facilityUpdates.Active;
@@ -133,7 +195,6 @@ namespace FMS.Infrastructure.Repositories
             facility.OrganizationalUnitId = facilityUpdates.OrganizationalUnitId;
             facility.EnvironmentalInterestId = facilityUpdates.EnvironmentalInterestId;
             facility.ComplianceOfficerId = facilityUpdates.ComplianceOfficerId;
-            facility.FileId = (Guid)facilityUpdates.FileId;
             facility.Location = facilityUpdates.Location;
             facility.Address = facilityUpdates.Address;
             facility.City = facilityUpdates.City;
@@ -143,6 +204,12 @@ namespace FMS.Infrastructure.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> FileLabelExists(string fileLabel) =>
+            await _context.Files.AnyAsync(e => e.FileLabel == fileLabel);
+
+
+        // Retention Records
 
         public async Task<bool> RetentionRecordExistsAsync(Guid id) =>
             await _context.RetentionRecords.AnyAsync(e => e.Id == id);

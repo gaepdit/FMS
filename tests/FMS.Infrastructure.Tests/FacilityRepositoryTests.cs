@@ -2,7 +2,6 @@ using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestHelpers;
@@ -172,34 +171,31 @@ namespace FMS.Infrastructure.Tests
         public async Task CreateFacility_Succeeds()
         {
             var repositoryHelper = new RepositoryHelper();
-            Guid facilityId = DataHelpers.Facilities[0].Id;
-            FacilityDetailDto sampleFacility;
+
             Guid newFacilityId;
+            var newFacility = new FacilityCreateDto()
+            {
+                FacilityNumber = "ABC",
+                Name = "New Facility",
+                FileLabel = "243-0001",
+                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
+                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
+                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
+                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
+                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
+                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                Location = "Description of Location",
+                Address = "123 Fake St.",
+                City = "WOODSTOCK",
+                State = "Georgia",
+                PostalCode = "30188",
+                Latitude = 34.114309m,
+                Longitude = -84.470057m,
+                CountyId = 243, // Cherokee
+            };
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                sampleFacility = await repository.GetFacilityAsync(facilityId);
-                var newFacility = new FacilityCreateDto()
-                {
-                    Address = sampleFacility.Address,
-                    BudgetCodeId = sampleFacility.BudgetCode.Id,
-                    City = sampleFacility.City,
-                    ComplianceOfficerId = sampleFacility.ComplianceOfficer.Id,
-                    CountyId = sampleFacility.County.Id,
-                    EnvironmentalInterestId = sampleFacility.EnvironmentalInterest.Id,
-                    FacilityNumber = sampleFacility.FacilityNumber,
-                    FacilityStatusId = sampleFacility.FacilityStatus.Id,
-                    FacilityTypeId = sampleFacility.FacilityType.Id,
-                    FileId = sampleFacility.FileId,
-                    Latitude = sampleFacility.Latitude,
-                    Location = sampleFacility.Location,
-                    Longitude = sampleFacility.Longitude,
-                    Name = sampleFacility.Name,
-                    OrganizationalUnitId = sampleFacility.OrganizationalUnit.Id,
-                    PostalCode = sampleFacility.PostalCode,
-                    State = sampleFacility.State
-                };
-
                 newFacilityId = await repository.CreateFacilityAsync(newFacility);
             }
 
@@ -207,47 +203,41 @@ namespace FMS.Infrastructure.Tests
             {
                 var createdFacility = await repository.GetFacilityAsync(newFacilityId);
 
-                // Set sample facility properties to match for comparison
-                sampleFacility.Id = newFacilityId;
-                sampleFacility.RetentionRecords = new List<RetentionRecordDetailDto>();
-
-                createdFacility.Should().BeEquivalentTo(sampleFacility);
+                createdFacility.Id.Should().Be(newFacilityId);
+                createdFacility.FileLabel.Should().Be(newFacility.FileLabel);
+                createdFacility.Name.Should().Be(newFacility.Name);
             }
         }
 
-        // TODO #19: Generate new File ID if newFacility.FileId is null
-        [Fact(Skip = "Not implemented yet")]
-        public async Task CreateFacility_EmptyFileID_SucceedsAndCreatesNewFile()
+        [Fact]
+        public async Task CreateFacility_WithoutFileLabel_SucceedsAndCreatesNewFile()
         {
             var repositoryHelper = new RepositoryHelper();
-            Guid facilityId = DataHelpers.Facilities[0].Id;
-            FacilityDetailDto sampleFacility;
+
             Guid newFacilityId;
+            var newFacility = new FacilityCreateDto()
+            {
+                FacilityNumber = "ABC",
+                Name = "New Facility",
+                FileLabel = null,
+                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
+                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
+                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
+                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
+                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
+                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                Location = "Description of Location",
+                Address = "123 Fake St.",
+                City = "WOODSTOCK",
+                State = "Georgia",
+                PostalCode = "30188",
+                Latitude = 34.114309m,
+                Longitude = -84.470057m,
+                CountyId = 243, // Cherokee
+            };
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                sampleFacility = await repository.GetFacilityAsync(facilityId);
-                var newFacility = new FacilityCreateDto()
-                {
-                    Address = sampleFacility.Address,
-                    BudgetCodeId = sampleFacility.BudgetCode.Id,
-                    City = sampleFacility.City,
-                    ComplianceOfficerId = sampleFacility.ComplianceOfficer.Id,
-                    CountyId = sampleFacility.County.Id,
-                    EnvironmentalInterestId = sampleFacility.EnvironmentalInterest.Id,
-                    FacilityNumber = sampleFacility.FacilityNumber,
-                    FacilityStatusId = sampleFacility.FacilityStatus.Id,
-                    FacilityTypeId = sampleFacility.FacilityType.Id,
-                    FileId = null,
-                    Latitude = sampleFacility.Latitude,
-                    Location = sampleFacility.Location,
-                    Longitude = sampleFacility.Longitude,
-                    Name = sampleFacility.Name,
-                    OrganizationalUnitId = sampleFacility.OrganizationalUnit.Id,
-                    PostalCode = sampleFacility.PostalCode,
-                    State = sampleFacility.State
-                };
-
                 newFacilityId = await repository.CreateFacilityAsync(newFacility);
             }
 
@@ -255,29 +245,49 @@ namespace FMS.Infrastructure.Tests
             {
                 var createdFacility = await repository.GetFacilityAsync(newFacilityId);
 
-                // Set sample facility properties to match for comparison
-                sampleFacility.Id = newFacilityId;
-                createdFacility.Should().BeEquivalentTo(sampleFacility);
+                createdFacility.Id.Should().Be(newFacilityId);
+                createdFacility.FileLabel.Should().NotBeNullOrEmpty();
+                createdFacility.FileLabel.Should().StartWith(newFacility.CountyId.ToString());
+                createdFacility.Name.Should().Be(newFacility.Name);
             }
         }
 
-        // TODO #56: Implement required fields
-        [Fact(Skip = "Not implemented yet")]
-        public async Task CreateFacility_WithEmptyNumber_ThrowsException()
+        [Fact]
+        public async Task CreateFacility_WithEmptyFacilityNumber_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var FacilityCreate = new FacilityCreateDto();
+
+            var newFacility = new FacilityCreateDto()
+            {
+                FacilityNumber = " ",
+                Name = "New Facility",
+                FileLabel = null,
+                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
+                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
+                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
+                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
+                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
+                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                Location = "Description of Location",
+                Address = "123 Fake St.",
+                City = "WOODSTOCK",
+                State = "Georgia",
+                PostalCode = "30188",
+                Latitude = 34.114309m,
+                Longitude = -84.470057m,
+                CountyId = 243, // Cherokee
+            };
 
             Func<Task> action = async () =>
             {
-                var result = await repository.CreateFacilityAsync(FacilityCreate);
+                var result = await repository.CreateFacilityAsync(newFacility);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage("Facility Number can not be null or empty.");
+                .WithMessage("Facility Number is required.");
         }
 
-        // TODO #19: When adding a new facility number, make sure the number doesn't already exist before trying to save. 
+        // TODO #66: When adding a new facility number, make sure the number doesn't already exist before trying to save. 
         [Fact(Skip = "Not implemented yet")]
         public async Task CreateFacility_WithExistingNumber_ThrowsException()
         {
@@ -294,10 +304,89 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"Facility Number '{FacilityCreate.FacilityNumber}' already exists.");
         }
 
+
+        [Fact]
+        public async Task CreateFacility_WithWhitespaceFileLabel_SucceedsAndCreatesNewFile()
+        {
+            var repositoryHelper = new RepositoryHelper();
+
+            Guid newFacilityId;
+            var newFacility = new FacilityCreateDto()
+            {
+                FacilityNumber = "ABC",
+                Name = "New Facility",
+                FileLabel = " ",
+                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
+                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
+                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
+                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
+                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
+                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                Location = "Description of Location",
+                Address = "123 Fake St.",
+                City = "WOODSTOCK",
+                State = "Georgia",
+                PostalCode = "30188",
+                Latitude = 34.114309m,
+                Longitude = -84.470057m,
+                CountyId = 243, // Cherokee
+            };
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                newFacilityId = await repository.CreateFacilityAsync(newFacility);
+            }
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var createdFacility = await repository.GetFacilityAsync(newFacilityId);
+
+                createdFacility.Id.Should().Be(newFacilityId);
+                createdFacility.FileLabel.Should().NotBeNullOrEmpty();
+                createdFacility.FileLabel.Should().StartWith(newFacility.CountyId.ToString());
+                createdFacility.Name.Should().Be(newFacility.Name);
+            }
+        }
+
+        [Fact]
+        public async Task CreateFacility_WithNonexistentFileLabel_ThrowsException()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+
+            var newFacility = new FacilityCreateDto()
+            {
+                FacilityNumber = "ABC",
+                Name = "New Facility",
+                FileLabel = "ABC999",
+                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
+                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
+                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
+                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
+                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
+                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                Location = "Description of Location",
+                Address = "123 Fake St.",
+                City = "WOODSTOCK",
+                State = "Georgia",
+                PostalCode = "30188",
+                Latitude = 34.114309m,
+                Longitude = -84.470057m,
+                CountyId = 243, // Cherokee
+            };
+
+            Func<Task> action = async () =>
+            {
+                var result = await repository.CreateFacilityAsync(newFacility);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"File Label {newFacility.FileLabel} does not exist.");
+        }
+
         // UpdateFacilityAsync
 
         [Fact]
-        public async Task UpdateFacilityCounty_Succeeds()
+        public async Task UpdateFacility_County_Succeeds()
         {
             var repositoryHelper = new RepositoryHelper();
             int newCountyId = 99;
@@ -316,14 +405,14 @@ namespace FMS.Infrastructure.Tests
                 var expected = DataHelpers.GetFacilityDetail(facilityId);
                 expected.County = DataHelpers.GetCounty(newCountyId);
 
-                var updatedFacility = await repository.GetFacilityAsync(expected.Id);
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
 
                 updatedFacility.Should().BeEquivalentTo(expected);
             }
         }
 
         [Fact]
-        public async Task UpdateFacilityState_Succeeds()
+        public async Task UpdateFacility_State_Succeeds()
         {
             var repositoryHelper = new RepositoryHelper();
             string newState = "Alabama";
@@ -342,14 +431,61 @@ namespace FMS.Infrastructure.Tests
                 var expected = DataHelpers.GetFacilityDetail(facilityId);
                 expected.State = newState;
 
-                var updatedFacility = await repository.GetFacilityAsync(expected.Id);
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
 
                 updatedFacility.Should().BeEquivalentTo(expected);
             }
         }
 
         [Fact]
-        public async Task UpdateNonexistentFacility_ThrowsException()
+        public async Task UpdateFacility_ChangeFile_Succeeds()
+        {
+            var repositoryHelper = new RepositoryHelper();
+            Guid facilityId = DataHelpers.Facilities[0].Id;
+            File newFile = DataHelpers.Files.Single(e => e.FileLabel == "248-0001");
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var updates = new FacilityEditDto(facility) { FileLabel = newFile.FileLabel };
+
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            }
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
+
+                updatedFacility.FileLabel.Should().Be(newFile.FileLabel);
+                updatedFacility.FileId.Should().Be(newFile.Id);
+            }
+        }
+
+        [Fact]
+        public async Task UpdateFacility_WithBlankFile_SucceedsAndCreatesNewFile()
+        {
+            var repositoryHelper = new RepositoryHelper();
+            Guid facilityId = DataHelpers.Facilities[0].Id;
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var updates = new FacilityEditDto(facility) { FileLabel = "" };
+
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            }
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var updatedFacility = await repository.GetFacilityAsync(facilityId);
+
+                updatedFacility.FileLabel.ShouldNotBeNull();
+                updatedFacility.FileLabel.Should().StartWith(DataHelpers.Facilities[0].CountyId.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task UpdateFacility_NonexistentId_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var updates = new FacilityEditDto() { CountyId = 99 };
@@ -361,6 +497,25 @@ namespace FMS.Infrastructure.Tests
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
+        }
+
+        [Fact]
+        public async Task UpdateFacility_WithNonexistentFile_ThrowsException()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+            string newFileLabel = "999-9999";
+
+            Guid facilityId = DataHelpers.Facilities[0].Id;
+            var facility = DataHelpers.GetFacilityDetail(facilityId);
+            var updates = new FacilityEditDto(facility) { FileLabel = newFileLabel };
+
+            Func<Task> action = async () =>
+            {
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"File Label {newFileLabel} does not exist.");
         }
 
         // RetentionRecordExistsAsync

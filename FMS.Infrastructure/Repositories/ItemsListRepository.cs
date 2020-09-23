@@ -59,13 +59,6 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetFacilityTypesItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<FacilityType>(includeInactive);
 
-        public async Task<IEnumerable<ListItem>> GetFilesItemListAsync(bool includeInactive = false) =>
-            await _context.Files.AsNoTracking()
-                .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.FileLabel)
-                .Select(e => new ListItem() { Id = e.Id, Name = e.FileLabel })
-                .ToListAsync();
-
         public async Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<OrganizationalUnit>(includeInactive);
 
