@@ -15,8 +15,7 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FileLabel"></label>
-                <input asp-for="Spec.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" />
-                <small id="FileIdHelpBlock" class="form-text text-muted">Partial match is okay.</small>
+                <input asp-for="Spec.FileLabel" class="form-control" />
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Spec.FacilityNumber"></label>
@@ -128,49 +127,49 @@
             <tbody>
                 @foreach (var item in Model.FacilityList)
                 {
-                <tr>
-                    <td>
-                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
-                            @Html.DisplayFor(m => item.FacilityNumber)
-                        </a>
-                    </td>
-                    <td class="text-nowrap">
-                        @item.FileLabel
-                    </td>
-                    <td>@Html.DisplayFor(m => item.Name)</td>
-                    <td>
-                        @Html.DisplayFor(m => item.Address)<br />
-                        @Html.DisplayFor(m => item.City),
-                        @Html.DisplayFor(m => item.State)
-                        @Html.DisplayFor(m => item.PostalCode)
-                    </td>
-                    <td>
-                        @if (item.Cabinets.Count > 0)
-                        {
-                            @item.Cabinets.ConcatNonEmpty(", ");
-                        }
-                        else
-                        {
-                            <span class="text-muted">none</span>
-                        }
-                    </td>
-                    <td>
-                        @if (item.RetentionRecords.Count > 0)
-                        {
-                            <ul class="list-unstyled">
-                                @foreach (var r in item.RetentionRecords)
-                                {
-                                    <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
-                                }
-                            </ul>
-                        }
-                        else
-                        {
-                            <span class="text-muted">none</span>
-                        }
-                    </td>
-                    <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
-                </tr>
+                    <tr>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                            </a>
+                        </td>
+                        <td class="text-nowrap">
+                            @Html.DisplayFor(m => item.FileLabel, "StringOrNone")
+                        </td>
+                        <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
+                        <td>
+                            @Html.DisplayFor(m => item.Address, "StringOrNone")<br />
+                            @Html.DisplayFor(m => item.City, "StringOrNone"),
+                            @Html.DisplayFor(m => item.State, "StringOrNone")
+                            @Html.DisplayFor(m => item.PostalCode, "StringOrNone")
+                        </td>
+                        <td>
+                            @if (item.Cabinets.Count > 0)
+                            {
+                                @item.Cabinets.ConcatNonEmpty(", ");
+                            }
+                            else
+                            {
+                                <span class="text-muted">none</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.RetentionRecords.Count > 0)
+                            {
+                                <ul class="list-unstyled">
+                                    @foreach (var r in item.RetentionRecords)
+                                    {
+                                        <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span class="text-muted">none</span>
+                            }
+                        </td>
+                        <td class="text-center">@Html.DisplayFor(m => item.Active)</td>
+                    </tr>
                 }
             </tbody>
         </table>
