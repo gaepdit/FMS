@@ -14,12 +14,12 @@ namespace FMS.Domain.Dto
             Name = facility.Name;
             Active = facility.Active;
             CountyId = facility.County.Id;
-            FacilityStatusId = facility.FacilityStatus.Id;
-            FacilityTypeId = facility.FacilityType.Id;
-            BudgetCodeId = facility.BudgetCode.Id;
-            OrganizationalUnitId = facility.OrganizationalUnit.Id;
+            FacilityStatusId = facility.FacilityStatus?.Id;
+            FacilityTypeId = facility.FacilityType?.Id;
+            BudgetCodeId = facility.BudgetCode?.Id;
+            OrganizationalUnitId = facility.OrganizationalUnit?.Id;
             EnvironmentalInterestId = facility.EnvironmentalInterest?.Id;
-            ComplianceOfficerId = facility.ComplianceOfficer.Id;
+            ComplianceOfficerId = facility.ComplianceOfficer?.Id;
             Location = facility.Location;
             Address = facility.Address;
             City = facility.City;
@@ -46,26 +46,26 @@ namespace FMS.Domain.Dto
 
         [Required]
         [Display(Name = "Facility Status")]
-        public Guid FacilityStatusId { get; set; }
+        public Guid? FacilityStatusId { get; set; }
 
         [Required]
         [Display(Name = "Facility Type")]
-        public Guid FacilityTypeId { get; set; }
+        public Guid? FacilityTypeId { get; set; }
 
         [Required]
         [Display(Name = "Budget Code")]
-        public Guid BudgetCodeId { get; set; }
+        public Guid? BudgetCodeId { get; set; }
 
         [Required]
         [Display(Name = "Organizational Unit")]
-        public Guid OrganizationalUnitId { get; set; }
+        public Guid? OrganizationalUnitId { get; set; }
 
         [Display(Name = "Environmental Interest")]
         public Guid? EnvironmentalInterestId { get; set; }
 
         [Required]
         [Display(Name = "Compliance Officer")]
-        public Guid ComplianceOfficerId { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
 
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
@@ -81,6 +81,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "City")]
         public string City { get; set; }
 
+        [Required]
         [Display(Name = "State")]
         public string State { get; set; }
 
