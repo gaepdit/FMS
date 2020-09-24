@@ -91,12 +91,12 @@ namespace FMS.Domain.Dto
 
         [Required]
         [Display(Name = "Latitude")]
-        [DisplayFormat(DataFormatString = "{0:F6}")]
+        [DisplayFormat(DataFormatString = "{0:F6}", ApplyFormatInEditMode = true)]
         public decimal Latitude { get; set; }
 
         [Required]
         [Display(Name = "Longitude")]
-        [DisplayFormat(DataFormatString = "{0:F6}")]
+        [DisplayFormat(DataFormatString = "{0:F6}", ApplyFormatInEditMode = true)]
         public decimal Longitude { get; set; }
     }
 }
