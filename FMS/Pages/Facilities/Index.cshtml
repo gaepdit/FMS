@@ -138,10 +138,10 @@
                         </td>
                         <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
                         <td>
-                            @Html.DisplayFor(m => item.Address, "StringOrNone")<br />
-                            @Html.DisplayFor(m => item.City, "StringOrNone"),
-                            @Html.DisplayFor(m => item.State, "StringOrNone")
-                            @Html.DisplayFor(m => item.PostalCode, "StringOrNone")
+                            @Html.DisplayFor(m => item.Address)<br />
+                            @Html.DisplayFor(m => item.City),
+                            @Html.DisplayFor(m => item.State)
+                            @Html.DisplayFor(m => item.PostalCode)
                         </td>
                         <td>
                             @if (item.Cabinets.Count > 0)
