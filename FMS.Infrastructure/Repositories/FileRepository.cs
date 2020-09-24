@@ -83,7 +83,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateFileAsync(int countyNum)
         {
-            if (!Data.Counties.Any(e => e.Id == countyNum))
+            if (Data.Counties.All(e => e.Id != countyNum))
             {
                 throw new ArgumentException($"County ID {countyNum} does not exist.", nameof(countyNum));
             }

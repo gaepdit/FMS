@@ -31,8 +31,8 @@ namespace FMS.Domain.Entities
         public int SequenceNumber => int.Parse(FileLabel.Substring(4, 4));
 
         public static string CountyString(int countyNum) =>
-            !Counties.Any(e => e.Id == countyNum)
-            ? throw new ArgumentException($"County ID {countyNum} does not exist.", nameof(countyNum))
+            Counties.All(e => e.Id != countyNum)
+                ? throw new ArgumentException($"County ID {countyNum} does not exist.", nameof(countyNum))
             : countyNum.ToString().PadLeft(3, '0');
 
         public static string SequenceString(int sequence) =>

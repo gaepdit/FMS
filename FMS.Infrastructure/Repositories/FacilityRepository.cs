@@ -1,4 +1,4 @@
-using FMS.Domain.Data;
+﻿using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
@@ -24,10 +24,8 @@ namespace FMS.Infrastructure.Repositories
             _fileRepository = fileRepository;
         }
 
-        public async Task<bool> FacilityExistsAsync(Guid id)
-        {
-            return await _context.Facilities.AnyAsync(e => e.Id == id);
-        }
+        public async Task<bool> FacilityExistsAsync(Guid id) => 
+            await _context.Facilities.AnyAsync(e => e.Id == id);
 
         public async Task<FacilityDetailDto> GetFacilityAsync(Guid id)
         {
@@ -120,7 +118,7 @@ namespace FMS.Infrastructure.Repositories
             if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
             {
                 // Generate new File if File Label is empty
-                if (!Data.Counties.Any(e => e.Id == newFacility.CountyId))
+                if (Data.Counties.All(e => e.Id != newFacility.CountyId))
                 {
                     throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
                 }
@@ -162,7 +160,7 @@ namespace FMS.Infrastructure.Repositories
             if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
             {
                 // Generate new File if File Label is empty
-                if (!Data.Counties.Any(e => e.Id == facilityUpdates.CountyId))
+                if (Data.Counties.All(e => e.Id != facilityUpdates.CountyId))
                 {
                     throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
                 }
