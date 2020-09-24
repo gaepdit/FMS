@@ -8,17 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="QueryStrings\**" />
-    <Compile Remove="Resources\**" />
-    <Content Remove="QueryStrings\**" />
-    <Content Remove="Resources\**" />
-    <EmbeddedResource Remove="QueryStrings\**" />
-    <EmbeddedResource Remove="Resources\**" />
-    <None Remove="QueryStrings\**" />
-    <None Remove="Resources\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
@@ -37,13 +26,5 @@
     <ProjectReference Include="..\FMS.Infrastructure\FMS.Infrastructure.csproj" />
     <ProjectReference Include="..\FMS.Domain\FMS.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="wwwroot\favicon.ico">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 
 </Project>
