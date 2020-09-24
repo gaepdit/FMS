@@ -4,7 +4,7 @@
     <partial name="_ValidationScriptsPartial" />
     <script type="text/javascript">
         $(document).ready(function domReady() {
-            $("#Facility_FileLabel").change(function () {
+            $("#Facility_FileLabel").on("input", function () {
                 if ($(this).val() === "") {
                     $("#FileIdHelpBlock").removeClass("d-none");
                 } else {
