@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Data;
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
@@ -185,7 +185,7 @@ namespace FMS.Infrastructure.Repositories
                 }
             }
 
-            facility.Active = facilityUpdates.Active;
+            // facility.Active = facilityUpdates.Active;
             facility.CountyId = facilityUpdates.CountyId;
             facility.FacilityNumber = facilityUpdates.FacilityNumber;
             facility.Name = facilityUpdates.Name;

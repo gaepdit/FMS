@@ -66,12 +66,6 @@
                 </select>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="form-check">
-                <input asp-for="Spec.ActiveOnly" />
-                <label asp-for="Spec.ActiveOnly" class="form-check-label"></label>
-            </div>
-        </div>
         <input type="hidden" name="handler" value="search" />
         <button id="Search" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
         <a asp-page="./Map" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
@@ -108,7 +102,6 @@
                             <th scope="col">Address</th>
                             <th scope="col">Type</th>
                             <th scope="col">Status</th>
-                            <th scope="col" class="text-center">Active</th>
                             <th scope="col">Distance</th>
                         </tr>
                     </thead>
@@ -143,9 +136,6 @@
 
                                     <td style="white-space: nowrap">
                                         @Html.DisplayFor(m => item.FacilityStatus)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(m => item.Active)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(m => item.Distance) mi

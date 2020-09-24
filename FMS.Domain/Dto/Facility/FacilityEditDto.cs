@@ -38,7 +38,7 @@ namespace FMS.Domain.Dto
         public string Name { get; set; }
 
         [Display(Name = "Active Site")]
-        public bool Active { get; set; } = true;
+        public bool Active { get; }
 
         [Required]
         [Display(Name = "County")]
