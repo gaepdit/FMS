@@ -2,6 +2,17 @@
 @model Pages.Facilities.EditModel
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        $(document).ready(function domReady() {
+            $("#Facility_FileLabel").change(function () {
+                if ($(this).val() === "") {
+                    $("#FileIdHelpBlock").removeClass("d-none");
+                } else {
+                    $("#FileIdHelpBlock").addClass("d-none");
+                }
+            });
+        });
+    </script>
 }
 @{
     ViewData["Title"] = $"Edit Facility: {Model.Facility.FacilityNumber}";
@@ -16,7 +27,7 @@
                 <label asp-for="Facility.FileLabel"></label>
                 <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" />
                 <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
-                <small id="FileIdHelpBlock" class="form-text text-muted">Enter an existing File or leave blank to create a new File.</small>
+                <small id="FileIdHelpBlock" class="d-none form-text px-1 rounded bg-info text-white">A blank File Label will create a new File.</small>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Facility.FacilityNumber"></label>
