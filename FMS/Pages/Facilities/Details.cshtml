@@ -7,7 +7,7 @@
     @ViewData["Title"]
     @if (!Model.FacilityDetail.Active)
     {
-        <span class="text-muted">(Inactive)</span>
+        <span class="text-muted">(Deleted)</span>
     }
     @* TODO #38: Add authorize check in production *@
     <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>

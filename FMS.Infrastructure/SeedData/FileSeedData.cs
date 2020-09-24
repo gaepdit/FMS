@@ -34,6 +34,11 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"),
                     FileLabel = "180-0003",
+                },
+                new File
+                {
+                    Id = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb69"),
+                    FileLabel = "099-0002",
                     Active = false,
                 },
                 new File
@@ -44,9 +49,14 @@ namespace FMS.Infrastructure.SeedData
                 new File
                 {
                     Id = new Guid("47B44DDE-D9D0-4799-AB32-20E829F9D53C"),
-                    Active = false,
                     FileLabel = "164-0001",     //telfair
-                }
+                },
+                new File
+                {
+                    Id = new Guid("47B44DDE-D9D0-4799-AB32-20E829F9D53D"),
+                    Active = false,
+                    FileLabel = "099-0001",     //telfair
+                },
             };
         }
     }

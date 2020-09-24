@@ -22,13 +22,13 @@ namespace FMS.Domain.Dto
                 ?? new List<CabinetSummaryDto>();
         }
 
-        public Guid Id { get; set; }
-        public bool Active { get; set; }
+        public Guid Id { get; }
+        public bool Active { get; }
 
         [Display(Name = "File Label")]
-        public string FileLabel { get; set; }
+        public string FileLabel { get; }
 
-        public List<CabinetSummaryDto> Cabinets { get; set; }
-        public List<FacilitySummaryDto> Facilities { get; set; }
+        public List<CabinetSummaryDto> Cabinets { get; set;  }
+        public List<FacilitySummaryDto> Facilities { get; set;  }
     }
 }

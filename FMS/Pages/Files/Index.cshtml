@@ -53,7 +53,7 @@
                     <tr>
                         <td>
                             <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                @item.FileLabel @(item.Active ? "" : "(Inactive)")
+                                @item.FileLabel @(item.Active ? "" : "(Deleted)")
                             </a>
                         </td>
                         <td>@item.Cabinets.Select(e => e.Name).ConcatNonEmpty(", ")</td>

@@ -15,8 +15,8 @@ namespace FMS.Pages.Files
         public DetailsModel(IFileRepository repository) => _repository = repository;
 
 
-        public FileDetailDto FileDetail { get; set; }
-        public DisplayMessage Message { get; set; }
+        public FileDetailDto FileDetail { get; private set; }
+        public DisplayMessage Message { get; private set; }
 
         [BindProperty]
         [HiddenInput]

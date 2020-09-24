@@ -29,7 +29,7 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<PageResult>();
             pageModel.Id.Should().Be(file.Id);
             pageModel.FileLabel.Should().Be(file.Name);
-            pageModel.Active.Should().Be(file.Active);
+            pageModel.Delete.Should().Be(!file.Active);
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be((Guid)default);
             pageModel.FileLabel.Should().Be(default);
-            pageModel.Active.ShouldBeFalse();
+            pageModel.Delete.ShouldBeFalse();
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(default(Guid));
             pageModel.FileLabel.Should().Be(default);
-            pageModel.Active.ShouldBeFalse();
+            pageModel.Delete.ShouldBeFalse();
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace FMS.App.Tests.Files
             var pageModel = new Pages.Files.EditModel(mockRepo.Object)
             {
                 Id = file.Id,
-                Active = true
+                Delete = false
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
