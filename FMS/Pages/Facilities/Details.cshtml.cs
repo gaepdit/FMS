@@ -52,11 +52,6 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostRetentionRecordAsync()
         {
-            if (FacilityId == null)
-            {
-                return NotFound();
-            }
-
             if (!ModelState.IsValid)
             {
                 FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
@@ -68,6 +63,8 @@ namespace FMS.Pages.Facilities
 
                 return Page();
             }
+
+            RecordCreate.TrimAll();
 
             HighlightRecord = await _repository.CreateRetentionRecordAsync(FacilityId, RecordCreate);
             FacilityDetail = await _repository.GetFacilityAsync(FacilityId);

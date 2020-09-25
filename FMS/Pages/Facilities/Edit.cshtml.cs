@@ -70,6 +70,8 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            Facility.TrimAll();
+
             // If new File Label is provided, make sure it exists
             if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
                 !await _repository.FileLabelExists(Facility.FileLabel))

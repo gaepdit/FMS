@@ -14,10 +14,10 @@ namespace FMS.Pages.Cabinets
         public bool ShowInactive { get; set; }
         public DisplayMessage Message { get; set; }
 
-        [BindProperty]
+        [BindProperty] 
         public CabinetCreateDto CabinetCreate { get; set; }
 
-        [TempData]
+        [TempData] 
         public Guid? NewCabinetId { get; set; }
 
         private readonly ICabinetRepository _repository;
@@ -38,6 +38,8 @@ namespace FMS.Pages.Cabinets
                 Cabinets = await _repository.GetCabinetListAsync();
                 return Page();
             }
+
+            CabinetCreate.Name = CabinetCreate.Name?.Trim();
 
             if (await _repository.CabinetNameExistsAsync(CabinetCreate.Name))
             {

@@ -98,5 +98,16 @@ namespace FMS.Domain.Dto
         [Display(Name = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}", ApplyFormatInEditMode = true)]
         public decimal Longitude { get; set; }
+
+        public void TrimAll()
+        {
+            FacilityNumber = FacilityNumber?.Trim();
+            Name = Name?.Trim();
+            FileLabel = FileLabel?.Trim();
+            Location = Location?.Trim();
+            Address = Address?.Trim();
+            City = City?.Trim();
+            PostalCode = PostalCode?.Trim();
+        }
     }
 }

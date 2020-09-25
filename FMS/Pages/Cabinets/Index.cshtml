@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Pages.Cabinets.IndexModel
 @{
     ViewData["Title"] = "Cabinets";
@@ -23,8 +23,8 @@
     {
         @foreach (var c in Model.Cabinets)
         {
-            <a asp-page="Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
-                @c.Name @(c.Active ? "" : "(Deleted)") @(c.Id==Model.NewCabinetId ? "(New)" : "")
+            <a asp-page="Details" asp-route-id="@c.Name" class="btn @(c.Active ? (c.Id == Model.NewCabinetId ? "btn-outline-primary" : "btn-outline-info") : "btn-outline-secondary") btn-sm m-1">
+                @c.Name @(c.Active ? "" : "(Deleted)") @(c.Id == Model.NewCabinetId ? "(New)" : "")
             </a>
         }
     }
