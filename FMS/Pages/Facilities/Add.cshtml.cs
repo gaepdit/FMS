@@ -62,7 +62,11 @@ namespace FMS.Pages.Facilities
                 ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
             }
 
-            // TODO #66: When adding a new facility number, make sure the number doesn't already exist before trying to save. 
+            // When adding a new facility number, make sure the number doesn't already exist before trying to save.
+            if (await _repository.FacilityNumberExists(Facility.FacilityNumber))
+            {
+                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists.");
+            }
 
             if (!ModelState.IsValid)
             {

@@ -309,7 +309,7 @@ namespace FMS.Infrastructure.Tests
         /// the GetNextSequenceForCounty unit tests.
         /// </summary>
         /// <returns>A FileRepository with a simplified list of Files.</returns>
-        private FileRepository SimpleFileRepository()
+        private static FileRepository SimpleFileRepository()
         {
             var simpleFileList = new List<File>
             {

@@ -2,9 +2,13 @@ using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Infrastructure.Contexts;
+using FMS.Infrastructure.Repositories;
 using TestHelpers;
+using TestSupport.EfHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -70,7 +74,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityCount_WithInactive_ReturnsCountOfAll()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() { ActiveOnly = false };
+            var spec = new FacilitySpec() {ActiveOnly = false};
 
             var result = await repository.CountAsync(spec);
             var expected = DataHelpers.Facilities.Count;
@@ -84,7 +88,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityCount_ByCounty_ReturnsCorrectCount(int countyId)
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() { CountyId = countyId };
+            var spec = new FacilitySpec() {CountyId = countyId};
 
             var result = await repository.CountAsync(spec);
             var expected = DataHelpers.Facilities.Count(e => e.CountyId == countyId && e.Active);
@@ -98,7 +102,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityCount_ByFacilityNumber_ReturnsCorrectCount(string facilityNumber)
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() { FacilityNumber = facilityNumber };
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumber};
 
             var result = await repository.CountAsync(spec);
             var expected = DataHelpers.Facilities.Count(e => e.FacilityNumber.Contains(facilityNumber) && e.Active);
@@ -124,7 +128,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_WithInactive_ReturnsAllFacilities()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() { ActiveOnly = false };
+            var spec = new FacilitySpec() {ActiveOnly = false};
 
             var result = await repository.GetFacilityListAsync(spec);
             var expected = DataHelpers.Facilities
@@ -139,7 +143,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_ByCounty_ReturnsCorrectList(int countyId)
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() { CountyId = countyId };
+            var spec = new FacilitySpec() {CountyId = countyId};
 
             var result = await repository.GetFacilityListAsync(spec);
             var expected = DataHelpers.Facilities
@@ -155,7 +159,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_ByFacilityNumber_ReturnsCorrectList(string facilityNumber)
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() { FacilityNumber = facilityNumber };
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumber};
 
             var result = await repository.GetFacilityListAsync(spec);
             var expected = DataHelpers.Facilities
@@ -287,23 +291,21 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage("Facility Number is required.");
         }
 
-        // TODO #66: When adding a new facility number, make sure the number doesn't already exist before trying to save. 
-        [Fact(Skip = "Not implemented yet")]
+        [Fact]
         public async Task CreateFacility_WithExistingNumber_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
             var existingNumber = DataHelpers.Facilities[0].FacilityNumber;
-            var FacilityCreate = new FacilityCreateDto() { FacilityNumber = existingNumber };
+            var facilityCreate = new FacilityCreateDto() {FacilityNumber = existingNumber};
 
             Func<Task> action = async () =>
             {
-                var result = await repository.CreateFacilityAsync(FacilityCreate);
+                var result = await repository.CreateFacilityAsync(facilityCreate);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"Facility Number '{FacilityCreate.FacilityNumber}' already exists.");
+                .WithMessage($"Facility Number '{facilityCreate.FacilityNumber}' already exists.");
         }
-
 
         [Fact]
         public async Task CreateFacility_WithWhitespaceFileLabel_SucceedsAndCreatesNewFile()
@@ -395,7 +397,7 @@ namespace FMS.Infrastructure.Tests
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
                 var facility = DataHelpers.GetFacilityDetail(facilityId);
-                var updates = new FacilityEditDto(facility) { CountyId = newCountyId };
+                var updates = new FacilityEditDto(facility) {CountyId = newCountyId};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
             }
@@ -421,7 +423,7 @@ namespace FMS.Infrastructure.Tests
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
                 var facility = DataHelpers.GetFacilityDetail(facilityId);
-                var updates = new FacilityEditDto(facility) { State = newState };
+                var updates = new FacilityEditDto(facility) {State = newState};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
             }
@@ -447,7 +449,7 @@ namespace FMS.Infrastructure.Tests
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
                 var facility = DataHelpers.GetFacilityDetail(facilityId);
-                var updates = new FacilityEditDto(facility) { FileLabel = newFile.FileLabel };
+                var updates = new FacilityEditDto(facility) {FileLabel = newFile.FileLabel};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
             }
@@ -470,7 +472,7 @@ namespace FMS.Infrastructure.Tests
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
                 var facility = DataHelpers.GetFacilityDetail(facilityId);
-                var updates = new FacilityEditDto(facility) { FileLabel = "" };
+                var updates = new FacilityEditDto(facility) {FileLabel = ""};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
             }
@@ -488,12 +490,9 @@ namespace FMS.Infrastructure.Tests
         public async Task UpdateFacility_NonexistentId_ThrowsException()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var updates = new FacilityEditDto() { CountyId = 99 };
+            var updates = new FacilityEditDto() {CountyId = 99};
 
-            Func<Task> action = async () =>
-            {
-                await repository.UpdateFacilityAsync(default, updates);
-            };
+            Func<Task> action = async () => { await repository.UpdateFacilityAsync(default, updates); };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
@@ -507,15 +506,106 @@ namespace FMS.Infrastructure.Tests
 
             Guid facilityId = DataHelpers.Facilities[0].Id;
             var facility = DataHelpers.GetFacilityDetail(facilityId);
-            var updates = new FacilityEditDto(facility) { FileLabel = newFileLabel };
+            var updates = new FacilityEditDto(facility) {FileLabel = newFileLabel};
 
-            Func<Task> action = async () =>
-            {
-                await repository.UpdateFacilityAsync(facilityId, updates);
-            };
+            Func<Task> action = async () => { await repository.UpdateFacilityAsync(facilityId, updates); };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"File Label {newFileLabel} does not exist.");
+        }
+
+        [Fact]
+        public async Task UpdateFacility_WithExistingNumber_ThrowsException()
+        {
+            using var repository = new RepositoryHelper().GetFacilityRepository();
+
+            var existingNumber = DataHelpers.Facilities[1].FacilityNumber;
+
+            var facilityId = DataHelpers.Facilities[0].Id;
+            var facility = DataHelpers.GetFacilityDetail(facilityId);
+            var updates = new FacilityEditDto(facility) {FacilityNumber = existingNumber};
+
+            Func<Task> action = async () => { await repository.UpdateFacilityAsync(facilityId, updates); };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"Facility Number '{existingNumber}' already exists.");
+        }
+
+        /// <summary>
+        /// This Simplified Facility repository is used by 
+        /// the FacilityNumberExists and FileLabelExists unit tests.
+        /// </summary>
+        /// <returns>A FileRepository with a simplified list of Files.</returns>
+        private static FacilityRepository SimpleFacilityRepository()
+        {
+            var simpleFileList = new List<File>
+            {
+                new File {Id = Guid.NewGuid(), FileLabel = "099-0001"},
+            };
+
+            var simpleFacilityList = new List<Facility>
+            {
+                new Facility
+                {
+                    Id = Guid.NewGuid(),
+                    FacilityNumber = "ABC",
+                    FileId = simpleFileList[0].Id,
+                    CountyId = 131
+                },
+            };
+
+            var context = new FmsDbContext(SqliteInMemory.CreateOptions<FmsDbContext>());
+            context.Database.EnsureCreated();
+            context.Files.AddRange(simpleFileList);
+            context.Facilities.AddRange(simpleFacilityList);
+            context.SaveChanges();
+            var fileRepository = new FileRepository(context);
+            return new FacilityRepository(context, fileRepository);
+        }
+
+        // FacilityNumberExists
+
+        [Fact]
+        public async Task FacilityNumberExists_Unique_ReturnsFalse()
+        {
+            using var repository = SimpleFacilityRepository();
+            var result = await repository.FacilityNumberExists("DEF", default);
+            result.ShouldBeFalse();
+        }
+
+        [Fact]
+        public async Task FacilityNumberExists_Duplicate_ReturnsTrue()
+        {
+            using var repository = SimpleFacilityRepository();
+            var result = await repository.FacilityNumberExists("ABC", default);
+            result.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task FacilityNumberExists_DuplicateIsIgnored_ReturnsFalse()
+        {
+            using var repository = SimpleFacilityRepository();
+            var ignoreId = (await repository.GetFacilityListAsync(new FacilitySpec()))[0].Id;
+            var result = await repository.FacilityNumberExists("ABC", ignoreId);
+            result.ShouldBeFalse();
+        }
+
+        // FileLabelExists
+
+        [Fact]
+        public async Task FileLabelExists_Unique_ReturnsFalse()
+        {
+            using var repository = SimpleFacilityRepository();
+            var result = await repository.FileLabelExists("999-9999");
+            result.ShouldBeFalse();
+        }
+
+        [Fact]
+        public async Task FileLabelExists_Duplicate_ReturnsTrue()
+        {
+            using var repository = SimpleFacilityRepository();
+            var result = await repository.FileLabelExists("099-0001");
+            result.ShouldBeTrue();
         }
 
         // RetentionRecordExistsAsync
@@ -582,7 +672,6 @@ namespace FMS.Infrastructure.Tests
                 RetentionSchedule = record.RetentionSchedule,
                 ShelfNumber = record.ShelfNumber,
                 StartYear = record.StartYear
-
             };
 
             record.Id = await repository.CreateRetentionRecordAsync(record.FacilityId, newRecord);
@@ -594,6 +683,5 @@ namespace FMS.Infrastructure.Tests
         // UpdateRetentionRecordAsync
 
         // GetFacilityForRetentionRecord
-
     }
 }
