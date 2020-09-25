@@ -1,5 +1,6 @@
 ﻿using FMS.Domain.Dto;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace FMS.Domain.Repositories
         Task<FacilityDetailDto> GetFacilityAsync(Guid id);
         Task<int> CountAsync(FacilitySpec spec);
         Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilitySpec spec);
+        Task<IReadOnlyList<FacilityDetailDto>> GetFacilityDetailListAsync(FacilitySpec spec);
         Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec);
         Task<Guid> CreateFacilityAsync(FacilityCreateDto facility);
         Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates);
@@ -24,4 +26,23 @@ namespace FMS.Domain.Repositories
         Task UpdateRetentionRecordAsync(Guid id, RetentionRecordEditDto edit);
         Task<FacilityBasicDto> GetFacilityForRetentionRecord(Guid recordId);
     }
+
+    //public class FacilityItem : IEnumerable
+    //{
+    //    public int Counter { get; set; }
+    //    public Guid Id { get; set; }
+
+    //    public FacilityItem() { }
+
+    //    public FacilityItem(int count, Guid id)
+    //    {
+    //        Counter = count;
+    //        Id = id;
+    //    }
+
+    //    public IEnumerator GetEnumerator()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

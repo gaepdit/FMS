@@ -6,5 +6,107 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 <div class="container-fluid">
-    <h3>No Report Available</h3>
+    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
+    {
+        <form method="get">
+            <table class="table ">
+                <caption id="search-results">
+                    <input type="hidden" asp-for="Spec.FileId" />
+                    <input type="hidden" asp-for="Spec.FacilityNumber" />
+                    <input type="hidden" asp-for="Spec.FacilityTypeId" />
+                    <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
+                    <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
+                    <input type="hidden" asp-for="Spec.BudgetCodeId" />
+                    <input type="hidden" asp-for="Spec.EnvironmentalInterestId" />
+                    <input type="hidden" asp-for="Spec.FacilityStatusId" />
+                    <input type="hidden" asp-for="Spec.Name" />
+                    <input type="hidden" asp-for="Spec.Address" />
+                    <input type="hidden" asp-for="Spec.City" />
+                    <input type="hidden" asp-for="Spec.CountyId" />
+                    <input type="hidden" asp-for="Spec.State" />
+                    <input type="hidden" asp-for="Spec.PostalCode" />
+                    <input type="hidden" asp-for="Spec.ActiveOnly" />
+                </caption>
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Facility</th>
+                        <th scope="col">File</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Location Description</th>
+                        <th scope="col">Facility Type</th>
+                        <th scope="col">Compliance Officer</th>
+                        <th scope="col">Organizational Unit</th>
+                        <th scope="col">Budget Code</th>
+                        <th scope="col">Environmental Interest</th>
+                        <th scope="col">Facility Status</th>
+                        <th scope="col">Cabinets</th>
+                        <th scope="col">Retention Records</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.FacilityList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.FacilityNumber)
+                            </td>
+                            <td class="text-nowrap">
+                                @item.FileLabel
+                            </td>
+                            <td>@Html.DisplayFor(m => item.Name)</td>
+                            <td>
+                                @Html.DisplayFor(m => item.Address)<br />
+                                @Html.DisplayFor(m => item.City),
+                                @Html.DisplayFor(m => item.County.Name) County,
+                                @Html.DisplayFor(m => item.State)
+                                @Html.DisplayFor(m => item.PostalCode)
+                            </td>
+                            <td>@Html.DisplayFor(m => item.Location)</td>
+                            <td>@Html.DisplayFor(m => item.FacilityType.Name)</td>
+                            <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                            <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name)</td>
+                            <td>@Html.DisplayFor(m => item.BudgetCode.Name)</td>
+                            <td>@Html.DisplayFor(m => item.EnvironmentalInterest.Name)</td>
+                            <td>@Html.DisplayFor(m => item.FacilityStatus.Name)</td>
+                            <td>
+                                @if (item.Cabinets.Count > 0)
+                                {
+                                    @item.Cabinets.ConcatNonEmpty(" & ");
+                                }
+                                else
+                                {
+                                    <span class="text-muted">none</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.RetentionRecords.Count > 0)
+                                {
+                                    <ul class="list-unstyled">
+                                        @foreach (var r in item.RetentionRecords)
+                                        {
+                                            <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">none</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr />
+            <input type="hidden" name="handler" value="export" />
+            <button id="ExportButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Export to Excel</button>
+        </form>
+    }
+    else
+    {
+        <div class="container mt-2">
+            <p class="lead text-info">No matching facilities found.</p>
+        </div>
+    }
 </div>

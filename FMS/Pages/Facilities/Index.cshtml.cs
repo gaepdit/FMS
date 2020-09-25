@@ -5,6 +5,7 @@ using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,8 +21,6 @@ namespace FMS.Pages.Facilities
 
         // List of facilities resulting from the search
         public IReadOnlyList<FacilitySummaryDto> FacilityList { get; private set; }
-
-        public int? CountyArg { get; set; }
 
         // Shows results section after searching
         public bool ShowResults { get; private set; }
@@ -55,10 +54,15 @@ namespace FMS.Pages.Facilities
         {
             // Get the list of facilities matching the "Spec" criteria
             FacilityList = await _repository.GetFacilityListAsync(spec);
-
+            Spec = spec;
             ShowResults = true;
             await PopulateSelectsAsync();
             return Page();
+        }
+
+        public IActionResult OnPost(FacilitySpec spec)
+        {
+            return RedirectToPage("../Reports/Index", spec);
         }
 
         private async Task PopulateSelectsAsync()

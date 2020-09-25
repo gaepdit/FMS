@@ -35,7 +35,7 @@ namespace FMS.Infrastructure.SeedData
                 new Facility
                 {
                     Id = new Guid("AB44F9C7-C2EC-47BC-8886-60D72B5BD5EB"),
-                    Active = false,
+                    Active = true,
                     FacilityNumber = "BRF3191858",
                     FileId = new Guid("790B04E8-F5F5-412E-95E2-B785E630A2A7"),  //248-0001
                     EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"),    //BROWN
@@ -79,7 +79,7 @@ namespace FMS.Infrastructure.SeedData
                 new Facility
                 {
                     Id = new Guid("7B20DE98-4726-4789-9AEA-2D995FF6839A"),
-                    Active = false,
+                    Active = true,
                     FacilityNumber = "BRF341436",
                     FileId = new Guid("015A39B3-A522-4C13-9479-B17626247313"),   //243-0068
                     EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"),   //BROWN
