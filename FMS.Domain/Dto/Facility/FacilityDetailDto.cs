@@ -31,74 +31,75 @@ namespace FMS.Domain.Dto
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
             Cabinets = facility.File.CabinetFiles?
-                .Select(c => c.Cabinet.Name).ToList()
+                    .Select(c => c.Cabinet.Name).ToList()
                 ?? new List<string>();
             RetentionRecords = facility.RetentionRecords?
-                .Select(e => new RetentionRecordDetailDto(e)).ToList()
+                    .Select(e => new RetentionRecordDetailDto(e)).ToList()
                 ?? new List<RetentionRecordDetailDto>();
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; }
 
         [Display(Name = "Facility Number")]
-        public string FacilityNumber { get; set; }
+        public string FacilityNumber { get; }
 
         [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
         [Display(Name = "Active Site")]
-        public bool Active { get; set; }
+        public bool Active { get; }
 
         [Display(Name = "County")]
         public County County { get; set; }
 
         [Display(Name = "Facility Status")]
-        public FacilityStatus FacilityStatus { get; set; }
+        public FacilityStatus FacilityStatus { get; }
 
         [Display(Name = "Facility Type")]
-        public FacilityType FacilityType { get; set; }
+        public FacilityType FacilityType { get; }
 
         [Display(Name = "Budget Code")]
-        public BudgetCode BudgetCode { get; set; }
+        public BudgetCode BudgetCode { get; }
 
         [Display(Name = "Organizational Unit")]
-        public OrganizationalUnit OrganizationalUnit { get; set; }
+        public OrganizationalUnit OrganizationalUnit { get; }
 
         [Display(Name = "Environmental Interest")]
-        public EnvironmentalInterest EnvironmentalInterest { get; set; }
+        public EnvironmentalInterest EnvironmentalInterest { get; }
 
         [Display(Name = "Compliance Officer")]
-        public ComplianceOfficer ComplianceOfficer { get; set; }
+        public ComplianceOfficer ComplianceOfficer { get; }
 
         [Display(Name = "File Label")]
-        public string FileLabel { get; set; }
-        public Guid FileId { get; set; }
+        public string FileLabel { get; }
+
+        public Guid FileId { get; }
 
         [Display(Name = "Location Description")]
-        public string Location { get; set; }
+        public string Location { get; }
 
         [Display(Name = "Address")]
-        public string Address { get; set; }
+        public string Address { get; }
 
         [Display(Name = "City")]
-        public string City { get; set; }
+        public string City { get; }
 
         [Display(Name = "State")]
         public string State { get; set; }
 
         [Display(Name = "Zip Code")]
-        public string PostalCode { get; set; }
+        public string PostalCode { get; }
 
         [Display(Name = "Latitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
-        public decimal Latitude { get; set; }
+        public decimal Latitude { get; }
 
         [Display(Name = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
-        public decimal Longitude { get; set; }
+        public decimal Longitude { get; }
 
-        public List<string> Cabinets { get; set; }
+        public List<string> Cabinets { get; }
 
-        public List<RetentionRecordDetailDto> RetentionRecords { get; set; }
+        public List<RetentionRecordDetailDto> RetentionRecords { get; }
     }
 }

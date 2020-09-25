@@ -18,12 +18,12 @@ namespace FMS.Domain.Dto
                 ?? new List<FileSummaryDto>();
         }
 
-        public Guid Id { get; set; }
-        public bool Active { get; set; }
+        public Guid Id { get; }
+        public bool Active { get; }
 
         [Display(Name = "Cabinet Number")]
-        public string Name { get; set; }
+        public string Name { get; }
 
-        public List<FileSummaryDto> Files { get; set; }
+        public List<FileSummaryDto> Files { get; }
     }
 }

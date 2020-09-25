@@ -45,10 +45,10 @@ namespace FMS.Infrastructure.Tests
             var result = await repository.GetFileAsync(file.Id);
 
             var expected = new FileDetailDto(file);
-            expected.Facilities = DataHelpers.Facilities
+            expected.Facilities.AddRange(DataHelpers.Facilities
                 .Where(e => e.Active)
                 .Where(e => e.FileId == expected.Id)
-                .Select(e => new FacilitySummaryDto(e)).ToList();
+                .Select(e => new FacilitySummaryDto(e)).ToList());
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -57,7 +57,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNonexistentFile_ById_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var result = await repository.GetFileAsync((Guid)default);
+            var result = await repository.GetFileAsync((Guid) default);
             result.ShouldBeNull();
         }
 
@@ -70,10 +70,10 @@ namespace FMS.Infrastructure.Tests
             var result = await repository.GetFileAsync(file.FileLabel);
 
             var expected = new FileDetailDto(file);
-            expected.Facilities = DataHelpers.Facilities
+            expected.Facilities.AddRange(DataHelpers.Facilities
                 .Where(e => e.Active)
                 .Where(e => e.FileId == expected.Id)
-                .Select(e => new FacilitySummaryDto(e)).ToList();
+                .Select(e => new FacilitySummaryDto(e)).ToList());
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -139,7 +139,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FileCount_WithInactive_ReturnsCountOfAll()
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() { ShowInactive = true };
+            var spec = new FileSpec() {ShowInactive = true};
 
             var result = await repository.CountAsync(spec);
 
@@ -153,7 +153,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FileCount_ByCounty_ReturnsCorrectCount(int countyId)
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() { CountyId = countyId };
+            var spec = new FileSpec() {CountyId = countyId};
             var countyString = countyId.ToString().PadLeft(3, '0');
 
             var result = await repository.CountAsync(spec);
@@ -169,7 +169,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FileCount_ByFileLabel_ReturnsCorrectCount(string fileLabel)
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() { FileLabel = fileLabel };
+            var spec = new FileSpec() {FileLabel = fileLabel};
 
             var result = await repository.CountAsync(spec);
 
@@ -191,18 +191,18 @@ namespace FMS.Infrastructure.Tests
 
             foreach (var file in expected)
             {
-                file.Facilities = DataHelpers.Facilities
+                file.Facilities.AddRange(DataHelpers.Facilities
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
-                    .ToList();
+                    .ToList());
 
                 foreach (var facility in file.Facilities)
                 {
-                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                    facility.RetentionRecords.Clear();
                 }
 
-                file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
+                file.Cabinets.AddRange(DataHelpers.GetCabinetSummariesForFile(file.Id));
             }
 
             result.Should().BeEquivalentTo(expected);
@@ -212,25 +212,25 @@ namespace FMS.Infrastructure.Tests
         public async Task FileSearch_WithInactive_ReturnsAllFiles()
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() { ShowInactive = true };
+            var spec = new FileSpec() {ShowInactive = true};
 
             var result = await repository.GetFileListAsync(spec);
             var expected = DataHelpers.Files
                 .Select(e => new FileDetailDto(e)).ToList();
             foreach (var file in expected)
             {
-                file.Facilities = DataHelpers.Facilities
+                file.Facilities.AddRange(DataHelpers.Facilities
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
-                    .ToList();
+                    .ToList());
 
                 foreach (var facility in file.Facilities)
                 {
-                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                    facility.RetentionRecords.Clear();
                 }
 
-                file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
+                file.Cabinets.AddRange(DataHelpers.GetCabinetSummariesForFile(file.Id));
             }
 
             result.Should().BeEquivalentTo(expected);
@@ -242,7 +242,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FileSearch_ByCounty_ReturnsCorrectList(int countyId)
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() { CountyId = countyId };
+            var spec = new FileSpec() {CountyId = countyId};
             var countyString = countyId.ToString().PadLeft(3, '0');
 
             var result = await repository.GetFileListAsync(spec);
@@ -251,18 +251,18 @@ namespace FMS.Infrastructure.Tests
                 .Select(e => new FileDetailDto(e)).ToList();
             foreach (var file in expected)
             {
-                file.Facilities = DataHelpers.Facilities
+                file.Facilities.AddRange(DataHelpers.Facilities
                     .Where(e => e.Active)
                     .Where(e => e.FileId == file.Id)
                     .Select(e => DataHelpers.GetFacilitySummary(e.Id))
-                    .ToList();
+                    .ToList());
 
                 foreach (var facility in file.Facilities)
                 {
-                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
+                    facility.RetentionRecords.Clear();
                 }
 
-                file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
+                file.Cabinets.AddRange(DataHelpers.GetCabinetSummariesForFile(file.Id));
             }
 
             result.Should().BeEquivalentTo(expected);
@@ -275,29 +275,17 @@ namespace FMS.Infrastructure.Tests
         public async Task FileSearch_ByFileNumber_ReturnsCorrectList(string fileLabel)
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() { FileLabel = fileLabel };
+            var spec = new FileSpec() {FileLabel = fileLabel};
 
             var result = await repository.GetFileListAsync(spec);
             var expected = DataHelpers.Files
                 .Where(e => e.FileLabel.Contains(fileLabel) && e.Active)
                 .Select(e => DataHelpers.GetFileDetail(e.Id)).ToList();
 
-            foreach (var file in expected)
+            foreach (var facility in expected.SelectMany(file => file.Facilities))
             {
-                file.Facilities = DataHelpers.Facilities
-                    .Where(e => e.Active)
-                    .Where(e => e.FileId == file.Id)
-                    .Select(e => DataHelpers.GetFacilitySummary(e.Id))
-                    .ToList();
-
-                foreach (var facility in file.Facilities)
-                {
-                    facility.RetentionRecords = new List<RetentionRecordSummaryDto>();
-                }
-
-                file.Cabinets = DataHelpers.GetCabinetSummariesForFile(file.Id);
+                facility.RetentionRecords.Clear();
             }
-
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -313,12 +301,12 @@ namespace FMS.Infrastructure.Tests
         {
             var simpleFileList = new List<File>
             {
-                new File { Id = Guid.NewGuid(), FileLabel = "099-0001" },
-                new File { Id = Guid.NewGuid(), FileLabel = "111-0001" },
-                new File { Id = Guid.NewGuid(), FileLabel = "102-0001" },
-                new File { Id = Guid.NewGuid(), FileLabel = "102-0003" },
-                new File { Id = Guid.NewGuid(), FileLabel = "103-0001" },
-                new File { Id = Guid.NewGuid(), FileLabel = "103-0002", Active = false }
+                new File {Id = Guid.NewGuid(), FileLabel = "099-0001"},
+                new File {Id = Guid.NewGuid(), FileLabel = "111-0001"},
+                new File {Id = Guid.NewGuid(), FileLabel = "102-0001"},
+                new File {Id = Guid.NewGuid(), FileLabel = "102-0003"},
+                new File {Id = Guid.NewGuid(), FileLabel = "103-0001"},
+                new File {Id = Guid.NewGuid(), FileLabel = "103-0002", Active = false}
             };
             var context = new FmsDbContext(SqliteInMemory.CreateOptions<FmsDbContext>());
             context.Database.EnsureCreated();
@@ -379,10 +367,7 @@ namespace FMS.Infrastructure.Tests
             int countyNum = 999;
             using var repository = SimpleFileRepository();
 
-            Func<Task> action = async () =>
-            {
-                await repository.GetNextSequenceForCountyAsync(countyNum);
-            };
+            Func<Task> action = async () => { await repository.GetNextSequenceForCountyAsync(countyNum); };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyNum')");
@@ -456,10 +441,7 @@ namespace FMS.Infrastructure.Tests
         {
             using var repository = new RepositoryHelper().GetFileRepository();
 
-            Func<Task> action = async () =>
-            {
-                await repository.UpdateFileAsync(default, default);
-            };
+            Func<Task> action = async () => { await repository.UpdateFileAsync(default, default); };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("File ID not found.");
@@ -507,7 +489,7 @@ namespace FMS.Infrastructure.Tests
             await repository.AddCabinetToFileAsync(cabinet.Id, fileId);
 
             var file = await repository.GetFileAsync(fileId);
-            file.Cabinets.Should().BeEquivalentTo(new List<CabinetSummaryDto> { new CabinetSummaryDto(cabinet) });
+            file.Cabinets.Should().BeEquivalentTo(new List<CabinetSummaryDto> {new CabinetSummaryDto(cabinet)});
         }
 
         // RemoveCabinetFromFileAsync
