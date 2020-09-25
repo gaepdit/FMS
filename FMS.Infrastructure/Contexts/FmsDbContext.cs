@@ -36,10 +36,9 @@ namespace FMS.Infrastructure.Contexts
             // Configure many-to-many relationships
             builder.Entity<CabinetFile>().HasKey(e => new { e.CabinetId, e.FileId });
 
-            // Unique indexes
+            // Additional model properties
             builder.Entity<File>().HasIndex(e => e.FileLabel).IsUnique();
             builder.Entity<Cabinet>().HasIndex(e => e.Name).IsUnique();
-            builder.Entity<Facility>().HasIndex(e => e.FacilityNumber).IsUnique();
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers");

@@ -1032,7 +1032,7 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FacilityNumber")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("FacilityStatusId")
                         .HasColumnType("uniqueidentifier");
@@ -1075,10 +1075,6 @@ namespace FMS.Infrastructure.Migrations
                     b.HasIndex("CountyId");
 
                     b.HasIndex("EnvironmentalInterestId");
-
-                    b.HasIndex("FacilityNumber")
-                        .IsUnique()
-                        .HasFilter("[FacilityNumber] IS NOT NULL");
 
                     b.HasIndex("FacilityStatusId");
 
