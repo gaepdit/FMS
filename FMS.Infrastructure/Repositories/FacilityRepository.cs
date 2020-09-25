@@ -121,7 +121,7 @@ namespace FMS.Infrastructure.Repositories
 
             if (await FacilityNumberExists(newFacility.FacilityNumber))
             {
-                throw new ArgumentException($"Facility Number {newFacility.FacilityNumber} already exists.");
+                throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
             }
 
             File file;
@@ -168,7 +168,7 @@ namespace FMS.Infrastructure.Repositories
 
             if (await FacilityNumberExists(facilityUpdates.FacilityNumber, id))
             {
-                throw new ArgumentException($"Facility Number {facilityUpdates.FacilityNumber} already exists.");
+                throw new ArgumentException($"Facility Number '{facilityUpdates.FacilityNumber}' already exists.");
             }
 
             File file;
