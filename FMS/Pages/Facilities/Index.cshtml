@@ -109,7 +109,7 @@
         <table class="table ">
             <caption id="search-results">
                 <form method="post">
-                    <input type="hidden" asp-for="Spec.FileId" />
+                    <input type="hidden" asp-for="Spec.FileLabel" />
                     <input type="hidden" asp-for="Spec.FacilityNumber" />
                     <input type="hidden" asp-for="Spec.FacilityTypeId" />
                     <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
@@ -124,7 +124,6 @@
                     <input type="hidden" asp-for="Spec.State" />
                     <input type="hidden" asp-for="Spec.PostalCode" />
                     <input type="hidden" asp-for="Spec.ActiveOnly" />
-                    @*<button class="usa-button-outline gaepd-button-inline-action" id="export-tool">Download search results</button>*@
                     <button id="ExportButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Create Report</button>
                 </form>
             </caption>
@@ -186,13 +185,6 @@
                 }
             </tbody>
         </table>
-        <!--<hr />
-        <form method="get">
-            <input type="hidden" name="facSpec" value="@Model.Spec" asp-for="@Model.Spec" />
-            <input type="hidden" name="handler" value="report" />-->
-        @*<a asp-page="../Reports/Index" asp-page-handler="@Model.Spec" class="btn btn-primary col-sm-3 col-md-2">Create Report</a>*@
-        <!--<button id="ExportButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Create Report</button>
-        </form>-->
     }
     else
     {

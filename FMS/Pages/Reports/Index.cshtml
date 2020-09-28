@@ -6,12 +6,71 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 <div class="container-fluid">
+    <h4>Search Criteria</h4>
+    <hr />
+    @if (Model.Spec.FacilityNumber != null)
+    {
+        <p>Facility Number: @Model.Spec.FacilityNumber</p>
+    }
+    @if (Model.Spec.FileLabel != null)
+    {
+        <p>File Label: @Model.Spec.FileLabel</p>
+    }
+    @if (Model.Spec.Name != null)
+    {
+        <p>Facility Name: @Model.Spec.Name</p>
+    }
+    @if (Model.Spec.Address != null)
+    {
+        <p>Address: @Model.Spec.Address</p>
+    }
+    @if (Model.Spec.City != null)
+    {
+        <p>City: @Model.Spec.City</p>
+    }
+    @if (Model.Spec.State != null)
+    {
+        <p>State: @Model.Spec.State</p>
+    }
+    @if (Model.Spec.PostalCode != null)
+    {
+        <p>ZIP Code: @Model.Spec.PostalCode</p>
+    }
+    @if (Model.Spec.CountyId != null)
+    {
+        <p>County: @Model.GetCountyName(Model.Spec.CountyId)</p>
+    }
+    @if (Model.Spec.BudgetCodeId != null)
+    {
+        <p>Budget Code: @Model.GetBudgetCodeName(Model.Spec.BudgetCodeId)</p>
+    }
+    @if (Model.Spec.ComplianceOfficerId != null)
+    {
+        <p>Compliance Officer: @Model.GetComplianceOfficerName(Model.Spec.ComplianceOfficerId)</p>
+    }
+    @if (Model.Spec.OrganizationalUnitId != null)
+    {
+        <p>Organizational Unit: @Model.GetOrganizationalUnitName(Model.Spec.OrganizationalUnitId)</p>
+    }
+    @if (Model.Spec.EnvironmentalInterestId != null)
+    {
+        <p>Environmental Interest: @Model.GetEnvironmentalInterestName(Model.Spec.EnvironmentalInterestId)</p>
+    }
+    @if (Model.Spec.FacilityTypeId != null)
+    {
+        <p>Facility Type: @Model.GetFacilityTypeName(Model.Spec.FacilityTypeId)</p>
+    }
+    @if (Model.Spec.FacilityStatusId != null)
+    {
+        <p>Facility Status: @Model.GetFacilityStatusName(Model.Spec.FacilityStatusId)</p>
+    }
+
     @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
     {
         <form method="get">
             <table class="table ">
                 <caption id="search-results">
-                    <input type="hidden" asp-for="Spec.FileId" />
+                    <input type="hidden" asp-for="Spec.FileLabel" />
                     <input type="hidden" asp-for="Spec.FacilityNumber" />
                     <input type="hidden" asp-for="Spec.FacilityTypeId" />
                     <input type="hidden" asp-for="Spec.OrganizationalUnitId" />

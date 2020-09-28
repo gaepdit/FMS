@@ -113,7 +113,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
                 .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
                 .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
-                .Where(e => !spec.FileId.HasValue || e.File.Id.Equals(spec.FileId))
+                .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
                 .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
                 .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))

@@ -24,9 +24,17 @@ namespace FMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<BudgetCodeDetailDto> GetBudgetCodeAsync(Guid id)
+        public async Task<BudgetCodeDetailDto> GetBudgetCodeAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var budgetCode = await _context.BudgetCodes.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (budgetCode == null)
+            {
+                return null;
+            }
+
+            return new BudgetCodeDetailDto(budgetCode);
         }
 
         public async Task<IReadOnlyList<BudgetCodeSummaryDto>> GetBudgetCodeListAsync()

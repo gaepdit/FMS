@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System;
-using Microsoft.Win32;
 using System.IO;
 using System.Globalization;
 using FMS.Helpers;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using FMS.Domain.Data;
 
 namespace FMS.Pages.Reports
 {
     public class IndexModel : PageModel
     {
         private readonly IFacilityRepository _repository;
+        private readonly ISelectListHelper _listHelper;
 
         // "Spec" is the Facility DTO bound to the HTML Page elements
         [BindProperty(SupportsGet = true)]
@@ -25,32 +26,171 @@ namespace FMS.Pages.Reports
 
         public IReadOnlyList<FacilityDetailDto> FacilityList { get; set; }
 
+        // Select Lists
+        public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
+        public SelectList States => new SelectList(Data.States);
+        public SelectList FacilityStatuses { get; private set; }
+        public SelectList FacilityTypes { get; private set; }
+        public SelectList BudgetCodes { get; private set; }
+        public SelectList OrganizationalUnits { get; private set; }
+        public SelectList EnvironmentalInterests { get; private set; }
+        public SelectList ComplianceOfficers { get; private set; }
+
         public IndexModel(
-            IFacilityRepository repository)
+            IFacilityRepository repository,
+             ISelectListHelper listHelper)
         {
             _repository = repository;
+            _listHelper = listHelper;
         }
         public async Task<IActionResult> OnGetAsync(FacilitySpec spec)
         {
             FacilityList = await _repository.GetFacilityDetailListAsync(spec);
             Spec = spec;
+            await PopulateSelectsAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnGetExportAsync(FacilitySpec spec)
         {
             FacilityList = await _repository.GetFacilityDetailListAsync(spec);
-
+            await PopulateSelectsAsync();
             await ExportReportAsync();
-
             return Page();
         }
 
-        public async Task<StreamWriter> ExportReportAsync()
+        #region "Methods"
+        private async Task PopulateSelectsAsync()
+        {
+            BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            EnvironmentalInterests = await _listHelper.EnvironmentalInterestsSelectListAsync();
+            FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
+            FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
+            OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
+        }
+
+        public string GetCountyName(int? id)
+        {
+            if(id == null)
+            {
+                return string.Empty;
+            }
+            foreach(SelectListItem item in Counties)
+            {
+                if(item.Value.Equals(id.ToString()))
+                {
+                    return item.Text;
+                }
+            }
+            return string.Empty;
+        }
+
+        public string GetBudgetCodeName(Guid? id)
+        {
+            if(id == null)
+            {
+                return string.Empty;
+            }
+            foreach (SelectListItem item in BudgetCodes)
+            {
+                if(item.Value.ToString().Equals(id.Value.ToString()))
+                {
+                    return item.Text;
+                }
+            }
+            return string.Empty;
+        }
+
+        public string GetComplianceOfficerName(Guid? id)
+        {
+            if (id == null)
+            {
+                return string.Empty;
+            }
+            foreach (SelectListItem item in ComplianceOfficers)
+            {
+                if (item.Value.ToString().Equals(id.Value.ToString()))
+                {
+                    return item.Text;
+                }
+            }
+            return string.Empty;
+        }
+
+        public string GetEnvironmentalInterestName(Guid? id)
+        {
+            if (id == null)
+            {
+                return string.Empty;
+            }
+            foreach (SelectListItem item in EnvironmentalInterests)
+            {
+                if (item.Value.ToString().Equals(id.Value.ToString()))
+                {
+                    return item.Text;
+                }
+            }
+            return string.Empty;
+        }
+
+        public string GetFacilityStatusName(Guid? id)
+        {
+            if (id == null)
+            {
+                return string.Empty;
+            }
+            foreach (SelectListItem item in FacilityStatuses)
+            {
+                if (item.Value.ToString().Equals(id.Value.ToString()))
+                {
+                    return item.Text;
+                }
+            }
+            return string.Empty;
+        }
+
+        public string GetFacilityTypeName(Guid? id)
+        {
+            if (id == null)
+            {
+                return string.Empty;
+            }
+            foreach (SelectListItem item in FacilityTypes)
+            {
+                if (item.Value.ToString().Equals(id.Value.ToString()))
+                {
+                    return item.Text;
+                }
+            }
+            return string.Empty;
+        }
+
+        public string GetOrganizationalUnitName(Guid? id)
+        {
+            if (id == null)
+            {
+                return string.Empty;
+            }
+            foreach (SelectListItem item in OrganizationalUnits)
+            {
+                if (item.Value.ToString().Equals(id.Value.ToString()))
+                {
+                    return item.Text;
+                }
+            }
+            return string.Empty;
+        }
+
+        #endregion
+
+        #region "Reports"
+        public async Task<MemoryStream> ExportReportAsync()
         {
             var xm = new DataExportMeta(DateTime.Now);
 
-            using (StreamWriter writer = new StreamWriter(xm.FilePath))
+            using (var ms = new MemoryStream())
+            using (StreamWriter writer = new StreamWriter(xm.FilePath)) 
             using (CsvWriter csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.SanitizeForInjection = false;
@@ -59,8 +199,9 @@ namespace FMS.Pages.Reports
                 
                 await csv.FlushAsync();
                 await writer.FlushAsync();
+                await ms.FlushAsync();
 
-                return writer;
+                return ms;
             }
         }
 
@@ -87,5 +228,7 @@ namespace FMS.Pages.Reports
                 Map(m => m.RetentionRecords).Index(16).Name("Retention Records");
             }
         }
+
+        #endregion
     }
 }
