@@ -12,6 +12,7 @@ using System.Globalization;
 using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FMS.Domain.Data;
+using System.Linq;
 
 namespace FMS.Pages.Reports
 {
@@ -28,13 +29,20 @@ namespace FMS.Pages.Reports
 
         // Select Lists
         public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
+        public string CountyName { get; private set; }
         public SelectList States => new SelectList(Data.States);
         public SelectList FacilityStatuses { get; private set; }
+        public string FacilityStatusName { get; private set; }
         public SelectList FacilityTypes { get; private set; }
+        public string FacilityTypeName { get; private set; }
         public SelectList BudgetCodes { get; private set; }
+        public string BudgetCodeName { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
+        public string OrganizationalUnitName { get; private set; }
         public SelectList EnvironmentalInterests { get; private set; }
+        public string EnvironmentalInterestName { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
+        public string ComplianceOfficerName { get; private set; }
 
         public IndexModel(
             IFacilityRepository repository,
@@ -48,18 +56,22 @@ namespace FMS.Pages.Reports
             FacilityList = await _repository.GetFacilityDetailListAsync(spec);
             Spec = spec;
             await PopulateSelectsAsync();
+            //SetNames();
             return Page();
         }
 
         public async Task<IActionResult> OnGetExportAsync(FacilitySpec spec)
         {
             FacilityList = await _repository.GetFacilityDetailListAsync(spec);
+            Spec = spec;
             await PopulateSelectsAsync();
-            await ExportReportAsync();
-            return Page();
+            //SetNames();
+
+            return File(await GetCsvByteArrayAsync(), "text/csv", $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.csv");
         }
 
         #region "Methods"
+
         private async Task PopulateSelectsAsync()
         {
             BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
@@ -70,130 +82,124 @@ namespace FMS.Pages.Reports
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
         }
 
-        public string GetCountyName(int? id)
+        private void SetNames()
         {
-            if(id == null)
-            {
-                return string.Empty;
-            }
-            foreach(SelectListItem item in Counties)
-            {
-                if(item.Value.Equals(id.ToString()))
-                {
-                    return item.Text;
-                }
-            }
-            return string.Empty;
+            SetCountyName();
+            SetBudgetCodeName();
+            SetComplianceOfficerName();
+            SetEnvironmentalInterestName();
+            SetFacilityStatusName();
+            SetFacilityTypeName();
+            SetOrganizationalUnitName();
         }
 
-        public string GetBudgetCodeName(Guid? id)
+        private void SetCountyName()
         {
-            if(id == null)
+            if(Spec.CountyId == null || Counties == null)
             {
-                return string.Empty;
+                CountyName = string.Empty;
             }
-            foreach (SelectListItem item in BudgetCodes)
+            else
             {
-                if(item.Value.ToString().Equals(id.Value.ToString()))
-                {
-                    return item.Text;
-                }
+                ListItem item = (ListItem)Counties.Where(m => m.Value.Equals(Spec.CountyId));
+                CountyName = item.Name;
             }
-            return string.Empty;
         }
 
-        public string GetComplianceOfficerName(Guid? id)
+        private void SetBudgetCodeName()
         {
-            if (id == null)
+            if(Spec.BudgetCodeId == null || BudgetCodes == null)
             {
-                return string.Empty;
+                BudgetCodeName = string.Empty;
             }
-            foreach (SelectListItem item in ComplianceOfficers)
+            else
             {
-                if (item.Value.ToString().Equals(id.Value.ToString()))
-                {
-                    return item.Text;
-                }
+                ListItem item = (ListItem)BudgetCodes.Where(m => m.Value.Equals(Spec.BudgetCodeId));
+                BudgetCodeName = item.Name;
             }
-            return string.Empty;
         }
 
-        public string GetEnvironmentalInterestName(Guid? id)
+        private void SetComplianceOfficerName()
         {
-            if (id == null)
+            if (Spec.ComplianceOfficerId == null || ComplianceOfficers == null)
             {
-                return string.Empty;
+                ComplianceOfficerName = string.Empty;
             }
-            foreach (SelectListItem item in EnvironmentalInterests)
+            else
             {
-                if (item.Value.ToString().Equals(id.Value.ToString()))
-                {
-                    return item.Text;
-                }
+                ListItem item = (ListItem)ComplianceOfficers.Where(m => m.Value.Equals(Spec.ComplianceOfficerId));
+                ComplianceOfficerName = item.Name;
             }
-            return string.Empty;
         }
 
-        public string GetFacilityStatusName(Guid? id)
+        private void SetEnvironmentalInterestName()
         {
-            if (id == null)
+            if (Spec.EnvironmentalInterestId == null || EnvironmentalInterests == null)
             {
-                return string.Empty;
+                EnvironmentalInterestName = string.Empty;
             }
-            foreach (SelectListItem item in FacilityStatuses)
+            else
             {
-                if (item.Value.ToString().Equals(id.Value.ToString()))
-                {
-                    return item.Text;
-                }
+                ListItem item = (ListItem)EnvironmentalInterests.Where(m => m.Value.Equals(Spec.EnvironmentalInterestId));
+                EnvironmentalInterestName = item.Name;
             }
-            return string.Empty;
         }
 
-        public string GetFacilityTypeName(Guid? id)
+        private void SetFacilityStatusName()
         {
-            if (id == null)
+            if (Spec.FacilityStatusId == null || FacilityStatuses == null)
             {
-                return string.Empty;
+                FacilityStatusName = string.Empty;
             }
-            foreach (SelectListItem item in FacilityTypes)
+            else
             {
-                if (item.Value.ToString().Equals(id.Value.ToString()))
-                {
-                    return item.Text;
-                }
+                ListItem item = (ListItem)FacilityStatuses.Where(m => m.Value.Equals(Spec.FacilityStatusId));
+                FacilityStatusName = item.Name;
             }
-            return string.Empty;
         }
 
-        public string GetOrganizationalUnitName(Guid? id)
+        private void SetFacilityTypeName()
         {
-            if (id == null)
+            if (Spec.FacilityTypeId == null || FacilityTypes == null)
             {
-                return string.Empty;
+                FacilityTypeName =  string.Empty;
             }
-            foreach (SelectListItem item in OrganizationalUnits)
+            else
             {
-                if (item.Value.ToString().Equals(id.Value.ToString()))
-                {
-                    return item.Text;
-                }
+                ListItem item = (ListItem)FacilityTypes.Where(m => m.Value.Equals(Spec.FacilityTypeId));
+                FacilityTypeName = item.Name;
             }
-            return string.Empty;
+        }
+
+        private void SetOrganizationalUnitName()
+        {
+            if (Spec.OrganizationalUnitId == null || OrganizationalUnits == null)
+            {
+                OrganizationalUnitName = string.Empty;
+            }
+            else
+            {
+                ListItem item = (ListItem)OrganizationalUnits.Where(m => m.Value.Equals(Spec.OrganizationalUnitId));
+                OrganizationalUnitName = item.Name;
+            }
         }
 
         #endregion
 
         #region "Reports"
-        public async Task<MemoryStream> ExportReportAsync()
-        {
-            var xm = new DataExportMeta(DateTime.Now);
 
+        public async Task<byte[]> GetCsvByteArrayAsync()
+        {
+            return (await GetCsvMemoryStreamAsync()).ToArray();
+        }
+
+        public async Task<MemoryStream> GetCsvMemoryStreamAsync()
+        {
             using (var ms = new MemoryStream())
-            using (StreamWriter writer = new StreamWriter(xm.FilePath)) 
+            using (StreamWriter writer = new StreamWriter(ms)) 
             using (CsvWriter csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.SanitizeForInjection = false;
+                csv.Configuration.SanitizeForInjection = true;
                 csv.Configuration.RegisterClassMap<FacilityReportMap>();
                 csv.WriteRecords(FacilityList);
                 
@@ -224,8 +230,7 @@ namespace FMS.Pages.Reports
                 Map(m => m.BudgetCode.Name).Index(12).Name("Budget Code");
                 Map(m => m.EnvironmentalInterest.Name).Index(13).Name("Environmental Interest");
                 Map(m => m.FacilityStatus.Name).Index(14).Name("Facility Status");
-                Map(m => m.Cabinets).Index(15).Name("Cabinet(s)");
-                Map(m => m.RetentionRecords).Index(16).Name("Retention Records");
+                Map(m => m.CabinetsToString).Index(15).Name("Cabinet(s)");
             }
         }
 
