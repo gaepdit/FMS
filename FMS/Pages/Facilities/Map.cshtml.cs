@@ -31,6 +31,8 @@ namespace FMS.Pages.Facilities
         // Shows if there are no results in result set
         public bool ShowNone { get; set; }
 
+        public string distance { get; set; }
+
         public MapModel(IFacilityRepository repository)
         {
             _repository = repository;

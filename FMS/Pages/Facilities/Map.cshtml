@@ -138,7 +138,18 @@
                                         @Html.DisplayFor(m => item.FacilityStatus)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(m => item.Distance) mi
+                                        @if (item.Distance < 0.25)
+                                        {
+                                             Model.distance = Math.Round(item.Distance * 5280).ToString() + " ft";
+                                            @Html.DisplayFor(m => Model.distance)  
+                                        }
+                                        else
+                                        {
+                                            Model.distance = Math.Round(item.Distance,2).ToString() + " mi";
+                                            @Html.DisplayFor(Model => Model.distance) 
+                                       }
+                                       
+
                                     </td>
                                 </tr>
                             }
