@@ -7,7 +7,7 @@
 <hr />
 <div class="container-fluid">
     <h4>Search Criteria</h4>
-    <hr />
+
     @if (Model.Spec.FacilityNumber != null)
     {
         <p>Facility Number: @Model.Spec.FacilityNumber</p>
@@ -64,10 +64,12 @@
     {
         <p>Facility Status: @Model.FacilityStatusName</p>
     }
-
+    <hr />
     @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
     {
-        <form method="get">
+        <form method="post">
+            <input type="hidden" name="handler" value="" />
+            <button id="ExportButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Export to Excel</button>
             <table class="table ">
                 <caption id="search-results">
                     <input type="hidden" asp-for="Spec.FileLabel" />
@@ -141,9 +143,6 @@
                     }
                 </tbody>
             </table>
-            <hr />
-            <input type="hidden" name="handler" value="export" />
-            <button id="ExportButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Export to Excel</button>
         </form>
     }
     else

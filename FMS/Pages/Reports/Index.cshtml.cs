@@ -9,7 +9,6 @@ using CsvHelper.Configuration;
 using System;
 using System.IO;
 using System.Globalization;
-using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FMS.Domain.Data;
 using System.Linq;
@@ -19,78 +18,79 @@ namespace FMS.Pages.Reports
     public class IndexModel : PageModel
     {
         private readonly IFacilityRepository _repository;
-        private readonly ISelectListHelper _listHelper;
+        private readonly IItemsListRepository _listRepository;
 
         // "Spec" is the Facility DTO bound to the HTML Page elements
         [BindProperty(SupportsGet = true)]
         public FacilitySpec Spec { get; set; }
 
+        // Detailed Facility List to go to a report
         public IReadOnlyList<FacilityDetailDto> FacilityList { get; set; }
 
-        // Select Lists
+        // Select List 
         public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
+
+        // Names from ItemList IDs
         public string CountyName { get; private set; }
-        public SelectList States => new SelectList(Data.States);
-        public SelectList FacilityStatuses { get; private set; }
         public string FacilityStatusName { get; private set; }
-        public SelectList FacilityTypes { get; private set; }
         public string FacilityTypeName { get; private set; }
-        public SelectList BudgetCodes { get; private set; }
         public string BudgetCodeName { get; private set; }
-        public SelectList OrganizationalUnits { get; private set; }
         public string OrganizationalUnitName { get; private set; }
-        public SelectList EnvironmentalInterests { get; private set; }
         public string EnvironmentalInterestName { get; private set; }
-        public SelectList ComplianceOfficers { get; private set; }
         public string ComplianceOfficerName { get; private set; }
 
         public IndexModel(
             IFacilityRepository repository,
-             ISelectListHelper listHelper)
+             IItemsListRepository listRepository)
         {
             _repository = repository;
-            _listHelper = listHelper;
+            _listRepository = listRepository;
         }
         public async Task<IActionResult> OnGetAsync(FacilitySpec spec)
         {
             FacilityList = await _repository.GetFacilityDetailListAsync(spec);
             Spec = spec;
-            await PopulateSelectsAsync();
-            //SetNames();
+            await SetNamesAsync();
+
             return Page();
         }
 
-        public async Task<IActionResult> OnGetExportAsync(FacilitySpec spec)
+        public async Task<IActionResult> OnPostAsync()
         {
-            FacilityList = await _repository.GetFacilityDetailListAsync(spec);
-            Spec = spec;
-            await PopulateSelectsAsync();
-            //SetNames();
+            FacilityList = await _repository.GetFacilityDetailListAsync(Spec);
 
             return File(await GetCsvByteArrayAsync(), "text/csv", $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.csv");
         }
 
-        #region "Methods"
+        #region "ListItem Get Name Methods"
 
-        private async Task PopulateSelectsAsync()
-        {
-            BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
-            EnvironmentalInterests = await _listHelper.EnvironmentalInterestsSelectListAsync();
-            FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
-            FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
-            OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
-        }
-
-        private void SetNames()
+        private async Task SetNamesAsync()
         {
             SetCountyName();
-            SetBudgetCodeName();
-            SetComplianceOfficerName();
-            SetEnvironmentalInterestName();
-            SetFacilityStatusName();
-            SetFacilityTypeName();
-            SetOrganizationalUnitName();
+            if (Spec.BudgetCodeId != null)
+            {
+                BudgetCodeName = await _listRepository.GetBudgetCodeNameAsync((Guid)Spec.BudgetCodeId);
+            }
+            if(Spec.ComplianceOfficerId != null)
+            {
+                ComplianceOfficerName = await _listRepository.GetComplianceOfficerNameAsync((Guid)Spec.ComplianceOfficerId);
+            }
+            if(Spec.EnvironmentalInterestId != null)
+            {
+                EnvironmentalInterestName = await _listRepository.GetEnvironmentalInterestNameAsync((Guid)Spec.EnvironmentalInterestId);
+            }
+            if(Spec.FacilityStatusId != null)
+            {
+                FacilityStatusName = await _listRepository.GetFacilityStatusNameAsync((Guid)Spec.FacilityStatusId);
+            }
+            if(Spec.FacilityTypeId != null)
+            {
+                FacilityTypeName = await _listRepository.GetFacilityTypeNameAsync((Guid)Spec.FacilityTypeId);
+            }
+            if(Spec.OrganizationalUnitId != null)
+            {
+                OrganizationalUnitName = await _listRepository.GetOrganizationalUnitNameAsync((Guid)Spec.OrganizationalUnitId);
+            }
         }
 
         private void SetCountyName()
@@ -101,86 +101,7 @@ namespace FMS.Pages.Reports
             }
             else
             {
-                ListItem item = (ListItem)Counties.Where(m => m.Value.Equals(Spec.CountyId));
-                CountyName = item.Name;
-            }
-        }
-
-        private void SetBudgetCodeName()
-        {
-            if(Spec.BudgetCodeId == null || BudgetCodes == null)
-            {
-                BudgetCodeName = string.Empty;
-            }
-            else
-            {
-                ListItem item = (ListItem)BudgetCodes.Where(m => m.Value.Equals(Spec.BudgetCodeId));
-                BudgetCodeName = item.Name;
-            }
-        }
-
-        private void SetComplianceOfficerName()
-        {
-            if (Spec.ComplianceOfficerId == null || ComplianceOfficers == null)
-            {
-                ComplianceOfficerName = string.Empty;
-            }
-            else
-            {
-                ListItem item = (ListItem)ComplianceOfficers.Where(m => m.Value.Equals(Spec.ComplianceOfficerId));
-                ComplianceOfficerName = item.Name;
-            }
-        }
-
-        private void SetEnvironmentalInterestName()
-        {
-            if (Spec.EnvironmentalInterestId == null || EnvironmentalInterests == null)
-            {
-                EnvironmentalInterestName = string.Empty;
-            }
-            else
-            {
-                ListItem item = (ListItem)EnvironmentalInterests.Where(m => m.Value.Equals(Spec.EnvironmentalInterestId));
-                EnvironmentalInterestName = item.Name;
-            }
-        }
-
-        private void SetFacilityStatusName()
-        {
-            if (Spec.FacilityStatusId == null || FacilityStatuses == null)
-            {
-                FacilityStatusName = string.Empty;
-            }
-            else
-            {
-                ListItem item = (ListItem)FacilityStatuses.Where(m => m.Value.Equals(Spec.FacilityStatusId));
-                FacilityStatusName = item.Name;
-            }
-        }
-
-        private void SetFacilityTypeName()
-        {
-            if (Spec.FacilityTypeId == null || FacilityTypes == null)
-            {
-                FacilityTypeName =  string.Empty;
-            }
-            else
-            {
-                ListItem item = (ListItem)FacilityTypes.Where(m => m.Value.Equals(Spec.FacilityTypeId));
-                FacilityTypeName = item.Name;
-            }
-        }
-
-        private void SetOrganizationalUnitName()
-        {
-            if (Spec.OrganizationalUnitId == null || OrganizationalUnits == null)
-            {
-                OrganizationalUnitName = string.Empty;
-            }
-            else
-            {
-                ListItem item = (ListItem)OrganizationalUnits.Where(m => m.Value.Equals(Spec.OrganizationalUnitId));
-                OrganizationalUnitName = item.Name;
+                CountyName = Data.Counties.SingleOrDefault(e => e.Id == Spec.CountyId.Value)?.Name;
             }
         }
 

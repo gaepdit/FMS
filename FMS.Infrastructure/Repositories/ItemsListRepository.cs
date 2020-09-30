@@ -65,6 +65,54 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetCabinetsItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<Cabinet>(includeInactive);
 
+
+        #region "Get single ListItem names"
+
+        //Used to get name value from a specific ListItem
+        public async Task<string> GetBudgetCodeNameAsync(Guid id)
+        {
+            var item = await _context.BudgetCodes.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+            return item.Name;
+        }
+
+        public async Task<string> GetComplianceOfficerNameAsync(Guid id)
+        {
+            var item = await _context.ComplianceOfficers.AsNoTracking()
+                 .SingleOrDefaultAsync(e => e.Id == id);
+            return item.GivenName + " " + item.FamilyName;
+        }
+
+        public async Task<string> GetEnvironmentalInterestNameAsync(Guid id)
+        {
+            var item = await _context.EnvironmentalInterests.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+            return item.Name;
+        }
+
+        public async Task<string> GetFacilityStatusNameAsync(Guid id)
+        {
+            var item = await _context.FacilityStatuses.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+            return item.Status;
+        }
+
+        public async Task<string> GetFacilityTypeNameAsync(Guid id)
+        {
+            var item = await _context.FacilityTypes.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+            return item.Name;
+        }
+
+        public async Task<string> GetOrganizationalUnitNameAsync(Guid id)
+        {
+            var item = await _context.OrganizationalUnits.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+            return item.Name;
+        }
+
+        #endregion
+
         #region IDisposable Support
 
         private bool _disposedValue;
