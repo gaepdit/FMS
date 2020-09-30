@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using FMS.App;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
@@ -9,17 +11,17 @@ using FMS.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.IO;
 
 namespace FMS
 {
@@ -32,8 +34,7 @@ namespace FMS
             CreateFolders();
         }
 
-        public IConfiguration Configuration { get; }
-
+        private IConfiguration Configuration { get; }
         private readonly IWebHostEnvironment _env;
         private string _dataProtectionKeysFolder;
 
@@ -43,20 +44,22 @@ namespace FMS
             // Configure database
             services.AddDbContext<FmsDbContext>(opts =>
             {
-                string connectionString = Configuration.GetConnectionString("DefaultConnection");
+                var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
                 if (_env.IsDevelopment())
                 {
                     if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
                     {
                         // The "TempDb" launch profiles must use LocalDB
-                        connectionString = "Server=(localdb)\\mssqllocaldb;Database=fms-temp;Trusted_Connection=True;MultipleActiveResultSets=true";
+                        connectionString =
+                            "Server=(localdb)\\mssqllocaldb;Database=fms-temp;Trusted_Connection=True;MultipleActiveResultSets=true";
                     }
                     else
                     {
                         // In dev environment, use connection string if specified; otherwise, use LocalDB.
                         // (In prod environment, connection string is required.)
-                        connectionString ??= "Server=(localdb)\\mssqllocaldb;Database=fms-local;Trusted_Connection=True;MultipleActiveResultSets=true";
+                        connectionString ??=
+                            "Server=(localdb)\\mssqllocaldb;Database=fms-local;Trusted_Connection=True;MultipleActiveResultSets=true";
                     }
                 }
 
@@ -65,6 +68,7 @@ namespace FMS
 
             // Configure Identity
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<FmsDbContext>();
 
             // Configure cookies
@@ -87,9 +91,10 @@ namespace FMS
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(_dataProtectionKeysFolder));
 
             // Configure Razor pages 
-            services.AddRazorPages(opts =>
+            services.AddRazorPages().AddMvcOptions(opts =>
             {
-                opts.Conventions.AuthorizeFolder("/Users");
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opts.Filters.Add(new AuthorizeFilter(policy));
             });
 
             // Configure dependencies
@@ -139,7 +144,8 @@ namespace FMS
         {
             // Base path for persisted files
             var BasePath = string.IsNullOrWhiteSpace(Configuration["PersistedFilesBasePath"])
-                ? "../_GeneratedFiles" : Configuration["PersistedFilesBasePath"].ForceToString();
+                ? "../_GeneratedFiles"
+                : Configuration["PersistedFilesBasePath"].ForceToString();
 
             // Data protection keys folder
             _dataProtectionKeysFolder = Path.Combine(BasePath, "DataProtectionKeys");

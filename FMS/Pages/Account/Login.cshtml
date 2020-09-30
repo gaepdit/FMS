@@ -3,14 +3,13 @@
 @{
     ViewData["Title"] = "Login";
 }
+<div class="jumbotron py-3 py-sm-4 py-md-5 mx-auto mt-3 mt-md-4 mt-lg-5 ">
+    <h1 class="display-4">Sign in using your work account</h1>
 
-<h1>Sign in using your work account</h1>
-
-<partial name="_AlertPartial" for="Message" />
-
-<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-    <button type="submit" class="btn btn-lg btn-outline-primary btn-img my-3 py-3 px-4" title="Sign in using your work account">
-        <img src="~/graphics/ms-symbol.svg" alt="" /> Sign in
-    </button>
-</form>
+    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <button type="submit" class="btn btn-lg btn-outline-primary btn-img my-3 py-3 px-4" title="Sign in using your work account">
+            <img src="~/graphics/ms-symbol.svg" alt="" /> Sign in
+        </button>
+    </form>
+</div>

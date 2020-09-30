@@ -2,6 +2,6 @@
 {
     public static class UserConstants
     {
-        public const string EditorRole = "Editor";
+        public const string AdminRole = "Administrator";
     }
 }

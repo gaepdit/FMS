@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS
+namespace FMS.Pages.Account
 {
-    public class LoginPartialModel : PageModel
+    public class AccessDenied : PageModel
     {
         public void OnGet() { }
     }

@@ -1,8 +1,10 @@
 ﻿@page "{id:Guid?}"
 @model Pages.Files.EditModel
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
 @{
     ViewData["Title"] = $"Edit File: {Model.FileLabel}";
 }

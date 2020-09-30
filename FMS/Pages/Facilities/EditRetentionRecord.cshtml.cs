@@ -1,15 +1,16 @@
+using System;
+using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
-    // TODO #38: Add authorize attribute in production 
-
+    [Authorize(Roles = UserConstants.AdminRole)]
     public class EditRetentionRecordModel : PageModel
     {
         [BindProperty]
@@ -73,8 +74,8 @@ namespace FMS.Pages.Facilities
 
             var facility = await _repository.GetFacilityForRetentionRecord(Id);
             HighlightRecord = Id;
-            return RedirectToPage("./Details", pageHandler: "Get", routeValues: new { id = facility.Id }, fragment: "retention-records");
+            return RedirectToPage("./Details", pageHandler: "Get", routeValues: new {id = facility.Id},
+                fragment: "retention-records");
         }
-
     }
 }
