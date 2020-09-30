@@ -9,24 +9,16 @@ namespace FMS.Domain.Dto
         public FacilityBasicDto(Facility facility)
         {
             Id = facility.Id;
-            FileLabel = facility.File.FileLabel;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
-            Active = facility.Active;
         }
 
-        public Guid Id { get; set; }
-
-        [Display(Name = "File")]
-        public string FileLabel { get; set; }
+        public Guid Id { get; }
 
         [Display(Name = "Facility Number")]
-        public string FacilityNumber { get; set; }
+        public string FacilityNumber { get; }
 
         [Display(Name = "Facility Name")]
-        public string Name { get; set; }
-
-        [Display(Name = "Active Site")]
-        public bool Active { get; set; } = true;
+        public string Name { get; }
     }
 }

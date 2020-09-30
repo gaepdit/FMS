@@ -20,41 +20,41 @@ namespace FMS.Domain.Dto
             State = facility.State;
             PostalCode = facility.PostalCode;
             Cabinets = facility.File.CabinetFiles?
-                .Select(c => c.Cabinet.Name).ToList()
+                    .Select(c => c.Cabinet.Name).ToList()
                 ?? new List<string>();
             RetentionRecords = facility.RetentionRecords?
-                .Select(e => new RetentionRecordSummaryDto(e)).ToList()
+                    .Select(e => new RetentionRecordSummaryDto(e)).ToList()
                 ?? new List<RetentionRecordSummaryDto>();
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; }
 
         [Display(Name = "File")]
-        public string FileLabel { get; set; }
+        public string FileLabel { get; }
 
         [Display(Name = "Facility Number")]
-        public string FacilityNumber { get; set; }
+        public string FacilityNumber { get; }
 
         [Display(Name = "Facility Name")]
-        public string Name { get; set; }
+        public string Name { get; }
 
         [Display(Name = "Active Site")]
-        public bool Active { get; set; } = true;
+        public bool Active { get; }
 
         [Display(Name = "Street Address")]
-        public string Address { get; set; }
+        public string Address { get; }
 
         [Display(Name = "City")]
-        public string City { get; set; }
+        public string City { get; }
 
         [Display(Name = "State")]
-        public string State { get; set; }
+        public string State { get; }
 
         [Display(Name = "ZIP Code")]
-        public string PostalCode { get; set; }
+        public string PostalCode { get; }
 
-        public List<string> Cabinets { get; set; }
+        public List<string> Cabinets { get; }
 
-        public List<RetentionRecordSummaryDto> RetentionRecords { get; set; }
+        public List<RetentionRecordSummaryDto> RetentionRecords { get; }
     }
 }

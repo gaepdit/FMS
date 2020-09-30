@@ -121,7 +121,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Cabinet Name '{cabinetEdit.Name}' already exists.");
             }
 
-            cabinet.Active = cabinetEdit.Active;
+            cabinet.Active = !cabinetEdit.Delete;
             cabinet.Name = cabinetEdit.Name;
 
             await _context.SaveChangesAsync();

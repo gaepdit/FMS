@@ -25,5 +25,13 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Retention Schedule Number")]
         public string RetentionSchedule { get; set; }
+
+        public void TrimAll()
+        {
+            BoxNumber = BoxNumber?.Trim();
+            ConsignmentNumber = ConsignmentNumber?.Trim();
+            ShelfNumber = ShelfNumber?.Trim();
+            RetentionSchedule = RetentionSchedule?.Trim();
+        }
     }
 }

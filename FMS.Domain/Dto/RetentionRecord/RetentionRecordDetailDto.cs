@@ -18,25 +18,25 @@ namespace FMS.Domain.Dto
             RetentionSchedule = record.RetentionSchedule;
         }
 
-        public Guid Id { get; set; }
-        public bool Active { get; set; }
+        public Guid Id { get; }
+        public bool Active { get; }
 
         [Display(Name = "Start year")]
-        public int StartYear { get; set; }
+        public int StartYear { get; }
 
         [Display(Name = "End year")]
-        public int EndYear { get; set; }
+        public int EndYear { get; }
 
         [Display(Name = "Consignment Number")]
-        public string ConsignmentNumber { get; set; }
+        public string ConsignmentNumber { get; }
 
         [Display(Name = "Box Number")]
-        public string BoxNumber { get; set; }
+        public string BoxNumber { get; }
 
         [Display(Name = "Shelf Number")]
-        public string ShelfNumber { get; set; }
+        public string ShelfNumber { get; }
 
         [Display(Name = "Retention Schedule Number")]
-        public string RetentionSchedule { get; set; }
+        public string RetentionSchedule { get; }
     }
 }

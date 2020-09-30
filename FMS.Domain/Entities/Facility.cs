@@ -26,8 +26,8 @@ namespace FMS.Domain.Entities
             City = newFacility.City;
             State = newFacility.State;
             PostalCode = newFacility.PostalCode;
-            Latitude = (decimal)newFacility.Latitude;
-            Longitude = (decimal)newFacility.Longitude; 
+            Latitude = newFacility.Latitude ?? 0;
+            Longitude = newFacility.Longitude ?? 0; 
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid

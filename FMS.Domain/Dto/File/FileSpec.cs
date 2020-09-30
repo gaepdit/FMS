@@ -11,7 +11,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "County")]
         public int? CountyId { get; set; }
 
-        [Display(Name = "Show inactive")]
+        [Display(Name = "Show deleted")]
         public bool ShowInactive { get; set; }
     }
 }

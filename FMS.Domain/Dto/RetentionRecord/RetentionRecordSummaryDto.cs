@@ -13,12 +13,12 @@ namespace FMS.Domain.Dto
         }
 
         [Display(Name = "Start year")]
-        public int StartYear { get; set; }
+        public int StartYear { get; }
 
         [Display(Name = "End year")]
-        public int EndYear { get; set; }
+        public int EndYear { get; }
 
         [Display(Name = "Box Number")]
-        public string BoxNumber { get; set; }
+        public string BoxNumber { get; }
     }
 }

@@ -53,6 +53,8 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            RecordEdit.TrimAll();
+
             try
             {
                 await _repository.UpdateRetentionRecordAsync(Id, RecordEdit);

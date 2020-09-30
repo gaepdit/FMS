@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Data;
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
@@ -7,7 +7,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +23,7 @@ namespace FMS.Infrastructure.Repositories
             _fileRepository = fileRepository;
         }
 
-        public async Task<bool> FacilityExistsAsync(Guid id) => 
+        public async Task<bool> FacilityExistsAsync(Guid id) =>
             await _context.Facilities.AnyAsync(e => e.Id == id);
 
         public async Task<FacilityDetailDto> GetFacilityAsync(Guid id)
@@ -59,9 +58,12 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
                 .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-                .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
-                .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue ||
+                    e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.EnvironmentalInterestId.HasValue ||
+                    e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
+                .Where(e => !spec.ComplianceOfficerId.HasValue ||
+                    e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
                 .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
                 .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
@@ -80,9 +82,12 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
                 .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-                .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
-                .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue ||
+                    e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.EnvironmentalInterestId.HasValue ||
+                    e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
+                .Where(e => !spec.ComplianceOfficerId.HasValue ||
+                    e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
                 .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
                 .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
@@ -114,6 +119,11 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Facility Number is required.");
             }
 
+            if (await FacilityNumberExists(newFacility.FacilityNumber))
+            {
+                throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
+            }
+
             File file;
             if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
             {
@@ -135,7 +145,7 @@ namespace FMS.Infrastructure.Repositories
                     ?? throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
-            Facility newFac = new Facility(newFacility)
+            var newFac = new Facility(newFacility)
             {
                 File = file
             };
@@ -154,6 +164,11 @@ namespace FMS.Infrastructure.Repositories
             if (string.IsNullOrWhiteSpace(facilityUpdates.FacilityNumber))
             {
                 throw new ArgumentException("Facility Number is required.");
+            }
+
+            if (await FacilityNumberExists(facilityUpdates.FacilityNumber, id))
+            {
+                throw new ArgumentException($"Facility Number '{facilityUpdates.FacilityNumber}' already exists.");
             }
 
             File file;
@@ -203,9 +218,13 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null) =>
+            await _context.Facilities.AnyAsync(e =>
+                e.FacilityNumber == facilityNumber
+                && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<bool> FileLabelExists(string fileLabel) =>
             await _context.Files.AnyAsync(e => e.FileLabel == fileLabel);
-
 
         // Retention Records
 

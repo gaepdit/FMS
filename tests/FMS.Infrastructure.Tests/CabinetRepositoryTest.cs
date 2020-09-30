@@ -182,7 +182,7 @@ namespace FMS.Infrastructure.Tests
             var newName = "C000";
             var cabinetEdit = new CabinetEditDto()
             {
-                Active = cabinet.Active,
+                Delete = !cabinet.Active,
                 Name = newName
             };
 
@@ -207,7 +207,7 @@ namespace FMS.Infrastructure.Tests
             var cabinet = DataHelpers.Cabinets[0];
             var cabinetEdit = new CabinetEditDto()
             {
-                Active = !cabinet.Active,
+                Delete = cabinet.Active,
                 Name = cabinet.Name
             };
 
@@ -232,7 +232,7 @@ namespace FMS.Infrastructure.Tests
             var cabinet = DataHelpers.Cabinets[0];
             var cabinetEdit = new CabinetEditDto()
             {
-                Active = cabinet.Active,
+                Delete = !cabinet.Active,
                 Name = cabinet.Name
             };
 
@@ -257,7 +257,7 @@ namespace FMS.Infrastructure.Tests
             var cabinet = DataHelpers.Cabinets[0];
             var cabinetEdit = new CabinetEditDto()
             {
-                Active = cabinet.Active,
+                Delete = !cabinet.Active,
                 Name = ""
             };
 
@@ -279,7 +279,7 @@ namespace FMS.Infrastructure.Tests
             var cabinet = DataHelpers.Cabinets[0];
             var cabinetEdit = new CabinetEditDto()
             {
-                Active = cabinet.Active,
+                Delete = !cabinet.Active,
                 Name = existingName
             };
 

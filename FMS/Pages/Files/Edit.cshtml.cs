@@ -11,14 +11,14 @@ namespace FMS.Pages.Files
     public class EditModel : PageModel
     {
         [BindProperty]
-        public bool Active { get; set; }
+        public bool Delete { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
 
         public string FileLabel { get; set; }
 
-        public readonly IFileRepository _repository;
+        private readonly IFileRepository _repository;
         public EditModel(IFileRepository repository) => _repository = repository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
@@ -37,7 +37,7 @@ namespace FMS.Pages.Files
 
             Id = file.Id;
             FileLabel = file.FileLabel;
-            Active = file.Active;
+            Delete = !file.Active;
 
             return Page();
         }
@@ -50,16 +50,16 @@ namespace FMS.Pages.Files
                 return Page();
             }
 
-            if (await _repository.FileHasActiveFacilities(Id))
+            if (Delete && await _repository.FileHasActiveFacilities(Id))
             {
-                TempData?.SetDisplayMessage(Context.Danger, "File has active Facilities and cannot be made inactive.");
+                TempData?.SetDisplayMessage(Context.Danger, "File has active Facilities and cannot be deleted.");
                 FileLabel = (await _repository.GetFileAsync(Id)).FileLabel;
                 return RedirectToPage("./Details", new { id = FileLabel });
             }
 
             try
             {
-                await _repository.UpdateFileAsync(Id, Active);
+                await _repository.UpdateFileAsync(Id, !Delete);
             }
             catch (DbUpdateConcurrencyException)
             {

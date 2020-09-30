@@ -70,6 +70,8 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            Facility.TrimAll();
+
             // If new File Label is provided, make sure it exists
             if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
                 !await _repository.FileLabelExists(Facility.FileLabel))
@@ -77,7 +79,11 @@ namespace FMS.Pages.Facilities
                 ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
             }
 
-            // TODO #66: If editing facility number, make sure the new number doesn't already exist before trying to save. 
+            // If editing facility number, make sure the new number doesn't already exist before trying to save.
+            if (await _repository.FacilityNumberExists(Facility.FacilityNumber, Id))
+            {
+                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists.");
+            }
 
             if (!ModelState.IsValid)
             {
@@ -102,7 +108,7 @@ namespace FMS.Pages.Facilities
             }
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
-            return RedirectToPage("./Details", new { id = Id });
+            return RedirectToPage("./Details", new {id = Id});
         }
 
         private async Task PopulateSelectsAsync()

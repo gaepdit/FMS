@@ -49,7 +49,7 @@ namespace FMS
                 {
                     if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
                     {
-                        // The "IISX-TempDb" launch profile must use LocalDB
+                        // The "TempDb" launch profiles must use LocalDB
                         connectionString = "Server=(localdb)\\mssqllocaldb;Database=fms-temp;Trusted_Connection=True;MultipleActiveResultSets=true";
                     }
                     else
@@ -111,7 +111,7 @@ namespace FMS
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

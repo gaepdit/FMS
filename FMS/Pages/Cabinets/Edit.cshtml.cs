@@ -48,6 +48,8 @@ namespace FMS.Pages.Cabinets
                 return Page();
             }
 
+            CabinetEdit.Name = CabinetEdit.Name?.Trim();
+
             if (await _repository.CabinetNameExistsAsync(CabinetEdit.Name, Id))
             {
                 ModelState.AddModelError("CabinetEdit.Name", "There is already a Cabinet with that name.");
@@ -72,7 +74,7 @@ namespace FMS.Pages.Cabinets
             }
 
             TempData?.SetDisplayMessage(Context.Success, "Cabinet successfully updated.");
-            return RedirectToPage("./Details", new { id = CabinetEdit.Name });
+            return RedirectToPage("./Details", new {id = CabinetEdit.Name});
         }
     }
 }

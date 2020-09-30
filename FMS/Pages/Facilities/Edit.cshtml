@@ -5,7 +5,7 @@
     <script type="text/javascript">
         $(document).ready(function domReady() {
             $("#Facility_FileLabel").on("input", function () {
-                if ($(this).val() === "") {
+                if ($(this).val().trim() === "") {
                     $("#FileIdHelpBlock").removeClass("d-none");
                 } else {
                     $("#FileIdHelpBlock").addClass("d-none");
@@ -21,7 +21,7 @@
     @ViewData["Title"]
     @if (!Model.Facility.Active)
     {
-        <span class="text-muted">(Inactive)</span>
+        <span class="text-muted">(Deleted)</span>
     }
 </h1>
 <hr />
@@ -147,7 +147,7 @@
         <div class="form-row">
             <div class="col">
                 <button type="submit" class="btn btn-primary col-md-2">Save Changes</button>
-                <a href="javascript: history.go(-1)" class="btn btn-outline-secondary col-md-2">Cancel</a>
+                <a asp-page="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary col-md-2">Cancel</a>
             </div>
         </div>
     </form>

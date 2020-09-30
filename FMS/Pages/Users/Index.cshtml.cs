@@ -16,7 +16,7 @@ namespace FMS.Pages.Users
 
         public string Name { get; set; }
 
-        [UIHint("EmailAddress")]
+        [EmailAddress]
         public string Email { get; set; }
 
         public bool ShowResults { get; set; }

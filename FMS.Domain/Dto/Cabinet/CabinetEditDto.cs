@@ -7,11 +7,11 @@ namespace FMS.Domain.Dto
         public CabinetEditDto() { }
         public CabinetEditDto(CabinetSummaryDto cabinet)
         {
-            Active = cabinet.Active;
+            Delete = !cabinet.Active;
             Name = cabinet.Name;
         }
 
-        public bool Active { get; set; }
+        public bool Delete { get; set; }
 
         [Required]
         [StringLength(5)]

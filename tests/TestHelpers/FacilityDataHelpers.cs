@@ -19,11 +19,11 @@ namespace TestHelpers
             facility.EnvironmentalInterest = GetEnvironmentalInterest(facility.EnvironmentalInterestId);
             facility.ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId);
 
-            return new FacilityDetailDto(facility)
-            {
-                Cabinets = GetCabinetsForFile(facility.FileId),
-                RetentionRecords = GetRetentionRecordDetailsForFacility(id)
-            };
+            var facilityDetail = new FacilityDetailDto(facility);
+            facilityDetail.Cabinets.AddRange(GetCabinetsForFile(facility.FileId));
+            facilityDetail.RetentionRecords.AddRange(GetRetentionRecordDetailsForFacility(id));
+
+            return facilityDetail;
         }
 
         public static FacilitySummaryDto GetFacilitySummary(Guid id)
@@ -31,20 +31,19 @@ namespace TestHelpers
             var facility = Facilities.Find(e => e.Id == id);
             facility.File = GetFile(facility.FileId);
 
-            return new FacilitySummaryDto(facility)
-            {
-                Cabinets = GetCabinetsForFile(facility.FileId),
-                RetentionRecords = GetRetentionRecordSummaryForFacility(id)
-            };
+            var facilitySummary = new FacilitySummaryDto(facility);
+            facilitySummary.Cabinets.AddRange(GetCabinetsForFile(facility.FileId));
+            facilitySummary.RetentionRecords.AddRange(GetRetentionRecordSummaryForFacility(id));
+
+            return facilitySummary;
         }
 
         public static List<RetentionRecordSummaryDto> GetRetentionRecordSummaryForFacility(Guid id) =>
             RetentionRecords.Where(e => e.FacilityId == id)
-            .Select(e => new RetentionRecordSummaryDto(e)).ToList();
+                .Select(e => new RetentionRecordSummaryDto(e)).ToList();
 
         public static List<RetentionRecordDetailDto> GetRetentionRecordDetailsForFacility(Guid id) =>
             RetentionRecords.Where(e => e.FacilityId == id)
-            .Select(e => new RetentionRecordDetailDto(e)).ToList();
-
+                .Select(e => new RetentionRecordDetailDto(e)).ToList();
     }
 }

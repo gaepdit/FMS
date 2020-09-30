@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model Pages.Cabinets.IndexModel
 @{
     ViewData["Title"] = "Cabinets";
@@ -8,11 +8,11 @@
     @ViewData["Title"]
     @if (Model.ShowInactive)
     {
-        <a asp-page="Index" class="btn btn-sm btn-outline-secondary">Hide inactive</a>
+        <a asp-page="Index" class="btn btn-sm btn-outline-secondary">Hide deleted</a>
     }
     else
     {
-        <a asp-page="Index" asp-route-showInactive="true" class="btn btn-sm btn-outline-secondary">Show inactive</a>
+        <a asp-page="Index" asp-route-showInactive="true" class="btn btn-sm btn-outline-secondary">Show deleted</a>
     }
 </h1>
 <hr />
@@ -23,8 +23,8 @@
     {
         @foreach (var c in Model.Cabinets)
         {
-            <a asp-page="Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
-                @c.Name @(c.Active ? "" : "(Inactive)") @(c.Id==Model.NewCabinetId ? "(New)" : "")
+            <a asp-page="Details" asp-route-id="@c.Name" class="btn @(c.Active ? (c.Id == Model.NewCabinetId ? "btn-outline-primary" : "btn-outline-info") : "btn-outline-secondary") btn-sm m-1">
+                @c.Name @(c.Active ? "" : "(Deleted)") @(c.Id == Model.NewCabinetId ? "(New)" : "")
             </a>
         }
     }

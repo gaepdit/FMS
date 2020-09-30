@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "IIS Express": {
+    "IISX-Migrate": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
@@ -25,12 +25,22 @@
         "RECREATE_DB": "true"
       }
     },
-    "FMS": {
+    "FMS-Migrate": {
       "applicationUrl": "https://localhost:44362;http://localhost:53734",
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+      },
+      "launchBrowser": true
+    },
+    "FMS-TempDb": {
+      "applicationUrl": "https://localhost:44362;http://localhost:53734",
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
+        "RECREATE_DB": "true"
       },
       "launchBrowser": true
     }

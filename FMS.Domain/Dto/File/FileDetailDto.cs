@@ -14,21 +14,21 @@ namespace FMS.Domain.Dto
             Active = file.Active;
             FileLabel = file.FileLabel;
             Facilities = file.Facilities?
-                .Where(e => e.Active)
-                .Select(e => new FacilitySummaryDto(e)).ToList()
+                    .Where(e => e.Active)
+                    .Select(e => new FacilitySummaryDto(e)).ToList()
                 ?? new List<FacilitySummaryDto>();
             Cabinets = file.CabinetFiles?
-                .Select(c => new CabinetSummaryDto(c.Cabinet)).ToList()
+                    .Select(c => new CabinetSummaryDto(c.Cabinet)).ToList()
                 ?? new List<CabinetSummaryDto>();
         }
 
-        public Guid Id { get; set; }
-        public bool Active { get; set; }
+        public Guid Id { get; }
+        public bool Active { get; }
 
         [Display(Name = "File Label")]
-        public string FileLabel { get; set; }
+        public string FileLabel { get; }
 
-        public List<CabinetSummaryDto> Cabinets { get; set; }
-        public List<FacilitySummaryDto> Facilities { get; set; }
+        public List<CabinetSummaryDto> Cabinets { get; }
+        public List<FacilitySummaryDto> Facilities { get; }
     }
 }
