@@ -31,7 +31,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Set<TEntity>().AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
-                .Select(e => new ListItem { Id = e.Id, Name = e.Name })
+                .Select(e => new ListItem {Id = e.Id, Name = e.Name})
                 .ToListAsync();
         }
 
@@ -43,7 +43,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.FamilyName)
                 .ThenBy(e => e.GivenName)
-                .Select(e => new ListItem() { Id = e.Id, Name = e.FamilyName + ", " + e.GivenName })
+                .Select(e => new ListItem() {Id = e.Id, Name = e.FamilyName + ", " + e.GivenName})
                 .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetEnvironmentalInterestsItemListAsync(bool includeInactive = false) =>
@@ -53,7 +53,7 @@ namespace FMS.Infrastructure.Repositories
             await _context.FacilityStatuses.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Status)
-                .Select(e => new ListItem() { Id = e.Id, Name = e.Status })
+                .Select(e => new ListItem() {Id = e.Id, Name = e.Status})
                 .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetFacilityTypesItemListAsync(bool includeInactive = false) =>
@@ -79,35 +79,35 @@ namespace FMS.Infrastructure.Repositories
         public async Task<string> GetComplianceOfficerNameAsync(Guid id)
         {
             var item = await _context.ComplianceOfficers.AsNoTracking()
-                 .SingleOrDefaultAsync(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id);
             return item.GivenName + " " + item.FamilyName;
         }
 
         public async Task<string> GetEnvironmentalInterestNameAsync(Guid id)
         {
             var item = await _context.EnvironmentalInterests.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id);
             return item.Name;
         }
 
         public async Task<string> GetFacilityStatusNameAsync(Guid id)
         {
             var item = await _context.FacilityStatuses.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id);
             return item.Status;
         }
 
         public async Task<string> GetFacilityTypeNameAsync(Guid id)
         {
             var item = await _context.FacilityTypes.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id);
             return item.Name;
         }
 
         public async Task<string> GetOrganizationalUnitNameAsync(Guid id)
         {
             var item = await _context.OrganizationalUnits.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                .SingleOrDefaultAsync(e => e.Id == id);
             return item.Name;
         }
 
