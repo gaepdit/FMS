@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>FMS</RootNamespace>
     <StartupObject>FMS.Program</StartupObject>
     <UserSecretsId>9eaa6ee0-f5de-4484-8e00-194a201392e7</UserSecretsId>
-    <AssemblyVersion>2020.9.30</AssemblyVersion>
+    <AssemblyVersion>2020.10.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
