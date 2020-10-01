@@ -1,8 +1,10 @@
 ﻿@page
+@using Domain.Entities.Users
 @model Pages.Users.IndexModel
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "User Search";
 }
+
 @section Scripts {
     <partial name="_SearchFormScriptsPartial" />
 }
@@ -36,24 +38,27 @@
     {
         <table class="table table-borderless">
             <thead class="thead-light">
-                <tr>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
-                    <th scope="col">@Html.DisplayNameFor(m => m.Email)</th>
-                    <th scope="col">Actions</th>
-                </tr>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.Email)</th>
+                <th scope="col">Actions</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.SearchResults)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(m => item.Name)</td>
-                        <td>@Html.DisplayFor(m => item.Email)</td>
-                        <td>
-                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">View</a>
+            @foreach (var item in Model.SearchResults)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => item.Name)</td>
+                    <td>@Html.DisplayFor(m => item.Email)</td>
+                    <td>
+                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">View</a>
+                        @if (User.IsInRole(UserConstants.AdminRole))
+                        {
                             <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
-                        </td>
-                    </tr>
-                }
+                        }
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     }

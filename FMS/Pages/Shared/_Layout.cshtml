@@ -8,74 +8,40 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <a class="skipnav" href="#main-content">Skip to main content</a>
-    <header role="banner">
-        <div class="container h3 my-2">
-            <img src="~/graphics/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
-            <a href="/" aria-label="Home" class="text-dark">File Management System</a>
-        </div>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-brand border-bottom box-shadow mb-3">
-            <div class="container">
-                @*<a class="navbar-brand" asp-page="/Index">FMS</a>*@
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-page="/Facilities/Index">Facility Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-page="/Facilities/Map">Location Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-page="/Facilities/Add">Add Facility</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="MoreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
-                            <div class="dropdown-menu" aria-labelledby="MoreDropdown">
-                                <a class="dropdown-item" asp-page="/Files/Index">Files</a>
-                                <a class="dropdown-item" asp-page="/Cabinets/Index">Cabinets</a>
-                                @*<a class="dropdown-item" asp-page="/Reports/Index">Reports</a>*@
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="AdminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                            <div class="dropdown-menu" aria-labelledby="FacDropdown">
-                                <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
-                                @*<a class="dropdown-item" asp-page="/Admin/Index">Site Maintenance</a>*@
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main id="main-content" role="main" class="pb-3">
-            @RenderBody()
-        </main>
+<a class="skipnav" href="#main-content">Skip to main content</a>
+<header role="banner">
+    <div class="container h3 my-2">
+        <img src="~/graphics/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
+        <a href="/" aria-label="Home" class="text-dark">File Management System</a>
     </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <partial name="_MenuPartial" />
+    }
+</header>
+<div class="container">
+    <main id="main-content" role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
 
-    <footer class="border-top footer">
-        <div class="container text-brand">
-            <a href="#">Return to top</a>
+<footer class="border-top footer">
+    <div class="container text-brand">
+        <a href="#">Return to top</a>
+    </div>
+    <div class="bg-brand text-light">
+        <div class="container">
+            &copy; @DateTime.Now.Year Environmental Protection Division IT -
+            <a href="http://georgia.gov/accessibility" target="_blank">Accessibility</a> |
+            <a href="http://www.gadnr.org/ada" target="_blank">DNR Accessibility Notice</a> |
+            <a href="http://georgia.gov/privacysecurity" target="_blank">Privacy/Security</a>
         </div>
-        <div class="bg-brand text-light">
-            <div class="container">
-                &copy; @DateTime.Now.Year Environmental Protection Division IT -
-                <a href="http://georgia.gov/accessibility" target="_blank">Accessibility</a> |
-                <a href="http://www.gadnr.org/ada" target="_blank">DNR Accessibility Notice</a> |
-                <a href="http://georgia.gov/privacysecurity" target="_blank">Privacy/Security</a>
-            </div>
-        </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

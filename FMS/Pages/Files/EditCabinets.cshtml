@@ -1,0 +1,52 @@
+﻿@page "{id:Guid?}"
+@model Pages.Files.EditCabinets
+@{
+    ViewData["Title"] = $"Edit Cabinets for File {Model.FileDetail.FileLabel}";
+}
+<h1>
+    @ViewData["Title"]
+    <a asp-page="Details" asp-route-id="@Model.FileDetail.FileLabel" class="btn btn-sm btn-outline-info">Back to File</a>
+</h1>
+<hr />
+<partial name="_AlertPartial" for="Message" />
+
+<div class="my-3">
+    <h2>Current Cabinets</h2>
+    @if (Model.FileDetail.Cabinets != null && Model.FileDetail.Cabinets.Count > 0)
+    {
+        @foreach (var c in Model.FileDetail.Cabinets)
+        {
+            <span class="border border-secondary btn-sm d-inline-block m-1">@c.Name @(c.Active ? "" : "(Deleted)")</span>
+        }
+    }
+    else
+    {
+        <p class="lead text-info">No cabinets found for this File.</p>
+    }
+</div>
+
+<div class="container-fluid bg-light pt-3 mt-5">
+    <form method="post" class="form-inline">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <label asp-for="CabinetToAdd" class="sr-only"></label>
+        <select asp-for="CabinetToAdd" asp-items="Model.CabinetsAvailableForFile" class="custom-select mb-sm-2 mr-sm-2">
+            <option value="">[Select]</option>
+        </select>
+        <div class="form-check mb-sm-2 mr-sm-2">
+            <span asp-validation-for="CabinetToAdd" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3 mb-sm-2 mr-5" asp-page-handler="AddCabinet">Add Cabinet to File</button>
+
+        <label asp-for="CabinetToRemove" class="sr-only"></label>
+        <select asp-for="CabinetToRemove" asp-items="Model.CabinetsWithFile" class="custom-select mb-sm-2 mr-sm-2">
+            <option value="">[Select]</option>
+        </select>
+        <div class="form-check mb-sm-2 mr-sm-2">
+            <span asp-validation-for="CabinetToRemove" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-danger mb-sm-2" asp-page-handler="RemoveCabinet">Remove Cabinet from File</button>
+
+        <input asp-for="FileId" />
+    </form>
+</div>

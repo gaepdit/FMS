@@ -1,33 +1,30 @@
-using FMS.Domain.Entities.Users;
-using FMS.Domain.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using FMS.Domain.Entities.Users;
+using FMS.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Users
 {
-    // TODO #38: Add authorize attribute in production 
-    //[Authorize(Roles = UserConstants.EditorRole)]
+    [Authorize(Roles = UserConstants.AdminRole)]
     public class EditModel : PageModel
     {
         private readonly IUserService _userService;
         public EditModel(IUserService userService) => _userService = userService;
 
         [BindProperty]
-        public Guid Id { get; set; }
+        [HiddenInput]
+        public Guid UserId { get; set; }
 
         [BindProperty]
-        [DisplayName("Editor Role")]
-        public bool HasEditorRole { get; set; }
+        [DisplayName("Administrator Role")]
+        public bool HasAdminRole { get; set; }
 
-        public string DisplayName { get; set; }
-        public string Email { get; set; }
-
-        public IEnumerable<IdentityError> Errors { get; set; }
+        public string DisplayName { get; private set; }
+        public string Email { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -42,12 +39,12 @@ namespace FMS.Pages.Users
                 return NotFound();
             }
 
-            Id = id.Value;
+            UserId = user.Id;
             DisplayName = user.DisplayName;
             Email = user.Email;
 
-            IList<string> roles = await _userService.GetUserRolesAsync(Id);
-            HasEditorRole = roles.Contains(UserConstants.EditorRole);
+            var roles = await _userService.GetUserRolesAsync(UserId);
+            HasAdminRole = roles.Contains(UserConstants.AdminRole);
 
             return Page();
         }
@@ -59,20 +56,20 @@ namespace FMS.Pages.Users
                 return Page();
             }
 
-            var result = await _userService.UpdateUserRoleAsync(Id, UserConstants.EditorRole, HasEditorRole);
+            var result = await _userService.UpdateUserRoleAsync(UserId, UserConstants.AdminRole, HasAdminRole);
 
             if (result.Succeeded)
             {
                 TempData?.SetDisplayMessage(Context.Success, "User account successfully updated.");
-                return RedirectToPage("./Details", new { id = Id });
+                return RedirectToPage("./Details", new {id = UserId});
             }
 
-            if (!await _userService.UserExistsAsync(Id))
+            if (!await _userService.UserExistsAsync(UserId))
             {
                 return NotFound();
             }
 
-            var user = await _userService.GetUserByIdAsync(Id);
+            var user = await _userService.GetUserByIdAsync(UserId);
             if (user == null)
             {
                 return NotFound();

@@ -1,13 +1,15 @@
+using System;
+using System.Threading.Tasks;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Files
 {
-    // TODO #38: Add authorize attribute in production 
+    [Authorize(Roles = UserConstants.AdminRole)]
     public class EditModel : PageModel
     {
         [BindProperty]
@@ -54,7 +56,7 @@ namespace FMS.Pages.Files
             {
                 TempData?.SetDisplayMessage(Context.Danger, "File has active Facilities and cannot be deleted.");
                 FileLabel = (await _repository.GetFileAsync(Id)).FileLabel;
-                return RedirectToPage("./Details", new { id = FileLabel });
+                return RedirectToPage("./Details", new {id = FileLabel});
             }
 
             try
@@ -75,7 +77,7 @@ namespace FMS.Pages.Files
 
             TempData?.SetDisplayMessage(Context.Success, "File successfully updated.");
             FileLabel = (await _repository.GetFileAsync(Id)).FileLabel;
-            return RedirectToPage("./Details", new { id = FileLabel });
+            return RedirectToPage("./Details", new {id = FileLabel});
         }
     }
 }

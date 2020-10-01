@@ -1,14 +1,16 @@
+using System;
+using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Cabinets
 {
-    // TODO #38: Add authorize attribute in production 
+    [Authorize(Roles = UserConstants.AdminRole)]
     public class EditModel : PageModel
     {
         [BindProperty]
@@ -17,7 +19,7 @@ namespace FMS.Pages.Cabinets
         [BindProperty]
         public Guid Id { get; set; }
 
-        public string OriginalCabinetName { get; set; }
+        public string OriginalCabinetName { get; private set; }
 
         private readonly ICabinetRepository _repository;
         public EditModel(ICabinetRepository repository) => _repository = repository;

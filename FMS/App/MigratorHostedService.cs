@@ -1,13 +1,14 @@
-﻿using FMS.Domain.Entities.Users;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using FMS.Domain.Entities.Users;
 using FMS.Infrastructure.Contexts;
+using FMS.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FMS.App
 {
@@ -32,26 +33,27 @@ namespace FMS.App
             // Initialize database
             if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
             {
-                // Using "IISX-TempDb" launch profile causes the database to be recreated on launch.
-                await context.Database.EnsureDeletedAsync();
-                await context.Database.EnsureCreatedAsync();
+                // Using "TempDb" launch profile causes the database to be recreated on launch.
+                await context.Database.EnsureDeletedAsync(cancellationToken);
+                await context.Database.EnsureCreatedAsync(cancellationToken);
             }
             else
             {
                 // Otherwise, the database is set up using EF migrations and preserved between restarts.
-                await context.Database.MigrateAsync();
+                await context.Database.MigrateAsync(cancellationToken: cancellationToken);
             }
 
             if (env.IsDevelopment())
             {
                 // Test data: will not run in production
-                Infrastructure.SeedData.DevSeedData.SeedTestData(context);
+                DevSeedData.SeedTestData(context);
             }
 
-            // Initialize Admin role           
-            if (!await context.Roles.AnyAsync(e => e.Name == UserConstants.EditorRole))
+            // Initialize Administrator role           
+            if (!await context.Roles.AnyAsync(e => e.Name == UserConstants.AdminRole,
+                cancellationToken: cancellationToken))
             {
-                await roleManager.CreateAsync(new IdentityRole<Guid>(UserConstants.EditorRole));
+                await roleManager.CreateAsync(new IdentityRole<Guid>(UserConstants.AdminRole));
             }
         }
 
