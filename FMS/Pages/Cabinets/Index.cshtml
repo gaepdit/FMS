@@ -1,4 +1,5 @@
 @page
+@using Domain.Entities.Users
 @model Pages.Cabinets.IndexModel
 @{
     ViewData["Title"] = "Cabinets";
@@ -34,15 +35,18 @@
     }
 </div>
 
-<div class="container-fluid bg-light pt-3 mt-5">
-    <form method="post" class="form-inline">
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <label asp-for="CabinetCreate.Name" class="sr-only"></label>
-        <input asp-for="CabinetCreate.Name" class="form-control mb-2 mr-sm-2" />
-        <div class="form-check mb-2 mr-sm-2">
-            <span asp-validation-for="CabinetCreate.Name" class="text-danger"></span>
-        </div>
+@if (User.IsInRole(UserConstants.AdminRole))
+{
+    <div class="container-fluid bg-light pt-3 mt-5">
+        <form method="post" class="form-inline">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <label asp-for="CabinetCreate.Name" class="sr-only"></label>
+            <input asp-for="CabinetCreate.Name" class="form-control mb-2 mr-sm-2" />
+            <div class="form-check mb-2 mr-sm-2">
+                <span asp-validation-for="CabinetCreate.Name" class="text-danger"></span>
+            </div>
 
-        <button type="submit" class="btn btn-primary mb-2">Create New Cabinet</button>
-    </form>
-</div>
+            <button type="submit" class="btn btn-primary mb-2">Create New Cabinet</button>
+        </form>
+    </div>
+}
