@@ -28,22 +28,13 @@
                     <div class="dropdown-menu" aria-labelledby="MoreDropdown">
                         <a class="dropdown-item" asp-page="/Files/Index">Files</a>
                         <a class="dropdown-item" asp-page="/Cabinets/Index">Cabinets</a>
-                        @*<a class="dropdown-item" asp-page="/Reports/Index">Reports</a>*@
+                        <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
+                        @if (User.IsInRole(UserConstants.AdminRole))
+                        {
+@*                             <a class="dropdown-item" asp-page="/Admin/Index">Site Maintenance</a> *@
+                        }
                     </div>
                 </li>
-                @if (User.IsInRole(UserConstants.AdminRole))
-                {
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="AdminDropdown" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="AdminDropdown">
-                            <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
-                            @*<a class="dropdown-item" asp-page="/Admin/Index">Site Maintenance</a>*@
-                        </div>
-                    </li>
-                }
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown text-dark">
