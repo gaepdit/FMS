@@ -31,7 +31,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Set<TEntity>().AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
-                .Select(e => new ListItem { Id = e.Id, Name = e.Name })
+                .Select(e => new ListItem {Id = e.Id, Name = e.Name})
                 .ToListAsync();
         }
 
@@ -43,7 +43,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.FamilyName)
                 .ThenBy(e => e.GivenName)
-                .Select(e => new ListItem() { Id = e.Id, Name = e.FamilyName + ", " + e.GivenName })
+                .Select(e => new ListItem() {Id = e.Id, Name = e.FamilyName + ", " + e.GivenName})
                 .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetEnvironmentalInterestsItemListAsync(bool includeInactive = false) =>
@@ -53,7 +53,7 @@ namespace FMS.Infrastructure.Repositories
             await _context.FacilityStatuses.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Status)
-                .Select(e => new ListItem() { Id = e.Id, Name = e.Status })
+                .Select(e => new ListItem() {Id = e.Id, Name = e.Status})
                 .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetFacilityTypesItemListAsync(bool includeInactive = false) =>
@@ -64,6 +64,90 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IEnumerable<ListItem>> GetCabinetsItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<Cabinet>(includeInactive);
+
+
+        #region "Get single ListItem names"
+
+        // && !id.Equals(Guid.Empty)
+        //Used to get name value from a specific ListItem
+        public async Task<string> GetBudgetCodeNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.BudgetCodes.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+
+            return null;
+        }
+
+        public async Task<string> GetComplianceOfficerNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.ComplianceOfficers.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                if (item == null)
+                {
+                    return null;
+                }
+
+                return item.GivenName + " " + item.FamilyName;
+            }
+
+            return null;
+        }
+
+        public async Task<string> GetEnvironmentalInterestNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.EnvironmentalInterests.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+
+            return null;
+        }
+
+        public async Task<string> GetFacilityStatusNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.FacilityStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Status;
+            }
+
+            return null;
+        }
+
+        public async Task<string> GetFacilityTypeNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.FacilityTypes.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+
+            return null;
+        }
+
+        public async Task<string> GetOrganizationalUnitNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.OrganizationalUnits.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+
+            return null;
+        }
+
+        #endregion
 
         #region IDisposable Support
 

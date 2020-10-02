@@ -22,9 +22,6 @@ namespace TestHelpers
             context.SaveChanges();
         }
 
-        public ItemsListRepository GetItemsListRepository() =>
-            new ItemsListRepository(new FmsDbContext(_options));
-
         public FacilityRepository GetFacilityRepository() =>
             new FacilityRepository(new FmsDbContext(_options), GetFileRepository());
 

@@ -225,3 +225,6 @@ body {
         height: 25px;
     }
 
+caption {
+    caption-side: top;
+}

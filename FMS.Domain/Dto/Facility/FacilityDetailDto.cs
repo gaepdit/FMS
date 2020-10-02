@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -101,5 +102,8 @@ namespace FMS.Domain.Dto
         public List<string> Cabinets { get; }
 
         public List<RetentionRecordDetailDto> RetentionRecords { get; }
+
+        // Used for CSV file output to CSVhelper
+        public string CabinetsToString => string.Join(" & ", Cabinets);
     }
 }
