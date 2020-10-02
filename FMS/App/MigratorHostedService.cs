@@ -46,7 +46,8 @@ namespace FMS.App
             if (env.IsDevelopment())
             {
                 // Test data: will not run in production
-                DevSeedData.SeedTestData(context);
+                Infrastructure.SeedData.DevSeedData.SeedTestData(context);
+                Infrastructure.Procs.StoredProcedures.CreateStoredProcedures(context);
             }
 
             // Initialize Administrator role           
