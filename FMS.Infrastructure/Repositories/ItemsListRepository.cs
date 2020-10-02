@@ -67,6 +67,7 @@ namespace FMS.Infrastructure.Repositories
 
 
         #region "Get single ListItem names"
+
         // && !id.Equals(Guid.Empty)
         //Used to get name value from a specific ListItem
         public async Task<string> GetBudgetCodeNameAsync(Guid? id)
@@ -74,9 +75,10 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.BudgetCodes.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                    .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }
+
             return null;
         }
 
@@ -85,16 +87,15 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.ComplianceOfficers.AsNoTracking()
-                 .SingleOrDefaultAsync(e => e.Id == id);
+                    .SingleOrDefaultAsync(e => e.Id == id);
                 if (item == null)
                 {
                     return null;
                 }
-                else
-                {
-                    return item.GivenName + " " + item.FamilyName;
-                }
+
+                return item.GivenName + " " + item.FamilyName;
             }
+
             return null;
         }
 
@@ -103,9 +104,10 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.EnvironmentalInterests.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                    .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }
+
             return null;
         }
 
@@ -114,9 +116,10 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.FacilityStatuses.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                    .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Status;
             }
+
             return null;
         }
 
@@ -125,9 +128,10 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.FacilityTypes.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                    .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }
+
             return null;
         }
 
@@ -136,9 +140,10 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.OrganizationalUnits.AsNoTracking()
-               .SingleOrDefaultAsync(e => e.Id == id);
+                    .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }
+
             return null;
         }
 

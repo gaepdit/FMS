@@ -61,10 +61,18 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
+        public async Task GetItemName_NullId_ReturnsNull()
+        {
+            using var repository = SimpleItemsListRepository();
+            var result = await repository.GetBudgetCodeNameAsync(null);
+            result.Should().BeNull();
+        }
+
+        [Fact]
         public async Task GetItemName_InvalidId_ReturnsNull()
         {
             using var repository = SimpleItemsListRepository();
-            var result = await repository.GetBudgetCodeNameAsync(Guid.Empty);
+            var result = await repository.GetBudgetCodeNameAsync(Guid.NewGuid());
             result.Should().BeNull();
         }
 
