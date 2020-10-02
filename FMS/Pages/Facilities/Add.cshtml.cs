@@ -1,14 +1,17 @@
+using System.Threading.Tasks;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
+    [Authorize(Roles = UserConstants.AdminRole)]
     public class AddModel : PageModel
     {
         private readonly IFacilityRepository _repository;
@@ -40,7 +43,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetAsync()
         {
             await PopulateSelectsAsync();
-            Facility = new FacilityCreateDto { State = "Georgia" };
+            Facility = new FacilityCreateDto {State = "Georgia"};
 
             return Page();
         }
@@ -77,7 +80,7 @@ namespace FMS.Pages.Facilities
             var newFacilityId = await _repository.CreateFacilityAsync(Facility);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully created.");
-            return RedirectToPage("./Details", new { id = newFacilityId });
+            return RedirectToPage("./Details", new {id = newFacilityId});
         }
 
         private async Task PopulateSelectsAsync()

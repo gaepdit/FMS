@@ -1,16 +1,19 @@
-﻿using FMS.Domain.Data;
+﻿using System;
+using System.Threading.Tasks;
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
+    [Authorize(Roles = UserConstants.AdminRole)]
     public class EditModel : PageModel
     {
         private readonly IFacilityRepository _repository;

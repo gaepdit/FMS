@@ -1,14 +1,16 @@
-﻿using FMS.Domain.Repositories;
-using FMS.Infrastructure.Contexts;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using FMS.Domain.Entities.Users;
+using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Admin
 {
+    [Authorize(Roles = UserConstants.AdminRole)]
     public class IndexModel : PageModel
     {
         private readonly IFileRepository _fileRepository;

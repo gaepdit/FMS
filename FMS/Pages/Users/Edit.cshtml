@@ -13,10 +13,11 @@
         </div>
         <p>Roles for: @Model.DisplayName &lt;@Model.Email&gt;</p>
         <div class="form-check mb-3">
-            <input asp-for="HasEditorRole" class="form-check-input">
-            <label asp-for="HasEditorRole" class="form-check-label"></label>
+            <input asp-for="HasAdminRole" class="form-check-input">
+            <label asp-for="HasAdminRole" class="form-check-label"></label>
         </div>
+        <input asp-for="UserId">
         <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a asp-page="./Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
+        <a asp-page="./Details" asp-route-id="@Model.UserId" class="btn btn-outline-secondary">Cancel</a>
     </form>
 </div>

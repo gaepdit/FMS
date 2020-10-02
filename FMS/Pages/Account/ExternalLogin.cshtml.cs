@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using FMS.App;
 using FMS.Domain.Entities.Users;
 using Microsoft.AspNetCore.Authentication;
@@ -6,8 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace FMS.Pages.Account
 {
@@ -16,16 +19,17 @@ namespace FMS.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _configuration = configuration;
         }
-
-        public string ReturnUrl { get; set; }
 
         [BindProperty]
         public ApplicationUser DisplayUser { get; set; }
@@ -38,7 +42,7 @@ namespace FMS.Pages.Account
         {
             // Request a redirect to the external login provider.
             var provider = AzureADDefaults.AuthenticationScheme;
-            var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
+            var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new {returnUrl});
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
         }
@@ -49,7 +53,7 @@ namespace FMS.Pages.Account
             if (remoteError != null)
             {
                 TempData?.SetDisplayMessage(Context.Danger, $"Error from work account provider: {remoteError}");
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+                return RedirectToPage("./Login", new {ReturnUrl = returnUrl});
             }
 
             // Get the information about the user from the external login provider
@@ -59,24 +63,26 @@ namespace FMS.Pages.Account
                 || !info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
             {
                 TempData?.SetDisplayMessage(Context.Danger, "Error loading work account information.");
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+                return RedirectToPage("./Login", new {ReturnUrl = returnUrl});
             }
 
             // Sign in the user with the external login provider if the user already has a login.
-            var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: true, bypassTwoFactor: true);
+            var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
+                isPersistent: true, bypassTwoFactor: true);
             if (signInResult.Succeeded)
             {
                 // TODO #28: Compare incoming claims with stored claims and update if needed. 
                 // (Use user service for this.)
                 return LocalRedirect(returnUrl);
             }
+
             if (signInResult.IsLockedOut)
             {
                 return RedirectToPage("./Lockout");
             }
 
             // If the user does not have an account, then create one.
-            string userName = info.Principal.FindFirstValue(ClaimConstants.PreferredUserName)
+            var userName = info.Principal.FindFirstValue(ClaimConstants.PreferredUserName)
                 ?? info.Principal.FindFirstValue(ClaimTypes.Email);
 
             var user = new ApplicationUser
@@ -94,6 +100,14 @@ namespace FMS.Pages.Account
             var userResult = await _userManager.CreateAsync(user);
             if (userResult.Succeeded)
             {
+                // Optionally add user to Admin Role
+                var seedAdminUsers = _configuration.GetSection("SeedAdminUsers")
+                    .Get<string[]>().AsEnumerable();
+                if (seedAdminUsers.Contains(user.Email, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    await _userManager.AddToRoleAsync(user, UserConstants.AdminRole);
+                }
+
                 // Add external provider login info to the user.
                 userResult = await _userManager.AddLoginAsync(user, info);
                 if (userResult.Succeeded)
