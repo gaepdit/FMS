@@ -69,46 +69,70 @@ namespace FMS.Infrastructure.Repositories
         #region "Get single ListItem names"
 
         //Used to get name value from a specific ListItem
-        public async Task<string> GetBudgetCodeNameAsync(Guid id)
+        public async Task<string> GetBudgetCodeNameAsync(Guid? id)
         {
-            var item = await _context.BudgetCodes.AsNoTracking()
+            if (id.HasValue && !id.Equals(Guid.Empty))
+            {
+                var item = await _context.BudgetCodes.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
-            return item.Name;
+                return item.Name;
+            }
+            return string.Empty;
         }
 
-        public async Task<string> GetComplianceOfficerNameAsync(Guid id)
+        public async Task<string> GetComplianceOfficerNameAsync(Guid? id)
         {
-            var item = await _context.ComplianceOfficers.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
-            return item.GivenName + " " + item.FamilyName;
+            if (id.HasValue && !id.Equals(Guid.Empty))
+            {
+                var item = await _context.ComplianceOfficers.AsNoTracking()
+                 .SingleOrDefaultAsync(e => e.Id == id);
+                return item.GivenName + " " + item.FamilyName;
+            }
+            return string.Empty;
         }
 
-        public async Task<string> GetEnvironmentalInterestNameAsync(Guid id)
+        public async Task<string> GetEnvironmentalInterestNameAsync(Guid? id)
         {
-            var item = await _context.EnvironmentalInterests.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
-            return item.Name;
+            if (id.HasValue && !id.Equals(Guid.Empty))
+            {
+                var item = await _context.EnvironmentalInterests.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+                return item.Name;
+            }
+            return string.Empty;
         }
 
-        public async Task<string> GetFacilityStatusNameAsync(Guid id)
+        public async Task<string> GetFacilityStatusNameAsync(Guid? id)
         {
-            var item = await _context.FacilityStatuses.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
-            return item.Status;
+            if (id.HasValue && !id.Equals(Guid.Empty))
+            {
+                var item = await _context.FacilityStatuses.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+                return item.Status;
+            }
+            return string.Empty;
         }
 
-        public async Task<string> GetFacilityTypeNameAsync(Guid id)
+        public async Task<string> GetFacilityTypeNameAsync(Guid? id)
         {
-            var item = await _context.FacilityTypes.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
-            return item.Name;
+            if (id.HasValue && !id.Equals(Guid.Empty))
+            {
+                var item = await _context.FacilityTypes.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+                return item.Name;
+            }
+            return string.Empty;
         }
 
-        public async Task<string> GetOrganizationalUnitNameAsync(Guid id)
+        public async Task<string> GetOrganizationalUnitNameAsync(Guid? id)
         {
-            var item = await _context.OrganizationalUnits.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
-            return item.Name;
+            if (id.HasValue && !id.Equals(Guid.Empty))
+            {
+                var item = await _context.OrganizationalUnits.AsNoTracking()
+               .SingleOrDefaultAsync(e => e.Id == id);
+                return item.Name;
+            }
+            return string.Empty;
         }
 
         #endregion

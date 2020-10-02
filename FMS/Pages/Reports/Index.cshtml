@@ -6,72 +6,76 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 <div class="container-fluid">
-    <h4>Search Criteria</h4>
+    <h5>Total Facilities Found: @Model.FacilityList.Count</h5>
+    <hr/>
+    <h5>Search Criteria</h5>
 
     @if (Model.Spec.FacilityNumber != null)
     {
-        <p>Facility Number: @Model.Spec.FacilityNumber</p>
+        <p><b>Facility Number:</b>  @Model.Spec.FacilityNumber</p>
     }
     @if (Model.Spec.FileLabel != null)
     {
-        <p>File Label: @Model.Spec.FileLabel</p>
+        <p><b>File Label:</b> @Model.Spec.FileLabel</p>
     }
     @if (Model.Spec.Name != null)
     {
-        <p>Facility Name: @Model.Spec.Name</p>
+        <p><b>Facility Name:</b> @Model.Spec.Name</p>
     }
     @if (Model.Spec.Address != null)
     {
-        <p>Address: @Model.Spec.Address</p>
+        <p><b>Address:</b> @Model.Spec.Address</p>
     }
     @if (Model.Spec.City != null)
     {
-        <p>City: @Model.Spec.City</p>
+        <p><b>City:</b> @Model.Spec.City</p>
     }
     @if (Model.Spec.State != null)
     {
-        <p>State: @Model.Spec.State</p>
+        <p><b>State:</b> @Model.Spec.State</p>
     }
     @if (Model.Spec.PostalCode != null)
     {
-        <p>ZIP Code: @Model.Spec.PostalCode</p>
+        <p><b>ZIP Code:</b> @Model.Spec.PostalCode</p>
     }
     @if (Model.Spec.CountyId != null)
     {
-        <p>County: @Model.CountyName</p>
+        <p><b>County:</b> @Model.CountyName</p>
     }
     @if (Model.Spec.BudgetCodeId != null)
     {
-        <p>Budget Code: @Model.BudgetCodeName</p>
+        <p><b>Budget Code:</b> @Model.BudgetCodeName</p>
     }
     @if (Model.Spec.ComplianceOfficerId != null)
     {
-        <p>Compliance Officer: @Model.ComplianceOfficerName</p>
+        <p><b>Compliance Officer:</b> @Model.ComplianceOfficerName</p>
     }
     @if (Model.Spec.OrganizationalUnitId != null)
     {
-        <p>Organizational Unit: @Model.OrganizationalUnitName</p>
+        <p><b>Organizational Unit:</b> @Model.OrganizationalUnitName</p>
     }
     @if (Model.Spec.EnvironmentalInterestId != null)
     {
-        <p>Environmental Interest: @Model.EnvironmentalInterestName</p>
+        <p><b>Environmental Interest:</b> @Model.EnvironmentalInterestName</p>
     }
     @if (Model.Spec.FacilityTypeId != null)
     {
-        <p>Facility Type: @Model.FacilityTypeName</p>
+        <p><b>Facility Type:</b> @Model.FacilityTypeName</p>
     }
     @if (Model.Spec.FacilityStatusId != null)
     {
-        <p>Facility Status: @Model.FacilityStatusName</p>
+        <p><b>Facility Status:</b> @Model.FacilityStatusName</p>
     }
     <hr />
     @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
     {
         <form method="post">
             <input type="hidden" name="handler" value="" />
-            <button id="ExportButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Export to Excel</button>
+            <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
+                Export to Excel
+            </button>
             <table class="table ">
-                <caption id="search-results">
+                <caption id="search-results" class="text-md-right px-3">
                     <input type="hidden" asp-for="Spec.FileLabel" />
                     <input type="hidden" asp-for="Spec.FacilityNumber" />
                     <input type="hidden" asp-for="Spec.FacilityTypeId" />

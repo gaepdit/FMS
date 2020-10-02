@@ -41,7 +41,7 @@ namespace FMS.Pages.Reports
 
         public IndexModel(
             IFacilityRepository repository,
-             IItemsListRepository listRepository)
+            IItemsListRepository listRepository)
         {
             _repository = repository;
             _listRepository = listRepository;
@@ -67,35 +67,24 @@ namespace FMS.Pages.Reports
         private async Task SetNamesAsync()
         {
             SetCountyName();
-            if (Spec.BudgetCodeId != null)
-            {
-                BudgetCodeName = await _listRepository.GetBudgetCodeNameAsync((Guid)Spec.BudgetCodeId);
-            }
-            if(Spec.ComplianceOfficerId != null)
-            {
-                ComplianceOfficerName = await _listRepository.GetComplianceOfficerNameAsync((Guid)Spec.ComplianceOfficerId);
-            }
-            if(Spec.EnvironmentalInterestId != null)
-            {
-                EnvironmentalInterestName = await _listRepository.GetEnvironmentalInterestNameAsync((Guid)Spec.EnvironmentalInterestId);
-            }
-            if(Spec.FacilityStatusId != null)
-            {
-                FacilityStatusName = await _listRepository.GetFacilityStatusNameAsync((Guid)Spec.FacilityStatusId);
-            }
-            if(Spec.FacilityTypeId != null)
-            {
-                FacilityTypeName = await _listRepository.GetFacilityTypeNameAsync((Guid)Spec.FacilityTypeId);
-            }
-            if(Spec.OrganizationalUnitId != null)
-            {
-                OrganizationalUnitName = await _listRepository.GetOrganizationalUnitNameAsync((Guid)Spec.OrganizationalUnitId);
-            }
+
+            BudgetCodeName = await _listRepository.GetBudgetCodeNameAsync(Spec.BudgetCodeId);
+
+            ComplianceOfficerName = await _listRepository.GetComplianceOfficerNameAsync(Spec.ComplianceOfficerId);
+
+            EnvironmentalInterestName = await _listRepository.GetEnvironmentalInterestNameAsync(Spec.EnvironmentalInterestId);
+
+            FacilityStatusName = await _listRepository.GetFacilityStatusNameAsync(Spec.FacilityStatusId);
+
+            FacilityTypeName = await _listRepository.GetFacilityTypeNameAsync(Spec.FacilityTypeId);
+
+            OrganizationalUnitName = await _listRepository.GetOrganizationalUnitNameAsync(Spec.OrganizationalUnitId);
+
         }
 
         private void SetCountyName()
         {
-            if(Spec.CountyId == null || Counties == null)
+            if (Spec.CountyId == null || Counties == null)
             {
                 CountyName = string.Empty;
             }
@@ -117,13 +106,13 @@ namespace FMS.Pages.Reports
         public async Task<MemoryStream> GetCsvMemoryStreamAsync()
         {
             using (var ms = new MemoryStream())
-            using (StreamWriter writer = new StreamWriter(ms)) 
+            using (StreamWriter writer = new StreamWriter(ms))
             using (CsvWriter csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.SanitizeForInjection = true;
                 csv.Configuration.RegisterClassMap<FacilityReportMap>();
                 csv.WriteRecords(FacilityList);
-                
+
                 await csv.FlushAsync();
                 await writer.FlushAsync();
                 await ms.FlushAsync();
@@ -139,7 +128,7 @@ namespace FMS.Pages.Reports
                 Map(m => m.FacilityNumber).Index(0).Name("Facility Number");
                 Map(m => m.FileLabel).Index(1).Name("File Label");
                 Map(m => m.Name).Index(2).Name("Facility Name");
-                Map(m => m.Address).Index(3).Name("Street");
+                Map(m => m.Address).Index(3).Name("Street Address");
                 Map(m => m.City).Index(4).Name("City");
                 Map(m => m.County.Name).Index(5).Name("County");
                 Map(m => m.State).Index(6).Name("State");
