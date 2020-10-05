@@ -6,7 +6,9 @@ using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Domain.Dto.PaginatedList;
 using TestHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -17,13 +19,16 @@ namespace FMS.App.Tests.Files
         [Fact]
         public async Task OnSearch_DefaultSpec_ReturnsActiveFiles()
         {
-            var expected = DataHelpers.Files
+            var items = SimpleRepositoryData.Files
                 .Where(e => e.Active)
                 .Select(e => new FileDetailDto(e))
                 .ToList();
+            var expected = new PaginatedList<FileDetailDto>(items, items.Count, 1, Globals.PageSize);
+
             var mockRepository = new Mock<IFileRepository>();
             var spec = new FileSpec();
-            mockRepository.Setup(l => l.GetFileListAsync(spec))
+            mockRepository.Setup(l =>
+                    l.GetFileListAsync(It.IsAny<FileSpec>(), It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(expected).Verifiable();
             var pageModel = new Pages.Files.IndexModel(mockRepository.Object);
 
@@ -32,7 +37,7 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
             pageModel.ShowResults.ShouldBeTrue();
-            pageModel.Files.Should().BeEquivalentTo(expected);
+            pageModel.FileList.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -40,8 +45,10 @@ namespace FMS.App.Tests.Files
         {
             var mockRepository = new Mock<IFileRepository>();
             var spec = new FileSpec();
-            mockRepository.Setup(l => l.GetFileListAsync(spec))
-                .ReturnsAsync(new List<FileDetailDto>()).Verifiable();
+            var expected = new PaginatedList<FileDetailDto>(new List<FileDetailDto>(), 0, 1, Globals.PageSize);
+            mockRepository.Setup(l =>
+                    l.GetFileListAsync(It.IsAny<FileSpec>(), It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(expected).Verifiable();
             var pageModel = new Pages.Files.IndexModel(mockRepository.Object);
 
             var result = await pageModel.OnGetSearchAsync(spec).ConfigureAwait(false);
@@ -49,7 +56,7 @@ namespace FMS.App.Tests.Files
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
             pageModel.ShowResults.ShouldBeTrue();
-            pageModel.Files.Should().BeEquivalentTo(new List<FileDetailDto>());
+            pageModel.FileList.Should().BeEquivalentTo(expected);
         }
 
         [Fact]

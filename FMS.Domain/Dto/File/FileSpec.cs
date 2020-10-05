@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -13,5 +14,13 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Show deleted")]
         public bool ShowInactive { get; set; }
+
+        public IDictionary<string, string> AsRouteValues =>
+            new Dictionary<string, string>
+            {
+                {nameof(ShowInactive), ShowInactive.ToString()},
+                {nameof(FileLabel), FileLabel},
+                {nameof(CountyId), CountyId?.ToString()},
+            };
     }
 }

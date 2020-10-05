@@ -1,7 +1,8 @@
-﻿using FMS.Domain.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FMS.Domain.Dto;
+using FMS.Domain.Dto.PaginatedList;
 
 namespace FMS.Domain.Repositories
 {
@@ -12,7 +13,7 @@ namespace FMS.Domain.Repositories
         Task<FileDetailDto> GetFileAsync(string id);
         Task<bool> FileHasActiveFacilities(Guid id);
         Task<int> CountAsync(FileSpec spec);
-        Task<IReadOnlyList<FileDetailDto>> GetFileListAsync(FileSpec spec);
+        Task<PaginatedList<FileDetailDto>> GetFileListAsync(FileSpec spec, int pageNumber, int pageSize);
         Task<int> GetNextSequenceForCountyAsync(int countId);
         Task<Guid> CreateFileAsync(int countyId);
         Task UpdateFileAsync(Guid id, bool active);

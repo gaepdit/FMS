@@ -1,13 +1,15 @@
-﻿using FMS.Domain.Data;
-using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Domain.Repositories;
-using FMS.Infrastructure.Contexts;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Domain.Data;
+using FMS.Domain.Dto;
+using FMS.Domain.Dto.PaginatedList;
+using FMS.Domain.Entities;
+using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
+using FMS.Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -41,35 +43,40 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .SingleOrDefaultAsync(e => e.FileLabel == id);
 
-            if (file == null)
-            {
-                return null;
-            }
-
-            return new FileDetailDto(file);
+            return file == null ? null : new FileDetailDto(file);
         }
 
         public async Task<bool> FileHasActiveFacilities(Guid id) =>
             await _context.Facilities.AsNoTracking()
-            .AnyAsync(e => e.FileId == id && e.Active);
+                .AnyAsync(e => e.FileId == id && e.Active);
 
         public async Task<int> CountAsync(FileSpec spec) =>
             await _context.Files.AsNoTracking()
-            .Where(e => e.Active || spec.ShowInactive)
-            .Where(e => string.IsNullOrWhiteSpace(spec.FileLabel) || e.FileLabel.Contains(spec.FileLabel))
-            .Where(e => !spec.CountyId.HasValue || e.FileLabel.StartsWith(File.CountyString(spec.CountyId.Value)))
-            .CountAsync();
+                .Where(e => spec.ShowInactive || e.Active)
+                .Where(e => string.IsNullOrWhiteSpace(spec.FileLabel) || e.FileLabel.Contains(spec.FileLabel))
+                .Where(e => !spec.CountyId.HasValue || e.FileLabel.StartsWith(File.CountyString(spec.CountyId.Value)))
+                .CountAsync();
 
-        public async Task<IReadOnlyList<FileDetailDto>> GetFileListAsync(FileSpec spec) =>
-            await _context.Files.AsNoTracking()
-            .Include(e => e.Facilities)
-            .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
-            .Where(e => e.Active || spec.ShowInactive)
-            .Where(e => string.IsNullOrWhiteSpace(spec.FileLabel) || e.FileLabel.Contains(spec.FileLabel))
-            .Where(e => !spec.CountyId.HasValue || e.FileLabel.StartsWith(File.CountyString(spec.CountyId.Value)))
-            .OrderBy(e => e.FileLabel)
-            .Select(e => new FileDetailDto(e))
-            .ToListAsync();
+        public async Task<PaginatedList<FileDetailDto>> GetFileListAsync(
+            FileSpec spec, int pageNumber, int pageSize)
+        {
+            Prevent.NegativeOrZero(pageNumber, nameof(pageNumber));
+            Prevent.NegativeOrZero(pageSize, nameof(pageSize));
+
+            var items = await _context.Files.AsNoTracking()
+                .Include(e => e.Facilities)
+                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Where(e => spec.ShowInactive || e.Active)
+                .Where(e => string.IsNullOrWhiteSpace(spec.FileLabel) || e.FileLabel.Contains(spec.FileLabel))
+                .Where(e => !spec.CountyId.HasValue || e.FileLabel.StartsWith(File.CountyString(spec.CountyId.Value)))
+                .OrderBy(e => e.FileLabel)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .Select(e => new FileDetailDto(e))
+                .ToListAsync();
+
+            var totalCount = await CountAsync(spec);
+            return new PaginatedList<FileDetailDto>(items, totalCount, pageNumber, pageSize);
+        }
 
         public async Task<int> GetNextSequenceForCountyAsync(int countyNum)
         {
@@ -147,7 +154,7 @@ namespace FMS.Infrastructure.Repositories
                 return;
             }
 
-            var cf = new CabinetFile() { CabinetId = cabinetId, FileId = fileId };
+            var cf = new CabinetFile() {CabinetId = cabinetId, FileId = fileId};
             await _context.CabinetFileJoin.AddAsync(cf);
             await _context.SaveChangesAsync();
         }

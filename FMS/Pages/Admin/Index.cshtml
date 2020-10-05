@@ -17,8 +17,7 @@
                     <option value=3>Environmental Interest</option>
                     <option value=4>Facility Status</option>
                     <option value=5>Facility Type</option>
-                    <option value=6>File</option>
-                    <option value=7>Organizational Unit</option>
+                    <option value=6>Organizational Unit</option>
                 </select>
             </div>
         </div>
@@ -93,18 +92,6 @@
 </div>
 }
 @if (Model.DropDownSelection == 6)
-{
-<div class="container-fluid">
-    <h5>Select from list of Files to Modify</h5>
-    <div class="form-group col-md-4">
-        <label asp-for="FileId"></label>
-        <select asp-for="FileId" asp-items="Model.Files" class="custom-select">
-            <option value=""></option>
-        </select>
-    </div>
-</div>
-}
-@if (Model.DropDownSelection == 7)
 {
 <div class="container-fluid">
     <h5>Select from list of Organizational Units to Modify</h5>

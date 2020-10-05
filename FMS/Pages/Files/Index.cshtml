@@ -1,8 +1,10 @@
 ﻿@page
+@using FMS.Domain.Dto
 @model Pages.Files.IndexModel
 @{
     ViewData["Title"] = "File Search";
 }
+
 @section Scripts {
     <partial name="_SearchFormScriptsPartial" />
 }
@@ -37,33 +39,46 @@
 {
     <a id="SearchResults"></a>
 
-    @if (Model.Files != null && Model.Files.Count > 0)
+    @if (Model.FileList.CurrentCount > 0)
     {
         <table class="table">
+            <caption class="container border-top py-3">
+                <div class="row">
+                    <div class="col-md"></div>
+                    <div class="col-md">
+                        <partial name="_PaginationNav" model="(Model.FileList, Model.Spec.AsRouteValues)" />
+                    </div>
+                    <div class="col-md text-md-right small">
+                        <partial name="Shared/_PaginatedResultsCount" model="Model.FileList" />
+                    </div>
+                </div>
+            </caption>
             <thead class="thead-light">
-                <tr>
-                    <th scope="col">File Label</th>
-                    <th scope="col">Cabinets</th>
-                    <th scope="col">Facilities</th>
-                </tr>
+            <tr>
+                <th scope="col">File Label</th>
+                <th scope="col">Cabinets</th>
+                <th scope="col">Facilities</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Files)
-                {
-                    <tr>
-                        <td>
-                            <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                @item.FileLabel @(item.Active ? "" : "(Deleted)")
-                            </a>
-                        </td>
-                        <td>@item.Cabinets.Select(e => e.Name).ConcatNonEmpty(", ")</td>
-                        <td>
-                            @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
-                        </td>
-                    </tr>
-                }
+            @foreach (FileDetailDto item in Model.FileList.Items)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                            @item.FileLabel @(item.Active ? "" : "(Deleted)")
+                        </a>
+                    </td>
+                    <td>@item.Cabinets.Select(e => e.Name).ConcatNonEmpty(", ")</td>
+                    <td>
+                        @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
+
+        <partial name="_PaginationNav" model="(Model.FileList, Model.Spec.AsRouteValues)" />
     }
     else
     {

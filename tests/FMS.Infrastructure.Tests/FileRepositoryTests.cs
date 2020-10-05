@@ -158,8 +158,14 @@ namespace FMS.Infrastructure.Tests
         public async Task FileSearch_Default_ReturnsActiveFiles()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
-            var result = await repository.GetFileListAsync(new FileSpec());
-            result.Count.Should().Be(SimpleRepositoryData.Files.Count(e => e.Active));
+
+            var result = await repository.GetFileListAsync(new FileSpec(), 1, 999);
+            var expectedCount = SimpleRepositoryData.Files.Count(e => e.Active);
+
+            result.TotalCount.Should().Be(expectedCount);
+            result.Items.Count.Should().Be(expectedCount);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(1);
         }
 
         [Fact]
@@ -167,8 +173,12 @@ namespace FMS.Infrastructure.Tests
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {ShowInactive = true};
-            var result = await repository.GetFileListAsync(spec);
-            result.Count.Should().Be(SimpleRepositoryData.Files.Count);
+
+            var result = await repository.GetFileListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Files.Count;
+
+            result.TotalCount.Should().Be(expectedCount);
+            result.Items.Count.Should().Be(expectedCount);
         }
 
         [Theory]
@@ -180,9 +190,11 @@ namespace FMS.Infrastructure.Tests
             var spec = new FileSpec() {CountyId = countyId};
             var countyString = countyId.ToString().PadLeft(3, '0');
 
-            var result = await repository.GetFileListAsync(spec);
+            var result = await repository.GetFileListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Files.Count(e => e.FileLabel.StartsWith(countyString) && e.Active);
 
-            result.Count.Should().Be(SimpleRepositoryData.Files.Count(e => e.FileLabel.StartsWith(countyString) && e.Active));
+            result.TotalCount.Should().Be(expectedCount);
+            result.Items.Count.Should().Be(expectedCount);
         }
 
         [Theory]
@@ -194,9 +206,11 @@ namespace FMS.Infrastructure.Tests
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {FileLabel = fileLabelSpec};
 
-            var result = await repository.GetFileListAsync(spec);
+            var result = await repository.GetFileListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Files.Count(e => e.FileLabel.Contains(fileLabelSpec) && e.Active);
 
-            result.Count.Should().Be(SimpleRepositoryData.Files.Count(e => e.FileLabel.Contains(fileLabelSpec) && e.Active));
+            result.TotalCount.Should().Be(expectedCount);
+            result.Items.Count.Should().Be(expectedCount);
         }
 
         // GetNextSequenceForCounty

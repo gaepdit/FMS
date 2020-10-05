@@ -13,8 +13,6 @@ namespace FMS.Pages.Admin
     [Authorize(Roles = UserConstants.AdminRole)]
     public class IndexModel : PageModel
     {
-        private readonly IFileRepository _fileRepository;
-
         private readonly IBudgetCodeRepository _budgetCodeRepository;
 
         private readonly IComplianceOfficerRepository _complianceOfficerRepository;
@@ -28,7 +26,6 @@ namespace FMS.Pages.Admin
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
 
         
-        public SelectList Files { get; set; }
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }
@@ -36,7 +33,6 @@ namespace FMS.Pages.Admin
         public SelectList EnvironmentalInterests { get; private set; }
         public SelectList ComplianceOfficers { get; set; }
         
-        public Guid FileId { get; set; }
         public Guid FacilityStatusId { get; private set; }
         public Guid FacilityTypeId { get; private set; }
         public Guid BudgetCodeId { get; private set; }
@@ -49,7 +45,6 @@ namespace FMS.Pages.Admin
         public int DropDownSelection { get; set; }
 
         public IndexModel(
-            IFileRepository fileRepository,
             IBudgetCodeRepository budgetCodeRepository,
             IComplianceOfficerRepository complianceOfficerRepository,
             IEnvironmentalInterestRepository environmentalInterestRepository,
@@ -57,7 +52,6 @@ namespace FMS.Pages.Admin
             IFacilityTypeRepository facilityTypeRepository,
             IOrganizationalUnitRepository organizationalUnitRepository)
         {
-            _fileRepository = fileRepository;
             _budgetCodeRepository = budgetCodeRepository;
             _complianceOfficerRepository = complianceOfficerRepository;
             _environmentalInterestRepository = environmentalInterestRepository;
@@ -98,9 +92,6 @@ namespace FMS.Pages.Admin
                     FacilityTypes = new SelectList(await _facilityTypeRepository.GetFacilityTypeListAsync(), "Id", "Name");
                     break;
                 case 6:
-                    Files = new SelectList(await _fileRepository.GetFileListAsync(null), "Id", "FileLabel");
-                    break;
-                case 7:
                     OrganizationalUnits = new SelectList(await _organizationalUnitRepository.GetOrganizationalUnitListAsync(), "Id", "Name");
                     break;
                 default:

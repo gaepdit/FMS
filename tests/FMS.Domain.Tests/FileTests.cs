@@ -1,6 +1,6 @@
+using System;
 using FluentAssertions;
 using FMS.Domain.Entities;
-using System;
 using Xunit;
 
 namespace FMS.Domain.Tests
