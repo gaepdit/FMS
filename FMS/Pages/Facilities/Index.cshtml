@@ -1,15 +1,17 @@
 @page
+@using FMS.Domain.Dto
 @model Pages.Facilities.IndexModel
 @{
     ViewData["Title"] = "Facility Search";
 }
+
 @section Scripts {
     <partial name="_SearchFormScriptsPartial" />
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<div class="container-fluid bg-light py-3">
+<div class="container bg-light py-3">
     <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
@@ -104,87 +106,98 @@
 {
     <a id="SearchResults"></a>
 
-    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
+    @if (Model.FacilityList.CurrentCount > 0)
     {
-        <table class="table ">
-            <caption id="search-results" class="text-md-left px-3">
-                <form method="post">
-                    <input type="hidden" asp-for="Spec.FileLabel" />
-                    <input type="hidden" asp-for="Spec.FacilityNumber" />
-                    <input type="hidden" asp-for="Spec.FacilityTypeId" />
-                    <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
-                    <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
-                    <input type="hidden" asp-for="Spec.BudgetCodeId" />
-                    <input type="hidden" asp-for="Spec.EnvironmentalInterestId" />
-                    <input type="hidden" asp-for="Spec.FacilityStatusId" />
-                    <input type="hidden" asp-for="Spec.Name" />
-                    <input type="hidden" asp-for="Spec.Address" />
-                    <input type="hidden" asp-for="Spec.City" />
-                    <input type="hidden" asp-for="Spec.CountyId" />
-                    <input type="hidden" asp-for="Spec.State" />
-                    <input type="hidden" asp-for="Spec.PostalCode" />
-                    <input type="hidden" asp-for="Spec.ActiveOnly" />
-                    <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">Create Report</button>
-                </form>
+        <table class="table">
+            <caption class="container border-top py-3">
+                <div class="row">
+                    <div class="col-md mb-3 mb-md-0">
+                        <form method="get" asp-page="/Reports/Index">
+                            <input type="hidden" asp-for="Spec.FileLabel" />
+                            <input type="hidden" asp-for="Spec.FacilityNumber" />
+                            <input type="hidden" asp-for="Spec.FacilityTypeId" />
+                            <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
+                            <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
+                            <input type="hidden" asp-for="Spec.BudgetCodeId" />
+                            <input type="hidden" asp-for="Spec.EnvironmentalInterestId" />
+                            <input type="hidden" asp-for="Spec.FacilityStatusId" />
+                            <input type="hidden" asp-for="Spec.Name" />
+                            <input type="hidden" asp-for="Spec.Address" />
+                            <input type="hidden" asp-for="Spec.City" />
+                            <input type="hidden" asp-for="Spec.CountyId" />
+                            <input type="hidden" asp-for="Spec.State" />
+                            <input type="hidden" asp-for="Spec.PostalCode" />
+                            <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">Create Report</button>
+                        </form>
+                    </div>
+                    <div class="col-md">
+                        <partial name="_PaginationNav" model="(Model.FacilityList, Model.Spec.AsRouteValues)" />
+                    </div>
+                    <div class="col-md text-md-right small">
+                        <partial name="Shared/_PaginatedResultsCount" model="Model.FacilityList" />
+                    </div>
+                </div>
             </caption>
             <thead class="thead-light">
-                <tr>
-                    <th scope="col">Facility</th>
-                    <th scope="col">File</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Cabinets</th>
-                    <th scope="col">Retention Records</th>
-                </tr>
+            <tr>
+                <th scope="col">Facility</th>
+                <th scope="col">File</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Cabinets</th>
+                <th scope="col">Retention Records</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.FacilityList)
-                {
-                    <tr>
-                        <td>
-                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
-                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                            </a>
-                        </td>
-                        <td class="text-nowrap">
-                            @Html.DisplayFor(m => item.FileLabel, "StringOrNone")
-                        </td>
-                        <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
-                        <td>
-                            @Html.DisplayFor(m => item.Address)<br />
-                            @Html.DisplayFor(m => item.City),
-                            @Html.DisplayFor(m => item.State)
-                            @Html.DisplayFor(m => item.PostalCode)
-                        </td>
-                        <td>
-                            @if (item.Cabinets.Count > 0)
-                            {
-                                @item.Cabinets.ConcatNonEmpty(", ");
-                            }
-                            else
-                            {
-                                <span class="text-muted">none</span>
-                            }
-                        </td>
-                        <td>
-                            @if (item.RetentionRecords.Count > 0)
-                            {
-                                <ul class="list-unstyled">
-                                    @foreach (var r in item.RetentionRecords)
-                                    {
-                                        <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
-                                    }
-                                </ul>
-                            }
-                            else
-                            {
-                                <span class="text-muted">none</span>
-                            }
-                        </td>
-                    </tr>
-                }
+            @foreach (FacilitySummaryDto item in Model.FacilityList.Items)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                            @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                        </a>
+                    </td>
+                    <td class="text-nowrap">
+                        @Html.DisplayFor(m => item.FileLabel, "StringOrNone")
+                    </td>
+                    <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
+                    <td>
+                        @Html.DisplayFor(m => item.Address)<br />
+                        @Html.DisplayFor(m => item.City),
+                        @Html.DisplayFor(m => item.State)
+                        @Html.DisplayFor(m => item.PostalCode)
+                    </td>
+                    <td>
+                        @if (item.Cabinets.Count > 0)
+                        {
+                            @item.Cabinets.ConcatNonEmpty(", ")
+                        }
+                        else
+                        {
+                            <span class="text-muted">none</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.RetentionRecords.Count > 0)
+                        {
+                            <ul class="list-unstyled">
+                                @foreach (var r in item.RetentionRecords)
+                                {
+                                    <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <span class="text-muted">none</span>
+                        }
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
+
+        <partial name="_PaginationNav" model="(Model.FacilityList, Model.Spec.AsRouteValues)" />
     }
     else
     {

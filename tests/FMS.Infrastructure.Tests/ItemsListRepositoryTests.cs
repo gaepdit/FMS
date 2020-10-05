@@ -1,42 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
-using FMS.Infrastructure.Contexts;
-using FMS.Infrastructure.Repositories;
-using TestSupport.EfHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 
 namespace FMS.Infrastructure.Tests
 {
     public class ItemsListRepositoryTests
     {
-        private static readonly List<BudgetCode> BudgetCodeList = new List<BudgetCode>
-        {
-            new BudgetCode {Id = Guid.NewGuid(), Name = "BC001"},
-            new BudgetCode {Id = Guid.NewGuid(), Name = "BC002"},
-            new BudgetCode {Id = Guid.NewGuid(), Name = "BC003", Active = false},
-        };
-
-        private static ItemsListRepository SimpleItemsListRepository()
-        {
-            var context = new FmsDbContext(SqliteInMemory.CreateOptions<FmsDbContext>());
-            context.Database.EnsureCreated();
-            context.BudgetCodes.AddRange(BudgetCodeList);
-            context.SaveChanges();
-
-            return new ItemsListRepository(context);
-        }
-
         [Fact]
         public async Task GetItemList_ReturnsAllActive()
         {
-            using var repository = SimpleItemsListRepository();
+            using var repository = new SimpleRepositoryHelper().GetItemsListRepository();
             var result = await repository.GetBudgetCodesItemListAsync();
-            var expected = BudgetCodeList
+            var expected = SimpleRepositoryData.BudgetCodes
                 .Where(e => e.Active)
                 .Select(e => new ListItem() {Id = e.Id, Name = e.Name});
             result.Should().BeEquivalentTo(expected);
@@ -45,9 +24,9 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetItemList_WithInactive_ReturnsAll()
         {
-            using var repository = SimpleItemsListRepository();
+            using var repository = new SimpleRepositoryHelper().GetItemsListRepository();
             var result = await repository.GetBudgetCodesItemListAsync(true);
-            var expected = BudgetCodeList
+            var expected = SimpleRepositoryData.BudgetCodes
                 .Select(e => new ListItem() {Id = e.Id, Name = e.Name});
             result.Should().BeEquivalentTo(expected);
         }
@@ -55,15 +34,16 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetItemName_ReturnsName()
         {
-            using var repository = SimpleItemsListRepository();
-            var result = await repository.GetBudgetCodeNameAsync(BudgetCodeList[0].Id);
-            result.Should().Be(BudgetCodeList[0].Name);
+            using var repository = new SimpleRepositoryHelper().GetItemsListRepository();
+            var bc = SimpleRepositoryData.BudgetCodes[0];
+            var result = await repository.GetBudgetCodeNameAsync(bc.Id);
+            result.Should().Be(bc.Name);
         }
 
         [Fact]
         public async Task GetItemName_NullId_ReturnsNull()
         {
-            using var repository = SimpleItemsListRepository();
+            using var repository = new SimpleRepositoryHelper().GetItemsListRepository();
             var result = await repository.GetBudgetCodeNameAsync(null);
             result.Should().BeNull();
         }
@@ -71,7 +51,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetItemName_InvalidId_ReturnsNull()
         {
-            using var repository = SimpleItemsListRepository();
+            using var repository = new SimpleRepositoryHelper().GetItemsListRepository();
             var result = await repository.GetBudgetCodeNameAsync(Guid.NewGuid());
             result.Should().BeNull();
         }
@@ -79,7 +59,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetItemName_EmptyList_ReturnsNull()
         {
-            using var repository = SimpleItemsListRepository();
+            using var repository = new SimpleRepositoryHelper().GetItemsListRepository();
             var result = await repository.GetComplianceOfficerNameAsync(Guid.Empty);
             result.Should().BeNull();
         }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FMS
+﻿namespace FMS.App
 {
-    public static partial class FMS
+    public static class Strings
     {
         // Common null display strings
         public const string NotEnteredDisplayText = "[Not entered]";

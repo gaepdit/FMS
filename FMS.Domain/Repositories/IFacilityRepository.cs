@@ -1,8 +1,8 @@
-﻿using FMS.Domain.Dto;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FMS.Domain.Dto;
+using FMS.Domain.Dto.PaginatedList;
 
 namespace FMS.Domain.Repositories
 {
@@ -11,7 +11,8 @@ namespace FMS.Domain.Repositories
         Task<bool> FacilityExistsAsync(Guid id);
         Task<FacilityDetailDto> GetFacilityAsync(Guid id);
         Task<int> CountAsync(FacilitySpec spec);
-        Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilitySpec spec);
+        Task<PaginatedList<FacilitySummaryDto>> GetFacilityPaginatedListAsync(
+            FacilitySpec spec, int pageNumber, int pageSize);
         Task<IReadOnlyList<FacilityDetailDto>> GetFacilityDetailListAsync(FacilitySpec spec);
         Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec);
         Task<Guid> CreateFacilityAsync(FacilityCreateDto facility);
@@ -26,23 +27,4 @@ namespace FMS.Domain.Repositories
         Task UpdateRetentionRecordAsync(Guid id, RetentionRecordEditDto edit);
         Task<FacilityBasicDto> GetFacilityForRetentionRecord(Guid recordId);
     }
-
-    //public class FacilityItem : IEnumerable
-    //{
-    //    public int Counter { get; set; }
-    //    public Guid Id { get; set; }
-
-    //    public FacilityItem() { }
-
-    //    public FacilityItem(int count, Guid id)
-    //    {
-    //        Counter = count;
-    //        Id = id;
-    //    }
-
-    //    public IEnumerator GetEnumerator()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 }

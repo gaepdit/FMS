@@ -4,11 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Infrastructure.Contexts;
-using FMS.Infrastructure.Repositories;
 using TestHelpers;
-using TestSupport.EfHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -16,69 +13,20 @@ namespace FMS.Infrastructure.Tests
 {
     public class FileRepositoryTests
     {
-        /// <summary>
-        /// Simple File list used by SimpleFileRepository
-        /// </summary>
-        private static readonly List<File> SimpleFileList = new List<File>
-        {
-            new File {Id = Guid.NewGuid(), FileLabel = "099-0001"},
-            new File {Id = Guid.NewGuid(), FileLabel = "111-0001"},
-            new File {Id = Guid.NewGuid(), FileLabel = "102-0001"},
-            new File {Id = Guid.NewGuid(), FileLabel = "102-0003"},
-            new File {Id = Guid.NewGuid(), FileLabel = "103-0001"},
-            new File {Id = Guid.NewGuid(), FileLabel = "103-0002", Active = false}
-        };
-
-        /// <summary>
-        /// Simple Facility list used by SimpleFileRepository
-        /// </summary>
-        private static readonly List<Facility> SimpleFacilityList = new List<Facility>
-        {
-            new Facility
-            {
-                Id = Guid.NewGuid(),
-                FacilityNumber = "ABC",
-                FileId = SimpleFileList[0].Id,
-                CountyId = 131
-            },
-            new Facility
-            {
-                Id = Guid.NewGuid(),
-                FacilityNumber = "DEF",
-                FileId = SimpleFileList[1].Id,
-                CountyId = 131,
-                Active = false
-            },
-        };
-
-        /// <summary>
-        /// Simplified File repository used by some unit tests.
-        /// </summary>
-        /// <returns>A FileRepository with a simplified list of Files and Facilities.</returns>
-        private static FileRepository SimpleFileRepository()
-        {
-            var context = new FmsDbContext(SqliteInMemory.CreateOptions<FmsDbContext>());
-            context.Database.EnsureCreated();
-            context.Files.AddRange(SimpleFileList);
-            context.Facilities.AddRange(SimpleFacilityList);
-            context.SaveChanges();
-            return new FileRepository(context);
-        }
-
         // FileExistsAsync
 
         [Fact]
         public async Task FileExists_Exists_ReturnsTrue()
         {
-            using var repository = SimpleFileRepository();
-            var result = await repository.FileExistsAsync(SimpleFileList[0].Id);
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
+            var result = await repository.FileExistsAsync(SimpleRepositoryData.Files[0].Id);
             result.ShouldBeTrue();
         }
 
         [Fact]
         public async Task FileExists_NotExists_ReturnsFalse()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.FileExistsAsync(Guid.Empty);
             result.ShouldBeFalse();
         }
@@ -88,8 +36,8 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetFile_ById_ReturnsCorrectFile()
         {
-            using var repository = SimpleFileRepository();
-            var file = SimpleFileList[0];
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
+            var file = SimpleRepositoryData.Files[0];
 
             var result = await repository.GetFileAsync(file.Id);
 
@@ -100,7 +48,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetNonexistentFile_ById_ReturnsNull()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(Guid.Empty);
             result.ShouldBeNull();
         }
@@ -108,8 +56,8 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetFile_ByName_ReturnsCorrectFile()
         {
-            using var repository = SimpleFileRepository();
-            var file = SimpleFileList[0];
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
+            var file = SimpleRepositoryData.Files[0];
             var result = await repository.GetFileAsync(file.FileLabel);
             result.Id.Should().Be(file.Id);
         }
@@ -117,7 +65,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetNonexistentFile_ByName_ReturnsNull()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(string.Empty);
             result.ShouldBeNull();
         }
@@ -127,23 +75,23 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FileHasActiveFacilities_HasActive_ReturnsTrue()
         {
-            using var repository = SimpleFileRepository();
-            var result = await repository.FileHasActiveFacilities(SimpleFileList[0].Id);
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
+            var result = await repository.FileHasActiveFacilities(SimpleRepositoryData.Files[0].Id);
             result.ShouldBeTrue();
         }
 
         [Fact]
         public async Task FileHasActiveFacilities_HasNoActive_ReturnsFalse()
         {
-            using var repository = SimpleFileRepository();
-            var result = await repository.FileHasActiveFacilities(SimpleFileList[1].Id);
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
+            var result = await repository.FileHasActiveFacilities(SimpleRepositoryData.Files[1].Id);
             result.ShouldBeFalse();
         }
 
         [Fact]
         public async Task FileHasActiveFacilities_NonExistentId_ReturnsFalse()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.FileHasActiveFacilities(Guid.Empty);
             result.ShouldBeFalse();
         }
@@ -153,24 +101,24 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FileCount_DefaultSpec_ReturnsCountOfActiveFiles()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec();
 
             var result = await repository.CountAsync(spec);
 
-            var expected = SimpleFileList.Count(e => e.Active);
+            var expected = SimpleRepositoryData.Files.Count(e => e.Active);
             result.Should().Be(expected);
         }
 
         [Fact]
         public async Task FileCount_WithInactive_ReturnsCountOfAll()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {ShowInactive = true};
 
             var result = await repository.CountAsync(spec);
 
-            var expected = SimpleFileList.Count;
+            var expected = SimpleRepositoryData.Files.Count;
             result.Should().Be(expected);
         }
 
@@ -179,13 +127,13 @@ namespace FMS.Infrastructure.Tests
         [InlineData(102)]
         public async Task FileCount_ByCounty_ReturnsCorrectCount(int countyId)
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {CountyId = countyId};
             var countyString = countyId.ToString().PadLeft(3, '0');
 
             var result = await repository.CountAsync(spec);
 
-            var expected = SimpleFileList.Count(e => e.FileLabel.StartsWith(countyString) && e.Active);
+            var expected = SimpleRepositoryData.Files.Count(e => e.FileLabel.StartsWith(countyString) && e.Active);
             result.Should().Be(expected);
         }
 
@@ -195,12 +143,12 @@ namespace FMS.Infrastructure.Tests
         [InlineData("2-0")]
         public async Task FileCount_ByFileLabel_ReturnsCorrectCount(string fileLabel)
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {FileLabel = fileLabel};
 
             var result = await repository.CountAsync(spec);
 
-            var expected = SimpleFileList.Count(e => e.FileLabel.Contains(fileLabel) && e.Active);
+            var expected = SimpleRepositoryData.Files.Count(e => e.FileLabel.Contains(fileLabel) && e.Active);
             result.Should().Be(expected);
         }
 
@@ -209,18 +157,18 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FileSearch_Default_ReturnsActiveFiles()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileListAsync(new FileSpec());
-            result.Count.Should().Be(SimpleFileList.Count(e => e.Active));
+            result.Count.Should().Be(SimpleRepositoryData.Files.Count(e => e.Active));
         }
 
         [Fact]
         public async Task FileSearch_WithInactive_ReturnsAllFiles()
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {ShowInactive = true};
             var result = await repository.GetFileListAsync(spec);
-            result.Count.Should().Be(SimpleFileList.Count);
+            result.Count.Should().Be(SimpleRepositoryData.Files.Count);
         }
 
         [Theory]
@@ -228,13 +176,13 @@ namespace FMS.Infrastructure.Tests
         [InlineData(102)]
         public async Task FileSearch_ByCounty_ReturnsCorrectList(int countyId)
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {CountyId = countyId};
             var countyString = countyId.ToString().PadLeft(3, '0');
 
             var result = await repository.GetFileListAsync(spec);
 
-            result.Count.Should().Be(SimpleFileList.Count(e => e.FileLabel.StartsWith(countyString) && e.Active));
+            result.Count.Should().Be(SimpleRepositoryData.Files.Count(e => e.FileLabel.StartsWith(countyString) && e.Active));
         }
 
         [Theory]
@@ -243,12 +191,12 @@ namespace FMS.Infrastructure.Tests
         [InlineData("2-0")]
         public async Task FileSearch_ByFileNumber_ReturnsCorrectList(string fileLabelSpec)
         {
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var spec = new FileSpec() {FileLabel = fileLabelSpec};
 
             var result = await repository.GetFileListAsync(spec);
 
-            result.Count.Should().Be(SimpleFileList.Count(e => e.FileLabel.Contains(fileLabelSpec) && e.Active));
+            result.Count.Should().Be(SimpleRepositoryData.Files.Count(e => e.FileLabel.Contains(fileLabelSpec) && e.Active));
         }
 
         // GetNextSequenceForCounty
@@ -257,7 +205,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNextSequenceForCounty_Succeeds()
         {
             const int countyNum = 111;
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetNextSequenceForCountyAsync(countyNum);
             result.Should().Be(2);
         }
@@ -267,7 +215,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNextSequenceForCounty_TwoDigit_Succeeds()
         {
             const int countyNum = 99;
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetNextSequenceForCountyAsync(countyNum);
             result.Should().Be(2);
         }
@@ -276,7 +224,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNextSequenceForCounty_NoCurrentLabel_ReturnsOne()
         {
             const int countyNum = 101;
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetNextSequenceForCountyAsync(countyNum);
             result.Should().Be(1);
         }
@@ -285,7 +233,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNextSequenceForCounty_CurrentLabelSkipsNumber_Succeeds()
         {
             const int countyNum = 102;
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetNextSequenceForCountyAsync(countyNum);
             result.Should().Be(4);
         }
@@ -294,19 +242,19 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNextSequenceForCounty_LatestLabelInactive_Succeeds()
         {
             const int countyNum = 103;
-            using var repository = SimpleFileRepository();
+            using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetNextSequenceForCountyAsync(countyNum);
             result.Should().Be(3);
         }
 
         [Fact]
-        public async Task GetNextSequenceForCounty_NoSuchCounty_ReturnsOne()
+        public async Task GetNextSequenceForCounty_NoSuchCounty_ThrowsException()
         {
             const int countyNum = 999;
 
             Func<Task> action = async () =>
             {
-                using var repository = SimpleFileRepository();
+                using var repository = new SimpleRepositoryHelper().GetFileRepository();
                 await repository.GetNextSequenceForCountyAsync(countyNum);
             };
 
@@ -319,10 +267,10 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateFile_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
+            var repositoryHelper = new SimpleRepositoryHelper();
             Guid newFileId;
-            const int countyNum = 170;
-            const string expectedFileLabel = "170-0002";
+            const int countyNum = 111;
+            const string expectedFileLabel = "111-0002";
 
             using (var repository = repositoryHelper.GetFileRepository())
             {
@@ -348,7 +296,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                using var repository = SimpleFileRepository();
+                using var repository = new SimpleRepositoryHelper().GetFileRepository();
                 await repository.CreateFileAsync(countyNum);
             };
 
@@ -361,8 +309,8 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFile_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
-            var file = DataHelpers.Files[0];
+            var repositoryHelper = new SimpleRepositoryHelper();
+            var file = SimpleRepositoryData.Files[0];
 
             using (var repository = repositoryHelper.GetFileRepository())
             {
@@ -382,7 +330,7 @@ namespace FMS.Infrastructure.Tests
         {
             Func<Task> action = async () =>
             {
-                using var repository = SimpleFileRepository();
+                using var repository = new SimpleRepositoryHelper().GetFileRepository();
                 await repository.UpdateFileAsync(default, default);
             };
 

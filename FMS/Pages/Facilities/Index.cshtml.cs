@@ -1,12 +1,13 @@
+using System.Threading.Tasks;
+using FMS.App;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
+using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
@@ -19,7 +20,7 @@ namespace FMS.Pages.Facilities
         public FacilitySpec Spec { get; set; }
 
         // List of facilities resulting from the search
-        public IReadOnlyList<FacilitySummaryDto> FacilityList { get; private set; }
+        public IPaginatedResult FacilityList { get; private set; }
 
         // Shows results section after searching
         public bool ShowResults { get; private set; }
@@ -49,10 +50,10 @@ namespace FMS.Pages.Facilities
             return Page();
         }
 
-        public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec)
+        public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
             // Get the list of facilities matching the "Spec" criteria
-            FacilityList = await _repository.GetFacilityListAsync(spec);
+            FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, Globals.PageSize);
             Spec = spec;
             ShowResults = true;
             await PopulateSelectsAsync();

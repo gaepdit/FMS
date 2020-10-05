@@ -1,0 +1,8 @@
+﻿@model FMS.Domain.Dto.PaginatedList.IPaginatedResult
+Total results:
+@Html.DisplayFor(m => Model.TotalCount)
+@if (Model.TotalPages > 1)
+{
+    <br />
+    @($"Showing results {Model.FirstItemIndex} – {Model.LastItemIndex}")
+}

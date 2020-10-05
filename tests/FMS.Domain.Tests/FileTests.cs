@@ -24,7 +24,7 @@ namespace FMS.Domain.Tests
         [Fact]
         public void File_InvalidCounty_ThrowsException()
         {
-            int countyNum = 999;
+            const int countyNum = 999;
             Action action = () => new File(999, 1);
             action.Should().Throw<ArgumentException>()
                 .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyNum')");
@@ -38,7 +38,7 @@ namespace FMS.Domain.Tests
         {
             Action action = () => new File(131, sequence);
             action.Should().Throw<ArgumentException>()
-                .WithMessage($"Sequence number {sequence} is outside the valid range of 1-9999. (Parameter 'sequence')");
+                .WithMessage("Input sequence was out of range (Parameter 'sequence')");
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace FMS.Domain.Tests
         {
             Action action = () => File.SequenceString(sequence);
             action.Should().Throw<ArgumentException>()
-                .WithMessage($"Sequence number {sequence} is outside the valid range of 1-9999. (Parameter 'sequence')");
+                .WithMessage("Input sequence was out of range (Parameter 'sequence')");
         }
     }
 }

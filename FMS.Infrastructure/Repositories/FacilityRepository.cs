@@ -1,14 +1,16 @@
-using FMS.Domain.Data;
-using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Domain.Repositories;
-using FMS.Infrastructure.Contexts;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Domain.Data;
+using FMS.Domain.Dto;
+using FMS.Domain.Dto.PaginatedList;
+using FMS.Domain.Entities;
+using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
+using FMS.Infrastructure.Contexts;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -72,9 +74,13 @@ namespace FMS.Infrastructure.Repositories
                 .CountAsync();
         }
 
-        public async Task<IReadOnlyList<FacilitySummaryDto>> GetFacilityListAsync(FacilitySpec spec)
+        public async Task<PaginatedList<FacilitySummaryDto>> GetFacilityPaginatedListAsync(
+            FacilitySpec spec, int pageNumber, int pageSize)
         {
-            return await _context.Facilities.AsNoTracking()
+            Prevent.NegativeOrZero(pageNumber, nameof(pageNumber));
+            Prevent.NegativeOrZero(pageSize, nameof(pageSize));
+
+            var items = await _context.Facilities.AsNoTracking()
                 .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
                 .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
                 .Where(e => !spec.ActiveOnly || e.Active)
@@ -96,8 +102,12 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Include(e => e.RetentionRecords)
                 .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
+
+            var totalCount = await CountAsync(spec);
+            return new PaginatedList<FacilitySummaryDto>(items, totalCount, pageNumber, pageSize);
         }
 
         public async Task<IReadOnlyList<FacilityDetailDto>> GetFacilityDetailListAsync(FacilitySpec spec)
@@ -110,9 +120,12 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
                 .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-                .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.EnvironmentalInterestId.HasValue || e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
-                .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue ||
+                    e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.EnvironmentalInterestId.HasValue ||
+                    e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
+                .Where(e => !spec.ComplianceOfficerId.HasValue ||
+                    e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
                 .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
                 .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
                 .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
@@ -140,7 +153,8 @@ namespace FMS.Infrastructure.Repositories
             var radius = new SqlParameter("@radius", spec.Radius);
 
             return await _context.FacilityList
-                .FromSqlRaw("EXEC dbo.getNearbyFacilities @Lat={0}, @Lng={1}, @radius={2}, @active={3}", lat, lng, radius, active)
+                .FromSqlRaw("EXEC dbo.getNearbyFacilities @Lat={0}, @Lng={1}, @radius={2}, @active={3}",
+                    lat, lng, radius, active)
                 .ToListAsync();
         }
 

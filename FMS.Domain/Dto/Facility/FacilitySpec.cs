@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -53,5 +54,25 @@ namespace FMS.Domain.Dto
         [Display(Name = "Zip Code")]
         public string PostalCode { get; set; }
 
+        public IDictionary<string, string> AsRouteValues =>
+            new Dictionary<string, string>
+            {
+                {nameof(ActiveOnly), ActiveOnly.ToString()},
+                {nameof(Address), Address},
+                {nameof(BudgetCodeId), BudgetCodeId?.ToString()},
+                {nameof(City), City},
+                {nameof(ComplianceOfficerId), ComplianceOfficerId?.ToString()},
+                {nameof(CountyId), CountyId?.ToString()},
+                {nameof(EnvironmentalInterestId), EnvironmentalInterestId?.ToString()},
+                {nameof(FacilityNumber), FacilityNumber},
+                {nameof(FacilityStatusId), FacilityStatusId?.ToString()},
+                {nameof(FacilityTypeId), FacilityTypeId?.ToString()},
+                {nameof(FileLabel), FileLabel},
+                {nameof(Location), Location},
+                {nameof(Name), Name},
+                {nameof(OrganizationalUnitId), OrganizationalUnitId?.ToString()},
+                {nameof(PostalCode), PostalCode},
+                {nameof(State), State},
+            };
     }
 }

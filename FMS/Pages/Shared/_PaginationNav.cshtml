@@ -1,0 +1,80 @@
+﻿@model (FMS.Domain.Dto.PaginatedList.IPaginatedResult paging, IDictionary<string, string> routeValues)
+
+@if (Model.paging.TotalPages > 1)
+{
+    <nav aria-label="Search results pages">
+        <ul class="pagination m-b-3 m-md-0 justify-content-md-center">
+            @if (Model.paging.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-fragment="SearchResults"
+                       asp-all-route-data="Model.routeValues" asp-route-handler="search"
+                       asp-route-p="@(Model.paging.PageNumber - 1)">
+                        Previous
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            }
+
+            @if (Model.paging.PageNumber > 3)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">…</span>
+                </li>
+            }
+
+            @for (var i = Math.Max(1, Model.paging.PageNumber - 2);
+                i <= Math.Min(Model.paging.PageNumber + 2, Model.paging.TotalPages);
+                i++)
+            {
+                @if (i == Model.paging.PageNumber)
+                {
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">
+                            @i.ToString() <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-fragment="SearchResults"
+                           asp-all-route-data="@Model.routeValues" asp-route-handler="search"
+                           asp-route-p="@i">
+                            @i.ToString()
+                        </a>
+                    </li>
+                }
+            }
+
+            @if (Model.paging.TotalPages - Model.paging.PageNumber > 2)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">…</span>
+                </li>
+            }
+
+            @if (Model.paging.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-fragment="SearchResults"
+                       asp-all-route-data="@Model.routeValues" asp-route-handler="search"
+                       asp-route-p="@(Model.paging.PageNumber + 1)">
+                        Next
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            }
+        </ul>
+    </nav>
+}

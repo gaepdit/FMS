@@ -1,14 +1,11 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FMS.Infrastructure.Contexts;
-using FMS.Infrastructure.Repositories;
 using TestHelpers;
-using TestSupport.EfHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -21,15 +18,15 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FacilityExists_Exists_ReturnsTrue()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            var result = await repository.FacilityExistsAsync(DataHelpers.Facilities[0].Id);
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.FacilityExistsAsync(SimpleRepositoryData.Facilities[0].Id);
             result.ShouldBeTrue();
         }
 
         [Fact]
         public async Task FacilityExists_NotExists_ReturnsFalse()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.FacilityExistsAsync(default);
             result.ShouldBeFalse();
         }
@@ -39,19 +36,19 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetFacility_ReturnsCorrectFacility()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            Guid facilityId = DataHelpers.Facilities[0].Id;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var facility = SimpleRepositoryData.Facilities[0];
 
-            var expected = DataHelpers.GetFacilityDetail(facilityId);
-            var result = await repository.GetFacilityAsync(facilityId);
+            var result = await repository.GetFacilityAsync(facility.Id);
 
-            result.Should().BeEquivalentTo(expected);
+            result.Id.Should().Be(facility.Id);
+            result.Name.Should().Be(facility.Name);
         }
 
         [Fact]
         public async Task GetNonexistentFacility_ReturnsNull()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.GetFacilityAsync(default);
             result.ShouldBeNull();
         }
@@ -61,11 +58,11 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FacilityCount_DefaultSpec_ReturnsCountOfActiveFacilities()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec();
 
             var result = await repository.CountAsync(spec);
-            var expected = DataHelpers.Facilities.Count(e => e.Active);
+            var expected = SimpleRepositoryData.Facilities.Count(e => e.Active);
 
             result.Should().Be(expected);
         }
@@ -73,100 +70,220 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FacilityCount_WithInactive_ReturnsCountOfAll()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() {ActiveOnly = false};
 
             var result = await repository.CountAsync(spec);
-            var expected = DataHelpers.Facilities.Count;
+            var expected = SimpleRepositoryData.Facilities.Count;
 
             result.Should().Be(expected);
         }
 
-        [Theory]
-        [InlineData(243)]
-        [InlineData(131)]
-        public async Task FacilityCount_ByCounty_ReturnsCorrectCount(int countyId)
+        [Fact]
+        public async Task FacilityCount_ByCounty_ReturnsCorrectCount()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            const int countyId = 131;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() {CountyId = countyId};
 
             var result = await repository.CountAsync(spec);
-            var expected = DataHelpers.Facilities.Count(e => e.CountyId == countyId && e.Active);
+            var expected = SimpleRepositoryData.Facilities
+                .Count(e => e.CountyId == countyId && e.Active);
 
             result.Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task FacilityCount_ByMissingCounty_ReturnsZero()
+        {
+            const int countyId = 243;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {CountyId = countyId};
+
+            var result = await repository.CountAsync(spec);
+
+            result.Should().Be(0);
         }
 
         [Theory]
-        [InlineData("00")]
-        [InlineData("BRF")]
-        public async Task FacilityCount_ByFacilityNumber_ReturnsCorrectCount(string facilityNumber)
+        [InlineData("ABC")]
+        [InlineData("GHI")]
+        // [InlineData("ghi")] Sqlite is case-sensitive by default
+        public async Task FacilityCount_ByFacilityNumber_ReturnsCorrectCount(string facilityNumberSpec)
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {FacilityNumber = facilityNumber};
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumberSpec};
 
             var result = await repository.CountAsync(spec);
-            var expected = DataHelpers.Facilities.Count(e => e.FacilityNumber.Contains(facilityNumber) && e.Active);
+            var expected = SimpleRepositoryData.Facilities
+                .Count(e => e.FacilityNumber.ToLower().Contains(facilityNumberSpec.ToLower()) && e.Active);
 
             result.Should().Be(expected);
         }
 
-        // GetFacilityListAsync
+        [Fact]
+        public async Task FacilityCount_ByInactiveFacilityNumber_ReturnsZero()
+        {
+            const string facilityNumber = "DEF";
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumber};
+
+            var result = await repository.CountAsync(spec);
+
+            result.Should().Be(0);
+        }
 
         [Fact]
-        public async Task FacilitySearch_Default_ReturnsActiveFacilities()
+        public async Task FacilityCount_ByMissingFacilityNumber_ReturnsZero()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            const string facilityNumber = "zzz";
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumber};
 
-            var result = await repository.GetFacilityListAsync(new FacilitySpec());
-            var expected = DataHelpers.Facilities.Where(e => e.Active)
-                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
+            var result = await repository.CountAsync(spec);
 
-            result.Should().BeEquivalentTo(expected);
+            result.Should().Be(0);
+        }
+
+        // GetFacilityPaginatedListAsync
+
+        [Fact]
+        public async Task FacilitySearch_DefaultSpec_ReturnsActiveFacilities()
+        {
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+
+            var result = await repository.GetFacilityPaginatedListAsync(new FacilitySpec(), 1, 999);
+            var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.Active);
+
+            result.TotalCount.ShouldEqual(expectedCount);
+            result.Items.Count.ShouldEqual(expectedCount);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(1);
         }
 
         [Fact]
         public async Task FacilitySearch_WithInactive_ReturnsAllFacilities()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() {ActiveOnly = false};
 
-            var result = await repository.GetFacilityListAsync(spec);
-            var expected = DataHelpers.Facilities
-                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Facilities.Count;
 
-            result.Should().BeEquivalentTo(expected);
+            result.TotalCount.ShouldEqual(expectedCount);
+            result.Items.Count.ShouldEqual(expectedCount);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(1);
+        }
+
+        [Fact]
+        public async Task FacilitySearch_ByCounty_ReturnsCorrectList()
+        {
+            const int countySpec = 131;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {CountyId = countySpec, ActiveOnly = false};
+
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.CountyId == countySpec);
+
+            result.TotalCount.ShouldEqual(expectedCount);
+            result.Items.Count.ShouldEqual(expectedCount);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(1);
+        }
+
+        [Fact]
+        public async Task FacilitySearch_ByMissingCounty_ReturnsNone()
+        {
+            const int countySpec = 243;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {CountyId = countySpec, ActiveOnly = false};
+
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.CountyId == countySpec);
+
+            result.TotalCount.ShouldEqual(expectedCount);
+            result.Items.Count.ShouldEqual(expectedCount);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(0);
         }
 
         [Theory]
-        [InlineData(243)]
-        [InlineData(131)]
-        public async Task FacilitySearch_ByCounty_ReturnsCorrectList(int countyId)
+        [InlineData("ABC")]
+        [InlineData("GHI")]
+        // [InlineData("ghi")] Sqlite is case-sensitive by default
+        public async Task FacilitySearch_ByFacilityNumber_ReturnsCorrectList(string facilityNumberSpec)
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {CountyId = countyId};
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumberSpec, ActiveOnly = false};
 
-            var result = await repository.GetFacilityListAsync(spec);
-            var expected = DataHelpers.Facilities
-                .Where(e => e.CountyId == countyId && e.Active)
-                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Facilities
+                .Count(e => e.FacilityNumber.ToLower().Contains(facilityNumberSpec.ToLower()) && e.Active);
 
-            result.Should().BeEquivalentTo(expected);
+            result.TotalCount.ShouldEqual(expectedCount);
+            result.Items.Count.ShouldEqual(expectedCount);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(1);
         }
 
-        [Theory]
-        [InlineData("00")]
-        [InlineData("BRF")]
-        public async Task FacilitySearch_ByFacilityNumber_ReturnsCorrectList(string facilityNumber)
+        [Fact]
+        public async Task FacilitySearch_ByInactiveFacilityNumber_ReturnsEmpty()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {FacilityNumber = facilityNumber};
+            const string facilityNumberSpec = "DEF";
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumberSpec};
 
-            var result = await repository.GetFacilityListAsync(spec);
-            var expected = DataHelpers.Facilities
-                .Where(e => e.FacilityNumber.Contains(facilityNumber) && e.Active)
-                .Select(e => DataHelpers.GetFacilitySummary(e.Id));
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
 
-            result.Should().BeEquivalentTo(expected);
+            result.TotalCount.ShouldEqual(0);
+            result.Items.Count.ShouldEqual(0);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(0);
+        }
+
+        [Fact]
+        public async Task FacilitySearch_ByMissingFacilityNumber_ReturnsEmpty()
+        {
+            const string facilityNumberSpec = "zzz";
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumberSpec};
+
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
+
+            result.TotalCount.ShouldEqual(0);
+            result.Items.Count.ShouldEqual(0);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(0);
+        }
+
+        [Fact]
+        public async Task FacilitySearch_Page2_ReturnsSecondPage()
+        {
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {ActiveOnly = false};
+
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 2, 2);
+            var expectedPages = (int) Math.Ceiling(SimpleRepositoryData.Facilities.Count / 2m);
+
+            result.TotalCount.ShouldEqual(SimpleRepositoryData.Facilities.Count);
+            result.Items.Count.ShouldEqual(2);
+            result.PageNumber.ShouldEqual(2);
+            result.TotalPages.ShouldEqual(expectedPages);
+        }
+
+        [Fact]
+        public async Task FacilitySearch_BeyondLastPage_ReturnsEmptyList()
+        {
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {ActiveOnly = false};
+
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 999, 999);
+
+            result.TotalCount.ShouldEqual(SimpleRepositoryData.Facilities.Count);
+            result.Items.Count.ShouldEqual(0);
+            result.PageNumber.ShouldEqual(999);
+            result.TotalPages.ShouldEqual(1);
         }
 
         // CreateFacilityAsync
@@ -531,52 +648,20 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"Facility Number '{existingNumber}' already exists.");
         }
 
-        /// <summary>
-        /// This Simplified Facility repository is used by 
-        /// the FacilityNumberExists and FileLabelExists unit tests.
-        /// </summary>
-        /// <returns>A FileRepository with a simplified list of Files.</returns>
-        private static FacilityRepository SimpleFacilityRepository()
-        {
-            var simpleFileList = new List<File>
-            {
-                new File {Id = Guid.NewGuid(), FileLabel = "099-0001"},
-            };
-
-            var simpleFacilityList = new List<Facility>
-            {
-                new Facility
-                {
-                    Id = Guid.NewGuid(),
-                    FacilityNumber = "ABC",
-                    FileId = simpleFileList[0].Id,
-                    CountyId = 131
-                },
-            };
-
-            var context = new FmsDbContext(SqliteInMemory.CreateOptions<FmsDbContext>());
-            context.Database.EnsureCreated();
-            context.Files.AddRange(simpleFileList);
-            context.Facilities.AddRange(simpleFacilityList);
-            context.SaveChanges();
-            var fileRepository = new FileRepository(context);
-            return new FacilityRepository(context, fileRepository);
-        }
-
         // FacilityNumberExists
 
         [Fact]
         public async Task FacilityNumberExists_Unique_ReturnsFalse()
         {
-            using var repository = SimpleFacilityRepository();
-            var result = await repository.FacilityNumberExists("DEF", default);
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.FacilityNumberExists("Unique", default);
             result.ShouldBeFalse();
         }
 
         [Fact]
         public async Task FacilityNumberExists_Duplicate_ReturnsTrue()
         {
-            using var repository = SimpleFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.FacilityNumberExists("ABC", default);
             result.ShouldBeTrue();
         }
@@ -584,9 +669,10 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FacilityNumberExists_DuplicateIsIgnored_ReturnsFalse()
         {
-            using var repository = SimpleFacilityRepository();
-            var ignoreId = (await repository.GetFacilityListAsync(new FacilitySpec()))[0].Id;
-            var result = await repository.FacilityNumberExists("ABC", ignoreId);
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var ignoreId = SimpleRepositoryData.Facilities[0].Id;
+            var facName = SimpleRepositoryData.Facilities[0].Name;
+            var result = await repository.FacilityNumberExists(facName, ignoreId);
             result.ShouldBeFalse();
         }
 
@@ -595,7 +681,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FileLabelExists_Unique_ReturnsFalse()
         {
-            using var repository = SimpleFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.FileLabelExists("999-9999");
             result.ShouldBeFalse();
         }
@@ -603,8 +689,9 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task FileLabelExists_Duplicate_ReturnsTrue()
         {
-            using var repository = SimpleFacilityRepository();
-            var result = await repository.FileLabelExists("099-0001");
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var fileLabel = SimpleRepositoryData.Files[0].FileLabel;
+            var result = await repository.FileLabelExists(fileLabel);
             result.ShouldBeTrue();
         }
 

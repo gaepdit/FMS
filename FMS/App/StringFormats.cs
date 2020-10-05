@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FMS
+﻿namespace FMS.App
 {
-    public static partial class FMS
+    public static class StringFormats
     {
         // DateTime display formats
         public const string FormatDateTimeDisplay = "{0:MMMM\u00a0d, yyyy, h:mm\u00a0tt}";

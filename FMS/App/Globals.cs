@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FMS
+namespace FMS.App
 {
-    public static partial class FMS
+    public static class Globals
     {
         // App-wide global variables
 
@@ -18,11 +15,5 @@ namespace FMS
 
         // Default pagination size for search results, etc.
         public const int PageSize = 25;
-
-        // Limit on exporting search results to CSV
-        public const int CsvRecordsExportLimit = 25000;
-
-        // Image thumbnail size
-        public const int ThumbnailSize = 90;
     }
 }
