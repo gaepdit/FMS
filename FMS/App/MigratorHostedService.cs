@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FMS.Domain.Entities.Users;
 using FMS.Infrastructure.Contexts;
+using FMS.Infrastructure.Procs;
 using FMS.Infrastructure.SeedData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -40,14 +41,17 @@ namespace FMS.App
             else
             {
                 // Otherwise, the database is set up using EF migrations and preserved between restarts.
-                await context.Database.MigrateAsync(cancellationToken: cancellationToken);
+                await context.Database.MigrateAsync(cancellationToken);
             }
 
             if (env.IsDevelopment())
             {
                 // Test data: will not run in production
-                Infrastructure.SeedData.DevSeedData.SeedTestData(context);
-                Infrastructure.Procs.StoredProcedures.CreateStoredProcedures(context);
+                DevSeedData.SeedTestData(context);
+                if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
+                {
+                    StoredProcedures.CreateStoredProcedures(context);
+                }
             }
 
             // Initialize Administrator role           

@@ -10,7 +10,7 @@ namespace FMS.Infrastructure.Procs
             context.Database.ExecuteSqlRaw(GetNearbyFacilities);
         }
 
-        private  const string GetNearbyFacilities = @"
+        private const string GetNearbyFacilities = @"
 CREATE PROCEDURE [dbo].[getNearbyFacilities] 
     @active bit = null,
     @Lat float = NULL,
