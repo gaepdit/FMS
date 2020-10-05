@@ -103,7 +103,7 @@ namespace FMS.Pages.Account
                 // Optionally add user to Admin Role
                 var seedAdminUsers = _configuration.GetSection("SeedAdminUsers")
                     .Get<string[]>().AsEnumerable();
-                if (seedAdminUsers.Contains(user.Email, StringComparer.InvariantCultureIgnoreCase))
+                if (seedAdminUsers !=null && seedAdminUsers.Contains(user.Email, StringComparer.InvariantCultureIgnoreCase))
                 {
                     await _userManager.AddToRoleAsync(user, UserConstants.AdminRole);
                 }
