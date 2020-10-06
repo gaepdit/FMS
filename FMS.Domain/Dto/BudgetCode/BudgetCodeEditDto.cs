@@ -12,7 +12,6 @@ namespace FMS.Domain.Dto
         {
             Id = budgetCode.Id;
             Active = budgetCode.Active;
-            //EnvironmentalInterestId = budgetCode.EnvironmentalInterest.Id;
             Code = budgetCode.Code;
             Name = budgetCode.Name;
             OrganizationNumber = budgetCode.OrganizationNumber;
@@ -22,8 +21,6 @@ namespace FMS.Domain.Dto
         public Guid Id { get; set; }
 
         public bool Active { get; set; }
-
-        //public Guid EnvironmentalInterestId { get; set; }
 
         [StringLength(20)]
         public string Code { get; set; }

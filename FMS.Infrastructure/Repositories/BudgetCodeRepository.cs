@@ -15,13 +15,12 @@ namespace FMS.Infrastructure.Repositories
 
         public BudgetCodeRepository(FmsDbContext context) => _context = context;
 
-        public Task<bool> BudgetCodeExistsAsync(Guid id)
+        public async Task<bool> BudgetCodeExistsAsync(Guid id) =>
+            await _context.BudgetCodes.AnyAsync(e => e.Id == id);
+
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
-        }
-        public Task<int> CountAsync(BudgetCodeSpec spec)
-        {
-            throw new NotImplementedException();
+            return await _context.BudgetCodes.AsNoTracking().CountAsync();
         }
 
         public async Task<BudgetCodeDetailDto> GetBudgetCodeAsync(Guid id)

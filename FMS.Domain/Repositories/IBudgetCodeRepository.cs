@@ -10,7 +10,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> BudgetCodeExistsAsync(Guid id);
         Task<BudgetCodeDetailDto> GetBudgetCodeAsync(Guid id);
-        Task<int> CountAsync(BudgetCodeSpec spec);
+        Task<int> CountAsync();
         Task<IReadOnlyList<BudgetCodeSummaryDto>> GetBudgetCodeListAsync();
         Task<Guid> CreateBudgetCodeAsync(BudgetCodeCreateDto budgetCode);
         Task UpdateBudgetCodeAsync(Guid id, BudgetCodeEditDto budgetCodeUpdates);

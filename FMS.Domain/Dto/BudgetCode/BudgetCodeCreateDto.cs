@@ -6,8 +6,6 @@ namespace FMS.Domain.Dto
     {
         public bool Active { get; set; }
 
-        //public Guid EnvironmentalInterestId { get; set; }
-
         [StringLength(20)]
         public string Code { get; set; }
 

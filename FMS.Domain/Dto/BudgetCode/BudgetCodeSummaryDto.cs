@@ -10,7 +10,6 @@ namespace FMS.Domain.Dto
         {
             Id = budgetCode.Id;
             Active = budgetCode.Active;
-            //EnvironmentalInterestId = budgetCode.EnvironmentalInterest.Id;
             Code = budgetCode.Code;
             Name = budgetCode.Name;
             OrganizationNumber = budgetCode.OrganizationNumber;

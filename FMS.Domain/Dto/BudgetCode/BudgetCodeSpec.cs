@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
     public class BudgetCodeSpec
     {
-        public bool Active { get; set; }
+        public Guid? Id { get; set; }
 
-        //public Guid? EnvironmentalInterestId { get; set; }
+        public bool Active { get; set; }
 
         [StringLength(20)]
         public string Code { get; set; }
