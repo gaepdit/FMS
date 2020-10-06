@@ -125,7 +125,10 @@
                 <th scope="col">Shelf Number</th>
                 <th scope="col">Retention Schedule Number</th>
                 <th scope="col" class="text-center">Active</th>
-                <th scope="col" class="text-center">Actions</th>
+                @if (User.IsInRole(UserConstants.AdminRole))
+                {
+                    <th scope="col" class="text-center">Actions</th>
+                }
             </tr>
             </thead>
             <tbody>
@@ -138,9 +141,12 @@
                     <td>@r.ShelfNumber</td>
                     <td>@r.RetentionSchedule</td>
                     <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
-                    <td>
-                        <a asp-page="EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                    </td>
+                    @if (User.IsInRole(UserConstants.AdminRole))
+                    {
+                        <td>
+                            <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                        </td>
+                    }
                 </tr>
             }
             </tbody>
