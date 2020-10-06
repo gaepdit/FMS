@@ -78,9 +78,9 @@ namespace FMS.Infrastructure.Repositories
             return new PaginatedList<FileDetailDto>(items, totalCount, pageNumber, pageSize);
         }
 
-        public async Task<int> GetNextSequenceForCountyAsync(int countyNum)
+        public async Task<int> GetNextSequenceForCountyAsync(int countyId)
         {
-            var countyString = File.CountyString(countyNum);
+            var countyString = File.CountyString(countyId);
             var allSequencesForCounty = await _context.Files.AsNoTracking()
                 .Where(e => e.FileLabel.StartsWith(countyString))
                 .Select(e => int.Parse(e.FileLabel.Substring(4, 4)))
@@ -88,15 +88,15 @@ namespace FMS.Infrastructure.Repositories
             return allSequencesForCounty.Count == 0 ? 1 : allSequencesForCounty.Max() + 1;
         }
 
-        public async Task<Guid> CreateFileAsync(int countyNum)
+        public async Task<Guid> CreateFileAsync(int countyId)
         {
-            if (Data.Counties.All(e => e.Id != countyNum))
+            if (Data.Counties.All(e => e.Id != countyId))
             {
-                throw new ArgumentException($"County ID {countyNum} does not exist.", nameof(countyNum));
+                throw new ArgumentException($"County ID {countyId} does not exist.", nameof(countyId));
             }
 
-            var nextSequence = await GetNextSequenceForCountyAsync(countyNum);
-            var file = new File(countyNum, nextSequence);
+            var nextSequence = await GetNextSequenceForCountyAsync(countyId);
+            var file = new File(countyId, nextSequence);
 
             await _context.Files.AddAsync(file);
             await _context.SaveChangesAsync();

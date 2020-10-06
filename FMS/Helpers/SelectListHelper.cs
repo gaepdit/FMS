@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FMS.Helpers
+namespace FMS
 {
     public interface ISelectListHelper
     {

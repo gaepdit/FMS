@@ -2,13 +2,9 @@
 
 namespace FMS.App
 {
+    // App-wide global variables
     public static class Globals
     {
-        // App-wide global variables
-
-        // Server environment (value set in Startup.Configure)
-        //internal static ServerEnvironment CurrentEnvironment { get; set; }
-
         // Date of final data migration from old FMS application 
         // into new EPD application: July 15, 2020
         public static readonly DateTime MigrationDate = new DateTime(2020, 7, 15);
