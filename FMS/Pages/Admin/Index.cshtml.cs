@@ -71,7 +71,7 @@ namespace FMS.Pages.Admin
             DropDownSelection = 0;
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnGetSearchAsync()
         {
             await PopulateResultAsync();
             return Page();
