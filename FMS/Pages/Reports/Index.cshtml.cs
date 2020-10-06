@@ -11,7 +11,6 @@ using System.IO;
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FMS.Domain.Data;
-using System.Linq;
 
 namespace FMS.Pages.Reports
 {
