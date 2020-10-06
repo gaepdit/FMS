@@ -19,7 +19,7 @@ namespace FMS.App.Tests.Files
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            File file = DataHelpers.Files[0];
+            var file = DataHelpers.Files[0];
             var mockRepository = new Mock<IFileRepository>();
             mockRepository.Setup(l => l.GetFileAsync(It.IsAny<string>()))
                 .ReturnsAsync(new FileDetailDto(file))
@@ -37,7 +37,7 @@ namespace FMS.App.Tests.Files
         }
 
         [Fact]
-        public async Task OnGet_NonexistantIdReturnsNotFound()
+        public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepository = new Mock<IFileRepository>();
             var pageModel = new Pages.Files.DetailsModel(mockRepository.Object);
@@ -63,6 +63,5 @@ namespace FMS.App.Tests.Files
         // Todo #49: OnPostAddCabinetAsync tests
 
         // Todo #49: OnPostRemoveCabinetAsync tests
-
     }
 }

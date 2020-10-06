@@ -41,7 +41,7 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = new Mock<IFacilityRepository>();
             mockRepo.Setup(l => l.GetFacilityAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((FacilityDetailDto)null)
+                .ReturnsAsync((FacilityDetailDto) null)
                 .Verifiable();
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
@@ -86,8 +86,8 @@ namespace FMS.App.Tests.Facilities
 
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
+            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(id);
         }
 
         [Fact]

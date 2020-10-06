@@ -1,17 +1,16 @@
-﻿using FMS.Domain.Dto;
-using FMS.Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
-using System;
-using System.IO;
-using System.Globalization;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using FMS.Domain.Data;
-using System.Linq;
+using FMS.Domain.Dto;
+using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FMS.Pages.Reports
 {
@@ -46,6 +45,7 @@ namespace FMS.Pages.Reports
             _repository = repository;
             _listRepository = listRepository;
         }
+
         public async Task<IActionResult> OnGetAsync(FacilitySpec spec)
         {
             FacilityList = await _repository.GetFacilityDetailListAsync(spec);

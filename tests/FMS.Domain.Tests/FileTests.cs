@@ -3,6 +3,8 @@ using FluentAssertions;
 using FMS.Domain.Entities;
 using Xunit;
 
+// ReSharper disable ObjectCreationAsStatement
+
 namespace FMS.Domain.Tests
 {
     public class FileTests

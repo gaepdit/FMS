@@ -38,7 +38,7 @@ namespace FMS.App.Tests.Cabinets
         {
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((CabinetSummaryDto)null)
+                .ReturnsAsync((CabinetSummaryDto) null)
                 .Verifiable();
 
             var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object);
@@ -78,15 +78,15 @@ namespace FMS.App.Tests.Cabinets
             var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object)
             {
                 Id = Guid.NewGuid(),
-                CabinetEdit = new CabinetEditDto() { Name = newName }
+                CabinetEdit = new CabinetEditDto() {Name = newName}
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(newName);
+            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newName);
         }
 
         [Fact]
@@ -125,7 +125,8 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.ShouldBeFalse();
-            pageModel.ModelState["CabinetEdit.Name"].Errors[0].ErrorMessage.Should().Be("There is already a Cabinet with that name.");
+            pageModel.ModelState["CabinetEdit.Name"].Errors[0].ErrorMessage.Should()
+                .Be("There is already a Cabinet with that name.");
             pageModel.OriginalCabinetName.Should().Be(cabinet.Name);
         }
     }

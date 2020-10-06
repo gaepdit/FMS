@@ -1,12 +1,11 @@
-﻿using FluentAssertions;
-using FMS.Domain.Dto;
+﻿using System;
+using System.Threading.Tasks;
+using FluentAssertions;
 using FMS.Domain.Repositories;
+using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -26,7 +25,7 @@ namespace FMS.App.Tests.Cabinets
                 .ReturnsAsync(item)
                 .Verifiable();
 
-            var pageModel = new Pages.Cabinets.DetailsModel(mockRepo.Object);
+            var pageModel = new DetailsModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(item.Name).ConfigureAwait(false);
 
@@ -35,10 +34,10 @@ namespace FMS.App.Tests.Cabinets
         }
 
         [Fact]
-        public async Task OnGet_NonexistantIdReturnsNotFound()
+        public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepo = new Mock<ICabinetRepository>();
-            var pageModel = new Pages.Cabinets.DetailsModel(mockRepo.Object);
+            var pageModel = new DetailsModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
@@ -50,7 +49,7 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockRepo = new Mock<ICabinetRepository>();
-            var pageModel = new Pages.Cabinets.DetailsModel(mockRepo.Object);
+            var pageModel = new DetailsModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

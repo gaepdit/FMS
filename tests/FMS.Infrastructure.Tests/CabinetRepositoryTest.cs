@@ -78,7 +78,7 @@ namespace FMS.Infrastructure.Tests
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
             var cabinet = DataHelpers.Cabinets[0];
-            
+
             var expected = DataHelpers.GetCabinetDetail(cabinet.Id);
             var result = await repository.GetCabinetDetailsAsync(cabinet.Id);
 
@@ -89,7 +89,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetCabinet_Nonexistent_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.GetCabinetDetailsAsync((Guid)default);
+            var result = await repository.GetCabinetDetailsAsync((Guid) default);
             result.ShouldBeNull();
         }
 
@@ -123,7 +123,7 @@ namespace FMS.Infrastructure.Tests
             var repositoryHelper = new RepositoryHelper();
             Guid newId;
             var newName = "C000";
-            var cabinetCreate = new CabinetCreateDto() { Name = newName };
+            var cabinetCreate = new CabinetCreateDto() {Name = newName};
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
@@ -143,12 +143,12 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateCabinet_WithEmptyName_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
             var cabinetCreate = new CabinetCreateDto();
 
             Func<Task> action = async () =>
             {
-                var result = await repository.CreateCabinetAsync(cabinetCreate);
+                using var repository = new RepositoryHelper().GetCabinetRepository();
+                await repository.CreateCabinetAsync(cabinetCreate);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
@@ -158,13 +158,13 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateCabinet_WithExistingName_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
             var existingName = DataHelpers.Cabinets[0].Name;
-            var cabinetCreate = new CabinetCreateDto() { Name = existingName };
+            var cabinetCreate = new CabinetCreateDto() {Name = existingName};
 
             Func<Task> action = async () =>
             {
-                var result = await repository.CreateCabinetAsync(cabinetCreate);
+                using var repository = new RepositoryHelper().GetCabinetRepository();
+                await repository.CreateCabinetAsync(cabinetCreate);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
@@ -252,8 +252,6 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateCabinet_WithEmptyName_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-
             var cabinet = DataHelpers.Cabinets[0];
             var cabinetEdit = new CabinetEditDto()
             {
@@ -263,6 +261,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
+                using var repository = new RepositoryHelper().GetCabinetRepository();
                 await repository.UpdateCabinetAsync(cabinet.Id, cabinetEdit);
             };
 
@@ -273,7 +272,6 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateCabinet_WithExistingName_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
             var existingName = DataHelpers.Cabinets[1].Name;
 
             var cabinet = DataHelpers.Cabinets[0];
@@ -285,6 +283,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
+                using var repository = new RepositoryHelper().GetCabinetRepository();
                 await repository.UpdateCabinetAsync(cabinet.Id, cabinetEdit);
             };
 
@@ -295,11 +294,11 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateNonexistentCabinet_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var cabinetEdit = new CabinetEditDto() { Name = "C000" };
+            var cabinetEdit = new CabinetEditDto() {Name = "C000"};
 
             Func<Task> action = async () =>
             {
+                using var repository = new RepositoryHelper().GetCabinetRepository();
                 await repository.UpdateCabinetAsync(default, cabinetEdit);
             };
 

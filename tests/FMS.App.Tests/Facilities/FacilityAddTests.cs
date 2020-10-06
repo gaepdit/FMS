@@ -24,7 +24,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.Facility.Should().BeEquivalentTo(new FacilityCreateDto { State = "Georgia" });
+            pageModel.Facility.Should().BeEquivalentTo(new FacilityCreateDto {State = "Georgia"});
         }
 
         [Fact]
@@ -41,15 +41,15 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = new Mock<ISelectListHelper>();
             var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object)
             {
-                Facility = new FacilityCreateDto { State = "Georgia" }
+                Facility = new FacilityCreateDto {State = "Georgia"}
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(newId);
+            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newId);
         }
 
         [Fact]

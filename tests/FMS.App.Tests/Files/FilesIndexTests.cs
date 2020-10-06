@@ -1,13 +1,13 @@
-﻿using FluentAssertions;
-using FMS.Domain.Dto;
-using FMS.Domain.Repositories;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
+using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
-using TestHelpers;
+using FMS.Domain.Repositories;
+using FMS.Pages.Files;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Moq;
 using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -30,7 +30,7 @@ namespace FMS.App.Tests.Files
             mockRepository.Setup(l =>
                     l.GetFileListAsync(It.IsAny<FileSpec>(), It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(expected).Verifiable();
-            var pageModel = new Pages.Files.IndexModel(mockRepository.Object);
+            var pageModel = new IndexModel(mockRepository.Object);
 
             var result = await pageModel.OnGetSearchAsync(spec).ConfigureAwait(false);
 
@@ -49,7 +49,7 @@ namespace FMS.App.Tests.Files
             mockRepository.Setup(l =>
                     l.GetFileListAsync(It.IsAny<FileSpec>(), It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(expected).Verifiable();
-            var pageModel = new Pages.Files.IndexModel(mockRepository.Object);
+            var pageModel = new IndexModel(mockRepository.Object);
 
             var result = await pageModel.OnGetSearchAsync(spec).ConfigureAwait(false);
 
@@ -63,7 +63,7 @@ namespace FMS.App.Tests.Files
         public async Task OnSearch_IfInvalidModel_ReturnPageWithInvalidModelState()
         {
             var mockRepository = new Mock<IFileRepository>();
-            var pageModel = new Pages.Files.IndexModel(mockRepository.Object);
+            var pageModel = new IndexModel(mockRepository.Object);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnGetSearchAsync(default).ConfigureAwait(false);
