@@ -315,7 +315,7 @@ namespace FMS.Infrastructure.Tests
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyNum')");
+                .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyId')");
         }
 
         // UpdateFileAsync

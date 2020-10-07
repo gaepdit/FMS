@@ -265,7 +265,7 @@ namespace FMS.Domain.Utils
         /// <exception cref="ArgumentException"></exception>
         private static T Zero<T>(T input, string parameterName) where T : struct
         {
-            if (EqualityComparer<T>.Default.Equals(input, default(T)))
+            if (EqualityComparer<T>.Default.Equals(input, default))
             {
                 throw new ArgumentException($"Required input {parameterName} cannot be zero.", parameterName);
             }
@@ -470,7 +470,7 @@ namespace FMS.Domain.Utils
         /// <exception cref="ArgumentException"></exception>
         public static T Default<T>([AllowNull, NotNull] T input, string parameterName)
         {
-            if (EqualityComparer<T>.Default.Equals(input, default(T)!) || input is null)
+            if (EqualityComparer<T>.Default.Equals(input, default!) || input is null)
             {
                 throw new ArgumentException($"Parameter [{parameterName}] is default value for type {typeof(T).Name}",
                     parameterName);

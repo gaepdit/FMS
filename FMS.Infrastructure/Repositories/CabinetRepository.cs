@@ -20,9 +20,9 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<bool> CabinetNameExistsAsync(string name, Guid? ignoreId = null) =>
             await _context.Cabinets.AnyAsync(e => e.Name == name &&
-                    (!ignoreId.HasValue || e.Id != ignoreId.Value));
+                (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false) => 
+        public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false) =>
             await _context.Cabinets.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
@@ -34,12 +34,7 @@ namespace FMS.Infrastructure.Repositories
             var cabinet = await _context.Cabinets.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            if (cabinet == null)
-            {
-                return null;
-            }
-
-            return new CabinetSummaryDto(cabinet);
+            return cabinet == null ? null : new CabinetSummaryDto(cabinet);
         }
 
         public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(string name)
@@ -47,12 +42,7 @@ namespace FMS.Infrastructure.Repositories
             var cabinet = await _context.Cabinets.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Name == name);
 
-            if (cabinet == null)
-            {
-                return null;
-            }
-
-            return new CabinetSummaryDto(cabinet);
+            return cabinet == null ? null : new CabinetSummaryDto(cabinet);
         }
 
         public async Task<CabinetDetailDto> GetCabinetDetailsAsync(Guid id)
@@ -61,12 +51,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            if (cabinet == null)
-            {
-                return null;
-            }
-
-            return new CabinetDetailDto(cabinet);
+            return cabinet == null ? null : new CabinetDetailDto(cabinet);
         }
 
         public async Task<CabinetDetailDto> GetCabinetDetailsAsync(string name)
@@ -75,27 +60,27 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
                 .SingleOrDefaultAsync(e => e.Name == name);
 
-            if (cabinet == null)
-            {
-                return null;
-            }
-
-            return new CabinetDetailDto(cabinet);
+            return cabinet == null ? null : new CabinetDetailDto(cabinet);
         }
 
-        public async Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)
+        public Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)
         {
             if (string.IsNullOrWhiteSpace(cabinetCreate.Name))
             {
                 throw new ArgumentException("Cabinet Name can not be null or empty.");
             }
 
+            return CreateCabinetInternalAsync(cabinetCreate);
+        }
+
+        private async Task<Guid> CreateCabinetInternalAsync(CabinetCreateDto cabinetCreate)
+        {
             if (await CabinetNameExistsAsync(cabinetCreate.Name))
             {
                 throw new ArgumentException($"Cabinet Name '{cabinetCreate.Name}' already exists.");
             }
 
-            Cabinet cabinet = new Cabinet() { Name = cabinetCreate.Name };
+            var cabinet = new Cabinet() {Name = cabinetCreate.Name};
             await _context.Cabinets.AddAsync(cabinet);
             await _context.SaveChangesAsync();
 
@@ -133,18 +118,17 @@ namespace FMS.Infrastructure.Repositories
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    // dispose managed state (managed objects)
-                    _context.Dispose();
-                }
+            if (_disposedValue) return;
 
-                // free unmanaged resources (unmanaged objects) and override finalizer
-                // set large fields to null
-                _disposedValue = true;
+            if (disposing)
+            {
+                // dispose managed state (managed objects)
+                _context.Dispose();
             }
+
+            // free unmanaged resources (unmanaged objects) and override finalizer
+            // set large fields to null
+            _disposedValue = true;
         }
 
         // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources

@@ -376,8 +376,6 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateFacility_WithEmptyFacilityNumber_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-
             var newFacility = new FacilityCreateDto()
             {
                 FacilityNumber = " ",
@@ -401,7 +399,8 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                var result = await repository.CreateFacilityAsync(newFacility);
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.CreateFacilityAsync(newFacility);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
@@ -411,17 +410,32 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateFacility_WithExistingNumber_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
             var existingNumber = DataHelpers.Facilities[0].FacilityNumber;
-            var facilityCreate = new FacilityCreateDto() {FacilityNumber = existingNumber};
+            var facilityCreate = new FacilityCreateDto() {FacilityNumber = existingNumber, CountyId = 123};
 
             Func<Task> action = async () =>
             {
-                var result = await repository.CreateFacilityAsync(facilityCreate);
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.CreateFacilityAsync(facilityCreate);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"Facility Number '{facilityCreate.FacilityNumber}' already exists.");
+        }
+
+        [Fact]
+        public async Task CreateFacility_WithNonexistentCounty_ThrowsException()
+        {
+            var facilityCreate = new FacilityCreateDto() {CountyId = 999, FacilityNumber = "zzz"};
+
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.CreateFacilityAsync(facilityCreate);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"County ID 999 does not exist.");
         }
 
         [Fact]
@@ -470,8 +484,6 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateFacility_WithNonexistentFileLabel_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-
             var newFacility = new FacilityCreateDto()
             {
                 FacilityNumber = "ABC",
@@ -495,7 +507,8 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                var result = await repository.CreateFacilityAsync(newFacility);
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.CreateFacilityAsync(newFacility);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
@@ -604,28 +617,64 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task UpdateFacility_NonexistentId_ThrowsException()
+        public async Task UpdateFacility_MissingFacilityNumber_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
             var updates = new FacilityEditDto() {CountyId = 99};
 
-            Func<Task> action = async () => { await repository.UpdateFacilityAsync(default, updates); };
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UpdateFacilityAsync(default, updates);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage("Facility Number is required.");
+        }
+
+        [Fact]
+        public async Task UpdateFacility_NonexistentId_ThrowsException()
+        {
+            var updates = new FacilityEditDto() {CountyId = 99, FacilityNumber = "zzz"};
+
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UpdateFacilityAsync(default, updates);
+            };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
         }
 
         [Fact]
+        public async Task UpdateFacility_InvalidCounty_ThrowsException()
+        {
+            var updates = new FacilityEditDto() {CountyId = 999, FacilityNumber = "zzz"};
+
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UpdateFacilityAsync(default, updates);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"County ID {updates.CountyId} does not exist.");
+        }
+
+        [Fact]
         public async Task UpdateFacility_WithNonexistentFile_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            string newFileLabel = "999-9999";
+            const string newFileLabel = "999-9999";
 
-            Guid facilityId = DataHelpers.Facilities[0].Id;
+            var facilityId = DataHelpers.Facilities[0].Id;
             var facility = DataHelpers.GetFacilityDetail(facilityId);
             var updates = new FacilityEditDto(facility) {FileLabel = newFileLabel};
 
-            Func<Task> action = async () => { await repository.UpdateFacilityAsync(facilityId, updates); };
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"File Label {newFileLabel} does not exist.");
@@ -634,15 +683,16 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFacility_WithExistingNumber_ThrowsException()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-
             var existingNumber = DataHelpers.Facilities[1].FacilityNumber;
-
             var facilityId = DataHelpers.Facilities[0].Id;
             var facility = DataHelpers.GetFacilityDetail(facilityId);
             var updates = new FacilityEditDto(facility) {FacilityNumber = existingNumber};
 
-            Func<Task> action = async () => { await repository.UpdateFacilityAsync(facilityId, updates); };
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UpdateFacilityAsync(facilityId, updates);
+            };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"Facility Number '{existingNumber}' already exists.");

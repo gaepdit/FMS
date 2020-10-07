@@ -1,16 +1,16 @@
-﻿using FMS.Domain.Dto;
-using FMS.Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
-using System;
-using System.IO;
-using System.Globalization;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using FMS.Domain.Data;
+using FMS.Domain.Dto;
+using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FMS.Pages.Reports
 {
@@ -45,6 +45,7 @@ namespace FMS.Pages.Reports
             _repository = repository;
             _listRepository = listRepository;
         }
+
         public async Task<IActionResult> OnGetAsync(FacilitySpec spec)
         {
             FacilityList = await _repository.GetFacilityDetailListAsync(spec);
@@ -74,21 +75,34 @@ namespace FMS.Pages.Reports
 
         #region "Reports"
 
-        private async Task<byte[]> GetCsvByteArrayAsync()
+        public async Task<byte[]> GetCsvByteArrayAsync()
         {
-            await using var ms = new MemoryStream();
-            await using var writer = new StreamWriter(ms);
-            await using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            MemoryStream ms = null;
+            StreamWriter writer = null;
+            CsvWriter csv = null;
 
-            csv.Configuration.SanitizeForInjection = true;
-            csv.Configuration.RegisterClassMap<FacilityReportMap>();
-            await csv.WriteRecordsAsync(FacilityList);
+            try
+            {
+                ms = new MemoryStream();
+                writer = new StreamWriter(ms);
+                csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
-            await csv.FlushAsync();
-            await writer.FlushAsync();
-            await ms.FlushAsync();
+                csv.Configuration.SanitizeForInjection = true;
+                csv.Configuration.RegisterClassMap<FacilityReportMap>();
+                await csv.WriteRecordsAsync(FacilityList);
 
-            return ms.ToArray();
+                await csv.FlushAsync();
+                await writer.FlushAsync();
+                await ms.FlushAsync();
+
+                return ms.ToArray();
+            }
+            finally
+            {
+                if (csv != null) await csv.DisposeAsync();
+                if (writer != null) await writer.DisposeAsync();
+                if (ms != null) await ms.DisposeAsync();
+            }
         }
 
         private class FacilityReportMap : ClassMap<FacilityDetailDto>

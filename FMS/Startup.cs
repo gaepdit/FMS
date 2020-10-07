@@ -4,7 +4,6 @@ using FMS.App;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
-using FMS.Helpers;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
@@ -143,12 +142,12 @@ namespace FMS
         private void CreateFolders()
         {
             // Base path for persisted files
-            var BasePath = string.IsNullOrWhiteSpace(Configuration["PersistedFilesBasePath"])
+            var basePath = string.IsNullOrWhiteSpace(Configuration["PersistedFilesBasePath"])
                 ? "../_GeneratedFiles"
                 : Configuration["PersistedFilesBasePath"].ForceToString();
 
             // Data protection keys folder
-            _dataProtectionKeysFolder = Path.Combine(BasePath, "DataProtectionKeys");
+            _dataProtectionKeysFolder = Path.Combine(basePath, "DataProtectionKeys");
             Directory.CreateDirectory(_dataProtectionKeysFolder);
         }
     }

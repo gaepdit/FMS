@@ -37,14 +37,14 @@ namespace FMS.App.Tests.Files
         {
             var mockRepo = new Mock<IFileRepository>();
             mockRepo.Setup(l => l.GetFileAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((FileDetailDto)null)
+                .ReturnsAsync((FileDetailDto) null)
                 .Verifiable();
             var pageModel = new Pages.Files.EditModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Id.Should().Be((Guid)default);
+            pageModel.Id.Should().Be((Guid) default);
             pageModel.FileLabel.Should().Be(default);
             pageModel.Delete.ShouldBeFalse();
         }
@@ -84,8 +84,8 @@ namespace FMS.App.Tests.Files
 
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(file.FileLabel);
+            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(file.FileLabel);
         }
 
         [Fact]
@@ -130,8 +130,8 @@ namespace FMS.App.Tests.Files
 
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(file.FileLabel);
+            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(file.FileLabel);
         }
     }
 }

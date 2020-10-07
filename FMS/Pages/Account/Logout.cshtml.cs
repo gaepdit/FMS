@@ -8,8 +8,6 @@ namespace FMS.Pages.Account
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
-        public LogoutModel() { }
-
         public IActionResult OnGet() => 
             SignOut("Identity.Application", "Identity.External", AzureADDefaults.OpenIdScheme);
 

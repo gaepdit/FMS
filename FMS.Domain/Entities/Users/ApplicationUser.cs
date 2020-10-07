@@ -21,8 +21,8 @@ namespace FMS.Domain.Entities.Users
         [PersonalData]
         public string ObjectId { get; set; }
 
-        public string DisplayName => string.Join(" ", new string[] { GivenName, FamilyName }.Where(s => !string.IsNullOrEmpty(s)));
+        public string DisplayName => string.Join(" ", new[] { GivenName, FamilyName }.Where(s => !string.IsNullOrEmpty(s)));
 
-        public string SortableFullName => string.Join(", ", new string[] { FamilyName, GivenName }.Where(s => !string.IsNullOrEmpty(s)));
+        public string SortableFullName => string.Join(", ", new[] { FamilyName, GivenName }.Where(s => !string.IsNullOrEmpty(s)));
     }
 }
