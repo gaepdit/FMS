@@ -63,13 +63,19 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-12">
                 <label asp-for="Spec.Name"></label>
                 <input asp-for="Spec.Name" class="form-control" />
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col-12 ">
+                <label asp-for="Spec.Location"></label>
+                <input asp-for="Spec.Location" class="form-control" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
                 <label asp-for="Spec.Address"></label>
                 <input asp-for="Spec.Address" class="form-control" />
             </div>
@@ -122,6 +128,7 @@
                             <input type="hidden" asp-for="Spec.EnvironmentalInterestId" />
                             <input type="hidden" asp-for="Spec.FacilityStatusId" />
                             <input type="hidden" asp-for="Spec.Name" />
+                            <input type="hidden" asp-for="Spec.Location" />
                             <input type="hidden" asp-for="Spec.Address" />
                             <input type="hidden" asp-for="Spec.City" />
                             <input type="hidden" asp-for="Spec.CountyId" />

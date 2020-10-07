@@ -192,6 +192,25 @@ namespace FMS.Infrastructure.Tests
             result.TotalPages.ShouldEqual(1);
         }
 
+        [Theory]
+        [InlineData("where")]
+        [InlineData("somewhere")]
+        [InlineData("here")]
+        [InlineData("")]
+        public async Task FacilitySearch_ByLocation_ReturnsCorrectList(string locationSpec)
+        {
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var spec = new FacilitySpec() {Location = locationSpec, ActiveOnly = false};
+
+            var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
+            var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.Location.Contains(locationSpec));
+
+            result.TotalCount.ShouldEqual(expectedCount);
+            result.Items.Count.ShouldEqual(expectedCount);
+            result.PageNumber.ShouldEqual(1);
+            result.TotalPages.ShouldEqual(1);
+        }
+
         [Fact]
         public async Task FacilitySearch_ByMissingCounty_ReturnsNone()
         {

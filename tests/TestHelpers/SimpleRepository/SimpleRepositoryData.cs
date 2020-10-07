@@ -23,14 +23,16 @@ namespace TestHelpers.SimpleRepository
                 Id = Guid.NewGuid(),
                 FacilityNumber = "ABC",
                 FileId = Files[0].Id,
-                CountyId = 131
+                CountyId = 131,
+                Location = "somewhere",
             },
             new Facility
             {
                 Id = Guid.NewGuid(),
                 FacilityNumber = "ABC123",
                 FileId = Files[0].Id,
-                CountyId = 131
+                CountyId = 131,
+                Location = "elsewhere",
             },
             new Facility
             {
@@ -38,28 +40,32 @@ namespace TestHelpers.SimpleRepository
                 FacilityNumber = "DEF",
                 FileId = Files[1].Id,
                 CountyId = 131,
-                Active = false
+                Location = "",
+                Active = false,
             },
             new Facility
             {
                 Id = Guid.NewGuid(),
                 FacilityNumber = "GHI",
                 FileId = Files[0].Id,
-                CountyId = 099
+                CountyId = 099,
+                Location = "nowhere",
             },
             new Facility
             {
                 Id = Guid.NewGuid(),
                 FacilityNumber = "JKL",
                 FileId = Files[3].Id,
-                CountyId = 102
+                CountyId = 102,
+                Location = "here",
             },
             new Facility
             {
                 Id = Guid.NewGuid(),
                 FacilityNumber = "MNO",
                 FileId = Files[4].Id,
-                CountyId = 103
+                CountyId = 103,
+                Location = "",
             },
         };
 
