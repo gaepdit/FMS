@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -178,18 +178,17 @@ namespace FMS.Infrastructure.Repositories
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    // dispose managed state (managed objects)
-                    _context.Dispose();
-                }
+            if (_disposedValue) return;
 
-                // free unmanaged resources (unmanaged objects) and override finalizer
-                // set large fields to null
-                _disposedValue = true;
+            if (disposing)
+            {
+                // dispose managed state (managed objects)
+                _context.Dispose();
             }
+
+            // free unmanaged resources (unmanaged objects) and override finalizer
+            // set large fields to null
+            _disposedValue = true;
         }
 
         // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources

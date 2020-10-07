@@ -42,12 +42,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.RetentionRecords)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            if (facility == null)
-            {
-                return null;
-            }
-
-            return new FacilityDetailDto(facility);
+            return facility == null ? null : new FacilityDetailDto(facility);
         }
 
         public async Task<int> CountAsync(FacilitySpec spec)
@@ -239,8 +234,9 @@ namespace FMS.Infrastructure.Repositories
                 if (facilityUpdates.FileLabel != oldFile.FileLabel)
                 {
                     file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
-                    facility.File = file
-                        ?? throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
+                    if (file == null)
+                        throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
+                    facility.File = file;
                 }
             }
 
@@ -280,18 +276,12 @@ namespace FMS.Infrastructure.Repositories
         public async Task<RetentionRecordDetailDto> GetRetentionRecordAsync(Guid id)
         {
             var record = await _context.RetentionRecords.FindAsync(id);
-
-            if (record == null)
-            {
-                return null;
-            }
-
-            return new RetentionRecordDetailDto(record);
+            return record == null ? null : new RetentionRecordDetailDto(record);
         }
 
         public async Task<Guid> CreateRetentionRecordAsync(Guid facilityId, RetentionRecordCreateDto create)
         {
-            RetentionRecord record = new RetentionRecord(facilityId, create);
+            var record = new RetentionRecord(facilityId, create);
             await _context.RetentionRecords.AddAsync(record);
             await _context.SaveChangesAsync();
             return record.Id;
@@ -344,18 +334,17 @@ namespace FMS.Infrastructure.Repositories
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
-            {
-                if (disposing)
-                {
-                    // dispose managed state (managed objects)
-                    _context.Dispose();
-                }
+            if (_disposedValue) return;
 
-                // free unmanaged resources (unmanaged objects) and override finalizer
-                // set large fields to null
-                _disposedValue = true;
+            if (disposing)
+            {
+                // dispose managed state (managed objects)
+                _context.Dispose();
             }
+
+            // free unmanaged resources (unmanaged objects) and override finalizer
+            // set large fields to null
+            _disposedValue = true;
         }
 
         // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
