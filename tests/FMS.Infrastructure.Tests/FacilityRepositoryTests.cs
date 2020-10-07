@@ -411,7 +411,7 @@ namespace FMS.Infrastructure.Tests
         public async Task CreateFacility_WithExistingNumber_ThrowsException()
         {
             var existingNumber = DataHelpers.Facilities[0].FacilityNumber;
-            var facilityCreate = new FacilityCreateDto() {FacilityNumber = existingNumber};
+            var facilityCreate = new FacilityCreateDto() {FacilityNumber = existingNumber, CountyId = 123};
 
             Func<Task> action = async () =>
             {
@@ -421,6 +421,21 @@ namespace FMS.Infrastructure.Tests
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"Facility Number '{facilityCreate.FacilityNumber}' already exists.");
+        }
+
+        [Fact]
+        public async Task CreateFacility_WithNonexistentCounty_ThrowsException()
+        {
+            var facilityCreate = new FacilityCreateDto() {CountyId = 999, FacilityNumber = "zzz"};
+
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.CreateFacilityAsync(facilityCreate);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"County ID 999 does not exist.");
         }
 
         [Fact]
@@ -602,7 +617,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task UpdateFacility_NonexistentId_ThrowsException()
+        public async Task UpdateFacility_MissingFacilityNumber_ThrowsException()
         {
             var updates = new FacilityEditDto() {CountyId = 99};
 
@@ -613,7 +628,37 @@ namespace FMS.Infrastructure.Tests
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage("Facility Number is required.");
+        }
+
+        [Fact]
+        public async Task UpdateFacility_NonexistentId_ThrowsException()
+        {
+            var updates = new FacilityEditDto() {CountyId = 99, FacilityNumber = "zzz"};
+
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UpdateFacilityAsync(default, updates);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
+        }
+
+        [Fact]
+        public async Task UpdateFacility_InvalidCounty_ThrowsException()
+        {
+            var updates = new FacilityEditDto() {CountyId = 999, FacilityNumber = "zzz"};
+
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UpdateFacilityAsync(default, updates);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"County ID {updates.CountyId} does not exist.");
         }
 
         [Fact]

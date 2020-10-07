@@ -1,4 +1,4 @@
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
@@ -63,13 +63,18 @@ namespace FMS.Infrastructure.Repositories
             return cabinet == null ? null : new CabinetDetailDto(cabinet);
         }
 
-        public async Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)
+        public Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)
         {
             if (string.IsNullOrWhiteSpace(cabinetCreate.Name))
             {
                 throw new ArgumentException("Cabinet Name can not be null or empty.");
             }
 
+            return CreateCabinetInternalAsync(cabinetCreate);
+        }
+
+        private async Task<Guid> CreateCabinetInternalAsync(CabinetCreateDto cabinetCreate)
+        {
             if (await CabinetNameExistsAsync(cabinetCreate.Name))
             {
                 throw new ArgumentException($"Cabinet Name '{cabinetCreate.Name}' already exists.");

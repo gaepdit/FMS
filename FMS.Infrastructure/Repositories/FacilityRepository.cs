@@ -153,37 +153,43 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
+        public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
             if (string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
             {
                 throw new ArgumentException("Facility Number is required.");
             }
 
+            if (string.IsNullOrWhiteSpace(newFacility.FileLabel) &&
+                Data.Counties.All(e => e.Id != newFacility.CountyId))
+            {
+                throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
+            }
+
+            return CreateFacilityInternalAsync(newFacility);
+        }
+
+        private async Task<Guid> CreateFacilityInternalAsync(FacilityCreateDto newFacility)
+        {
             if (await FacilityNumberExists(newFacility.FacilityNumber))
             {
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
             }
 
             File file;
+
             if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
             {
-                // Generate new File if File Label is empty
-                if (Data.Counties.All(e => e.Id != newFacility.CountyId))
-                {
-                    throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
-                }
-
+                // If File Label is empty, generate new File
                 var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(newFacility.CountyId);
                 file = new File(newFacility.CountyId, nextSequence);
-
                 await _context.Files.AddAsync(file);
             }
             else
             {
                 // Otherwise, if File Label is provided, make sure it exists
-                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel)
-                    ?? throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
+                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel);
+                if (file == null) throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
             var newFac = new Facility(newFacility)
@@ -197,14 +203,29 @@ namespace FMS.Infrastructure.Repositories
             return newFac.Id;
         }
 
-        public async Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
+        public Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
-            var facility = await _context.Facilities.FindAsync(id)
-                ?? throw new ArgumentException("Facility ID not found.", nameof(id));
-
             if (string.IsNullOrWhiteSpace(facilityUpdates.FacilityNumber))
             {
                 throw new ArgumentException("Facility Number is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel) &&
+                Data.Counties.All(e => e.Id != facilityUpdates.CountyId))
+            {
+                throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
+            }
+
+            return UpdateFacilityInternalAsync(id, facilityUpdates);
+        }
+
+        private async Task UpdateFacilityInternalAsync(Guid id, FacilityEditDto facilityUpdates)
+        {
+            var facility = await _context.Facilities.FindAsync(id);
+
+            if (facility == null)
+            {
+                throw new ArgumentException("Facility ID not found.", nameof(id));
             }
 
             if (await FacilityNumberExists(facilityUpdates.FacilityNumber, id))
@@ -216,14 +237,8 @@ namespace FMS.Infrastructure.Repositories
             if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
             {
                 // Generate new File if File Label is empty
-                if (Data.Counties.All(e => e.Id != facilityUpdates.CountyId))
-                {
-                    throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
-                }
-
                 var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(facilityUpdates.CountyId);
                 file = new File(facilityUpdates.CountyId, nextSequence);
-
                 await _context.Files.AddAsync(file);
                 facility.File = file;
             }

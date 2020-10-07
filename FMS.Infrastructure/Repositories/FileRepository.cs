@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -88,13 +88,18 @@ namespace FMS.Infrastructure.Repositories
             return allSequencesForCounty.Count == 0 ? 1 : allSequencesForCounty.Max() + 1;
         }
 
-        public async Task<Guid> CreateFileAsync(int countyId)
+        public Task<Guid> CreateFileAsync(int countyId)
         {
             if (Data.Counties.All(e => e.Id != countyId))
             {
                 throw new ArgumentException($"County ID {countyId} does not exist.", nameof(countyId));
             }
 
+            return CreateFileInternalAsync(countyId);
+        }
+
+        private async Task<Guid> CreateFileInternalAsync(int countyId)
+        {
             var nextSequence = await GetNextSequenceForCountyAsync(countyId);
             var file = new File(countyId, nextSequence);
 
