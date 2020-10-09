@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using FMS.Domain.Entities.Users;
@@ -23,6 +24,14 @@ namespace FMS.Pages.Users
         [DisplayName("Administrator Role")]
         public bool HasAdminRole { get; set; }
 
+        [BindProperty]
+        [DisplayName("Creator Role")]
+        public bool HasCreatorRole { get; set; }
+
+        [BindProperty]
+        [DisplayName("Editor Role")]
+        public bool HasEditorRole { get; set; }
+
         public string DisplayName { get; private set; }
         public string Email { get; private set; }
 
@@ -45,6 +54,8 @@ namespace FMS.Pages.Users
 
             var roles = await _userService.GetUserRolesAsync(UserId);
             HasAdminRole = roles.Contains(UserConstants.AdminRole);
+            HasCreatorRole = roles.Contains(UserConstants.CreatorRole);
+            HasEditorRole = roles.Contains(UserConstants.EditorRole);
 
             return Page();
         }
@@ -56,17 +67,19 @@ namespace FMS.Pages.Users
                 return Page();
             }
 
-            var result = await _userService.UpdateUserRoleAsync(UserId, UserConstants.AdminRole, HasAdminRole);
+            var roleSettings = new Dictionary<string, bool>()
+            {
+                {UserConstants.AdminRole, HasAdminRole},
+                {UserConstants.CreatorRole, HasCreatorRole},
+                {UserConstants.EditorRole, HasEditorRole},
+            };
+
+            var result = await _userService.UpdateUserRolesAsync(UserId, roleSettings);
 
             if (result.Succeeded)
             {
                 TempData?.SetDisplayMessage(Context.Success, "User account successfully updated.");
                 return RedirectToPage("./Details", new {id = UserId});
-            }
-
-            if (!await _userService.UserExistsAsync(UserId))
-            {
-                return NotFound();
             }
 
             var user = await _userService.GetUserByIdAsync(UserId);
@@ -77,6 +90,12 @@ namespace FMS.Pages.Users
 
             DisplayName = user.DisplayName;
             Email = user.Email;
+
+            var roles = await _userService.GetUserRolesAsync(UserId);
+
+            HasAdminRole = roles.Contains(UserConstants.AdminRole);
+            HasCreatorRole = roles.Contains(UserConstants.CreatorRole);
+            HasEditorRole = roles.Contains(UserConstants.EditorRole);
 
             foreach (var err in result.Errors)
             {

@@ -31,12 +31,7 @@ namespace FMS.Infrastructure.Services
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
             var principal = _httpContextAccessor?.HttpContext?.User;
-            if (principal == null)
-            {
-                return null;
-            }
-
-            return await _userManager.GetUserAsync(principal);
+            return principal == null ? null : await _userManager.GetUserAsync(principal);
         }
 
         public async Task<IList<string>> GetCurrentUserRolesAsync()
@@ -45,16 +40,9 @@ namespace FMS.Infrastructure.Services
             return await _userManager.GetRolesAsync(user);
         }
 
-        // Any user        
-        public async Task<bool> UserExistsAsync(Guid id)
-        {
-            return await _context.Users.AnyAsync(e => e.Id == id);
-        }
-
-        public async Task<ApplicationUser> GetUserByIdAsync(Guid id)
-        {
-            return await _userManager.FindByIdAsync(id.ToString());
-        }
+        // Any user
+        public async Task<ApplicationUser> GetUserByIdAsync(Guid id) =>
+            await _userManager.FindByIdAsync(id.ToString());
 
         public async Task<IList<string>> GetUserRolesAsync(Guid id)
         {
@@ -62,7 +50,7 @@ namespace FMS.Infrastructure.Services
             return await _userManager.GetRolesAsync(user);
         }
 
-        public async Task<IdentityResult> UpdateUserRoleAsync(Guid id, string role, bool addToRole)
+        private async Task<IdentityResult> UpdateUserRoleAsync(Guid id, string role, bool addToRole)
         {
             var user = await GetUserByIdAsync(id);
             if (user == null)
@@ -85,13 +73,29 @@ namespace FMS.Infrastructure.Services
             return IdentityResult.Success;
         }
 
-        // User search
-        public async Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter)
+        public async Task<IdentityResult> UpdateUserRolesAsync(Guid id, Dictionary<string, bool> roleSettings)
         {
-            return await _context.Users.AsNoTracking()
-                .Where(m => string.IsNullOrEmpty(nameFilter) || m.GivenName.Contains(nameFilter) || m.FamilyName.Contains(nameFilter))
-                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email == emailFilter)
-                .ToListAsync();
+            foreach (var (key, value) in roleSettings)
+            {
+                var result = await UpdateUserRoleAsync(id, key, value);
+
+                if (result != IdentityResult.Success)
+                {
+                    return result;
+                }
+            }
+
+            return IdentityResult.Success;
         }
+
+        // User search
+        public async Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter) =>
+            await _context.Users.AsNoTracking()
+                .Where(m => string.IsNullOrEmpty(nameFilter)
+                    || m.GivenName.Contains(nameFilter)
+                    || m.FamilyName.Contains(nameFilter))
+                .Where(m => string.IsNullOrEmpty(emailFilter)
+                    || m.Email == emailFilter)
+                .ToListAsync();
     }
 }

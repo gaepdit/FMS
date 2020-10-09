@@ -13,8 +13,25 @@
         </div>
         <p>Roles for: @Model.DisplayName &lt;@Model.Email&gt;</p>
         <div class="form-check mb-3">
-            <input asp-for="HasAdminRole" class="form-check-input">
+            <input asp-for="HasAdminRole" class="form-check-input" aria-describedby="AdminRoleHelpBlock">
             <label asp-for="HasAdminRole" class="form-check-label"></label>
+            <small id="AdminRoleHelpBlock" class="form-text text-muted">
+                Users with the Administrator role are able to manage user profiles, update values in lookup tables (drop-down lists), and edit Cabinets.
+            </small>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasCreatorRole" class="form-check-input" aria-describedby="CreatorRoleHelpBlock">
+            <label asp-for="HasCreatorRole" class="form-check-label"></label>
+            <small id="CreatorRoleHelpBlock" class="form-text text-muted">
+                Users with the Creator role are able to add new Facilities and Files.
+            </small>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasEditorRole" class="form-check-input" aria-describedby="EditorRoleHelpBlock">
+            <label asp-for="HasEditorRole" class="form-check-label"></label>
+            <small id="EditorRoleHelpBlock" class="form-text text-muted">
+                Users with the Editor Role are able to edit existing Facilities and delete Files.
+            </small>
         </div>
         <input asp-for="UserId">
         <button type="submit" class="btn btn-primary">Save Changes</button>
