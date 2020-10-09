@@ -7,9 +7,8 @@ namespace FMS.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        public string ReturnUrl { get; set; }
-
-        public DisplayMessage Message { get; set; }
+        public string ReturnUrl { get; private set; }
+        public DisplayMessage Message { get; private set; }
 
         public IActionResult OnGet(string returnUrl = null)
         {
@@ -19,7 +18,6 @@ namespace FMS.Pages.Account
             }
 
             Message = TempData?.GetDisplayMessage();
-
             ReturnUrl = returnUrl ?? Url.Content("~/");
             return Page();
         }
