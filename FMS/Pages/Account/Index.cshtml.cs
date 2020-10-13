@@ -12,9 +12,9 @@ namespace FMS.Pages.Account
         private readonly IUserService _userService;
         public IndexModel(IUserService userService) => _userService = userService;
 
-        public string DisplayName { get; set; }
-        public string Email { get; set; }
-        public IList<string> Roles { get; set; }
+        public string DisplayName { get; private set; }
+        public string Email { get; private set; }
+        public IList<string> Roles { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
         {

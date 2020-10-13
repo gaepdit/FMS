@@ -17,37 +17,37 @@
             <input asp-for="HasUserAdminRole" class="form-check-input" aria-describedby="UserAdminRoleHelpBlock">
             <label asp-for="HasUserAdminRole" class="form-check-label font-weight-bold">
                 @UserRoles.DisplayName(UserRoles.UserAdmin)
+                <small id="UserAdminRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.UserAdmin)
+                </small>
             </label>
-            <small id="UserAdminRoleHelpBlock" class="form-text text-muted">
-                @UserRoles.Description(UserRoles.UserAdmin)
-            </small>
         </div>
         <div class="form-check mb-3">
             <input asp-for="HasSiteMaintenanceRole" class="form-check-input" aria-describedby="SiteMaintenanceRoleHelpBlock">
             <label asp-for="HasSiteMaintenanceRole" class="form-check-label font-weight-bold">
                 @UserRoles.DisplayName(UserRoles.SiteMaintenance)
+                <small id="SiteMaintenanceRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.SiteMaintenance)
+                </small>
             </label>
-            <small id="SiteMaintenanceRoleHelpBlock" class="form-text text-muted">
-                @UserRoles.Description(UserRoles.SiteMaintenance)
-            </small>
         </div>
         <div class="form-check mb-3">
             <input asp-for="HasFileCreatorRole" class="form-check-input" aria-describedby="CreatorRoleHelpBlock">
             <label asp-for="HasFileCreatorRole" class="form-check-label font-weight-bold">
                 @UserRoles.DisplayName(UserRoles.FileCreator)
+                <small id="CreatorRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.FileCreator)
+                </small>
             </label>
-            <small id="CreatorRoleHelpBlock" class="form-text text-muted">
-                @UserRoles.Description(UserRoles.FileCreator)
-            </small>
         </div>
         <div class="form-check mb-3">
             <input asp-for="HasFileEditorRole" class="form-check-input" aria-describedby="EditorRoleHelpBlock">
             <label asp-for="HasFileEditorRole" class="form-check-label font-weight-bold">
                 @UserRoles.DisplayName(UserRoles.FileEditor)
+                <small id="EditorRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.FileEditor)
+                </small>
             </label>
-            <small id="EditorRoleHelpBlock" class="form-text text-muted">
-                @UserRoles.Description(UserRoles.FileEditor)
-            </small>
         </div>
         <input asp-for="UserId">
         <button type="submit" class="btn btn-primary">Save Changes</button>
