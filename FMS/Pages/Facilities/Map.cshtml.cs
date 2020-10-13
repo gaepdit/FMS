@@ -92,12 +92,15 @@ namespace FMS.Pages.Facilities
       
         public async Task<IActionResult> OnPostAsync(FacilityMapSpec Spec)       
         {
-            if (Spec.GeocodeLat.Length > 0 && Spec.GeocodeLng.Length > 0)
+            if (!string.IsNullOrEmpty(Spec.GeocodeLat) || !string.IsNullOrEmpty(Spec.GeocodeLng))
             {
-                if (float.Parse(Spec.GeocodeLat) > 0 && float.Parse(Spec.GeocodeLng) < 0)
+                if (Spec.GeocodeLat.Length > 0 && Spec.GeocodeLng.Length > 0)
                 {
-                    Spec.Latitude = decimal.Parse(Spec.GeocodeLat);
-                    Spec.Longitude = decimal.Parse(Spec.GeocodeLng);
+                    if (float.Parse(Spec.GeocodeLat) > 0 && float.Parse(Spec.GeocodeLng) < 0)
+                    {
+                        Spec.Latitude = decimal.Parse(Spec.GeocodeLat);
+                        Spec.Longitude = decimal.Parse(Spec.GeocodeLng);
+                    }
                 }
             }
             FacilityList = await _repository.GetFacilityListAsync(Spec);
