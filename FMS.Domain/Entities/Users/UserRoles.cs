@@ -30,11 +30,28 @@ namespace FMS.Domain.Entities.Users
         public static string Description(string role) =>
             role switch
             {
-                UserAdmin => "Users with the User Administrator role are able to add and remove roles for other users.",
-                SiteMaintenance => "Users with the Site Maintenance role are able to update values in lookup tables (drop-down lists) and edit cabinets.",
-                FileCreator => "Users with the File Creator role are able to add new facilities and files.",
-                FileEditor => "Users with the File Editor role are able to add new facilities and files, edit existing facilities, and delete files.",
+                UserAdmin => "Users with the User Administrator role are able to add and remove " +
+                    "roles for other users.",
+                SiteMaintenance =>
+                    "Users with the Site Maintenance role are able to update values in lookup " +
+                    "tables (drop-down lists) and modify cabinets.",
+                FileCreator =>
+                    "Users with the File Creator role are able to add new facilities, files, " +
+                    "and retention records.",
+                FileEditor =>
+                    "Users with the File Editor role are able to edit facilities, files, and " +
+                    "retention records, and delete files.",
                 _ => role
             };
+    }
+
+    /// <summary>
+    /// Authorization Policies for the application.
+    /// The policies are configured in Startup.
+    /// </summary>
+    public static class UserPolicies
+    {
+        // Policies
+        public const string FileCreatorOrEditor = "FileCreatorOrEditor";
     }
 }

@@ -10,7 +10,7 @@
     {
         <span class="text-muted">(Deleted)</span>
     }
-    @if (User.IsInRole(UserRoles.UserAdmin))
+    @if (User.IsInRole(UserRoles.FileEditor))
     {
         <a asp-page="Edit" asp-route-id="@Model.FileDetail.Id" class="btn btn-sm btn-outline-primary">Delete File</a>
     }
@@ -21,7 +21,7 @@
 <div class="my-3">
     <h2>
         Cabinets
-        @if (User.IsInRole(UserRoles.UserAdmin))
+        @if (User.IsInRole(UserRoles.FileEditor))
         {
             <a asp-page="EditCabinets" asp-route-id="@Model.FileDetail.Id" class="btn btn-sm btn-outline-primary">Edit Cabinets</a>
         }

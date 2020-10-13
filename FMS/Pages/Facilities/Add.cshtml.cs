@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FMS.Pages.Facilities
 {
-    [Authorize(Roles = UserRoles.UserAdmin)]
+    [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
     public class AddModel : PageModel
     {
         private readonly IFacilityRepository _repository;
