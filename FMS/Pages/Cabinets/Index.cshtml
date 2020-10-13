@@ -35,7 +35,7 @@
     }
 </div>
 
-@if (User.IsInRole(UserConstants.AdminRole))
+@if (User.IsInRole(UserRoles.UserAdmin))
 {
     <div class="container-fluid bg-light pt-3 mt-5">
         <form method="post" class="form-inline">

@@ -10,7 +10,7 @@
     {
         <span class="text-muted">(Deleted)</span>
     }
-    @if (User.IsInRole(UserConstants.AdminRole))
+    @if (User.IsInRole(UserRoles.UserAdmin))
     {
         <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
     }
@@ -125,7 +125,7 @@
                 <th scope="col">Shelf Number</th>
                 <th scope="col">Retention Schedule Number</th>
                 <th scope="col" class="text-center">Active</th>
-                @if (User.IsInRole(UserConstants.AdminRole))
+                @if (User.IsInRole(UserRoles.UserAdmin))
                 {
                     <th scope="col" class="text-center">Actions</th>
                 }
@@ -141,7 +141,7 @@
                     <td>@r.ShelfNumber</td>
                     <td>@r.RetentionSchedule</td>
                     <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
-                    @if (User.IsInRole(UserConstants.AdminRole))
+                    @if (User.IsInRole(UserRoles.UserAdmin))
                     {
                         <td>
                             <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
@@ -157,7 +157,7 @@
         <span class="text-muted">none</span>
     }
 
-    @if (User.IsInRole(UserConstants.AdminRole))
+    @if (User.IsInRole(UserRoles.UserAdmin))
     {
         <div class="container-fluid bg-light pt-3 mt-5">
             <h3 class="h5">Add a Retention Record</h3>

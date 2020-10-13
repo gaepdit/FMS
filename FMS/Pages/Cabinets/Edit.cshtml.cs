@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Cabinets
 {
-    [Authorize(Roles = UserConstants.AdminRole)]
+    [Authorize(Roles = UserRoles.UserAdmin)]
     public class EditModel : PageModel
     {
         [BindProperty]

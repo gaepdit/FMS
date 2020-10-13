@@ -16,21 +16,24 @@
         <div>
             <h2>
                 @Model.DisplayName
-                @if (User.IsInRole(UserConstants.AdminRole))
+                @if (User.IsInRole(UserRoles.UserAdmin))
                 {
-                    <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
                 }
             </h2>
             <p>@Model.Email</p>
             @if (Model.Roles != null && Model.Roles.Count > 0)
             {
                 <h3>Roles</h3>
-                <ul>
+                <dl>
                     @foreach (var role in Model.Roles)
                     {
-                        <li>@role</li>
+                        <dt>@UserRoles.DisplayName(role)</dt>
+                        <dd>
+                            <small class="text-muted">@UserRoles.Description(role)</small>
+                        </dd>
                     }
-                </ul>
+                </dl>
             }
         </div>
     </div>

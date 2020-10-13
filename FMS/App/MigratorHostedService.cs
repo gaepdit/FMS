@@ -55,7 +55,7 @@ namespace FMS.App
             }
 
             // Initialize roles
-            foreach (var role in UserConstants.AllRoles)
+            foreach (var role in UserRoles.AllRoles)
             {
                 if (!await context.Roles.AnyAsync(e => e.Name == role, cancellationToken))
                 {

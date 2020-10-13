@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Facilities
 {
-    [Authorize(Roles = UserConstants.AdminRole)]
+    [Authorize(Roles = UserRoles.UserAdmin)]
     public class EditModel : PageModel
     {
         private readonly IFacilityRepository _repository;

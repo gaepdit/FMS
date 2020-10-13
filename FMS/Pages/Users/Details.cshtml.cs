@@ -12,11 +12,11 @@ namespace FMS.Pages.Users
         private readonly IUserService _userService;
         public DetailsModel(IUserService userService) => _userService = userService;
 
-        public string Id { get; set; }
-        public string DisplayName { get; set; }
-        public string Email { get; set; }
-        public IList<string> Roles { get; set; }
-        public DisplayMessage Message { get; set; }
+        public string Id { get; private set; }
+        public string DisplayName { get; private set; }
+        public string Email { get; private set; }
+        public IList<string> Roles { get; private set; }
+        public DisplayMessage Message { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {

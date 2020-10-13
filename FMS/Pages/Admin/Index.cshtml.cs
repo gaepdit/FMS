@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FMS.Pages.Admin
 {
-    [Authorize(Roles = UserConstants.AdminRole)]
+    [Authorize(Roles = UserRoles.UserAdmin)]
     public class IndexModel : PageModel
     {
         private readonly IBudgetCodeRepository _budgetCodeRepository;
