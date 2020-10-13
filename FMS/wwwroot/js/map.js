@@ -154,7 +154,7 @@ function getLatLongs(addr, city, zip) {
 
             if (lat > 0) {
                 bool = false;
-                $('#Search').click();
+                $('#btnSearch').click();
             }
         }
         else {

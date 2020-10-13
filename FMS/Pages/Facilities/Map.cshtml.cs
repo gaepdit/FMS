@@ -41,8 +41,7 @@ namespace FMS.Pages.Facilities
         }
 
         public IActionResult OnGet()
-        {
-           // Spec = new FacilityMapSpec();
+        {           
             return Page();
         }
 

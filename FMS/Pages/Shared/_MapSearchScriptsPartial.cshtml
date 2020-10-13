@@ -1,7 +1,6 @@
 ﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 <script src="~/js/map.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Configuration["GoogleMapSettings:ApiKey"]"></script>
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script type="text/javascript">
 
@@ -69,7 +68,7 @@
             }
         });
 
-        $('#Search').click(function OnSearchSubmit() {
+        $('#btnSearch').click(function OnSearchSubmit() {
             var output = $('#Output').val();
             var lat = $('#Latitude').val();
             var lng = $('#Longitude').val();
