@@ -1,4 +1,5 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Users.EditModel
 @{
     ViewData["Title"] = "Edit User Roles";
@@ -13,8 +14,40 @@
         </div>
         <p>Roles for: @Model.DisplayName &lt;@Model.Email&gt;</p>
         <div class="form-check mb-3">
-            <input asp-for="HasAdminRole" class="form-check-input">
-            <label asp-for="HasAdminRole" class="form-check-label"></label>
+            <input asp-for="HasUserAdminRole" class="form-check-input" aria-describedby="UserAdminRoleHelpBlock">
+            <label asp-for="HasUserAdminRole" class="form-check-label font-weight-bold">
+                @UserRoles.DisplayName(UserRoles.UserAdmin)
+            </label>
+            <small id="UserAdminRoleHelpBlock" class="form-text text-muted">
+                @UserRoles.Description(UserRoles.UserAdmin)
+            </small>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasSiteMaintenanceRole" class="form-check-input" aria-describedby="SiteMaintenanceRoleHelpBlock">
+            <label asp-for="HasSiteMaintenanceRole" class="form-check-label font-weight-bold">
+                @UserRoles.DisplayName(UserRoles.SiteMaintenance)
+            </label>
+            <small id="SiteMaintenanceRoleHelpBlock" class="form-text text-muted">
+                @UserRoles.Description(UserRoles.SiteMaintenance)
+            </small>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasFileCreatorRole" class="form-check-input" aria-describedby="CreatorRoleHelpBlock">
+            <label asp-for="HasFileCreatorRole" class="form-check-label font-weight-bold">
+                @UserRoles.DisplayName(UserRoles.FileCreator)
+            </label>
+            <small id="CreatorRoleHelpBlock" class="form-text text-muted">
+                @UserRoles.Description(UserRoles.FileCreator)
+            </small>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasFileEditorRole" class="form-check-input" aria-describedby="EditorRoleHelpBlock">
+            <label asp-for="HasFileEditorRole" class="form-check-label font-weight-bold">
+                @UserRoles.DisplayName(UserRoles.FileEditor)
+            </label>
+            <small id="EditorRoleHelpBlock" class="form-text text-muted">
+                @UserRoles.Description(UserRoles.FileEditor)
+            </small>
         </div>
         <input asp-for="UserId">
         <button type="submit" class="btn btn-primary">Save Changes</button>

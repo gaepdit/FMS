@@ -90,10 +90,13 @@ namespace FMS
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(_dataProtectionKeysFolder));
 
             // Configure Razor pages 
-            services.AddRazorPages().AddMvcOptions(opts =>
+            services.AddRazorPages();
+
+            // Configure authorization policies 
+            services.AddAuthorization(opts =>
             {
-                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                opts.Filters.Add(new AuthorizeFilter(policy));
+                opts.AddPolicy(UserPolicies.FileCreatorOrEditor, policy =>
+                    policy.RequireRole(UserRoles.FileCreator, UserRoles.FileEditor));
             });
 
             // Configure dependencies
@@ -136,7 +139,7 @@ namespace FMS
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => endpoints.MapRazorPages());
+            app.UseEndpoints(endpoints => endpoints.MapRazorPages().RequireAuthorization());
         }
 
         private void CreateFolders()

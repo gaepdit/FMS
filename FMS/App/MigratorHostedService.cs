@@ -47,18 +47,20 @@ namespace FMS.App
             if (env.IsDevelopment())
             {
                 // Test data: will not run in production
-                DevSeedData.SeedTestData(context);
+                context.SeedTestData();
                 if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
                 {
-                    StoredProcedures.CreateStoredProcedures(context);
+                    context.CreateStoredProcedures();
                 }
             }
 
-            // Initialize Administrator role           
-            if (!await context.Roles.AnyAsync(e => e.Name == UserConstants.AdminRole,
-                cancellationToken: cancellationToken))
+            // Initialize roles
+            foreach (var role in UserRoles.AllRoles)
             {
-                await roleManager.CreateAsync(new IdentityRole<Guid>(UserConstants.AdminRole));
+                if (!await context.Roles.AnyAsync(e => e.Name == role, cancellationToken))
+                {
+                    await roleManager.CreateAsync(new IdentityRole<Guid>(role));
+                }
             }
         }
 

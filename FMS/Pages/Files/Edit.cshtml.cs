@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Files
 {
-    [Authorize(Roles = UserConstants.AdminRole)]
+    [Authorize(Roles = UserRoles.FileEditor)]
     public class EditModel : PageModel
     {
         [BindProperty]

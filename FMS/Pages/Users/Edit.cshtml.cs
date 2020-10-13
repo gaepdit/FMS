@@ -1,5 +1,5 @@
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Users
 {
-    [Authorize(Roles = UserConstants.AdminRole)]
+    [Authorize(Roles = UserRoles.UserAdmin)]
     public class EditModel : PageModel
     {
         private readonly IUserService _userService;
@@ -20,8 +20,16 @@ namespace FMS.Pages.Users
         public Guid UserId { get; set; }
 
         [BindProperty]
-        [DisplayName("Administrator Role")]
-        public bool HasAdminRole { get; set; }
+        public bool HasUserAdminRole { get; set; }
+
+        [BindProperty]
+        public bool HasSiteMaintenanceRole { get; set; }
+
+        [BindProperty]
+        public bool HasFileCreatorRole { get; set; }
+
+        [BindProperty]
+        public bool HasFileEditorRole { get; set; }
 
         public string DisplayName { get; private set; }
         public string Email { get; private set; }
@@ -33,19 +41,9 @@ namespace FMS.Pages.Users
                 return NotFound();
             }
 
-            var user = await _userService.GetUserByIdAsync(id.Value);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            UserId = user.Id;
-            DisplayName = user.DisplayName;
-            Email = user.Email;
-
-            var roles = await _userService.GetUserRolesAsync(UserId);
-            HasAdminRole = roles.Contains(UserConstants.AdminRole);
-
+            UserId = id.Value;
+            if (!await GetUserDetails()) return NotFound();
+            await GetUserRoles();
             return Page();
         }
 
@@ -56,34 +54,52 @@ namespace FMS.Pages.Users
                 return Page();
             }
 
-            var result = await _userService.UpdateUserRoleAsync(UserId, UserConstants.AdminRole, HasAdminRole);
+            var roleSettings = new Dictionary<string, bool>()
+            {
+                {UserRoles.UserAdmin, HasUserAdminRole},
+                {UserRoles.SiteMaintenance, HasSiteMaintenanceRole},
+                {UserRoles.FileCreator, HasFileCreatorRole},
+                {UserRoles.FileEditor, HasFileEditorRole},
+            };
+            var result = await _userService.UpdateUserRolesAsync(UserId, roleSettings);
 
             if (result.Succeeded)
             {
-                TempData?.SetDisplayMessage(Context.Success, "User account successfully updated.");
+                TempData?.SetDisplayMessage(Context.Success, "User roles successfully updated.");
                 return RedirectToPage("./Details", new {id = UserId});
             }
-
-            if (!await _userService.UserExistsAsync(UserId))
-            {
-                return NotFound();
-            }
-
-            var user = await _userService.GetUserByIdAsync(UserId);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            DisplayName = user.DisplayName;
-            Email = user.Email;
 
             foreach (var err in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, err.Description);
             }
 
+            if (!await GetUserDetails()) return NotFound();
+            await GetUserRoles();
             return Page();
+        }
+
+        private async Task<bool> GetUserDetails()
+        {
+            var user = await _userService.GetUserByIdAsync(UserId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            DisplayName = user.DisplayName;
+            Email = user.Email;
+            return true;
+        }
+
+        private async Task GetUserRoles()
+        {
+            var roles = await _userService.GetUserRolesAsync(UserId);
+            HasUserAdminRole = roles.Contains(UserRoles.UserAdmin);
+            HasSiteMaintenanceRole = roles.Contains(UserRoles.SiteMaintenance);
+            HasFileCreatorRole = roles.Contains(UserRoles.FileCreator);
+            HasFileEditorRole = roles.Contains(UserRoles.FileEditor);
         }
     }
 }

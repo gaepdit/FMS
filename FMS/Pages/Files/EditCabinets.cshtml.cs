@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FMS.Pages.Files
 {
-    [Authorize(Roles = UserConstants.AdminRole)]
+    [Authorize(Roles = UserRoles.FileEditor)]
     public class EditCabinets : PageModel
     {
         private readonly IFileRepository _repository;

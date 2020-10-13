@@ -10,7 +10,7 @@
     {
         <span class="text-muted">(Deleted)</span>
     }
-    @if (User.IsInRole(UserConstants.AdminRole))
+    @if (User.IsInRole(UserRoles.SiteMaintenance))
     {
         <a asp-page="Edit" asp-route-id="@Model.CabinetDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
     }
