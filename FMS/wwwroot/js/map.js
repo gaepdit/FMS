@@ -164,6 +164,31 @@ function getLatLongs(addr, city, zip) {
     });
 
 }
+function getCoordinates(address) {
+    var lat = 0;// 33.879807;
+    var lng = 0;// -87.306964;   
+   
+    var request = {
+        address: address,
+        componentRestrictions: {
+            country: 'US'
+        }
+    }
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode(request, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            lat = results[0].geometry.location.lat();
+            lng = results[0].geometry.location.lng();
+            $('#Latitude').val(parseFloat(lat).toFixed(4));
+            $('#Longitude').val(parseFloat(lng).toFixed(4));         
+        }
+        else {
+            alert("Geocode was not successful for the following reason: " + status);
+        }
+
+    });
+
+}
 
 function mapInitialize1(lat, lng, radius, markers) {
     //debugger;

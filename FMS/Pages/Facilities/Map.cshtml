@@ -94,6 +94,28 @@
         <div id="ResultList">
             <div class="container-fluid">
                 <table class="table">
+                    <caption class="container border-top py-3">
+                        <div class="row">
+                            <div class="col-md mb-3 mb-md-0">                                
+                                <form method="post">
+                                    <button id="ExportButton" type="submit" class="btn btn-outline-primary">
+                                        Export to Excel
+                                    </button>
+                                    <input type="hidden" asp-for="Spec.ActiveOnly" />
+                                    <input type="hidden" asp-for="Spec.Address" />
+                                    <input type="hidden" asp-for="Spec.City" />
+                                    <input type="hidden" asp-for="Spec.State" />
+                                    <input type="hidden" asp-for="Spec.PostalCode" />
+                                    <input type="hidden" asp-for="Spec.Latitude" />
+                                    <input type="hidden" asp-for="Spec.Longitude" />
+                                    <input type="hidden" asp-for="Spec.Radius" />                                   
+                                    <input type="hidden" asp-for="Spec.Output" />
+                                    <input type="hidden" asp-for="Spec.GeocodeLat" />
+                                    <input type="hidden" asp-for="Spec.GeocodeLng" />
+                                </form>
+                            </div>                         
+                        </div>
+                    </caption>
                     <thead class="thead-light">
                         <tr>
                             <th scope="col">Facility</th>
@@ -138,24 +160,13 @@
                                         @Html.DisplayFor(m => item.FacilityStatus)
                                     </td>
                                     <td>
-                                        @if (item.Distance < 0.25)
-                                        {
-                                             Model.distance = Math.Round(item.Distance * 5280).ToString() + " ft";
-                                            @Html.DisplayFor(m => Model.distance)  
-                                        }
-                                        else
-                                        {
-                                            Model.distance = Math.Round(item.Distance,2).ToString() + " mi";
-                                            @Html.DisplayFor(Model => Model.distance) 
-                                       }
-                                       
-
+                                        @Html.DisplayFor(m => item.Distance, "Distance")
                                     </td>
                                 </tr>
                             }
                         }
                     </tbody>
-                </table>
+                </table>                
             </div>
         </div>
     }

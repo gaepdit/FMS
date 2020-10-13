@@ -1,0 +1,10 @@
+@model double
+@if (Model < 0.25)
+{   
+<span class="text-muted">@(Math.Round(Model * 5280).ToString()) ft</span>
+}
+else
+{   
+<span class="text-muted">@(Math.Round(Model, 2).ToString()) mi</span>
+}
+
