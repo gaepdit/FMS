@@ -22,6 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Mindscape.Raygun4Net.AspNetCore" Version="6.4.0" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="CsvHelper" Version="15.0.7" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.14.0.22654">
@@ -33,6 +34,12 @@
   <ItemGroup>
     <ProjectReference Include="..\FMS.Infrastructure\FMS.Infrastructure.csproj" />
     <ProjectReference Include="..\FMS.Domain\FMS.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Content>
   </ItemGroup>
 
 </Project>

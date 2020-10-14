@@ -7,20 +7,20 @@ using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
+using FMS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Mindscape.Raygun4Net.AspNetCore;
 
 namespace FMS
 {
@@ -92,6 +92,12 @@ namespace FMS
             // Configure Razor pages 
             services.AddRazorPages();
 
+            // Configure Raygun
+            services.AddRaygun(Configuration, new RaygunMiddlewareSettings()
+            {
+                ClientProvider = new RaygunClientProvider()
+            });
+
             // Configure authorization policies 
             services.AddAuthorization(opts =>
             {
@@ -127,10 +133,13 @@ namespace FMS
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseStatusCodePages ();
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            app.UseRaygun();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
