@@ -3,14 +3,17 @@
 @{
     ViewData["Title"] = "Search Facilities By Address";
 }
+
 @section Scripts {
+    <partial name="_SearchFormScriptsPartial" />
     <partial name="_MapSearchScriptsPartial" />
 }
+
 <h1>Search a Location</h1>
 <p>(See what's near any address)</p>
 
 <div class="container bg-light py-3">
-    <form id="LocationSearch" method="get" asp-fragment="SearchResults">
+    <form method="get" asp-fragment="SearchResults">
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Spec.Address"></label>
@@ -19,27 +22,21 @@
         </div>
 
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-9">
                 <label asp-for="Spec.City"></label>
                 <input id="City" asp-for="Spec.City" class="form-control" />
             </div>
-            <div class="form-group col">
-                <label asp-for="Spec.State"></label>
-                <select asp-for="Spec.State" asp-items="Model.States" class="custom-select">
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="form-group col">
+            <div class="form-group col-md-3">
                 <label asp-for="Spec.PostalCode"></label>
                 <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
 
         <div class="form-row">
-            <div class="col-md-3">
+            <div class="form-group col-md-3">
                 <label asp-for="Spec.Radius"></label>
                 <select id="Radius" asp-for="Spec.Radius" class="custom-select">
-                    <option selected value="0.25">1/4 Mile (default)</option>
+                    <option selected value="0.25">1/4 Mile</option>
                     <option value="0.5">1/2 Mile</option>
                     <option value="1">1 Mile</option>
                     <option value="3">3 Miles</option>
@@ -58,7 +55,7 @@
                 <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.519379)</small>
                 <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
             </div>
-            <div class="col-md-3">
+            <div class="form-group col-md-3">
                 <label class="form-check-label" asp-for="Spec.Output"></label>
                 <select id="Output" asp-for="Spec.Output" class="custom-select mt-md-2">
                     <option selected value="1">Map</option>
@@ -67,108 +64,96 @@
             </div>
         </div>
         <input type="hidden" name="handler" value="search" />
-        <button id="btnSearch" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
+        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
         <a asp-page="./Map" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
     </form>
 </div>
 
-<a id="SearchResults"></a>
+@if (Model.ShowMap || Model.ShowResults)
+{
+    <a id="SearchResults"></a>
+    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
+    {
+        <div class="container border-top py-3">
+            <form method="post">
+                <button id="ExportButton" type="submit" class="btn btn-outline-primary">
+                    Export to Excel
+                </button>
+                <input type="hidden" asp-for="ExportSpec.ActiveOnly" />
+                <input type="hidden" asp-for="ExportSpec.Latitude" />
+                <input type="hidden" asp-for="ExportSpec.Longitude" />
+                <input type="hidden" asp-for="ExportSpec.Radius" />
+            </form>
+        </div>
+    }
+}
 @if (Model.ShowMap)
 {
-    <div class="container mt-2">
-        @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
-        {
-            <div id="dvMap" style="height:600px;width:760px" class="mx-auto"></div>
-        }
-        else
-        {
-            <p class="lead text-info">No matching facilities found.</p>
-        }
-    </div>
-
+    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
+    {
+        <div id="dvMap" style="height:600px;"></div>
+    }
+    else
+    {
+        <p class="lead text-info">No matching facilities found.</p>
+    }
 }
 @if (Model.ShowResults)
 {
     @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
     {
-        <div id="ResultList">
-            <div class="container-fluid">
-                <table class="table">
-                    <caption class="container border-top py-3">
-                        <div class="row">
-                            <div class="col-md mb-3 mb-md-0">                                
-                                <form method="post">
-                                    <button id="ExportButton" type="submit" class="btn btn-outline-primary">
-                                        Export to Excel
-                                    </button>
-                                    <input type="hidden" asp-for="Spec.ActiveOnly" />
-                                    <input type="hidden" asp-for="Spec.Address" />
-                                    <input type="hidden" asp-for="Spec.City" />
-                                    <input type="hidden" asp-for="Spec.State" />
-                                    <input type="hidden" asp-for="Spec.PostalCode" />
-                                    <input type="hidden" asp-for="Spec.Latitude" />
-                                    <input type="hidden" asp-for="Spec.Longitude" />
-                                    <input type="hidden" asp-for="Spec.Radius" />                                   
-                                    <input type="hidden" asp-for="Spec.Output" />
-                                    <input type="hidden" asp-for="Spec.GeocodeLat" />
-                                    <input type="hidden" asp-for="Spec.GeocodeLng" />
-                                </form>
-                            </div>                         
-                        </div>
-                    </caption>
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Facility</th>
-                            <th scope="col">File</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Distance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.ShowResults)
-                        {
-                            @foreach (var item in Model.FacilityList)
-                            {
-                                <tr>
-                                    <td>
-                                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
-                                            @Html.DisplayFor(m => item.FacilityNumber)
-                                        </a>
-                                    </td>
-                                    <td class="text-nowrap">
-                                        <a asp-page="../Files/Details" asp-route-id="@item.FileLabel" class="btn btn-outline-info btn-sm">
-                                            @Html.DisplayFor(m => item.FileLabel)
-                                        </a>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(m => item.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(m => item.Address)<br />
-                                        @Html.DisplayFor(m => item.City),
-                                        @Html.DisplayFor(m => item.State)
-                                        @Html.DisplayFor(m => item.PostalCode)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(m => item.FacilityType)
-                                    </td>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Facility</th>
+                <th scope="col">File</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Distance</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model.ShowResults)
+            {
+                @foreach (var item in Model.FacilityList)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                                @Html.DisplayFor(m => item.FacilityNumber)
+                            </a>
+                        </td>
+                        <td class="text-nowrap">
+                            <a asp-page="../Files/Details" asp-route-id="@item.FileLabel" class="btn btn-outline-info btn-sm">
+                                @Html.DisplayFor(m => item.FileLabel)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Address)<br />
+                            @Html.DisplayFor(m => item.City),
+                            @Html.DisplayFor(m => item.State)
+                            @Html.DisplayFor(m => item.PostalCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.FacilityType)
+                        </td>
 
-                                    <td style="white-space: nowrap">
-                                        @Html.DisplayFor(m => item.FacilityStatus)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(m => item.Distance, "Distance")
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>                
-            </div>
-        </div>
+                        <td style="white-space: nowrap">
+                            @Html.DisplayFor(m => item.FacilityStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Distance, "Distance")
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
     }
     else
     {
@@ -176,7 +161,6 @@
             <p class="lead text-info">No matching facilities found.</p>
         </div>
     }
-
 }
 @if (Model.ShowNone)
 {

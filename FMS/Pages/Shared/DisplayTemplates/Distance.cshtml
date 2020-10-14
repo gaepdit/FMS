@@ -1,10 +1,12 @@
+@using System.Globalization
 @model double
 @if (Model < 0.25)
-{   
-<span class="text-muted">@(Math.Round(Model * 5280).ToString()) ft</span>
+{
+    @Math.Round(Model * 5280).ToString("N0", CultureInfo.InvariantCulture)
+    <text> ft</text>
 }
 else
-{   
-<span class="text-muted">@(Math.Round(Model, 2).ToString()) mi</span>
+{
+    @Math.Round(Model, 2).ToString("N2", CultureInfo.InvariantCulture)
+    <text> mi</text>
 }
-

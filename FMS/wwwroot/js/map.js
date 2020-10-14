@@ -136,7 +136,7 @@ function getLatLongs(addr, city, zip) {
     var address = addr + " " + city + ", GA " + zip;        
    // var address = $('#Address').val();    
     var request = {
-        address: address + ' GA ' + zip,
+        address: address,
         componentRestrictions: {
             country: 'US'
         }
@@ -154,7 +154,7 @@ function getLatLongs(addr, city, zip) {
 
             if (lat > 0) {
                 bool = false;
-                $('#btnSearch').click();
+                $('#SearchButton').click();
             }
         }
         else {

@@ -1,129 +1,91 @@
 ﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 <script src="~/js/map.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Configuration["GoogleMapSettings:ApiKey"]"></script>
-
 <script type="text/javascript">
-
-    var bool = true;
+    let bool = true;
     $(document).ready(function domReady() {
-        $("#Address").change(function () {
-            if ($(this).val() != "") {
-                $("#Latitude").attr("disabled", true);
-                $("#Longitude").attr("disabled", true);
-                $("#Longitude").val("");
-                $("#Latitude").val("");
+        $("#Address,#City,#PostalCode").change(function () {
+            if ($(this).val() !== "") {
+                DisableLatLng();
             } else {
-                $("#Latitude").attr("disabled", false);
-                $("#Longitude").attr("disabled", false);
-            }
-        });
-        $("#City").change(function () {
-            if ($(this).val() != "") {
-                $("#Latitude").attr("disabled", true);
-                $("#Longitude").attr("disabled", true);
-                $("#Longitude").val("");
-                $("#Latitude").val("");
-            } else {
-                $("#Latitude").attr("disabled", false);
-                $("#Longitude").attr("disabled", false);
-            }
-        });
-        $("#PostalCode").change(function () {
-            if ($(this).val() != "") {
-                $("#Latitude").attr("disabled", true);
-                $("#Longitude").attr("disabled", true);
-                $("#Longitude").val("");
-                $("#Latitude").val("");
-            } else {
-                $("#Latitude").attr("disabled", false);
-                $("#Longitude").attr("disabled", false);
-            }
-        });
-        $("#Latitude").change(function () {
-            if ($(this).val() != "") {
-                $("#Address").attr("disabled", true);
-                $("#City").attr("disabled", true);
-                $("#PostalCode").attr("disabled", true);
-                $("#Address").val("");
-                $("#City").val("");
-                $("#PostalCode").val("");
-            } else {
-                $("#Address").attr("disabled", false);
-                $("#City").attr("disabled", false);
-                $("#PostalCode").attr("disabled", false);
-            }
-        });
-        $("#Longitude").change(function () {
-            if ($(this).val() != "") {
-                $("#Address").attr("disabled", true);
-                $("#City").attr("disabled", true);
-                $("#PostalCode").attr("disabled", true);
-                $("#Address").val("");
-                $("#City").val("");
-                $("#PostalCode").val("");
-            } else {
-                $("#Address").attr("disabled", false);
-                $("#City").attr("disabled", false);
-                $("#PostalCode").attr("disabled", false);
+                EnableLatLng();
             }
         });
 
-        $('#btnSearch').click(function OnSearchSubmit() {
-            var output = $('#Output').val();
-            var lat = $('#Latitude').val();
-            var lng = $('#Longitude').val();
-            //debugger;
-            if (lat != "" && lng != "") {
+        $("#Latitude,#Latitude").change(function () {
+            if ($(this).val() !== "") {
+                DisableAddress();
+            } else {
+                EnableAddress();
+            }
+        });
+
+        $('#SearchButton').click(function GeoCodeLatLong() {
+            const output = $('#Output').val();
+            if (output !== "1" && output !== "2" ) {
+                return false;
+            }
+
+            const lat = $('#Latitude').val();
+            const lng = $('#Longitude').val();
+            if (lat !== "" && lng !== "") {
+                $("#LocalLat").val("");
+                $("#LocalLng").val("");
                 return true;
             }
-            if (output != "" && (output == "1" || output == "2" )) {
-                if (bool == false) {
-                    bool = true;
-                    return true;
-                }
-                //TO DO: Need to vomment in UAT/Production
-               // var lat = 34.101318; // $('#Latitude').val();
-                //var lng = -84.519379; //$('#Longitude').val();
-                //$('#LocalLat').val(parseFloat(lat).toFixed(4));
-               // $('#LocalLng').val(parseFloat(lng).toFixed(4));
 
-                var addr = $('#Address').val();
-                var city = $('#City').val();
-                var zip = $('#PostalCode').val();
+            $("#LocalLat").attr("disabled", false);
+            $("#LocalLng").attr("disabled", false);
 
-                getLatLongs(addr, city, zip);
-
-                if (bool) {
-                    bool = false;
-                    return false;
-                }
-                else {
-                    bool = true;
-                }
+            if (!bool) {
+                bool = true;
+                return true;
             }
+            
+            const addr = $('#Address').val();
+            const city = $('#City').val();
+            const zip = $('#PostalCode').val();
+
+            getLatLongs(addr, city, zip);
+
+            bool = !bool;
+            return bool;
         });
-        var outputvalue = @Html.Raw(Json.Serialize(@Model.ShowMap));
-        var output = $('#Output').val();
-        if (outputvalue) {
-        var markers = @Html.Raw(Json.Serialize(@Model.FacilityList));
-           // debugger;
-            if (markers != "" && markers.length > 0)
+
+        const outputValue = @Html.Raw(Json.Serialize(Model.ShowMap));
+        if (outputValue) {
+            const markers = @Html.Raw(Json.Serialize(Model.FacilityList));
+            if (markers !== "" && markers.length > 0)
             {
-                var lat = $('#Latitude').val();
-                var lng = $('#Longitude').val();
-                if (lat == "" || lng == "")
+                let lat = $('#Latitude').val();
+                let lng = $('#Longitude').val();
+                if (lat === "" || lng === "")
                 {
-                    var lat = $('#LocalLat').val();
-                    var lng = $('#LocalLng').val();
-                }                
-                var radius = $('#Radius').val();
+                    lat = $('#LocalLat').val();
+                    lng = $('#LocalLng').val();
+                }
+                const radius = $('#Radius').val();
                 mapInitialize(lat, lng, radius, markers);
             }
         }
-
-
+        
+        function DisableLatLng(){
+            $("#Latitude").attr("disabled", true).val("");
+            $("#Longitude").attr("disabled", true).val("");
+        }
+        function EnableLatLng(){
+            $("#Latitude").attr("disabled", false);
+            $("#Longitude").attr("disabled", false);
+        }
+        function DisableAddress() {
+            $("#Address").attr("disabled", true).val("");
+            $("#City").attr("disabled", true).val("");
+            $("#PostalCode").attr("disabled", true).val("");
+        }
+        function EnableAddress() {
+            $("#Address").attr("disabled", false);
+            $("#City").attr("disabled", false);
+            $("#PostalCode").attr("disabled", false);
+        }
     });
-
-
-
 </script>
