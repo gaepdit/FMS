@@ -1,4 +1,7 @@
-﻿<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+<script src="~/js/map.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=@Configuration["GoogleMapSettings:ApiKey"]"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 <script>
     var settings = {
@@ -7,4 +10,22 @@
     };
     $.validator.setDefaults(settings);
     $.validator.unobtrusive.options = settings;
+
+    $('#btnSearch').click(function OnSearchSubmit()
+    {       
+        var addr = $('#Address').val();
+        if (addr != "") {
+            var city = $('#City').val();
+            var state = $('#State').val();
+            var zip = $('#PostalCode').val();
+            var address = addr + ", " + city + ", " + state + " " + zip;
+            getCoordinates(address);
+            return false;
+        }
+        else {
+            alert("Please enter Street Address.");
+           return false;
+        }
+    });
+
 </script>

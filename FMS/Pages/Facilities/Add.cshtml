@@ -77,14 +77,14 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label>Street Address <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Address" class="form-control" />
+                <input id="Address" asp-for="Facility.Address" class="form-control" />
                 <span asp-validation-for="Facility.Address" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>City <span class="text-danger">*</span></label>
-                <input asp-for="Facility.City" class="form-control" />
+                <input id="City" asp-for="Facility.City" class="form-control" />
                 <span asp-validation-for="Facility.City" class="text-danger"></span>
             </div>
             <div class="form-group col">
@@ -96,13 +96,13 @@
             </div>
             <div class="form-group col">
                 <label>State <span class="text-danger">*</span></label>
-                <select asp-for="Facility.State" asp-items="Model.States" class="custom-select">
+                <select  id="State" asp-for="Facility.State" asp-items="Model.States" class="custom-select">
                 </select>
                 <span asp-validation-for="Facility.State" class="text-danger"></span>
             </div>
             <div class="form-group col">
                 <label>ZIP Code <span class="text-danger">*</span></label>
-                <input asp-for="Facility.PostalCode" class="form-control" />
+                <input id="PostalCode" asp-for="Facility.PostalCode" class="form-control" />
                 <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
             </div>
         </div>
@@ -112,17 +112,20 @@
                 <input asp-for="Facility.Location" class="form-control" />
                 <span asp-validation-for="Facility.Location" class="text-danger"></span>
             </div>
-        </div>
+        </div>        
         <div class="form-group row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
                 <label>Latitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Latitude" class="form-control" />
+                <input id="Latitude" asp-for="Facility.Latitude" class="form-control" />
                 <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
             </div>
-            <div class="form-group col">
+            <div class="form-group col-md-3">
                 <label>Longitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Longitude" class="form-control" />
+                <input id="Longitude" asp-for="Facility.Longitude" class="form-control" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">                
+                <button type="submit" id="btnSearch" class="btn btn-primary mb-2">Geocode</button>
             </div>
         </div>
         <hr />
