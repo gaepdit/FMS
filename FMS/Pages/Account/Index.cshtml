@@ -1,4 +1,5 @@
 @page
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Account.IndexModel
 @{
     ViewData["Title"] = "Account Profile";
@@ -17,12 +18,15 @@
             @if (Model.Roles != null && Model.Roles.Count > 0)
             {
                 <h3>Roles</h3>
-                <ul>
+                <dl>
                     @foreach (var role in Model.Roles)
                     {
-                        <li>@role</li>
+                        <dt>@UserRoles.DisplayName(role)</dt>
+                        <dd>
+                            <small class="text-muted">@UserRoles.Description(role)</small>
+                        </dd>
                     }
-                </ul>
+                </dl>
             }
             <form asp-page="./Logout" asp-route-returnUrl="@Url.Page("/")" method="post">
                 <button type="submit" class="btn btn-danger">Sign out</button>
