@@ -9,29 +9,33 @@
     <partial name="_MapSearchScriptsPartial" />
 }
 
-<h1>Search a Location</h1>
-<p>(See what's near any address)</p>
+<h1>
+    Search a Location
+    <small class="text-muted">(See what's near any address)</small>
+</h1>
 
 <div class="container bg-light py-3">
     <form method="get" asp-fragment="SearchResults">
         <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col">
                 <label asp-for="Spec.Address"></label>
                 <input id="Address" asp-for="Spec.Address" class="form-control" />
             </div>
         </div>
-
         <div class="form-row">
-            <div class="form-group col-md-9">
+            <div class="form-group col-md-6">
                 <label asp-for="Spec.City"></label>
                 <input id="City" asp-for="Spec.City" class="form-control" />
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col">
+                <label asp-for="Spec.State"></label>
+                <input class="form-control" type="text" value="Georgia" disabled>
+            </div>
+            <div class="form-group col">
                 <label asp-for="Spec.PostalCode"></label>
                 <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
-
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Spec.Radius"></label>
@@ -64,7 +68,7 @@
             </div>
         </div>
         <input type="hidden" name="handler" value="search" />
-        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
+        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Search</button>
         <a asp-page="./Map" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
     </form>
 </div>
@@ -76,7 +80,7 @@
     {
         <div class="container border-top py-3">
             <form method="post">
-                <button id="ExportButton" type="submit" class="btn btn-outline-primary">
+                <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
                     Export to Excel
                 </button>
                 <input type="hidden" asp-for="ExportSpec.ActiveOnly" />

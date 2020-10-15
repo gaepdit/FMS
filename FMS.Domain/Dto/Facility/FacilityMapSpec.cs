@@ -13,7 +13,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Show Active Sites Only")]
         public bool ActiveOnly { get; set; } = true;
 
-        [Display(Name = "Address")]
+        [Display(Name = "Street Address")]
         public string Address { get; set; }
 
         [Display(Name = "City")]
@@ -22,7 +22,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "State")]
         public string State { get; set; } = "Georgia";
 
-        [Display(Name = "Zip Code")]
+        [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]

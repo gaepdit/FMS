@@ -42,7 +42,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Location Description")]
         public string Location { get; set; }
 
-        [Display(Name = "Address")]
+        [Display(Name = "Street Address")]
         public string Address { get; set; }
 
         [Display(Name = "City")]
@@ -51,7 +51,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "State")]
         public string State { get; set; }
 
-        [Display(Name = "Zip Code")]
+        [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
 
         public IDictionary<string, string> AsRouteValues =>

@@ -35,7 +35,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "State")]
         public string State { get; set; }
 
-        [Display(Name = "Zip Code")]
+        [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]

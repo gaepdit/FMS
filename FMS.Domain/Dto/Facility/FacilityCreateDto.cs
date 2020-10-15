@@ -59,7 +59,7 @@ namespace FMS.Domain.Dto
         public string State { get; set; }
 
         [Required]
-        [Display(Name = "Zip Code")]
+        [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
 
         [Required]

@@ -15,47 +15,55 @@
     <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md">
                 <label asp-for="Spec.FileLabel"></label>
                 <input asp-for="Spec.FileLabel" class="form-control" />
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md">
                 <label asp-for="Spec.FacilityNumber"></label>
                 <input asp-for="Spec.FacilityNumber" class="form-control" />
             </div>
-            <div class="form-group col-md-3">
-                <label asp-for="Spec.FacilityTypeId"></label>
-                <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="Spec.OrganizationalUnitId"></label>
-                <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
+            <div class="form-group col">
+                <label asp-for="Spec.CountyId"></label>
+                <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="custom-select">
                     <option value=""></option>
                 </select>
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md">
+                <label asp-for="Spec.FacilityTypeId"></label>
+                <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group col-md">
+                <label asp-for="Spec.OrganizationalUnitId"></label>
+                <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group col-md">
                 <label asp-for="Spec.ComplianceOfficerId"></label>
                 <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col-md-3">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
                 <label asp-for="Spec.BudgetCodeId"></label>
                 <select asp-for="Spec.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md">
                 <label asp-for="Spec.EnvironmentalInterestId"></label>
                 <select asp-for="Spec.EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md">
                 <label asp-for="Spec.FacilityStatusId"></label>
                 <select asp-for="Spec.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
                     <option value=""></option>
@@ -63,19 +71,19 @@
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-12">
+            <div class="form-group col">
                 <label asp-for="Spec.Name"></label>
                 <input asp-for="Spec.Name" class="form-control" />
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-12 ">
+            <div class="form-group col">
                 <label asp-for="Spec.Location"></label>
                 <input asp-for="Spec.Location" class="form-control" />
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-12">
+            <div class="form-group col">
                 <label asp-for="Spec.Address"></label>
                 <input asp-for="Spec.Address" class="form-control" />
             </div>
@@ -84,12 +92,6 @@
             <div class="form-group col-md-6">
                 <label asp-for="Spec.City"></label>
                 <input asp-for="Spec.City" class="form-control" />
-            </div>
-            <div class="form-group col">
-                <label asp-for="Spec.CountyId"></label>
-                <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="custom-select">
-                    <option value=""></option>
-                </select>
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.State"></label>
@@ -103,8 +105,8 @@
             </div>
         </div>
         <input type="hidden" name="handler" value="search" />
-        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
-        <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear form</a>
+        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Search</button>
+        <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
     </form>
 </div>
 
