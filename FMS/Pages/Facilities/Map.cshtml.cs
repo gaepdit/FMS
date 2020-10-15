@@ -1,18 +1,11 @@
-﻿using FMS.Domain.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CsvHelper.Configuration;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CsvHelper;
-using CsvHelper.Configuration;
-using System;
-using System.IO;
-using System.Globalization;
-
 
 namespace FMS.Pages.Facilities
 {
@@ -79,10 +72,10 @@ namespace FMS.Pages.Facilities
 
             ExportSpec = new FacilityMapSpec()
             {
-                Latitude=spec.Latitude,
-                Longitude=spec.Longitude,
-                ActiveOnly=spec.ActiveOnly,
-                Radius=spec.Radius
+                Latitude = spec.Latitude,
+                Longitude = spec.Longitude,
+                ActiveOnly = spec.ActiveOnly,
+                Radius = spec.Radius
             };
             return Page();
         }
@@ -90,43 +83,11 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnPostAsync()
         {
             FacilityList = await _repository.GetFacilityListAsync(ExportSpec);
-            return File(await GetCsvByteArrayAsync(), "text/csv",
-                $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.csv");
+            return File(await FacilityList.GetCsvByteArrayAsync<FacilityMapReportMap>(), "text/csv",
+                $"FMS_export_{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.csv");
         }
 
-        #region "Reports"
-
-        private async Task<byte[]> GetCsvByteArrayAsync()
-        {
-            MemoryStream ms = null;
-            StreamWriter writer = null;
-            CsvWriter csv = null;
-
-            try
-            {
-                ms = new MemoryStream();
-                writer = new StreamWriter(ms, new System.Text.UTF8Encoding(true));
-                csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-
-                csv.Configuration.SanitizeForInjection = true;
-                csv.Configuration.RegisterClassMap<FacilityMapReportMap>();
-                await csv.WriteRecordsAsync(FacilityList);
-
-                await csv.FlushAsync();
-                await writer.FlushAsync();
-                await ms.FlushAsync();
-
-                return ms.ToArray();
-            }
-            finally
-            {
-                if (csv != null) await csv.DisposeAsync();
-                if (writer != null) await writer.DisposeAsync();
-                if (ms != null) await ms.DisposeAsync();
-            }
-        }
-
-        private class FacilityMapReportMap : ClassMap<FacilityMapSummaryDto>
+        private sealed class FacilityMapReportMap : ClassMap<FacilityMapSummaryDto>
         {
             public FacilityMapReportMap()
             {
@@ -135,16 +96,14 @@ namespace FMS.Pages.Facilities
                 Map(m => m.Name).Index(2).Name("Facility Name");
                 Map(m => m.Address).Index(3).Name("Street Address");
                 Map(m => m.City).Index(4).Name("City");
-                Map(m => m.State).Index(6).Name("State");
-                Map(m => m.PostalCode).Index(7).Name("ZIP Code");
-                Map(m => m.FacilityType).Index(9).Name("Facility Type");
-                Map(m => m.FacilityStatus).Index(14).Name("Facility Status");
-                Map(m => m.Latitude).Index(12).Name("Latitude");
-                Map(m => m.Longitude).Index(13).Name("Longitude");
-                Map(m => m.Distance).Index(15).Name("Distance (miles)");
+                Map(m => m.State).Index(5).Name("State");
+                Map(m => m.PostalCode).Index(6).Name("ZIP Code");
+                Map(m => m.FacilityType).Index(7).Name("Facility Type");
+                Map(m => m.Latitude).Index(8).Name("Latitude");
+                Map(m => m.Longitude).Index(9).Name("Longitude");
+                Map(m => m.FacilityStatus).Index(10).Name("Facility Status");
+                Map(m => m.Distance).Index(11).Name("Distance (miles)");
             }
         }
-
-        #endregion
     }
 }

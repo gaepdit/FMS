@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Threading.Tasks;
-using CsvHelper;
 using CsvHelper.Configuration;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -58,8 +55,8 @@ namespace FMS.Pages.Reports
         public async Task<IActionResult> OnPostAsync()
         {
             FacilityList = await _repository.GetFacilityDetailListAsync(Spec);
-
-            return File(await GetCsvByteArrayAsync(), "text/csv", $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.csv");
+            return File(await FacilityList.GetCsvByteArrayAsync<FacilityReportMap>(), "text/csv",
+                $"FMS_export_{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.csv");
         }
 
         private async Task SetNamesAsync()
@@ -67,45 +64,14 @@ namespace FMS.Pages.Reports
             CountyName = Data.Counties.Find(e => e.Id == Spec.CountyId)?.Name;
             BudgetCodeName = await _listRepository.GetBudgetCodeNameAsync(Spec.BudgetCodeId);
             ComplianceOfficerName = await _listRepository.GetComplianceOfficerNameAsync(Spec.ComplianceOfficerId);
-            EnvironmentalInterestName = await _listRepository.GetEnvironmentalInterestNameAsync(Spec.EnvironmentalInterestId);
+            EnvironmentalInterestName = await _listRepository
+                .GetEnvironmentalInterestNameAsync(Spec.EnvironmentalInterestId);
             FacilityStatusName = await _listRepository.GetFacilityStatusNameAsync(Spec.FacilityStatusId);
             FacilityTypeName = await _listRepository.GetFacilityTypeNameAsync(Spec.FacilityTypeId);
             OrganizationalUnitName = await _listRepository.GetOrganizationalUnitNameAsync(Spec.OrganizationalUnitId);
         }
 
-        #region "Reports"
-
-        public async Task<byte[]> GetCsvByteArrayAsync()
-        {
-            MemoryStream ms = null;
-            StreamWriter writer = null;
-            CsvWriter csv = null;
-
-            try
-            {
-                ms = new MemoryStream();
-                writer = new StreamWriter(ms, new System.Text.UTF8Encoding(true));
-                csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-
-                csv.Configuration.SanitizeForInjection = true;
-                csv.Configuration.RegisterClassMap<FacilityReportMap>();
-                await csv.WriteRecordsAsync(FacilityList);
-
-                await csv.FlushAsync();
-                await writer.FlushAsync();
-                await ms.FlushAsync();
-
-                return ms.ToArray();
-            }
-            finally
-            {
-                if (csv != null) await csv.DisposeAsync();
-                if (writer != null) await writer.DisposeAsync();
-                if (ms != null) await ms.DisposeAsync();
-            }
-        }
-
-        private class FacilityReportMap : ClassMap<FacilityDetailDto>
+        private sealed class FacilityReportMap : ClassMap<FacilityDetailDto>
         {
             public FacilityReportMap()
             {
@@ -127,7 +93,5 @@ namespace FMS.Pages.Reports
                 Map(m => m.CabinetsToString).Index(15).Name("Cabinet(s)");
             }
         }
-
-        #endregion
     }
 }

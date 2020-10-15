@@ -2,10 +2,9 @@
 {
     public class DisplayMessage
     {
-        public Context Context { get; set; }
-        public string Message { get; set; }
+        private Context Context { get; }
+        public string Message { get; }
 
-        public DisplayMessage() { }
         public DisplayMessage(Context context, string message)
         {
             Context = context;

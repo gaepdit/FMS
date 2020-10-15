@@ -208,7 +208,29 @@ namespace FMS.Infrastructure.SeedData
                     Latitude = 34.141353m,
                     Longitude = -84.505629m,
                     CountyId = 243, // CHEROKEE
-                }
+                },
+                new Facility
+                {
+                    Id = new Guid("810DDE72-5459-4ECC-81D8-A51554C9FF3F"),
+                    Active = true,
+                    FacilityNumber = "UTF8",
+                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
+                    EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), //RCRA
+                    FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), //gen
+                    OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
+                    BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
+                    Name = "Unicode’s fun 🐛👍😜",
+                    ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"), //00943668
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
+                    Location = "Parking lot",
+                    Address = "123 Street",
+                    City = "Town",
+                    State = "Georgia",
+                    PostalCode = "30188",
+                    Latitude = 34.1m,
+                    Longitude = -84.5m,
+                    CountyId = 243,
+                },
             };
         }
     }
