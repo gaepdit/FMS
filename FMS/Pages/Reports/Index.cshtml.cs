@@ -84,7 +84,7 @@ namespace FMS.Pages.Reports
             try
             {
                 ms = new MemoryStream();
-                writer = new StreamWriter(ms);
+                writer = new StreamWriter(ms, new System.Text.UTF8Encoding(true));
                 csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
                 csv.Configuration.SanitizeForInjection = true;

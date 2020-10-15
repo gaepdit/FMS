@@ -105,7 +105,7 @@ namespace FMS.Pages.Facilities
             try
             {
                 ms = new MemoryStream();
-                writer = new StreamWriter(ms);
+                writer = new StreamWriter(ms, new System.Text.UTF8Encoding(true));
                 csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
                 csv.Configuration.SanitizeForInjection = true;
@@ -141,7 +141,7 @@ namespace FMS.Pages.Facilities
                 Map(m => m.FacilityStatus).Index(14).Name("Facility Status");
                 Map(m => m.Latitude).Index(12).Name("Latitude");
                 Map(m => m.Longitude).Index(13).Name("Longitude");
-                Map(m => m.Distance).Index(15).Name("Distance");
+                Map(m => m.Distance).Index(15).Name("Distance (miles)");
             }
         }
 

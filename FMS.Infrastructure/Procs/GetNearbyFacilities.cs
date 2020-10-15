@@ -30,10 +30,10 @@ BEGIN
                d.FileLabel                as FileLabel,
                CONCAT(a.Address, ', ', a.City, ', ', a.State, ' ', a.PostalCode)
                                           as FullAddress,
-               (ACOS(SIN(@Lat * PI() / 180) * SIN(a.Latitude * PI() / 180) +
+               ROUND((ACOS(SIN(@Lat * PI() / 180) * SIN(a.Latitude * PI() / 180) +
                      COS(@Lat * PI() / 180) * COS(a.Latitude * PI() / 180) *
                      COS((@Lng - a.Longitude) * PI() / 180)) *
-                180 / PI()) * 60 * 1.1515 AS Distance
+                180 / PI()) * 60 * 1.1515, 2) AS Distance
         FROM [dbo].[Facilities] as A
             INNER JOIN [dbo].[FacilityStatuses] as B
             ON A.FacilityStatusId = B.Id
