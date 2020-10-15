@@ -3,6 +3,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <partial name="_GeocodeScriptsPartial" />
     <script>
         $(document).ready(function domReady() {
             $("#Facility_FileLabel").on("input", function () {
@@ -143,6 +144,13 @@
                 <label>Longitude <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Longitude" class="form-control" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4 col-lg-3">
+                <span class="mb-md-2 d-inline-block">
+                    <span id="GeocodeAddressWarn" class="d-none text-danger">Please enter an address.</span> &nbsp;
+                </span>
+                <button id="GeocodeButton" class="btn btn-outline-primary form-control" aria-describedby="GeocodeHelpBlock">Geocode</button>
+                <small id="GeocodeHelpBlock" class="form-text text-muted">Street address is required for geocoding. City and ZIP Code are optional.</small>
             </div>
         </div>
         <hr />
