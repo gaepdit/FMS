@@ -1,13 +1,16 @@
 using System;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Admin
 {
+    [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class EditBudgetCodeModel : PageModel
     {
         [BindProperty]
@@ -46,14 +49,7 @@ namespace FMS.Pages.Admin
 
             BudgetCode.TrimAll();
 
-            // If Code is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(BudgetCode.Code) &&
-                !await _budgetCodeRepository.BudgetCodeCodeExistsAsync(BudgetCode.Code))
-            {
-                ModelState.AddModelError("BudgetCode.Code", "Code entered does not exist.");
-            }
-
-            // If editing Code, make sure the new number doesn't already exist before trying to save.
+            // If editing Code, make sure the new Code doesn't already exist before trying to save.
             if (await _budgetCodeRepository.BudgetCodeCodeExistsAsync(BudgetCode.Code, Id))
             {
                 ModelState.AddModelError("BudgetCode.Code", "Code entered already exists.");

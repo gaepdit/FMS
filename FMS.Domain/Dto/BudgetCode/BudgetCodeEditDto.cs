@@ -10,15 +10,12 @@ namespace FMS.Domain.Dto
 
         public BudgetCodeEditDto(BudgetCode budgetCode)
         {
-            Id = budgetCode.Id;
             Active = budgetCode.Active;
             Code = budgetCode.Code;
             Name = budgetCode.Name;
             OrganizationNumber = budgetCode.OrganizationNumber;
             ProjectNumber = budgetCode.ProjectNumber;
         }
-
-        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

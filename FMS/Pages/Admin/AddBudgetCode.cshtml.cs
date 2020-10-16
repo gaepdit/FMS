@@ -1,12 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Admin
 {
+    [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class AddBudgetCodeModel : PageModel
     {
         [BindProperty]
@@ -20,7 +23,7 @@ namespace FMS.Pages.Admin
 
         public IActionResult OnGet()
         {
-            BudgetCode = new BudgetCodeCreateDto();
+            BudgetCode = new BudgetCodeCreateDto { Active = true };
 
             return Page();
         }

@@ -139,7 +139,7 @@
                             }
                         </td>
                         <td>
-                            <a asp-page="EditEnvironmentalInterest" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Add</a>
+                            <a asp-page="EditEnvironmentalInterest" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
                             <a asp-page="DeleteEnvironmentalInterest" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
                         </td>
                     </tr>
@@ -151,28 +151,108 @@
 @if (Model.DropDownSelection == 4)
 {
     <div class="container-fluid">
-        <div class="form-group col-md-4">
-            <label>Select from list of Facility Statuses</label>
-
-        </div>
+        <table class="table">
+            <caption class="container border-top">
+                <a asp-page="AddFacilityStatus" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Facility Status</a>
+            </caption>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Status Name</th>
+                    <th scope="col">Edit | Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (FMS.Domain.Dto.FacilityStatusSummaryDto item in Model.FacilityStatuses)
+                {
+                    <tr>
+                        <td class="text-nowrap">
+                            @Html.DisplayFor(m => item.Status, "StringOrNone")
+                            @if (!item.Active)
+                            {
+                                <span class="text-muted">(Deleted)</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-page="EditFacilityStatus" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
+                            <a asp-page="DeleteFacilityStatus" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 }
 @if (Model.DropDownSelection == 5)
 {
     <div class="container-fluid">
-        <div class="form-group col-md-4">
-            <label>Select from list of Facility Types</label>
+        <table class="table">
+            <caption class="container border-top">
+                <a asp-page="AddFacilityType" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Facility Type</a>
+            </caption>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Edit | Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (FMS.Domain.Dto.FacilityTypeSummaryDto item in Model.FacilityTypes)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.Code)
+                        @if (!item.Active)
+                        {
+                            <span class="text-muted">(Deleted)</span>
+                        }
 
-        </div>
+                    </td>
+                    <td class="text-nowrap">
+                        @Html.DisplayFor(m => item.Name, "StringOrNone")
+                    </td>
+                    <td>
+                        <a asp-page="EditFacilityType" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
+                        <a asp-page="DeleteFacilityType" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
     </div>
 }
 @if (Model.DropDownSelection == 6)
 {
     <div class="container-fluid">
-        <div class="form-group col-md-4">
-            <label>Select from list of Organizational Units</label>
-
-        </div>
+        <table class="table">
+            <caption class="container border-top">
+                <a asp-page="AddOrganizationalUnit" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Organizational Unit</a>
+            </caption>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Edit | Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (FMS.Domain.Dto.OrganizationalUnitSummaryDto item in Model.OrganizationalUnits)
+                {
+                    <tr>
+                        <td class="text-nowrap">
+                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                            @if (!item.Active)
+                            {
+                                <span class="text-muted">(Deleted)</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-page="EditOrganizationalUnit" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
+                            <a asp-page="DeleteOrganizationalUnit" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 }
 
