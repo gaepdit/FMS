@@ -29,145 +29,150 @@
         </div>
     </form>
 </div>
-<hr />
 <a name="SearchResults"></a>
-@if (Model.DropDownSelection > 0)
+@if (Model.DropDownSelection == 0)
 {
-<form method="get">
-    @if (Model.DropDownSelection == 1)
-    {
-        <div class="container-fluid">
-            <div class="form-group col-md-4">
-                <label>Select from list of Budget Codes</label>
-                <select asp-for="BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
-                    <option value="0"></option>
-                </select>
-            </div>
-        </div>
-    }
-    @if (Model.DropDownSelection == 2)
-    {
-        <div class="container-fluid">
-            <div class="form-group col-md-4">
-                <label>Select from list of Compliance Officers</label>
-                <select asp-for="ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
-                    <option value="0"></option>
-                </select>
-            </div>
-        </div>
-    }
-    @if (Model.DropDownSelection == 3)
-    {
-        <div class="container-fluid">
-            <div class="form-group col-md-4">
-                <label>Select from list of Environmental Interests</label>
-                <select asp-for="EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
-                    <option value="0"></option>
-                </select>
-            </div>
-        </div>
-    }
-    @if (Model.DropDownSelection == 4)
-    {
-        <div class="container-fluid">
-            <div class="form-group col-md-4">
-                <label>Select from list of Facility Statuses</label>
-                <select asp-for="FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
-                    <option value="0"></option>
-                </select>
-            </div>
-        </div>
-    }
-    @if (Model.DropDownSelection == 5)
-    {
-        <div class="container-fluid">
-            <div class="form-group col-md-4">
-                <label>Select from list of Facility Types</label>
-                <select asp-for="FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
-                    <option value="0"></option>
-                </select>
-            </div>
-        </div>
-    }
-    @if (Model.DropDownSelection == 6)
-    {
-        <div class="container-fluid">
-            <div class="form-group col-md-4">
-                <label>Select from list of Organizational Units</label>
-                <select asp-for="OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
-                    <option value="0"></option>
-                </select>
-            </div>
-        </div>
-    }
     <div class="container-fluid">
-        <h5>Add, Modify or Remove</h5>
-        <p>Leave Blank to add new entry</p>
-        <form-group>
-            <button id="Add" type="submit" class="btn btn-sm btn-outline-primary">Add</button>
-            <button id="Modify" type="submit" class="btn btn-sm btn-outline-secondary">Modify</button>
-            <button id="Remove" type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
-        </form-group>
+        @Model.Message
     </div>
-</form>
+}
+@if (Model.DropDownSelection == 1)
+{
+    <div class="container-fluid">
+        <table class="table">
+            <caption class="container border-top">
+                <a asp-page="AddBudgetCode" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Budget Code</a>
+            </caption>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Organization Number</th>
+                    <th scope="col">Project Number</th>
+                    <th scope="col">Edit | Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (FMS.Domain.Dto.BudgetCodeSummaryDto item in Model.BudgetCodes)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Code, "StringOrNone")
+                            @if (!item.Active)
+                            {
+                                <span class="text-muted">(Deleted)</span>
+                            }
+                        </td>
+                        <td class="text-nowrap">
+                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                        </td>
+                        <td>@Html.DisplayFor(m => item.OrganizationNumber, "StringOrNone")</td>
+                        <td>
+                            @Html.DisplayFor(m => item.ProjectNumber, "StringOrNone")<br />
+                        </td>
+                        <td>
+                            <a asp-page="EditBudgetCode" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
+                            <a asp-page="DeleteBudgetCode" asp-route-id="@item.Id"  class="btn btn-outline-info btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 @if (Model.DropDownSelection == 2)
 {
 <div class="container-fluid">
-    <h5>Select from list of Compliance Officers to Modify</h5>
-    <div class="form-group col-md-4">
-        <label asp-for="ComplianceOfficerId"></label>
-        <select asp-for="ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
-            <option value=""></option>
-        </select>
-    </div>
+    <table class="table">
+        <caption class="container border-top">
+            <a asp-page="AddComplianceOfficer" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Compliance Officer</a>
+        </caption>
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Add | Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (FMS.Domain.Dto.ComplianceOfficerSummaryDto item in Model.ComplianceOfficers)
+            {
+                <tr>
+                    <td class="text-nowrap">
+                        @Html.DisplayFor(m => item.Name, "StringOrNone")
+                        @if (!item.Active)
+                        {
+                            <span class="text-muted">(Deleted)</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-page="AddComplianceOfficer" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Add</a>
+                        <a asp-page="DeleteComplianceOfficer" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 }
 @if (Model.DropDownSelection == 3)
 {
-<div class="container-fluid">
-    <h5>Select from list of Environmental Interests to Modify</h5>
-    <div class="form-group col-md-4">
-        <label asp-for="EnvironmentalInterestId"></label>
-        <select asp-for="EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
-            <option value=""></option>
-        </select>
+    <div class="container-fluid">
+        <table class="table">
+            <caption class="container border-top">
+                <a asp-page="AddEnvironmentalInterest" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Environmental Interest</a>
+            </caption>
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Edit | Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (FMS.Domain.Dto.EnvironmentalInterestSummaryDto item in Model.EnvironmentalInterests)
+                {
+                    <tr>
+                        <td class="text-nowrap">
+                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                            @if (!item.Active)
+                            {
+                                <span class="text-muted">(Deleted)</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-page="EditEnvironmentalInterest" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Add</a>
+                            <a asp-page="DeleteEnvironmentalInterest" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</div>
 }
 @if (Model.DropDownSelection == 4)
 {
-<div class="container-fluid">
-    <h5>Select from list of Facility Statuses to Modify</h5>
-    <div class="form-group col-md-4">
-        <label asp-for="FacilityStatusId"></label>
-        <select asp-for="FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
-            <option value=""></option>
-        </select>
+    <div class="container-fluid">
+        <div class="form-group col-md-4">
+            <label>Select from list of Facility Statuses</label>
+
+        </div>
     </div>
-</div>
 }
 @if (Model.DropDownSelection == 5)
 {
-<div class="container-fluid">
-    <h5>Select from list of Facility Types to Modify</h5>
-    <div class="form-group col-md-4">
-        <label asp-for="FacilityTypeId"></label>
-        <select asp-for="FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
-            <option value=""></option>
-        </select>
+    <div class="container-fluid">
+        <div class="form-group col-md-4">
+            <label>Select from list of Facility Types</label>
+
+        </div>
     </div>
-</div>
 }
 @if (Model.DropDownSelection == 6)
 {
-<div class="container-fluid">
-    <h5>Select from list of Organizational Units to Modify</h5>
-    <div class="form-group col-md-4">
-        <label asp-for="OrganizationalUnitId"></label>
-        <select asp-for="OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
-            <option value=""></option>
-        </select>
+    <div class="container-fluid">
+        <div class="form-group col-md-4">
+            <label>Select from list of Organizational Units</label>
+
+        </div>
     </div>
-</div>
 }
+

@@ -1,0 +1,34 @@
+﻿@page "{id:Guid?}"
+@model FMS.Pages.Admin.DeleteBudgetCodeModel
+@{
+    ViewData["Title"] = $"Delete Budget Code: {Model.Code}";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+<hr />
+<div class="container-fluid">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <div class="form-group row">
+            <div class="form-group col">
+                <div class="form-check">
+                    <input asp-for="Delete" />
+                    <label asp-for="Delete" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+                <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
+            </div>
+        </div>
+    </form>
+    @if (Model.Delete == true)
+    {
+        <div class="container-fluid">
+            <h5>This Budget Code is now currently Inactive.</h5>
+        </div>
+    }
+</div>

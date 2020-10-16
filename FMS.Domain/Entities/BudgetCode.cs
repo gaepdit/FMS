@@ -1,18 +1,24 @@
-﻿using FMS.Domain.Entities.Base;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
     public class BudgetCode : BaseActiveNamedModel
     {
-        //public Guid EnvironmentalInterestId { get; set; }
+        public BudgetCode() { }
+
+        public BudgetCode(BudgetCodeCreateDto newBudgetCode)
+        {
+            Name = newBudgetCode.Name;
+            Code = newBudgetCode.Code;
+            OrganizationNumber = newBudgetCode.OrganizationNumber;
+            ProjectNumber = newBudgetCode.ProjectNumber;
+        }
         public EnvironmentalInterest EnvironmentalInterest { get; set; }   //virtual
 
         [StringLength(20)]
         public string Code { get; set; }
-
-        //[Display(Name = "Budget Code")]
-        //public string Name { get; set; }
 
         [StringLength(20)]
         public string OrganizationNumber { get; set; }

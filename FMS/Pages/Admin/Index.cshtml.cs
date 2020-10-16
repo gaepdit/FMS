@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
-using FMS.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FMS.Pages.Admin
 {
@@ -15,40 +15,25 @@ namespace FMS.Pages.Admin
     public class IndexModel : PageModel
     {
         private readonly IBudgetCodeRepository _budgetCodeRepository;
-
         private readonly IComplianceOfficerRepository _complianceOfficerRepository;
-
         private readonly IEnvironmentalInterestRepository _environmentalInterestRepository;
-
         private readonly IFacilityStatusRepository _facilityStatusRepository;
-
         private readonly IFacilityTypeRepository _facilityTypeRepository;
-
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
 
-        
-        private readonly ISelectListHelper _listHelper;
-
-        public SelectList FacilityStatuses { get; private set; }
-        public SelectList FacilityTypes { get; private set; }
-        public SelectList BudgetCodes { get; private set; }
-        public SelectList OrganizationalUnits { get; private set; }
-        public SelectList EnvironmentalInterests { get; private set; }
-        public SelectList ComplianceOfficers { get; set; }
-
-        public Guid BudgetCodeId { get; private set; }
-        public Guid ComplianceOfficerId { get; set; }
-        public Guid EnvironmentalInterestId { get; private set; }
-        public Guid FacilityStatusId { get; private set; }
-        public Guid FacilityTypeId { get; private set; }
-        public Guid OrganizationalUnitId { get; private set; }
+        public IReadOnlyList<FacilityStatusSummaryDto> FacilityStatuses { get; private set; }
+        public IReadOnlyList<FacilityTypeSummaryDto> FacilityTypes { get; private set; }
+        public IReadOnlyList<BudgetCodeSummaryDto> BudgetCodes { get; private set; }
+        public IReadOnlyList<OrganizationalUnitSummaryDto> OrganizationalUnits { get; private set; }
+        public IReadOnlyList<EnvironmentalInterestSummaryDto> EnvironmentalInterests { get; private set; }
+        public IReadOnlyList<ComplianceOfficerSummaryDto> ComplianceOfficers { get; set; }
         
         [Display(Name = "Select a Drop-Down Menu to Edit")]
         [BindProperty(SupportsGet =true)]
         public int DropDownSelection { get; set; }
+        public string Message { get; set; }
 
         public IndexModel(
-            IFileRepository fileRepository,
             IBudgetCodeRepository budgetCodeRepository,
             IComplianceOfficerRepository complianceOfficerRepository,
             IEnvironmentalInterestRepository environmentalInterestRepository,
@@ -56,7 +41,6 @@ namespace FMS.Pages.Admin
             IFacilityTypeRepository facilityTypeRepository,
             IOrganizationalUnitRepository organizationalUnitRepository)
         {
-            _fileRepository = fileRepository;
             _budgetCodeRepository = budgetCodeRepository;
             _complianceOfficerRepository = complianceOfficerRepository;
             _environmentalInterestRepository = environmentalInterestRepository;
@@ -67,13 +51,14 @@ namespace FMS.Pages.Admin
 
         public void OnGet()
         {
-            //PopulateListBoxes();
             DropDownSelection = 0;
+            Message = "";
         }
 
         public async Task<IActionResult> OnGetSearchAsync()
         {
             await PopulateResultAsync();
+            if(DropDownSelection == 0) { Message = "Please Make A Selection"; }
             return Page();
         }
 
@@ -82,22 +67,22 @@ namespace FMS.Pages.Admin
             switch (DropDownSelection)
             {
                 case 1:
-                    BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
+                    BudgetCodes = await _budgetCodeRepository.GetBudgetCodeListAsync();
                     break;
                 case 2:
-                    ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+                    ComplianceOfficers = await _complianceOfficerRepository.GetComplianceOfficerListAsync();
                     break;
                 case 3:
-                    EnvironmentalInterests = await _listHelper.EnvironmentalInterestsSelectListAsync();
+                    EnvironmentalInterests = await _environmentalInterestRepository.GetEnvironmentalInterestListAsync();
                     break;
                 case 4:
-                    FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
+                    FacilityStatuses = await _facilityStatusRepository.GetFacilityStatusListAsync();
                     break;
                 case 5:
-                    FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
+                    FacilityTypes = await _facilityTypeRepository.GetFacilityTypeListAsync();
                     break;
                 case 6:
-                    OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
+                    OrganizationalUnits = await _organizationalUnitRepository.GetOrganizationalUnitListAsync();
                     break;
                 default:
                     break;
