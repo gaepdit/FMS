@@ -47,18 +47,22 @@ namespace FMS.Domain.Dto
         public string Location { get; set; }
 
         [Required]
+        [StringLength(100)]
         [Display(Name = "Street Address")]
         public string Address { get; set; }
 
         [Required]
+        [StringLength(30)]
         [Display(Name = "City")]
         public string City { get; set; }
 
         [Required]
+        [StringLength(20)]
         [Display(Name = "State")]
         public string State { get; set; }
 
         [Required]
+        [StringLength(10)]
         [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
 
