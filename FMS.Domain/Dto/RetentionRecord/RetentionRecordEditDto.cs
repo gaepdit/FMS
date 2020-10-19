@@ -17,6 +17,7 @@ namespace FMS.Domain.Dto
             RetentionSchedule = record.RetentionSchedule;
         }
 
+        [Display(Name = "Retained")]
         public bool Active { get; set; }
 
         [Required]

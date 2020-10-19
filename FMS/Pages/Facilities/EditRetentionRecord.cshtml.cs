@@ -74,8 +74,7 @@ namespace FMS.Pages.Facilities
 
             var facility = await _repository.GetFacilityForRetentionRecord(Id);
             HighlightRecord = Id;
-            return RedirectToPage("./Details", pageHandler: "Get", routeValues: new {id = facility.Id},
-                fragment: "retention-records");
+            return RedirectToPage("./Details", new {id = facility.Id});
         }
     }
 }

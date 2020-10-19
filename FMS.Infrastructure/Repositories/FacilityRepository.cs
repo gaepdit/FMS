@@ -42,7 +42,14 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.RetentionRecords)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            return facility == null ? null : new FacilityDetailDto(facility);
+            if (facility == null) return null;
+            
+            facility.RetentionRecords = facility.RetentionRecords
+                .OrderBy(e => e.StartYear)
+                .ThenBy(e => e.EndYear)
+                .ThenBy(e => e.BoxNumber).ToList();
+
+            return  new FacilityDetailDto(facility);
         }
 
         public async Task<int> CountAsync(FacilitySpec spec)

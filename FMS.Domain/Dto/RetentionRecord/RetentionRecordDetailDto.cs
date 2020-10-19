@@ -19,6 +19,8 @@ namespace FMS.Domain.Dto
         }
 
         public Guid Id { get; }
+        
+        [Display(Name = "Retained")]
         public bool Active { get; }
 
         [Display(Name = "Start year")]

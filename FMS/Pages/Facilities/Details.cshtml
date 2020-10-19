@@ -124,7 +124,7 @@
                 <th scope="col">Consignment Number</th>
                 <th scope="col">Shelf Number</th>
                 <th scope="col">Retention Schedule Number</th>
-                <th scope="col" class="text-center">Active</th>
+                <th scope="col" class="text-center">Retained</th>
                 @if (User.IsInRole(UserRoles.FileEditor))
                 {
                     <th scope="col" class="text-center">Actions</th>
@@ -134,7 +134,7 @@
             <tbody>
             @foreach (var r in Model.FacilityDetail.RetentionRecords)
             {
-                <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "table-secondary" : "") ">
+                <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
                     <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
                     <td>@r.BoxNumber</td>
                     <td>@r.ConsignmentNumber</td>
