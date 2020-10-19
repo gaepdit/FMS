@@ -74,7 +74,7 @@ namespace FMS.Pages.Facilities
                 return NotFound();
             }
 
-            return Page();
+            return RedirectToPage();
         }
     }
 }

@@ -88,7 +88,7 @@ namespace FMS.Pages.Files
             FileId = FileDetail.Id;
             await PopulateSelectsAsync();
             Message = new DisplayMessage(Context.Success, "Cabinet added to File.");
-            return Page();
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostRemoveCabinetAsync()
@@ -124,7 +124,7 @@ namespace FMS.Pages.Files
             FileId = FileDetail.Id;
             await PopulateSelectsAsync();
             Message = new DisplayMessage(Context.Success, "Cabinet removed from File.");
-            return Page();
+            return RedirectToPage();
         }
 
         private async Task PopulateSelectsAsync()
