@@ -5,6 +5,10 @@
         private Context Context { get; }
         public string Message { get; }
 
+        // parameterless constructor required for deserialization in GetDisplayMessage method
+        // ReSharper disable once UnusedMember.Global
+        public DisplayMessage() { }
+
         public DisplayMessage(Context context, string message)
         {
             Context = context;
