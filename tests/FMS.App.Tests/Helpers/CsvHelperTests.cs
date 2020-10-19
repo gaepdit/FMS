@@ -1,12 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using CsvHelper.Configuration;
 using FluentAssertions;
 using Xunit;
-using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Helpers
 {
@@ -46,9 +44,14 @@ namespace FMS.App.Tests.Helpers
             }
         }
 
-        private static readonly string Zwnbsp = ((char) 0xFEFF).ToString();
+        /// U+FEFF BYTE ORDER MARK
+        /// The BOM is used at the start of a text stream to indicate that the stream's encoding is Unicode.
+        private const char Bom = (char) 0xFEFF;
 
-        private static readonly string CsvOutput = $"{Zwnbsp}MyInt,MyDecimal,MyDouble,MyFloat,MyString\r\n" +
+        /// NewLine characters are explicitly defined because CSV Helper uses CRLF by default regardless
+        /// of environment. Leaving it unspecified (using "Environment.NewLine" or a multi-line verbatim
+        /// string literal) would cause the unit tests to fail in non-Windows environments.
+        private static readonly string CsvOutput = $"{Bom}MyInt,MyDecimal,MyDouble,MyFloat,MyString\r\n" +
             "1,2,3,4,abc\r\n" +
             "1,2.0,3,4,🐛👍😜\r\n" +
             "0,0,0,0,\r\n" +
@@ -58,7 +61,7 @@ namespace FMS.App.Tests.Helpers
         public async Task GetCsv_Succeeds()
         {
             var csvByteArray = await MyItems.GetCsvByteArrayAsync<MyClassMap>();
-            var result = System.Text.Encoding.UTF8.GetString(csvByteArray);
+            var result = Encoding.UTF8.GetString(csvByteArray);
             result.Should().BeEquivalentTo(CsvOutput);
         }
     }
