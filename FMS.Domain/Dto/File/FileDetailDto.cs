@@ -18,7 +18,8 @@ namespace FMS.Domain.Dto
                     .Select(e => new FacilitySummaryDto(e)).ToList()
                 ?? new List<FacilitySummaryDto>();
             Cabinets = file.CabinetFiles?
-                    .Select(c => new CabinetSummaryDto(c.Cabinet)).ToList()
+                    .Select(e => new CabinetSummaryDto(e.Cabinet))
+                    .OrderBy(e => e.Name).ToList()
                 ?? new List<CabinetSummaryDto>();
         }
 

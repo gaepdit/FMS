@@ -134,7 +134,8 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("File ID not found.");
             }
 
-            return file.CabinetFiles.Select(e => new CabinetSummaryDto(e.Cabinet)).ToList();
+            return file.CabinetFiles.Select(e => new CabinetSummaryDto(e.Cabinet))
+                .OrderBy(e => e.Name).ToList();
         }
 
         public async Task<List<CabinetSummaryDto>> GetCabinetsAvailableForFileAsync(Guid id)
