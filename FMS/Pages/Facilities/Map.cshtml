@@ -1,7 +1,7 @@
 ﻿@page
 @model FMS.Pages.Facilities.MapModel
 @{
-    ViewData["Title"] = "Search Facilities By Address";
+    ViewData["Title"] = "Location Search";
 }
 
 @section Scripts {
@@ -50,13 +50,13 @@
             <div class="form-group col">
                 <label asp-for="Spec.Latitude"></label>
                 <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
-                <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.101318)</small>
+                <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.1)</small>
                 <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
             </div>
             <div class="form-group col">
                 <label asp-for="Spec.Longitude"></label>
                 <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
-                <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.519379)</small>
+                <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.5)</small>
                 <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
             </div>
             <div class="form-group col-md-3">
