@@ -31,13 +31,15 @@ namespace FMS.Pages.Cabinets
                 return NotFound();
             }
 
-            Id = id.Value;
-            CabinetEdit = new CabinetEditDto(await _repository.GetCabinetSummaryAsync(id.Value));
+            var cabinet = await _repository.GetCabinetSummaryAsync(id.Value);
 
-            if (CabinetEdit == null)
+            if (cabinet == null)
             {
                 return NotFound();
             }
+            
+            Id = id.Value;
+            CabinetEdit = new CabinetEditDto(cabinet);
 
             Message = TempData?.GetDisplayMessage();
             return Page();

@@ -193,6 +193,8 @@ namespace FMS.Infrastructure.Repositories
                 // If File Label is empty, generate new File
                 var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(newFacility.CountyId);
                 file = new File(newFacility.CountyId, nextSequence);
+                
+                // TODO #97: Add cabinet
                 await _context.Files.AddAsync(file);
             }
             else

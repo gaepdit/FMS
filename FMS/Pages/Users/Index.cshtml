@@ -41,7 +41,7 @@
             <tr>
                 <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
                 <th scope="col">@Html.DisplayNameFor(m => m.Email)</th>
-                <th scope="col">Actions</th>
+                <th scope="col" class="text-center">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -50,7 +50,7 @@
                 <tr>
                     <td>@Html.DisplayFor(m => item.Name)</td>
                     <td>@Html.DisplayFor(m => item.Email)</td>
-                    <td>
+                    <td class="text-center">
                         <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">View</a>
                         @if (User.IsInRole(UserRoles.UserAdmin))
                         {

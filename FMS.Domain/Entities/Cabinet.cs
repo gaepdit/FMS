@@ -9,7 +9,7 @@ namespace FMS.Domain.Entities
         [Range(1, 999)]
         public int CabinetNumber { get; set; }
 
-        public string Name => string.Concat("C", CabinetNumber.ToString().PadLeft(3, '0'));
+        public string Name => CabinetNumberAsName(CabinetNumber);
 
         /// <summary>
         /// The first/lowest file label in the cabinet. Used for determining appropriate cabinet when
@@ -20,5 +20,8 @@ namespace FMS.Domain.Entities
 
         // Files and Cabinets have a many-to-many relationship
         public ICollection<CabinetFile> CabinetFiles { get; set; }
+
+        public static string CabinetNumberAsName(int cabinetNumber) =>
+            string.Concat("C", cabinetNumber.ToString().PadLeft(3, '0'));
     }
 }

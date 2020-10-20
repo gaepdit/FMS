@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
@@ -38,7 +39,7 @@ namespace FMS.App.Tests.Cabinets
             var mockRepo = new Mock<ICabinetRepository>();
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(int.MinValue).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.CabinetDetail.ShouldBeNull();

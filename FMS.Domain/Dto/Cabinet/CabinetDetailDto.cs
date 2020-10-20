@@ -14,6 +14,7 @@ namespace FMS.Domain.Dto
             Active = cabinet.Active;
             CabinetNumber = cabinet.CabinetNumber;
             Name = cabinet.Name;
+            FirstFileLabel = cabinet.FirstFileLabel;
             Files = cabinet.CabinetFiles?
                 .Select(c => new FileSummaryDto(c.File)).ToList()
                 ?? new List<FileSummaryDto>();

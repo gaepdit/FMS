@@ -1,12 +1,12 @@
-﻿using FMS.Domain.Dto;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -18,7 +18,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> CabinetExistsAsync(Guid id) =>
             await _context.Cabinets.AnyAsync(e => e.Id == id);
 
-        public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false) =>
+        public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true) =>
             await _context.Cabinets.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.CabinetNumber)
@@ -59,49 +59,49 @@ namespace FMS.Infrastructure.Repositories
             return cabinet == null ? null : new CabinetDetailDto(cabinet);
         }
 
-        public Task<string> GetNextCabinetName()
+        private async Task<int> GetNextCabinetNumber() =>
+            1 + (await _context.Cabinets.MaxAsync(e => (int?) e.CabinetNumber) ?? 0);
+
+        public async Task<string> GetNextCabinetName() =>
+            Cabinet.CabinetNumberAsName(await GetNextCabinetNumber());
+
+        public async Task<int> CreateCabinetAsync()
         {
-            throw new NotImplementedException();
+            var newCabinetNumber = await GetNextCabinetNumber();
+
+            var cabinet = new Cabinet()
+            {
+                CabinetNumber = newCabinetNumber,
+                FirstFileLabel = "999-9999",
+            };
+
+            await _context.Cabinets.AddAsync(cabinet);
+            await _context.SaveChangesAsync();
+
+            return newCabinetNumber;
         }
 
-        public Task<int> CreateCabinetAsync()
-        {
-            throw new NotImplementedException();
-            // var maxCabinetNumber = 
-            //
-            // var cabinet = new Cabinet() {Name = cabinetCreate.Name};
-            // await _context.Cabinets.AddAsync(cabinet);
-            // await _context.SaveChangesAsync();
-            //
-            // return cabinet.Id;
-        }
-        
         public async Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit)
         {
-            throw  new NotImplementedException();
-            // ONLY UPDATE FILE LABEL
+            var cabinet = await _context.Cabinets.FindAsync(id);
 
-            // var cabinet = await _context.Cabinets.FindAsync(id);
-            //
-            // if (cabinet == null)
-            // {
-            //     throw new ArgumentException("Cabinet ID not found.");
-            // }
-            //
-            // if (string.IsNullOrWhiteSpace(cabinetEdit.Name))
-            // {
-            //     throw new ArgumentException("Cabinet Name can not be null or empty.");
-            // }
-            //
-            // if (await CabinetNameExistsAsync(cabinetEdit.Name, id))
-            // {
-            //     throw new ArgumentException($"Cabinet Name '{cabinetEdit.Name}' already exists.");
-            // }
-            //
-            // cabinet.Active = !cabinetEdit.Delete;
-            // cabinet.Name = cabinetEdit.Name;
-            //
-            // await _context.SaveChangesAsync();
+            if (cabinet == null)
+            {
+                throw new ArgumentException("Cabinet ID not found.");
+            }
+
+            if (cabinetEdit.FirstFileLabel == null)
+            {
+                throw new ArgumentException("File Label cannot be null or empty.");
+            }
+
+            if (!File.IsValidFileLabelFormat(cabinetEdit.FirstFileLabel))
+            {
+                throw new ArgumentException("The File Label is invalid.");
+            }
+
+            cabinet.FirstFileLabel = cabinetEdit.FirstFileLabel;
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Support

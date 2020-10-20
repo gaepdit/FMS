@@ -22,8 +22,8 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnGet_PopulatesThePageModel()
         {
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetListAsync(false))
-                .ReturnsAsync(_cabinets.Where(e => e.Active).ToList())
+            mockRepo.Setup(l => l.GetCabinetListAsync(true))
+                .ReturnsAsync(_cabinets)
                 .Verifiable();
 
             var pageModel = new IndexModel(mockRepo.Object);

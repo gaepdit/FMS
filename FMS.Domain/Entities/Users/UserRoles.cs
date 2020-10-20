@@ -34,7 +34,7 @@ namespace FMS.Domain.Entities.Users
                     "roles for other users.",
                 SiteMaintenance =>
                     "Users with the Site Maintenance role are able to update values in lookup " +
-                    "tables (drop-down lists) and modify cabinets.",
+                    "tables (drop-down lists) and create new cabinets.",
                 FileCreator =>
                     "Users with the File Creator role are able to add new facilities, files, " +
                     "and retention records.",
