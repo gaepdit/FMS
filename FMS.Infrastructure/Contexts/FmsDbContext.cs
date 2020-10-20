@@ -38,7 +38,7 @@ namespace FMS.Infrastructure.Contexts
 
             // Additional model indexes
             builder.Entity<File>().HasIndex(e => e.FileLabel).IsUnique();
-            // builder.Entity<Cabinet>().HasIndex(e => e.CabinetNumber).IsUnique();
+            builder.Entity<Cabinet>().HasIndex(e => e.CabinetNumber).IsUnique();
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers");
