@@ -103,10 +103,8 @@ namespace FMS.Pages.Facilities
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");

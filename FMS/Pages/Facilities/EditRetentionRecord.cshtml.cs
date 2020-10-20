@@ -66,10 +66,8 @@ namespace FMS.Pages.Facilities
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             var facility = await _repository.GetFacilityForRetentionRecord(Id);

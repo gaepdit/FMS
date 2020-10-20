@@ -18,14 +18,10 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> CabinetExistsAsync(Guid id) =>
             await _context.Cabinets.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> CabinetNameExistsAsync(string name, Guid? ignoreId = null) =>
-            await _context.Cabinets.AnyAsync(e => e.Name == name &&
-                (!ignoreId.HasValue || e.Id != ignoreId.Value));
-
         public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = false) =>
             await _context.Cabinets.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.Name)
+                .OrderBy(e => e.CabinetNumber)
                 .Select(e => new CabinetSummaryDto(e))
                 .ToListAsync();
 
@@ -54,62 +50,58 @@ namespace FMS.Infrastructure.Repositories
             return cabinet == null ? null : new CabinetDetailDto(cabinet);
         }
 
-        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(string name)
+        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(int cabinetNumber)
         {
             var cabinet = await _context.Cabinets.AsNoTracking()
                 .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
-                .SingleOrDefaultAsync(e => e.Name == name);
+                .SingleOrDefaultAsync(e => e.CabinetNumber == cabinetNumber);
 
             return cabinet == null ? null : new CabinetDetailDto(cabinet);
         }
 
-        public Task<Guid> CreateCabinetAsync(CabinetCreateDto cabinetCreate)
+        public Task<string> GetNextCabinetName()
         {
-            if (string.IsNullOrWhiteSpace(cabinetCreate.Name))
-            {
-                throw new ArgumentException("Cabinet Name can not be null or empty.");
-            }
-
-            return CreateCabinetInternalAsync(cabinetCreate);
+            throw new NotImplementedException();
         }
 
-        private async Task<Guid> CreateCabinetInternalAsync(CabinetCreateDto cabinetCreate)
+        public Task<int> CreateCabinetAsync()
         {
-            if (await CabinetNameExistsAsync(cabinetCreate.Name))
-            {
-                throw new ArgumentException($"Cabinet Name '{cabinetCreate.Name}' already exists.");
-            }
-
-            var cabinet = new Cabinet() {Name = cabinetCreate.Name};
-            await _context.Cabinets.AddAsync(cabinet);
-            await _context.SaveChangesAsync();
-
-            return cabinet.Id;
+            throw new NotImplementedException();
+            // var maxCabinetNumber = 
+            //
+            // var cabinet = new Cabinet() {Name = cabinetCreate.Name};
+            // await _context.Cabinets.AddAsync(cabinet);
+            // await _context.SaveChangesAsync();
+            //
+            // return cabinet.Id;
         }
-
+        
         public async Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit)
         {
-            var cabinet = await _context.Cabinets.FindAsync(id);
+            throw  new NotImplementedException();
+            // ONLY UPDATE FILE LABEL
 
-            if (cabinet == null)
-            {
-                throw new ArgumentException("Cabinet ID not found.");
-            }
-
-            if (string.IsNullOrWhiteSpace(cabinetEdit.Name))
-            {
-                throw new ArgumentException("Cabinet Name can not be null or empty.");
-            }
-
-            if (await CabinetNameExistsAsync(cabinetEdit.Name, id))
-            {
-                throw new ArgumentException($"Cabinet Name '{cabinetEdit.Name}' already exists.");
-            }
-
-            cabinet.Active = !cabinetEdit.Delete;
-            cabinet.Name = cabinetEdit.Name;
-
-            await _context.SaveChangesAsync();
+            // var cabinet = await _context.Cabinets.FindAsync(id);
+            //
+            // if (cabinet == null)
+            // {
+            //     throw new ArgumentException("Cabinet ID not found.");
+            // }
+            //
+            // if (string.IsNullOrWhiteSpace(cabinetEdit.Name))
+            // {
+            //     throw new ArgumentException("Cabinet Name can not be null or empty.");
+            // }
+            //
+            // if (await CabinetNameExistsAsync(cabinetEdit.Name, id))
+            // {
+            //     throw new ArgumentException($"Cabinet Name '{cabinetEdit.Name}' already exists.");
+            // }
+            //
+            // cabinet.Active = !cabinetEdit.Delete;
+            // cabinet.Name = cabinetEdit.Name;
+            //
+            // await _context.SaveChangesAsync();
         }
 
         #region IDisposable Support

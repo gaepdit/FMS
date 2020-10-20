@@ -5,17 +5,20 @@ namespace FMS.Domain.Dto
     public class CabinetEditDto
     {
         public CabinetEditDto() { }
+
         public CabinetEditDto(CabinetSummaryDto cabinet)
         {
-            Delete = !cabinet.Active;
+            FirstFileLabel = cabinet.FirstFileLabel;
             Name = cabinet.Name;
+            CabinetNumber = cabinet.CabinetNumber;
         }
 
-        public bool Delete { get; set; }
-
         [Required]
-        [StringLength(5)]
-        [Display(Name = "Cabinet Number")]
-        public string Name { get; set; }
+        [StringLength(9)]
+        [Display(Name = "First File Label")]
+        public string FirstFileLabel { get; set; }
+
+        public string Name { get; }
+        public int CabinetNumber { get; }
     }
 }

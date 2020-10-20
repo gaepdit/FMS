@@ -69,10 +69,8 @@ namespace FMS.Pages.Files
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             TempData?.SetDisplayMessage(Context.Success, "File successfully updated.");

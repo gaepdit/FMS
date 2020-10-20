@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using TestHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -16,34 +17,16 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CabinetExists_Exists_ReturnsTrue()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.CabinetExistsAsync(DataHelpers.Cabinets[0].Id);
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var result = await repository.CabinetExistsAsync(SimpleRepositoryData.Cabinets[0].Id);
             result.ShouldBeTrue();
         }
 
         [Fact]
         public async Task CabinetExists_NotExists_ReturnsFalse()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
             var result = await repository.CabinetExistsAsync(default);
-            result.ShouldBeFalse();
-        }
-
-        // CabinetNameExistsAsync
-
-        [Fact]
-        public async Task CabinetNameExists_Exists_ReturnsTrue()
-        {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.CabinetNameExistsAsync(DataHelpers.Cabinets[0].Name);
-            result.ShouldBeTrue();
-        }
-
-        [Fact]
-        public async Task CabinetNameExists_NotExists_ReturnsFalse()
-        {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.CabinetNameExistsAsync("0");
             result.ShouldBeFalse();
         }
 
@@ -52,9 +35,10 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetCabinetList_ReturnsAllActive()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.GetCabinetListAsync(false);
-            var expected = DataHelpers.Cabinets.Where(e => e.Active)
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var result = await repository.GetCabinetListAsync();
+            var expected = SimpleRepositoryData.Cabinets
+                .Where(e => e.Active)
                 .Select(e => new CabinetSummaryDto(e));
             result.Should().BeEquivalentTo(expected);
         }
@@ -62,56 +46,76 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetCabinetList_WithInactive_ReturnsAll()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
             var result = await repository.GetCabinetListAsync(true);
-            var expected = DataHelpers.Cabinets
+            var expected = SimpleRepositoryData.Cabinets
                 .Select(e => new CabinetSummaryDto(e));
             result.Should().BeEquivalentTo(expected);
         }
 
         // GetCabinetSummaryAsync
 
+        [Fact]
+        public async Task GetCabinetSummary_ReturnsCorrectCabinet()
+        {
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var cabinet = SimpleRepositoryData.Cabinets[0];
+
+            var expected = SimpleRepositoryData.GetCabinetSummary(cabinet.Id);
+            var result = await repository.GetCabinetSummaryAsync(cabinet.Id);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task GetCabinetSummary_Nonexistent_ReturnsNull()
+        {
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var result = await repository.GetCabinetSummaryAsync(Guid.Empty);
+            result.ShouldBeNull();
+        }
+
         // GetCabinetDetailsAsync (by Guid)
 
         [Fact]
-        public async Task GetCabinet_ReturnsCorrectCabinet()
+        public async Task GetCabinetDetails_ReturnsCorrectCabinet()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var cabinet = DataHelpers.Cabinets[0];
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var cabinet = SimpleRepositoryData.Cabinets[0];
 
-            var expected = DataHelpers.GetCabinetDetail(cabinet.Id);
+            var expected = SimpleRepositoryData.GetCabinetDetail(cabinet.Id);
             var result = await repository.GetCabinetDetailsAsync(cabinet.Id);
 
             result.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
-        public async Task GetCabinet_Nonexistent_ReturnsNull()
+        public async Task GetCabinetDetails_Nonexistent_ReturnsNull()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.GetCabinetDetailsAsync((Guid) default);
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var result = await repository.GetCabinetDetailsAsync(Guid.Empty);
             result.ShouldBeNull();
         }
 
-        // GetCabinetDetailsAsync (by name)
+        // GetCabinetDetailsAsync (by cabinet number)
 
         [Fact]
-        public async Task GetCabinetByName_ReturnsCorrectCabinet()
+        public async Task GetCabinetByNumber_ReturnsCorrectCabinet()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var cabinet = DataHelpers.Cabinets[0];
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var cabinet = SimpleRepositoryData.Cabinets[0];
 
-            var expected = DataHelpers.GetCabinetDetail(cabinet.Id);
-            var result = await repository.GetCabinetDetailsAsync(cabinet.Name);
+            var expected = SimpleRepositoryData.GetCabinetDetail(cabinet.Id);
+            var result = await repository.GetCabinetDetailsAsync(cabinet.CabinetNumber);
 
             result.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
-        public async Task GetCabinetByName_Nonexistent_ReturnsNull()
+        public async Task GetCabinetByNumber_Nonexistent_ReturnsNull()
         {
-            using var repository = new RepositoryHelper().GetCabinetRepository();
-            var result = await repository.GetCabinetDetailsAsync(null);
+            using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var result = await repository.GetCabinetDetailsAsync(0);
             result.ShouldBeNull();
         }
 
@@ -120,71 +124,36 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateCabinet_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
-            Guid newId;
-            var newName = "C000";
-            var cabinetCreate = new CabinetCreateDto() {Name = newName};
+            var repositoryHelper = new SimpleRepositoryHelper();
+            int newCabinetNumber;
+            var expectedCabinetNumber = SimpleRepositoryData.Cabinets.Max(e => e.CabinetNumber) + 1;
+            var expectedName = string.Concat("C", expectedCabinetNumber.ToString().PadLeft(3, '0'));
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                newId = await repository.CreateCabinetAsync(cabinetCreate);
+                newCabinetNumber = await repository.CreateCabinetAsync();
             }
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var cabinet = await repository.GetCabinetDetailsAsync(newId);
+                var cabinet = await repository.GetCabinetDetailsAsync(newCabinetNumber);
 
-                cabinet.Id.Should().Be(newId);
-                cabinet.Name.Should().Be(newName);
+                newCabinetNumber.ShouldEqual(expectedCabinetNumber);
+                cabinet.CabinetNumber.Should().Be(newCabinetNumber);
+                cabinet.Name.Should().Be(expectedName);
                 cabinet.Active.ShouldBeTrue();
             }
-        }
-
-        [Fact]
-        public async Task CreateCabinet_WithEmptyName_ThrowsException()
-        {
-            var cabinetCreate = new CabinetCreateDto();
-
-            Func<Task> action = async () =>
-            {
-                using var repository = new RepositoryHelper().GetCabinetRepository();
-                await repository.CreateCabinetAsync(cabinetCreate);
-            };
-
-            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage("Cabinet Name can not be null or empty.");
-        }
-
-        [Fact]
-        public async Task CreateCabinet_WithExistingName_ThrowsException()
-        {
-            var existingName = DataHelpers.Cabinets[0].Name;
-            var cabinetCreate = new CabinetCreateDto() {Name = existingName};
-
-            Func<Task> action = async () =>
-            {
-                using var repository = new RepositoryHelper().GetCabinetRepository();
-                await repository.CreateCabinetAsync(cabinetCreate);
-            };
-
-            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"Cabinet Name '{cabinetCreate.Name}' already exists.");
         }
 
         // UpdateCabinetAsync
 
         [Fact]
-        public async Task UpdateCabinet_Name_Succeeds()
+        public async Task UpdateCabinet_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
+            var repositoryHelper = new SimpleRepositoryHelper();
+            var cabinet = SimpleRepositoryData.Cabinets[0];
 
-            var cabinet = DataHelpers.Cabinets[0];
-            var newName = "C000";
-            var cabinetEdit = new CabinetEditDto()
-            {
-                Delete = !cabinet.Active,
-                Name = newName
-            };
+            var cabinetEdit = new CabinetEditDto() {FirstFileLabel = "222-2222"};
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
@@ -193,33 +162,9 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var updatedCabinet = await repository.GetCabinetDetailsAsync(cabinet.Id);
-                updatedCabinet.Name.Should().Be(newName);
-                updatedCabinet.Active.ShouldBeTrue();
-            }
-        }
-
-        [Fact]
-        public async Task UpdateCabinet_Active_Succeeds()
-        {
-            var repositoryHelper = new RepositoryHelper();
-
-            var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto()
-            {
-                Delete = cabinet.Active,
-                Name = cabinet.Name
-            };
-
-            using (var repository = repositoryHelper.GetCabinetRepository())
-            {
-                await repository.UpdateCabinetAsync(cabinet.Id, cabinetEdit);
-            }
-
-            using (var repository = repositoryHelper.GetCabinetRepository())
-            {
-                var updatedCabinet = await repository.GetCabinetDetailsAsync(cabinet.Id);
+                var updatedCabinet = await repository.GetCabinetSummaryAsync(cabinet.Id);
                 updatedCabinet.Name.Should().Be(cabinet.Name);
+                updatedCabinet.FirstFileLabel.Should().Be(cabinetEdit.FirstFileLabel);
                 updatedCabinet.Active.Should().Be(!cabinet.Active);
             }
         }
@@ -227,14 +172,10 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateCabinet_WithNoChanges_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
+            var repositoryHelper = new SimpleRepositoryHelper();
+            var cabinet = SimpleRepositoryData.Cabinets[0];
 
-            var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto()
-            {
-                Delete = !cabinet.Active,
-                Name = cabinet.Name
-            };
+            var cabinetEdit = new CabinetEditDto() {FirstFileLabel = cabinet.FirstFileLabel};
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
@@ -245,19 +186,16 @@ namespace FMS.Infrastructure.Tests
             {
                 var updatedCabinet = await repository.GetCabinetDetailsAsync(cabinet.Id);
                 updatedCabinet.Name.Should().Be(cabinet.Name);
+                updatedCabinet.FirstFileLabel.Should().Be(cabinetEdit.FirstFileLabel);
                 updatedCabinet.Active.Should().Be(cabinet.Active);
             }
         }
 
         [Fact]
-        public async Task UpdateCabinet_WithEmptyName_ThrowsException()
+        public async Task UpdateCabinet_WithEmptyFileLabel_ThrowsException()
         {
             var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto()
-            {
-                Delete = !cabinet.Active,
-                Name = ""
-            };
+            var cabinetEdit = new CabinetEditDto() {FirstFileLabel = ""};
 
             Func<Task> action = async () =>
             {
@@ -266,20 +204,14 @@ namespace FMS.Infrastructure.Tests
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage("Cabinet Name can not be null or empty.");
+                .WithMessage("File Label can not be null or empty.");
         }
 
         [Fact]
-        public async Task UpdateCabinet_WithExistingName_ThrowsException()
+        public async Task UpdateCabinet_WithInvalidFileLabel_ThrowsException()
         {
-            var existingName = DataHelpers.Cabinets[1].Name;
-
             var cabinet = DataHelpers.Cabinets[0];
-            var cabinetEdit = new CabinetEditDto()
-            {
-                Delete = !cabinet.Active,
-                Name = existingName
-            };
+            var cabinetEdit = new CabinetEditDto() {FirstFileLabel = "00-00"};
 
             Func<Task> action = async () =>
             {
@@ -288,13 +220,13 @@ namespace FMS.Infrastructure.Tests
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"Cabinet Name '{cabinetEdit.Name}' already exists.");
+                .WithMessage("File Label is invalid.");
         }
 
         [Fact]
         public async Task UpdateNonexistentCabinet_ThrowsException()
         {
-            var cabinetEdit = new CabinetEditDto() {Name = "C000"};
+            var cabinetEdit = new CabinetEditDto() {FirstFileLabel = "000-0000"};
 
             Func<Task> action = async () =>
             {
@@ -304,6 +236,20 @@ namespace FMS.Infrastructure.Tests
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Cabinet ID not found.");
+        }
+
+        // GetNextCabinetName
+
+        [Fact]
+        public async Task GetNextCabinetName_Succeeds()
+        {
+            var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+            var nextCabinetNumber = SimpleRepositoryData.Cabinets.Max(e => e.CabinetNumber) + 1;
+            var expected = string.Concat("C", nextCabinetNumber.ToString().PadLeft(3, '0'));
+
+            var result = await repository.GetNextCabinetName();
+
+            result.Should().Be(expected);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using FMS.Domain.Entities.Base;
 using FMS.Domain.Utils;
 using static FMS.Domain.Data.Data;
@@ -20,7 +21,6 @@ namespace FMS.Domain.Entities
         /// and a 4-digit system-generated sequential number for each county (xxx-xxxx)
         /// </summary>
         [StringLength(9)]
-        [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
         public ICollection<Facility> Facilities { get; set; }
@@ -47,5 +47,10 @@ namespace FMS.Domain.Entities
             Prevent.OutOfRange(sequence, nameof(sequence), 1, 9999);
             return sequence.ToString().PadLeft(4, '0');
         }
+
+        private const string FileLabelPattern = @"^\d{3}-\d{4}$";
+
+        public static bool IsValidFileLabelFormat(string fileLabel) =>
+            Regex.IsMatch(fileLabel, FileLabelPattern);
     }
 }

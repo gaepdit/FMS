@@ -1,12 +1,13 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Threading.Tasks;
+using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System;
-using System.Threading.Tasks;
-using TestHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -17,19 +18,18 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var cabinet = DataHelpers.Cabinets[0];
+            var cabinet = SimpleRepositoryData.Cabinets[0];
             var expected = new CabinetSummaryDto(cabinet);
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.GetCabinetSummaryAsync(cabinet.Id))
                 .ReturnsAsync(expected)
                 .Verifiable();
-            var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object);
+            var pageModel = new EditModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(cabinet.Id).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.Id.Should().Be(cabinet.Id);
-            pageModel.OriginalCabinetName.Should().Be(cabinet.Name);
             pageModel.CabinetEdit.Should().BeEquivalentTo(new CabinetEditDto(expected));
         }
 
@@ -41,13 +41,12 @@ namespace FMS.App.Tests.Cabinets
                 .ReturnsAsync((CabinetSummaryDto) null)
                 .Verifiable();
 
-            var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object);
+            var pageModel = new EditModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Id.Should().Be(default(Guid));
-            pageModel.OriginalCabinetName.ShouldBeNull();
+            pageModel.Id.Should().Be(Guid.Empty);
             pageModel.CabinetEdit.Should().Be(default);
         }
 
@@ -55,30 +54,26 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = new Mock<ICabinetRepository>();
-            var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object);
+            var pageModel = new EditModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Id.Should().Be(default(Guid));
-            pageModel.OriginalCabinetName.ShouldBeNull();
+            pageModel.Id.Should().Be(Guid.Empty);
             pageModel.CabinetEdit.Should().Be(default);
         }
 
         [Fact]
-        public async Task OnPost_IfValidModel_ReturnsDetailsPage()
+        public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
-            var newName = "NewCab";
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.UpdateCabinetAsync(It.IsAny<Guid>(), It.IsAny<CabinetEditDto>()));
-            mockRepo.Setup(l => l.CabinetNameExistsAsync(It.IsAny<string>(), It.IsAny<Guid>()))
-                .ReturnsAsync(false)
-                .Verifiable();
+            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
 
-            var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object)
+            var pageModel = new EditModel(mockRepo.Object)
             {
                 Id = Guid.NewGuid(),
-                CabinetEdit = new CabinetEditDto() {Name = newName}
+                CabinetEdit = new CabinetEditDto(cabinet)
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -86,14 +81,14 @@ namespace FMS.App.Tests.Cabinets
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
             ((RedirectToPageResult) result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newName);
+            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(cabinet.CabinetNumber);
         }
 
         [Fact]
-        public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
+        public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
             var mockRepo = new Mock<ICabinetRepository>();
-            var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object);
+            var pageModel = new EditModel(mockRepo.Object);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -104,30 +99,27 @@ namespace FMS.App.Tests.Cabinets
         }
 
         [Fact]
-        public async Task OnPost_IfNameExists_ReturnsPageWithInvalidModelState()
+        public async Task OnPost_InvalidFileLabel_ReturnsPageWithInvalidModelState()
         {
-            var cabinet = new CabinetSummaryDto(DataHelpers.Cabinets[0]);
-
+            const string newFileLabel = "abc";
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(cabinet);
-            mockRepo.Setup(l => l.CabinetNameExistsAsync(It.IsAny<string>(), It.IsAny<Guid>()))
-                .ReturnsAsync(true)
-                .Verifiable();
+            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
 
-            var pageModel = new Pages.Cabinets.EditModel(mockRepo.Object)
+            var pageModel = new EditModel(mockRepo.Object)
             {
                 Id = Guid.NewGuid(),
                 CabinetEdit = new CabinetEditDto(cabinet)
+                {
+                    FirstFileLabel = newFileLabel
+                }
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.ShouldBeFalse();
-            pageModel.ModelState["CabinetEdit.Name"].Errors[0].ErrorMessage.Should()
-                .Be("There is already a Cabinet with that name.");
-            pageModel.OriginalCabinetName.Should().Be(cabinet.Name);
+            pageModel.ModelState["CabinetEdit.FirstFileLabel"].Errors[0].ErrorMessage.Should()
+                .Be("The File Label is invalid.");
         }
     }
 }

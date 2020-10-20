@@ -13,33 +13,39 @@ namespace FMS.Infrastructure.SeedData
                 new Cabinet
                 {
                     Id = new Guid("06C4AE30-4FFB-4C6B-9E5E-577D088554A4"),
-                    Name = "C001",
+                    CabinetNumber = 1,
+                    FirstFileLabel = "000-0000",
                 },
                 new Cabinet
                 {
                     Id = new Guid("0C46CCE9-77DB-4882-B4F5-9CDBE6522D01"),
-                    Name = "C002",
+                    CabinetNumber = 2,
+                    FirstFileLabel = "100-0000",
                 },
                 new Cabinet
                 {
                     Id = new Guid("1548EABF-B62E-4938-8EC6-075F3F385BCF"),
-                    Name = "C003",
+                    CabinetNumber = 3,
+                    FirstFileLabel = "164-0001",
                 },
                 new Cabinet
                 {
                     Id = new Guid("6FCDA843-53DC-4846-8AC4-A55AD6D88B11"),
                     Active = false,
-                    Name = "C004",
+                    CabinetNumber = 4,
+                    FirstFileLabel = "170-0000",
                 },
                 new Cabinet
                 {
                     Id = new Guid("20FDB0C9-F173-414F-96DA-9CA63EB4065F"),
-                    Name = "C005",
+                    CabinetNumber = 5,
+                    FirstFileLabel = "180-0000",
                 },
                 new Cabinet
                 {
                     Id = new Guid("C8124DAF-D088-4B67-B846-AF5622FA4D9E"),
-                    Name = "C006",
+                    CabinetNumber = 6,
+                    FirstFileLabel = "200-0000",
                 }
             };
         }

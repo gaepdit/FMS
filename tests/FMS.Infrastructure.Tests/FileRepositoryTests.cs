@@ -276,48 +276,6 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyNum')");
         }
 
-        // CreateFileAsync
-
-        [Fact]
-        public async Task CreateFile_Succeeds()
-        {
-            var repositoryHelper = new SimpleRepositoryHelper();
-            Guid newFileId;
-            const int countyNum = 111;
-            const string expectedFileLabel = "111-0002";
-
-            using (var repository = repositoryHelper.GetFileRepository())
-            {
-                newFileId = await repository.CreateFileAsync(countyNum);
-            }
-
-            using (var repository = repositoryHelper.GetFileRepository())
-            {
-                var createdFile = await repository.GetFileAsync(expectedFileLabel);
-
-                createdFile.Active.ShouldBeTrue();
-                createdFile.FileLabel.Should().Be(expectedFileLabel);
-                createdFile.Id.Should().Be(newFileId);
-                createdFile.Facilities.Should().BeEquivalentTo(new List<FacilitySummaryDto>());
-                createdFile.Cabinets.Should().BeEquivalentTo(new List<string>());
-            }
-        }
-
-        [Fact]
-        public async Task CreateFile_WithInvalidCounty_ThrowsException()
-        {
-            const int countyNum = 999;
-
-            Func<Task> action = async () =>
-            {
-                using var repository = new SimpleRepositoryHelper().GetFileRepository();
-                await repository.CreateFileAsync(countyNum);
-            };
-
-            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyId')");
-        }
-
         // UpdateFileAsync
 
         [Fact]
@@ -385,13 +343,13 @@ namespace FMS.Infrastructure.Tests
         public async Task AddCabinetFile_Succeeds()
         {
             using var repository = new RepositoryHelper().GetFileRepository();
-            var cabinet = DataHelpers.Cabinets.FirstOrDefault(e => e.Name == "C006");
-            var fileId = DataHelpers.Files.FirstOrDefault().Id;
+            var cabinet = DataHelpers.Cabinets.FirstOrDefault();
+            var file = DataHelpers.Files.FirstOrDefault();
 
-            await repository.AddCabinetToFileAsync(cabinet.Id, fileId);
+            await repository.AddCabinetToFileAsync(cabinet.Id, file.Id);
 
-            var file = await repository.GetFileAsync(fileId);
-            file.Cabinets.Should().BeEquivalentTo(new List<CabinetSummaryDto> {new CabinetSummaryDto(cabinet)});
+            var result = await repository.GetFileAsync(file.Id);
+            result.Cabinets.Should().BeEquivalentTo(new List<CabinetSummaryDto> {new CabinetSummaryDto(cabinet)});
         }
 
         // RemoveCabinetFromFileAsync
@@ -401,12 +359,12 @@ namespace FMS.Infrastructure.Tests
         {
             using var repository = new RepositoryHelper().GetFileRepository();
             var cf = DataHelpers.CabinetFiles[0];
-            var cabinetName = DataHelpers.GetCabinetSummary(cf.CabinetId).Name;
+            var cabinet =  DataHelpers.GetCabinetSummary(cf.CabinetId);
 
             await repository.RemoveCabinetFromFileAsync(cf.CabinetId, cf.FileId);
 
             var file = await repository.GetFileAsync(cf.FileId);
-            file.Cabinets.Should().NotContain(cabinetName);
+            file.Cabinets.Should().NotContain(cabinet);
         }
     }
 }

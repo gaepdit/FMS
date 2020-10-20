@@ -19,7 +19,7 @@ namespace FMS.Pages.Cabinets
         [BindProperty]
         public Guid Id { get; set; }
 
-        public string OriginalCabinetName { get; private set; }
+        public DisplayMessage Message { get; private set; }
 
         private readonly ICabinetRepository _repository;
         public EditModel(ICabinetRepository repository) => _repository = repository;
@@ -39,7 +39,7 @@ namespace FMS.Pages.Cabinets
                 return NotFound();
             }
 
-            OriginalCabinetName = CabinetEdit.Name;
+            Message = TempData?.GetDisplayMessage();
             return Page();
         }
 
@@ -50,12 +50,11 @@ namespace FMS.Pages.Cabinets
                 return Page();
             }
 
-            CabinetEdit.Name = CabinetEdit.Name?.Trim();
+            CabinetEdit.FirstFileLabel = CabinetEdit.FirstFileLabel?.Trim();
 
-            if (await _repository.CabinetNameExistsAsync(CabinetEdit.Name, Id))
+            if (!Domain.Entities.File.IsValidFileLabelFormat(CabinetEdit.FirstFileLabel))
             {
-                ModelState.AddModelError("CabinetEdit.Name", "There is already a Cabinet with that name.");
-                OriginalCabinetName = (await _repository.GetCabinetSummaryAsync(Id)).Name;
+                ModelState.AddModelError("CabinetEdit.FirstFileLabel", "The File Label is invalid.");
                 return Page();
             }
 
@@ -69,14 +68,12 @@ namespace FMS.Pages.Cabinets
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
 
             TempData?.SetDisplayMessage(Context.Success, "Cabinet successfully updated.");
-            return RedirectToPage("./Details", new {id = CabinetEdit.Name});
+            return RedirectToPage("./Details", new {id = CabinetEdit.CabinetNumber});
         }
     }
 }

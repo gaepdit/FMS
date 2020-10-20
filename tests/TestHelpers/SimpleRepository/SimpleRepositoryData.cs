@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 
 namespace TestHelpers.SimpleRepository
 {
     public static class SimpleRepositoryData
     {
+        // Data
+
         public static readonly List<File> Files = new List<File>
         {
             new File {Id = Guid.NewGuid(), FileLabel = "099-0001"},
@@ -75,5 +79,41 @@ namespace TestHelpers.SimpleRepository
             new BudgetCode {Id = Guid.NewGuid(), Name = "BC002"},
             new BudgetCode {Id = Guid.NewGuid(), Name = "BC003", Active = false},
         };
+
+        public static readonly List<Cabinet> Cabinets = new List<Cabinet>
+        {
+            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 1, FirstFileLabel = "000-0000"},
+            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 2, FirstFileLabel = "103-0001"},
+            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 3, FirstFileLabel = "110-0001"},
+            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 4, FirstFileLabel = "111-0001"},
+            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 5, FirstFileLabel = "111-0001"},
+            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 6, FirstFileLabel = "999-0001", Active = false},
+        };
+
+        public static readonly List<CabinetFile> CabinetFiles = new List<CabinetFile>
+        {
+            new CabinetFile {FileId = Files[0].Id, CabinetId = Cabinets[0].Id},
+            new CabinetFile {FileId = Files[1].Id, CabinetId = Cabinets[3].Id},
+            new CabinetFile {FileId = Files[1].Id, CabinetId = Cabinets[4].Id},
+            new CabinetFile {FileId = Files[2].Id, CabinetId = Cabinets[0].Id},
+            new CabinetFile {FileId = Files[3].Id, CabinetId = Cabinets[0].Id},
+            new CabinetFile {FileId = Files[4].Id, CabinetId = Cabinets[2].Id},
+            new CabinetFile {FileId = Files[5].Id, CabinetId = Cabinets[2].Id},
+        };
+
+
+        // DTO helpers
+
+        public static CabinetSummaryDto GetCabinetSummary(Guid id) =>
+            new CabinetSummaryDto(Cabinets.Find(e => e.Id == id));
+
+        public static CabinetDetailDto GetCabinetDetail(Guid id)
+        {
+            var cabinet = Cabinets.Find(e => e.Id == id);
+            return new CabinetDetailDto(cabinet);
+        }
+
+        private static IEnumerable<CabinetFile> GetCabinetFileJoinsForCabinet(Guid cabinetId) =>
+            CabinetFiles.Where(e => e.CabinetId == cabinetId).ToList();
     }
 }

@@ -9,8 +9,7 @@
     ViewData["Title"] = $"Edit File: {Model.FileLabel}";
 }
 <h1>@ViewData["Title"]</h1>
-<hr />
-<div class="container-fluid">
+<div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-group row">
@@ -21,6 +20,7 @@
                 </div>
             </div>
         </div>
+        <hr />
         <div class="form-row">
             <div class="col">
                 <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>

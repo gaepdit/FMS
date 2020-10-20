@@ -7,46 +7,47 @@
 
 <h1>
     @ViewData["Title"]
-    @if (Model.ShowInactive)
+    @if (User.IsInRole(UserRoles.SiteMaintenance))
     {
-        <a asp-page="Index" class="btn btn-sm btn-outline-secondary">Hide deleted</a>
-    }
-    else
-    {
-        <a asp-page="Index" asp-route-showInactive="true" class="btn btn-sm btn-outline-secondary">Show deleted</a>
+        <a class="btn btn-sm btn-outline-primary" asp-page="Add">Create New Cabinet</a>
     }
 </h1>
-<hr />
-<partial name="_AlertPartial" for="Message" />
 
-<div>
-    @if (Model.Cabinets != null && Model.Cabinets.Count > 0)
-    {
-        @foreach (var c in Model.Cabinets)
-        {
-            <a asp-page="Details" asp-route-id="@c.Name" class="btn @(c.Active ? (c.Id == Model.NewCabinetId ? "btn-outline-primary" : "btn-outline-info") : "btn-outline-secondary") btn-sm m-1">
-                @c.Name @(c.Active ? "" : "(Deleted)") @(c.Id == Model.NewCabinetId ? "(New)" : "")
-            </a>
-        }
-    }
-    else
-    {
-        <p class="lead text-info">No cabinets found.</p>
-    }
-</div>
-
-@if (User.IsInRole(UserRoles.SiteMaintenance))
+@if (Model.Cabinets != null && Model.Cabinets.Count > 0)
 {
-    <div class="container-fluid bg-light pt-3 mt-5">
-        <form method="post" class="form-inline">
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-            <label asp-for="CabinetCreate.Name" class="sr-only"></label>
-            <input asp-for="CabinetCreate.Name" class="form-control mb-2 mr-sm-2" />
-            <div class="form-check mb-2 mr-sm-2">
-                <span asp-validation-for="CabinetCreate.Name" class="text-danger"></span>
-            </div>
-
-            <button type="submit" class="btn btn-primary mb-2">Create New Cabinet</button>
-        </form>
-    </div>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Cabinet</th>
+            <th scope="col">First File Label</th>
+            @if (User.IsInRole(UserRoles.SiteMaintenance))
+            {
+                <th scope="col" class="text-center">Actions</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Cabinets)
+        {
+            <tr>
+                <td>
+                    <a asp-page="Details" asp-route-id="@item.CabinetNumber" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                        @item.Name @(item.Active ? "" : "(Deleted)")
+                    </a>
+                </td>
+                <td>@item.FirstFileLabel</td>
+                @if (User.IsInRole(UserRoles.SiteMaintenance))
+                {
+                    <td class="text-center">
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="lead text-info">No cabinets found.</p>
 }

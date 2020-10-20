@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using TestHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -17,17 +16,17 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            Guid id = DataHelpers.Cabinets[0].Id;
-            var item = DataHelpers.GetCabinetDetail(id);
+            var id = SimpleRepositoryData.Cabinets[0].Id;
+            var item = SimpleRepositoryData.GetCabinetDetail(id);
 
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetDetailsAsync(It.IsAny<string>()))
+            mockRepo.Setup(l => l.GetCabinetDetailsAsync(It.IsAny<int>()))
                 .ReturnsAsync(item)
                 .Verifiable();
 
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(item.Name).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(item.CabinetNumber).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.CabinetDetail.Should().BeEquivalentTo(item);

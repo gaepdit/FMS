@@ -1,4 +1,5 @@
-﻿using FMS.Infrastructure.Contexts;
+﻿using FMS.Domain.Repositories;
+using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
@@ -16,16 +17,21 @@ namespace TestHelpers.SimpleRepository
             context.Files.AddRange(SimpleRepositoryData.Files);
             context.Facilities.AddRange(SimpleRepositoryData.Facilities);
             context.BudgetCodes.AddRange(SimpleRepositoryData.BudgetCodes);
+            context.Cabinets.AddRange(SimpleRepositoryData.Cabinets);
+            context.CabinetFileJoin.AddRange(SimpleRepositoryData.CabinetFiles);
             context.SaveChanges();
         }
 
-        public FacilityRepository GetFacilityRepository() =>
+        public IFacilityRepository GetFacilityRepository() =>
             new FacilityRepository(new FmsDbContext(_options), GetFileRepository());
 
-        public FileRepository GetFileRepository() =>
+        public IFileRepository GetFileRepository() =>
             new FileRepository(new FmsDbContext(_options));
 
-        public ItemsListRepository GetItemsListRepository() =>
+        public IItemsListRepository GetItemsListRepository() =>
             new ItemsListRepository(new FmsDbContext(_options));
+
+        public ICabinetRepository GetCabinetRepository() =>
+            new CabinetRepository(new FmsDbContext(_options));
     }
 }

@@ -76,5 +76,23 @@ namespace FMS.Domain.Tests
             action.Should().Throw<ArgumentException>()
                 .WithMessage("Input sequence was out of range (Parameter 'sequence')");
         }
+
+        [Theory]
+        [InlineData("000-0000")]
+        [InlineData("999-9999")]
+        public void FileLabelString_Valid_IsValid(string fileLabel)
+        {
+            File.IsValidFileLabelFormat(fileLabel).Should().BeTrue();
+        }
+        
+        [Theory]
+        [InlineData("0000000")]
+        [InlineData("00000000")]
+        [InlineData("9999-999")]
+        [InlineData("NOT-GOOD")]
+        public void FileLabelString_Invalid_IsInValid(string fileLabel)
+        {
+            File.IsValidFileLabelFormat(fileLabel).Should().BeFalse();
+        }
     }
 }

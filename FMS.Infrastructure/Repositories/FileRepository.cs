@@ -88,27 +88,6 @@ namespace FMS.Infrastructure.Repositories
             return allSequencesForCounty.Count == 0 ? 1 : allSequencesForCounty.Max() + 1;
         }
 
-        public Task<Guid> CreateFileAsync(int countyId)
-        {
-            if (Data.Counties.All(e => e.Id != countyId))
-            {
-                throw new ArgumentException($"County ID {countyId} does not exist.", nameof(countyId));
-            }
-
-            return CreateFileInternalAsync(countyId);
-        }
-
-        private async Task<Guid> CreateFileInternalAsync(int countyId)
-        {
-            var nextSequence = await GetNextSequenceForCountyAsync(countyId);
-            var file = new File(countyId, nextSequence);
-
-            await _context.Files.AddAsync(file);
-            await _context.SaveChangesAsync();
-
-            return file.Id;
-        }
-
         public async Task UpdateFileAsync(Guid id, bool active)
         {
             var file = await _context.Files.FindAsync(id);
@@ -148,7 +127,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Cabinets.AsNoTracking()
                 .Where(e => e.Active)
                 .Where(e => !cabinetsForFile.Contains(e.Id))
-                .OrderBy(e => e.Name)
+                .OrderBy(e => e.CabinetNumber)
                 .Select(e => new CabinetSummaryDto(e))
                 .ToListAsync();
         }
