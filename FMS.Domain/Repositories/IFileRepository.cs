@@ -15,7 +15,6 @@ namespace FMS.Domain.Repositories
         Task<int> CountAsync(FileSpec spec);
         Task<PaginatedList<FileDetailDto>> GetFileListAsync(FileSpec spec, int pageNumber, int pageSize);
         Task<int> GetNextSequenceForCountyAsync(int countyId);
-        // Task<Guid> GetPreferredCabinetForFile(string fileLabel);
         Task UpdateFileAsync(Guid id, bool active);
 
         Task<List<CabinetSummaryDto>> GetCabinetsForFileAsync(Guid id);

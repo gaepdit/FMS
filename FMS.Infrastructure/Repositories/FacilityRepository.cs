@@ -43,13 +43,13 @@ namespace FMS.Infrastructure.Repositories
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null) return null;
-            
+
             facility.RetentionRecords = facility.RetentionRecords
                 .OrderBy(e => e.StartYear)
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
 
-            return  new FacilityDetailDto(facility);
+            return new FacilityDetailDto(facility);
         }
 
         public async Task<int> CountAsync(FacilitySpec spec)
@@ -191,11 +191,7 @@ namespace FMS.Infrastructure.Repositories
             if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
             {
                 // If File Label is empty, generate new File
-                var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(newFacility.CountyId);
-                file = new File(newFacility.CountyId, nextSequence);
-                
-                // TODO #97: Add cabinet
-                await _context.Files.AddAsync(file);
+                file = await CreateFileInternal(newFacility.CountyId);
             }
             else
             {
@@ -245,14 +241,10 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Facility Number '{facilityUpdates.FacilityNumber}' already exists.");
             }
 
-            File file;
             if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
             {
                 // Generate new File if File Label is empty
-                var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(facilityUpdates.CountyId);
-                file = new File(facilityUpdates.CountyId, nextSequence);
-                await _context.Files.AddAsync(file);
-                facility.File = file;
+                facility.File = await CreateFileInternal(facilityUpdates.CountyId);
             }
             else
             {
@@ -260,7 +252,7 @@ namespace FMS.Infrastructure.Repositories
                 var oldFile = await _context.Files.FindAsync(facility.FileId);
                 if (facilityUpdates.FileLabel != oldFile.FileLabel)
                 {
-                    file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
+                    var file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
                     if (file == null)
                         throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
                     facility.File = file;
@@ -285,6 +277,36 @@ namespace FMS.Infrastructure.Repositories
             facility.Latitude = facilityUpdates.Latitude;
 
             await _context.SaveChangesAsync();
+        }
+
+        private async Task<File> CreateFileInternal(int countyId)
+        {
+            // Generate new File
+            var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(countyId);
+            var file = new File(countyId, nextSequence);
+            await _context.Files.AddAsync(file);
+
+            // Add Cabinet to new File
+            var cabinetId = await GetRecommendedCabinetForFile(file.FileLabel);
+            if (cabinetId.HasValue)
+            {
+                await _context.CabinetFileJoin
+                    .AddAsync(new CabinetFile() {CabinetId = cabinetId.Value, FileId = file.Id});
+            }
+
+            return file;
+        }
+
+        // ReSharper disable once StringCompareIsCultureSpecific.1
+        public async Task<Guid?> GetRecommendedCabinetForFile(string fileLabel)
+        {
+            // Get last (active) cabinet where file label is less than the new file label alphabetically
+            var cabinet = await _context.Cabinets.AsNoTracking()
+                .OrderBy(e => e.CabinetNumber)
+                .LastOrDefaultAsync(e => e.Active
+                    && string.Compare(e.FirstFileLabel, fileLabel) <= 0);
+
+            return cabinet?.Id;
         }
 
         public async Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null) =>

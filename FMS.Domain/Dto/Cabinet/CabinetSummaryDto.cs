@@ -1,6 +1,6 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -21,8 +21,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Cabinet Number")]
         public string Name { get; }
-        
+
         [Display(Name = "First File Label")]
-        public string FirstFileLabel { get;  }
+        public string FirstFileLabel { get; }
     }
 }

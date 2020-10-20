@@ -1,8 +1,8 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -16,7 +16,7 @@ namespace FMS.Domain.Dto
             Name = cabinet.Name;
             FirstFileLabel = cabinet.FirstFileLabel;
             Files = cabinet.CabinetFiles?
-                .Select(c => new FileSummaryDto(c.File)).ToList()
+                    .Select(c => new FileSummaryDto(c.File)).ToList()
                 ?? new List<FileSummaryDto>();
         }
 

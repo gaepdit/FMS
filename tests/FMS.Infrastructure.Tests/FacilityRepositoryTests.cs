@@ -717,6 +717,24 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"Facility Number '{existingNumber}' already exists.");
         }
 
+        // GetRecommendedCabinetForFile
+
+        [Theory]
+        [InlineData("000-0000", 1)]
+        [InlineData("100-0001", 1)]
+        [InlineData("110-0000", 2)]
+        [InlineData("110-0001", 3)]
+        [InlineData("111-0001", 5)]
+        [InlineData("111-0002", 5)]
+        [InlineData("999-9999", 5)]
+        public async Task GetRecommendedCabinetForFile_Succeeds(string fileLabel, int cabinetNumber)
+        {
+            var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.GetRecommendedCabinetForFile(fileLabel);
+            var cabinet = SimpleRepositoryData.Cabinets.Single(e => e.CabinetNumber == cabinetNumber);
+            result.ShouldEqual(cabinet.Id);
+        }
+
         // FacilityNumberExists
 
         [Fact]

@@ -84,7 +84,7 @@ namespace FMS.Domain.Tests
         {
             File.IsValidFileLabelFormat(fileLabel).Should().BeTrue();
         }
-        
+
         [Theory]
         [InlineData("0000000")]
         [InlineData("00000000")]

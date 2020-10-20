@@ -359,7 +359,7 @@ namespace FMS.Infrastructure.Tests
         {
             using var repository = new RepositoryHelper().GetFileRepository();
             var cf = DataHelpers.CabinetFiles[0];
-            var cabinet =  DataHelpers.GetCabinetSummary(cf.CabinetId);
+            var cabinet = DataHelpers.GetCabinetSummary(cf.CabinetId);
 
             await repository.RemoveCabinetFromFileAsync(cf.CabinetId, cf.FileId);
 
