@@ -51,16 +51,17 @@ namespace FMS.Pages.Facilities
                 return NotFound();
             }
 
-            Id = id.Value;
-            Facility = new FacilityEditDto(await _repository.GetFacilityAsync(id.Value));
+            var fac = await _repository.GetFacilityAsync(id.Value);
 
-            if (Facility == null)
+            if (fac == null)
             {
                 return NotFound();
             }
 
-            await PopulateSelectsAsync();
+            Id = id.Value;
+            Facility = new FacilityEditDto(fac);
 
+            await PopulateSelectsAsync();
             return Page();
         }
 

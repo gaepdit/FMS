@@ -41,10 +41,10 @@ namespace FMS.App.Tests.Files
                 .Verifiable();
             var pageModel = new Pages.Files.EditModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Id.Should().Be((Guid) default);
+            pageModel.Id.Should().Be(Guid.Empty);
             pageModel.FileLabel.Should().Be(default);
             pageModel.Delete.ShouldBeFalse();
         }
@@ -58,7 +58,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Id.Should().Be(default(Guid));
+            pageModel.Id.Should().Be(Guid.Empty);
             pageModel.FileLabel.Should().Be(default);
             pageModel.Delete.ShouldBeFalse();
         }

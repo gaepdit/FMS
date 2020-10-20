@@ -42,7 +42,7 @@ namespace FMS.App.Tests.Files
             var mockRepository = new Mock<IFileRepository>();
             var pageModel = new Pages.Files.DetailsModel(mockRepository.Object);
 
-            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync("abcd").ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.FileDetail.ShouldBeNull();

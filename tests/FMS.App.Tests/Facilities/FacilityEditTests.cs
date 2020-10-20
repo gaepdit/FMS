@@ -46,10 +46,10 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = new Mock<ISelectListHelper>();
             var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
 
-            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Id.Should().Be(default(Guid));
+            pageModel.Id.Should().Be(Guid.Empty);
             pageModel.Facility.ShouldBeNull();
         }
 
@@ -63,7 +63,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Id.Should().Be(default(Guid));
+            pageModel.Id.Should().Be(Guid.Empty);
             pageModel.Facility.ShouldBeNull();
         }
 

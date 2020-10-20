@@ -39,7 +39,7 @@ namespace FMS.App.Tests.Users
             var mockUserService = new Mock<IUserService>();
             var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);
 
-            var result = await pageModel.OnGetAsync(default).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Email.ShouldBeNull();

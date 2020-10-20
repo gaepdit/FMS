@@ -27,7 +27,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityExists_NotExists_ReturnsFalse()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var result = await repository.FacilityExistsAsync(default);
+            var result = await repository.FacilityExistsAsync(Guid.Empty);
             result.ShouldBeFalse();
         }
 
@@ -49,7 +49,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNonexistentFacility_ReturnsNull()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var result = await repository.GetFacilityAsync(default);
+            var result = await repository.GetFacilityAsync(Guid.Empty);
             result.ShouldBeNull();
         }
 
@@ -643,7 +643,7 @@ namespace FMS.Infrastructure.Tests
             Func<Task> action = async () =>
             {
                 using var repository = new RepositoryHelper().GetFacilityRepository();
-                await repository.UpdateFacilityAsync(default, updates);
+                await repository.UpdateFacilityAsync(Guid.Empty, updates);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
@@ -658,7 +658,7 @@ namespace FMS.Infrastructure.Tests
             Func<Task> action = async () =>
             {
                 using var repository = new RepositoryHelper().GetFacilityRepository();
-                await repository.UpdateFacilityAsync(default, updates);
+                await repository.UpdateFacilityAsync(Guid.Empty, updates);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
@@ -673,7 +673,7 @@ namespace FMS.Infrastructure.Tests
             Func<Task> action = async () =>
             {
                 using var repository = new RepositoryHelper().GetFacilityRepository();
-                await repository.UpdateFacilityAsync(default, updates);
+                await repository.UpdateFacilityAsync(Guid.Empty, updates);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
@@ -723,7 +723,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityNumberExists_Unique_ReturnsFalse()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var result = await repository.FacilityNumberExists("Unique", default);
+            var result = await repository.FacilityNumberExists("Unique");
             result.ShouldBeFalse();
         }
 
@@ -731,7 +731,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityNumberExists_Duplicate_ReturnsTrue()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var result = await repository.FacilityNumberExists("ABC", default);
+            var result = await repository.FacilityNumberExists("ABC");
             result.ShouldBeTrue();
         }
 
@@ -778,7 +778,7 @@ namespace FMS.Infrastructure.Tests
         public async Task RetentionRecord_NotExists_ReturnsFalse()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var result = await repository.RetentionRecordExistsAsync(default);
+            var result = await repository.RetentionRecordExistsAsync(Guid.Empty);
             result.ShouldBeFalse();
         }
 
@@ -799,7 +799,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetNonexistentRetentionRecord_ReturnsNull()
         {
             using var repository = new RepositoryHelper().GetFacilityRepository();
-            var result = await repository.GetRetentionRecordAsync(default);
+            var result = await repository.GetRetentionRecordAsync(Guid.Empty);
             result.ShouldBeNull();
         }
 

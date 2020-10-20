@@ -38,7 +38,7 @@ namespace FMS.App.Tests.Facilities
             var mockRepo = new Mock<IFacilityRepository>();
             var pageModel = new Pages.Facilities.DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(default, null).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(Guid.Empty, null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.FacilityDetail.ShouldBeNull();

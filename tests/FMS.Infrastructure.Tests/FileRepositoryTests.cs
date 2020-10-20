@@ -303,7 +303,7 @@ namespace FMS.Infrastructure.Tests
             Func<Task> action = async () =>
             {
                 using var repository = new SimpleRepositoryHelper().GetFileRepository();
-                await repository.UpdateFileAsync(default, default);
+                await repository.UpdateFileAsync(Guid.Empty, default);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))

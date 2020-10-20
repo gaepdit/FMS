@@ -1,9 +1,11 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Threading.Tasks;
+using FluentAssertions;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
+using FMS.Pages.Account;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace FMS.App.Tests.Account
@@ -12,7 +14,7 @@ namespace FMS.App.Tests.Account
     {
         private static readonly ApplicationUser _user = new ApplicationUser()
         {
-            Id = default,
+            Id = Guid.Empty,
             Email = "example.one@example.com",
             GivenName = "Sample",
             FamilyName = "User"
@@ -25,7 +27,7 @@ namespace FMS.App.Tests.Account
             mockUserService.Setup(l => l.GetCurrentUserAsync())
                 .ReturnsAsync(_user)
                 .Verifiable();
-            var pageModel = new Pages.Account.IndexModel(mockUserService.Object);
+            var pageModel = new IndexModel(mockUserService.Object);
 
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
