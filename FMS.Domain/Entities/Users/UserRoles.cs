@@ -39,7 +39,7 @@ namespace FMS.Domain.Entities.Users
                     "Users with the File Creator role are able to add new facilities, files, " +
                     "and retention records.",
                 FileEditor =>
-                    "Users with the File Editor role are able to edit facilities, files, and " +
+                    "Users with the File Editor role are able to add and edit facilities, files, and " +
                     "retention records, and delete files.",
                 _ => role
             };
