@@ -1,10 +1,18 @@
-﻿using FMS.Domain.Entities.Base;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
     public class FacilityType : BaseActiveModel, INamedModel
     {
+        public FacilityType() { }
+
+        public FacilityType(FacilityTypeCreateDto newFacilityType)
+        {
+            Name = newFacilityType.Name;
+            Code = newFacilityType.Code;
+        }
         // Existing numeric code
         public int Code { get; set; }
 

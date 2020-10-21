@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -10,13 +9,10 @@ namespace FMS.Domain.Dto
 
         public FacilityTypeEditDto(FacilityType facilityType)
         {
-            Id = facilityType.Id;
             Active = facilityType.Active;
             Code = facilityType.Code;
             Name = facilityType.Name;
         }
-
-        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 
@@ -25,5 +21,10 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Facility Type")]
         public string Name { get; set; }
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }

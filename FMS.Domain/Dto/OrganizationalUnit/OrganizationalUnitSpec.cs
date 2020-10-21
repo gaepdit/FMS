@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -12,6 +9,5 @@ namespace FMS.Domain.Dto
         [Display(Name = "Organizational Unit")]
         public string Name { get; set; }
 
-        //public Guid ComplianceOfficerId { get; set; }
     }
 }

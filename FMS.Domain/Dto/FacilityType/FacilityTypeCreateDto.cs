@@ -12,5 +12,10 @@ namespace FMS.Domain.Dto
         [StringLength(20)]
         [Display(Name = "Facility Type")]
         public string Name { get; set; }
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }
