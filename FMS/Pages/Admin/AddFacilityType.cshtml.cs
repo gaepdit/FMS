@@ -33,7 +33,7 @@ namespace FMS.Pages.Admin
 
             FacilityType.TrimAll();
 
-            // When adding a new Budget Code, make sure the number doesn't already exist before trying to save.
+            // When adding a new Facility Type, make sure the number doesn't already exist before trying to save.
             if (await _facilityTypeRepository.FacilityTypeCodeExistsAsync(FacilityType.Code))
             {
                 ModelState.AddModelError("FacilityType.Code", "Code entered already exists.");
@@ -46,7 +46,7 @@ namespace FMS.Pages.Admin
 
             await _facilityTypeRepository.CreateFacilityTypeAsync(FacilityType);
 
-            TempData?.SetDisplayMessage(Context.Success, $"Facility Type {FacilityType.Code} successfully created.");
+            TempData?.SetDisplayMessage(Context.Success, $"Facility Type {FacilityType.Name} successfully created.");
 
             return RedirectToPage("./Index");
         }

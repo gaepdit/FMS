@@ -86,12 +86,12 @@
 <div class="container-fluid">
     <table class="table">
         <caption class="container border-top">
-            <a asp-page="AddComplianceOfficer" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Compliance Officer</a>
+            <a asp-page="./AddComplianceOfficer" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Compliance Officer</a>
         </caption>
         <thead class="thead-light">
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Restore/Remove</th>
+                <th scope="col">Add/Remove</th>
             </tr>
         </thead>
         <tbody>
@@ -106,7 +106,7 @@
                         }
                     </td>
                     <td>
-                        <a asp-page="DetailsComplianceOfficer" asp-route-id="@item.Name" class="btn btn-outline-info btn-sm">Add/Remove</a>
+                        <a asp-page="./DetailsComplianceOfficer" asp-route-id="@item.Name" class="btn btn-outline-info btn-sm">Add/Remove</a>
                     </td>
                 </tr>
             }

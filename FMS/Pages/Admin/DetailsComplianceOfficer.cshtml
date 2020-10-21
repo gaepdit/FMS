@@ -1,13 +1,11 @@
-﻿@page "{id:Guid?}"
+﻿@page "{name:string?}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Admin.DetailsComplianceOfficerModel
 @{
-    ViewData["Title"] = "User Profile: " + Model.DisplayName;
+    ViewData["Title"] = $"Compliance Officer: {Model.DisplayName}";
 }
-<h1>FMS User Profile</h1>
-
+<h1>@ViewData["Title"]</h1>
 <partial name="_AlertPartial" for="Message" />
-
 <div class="container">
     <div class="row my-3">
         <div class="mr-2">
@@ -21,7 +19,6 @@
                         @Model.DisplayName
                     </h2>
                     <p>@Model.Email</p>
-
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
