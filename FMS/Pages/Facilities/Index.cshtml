@@ -164,8 +164,7 @@
                 <th scope="col">File</th>
                 <th scope="col">Name</th>
                 <th scope="col">Address</th>
-                <th scope="col">Cabinets</th>
-                <th scope="col">Retention Records</th>
+                <th scope="col">Records</th>
             </tr>
             </thead>
             <tbody>
@@ -189,28 +188,26 @@
                         @Html.DisplayFor(m => item.PostalCode)
                     </td>
                     <td>
+                        @if (item.Cabinets.Count == 0 && item.RetentionRecords.Count == 0)
+                        {
+                            <span class="text-muted">none</span>
+                        }
                         @if (item.Cabinets.Count > 0)
                         {
+                            <b class="font-weight-medium">Cabinets:</b><br />
                             @item.Cabinets.ConcatNonEmpty(", ")
                         }
-                        else
-                        {
-                            <span class="text-muted">none</span>
-                        }
-                    </td>
-                    <td>
                         @if (item.RetentionRecords.Count > 0)
                         {
-                            <ul class="list-unstyled">
-                                @foreach (var r in item.RetentionRecords)
-                                {
-                                    <li>@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
-                                }
-                            </ul>
-                        }
-                        else
-                        {
-                            <span class="text-muted">none</span>
+                            <div>
+                                <b class="font-weight-medium">Offsite:</b><br />
+                                <ul class="list-unstyled">
+                                    @foreach (var r in item.RetentionRecords)
+                                    {
+                                        <li class="text-nowrap">@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
+                                    }
+                                </ul>
+                            </div>
                         }
                     </td>
                 </tr>
