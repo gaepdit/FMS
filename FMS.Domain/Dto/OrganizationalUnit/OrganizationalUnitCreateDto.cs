@@ -11,6 +11,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Organizational Unit")]
         public string Name { get; set; }
 
-        //public Guid ComplianceOfficerId { get; set; }
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }

@@ -7,8 +7,12 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         [Display(Name = "Facility Status")]
-        public string Name { get; set; }
+        [Required]
+        public string Status { get; set; }
 
-        //public Guid EnvironmentalInterestId { get; set; }
+        public void TrimAll()
+        {
+            Status = Status?.Trim();
+        }
     }
 }

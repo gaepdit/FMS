@@ -1,7 +1,7 @@
 ﻿@page "{id:Guid?}"
-@model FMS.Pages.Admin.DeleteBudgetCodeModel
+@model FMS.Pages.Admin.DeleteFacilityStatusModel
 @{
-    ViewData["Title"] = $"Remove Budget Code: {Model.Code}";
+    ViewData["Title"] = $"Remove Facility Status: {Model.Status}";
 }
 <h1>
     @ViewData["Title"]
@@ -26,14 +26,14 @@
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-danger">This Budget Code is currently Inactive and will not show in Drop-Down Menus.</h5>
+        <h5 class="alert alert-danger">This Facility Status is currently Inactive and will not show in Drop-Down Menus.</h5>
     </div>
 }
 @if (Model.ShowChange == true)
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-success">Budget Code: @Model.Code has changed successfully.</h5>
+        <h5 class="alert alert-success">Facility Status: @Model.Status has changed successfully.</h5>
         <br />
     </div>
 }

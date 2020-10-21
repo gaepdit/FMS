@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
@@ -16,7 +15,6 @@ namespace FMS.Pages.Admin
     {
         private readonly IBudgetCodeRepository _budgetCodeRepository;
         private readonly IComplianceOfficerRepository _complianceOfficerRepository;
-        private readonly IEnvironmentalInterestRepository _environmentalInterestRepository;
         private readonly IFacilityStatusRepository _facilityStatusRepository;
         private readonly IFacilityTypeRepository _facilityTypeRepository;
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
@@ -25,25 +23,23 @@ namespace FMS.Pages.Admin
         public IReadOnlyList<FacilityTypeSummaryDto> FacilityTypes { get; private set; }
         public IReadOnlyList<BudgetCodeSummaryDto> BudgetCodes { get; private set; }
         public IReadOnlyList<OrganizationalUnitSummaryDto> OrganizationalUnits { get; private set; }
-        public IReadOnlyList<EnvironmentalInterestSummaryDto> EnvironmentalInterests { get; private set; }
         public IReadOnlyList<ComplianceOfficerSummaryDto> ComplianceOfficers { get; set; }
         
         [Display(Name = "Select a Drop-Down Menu to Edit")]
         [BindProperty(SupportsGet =true)]
         public int DropDownSelection { get; set; }
         public string Message { get; set; }
+        public DisplayMessage DisplayMessage { get; set; }
 
         public IndexModel(
             IBudgetCodeRepository budgetCodeRepository,
             IComplianceOfficerRepository complianceOfficerRepository,
-            IEnvironmentalInterestRepository environmentalInterestRepository,
             IFacilityStatusRepository facilityStatusRepository,
             IFacilityTypeRepository facilityTypeRepository,
             IOrganizationalUnitRepository organizationalUnitRepository)
         {
             _budgetCodeRepository = budgetCodeRepository;
             _complianceOfficerRepository = complianceOfficerRepository;
-            _environmentalInterestRepository = environmentalInterestRepository;
             _facilityStatusRepository = facilityStatusRepository;
             _facilityTypeRepository = facilityTypeRepository;
             _organizationalUnitRepository = organizationalUnitRepository;
@@ -52,6 +48,7 @@ namespace FMS.Pages.Admin
         public void OnGet()
         {
             DropDownSelection = 0;
+            DisplayMessage = TempData?.GetDisplayMessage();
             Message = "";
         }
 
@@ -71,9 +68,6 @@ namespace FMS.Pages.Admin
                     break;
                 case 2:
                     ComplianceOfficers = await _complianceOfficerRepository.GetComplianceOfficerListAsync();
-                    break;
-                case 3:
-                    EnvironmentalInterests = await _environmentalInterestRepository.GetEnvironmentalInterestListAsync();
                     break;
                 case 4:
                     FacilityStatuses = await _facilityStatusRepository.GetFacilityStatusListAsync();

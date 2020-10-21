@@ -1,7 +1,7 @@
 ﻿@page "{id:Guid?}"
-@model FMS.Pages.Admin.DeleteBudgetCodeModel
+@model FMS.Pages.Admin.DeleteOrganizationalUnitModel
 @{
-    ViewData["Title"] = $"Remove Budget Code: {Model.Code}";
+    ViewData["Title"] = $"Remove Organizational Unit: {Model.Name}";
 }
 <h1>
     @ViewData["Title"]
@@ -33,7 +33,7 @@
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-success">Budget Code: @Model.Code has changed successfully.</h5>
+        <h5 class="alert alert-success">Budget Code: @Model.Name has changed successfully.</h5>
         <br />
     </div>
 }

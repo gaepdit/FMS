@@ -1,0 +1,38 @@
+﻿@page "{id:Guid?}"
+@model FMS.Pages.Admin.EditOrganizationalUnitModel
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@{
+    ViewData["Title"] = $"Edit Organizational Unit: {Model.OrganizationalUnit.Name}";
+}
+<h1>
+    @ViewData["Title"]
+    @if (!Model.OrganizationalUnit.Active)
+    {
+        <span class="text-muted">(Deleted)</span>
+    }
+</h1>
+<hr />
+<div class="container-fluid">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="OrganizationalUnit.Active" />
+        <input type="hidden" asp-for="Id" />
+        <div class="form-row">
+            <div class="form-group col-md-10">
+                <label>Budget Code Name <span class="text-danger">*</span></label>
+                <input asp-for="OrganizationalUnit.Name" class="form-control" />
+                <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="form-row">
+            <div class="col">
+                <p class="text-danger">* denotes a required field</p>
+                <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+                <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Return to Site Maintenance</a>
+            </div>
+        </div>
+    </form>
+</div>

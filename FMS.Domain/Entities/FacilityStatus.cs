@@ -1,13 +1,17 @@
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
     public class FacilityStatus : BaseActiveModel, INamedModel
     {
-        public string Status { get; set; }
+        public FacilityStatus() { }
 
-        //public Guid EnvironmentalInterestId { get; set; }
-        public EnvironmentalInterest EnvironmentalInterest { get; set; }
+        public FacilityStatus(FacilityStatusCreateDto newFacilityStatus)
+        {
+            Status = newFacilityStatus.Status;
+        }
+        public string Status { get; set; }
 
         public string Name => Status;
     }

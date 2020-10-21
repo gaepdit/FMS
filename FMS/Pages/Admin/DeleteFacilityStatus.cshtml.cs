@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
@@ -10,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FMS.Pages.Admin
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class DeleteBudgetCodeModel : PageModel
+    public class DeleteFacilityStatusModel : PageModel
     {
         [BindProperty]
         public bool Delete { get; set; }
@@ -19,13 +21,13 @@ namespace FMS.Pages.Admin
         public Guid Id { get; set; }
 
         [BindProperty]
-        public string Code { get; set; }
+        public string Status { get; set; }
 
         [BindProperty]
         public bool ShowChange { get; set; }
 
-        private readonly IBudgetCodeRepository _budgetCodeRepository;
-        public DeleteBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) => _budgetCodeRepository = budgetCodeRepository;
+        private readonly IFacilityStatusRepository _facilityStatusRepository;
+        public DeleteFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) => _facilityStatusRepository = facilityStatusRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -34,18 +36,18 @@ namespace FMS.Pages.Admin
                 return NotFound();
             }
 
-            var budgetCode = await _budgetCodeRepository.GetBudgetCodeAsync(id.Value);
+            var facilityStatus = await _facilityStatusRepository.GetFacilityStatusAsync(id.Value);
 
-            if (budgetCode == null)
+            if (facilityStatus == null)
             {
                 return NotFound();
             }
 
             Id = id.Value;
-            Delete = !budgetCode.Active;
-            Code = budgetCode.Code;
+            Delete = !facilityStatus.Active;
+            Status = facilityStatus.Status;
             ShowChange = false;
-            
+
             return Page();
         }
 
@@ -53,17 +55,17 @@ namespace FMS.Pages.Admin
         {
             if (!ModelState.IsValid)
             {
-                Code = (await _budgetCodeRepository.GetBudgetCodeAsync(Id)).Code;
+                Status = (await _facilityStatusRepository.GetFacilityStatusAsync(Id)).Status;
                 return Page();
             }
 
             try
             {
-                await _budgetCodeRepository.UpdateBudgetCodeStatusAsync(Id, !Delete);
+                await _facilityStatusRepository.UpdateFacilityStatusStatusAsync(Id, !Delete);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _budgetCodeRepository.BudgetCodeExistsAsync(Id))
+                if (!await _facilityStatusRepository.FacilityStatusExistsAsync(Status))
                 {
                     return NotFound();
                 }
@@ -72,7 +74,7 @@ namespace FMS.Pages.Admin
                     throw;
                 }
             }
-            Code = (await _budgetCodeRepository.GetBudgetCodeAsync(Id)).Code;
+            Status = (await _facilityStatusRepository.GetFacilityStatusAsync(Id)).Status;
             ShowChange = true;
 
             return Page();

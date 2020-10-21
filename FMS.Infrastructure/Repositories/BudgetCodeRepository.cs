@@ -19,8 +19,10 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> BudgetCodeExistsAsync(Guid id) =>
             await _context.BudgetCodes.AnyAsync(e => e.Id == id);
 
-        private async Task<bool> BudgetCodeExistsAsync(string code) =>
+        public async Task<bool> BudgetCodeExistsAsync(string code) =>
             await _context.BudgetCodes.AnyAsync(e => e.Code == code);
+
+        public async Task<bool> BudgetCodeCodeExistsAsync(string budgetCodeCode, Guid? ignoreId = null) => await _context.BudgetCodes.AnyAsync(e => e.Code == budgetCodeCode && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<int> CountAsync()
         {
@@ -43,13 +45,18 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<BudgetCodeSummaryDto>> GetBudgetCodeListAsync()
         {
             return await _context.BudgetCodes.AsNoTracking()
-                .OrderBy(e => e.Name)
+                .OrderBy(e => e.Code)
                 .Select(e => new BudgetCodeSummaryDto(e))
                 .ToListAsync();
         }
 
         public async Task<Guid> CreateBudgetCodeAsync(BudgetCodeCreateDto budgetCode)
         {
+            if(budgetCode == null)
+            {
+                throw new ArgumentException("Values required for new Budget Code.");
+            }
+
             if (string.IsNullOrWhiteSpace(budgetCode.Code))
             {
                 throw new ArgumentException("New Code for Budget Code is required.");
@@ -113,8 +120,6 @@ namespace FMS.Infrastructure.Repositories
 
             await _context.SaveChangesAsync();
         }
-
-        public async Task<bool> BudgetCodeCodeExistsAsync(string budgetCodeCode, Guid? ignoreId = null) => await _context.BudgetCodes.AnyAsync(e => e.Code == budgetCodeCode && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task UpdateBudgetCodeStatusAsync(Guid id, bool active)
         {

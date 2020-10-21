@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -15,24 +16,60 @@ namespace FMS.Infrastructure.Repositories
 
         public FacilityStatusRepository(FmsDbContext context) => _context = context;
 
-        public Task<int> CountAsync(FacilityStatusSpec spec)
+        public async Task<int> CountAsync(FacilityStatusSpec spec)
         {
-            throw new NotImplementedException();
+            return await _context.FacilityStatuses.AsNoTracking().CountAsync();
         }
 
-        public Task<Guid> CreateFacilityStatusAsync(FacilityStatusCreateDto facilityStatus)
+        public async Task<Guid> CreateFacilityStatusAsync(FacilityStatusCreateDto facilityStatus)
         {
-            throw new NotImplementedException();
+            if (facilityStatus == null)
+            {
+                throw new ArgumentException("Values required for new Facility Status.");
+            }
+
+            if (string.IsNullOrWhiteSpace(facilityStatus.Status))
+            {
+                throw new ArgumentException("New Name for Facility Status is required.");
+            }
+
+            return await CreatefacilityStatusInternalAsync(facilityStatus);
         }
 
-        public Task<bool> FacilityStatusExistsAsync(Guid id)
+        public async Task<Guid> CreatefacilityStatusInternalAsync(FacilityStatusCreateDto facilityStatus)
         {
-            throw new NotImplementedException();
+            if (await FacilityStatusExistsAsync(facilityStatus.Status))
+            {
+                throw new ArgumentException($"Facility Status {facilityStatus.Status} Already Exists.");
+            }
+
+            var newFS = new FacilityStatus(facilityStatus);
+
+            await _context.FacilityStatuses.AddAsync(newFS);
+            await _context.SaveChangesAsync();
+
+            return newFS.Id;
         }
 
-        public Task<FacilityStatusDetailDto> GetFacilityStatusAsync(Guid id)
+        public async Task<bool> FacilityStatusExistsAsync(Guid id) =>
+            await _context.FacilityStatuses.AnyAsync(e => e.Id == id);
+
+        public async Task<bool> FacilityStatusExistsAsync(string status) =>
+            await _context.FacilityStatuses.AnyAsync(e => e.Status == status);
+
+        public async Task<bool> FacilityStatusStatusExistsAsync(string facilityStatusStatus, Guid? ignoreId = null) => await _context.FacilityStatuses.AnyAsync(e => e.Status == facilityStatusStatus && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public async Task<FacilityStatusEditDto> GetFacilityStatusAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var facilityStatus = await _context.FacilityStatuses.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (facilityStatus == null)
+            {
+                return null;
+            }
+
+            return new FacilityStatusEditDto(facilityStatus);
         }
 
         public async Task<IReadOnlyList<FacilityStatusSummaryDto>> GetFacilityStatusListAsync()
@@ -45,8 +82,48 @@ namespace FMS.Infrastructure.Repositories
 
         public Task UpdateFacilityStatusAsync(Guid id, FacilityStatusEditDto facilityStatusUpdates)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(facilityStatusUpdates.Status))
+            {
+                throw new ArgumentException("Facility Status Name is required.");
+            }
+            
+            return UpdateFacilityStatusUpdatesInternalAsync(id, facilityStatusUpdates);
         }
+
+        public async Task UpdateFacilityStatusUpdatesInternalAsync(Guid id, FacilityStatusEditDto facilityStatusUpdates)
+        {
+            var facilityStatus = await _context.FacilityStatuses.FindAsync(id);
+
+            if (facilityStatus == null)
+            {
+                throw new ArgumentException("Facility Status ID not found.", nameof(id));
+            }
+
+            if (await FacilityStatusStatusExistsAsync(facilityStatus.Status, id))
+            {
+                throw new ArgumentException($"Facility Status '{facilityStatus.Status}' already exists.");
+            }
+
+            facilityStatus.Status = facilityStatusUpdates.Status;
+            facilityStatus.Active = true;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateFacilityStatusStatusAsync(Guid id, bool active)
+        {
+            var facilityStatus = await _context.FacilityStatuses.FindAsync(id);
+
+            if (facilityStatus == null)
+            {
+                throw new ArgumentException("Facility Status ID not found");
+            }
+
+            facilityStatus.Active = active;
+
+            await _context.SaveChangesAsync();
+        }
+
 
         #region IDisposable Support
 

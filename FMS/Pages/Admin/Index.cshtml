@@ -5,6 +5,8 @@
 }
 <h1>@ViewData["Title"]</h1>
 <hr />
+<partial name="_AlertPartial" for="DisplayMessage" />
+
 <div class="container-fluid">
     <form method="get" asp-fragment="SearchResults">
         <div class="form-row">
@@ -14,7 +16,6 @@
                     <option value=0></option>
                     <option value=1>Budget Code</option>
                     <option value=2>Compliance Officer</option>
-                    <option value=3>Environmental Interest</option>
                     <option value=4>Facility Status</option>
                     <option value=5>Facility Type</option>
                     <option value=6>Organizational Unit</option>
@@ -49,30 +50,30 @@
                     <th scope="col">Name</th>
                     <th scope="col">Organization Number</th>
                     <th scope="col">Project Number</th>
-                    <th scope="col">Edit | Delete</th>
+                    <th scope="col">Edit | Restore/Remove</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (FMS.Domain.Dto.BudgetCodeSummaryDto item in Model.BudgetCodes)
                 {
                     <tr>
-                        <td>
+                        <td class="text-nowrap">
                             @Html.DisplayFor(m => item.Code, "StringOrNone")
                             @if (!item.Active)
                             {
-                                <span class="text-muted">(Deleted)</span>
+                                <span class="text-muted">(Removed)</span>
                             }
                         </td>
-                        <td class="text-nowrap">
+                        <td>
                             @Html.DisplayFor(m => item.Name, "StringOrNone")
                         </td>
                         <td>@Html.DisplayFor(m => item.OrganizationNumber, "StringOrNone")</td>
                         <td>
                             @Html.DisplayFor(m => item.ProjectNumber, "StringOrNone")<br />
                         </td>
-                        <td>
+                        <td class="text-nowrap">
                             <a asp-page="EditBudgetCode" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
-                            <a asp-page="DeleteBudgetCode" asp-route-id="@item.Id"  class="btn btn-outline-info btn-sm">Delete</a>
+                            <a asp-page="DeleteBudgetCode" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Restore/Remove</a>
                         </td>
                     </tr>
                 }
@@ -90,7 +91,7 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Add | Remove</th>
+                <th scope="col">Restore/Remove</th>
             </tr>
         </thead>
         <tbody>
@@ -101,52 +102,17 @@
                         @Html.DisplayFor(m => item.Name, "StringOrNone")
                         @if (!item.Active)
                         {
-                            <span class="text-muted">(Deleted)</span>
+                            <span class="text-muted">(Removed)</span>
                         }
                     </td>
                     <td>
-                        <a asp-page="AddComplianceOfficer" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Add</a>
-                        <a asp-page="DeleteComplianceOfficer" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                        <a asp-page="DetailsComplianceOfficer" asp-route-id="@item.Name" class="btn btn-outline-info btn-sm">Add/Remove</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-}
-@if (Model.DropDownSelection == 3)
-{
-    <div class="container-fluid">
-        <table class="table">
-            <caption class="container border-top">
-                <a asp-page="AddEnvironmentalInterest" asp-route-id="" class="btn btn-outline-info btn-sm">Add New Environmental Interest</a>
-            </caption>
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Edit | Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (FMS.Domain.Dto.EnvironmentalInterestSummaryDto item in Model.EnvironmentalInterests)
-                {
-                    <tr>
-                        <td class="text-nowrap">
-                            @Html.DisplayFor(m => item.Name, "StringOrNone")
-                            @if (!item.Active)
-                            {
-                                <span class="text-muted">(Deleted)</span>
-                            }
-                        </td>
-                        <td>
-                            <a asp-page="EditEnvironmentalInterest" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
-                            <a asp-page="DeleteEnvironmentalInterest" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
 }
 @if (Model.DropDownSelection == 4)
 {
@@ -158,7 +124,7 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Status Name</th>
-                    <th scope="col">Edit | Remove</th>
+                    <th scope="col">Edit | Restore/Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -169,12 +135,12 @@
                             @Html.DisplayFor(m => item.Status, "StringOrNone")
                             @if (!item.Active)
                             {
-                                <span class="text-muted">(Deleted)</span>
+                                <span class="text-muted">(Removed)</span>
                             }
                         </td>
                         <td>
                             <a asp-page="EditFacilityStatus" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
-                            <a asp-page="DeleteFacilityStatus" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                            <a asp-page="DeleteFacilityStatus" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Restore/Remove</a>
                         </td>
                     </tr>
                 }
@@ -193,7 +159,7 @@
                 <tr>
                     <th scope="col">Code</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Edit | Remove</th>
+                    <th scope="col">Edit | Restore/Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -204,7 +170,7 @@
                         @Html.DisplayFor(m => item.Code)
                         @if (!item.Active)
                         {
-                            <span class="text-muted">(Deleted)</span>
+                            <span class="text-muted">(Removed)</span>
                         }
 
                     </td>
@@ -213,7 +179,7 @@
                     </td>
                     <td>
                         <a asp-page="EditFacilityType" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
-                        <a asp-page="DeleteFacilityType" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                        <a asp-page="DeleteFacilityType" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Restore/Remove</a>
                     </td>
                 </tr>
                 }
@@ -231,7 +197,7 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Edit | Remove</th>
+                    <th scope="col">Edit | Restore/Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -242,12 +208,12 @@
                             @Html.DisplayFor(m => item.Name, "StringOrNone")
                             @if (!item.Active)
                             {
-                                <span class="text-muted">(Deleted)</span>
+                                <span class="text-muted">(Removed)</span>
                             }
                         </td>
                         <td>
                             <a asp-page="EditOrganizationalUnit" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Edit</a>
-                            <a asp-page="DeleteOrganizationalUnit" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Remove</a>
+                            <a asp-page="DeleteOrganizationalUnit" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Restore/Remove</a>
                         </td>
                     </tr>
                 }

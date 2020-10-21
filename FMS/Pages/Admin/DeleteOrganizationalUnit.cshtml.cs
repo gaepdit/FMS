@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
@@ -10,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FMS.Pages.Admin
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class DeleteBudgetCodeModel : PageModel
+    public class DeleteOrganizationalUnitModel : PageModel
     {
         [BindProperty]
         public bool Delete { get; set; }
@@ -19,13 +21,13 @@ namespace FMS.Pages.Admin
         public Guid Id { get; set; }
 
         [BindProperty]
-        public string Code { get; set; }
+        public string Name { get; set; }
 
         [BindProperty]
         public bool ShowChange { get; set; }
 
-        private readonly IBudgetCodeRepository _budgetCodeRepository;
-        public DeleteBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) => _budgetCodeRepository = budgetCodeRepository;
+        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
+        public DeleteOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) => _organizationalUnitRepository = organizationalUnitRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -34,18 +36,18 @@ namespace FMS.Pages.Admin
                 return NotFound();
             }
 
-            var budgetCode = await _budgetCodeRepository.GetBudgetCodeAsync(id.Value);
+            var organizationalUnit = await _organizationalUnitRepository.GetOrganizationalUnitAsync(id.Value);
 
-            if (budgetCode == null)
+            if (organizationalUnit == null)
             {
                 return NotFound();
             }
 
             Id = id.Value;
-            Delete = !budgetCode.Active;
-            Code = budgetCode.Code;
+            Delete = !organizationalUnit.Active;
+            Name = organizationalUnit.Name;
             ShowChange = false;
-            
+
             return Page();
         }
 
@@ -53,17 +55,17 @@ namespace FMS.Pages.Admin
         {
             if (!ModelState.IsValid)
             {
-                Code = (await _budgetCodeRepository.GetBudgetCodeAsync(Id)).Code;
+                Name = (await _organizationalUnitRepository.GetOrganizationalUnitAsync(Id)).Name;
                 return Page();
             }
 
             try
             {
-                await _budgetCodeRepository.UpdateBudgetCodeStatusAsync(Id, !Delete);
+                await _organizationalUnitRepository.UpdateOrganizationalUnitStatusAsync(Id, !Delete);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _budgetCodeRepository.BudgetCodeExistsAsync(Id))
+                if (!await _organizationalUnitRepository.OrganizationalUnitExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -72,7 +74,7 @@ namespace FMS.Pages.Admin
                     throw;
                 }
             }
-            Code = (await _budgetCodeRepository.GetBudgetCodeAsync(Id)).Code;
+            Name = (await _organizationalUnitRepository.GetOrganizationalUnitAsync(Id)).Name;
             ShowChange = true;
 
             return Page();

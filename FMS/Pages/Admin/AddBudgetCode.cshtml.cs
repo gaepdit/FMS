@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
@@ -13,10 +12,7 @@ namespace FMS.Pages.Admin
     public class AddBudgetCodeModel : PageModel
     {
         [BindProperty]
-        public BudgetCodeCreateDto BudgetCode { get; private set; }
-
-        [BindProperty]
-        public Guid Id { get; private set; }
+        public BudgetCodeCreateDto BudgetCode { get; set; }
 
         private readonly IBudgetCodeRepository _budgetCodeRepository;
         public AddBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) => _budgetCodeRepository = budgetCodeRepository;
@@ -49,6 +45,8 @@ namespace FMS.Pages.Admin
             }
 
             await _budgetCodeRepository.CreateBudgetCodeAsync(BudgetCode);
+
+            TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully created.");
 
             return RedirectToPage("./Index");
         }

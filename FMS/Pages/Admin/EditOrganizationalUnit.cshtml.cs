@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
@@ -11,16 +13,16 @@ using Microsoft.EntityFrameworkCore;
 namespace FMS.Pages.Admin
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditBudgetCodeModel : PageModel
+    public class EditOrganizationalUnitModel : PageModel
     {
         [BindProperty]
-        public BudgetCodeEditDto BudgetCode { get; set; }
+        public OrganizationalUnitEditDto OrganizationalUnit { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
 
-        private readonly IBudgetCodeRepository _budgetCodeRepository;
-        public EditBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) => _budgetCodeRepository = budgetCodeRepository;
+        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
+        public EditOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) => _organizationalUnitRepository = organizationalUnitRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -30,9 +32,9 @@ namespace FMS.Pages.Admin
             }
 
             Id = id.Value;
-            BudgetCode = await _budgetCodeRepository.GetBudgetCodeAsync(id.Value);
+            OrganizationalUnit = await _organizationalUnitRepository.GetOrganizationalUnitAsync(id.Value);
 
-            if (BudgetCode == null)
+            if (OrganizationalUnit == null)
             {
                 return NotFound();
             }
@@ -47,12 +49,12 @@ namespace FMS.Pages.Admin
                 return Page();
             }
 
-            BudgetCode.TrimAll();
+            OrganizationalUnit.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _budgetCodeRepository.BudgetCodeCodeExistsAsync(BudgetCode.Code, Id))
+            if (await _organizationalUnitRepository.OrganizationalUnitNameExistsAsync(OrganizationalUnit.Name, Id))
             {
-                ModelState.AddModelError("BudgetCode.Code", "Code entered already exists.");
+                ModelState.AddModelError("OrganizationalUnit.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -62,11 +64,11 @@ namespace FMS.Pages.Admin
 
             try
             {
-                await _budgetCodeRepository.UpdateBudgetCodeAsync(Id, BudgetCode);
+                await _organizationalUnitRepository.UpdateOrganizationalUnitAsync(Id, OrganizationalUnit);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _budgetCodeRepository.BudgetCodeExistsAsync(Id))
+                if (!await _organizationalUnitRepository.OrganizationalUnitExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -75,7 +77,7 @@ namespace FMS.Pages.Admin
                     throw;
                 }
             }
-            TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully updated.");
+            TempData?.SetDisplayMessage(Context.Success, $"Organizational Unit {OrganizationalUnit.Name} successfully updated.");
 
             return RedirectToPage("./Index");
         }
