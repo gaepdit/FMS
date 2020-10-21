@@ -19,8 +19,11 @@ namespace FMS.Pages.Facilities
         // List of facilities returned from the search
         public IReadOnlyList<FacilityMapSummaryDto> FacilityList { get; private set; }
 
-        // true to show the table for results
+        // Shows results section after searching
         public bool ShowResults { get; private set; }
+
+        // true to show the table for results
+        public bool ShowTable { get; private set; }
 
         // true to show the map for results
         public bool ShowMap { get; private set; }
@@ -37,7 +40,7 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {
-            if ((!string.IsNullOrEmpty(spec.GeocodeLat) || !string.IsNullOrEmpty(spec.GeocodeLng))
+            if ((!string.IsNullOrEmpty(spec.GeocodeLat) && !string.IsNullOrEmpty(spec.GeocodeLng))
                 && decimal.Parse(spec.GeocodeLat) > 0 && decimal.Parse(spec.GeocodeLng) < 0)
             {
                 spec.Latitude = decimal.Parse(spec.GeocodeLat);
@@ -47,25 +50,20 @@ namespace FMS.Pages.Facilities
             if (spec.Latitude > 0 && spec.Longitude < 0)
             {
                 FacilityList = await _repository.GetFacilityListAsync(spec);
-                
+
+                if (FacilityList == null || FacilityList.Count == 0)
+                {
+                    ShowNone = true;
+                }
+
                 if (spec.Output == "1")
                 {
                     ShowMap = true;
-                    ShowResults = false;
-                    ShowNone = false;
                 }
-                else if (spec.Output == "2")
-                {
-                    if (FacilityList != null && FacilityList.Count > 0)
-                    {
-                        ShowMap = false;
-                        ShowResults = true;
-                    }
-                    else
-                    {
-                        ShowNone = true;
-                    }
 
+                if (spec.Output == "2" && FacilityList != null && FacilityList.Count > 0)
+                {
+                    ShowTable = true;
                 }
             }
             else
@@ -80,6 +78,8 @@ namespace FMS.Pages.Facilities
                 ShowDeleted = spec.ShowDeleted,
                 Radius = spec.Radius
             };
+
+            ShowResults = true;
             return Page();
         }
 

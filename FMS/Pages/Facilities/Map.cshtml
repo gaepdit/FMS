@@ -84,55 +84,50 @@
     </form>
 </div>
 
-@if (Model.ShowMap || Model.ShowResults)
-{
-    <a id="SearchResults"></a>
-    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
-    {
-        <div class="container border-top py-3">
-            <form method="post">
-                <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
-                    Export to Excel
-                </button>
-                <input type="hidden" asp-for="ExportSpec.ShowDeleted" />
-                <input type="hidden" asp-for="ExportSpec.Latitude" />
-                <input type="hidden" asp-for="ExportSpec.Longitude" />
-                <input type="hidden" asp-for="ExportSpec.Radius" />
-            </form>
-        </div>
-    }
-}
-@if (Model.ShowMap)
-{
-    @if (Model.FacilityList.Count < 1)
-    {
-        <p class="lead text-info">No matching facilities found.</p>
-        <div id="dvMap" style="height:600px;"></div>
-    }
-    else
-    {
-        <div id="dvMap" style="height:600px;"></div>
-    }
-}
 @if (Model.ShowResults)
 {
-    @if (Model.FacilityList != null && Model.FacilityList.Count > 0)
-    {
-        <table class="table">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">Facility</th>
-                <th scope="col">File</th>
-                <th scope="col">Name</th>
-                <th scope="col">Address</th>
-                <th scope="col">Type</th>
-                <th scope="col">Status</th>
-                <th scope="col">Distance</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if (Model.ShowResults)
-            {
+    <div class="border-top" id="SearchResults">
+        @if (Model.ShowNone)
+        {
+            <div class="container pt-3">
+                <p class="lead text-info">No matching facilities found.</p>
+            </div>
+        }
+        else
+        {
+            <div class="container py-3">
+                <form method="post">
+                    <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
+                        Export to Excel
+                    </button>
+                    <input type="hidden" asp-for="ExportSpec.ShowDeleted" />
+                    <input type="hidden" asp-for="ExportSpec.Latitude" />
+                    <input type="hidden" asp-for="ExportSpec.Longitude" />
+                    <input type="hidden" asp-for="ExportSpec.Radius" />
+                </form>
+            </div>
+        }
+
+        @if (Model.ShowMap)
+        {
+            <div id="dvMap" style="height:600px;"></div>
+        }
+
+        @if (Model.ShowTable)
+        {
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Facility</th>
+                    <th scope="col">File</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Distance</th>
+                </tr>
+                </thead>
+                <tbody>
                 @foreach (var item in Model.FacilityList)
                 {
                     <tr class="@(!item.Active ? "table-secondary" : "")">
@@ -168,20 +163,8 @@
                         </td>
                     </tr>
                 }
-            }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <div class="container mt-2">
-            <p class="lead text-info">No matching facilities found.</p>
-        </div>
-    }
-}
-@if (Model.ShowNone)
-{
-    <div class="container mt-2">
-        <p class="lead text-info">No matching facilities found.</p>
+                </tbody>
+            </table>
+        }
     </div>
 }
