@@ -66,9 +66,12 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
+            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
+
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.UpdateCabinetAsync(It.IsAny<Guid>(), It.IsAny<CabinetEditDto>()));
-            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
+            mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(cabinet);
 
             var pageModel = new EditModel(mockRepo.Object)
             {

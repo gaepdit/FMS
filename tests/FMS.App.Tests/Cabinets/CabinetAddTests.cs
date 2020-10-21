@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
@@ -31,7 +33,7 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnPost_AddNew_RedirectsToDetails()
         {
-            const int newCabinetNumber = 1;
+            var newCabinetNumber = Guid.NewGuid(); 
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.CreateCabinetAsync())
                 .ReturnsAsync(newCabinetNumber)

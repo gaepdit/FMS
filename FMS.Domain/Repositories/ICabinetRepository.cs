@@ -14,7 +14,7 @@ namespace FMS.Domain.Repositories
         Task<CabinetDetailDto> GetCabinetDetailsAsync(Guid id);
         Task<CabinetDetailDto> GetCabinetDetailsAsync(int cabinetNumber);
         Task<string> GetNextCabinetName();
-        Task<int> CreateCabinetAsync();
+        Task<Guid> CreateCabinetAsync();
         Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit);
     }
 }

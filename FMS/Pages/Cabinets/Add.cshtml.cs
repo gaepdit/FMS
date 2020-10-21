@@ -23,10 +23,10 @@ namespace FMS.Pages.Cabinets
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var newCabinet = await _repository.CreateCabinetAsync();
+            var newCabinetId = await _repository.CreateCabinetAsync();
             TempData?.SetDisplayMessage(Context.Success, 
                 "New Cabinet successfully created. Be sure to set the first File Label.");
-            return RedirectToPage("./Edit", new {id = newCabinet});
+            return RedirectToPage("./Edit", new {id = newCabinetId});
         }
     }
 }

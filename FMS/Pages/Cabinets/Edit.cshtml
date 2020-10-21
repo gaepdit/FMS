@@ -6,7 +6,7 @@
 }
 
 @{
-    ViewData["Title"] = $"Edit Cabinet: {Model.CabinetEdit.Name}";
+    ViewData["Title"] = $"Edit Cabinet: {Model.CabinetName}";
 }
 <h1>@ViewData["Title"]</h1>
 <partial name="_AlertPartial" for="Message" />
@@ -29,7 +29,7 @@
         <div class="form-row">
             <div class="col">
                 <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
-                <a asp-page="Details" asp-route-id="@Model.CabinetEdit.CabinetNumber" class="btn btn-outline-secondary col-md-2">Cancel</a>
+                <a asp-page="Details" asp-route-id="@Model.CabinetNumber" class="btn btn-outline-secondary col-md-2">Cancel</a>
             </div>
         </div>
     </form>

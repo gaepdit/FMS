@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -65,39 +66,39 @@ namespace FMS.Infrastructure.Repositories
         public async Task<string> GetNextCabinetName() =>
             Cabinet.CabinetNumberAsName(await GetNextCabinetNumber());
 
-        public async Task<int> CreateCabinetAsync()
+        public async Task<Guid> CreateCabinetAsync()
         {
-            var newCabinetNumber = await GetNextCabinetNumber();
-
             var cabinet = new Cabinet()
             {
-                CabinetNumber = newCabinetNumber,
+                CabinetNumber = await GetNextCabinetNumber(),
                 FirstFileLabel = "999-9999",
             };
 
             await _context.Cabinets.AddAsync(cabinet);
             await _context.SaveChangesAsync();
 
-            return newCabinetNumber;
+            return cabinet.Id;
         }
 
-        public async Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit)
+        public Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit)
+        {
+            Prevent.NullOrEmpty(cabinetEdit.FirstFileLabel, nameof(cabinetEdit.FirstFileLabel));
+
+            if (!File.IsValidFileLabelFormat(cabinetEdit.FirstFileLabel))
+            {
+                throw new ArgumentException("The File Label is invalid.");
+            }
+
+            return UpdateCabinetInternalAsync(id, cabinetEdit);
+        }
+
+        private async Task UpdateCabinetInternalAsync(Guid id, CabinetEditDto cabinetEdit)
         {
             var cabinet = await _context.Cabinets.FindAsync(id);
 
             if (cabinet == null)
             {
                 throw new ArgumentException("Cabinet ID not found.");
-            }
-
-            if (cabinetEdit.FirstFileLabel == null)
-            {
-                throw new ArgumentException("File Label cannot be null or empty.");
-            }
-
-            if (!File.IsValidFileLabelFormat(cabinetEdit.FirstFileLabel))
-            {
-                throw new ArgumentException("The File Label is invalid.");
             }
 
             cabinet.FirstFileLabel = cabinetEdit.FirstFileLabel;

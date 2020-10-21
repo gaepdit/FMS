@@ -18,7 +18,9 @@ namespace FMS.Pages.Cabinets
 
         [BindProperty]
         public Guid Id { get; set; }
-
+        
+        public int CabinetNumber { get; private set; }
+        public string CabinetName { get; private set; }
         public DisplayMessage Message { get; private set; }
 
         private readonly ICabinetRepository _repository;
@@ -37,9 +39,11 @@ namespace FMS.Pages.Cabinets
             {
                 return NotFound();
             }
-            
+
             Id = id.Value;
             CabinetEdit = new CabinetEditDto(cabinet);
+            CabinetName = cabinet.Name;
+            CabinetNumber = cabinet.CabinetNumber;
 
             Message = TempData?.GetDisplayMessage();
             return Page();
@@ -73,9 +77,10 @@ namespace FMS.Pages.Cabinets
 
                 throw;
             }
-
+            
+            var cabinet = await _repository.GetCabinetSummaryAsync(Id);
             TempData?.SetDisplayMessage(Context.Success, "Cabinet successfully updated.");
-            return RedirectToPage("./Details", new {id = CabinetEdit.CabinetNumber});
+            return RedirectToPage("./Details", new {id = cabinet.CabinetNumber});
         }
     }
 }

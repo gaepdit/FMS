@@ -5,7 +5,6 @@ using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
-using TestHelpers;
 using TestHelpers.SimpleRepository;
 using TestSupport.EfHelpers;
 using Xunit;
@@ -128,7 +127,7 @@ namespace FMS.Infrastructure.Tests
         public async Task CreateCabinet_Succeeds()
         {
             var repositoryHelper = new SimpleRepositoryHelper();
-            int newCabinetNumber;
+            Guid newCabinetNumber;
             var expectedCabinetNumber = SimpleRepositoryData.Cabinets.Max(e => e.CabinetNumber) + 1;
             var expectedName = string.Concat("C", expectedCabinetNumber.ToString().PadLeft(3, '0'));
 
@@ -141,10 +140,10 @@ namespace FMS.Infrastructure.Tests
             {
                 var cabinet = await repository.GetCabinetDetailsAsync(newCabinetNumber);
 
-                newCabinetNumber.ShouldEqual(expectedCabinetNumber);
-                cabinet.CabinetNumber.Should().Be(newCabinetNumber);
+                cabinet.CabinetNumber.Should().Be(expectedCabinetNumber);
                 cabinet.Name.Should().Be(expectedName);
                 cabinet.Active.ShouldBeTrue();
+                cabinet.FirstFileLabel.Should().Be("999-9999");
             }
         }
 
@@ -206,7 +205,7 @@ namespace FMS.Infrastructure.Tests
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage("File Label cannot be null or empty.");
+                .WithMessage("Value cannot be null. (Parameter 'FirstFileLabel')");
         }
 
         [Fact]

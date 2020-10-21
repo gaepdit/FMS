@@ -10,10 +10,11 @@
 }
 <h1>@ViewData["Title"]</h1>
 <div class="container bg-light py-3">
-    <p>Confirm that you want to create a new Cabinet:</p>
-    <p>
-        <span class="border border-secondary">@Model.NewCabinetName</span>
-    </p>
-    <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save New Cabinet</button>
-    <a asp-page="Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Cancel</a>
+    <form method="post">
+        <p class="mt-2 mb-4">
+            Cabinet <span class="border border-secondary rounded px-2 py-1">@Model.NewCabinetName</span> will be created.
+        </p>
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Save New Cabinet</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Cancel</a>
+    </form>
 </div>
