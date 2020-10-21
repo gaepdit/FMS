@@ -297,6 +297,32 @@ namespace FMS.Infrastructure.Repositories
             return file;
         }
 
+        public async Task DeleteFacilityAsync(Guid id)
+        {
+            var facility = await _context.Facilities.FindAsync(id);
+
+            if (facility == null)
+            {
+                throw new ArgumentException("Facility ID not found.", nameof(id));
+            }
+
+            facility.Active = false;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UndeleteFacilityAsync(Guid id)
+        {
+            var facility = await _context.Facilities.FindAsync(id);
+
+            if (facility == null)
+            {
+                throw new ArgumentException("Facility ID not found.", nameof(id));
+            }
+
+            facility.Active = true;
+            await _context.SaveChangesAsync();
+        }
+
         // ReSharper disable once StringCompareIsCultureSpecific.1
         public async Task<Guid?> GetRecommendedCabinetForFile(string fileLabel)
         {

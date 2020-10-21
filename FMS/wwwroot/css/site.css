@@ -228,3 +228,9 @@ body {
 caption {
     caption-side: top;
 }
+
+/* Additional font styles
+-------------------------------------------------- */
+.font-weight-medium {
+    font-weight: 500 !important;
+}

@@ -716,7 +716,73 @@ namespace FMS.Infrastructure.Tests
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"Facility Number '{existingNumber}' already exists.");
         }
+        
+        // Delete/Undelete
 
+        [Fact]
+        public async Task DeleteFacility_Succeeds()
+        {
+            var repositoryHelper = new SimpleRepositoryHelper();
+            var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => !e.Active);
+            if(facility==null) throw new NotImplementedException();
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                await repository.DeleteFacilityAsync(facility.Id);
+            }
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var updatedFacility = await repository.GetFacilityAsync(facility.Id);
+                updatedFacility.Active.ShouldBeFalse();
+            }
+        }
+        
+        [Fact]
+        public async Task DeleteFacility_Nonexistent_ThrowsException()
+        {
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.DeleteFacilityAsync(Guid.Empty);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage("Facility ID not found. (Parameter 'id')");
+        }
+
+        [Fact]
+        public async Task UndeleteFacility_Succeeds()
+        {
+            var repositoryHelper = new SimpleRepositoryHelper();
+            var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => e.Active);
+            if(facility==null) throw new NotImplementedException();
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                await repository.UndeleteFacilityAsync(facility.Id);
+            }
+
+            using (var repository = repositoryHelper.GetFacilityRepository())
+            {
+                var updatedFacility = await repository.GetFacilityAsync(facility.Id);
+                updatedFacility.Active.ShouldBeTrue();
+            }
+        }
+
+        [Fact]
+        public async Task UndeleteFacility_Nonexistent_ThrowsException()
+        {
+            Func<Task> action = async () =>
+            {
+                using var repository = new RepositoryHelper().GetFacilityRepository();
+                await repository.UndeleteFacilityAsync(Guid.Empty);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage("Facility ID not found. (Parameter 'id')");
+        }
+        
         // GetRecommendedCabinetForFile
 
         [Theory]

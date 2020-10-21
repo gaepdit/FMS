@@ -15,16 +15,11 @@ namespace FMS.Pages.Facilities
     [Authorize(Roles = UserRoles.FileEditor)]
     public class EditModel : PageModel
     {
-        private readonly IFacilityRepository _repository;
-        private readonly ISelectListHelper _listHelper;
-
         [BindProperty]
         public FacilityEditDto Facility { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
-
-        public int? CountyArg { get; set; }
 
         // Select Lists
         public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
@@ -35,6 +30,9 @@ namespace FMS.Pages.Facilities
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList EnvironmentalInterests { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
+
+        private readonly IFacilityRepository _repository;
+        private readonly ISelectListHelper _listHelper;
 
         public EditModel(
             IFacilityRepository repository,
