@@ -47,22 +47,25 @@ namespace FMS.Pages.Facilities
             if (spec.Latitude > 0 && spec.Longitude < 0)
             {
                 FacilityList = await _repository.GetFacilityListAsync(spec);
-                if (FacilityList != null && FacilityList.Count > 0)
+                
+                if (spec.Output == "1")
                 {
-                    if (spec.Output == "1")
-                    {
-                        ShowMap = true;
-                        ShowResults = false;
-                    }
-                    else if (spec.Output == "2")
+                    ShowMap = true;
+                    ShowResults = false;
+                    ShowNone = false;
+                }
+                else if (spec.Output == "2")
+                {
+                    if (FacilityList != null && FacilityList.Count > 0)
                     {
                         ShowMap = false;
                         ShowResults = true;
                     }
-                }
-                else
-                {
-                    ShowNone = true;
+                    else
+                    {
+                        ShowNone = true;
+                    }
+
                 }
             }
             else

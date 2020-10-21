@@ -1,5 +1,5 @@
 
-function mapInitialize(lat, lng, inputRadius, markers) {
+function mapInitialize(lat, lng, inputRadius, markers, Localaddr) {
     var lat = lat;
     var lng = lng;
     var myradius = parseFloat(inputRadius);
@@ -40,14 +40,15 @@ function mapInitialize(lat, lng, inputRadius, markers) {
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-   
+
     var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
-     
+    var toolContent = Localaddr;
     var centermarker = new google.maps.Marker({
         position: myLatlng,
         map: map,
-        icon: '/images/center.png'       
+        icon: '/images/center.png',
+        title: toolContent       
     });
 
     var circle = new google.maps.Circle({
@@ -57,6 +58,24 @@ function mapInitialize(lat, lng, inputRadius, markers) {
     });
     circle.bindTo('center', centermarker, 'position');
 
+    var infoWndw = new google.maps.InfoWindow({
+        content: '<div style="padding:0.5em;border:groove;font-weight:normal;font-size:10pt;color:black">' + Localaddr + '<br>'+ '<br>' + lat + ',     ' + lng + '</div>'   
+     });   
+    
+    google.maps.event.addListener(centermarker, 'click', function () {
+        if (!centermarker.open) {
+            infoWndw.open(map, centermarker);
+            centermarker.open = true;
+        }
+        else {
+            infoWndw.close();
+            centermarker.open = false;
+        }
+        google.maps.event.addListener(map, 'click', function () {
+            infoWndw.close();
+            centermarker.open = false;
+        });
+    });
 
     for (i = 0; i < markers.length; i++) {
         var data = markers[i];
@@ -103,7 +122,7 @@ function mapInitialize(lat, lng, inputRadius, markers) {
         var marker = new google.maps.Marker({
             position: myLatlng,
             map: map,
-            icon: imageName            
+            icon: imageName
         });
 
         (function (marker, data) {
@@ -124,7 +143,7 @@ function mapInitialize(lat, lng, inputRadius, markers) {
                 infowindow.open(map, marker);
             });
         })(marker, data);
-       
+
     }
 
 
@@ -133,8 +152,9 @@ function mapInitialize(lat, lng, inputRadius, markers) {
 function getLatLongs(addr, city, zip) {
     var lat = 0;// 33.879807;
     var lng = 0;// -87.306964;
-    var address = addr + " " + city + ", GA " + zip;        
-   // var address = $('#Address').val();    
+    var fAddress = "";
+    var address = addr + " " + city + ", GA " + zip;
+    // var address = $('#Address').val();    
     var request = {
         address: address,
         componentRestrictions: {
@@ -145,12 +165,19 @@ function getLatLongs(addr, city, zip) {
     geocoder.geocode(request, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             lat = results[0].geometry.location.lat();
-            lng = results[0].geometry.location.lng();         
+            lng = results[0].geometry.location.lng();
+            if (results.length > 1) {
+                localAddr = results[1].formatted_address;                
+            }
+            else {
+                localAddr = results[0].formatted_address;
+            }
 
             //$('#Latitude').val(parseFloat(lat).toFixed(4));
             //$('#Longitude').val(parseFloat(lng).toFixed(4));
             $('#LocalLat').val(parseFloat(lat).toFixed(4));
             $('#LocalLng').val(parseFloat(lng).toFixed(4));
+            $('#LocalAddress').val(localAddr.toString());            
 
             if (lat > 0) {
                 bool = false;
@@ -164,10 +191,11 @@ function getLatLongs(addr, city, zip) {
     });
 
 }
+
 function getCoordinates(address) {
     var lat = 0;// 33.879807;
     var lng = 0;// -87.306964;   
-   
+
     var request = {
         address: address,
         componentRestrictions: {
@@ -180,7 +208,7 @@ function getCoordinates(address) {
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
             $('#Latitude').val(parseFloat(lat).toFixed(4));
-            $('#Longitude').val(parseFloat(lng).toFixed(4));         
+            $('#Longitude').val(parseFloat(lng).toFixed(4));
         }
         else {
             alert("Geocode was not successful for the following reason: " + status);

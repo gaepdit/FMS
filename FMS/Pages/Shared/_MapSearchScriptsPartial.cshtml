@@ -2,7 +2,7 @@
 <script src="~/js/map.js" asp-append-version="true"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=@Configuration["GoogleMapSettings:ApiKey"]"></script>
 <script>
-    let bool = true;
+    let bool = true;   
     $(document).ready(function domReady() {
         $("#Address,#City,#PostalCode").change(function () {
             if ($(this).val() !== "") {
@@ -36,6 +36,7 @@
 
             $("#LocalLat").attr("disabled", false);
             $("#LocalLng").attr("disabled", false);
+            $("#LocalAddress").attr("disabled", false);
 
             if (!bool) {
                 bool = true;
@@ -52,20 +53,24 @@
             return bool;
         });
 
-        const outputValue = @Html.Raw(Json.Serialize(Model.ShowMap));
+        const outputValue = @Html.Raw(Json.Serialize(Model.ShowMap));      
         if (outputValue) {
             const markers = @Html.Raw(Json.Serialize(Model.FacilityList));
-            if (markers !== "" && markers.length > 0)
-            {
+          
                 let lat = $('#Latitude').val();
                 let lng = $('#Longitude').val();
+                let Localaddr = $('#LocalAddress').val();
+       
                 if (lat === "" || lng === "")
                 {
                     lat = $('#LocalLat').val();
                     lng = $('#LocalLng').val();
                 }
                 const radius = $('#Radius').val();
-                mapInitialize(lat, lng, radius, markers);
+
+            if (lat !== "" && lat.length > 0) {
+
+                mapInitialize(lat, lng, radius, markers, Localaddr);
             }
         }
         

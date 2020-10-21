@@ -50,5 +50,6 @@ namespace FMS.Domain.Dto
         public string Output { get; set; }
         public string GeocodeLat { get; set; }
         public string GeocodeLng { get; set; }
+        public string GeocodeAddress { get; set; }
     }
 }
