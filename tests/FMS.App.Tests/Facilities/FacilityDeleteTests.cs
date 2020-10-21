@@ -7,12 +7,13 @@ using Moq;
 using System;
 using System.Threading.Tasks;
 using TestHelpers;
+using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.App.Tests.Facilities
 {
-    public class FacilityEditTests
+    public class FacilityDeleteTests
     {
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
@@ -24,15 +25,13 @@ namespace FMS.App.Tests.Facilities
             mockRepo.Setup(l => l.GetFacilityAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(facility)
                 .Verifiable();
-
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new Pages.Facilities.DeleteModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.Id.Should().Be(facility.Id);
-            pageModel.Facility.Should().BeEquivalentTo(new FacilityEditDto(facility));
+            pageModel.FacilityDetail.Should().BeEquivalentTo(facility);
         }
 
         [Fact]
@@ -44,27 +43,26 @@ namespace FMS.App.Tests.Facilities
                 .Verifiable();
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new Pages.Facilities.DeleteModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
-            pageModel.Facility.ShouldBeNull();
+            pageModel.FacilityDetail.ShouldBeNull();
         }
 
         [Fact]
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new Pages.Facilities.DeleteModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
-            pageModel.Facility.ShouldBeNull();
+            pageModel.FacilityDetail.ShouldBeNull();
         }
 
         [Fact]
@@ -72,13 +70,11 @@ namespace FMS.App.Tests.Facilities
         {
             var id = Guid.NewGuid();
             var mockRepo = new Mock<IFacilityRepository>();
-            mockRepo.Setup(l => l.UpdateFacilityAsync(It.IsAny<Guid>(), It.IsAny<FacilityEditDto>()));
+            mockRepo.Setup(l => l.DeleteFacilityAsync(It.IsAny<Guid>()));
 
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object)
+            var pageModel = new Pages.Facilities.DeleteModel(mockRepo.Object)
             {
                 Id = id,
-                Facility = new FacilityEditDto()
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -87,21 +83,6 @@ namespace FMS.App.Tests.Facilities
             pageModel.ModelState.IsValid.ShouldBeTrue();
             ((RedirectToPageResult) result).PageName.Should().Be("./Details");
             ((RedirectToPageResult) result).RouteValues["id"].Should().Be(id);
-        }
-
-        [Fact]
-        public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
-        {
-            var mockRepo = new Mock<IFacilityRepository>();
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
-            pageModel.ModelState.AddModelError("Error", "Sample error description");
-
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
-
-            result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
-            pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
     }
 }

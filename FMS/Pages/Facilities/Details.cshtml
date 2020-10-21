@@ -1,4 +1,4 @@
-﻿@page "{id:Guid?}"
+@page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Facilities.DetailsModel
 @{
@@ -13,6 +13,14 @@
     @if (User.IsInRole(UserRoles.FileEditor))
     {
         <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+        @if (Model.FacilityDetail.Active)
+        {
+            <a asp-page="Delete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+        }
+        else
+        {
+            <a asp-page="Undelete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-warning">Undelete</a>
+        }
     }
 </h1>
 <hr />
@@ -89,9 +97,7 @@
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
         </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Address)
-        </dt>
+        <dt class="col-sm-3">Address</dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
             @Html.DisplayFor(model => model.FacilityDetail.City),
