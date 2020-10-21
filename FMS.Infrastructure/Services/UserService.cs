@@ -96,6 +96,7 @@ namespace FMS.Infrastructure.Services
                     || m.FamilyName.Contains(nameFilter))
                 .Where(m => string.IsNullOrEmpty(emailFilter)
                     || m.Email == emailFilter)
+                .OrderBy(m => m.FamilyName)
                 .ToListAsync();
     }
 }

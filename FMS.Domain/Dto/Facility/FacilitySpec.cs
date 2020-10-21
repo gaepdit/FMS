@@ -52,6 +52,7 @@ namespace FMS.Domain.Dto
         public string State { get; set; }
 
         [Display(Name = "ZIP Code")]
+        [StringLength(10)]
         public string PostalCode { get; set; }
 
         public IDictionary<string, string> AsRouteValues =>

@@ -9,10 +9,10 @@
 
 <div class="container bg-light py-3">
     <form method="post">
+        <p>Roles for: <b>@Model.DisplayName</b> (@Model.Email)</p>
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
             User update failed:
         </div>
-        <p>Roles for: @Model.DisplayName &lt;@Model.Email&gt;</p>
         <div class="form-check mb-3">
             <input asp-for="HasUserAdminRole" class="form-check-input" aria-describedby="UserAdminRoleHelpBlock">
             <label asp-for="HasUserAdminRole" class="form-check-label font-weight-bold">
@@ -49,8 +49,9 @@
                 </small>
             </label>
         </div>
+        <hr />
         <input asp-for="UserId">
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
         <a asp-page="./Details" asp-route-id="@Model.UserId" class="btn btn-outline-secondary">Cancel</a>
     </form>
 </div>

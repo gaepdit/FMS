@@ -26,7 +26,7 @@
 <hr />
 <partial name="_AlertPartial" for="Message" />
 
-<div class="container-fluid">
+<div class="container">
     <dl class="row">
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.Name)
@@ -165,7 +165,7 @@
 
     @if (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor))
     {
-        <div class="container-fluid bg-light pt-3 mt-5">
+        <div class="container bg-light pt-3 mt-5">
             <h3 class="h5">Add a Retention Record</h3>
             <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
