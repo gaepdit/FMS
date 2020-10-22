@@ -57,7 +57,12 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
                 .SingleOrDefaultAsync(e => e.CabinetNumber == cabinetNumber);
 
-            return cabinet == null ? null : new CabinetDetailDto(cabinet);
+            if (cabinet == null) return null;
+
+            cabinet.CabinetFiles = cabinet.CabinetFiles
+                .OrderBy(e => e.File.Name).ToList();
+
+            return new CabinetDetailDto(cabinet);
         }
 
         private async Task<int> GetNextCabinetNumber() =>
