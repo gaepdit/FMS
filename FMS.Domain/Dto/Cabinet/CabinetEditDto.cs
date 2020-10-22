@@ -12,7 +12,7 @@ namespace FMS.Domain.Dto
         }
 
         [Required]
-        [StringLength(9)]
+        [StringLength(8)]
         [Display(Name = "First File Label")]
         public string FirstFileLabel { get; set; }
     }
