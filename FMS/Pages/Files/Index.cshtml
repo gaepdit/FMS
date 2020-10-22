@@ -25,10 +25,6 @@
                 <input asp-for="Spec.FileLabel" class="form-control" />
             </div>
         </div>
-        <div class="form-group form-check">
-            <input asp-for="Spec.ShowInactive" class="form-check-input" />
-            <label asp-for="Spec.ShowInactive" class="form-check-label"></label>
-        </div>
         <input type="hidden" name="handler" value="search" />
         <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 col-md-2">Search</button>
         <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear form</a>
@@ -63,11 +59,12 @@
             <tbody>
             @foreach (FileDetailDto item in Model.FileList.Items)
             {
-                <tr>
+                <tr class="@(!item.Active ? "table-secondary" : "")">
                     <td>
                         <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                            @item.FileLabel @(item.Active ? "" : "(Deleted)")
+                            @Html.DisplayFor(m => item.FileLabel)
                         </a>
+                        @Html.DisplayFor(m => item.Active, "BoolDeleted")
                     </td>
                     <td>@item.Cabinets.Select(e => e.Name).ConcatNonEmpty(", ")</td>
                     <td>
