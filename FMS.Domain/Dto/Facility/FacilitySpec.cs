@@ -12,8 +12,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
-        [Display(Name = "Show Active Sites Only")]
-        public bool ActiveOnly { get; set; } = true;
+        [Display(Name = "Include deleted records")]
+        public bool ShowDeleted { get; set; } 
 
         [Display(Name = "County")]
         public int? CountyId { get; set; }
@@ -57,7 +57,7 @@ namespace FMS.Domain.Dto
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>
             {
-                {nameof(ActiveOnly), ActiveOnly.ToString()},
+                {nameof(ShowDeleted), ShowDeleted.ToString()},
                 {nameof(Address), Address},
                 {nameof(BudgetCodeId), BudgetCodeId?.ToString()},
                 {nameof(City), City},

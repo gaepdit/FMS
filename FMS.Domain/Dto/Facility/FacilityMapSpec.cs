@@ -4,14 +4,8 @@ namespace FMS.Domain.Dto
 {
     public class FacilityMapSpec
     {
-        [Display(Name = "Facility Number")]
-        public string FacilityNumber { get; set; }
-
-        [Display(Name = "Facility Name")]
-        public string Name { get; set; }
-
-        [Display(Name = "Show Active Sites Only")]
-        public bool ActiveOnly { get; set; } = true;
+        [Display(Name = "Include deleted records")]
+        public bool ShowDeleted { get; set; }
 
         [Display(Name = "Street Address")]
         public string Address { get; set; }
@@ -34,20 +28,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "Radius")]
         public string Radius { get; set; }
 
-        [Display(Name = "Distance")]
-        public decimal? Distance { get; set; }
-
-        [Display(Name = "Facility Status")]
-        public string FacilityStatus { get; set; }
-
-        [Display(Name = "Facility Type")]
-        public string FacilityType { get; set; }
-
-        [Display(Name = "File Label")]
-        public string FileLabel { get; set; }
-
         [Display(Name = "Output")]
         public string Output { get; set; }
+
+        // Internal geocode results
         public string GeocodeLat { get; set; }
         public string GeocodeLng { get; set; }
         public string GeocodeAddress { get; set; }

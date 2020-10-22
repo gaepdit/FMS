@@ -1,5 +1,6 @@
 @page
 @using FMS.Domain.Dto
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Facilities.IndexModel
 @{
     ViewData["Title"] = "Facility Search";
@@ -104,6 +105,15 @@
                 <input asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
+        @if (User.IsInRole(UserRoles.FileEditor))
+        {
+            <div class="form-group row">
+                <div class="form-check">
+                    <input asp-for="Spec.ShowDeleted" />
+                    <label asp-for="Spec.ShowDeleted" class="form-check-label"></label>
+                </div>
+            </div>
+        }
         <input type="hidden" name="handler" value="search" />
         <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Search</button>
         <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
@@ -136,6 +146,7 @@
                             <input type="hidden" asp-for="Spec.CountyId" />
                             <input type="hidden" asp-for="Spec.State" />
                             <input type="hidden" asp-for="Spec.PostalCode" />
+                            <input type="hidden" asp-for="Spec.ShowDeleted" />
                             <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">Create Report</button>
                         </form>
                     </div>
@@ -160,11 +171,12 @@
             <tbody>
             @foreach (FacilitySummaryDto item in Model.FacilityList.Items)
             {
-                <tr>
+                <tr class="@(!item.Active ? "table-secondary" : "")">
                     <td>
-                        <a asp-page="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                        <a asp-page="Details" asp-route-id="@item.Id" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
                             @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
                         </a>
+                        @Html.DisplayFor(m => item.Active, "BoolDeleted")
                     </td>
                     <td class="text-nowrap">
                         @Html.DisplayFor(m => item.FileLabel, "StringOrNone")
