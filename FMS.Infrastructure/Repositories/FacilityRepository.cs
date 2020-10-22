@@ -57,7 +57,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Facilities.AsNoTracking()
                 .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
                 .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
-                .Where(e => !spec.ActiveOnly || e.Active)
+                .Where(e => spec.ShowDeleted || e.Active)
                 .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
                 .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
@@ -86,7 +86,7 @@ namespace FMS.Infrastructure.Repositories
             var items = await _context.Facilities.AsNoTracking()
                 .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
                 .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
-                .Where(e => !spec.ActiveOnly || e.Active)
+                .Where(e => spec.ShowDeleted || e.Active)
                 .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
                 .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
@@ -119,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Facilities.AsNoTracking()
                 .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
                 .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
-                .Where(e => !spec.ActiveOnly || e.Active)
+                .Where(e => spec.ShowDeleted || e.Active)
                 .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
                 .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
                 .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
@@ -152,7 +152,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
-            var active = new SqlParameter("@active", spec.ActiveOnly);
+            var active = new SqlParameter("@active", !spec.ShowDeleted);
             var lat = new SqlParameter("@Lat", spec.Latitude);
             var lng = new SqlParameter("@Lng", spec.Longitude);
             var radius = new SqlParameter("@radius", spec.Radius);
@@ -259,7 +259,6 @@ namespace FMS.Infrastructure.Repositories
                 }
             }
 
-            // facility.Active = facilityUpdates.Active;
             facility.CountyId = facilityUpdates.CountyId;
             facility.FacilityNumber = facilityUpdates.FacilityNumber;
             facility.Name = facilityUpdates.Name;

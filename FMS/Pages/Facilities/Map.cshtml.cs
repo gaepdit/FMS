@@ -77,7 +77,7 @@ namespace FMS.Pages.Facilities
             {
                 Latitude = spec.Latitude,
                 Longitude = spec.Longitude,
-                ActiveOnly = spec.ActiveOnly,
+                ShowDeleted = spec.ShowDeleted,
                 Radius = spec.Radius
             };
             return Page();

@@ -68,10 +68,10 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task FacilityCount_WithInactive_ReturnsCountOfAll()
+        public async Task FacilityCount_WithDeleted_ReturnsCountOfAll()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {ActiveOnly = false};
+            var spec = new FacilitySpec() {ShowDeleted = true};
 
             var result = await repository.CountAsync(spec);
             var expected = SimpleRepositoryData.Facilities.Count;
@@ -162,10 +162,10 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task FacilitySearch_WithInactive_ReturnsAllFacilities()
+        public async Task FacilitySearch_WithDeleted_ReturnsAllFacilities()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {ActiveOnly = false};
+            var spec = new FacilitySpec() {ShowDeleted = true};
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
             var expectedCount = SimpleRepositoryData.Facilities.Count;
@@ -181,7 +181,7 @@ namespace FMS.Infrastructure.Tests
         {
             const int countySpec = 131;
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {CountyId = countySpec, ActiveOnly = false};
+            var spec = new FacilitySpec() {CountyId = countySpec, ShowDeleted = true};
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
             var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.CountyId == countySpec);
@@ -200,7 +200,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_ByLocation_ReturnsCorrectList(string locationSpec)
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {Location = locationSpec, ActiveOnly = false};
+            var spec = new FacilitySpec() {Location = locationSpec, ShowDeleted = true};
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
             var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.Location.Contains(locationSpec));
@@ -216,7 +216,7 @@ namespace FMS.Infrastructure.Tests
         {
             const int countySpec = 243;
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {CountyId = countySpec, ActiveOnly = false};
+            var spec = new FacilitySpec() {CountyId = countySpec, ShowDeleted = true};
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
             var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.CountyId == countySpec);
@@ -234,7 +234,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_ByFacilityNumber_ReturnsCorrectList(string facilityNumberSpec)
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {FacilityNumber = facilityNumberSpec, ActiveOnly = false};
+            var spec = new FacilitySpec() {FacilityNumber = facilityNumberSpec, ShowDeleted = true};
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
             var expectedCount = SimpleRepositoryData.Facilities
@@ -280,7 +280,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_Page2_ReturnsSecondPage()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {ActiveOnly = false};
+            var spec = new FacilitySpec() {ShowDeleted = true};
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 2, 2);
             var expectedPages = (int) Math.Ceiling(SimpleRepositoryData.Facilities.Count / 2m);
@@ -295,7 +295,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_BeyondLastPage_ReturnsEmptyList()
         {
             using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var spec = new FacilitySpec() {ActiveOnly = false};
+            var spec = new FacilitySpec() {ShowDeleted = true};
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 999, 999);
 
@@ -716,7 +716,7 @@ namespace FMS.Infrastructure.Tests
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage($"Facility Number '{existingNumber}' already exists.");
         }
-        
+
         // Delete/Undelete
 
         [Fact]
@@ -724,7 +724,7 @@ namespace FMS.Infrastructure.Tests
         {
             var repositoryHelper = new SimpleRepositoryHelper();
             var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => !e.Active);
-            if(facility==null) throw new NotImplementedException();
+            if (facility == null) throw new NotImplementedException();
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
@@ -737,7 +737,7 @@ namespace FMS.Infrastructure.Tests
                 updatedFacility.Active.ShouldBeFalse();
             }
         }
-        
+
         [Fact]
         public async Task DeleteFacility_Nonexistent_ThrowsException()
         {
@@ -756,7 +756,7 @@ namespace FMS.Infrastructure.Tests
         {
             var repositoryHelper = new SimpleRepositoryHelper();
             var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => e.Active);
-            if(facility==null) throw new NotImplementedException();
+            if (facility == null) throw new NotImplementedException();
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
@@ -782,7 +782,7 @@ namespace FMS.Infrastructure.Tests
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
         }
-        
+
         // GetRecommendedCabinetForFile
 
         [Theory]
