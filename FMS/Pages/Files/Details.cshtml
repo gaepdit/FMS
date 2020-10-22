@@ -1,4 +1,4 @@
-﻿@page "{id}"
+@page "{id}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Files.DetailsModel
 @{
@@ -9,10 +9,6 @@
     @if (!Model.FileDetail.Active)
     {
         <span class="text-muted">(Deleted)</span>
-    }
-    @if (User.IsInRole(UserRoles.FileEditor))
-    {
-        <a asp-page="Edit" asp-route-id="@Model.FileDetail.Id" class="btn btn-sm btn-outline-primary">Delete File</a>
     }
 </h1>
 <hr />
