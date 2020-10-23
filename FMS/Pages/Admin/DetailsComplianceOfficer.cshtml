@@ -1,4 +1,4 @@
-﻿@page "{name:string?}"
+﻿@page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Admin.DetailsComplianceOfficerModel
 @{
@@ -14,27 +14,55 @@
         <div class="container-fluid bg-light py-3">
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
                 <div class="form-row">
                     <h2>
                         @Model.DisplayName
                     </h2>
-                    <p>@Model.Email</p>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col">
-                        <div class="form-check">
-                            <input asp-for="Add" />
-                            <label class="form-check-label">Add/Remove from list</label>
+                    <h5>
+                        @Model.Email
+                    </h5>
+                </div>
+                @if (Model.IsUser)
+                {
+                    <hr/>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <div class="form-check">
+                                <input asp-for="Add" />
+                                <label asp-for="Add" class="form-check-label">Add/Remove from Compliance Officer list</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="col">
-                        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-3">Save Changes</button>
-                        <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
+                    <div class="form-row">
+                        <div class="col">
+                            <button id="SubmitButton" type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+                            <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Return to Site Maintenance</a>
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Return to Site Maintenance</a>
+                }
             </form>
         </div>
     </div>
 </div>
+@if (Model.Add == false)
+{
+    <br />
+    <div class="container-fluid">
+        <h5 class="alert alert-danger">Compliance Officer: @Model.DisplayName is currently Inactive and will not show in Drop-Down Menus.</h5>
+    </div>
+}
+@if (Model.ShowChange == true)
+{
+    <br />
+    <div class="container-fluid">
+        <h5 class="alert alert-success">Compliance Officer: @Model.DisplayName has changed successfully.</h5>
+        <br />
+    </div>
+}

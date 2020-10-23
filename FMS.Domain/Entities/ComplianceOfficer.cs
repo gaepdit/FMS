@@ -11,7 +11,6 @@ namespace FMS.Domain.Entities
 
         public string FamilyName { get; set; }
 
-        //public Guid UnitId { get; set; }
         public OrganizationalUnit Unit { get; set; }   //virtual
 
         public string Name => string.Join(", ", new[] { FamilyName, GivenName }.Where(s => !string.IsNullOrEmpty(s)));

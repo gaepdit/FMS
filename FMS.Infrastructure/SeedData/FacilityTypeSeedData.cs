@@ -64,7 +64,7 @@ namespace FMS.Infrastructure.SeedData
                     Id = new Guid("3FE54579-1762-4A77-9AD7-9D185E000A79"),
                     Active = true,
                     Code = 8,
-                    Name = "RCRA-non-gen TSD/CA"
+                    Name = "RCRA-non-gen TSD"
                 },
                 new FacilityType
                 {

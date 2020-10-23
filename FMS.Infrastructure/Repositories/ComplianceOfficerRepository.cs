@@ -14,26 +14,43 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
 
         public ComplianceOfficerRepository(FmsDbContext context) => _context = context;
-        
 
-        public Task<bool> ComplianceOfficerExistsAsync(Guid id)
+        public async Task<bool> ComplianceOfficerIdExistsAsync(Guid id) =>
+            await _context.ComplianceOfficers.AnyAsync(e => e.Id == id);
+
+        public async Task<bool> ComplianceOfficerNameExistsAsync(string name) =>
+            await _context.ComplianceOfficers.AnyAsync(m => name.Contains(m.GivenName)
+                    && name.Contains(m.FamilyName));
+
+        public async Task<int> CountAsync(ComplianceOfficerSpec spec)
         {
-            throw new NotImplementedException();
+            return await _context.ComplianceOfficers.AsNoTracking().CountAsync();
         }
 
-        public Task<int> CountAsync(ComplianceOfficerSpec spec)
+        public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (complianceOfficer == null || complianceOfficer.Id == Guid.Empty)
+            {
+                return null;
+            }
+
+            return new ComplianceOfficerDetailDto(complianceOfficer);
         }
 
-        public Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
+        public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string name)
         {
-            throw new NotImplementedException();
-        }
+            var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
+                .SingleOrDefaultAsync(e => name.Contains(e.FamilyName) && name.Contains(e.GivenName));
 
-        public Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(Guid id)
-        {
-            throw new NotImplementedException();
+            if (complianceOfficer == null || complianceOfficer.Id == Guid.Empty)
+            {
+                return null;
+            }
+
+            return new ComplianceOfficerDetailDto(complianceOfficer);
         }
 
         public async Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync()
@@ -43,10 +60,28 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new ComplianceOfficerSummaryDto(e))
                 .ToListAsync();
         }
+        public Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task UpdateComplianceOfficerAsync(Guid id, ComplianceOfficerEditDto complianceOfficerUpdates)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task UpdateComplianceOfficerStatusAsync(Guid id, bool active)
+        {
+            var complianceOfficer = await _context.ComplianceOfficers.FindAsync(id);
+
+            if (complianceOfficer == null)
+            {
+                throw new ArgumentException("Compliance Officer ID not found");
+            }
+
+            complianceOfficer.Active = active;
+
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Support

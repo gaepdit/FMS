@@ -14,7 +14,7 @@
             <div class="form-group col">
                 <div class="form-check">
                     <input asp-for="Delete" />
-                    <label class="form-check-label">Remove from list</label>
+                    <label asp-for="Delete" class="form-check-label">Remove from list</label>
                 </div>
             </div>
         </div>
@@ -26,14 +26,14 @@
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-danger">This Budget Code is currently Inactive and will not show in Drop-Down Menus.</h5>
+        <h5 class="alert alert-danger">This Organizational Unit is currently Inactive and will not show in Drop-Down Menus.</h5>
     </div>
 }
 @if (Model.ShowChange == true)
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-success">Budget Code: @Model.Name has changed successfully.</h5>
+        <h5 class="alert alert-success">Organizational Unit: @Model.Name has changed successfully.</h5>
         <br />
     </div>
 }

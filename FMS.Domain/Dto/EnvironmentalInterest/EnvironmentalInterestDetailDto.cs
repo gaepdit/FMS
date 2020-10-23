@@ -11,7 +11,6 @@ namespace FMS.Domain.Dto
             Id = environmentalInterest.Id;
             Active = environmentalInterest.Active;
             Name = environmentalInterest.Name;
-            //BudgetCodeId = environmentalInterest.BudgetCode.Id;
         }
 
         public Guid Id { get; set; }
@@ -20,7 +19,5 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Environmental Interest")]
         public string Name { get; set; }
-
-        //public BudgetCodeId BudgetCodeId { get; set; }
     }
 }
