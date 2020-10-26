@@ -85,6 +85,7 @@ namespace FMS
             {
                 opts.Authority += "/v2.0/";
                 opts.TokenValidationParameters.ValidateIssuer = true;
+                opts.Scope.Add(GraphConstants.UserReadScope);
                 opts.UsePkce = true;
             });
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(_dataProtectionKeysFolder));

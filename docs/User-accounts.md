@@ -9,6 +9,7 @@ requested from Azure AD are:
 
 * openid (included by default)
 * profile (included by default)
+* `https://graph.microsoft.com/User.Read` (added in Startup)
 
 SubjectId and ObjectId claims are stored to identify the user. (SubjectId 
 uniquely identifies the user within the application; ObjectId uniquely 
@@ -16,6 +17,9 @@ identifies the user across applications. See
 [Microsoft identity platform ID tokens](https://docs.microsoft.com/en-us/azure/active-directory/develop/id-tokens#claims-in-an-id_token).)
 
 Email address and name are stored for display/search within the application.
+
+Profile photo is available from [Microsoft Graph](https://docs.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0), 
+e.g., `https://graph.microsoft.com/v1.0/users/@Model.Email/photos/96x96/$value`.
 
 ## Configuration
 
