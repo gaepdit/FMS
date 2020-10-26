@@ -15,7 +15,6 @@ namespace TestHelpers
         public static List<FacilityType> FacilityTypes = DevSeedData.GetFacilityTypes();
         public static List<BudgetCode> BudgetCodes = DevSeedData.GetBudgetCodes();
         public static List<OrganizationalUnit> OrganizationalUnits = DevSeedData.GetOrganizationalUnits();
-        public static List<EnvironmentalInterest> EnvironmentalInterests = DevSeedData.GetEnvironmentalInterests();
         public static List<ComplianceOfficer> ComplianceOfficers = DevSeedData.GetComplianceOfficers();
         public static List<File> Files = DevSeedData.GetFiles();
         public static List<Cabinet> Cabinets = DevSeedData.GetCabinets();
@@ -33,8 +32,6 @@ namespace TestHelpers
             !id.HasValue ? null : BudgetCodes.Find(e => e.Id == id);
         public static OrganizationalUnit GetOrganizationalUnit(Guid? id) =>
             !id.HasValue ? null : OrganizationalUnits.Find(e => e.Id == id);
-        public static EnvironmentalInterest GetEnvironmentalInterest(Guid? id) =>
-            !id.HasValue ? null : EnvironmentalInterests.Find(e => e.Id == id);
         public static ComplianceOfficer GetComplianceOfficer(Guid? id) =>
             !id.HasValue ? null : ComplianceOfficers.Find(e => e.Id == id);
     }

@@ -36,7 +36,6 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.FacilityType)
                 .Include(e => e.BudgetCode)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.EnvironmentalInterest)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Include(e => e.RetentionRecords)
@@ -64,8 +63,6 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
                 .Where(e => !spec.OrganizationalUnitId.HasValue ||
                     e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.EnvironmentalInterestId.HasValue ||
-                    e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
                 .Where(e => !spec.ComplianceOfficerId.HasValue ||
                     e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
                 .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
@@ -93,8 +90,6 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
                 .Where(e => !spec.OrganizationalUnitId.HasValue ||
                     e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.EnvironmentalInterestId.HasValue ||
-                    e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
                 .Where(e => !spec.ComplianceOfficerId.HasValue ||
                     e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
                 .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
@@ -126,8 +121,6 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
                 .Where(e => !spec.OrganizationalUnitId.HasValue ||
                     e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.EnvironmentalInterestId.HasValue ||
-                    e.EnvironmentalInterest.Id.Equals(spec.EnvironmentalInterestId))
                 .Where(e => !spec.ComplianceOfficerId.HasValue ||
                     e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
                 .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
@@ -141,7 +134,6 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.FacilityType)
                 .Include(e => e.BudgetCode)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.EnvironmentalInterest)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Include(e => e.RetentionRecords)
@@ -266,7 +258,6 @@ namespace FMS.Infrastructure.Repositories
             facility.FacilityTypeId = facilityUpdates.FacilityTypeId;
             facility.BudgetCodeId = facilityUpdates.BudgetCodeId;
             facility.OrganizationalUnitId = facilityUpdates.OrganizationalUnitId;
-            facility.EnvironmentalInterestId = facilityUpdates.EnvironmentalInterestId;
             facility.ComplianceOfficerId = facilityUpdates.ComplianceOfficerId;
             facility.Location = facilityUpdates.Location;
             facility.Address = facilityUpdates.Address;

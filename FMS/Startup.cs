@@ -111,7 +111,6 @@ namespace FMS
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IBudgetCodeRepository, BudgetCodeRepository>();
             services.AddScoped<IComplianceOfficerRepository, ComplianceOfficerRepository>();
-            services.AddScoped<IEnvironmentalInterestRepository, EnvironmentalInterestRepository>();
             services.AddScoped<IFacilityStatusRepository, FacilityStatusRepository>();
             services.AddScoped<IFacilityTypeRepository, FacilityTypeRepository>();
             services.AddScoped<IOrganizationalUnitRepository, OrganizationalUnitRepository>();

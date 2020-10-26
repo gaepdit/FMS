@@ -31,7 +31,6 @@ namespace FMS.Pages.Facilities
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
-        public SelectList EnvironmentalInterests { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
 
         public IndexModel(
@@ -68,7 +67,6 @@ namespace FMS.Pages.Facilities
         {
             BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
-            EnvironmentalInterests = await _listHelper.EnvironmentalInterestsSelectListAsync();
             FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
             FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();

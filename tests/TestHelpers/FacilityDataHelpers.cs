@@ -16,7 +16,6 @@ namespace TestHelpers
             facility.FacilityType = GetFacilityType(facility.FacilityTypeId);
             facility.BudgetCode = GetBudgetCode(facility.BudgetCodeId);
             facility.OrganizationalUnit = GetOrganizationalUnit(facility.OrganizationalUnitId);
-            facility.EnvironmentalInterest = GetEnvironmentalInterest(facility.EnvironmentalInterestId);
             facility.ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId);
 
             var facilityDetail = new FacilityDetailDto(facility);

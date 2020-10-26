@@ -17,7 +17,6 @@ namespace FMS.Domain.Dto
             FacilityTypeId = facility.FacilityType?.Id;
             BudgetCodeId = facility.BudgetCode?.Id;
             OrganizationalUnitId = facility.OrganizationalUnit?.Id;
-            EnvironmentalInterestId = facility.EnvironmentalInterest?.Id;
             ComplianceOfficerId = facility.ComplianceOfficer?.Id;
             Location = facility.Location;
             Address = facility.Address;
@@ -58,9 +57,6 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Organizational Unit")]
         public Guid? OrganizationalUnitId { get; set; }
-
-        [Display(Name = "Environmental Interest")]
-        public Guid? EnvironmentalInterestId { get; set; }
 
         [Required]
         [Display(Name = "Compliance Officer")]

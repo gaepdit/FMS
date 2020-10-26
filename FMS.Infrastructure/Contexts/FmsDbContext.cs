@@ -16,7 +16,6 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<BudgetCode> BudgetCodes { get; set; }
         public DbSet<ComplianceOfficer> ComplianceOfficers { get; set; }
         public DbSet<County> Counties { get; set; }
-        public DbSet<EnvironmentalInterest> EnvironmentalInterests { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<FacilityStatus> FacilityStatuses { get; set; }
         public DbSet<FacilityType> FacilityTypes { get; set; }

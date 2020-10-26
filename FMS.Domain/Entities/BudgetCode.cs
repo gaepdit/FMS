@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,7 +15,6 @@ namespace FMS.Domain.Entities
             OrganizationNumber = newBudgetCode.OrganizationNumber;
             ProjectNumber = newBudgetCode.ProjectNumber;
         }
-        public EnvironmentalInterest EnvironmentalInterest { get; set; }   //virtual
 
         [StringLength(20)]
         public string Code { get; set; }

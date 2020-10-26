@@ -21,7 +21,6 @@ namespace FMS.Domain.Dto
             FacilityType = facility.FacilityType;
             BudgetCode = facility.BudgetCode;
             OrganizationalUnit = facility.OrganizationalUnit;
-            EnvironmentalInterest = facility.EnvironmentalInterest;
             ComplianceOfficer = facility.ComplianceOfficer;
             Location = facility.Location;
             Address = facility.Address;
@@ -63,9 +62,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Organizational Unit")]
         public OrganizationalUnit OrganizationalUnit { get; }
-
-        [Display(Name = "Environmental Interest")]
-        public EnvironmentalInterest EnvironmentalInterest { get; }
 
         [Display(Name = "Compliance Officer")]
         public ComplianceOfficer ComplianceOfficer { get; }

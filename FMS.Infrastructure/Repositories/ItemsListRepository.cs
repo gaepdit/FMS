@@ -46,9 +46,6 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new ListItem() {Id = e.Id, Name = e.FamilyName + ", " + e.GivenName})
                 .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetEnvironmentalInterestsItemListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<EnvironmentalInterest>(includeInactive);
-
         public async Task<IEnumerable<ListItem>> GetFacilityStatusesItemListAsync(bool includeInactive = false) =>
             await _context.FacilityStatuses.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
@@ -94,18 +91,6 @@ namespace FMS.Infrastructure.Repositories
                 }
 
                 return item.GivenName + " " + item.FamilyName;
-            }
-
-            return null;
-        }
-
-        public async Task<string> GetEnvironmentalInterestNameAsync(Guid? id)
-        {
-            if (id.HasValue)
-            {
-                var item = await _context.EnvironmentalInterests.AsNoTracking()
-                    .SingleOrDefaultAsync(e => e.Id == id);
-                return item?.Name;
             }
 
             return null;

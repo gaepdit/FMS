@@ -65,13 +65,6 @@
                 <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
             </div>
             <div class="form-group col-md">
-                <label asp-for="Facility.EnvironmentalInterestId"></label>
-                <select asp-for="Facility.EnvironmentalInterestId" asp-items="Model.EnvironmentalInterests" class="custom-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Facility.EnvironmentalInterestId" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md">
                 <label>Facility Status <span class="text-danger">*</span></label>
                 <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
                     <option value=""></option>

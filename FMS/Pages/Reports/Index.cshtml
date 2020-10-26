@@ -75,12 +75,6 @@
             <b>Organizational Unit:</b> @Model.OrganizationalUnitName
         </li>
     }
-    @if (Model.Spec.EnvironmentalInterestId != null)
-    {
-        <li>
-            <b>Environmental Interest:</b> @Model.EnvironmentalInterestName
-        </li>
-    }
     @if (Model.Spec.FacilityTypeId != null)
     {
         <li>
@@ -109,7 +103,6 @@
                 <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
                 <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
                 <input type="hidden" asp-for="Spec.BudgetCodeId" />
-                <input type="hidden" asp-for="Spec.EnvironmentalInterestId" />
                 <input type="hidden" asp-for="Spec.FacilityStatusId" />
                 <input type="hidden" asp-for="Spec.Name" />
                 <input type="hidden" asp-for="Spec.Address" />
@@ -159,7 +152,6 @@
                 <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
                 <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name)</td>
                 <td>@Html.DisplayFor(m => item.BudgetCode.Name)</td>
-                <td>@Html.DisplayFor(m => item.EnvironmentalInterest.Name)</td>
                 <td>@Html.DisplayFor(m => item.FacilityStatus.Name)</td>
                 <td>
                     @if (item.Cabinets.Count > 0)

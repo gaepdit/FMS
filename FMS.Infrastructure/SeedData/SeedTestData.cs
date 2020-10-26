@@ -9,7 +9,6 @@ namespace FMS.Infrastructure.SeedData
         {
             if (!context.BudgetCodes.Any()) context.BudgetCodes.AddRange(GetBudgetCodes());
             if (!context.ComplianceOfficers.Any()) context.ComplianceOfficers.AddRange(GetComplianceOfficers());
-            if (!context.EnvironmentalInterests.Any()) context.EnvironmentalInterests.AddRange(GetEnvironmentalInterests());
             if (!context.Facilities.Any()) context.Facilities.AddRange(GetFacilities());
             if (!context.FacilityStatuses.Any()) context.FacilityStatuses.AddRange(GetFacilityStatuses());
             if (!context.FacilityTypes.Any()) context.FacilityTypes.AddRange(GetFacilityTypes());

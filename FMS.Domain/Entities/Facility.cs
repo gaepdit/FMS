@@ -19,7 +19,6 @@ namespace FMS.Domain.Entities
             FacilityTypeId = newFacility.FacilityTypeId;
             BudgetCodeId = newFacility.BudgetCodeId;
             OrganizationalUnitId = newFacility.OrganizationalUnitId;
-            EnvironmentalInterestId = newFacility.EnvironmentalInterestId;
             ComplianceOfficerId = newFacility.ComplianceOfficerId;
             Location = newFacility.Location;
             Address = newFacility.Address;
@@ -36,10 +35,6 @@ namespace FMS.Domain.Entities
         // File label and Cabinet where this Facility is located
         public Guid FileId { get; set; }
         public virtual File File { get; set; }
-
-        // Environmental Interest/Program of this Facility
-        public Guid? EnvironmentalInterestId { get; set; }
-        public virtual EnvironmentalInterest EnvironmentalInterest { get; set; }
 
         // Type of Facility
         public Guid? FacilityTypeId { get; set; }

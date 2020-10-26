@@ -318,7 +318,6 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = "ABC",
                 Name = "New Facility",
                 FileLabel = "243-0001",
-                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
                 FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
                 OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
                 BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
@@ -360,7 +359,6 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = "ABC",
                 Name = "New Facility",
                 FileLabel = null,
-                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
                 FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
                 OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
                 BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
@@ -400,7 +398,6 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = " ",
                 Name = "New Facility",
                 FileLabel = null,
-                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
                 FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
                 OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
                 BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
@@ -468,7 +465,6 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = "ABC",
                 Name = "New Facility",
                 FileLabel = " ",
-                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
                 FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
                 OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
                 BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
@@ -508,7 +504,6 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = "ABC",
                 Name = "New Facility",
                 FileLabel = "ABC999",
-                EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), // RCRA
                 FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
                 OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
                 BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA

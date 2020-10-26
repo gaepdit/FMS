@@ -30,9 +30,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Organizational Unit")]
         public Guid? OrganizationalUnitId { get; set; }
 
-        [Display(Name = "Environmental Interest")]
-        public Guid? EnvironmentalInterestId { get; set; }
-
         [Display(Name = "Compliance Officer")]
         public Guid? ComplianceOfficerId { get; set; }
 
@@ -64,7 +61,6 @@ namespace FMS.Domain.Dto
                 {nameof(City), City},
                 {nameof(ComplianceOfficerId), ComplianceOfficerId?.ToString()},
                 {nameof(CountyId), CountyId?.ToString()},
-                {nameof(EnvironmentalInterestId), EnvironmentalInterestId?.ToString()},
                 {nameof(FacilityNumber), FacilityNumber},
                 {nameof(FacilityStatusId), FacilityStatusId?.ToString()},
                 {nameof(FacilityTypeId), FacilityTypeId?.ToString()},

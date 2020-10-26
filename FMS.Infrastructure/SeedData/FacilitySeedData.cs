@@ -16,7 +16,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "BRF1211825",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //FileLabel = "243-0001"
-                    EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), //GEN
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
@@ -39,7 +38,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "BRF3191858",
                     FileId = new Guid("790B04E8-F5F5-412E-95E2-B785E630A2A7"), //248-0001
-                    EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
                     FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
@@ -61,7 +59,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "BRF3471841",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //243-0085
-                    EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
                     FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
@@ -83,7 +80,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "BRF341436",
                     FileId = new Guid("015A39B3-A522-4C13-9479-B17626247313"), //243-0068
-                    EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
                     FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
@@ -105,7 +101,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "BRF691433",
                     FileId = new Guid("47B44DDE-D9D0-4799-AB32-20E829F9D53C"), //243-0069
-                    EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
                     FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
@@ -127,7 +122,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "GAR000068791",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //243-0075
-                    EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), //gen
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
@@ -149,7 +143,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "GAR000077271",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
-                    EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), //gen
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
@@ -171,7 +164,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "GAR000068759",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
-                    EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), //gen
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
@@ -193,7 +185,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = false,
                     FacilityNumber = "DELETED123",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
-                    EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), //gen
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
@@ -215,7 +206,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     FacilityNumber = "UTF8",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
-                    EnvironmentalInterestId = new Guid("FC2A0444-6287-432F-9285-6BA0E7AA73C6"), //RCRA
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), //gen
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
