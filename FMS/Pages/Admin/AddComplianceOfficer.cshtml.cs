@@ -24,7 +24,10 @@ namespace FMS.Pages.Admin
 
         public bool ShowResults { get; set; }
         public List<UsersSearchResult> SearchResults { get; set; }
-        public void OnGet() {  }
+        public void OnGet()
+        {
+            // Method intentionally left empty.
+        }
 
         public async Task<IActionResult> OnGetSearchAsync(string name, string email)
         {

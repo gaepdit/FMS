@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -60,9 +61,20 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new ComplianceOfficerSummaryDto(e))
                 .ToListAsync();
         }
-        public Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
+
+        public async Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
         {
-            throw new NotImplementedException();
+            if(complianceOfficer == null)
+            {
+                return Guid.Empty;
+            }
+
+            var newCO = new ComplianceOfficer(complianceOfficer);
+
+            await _context.ComplianceOfficers.AddAsync(newCO);
+            await _context.SaveChangesAsync();
+
+            return newCO.Id;
         }
 
         public Task UpdateComplianceOfficerAsync(Guid id, ComplianceOfficerEditDto complianceOfficerUpdates)

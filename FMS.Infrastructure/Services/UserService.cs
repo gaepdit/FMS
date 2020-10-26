@@ -99,7 +99,7 @@ namespace FMS.Infrastructure.Services
                 .OrderBy(m => m.FamilyName)
                 .ToListAsync();
 
-        public async Task<ApplicationUser> GetUserAsync(string nameFilter) => await _context.Users.SingleOrDefaultAsync(m => m.GivenName.Contains(nameFilter)
-                    && m.FamilyName.Contains(nameFilter));
+        public async Task<ApplicationUser> GetUserAsync(string nameFilter) => await _context.Users.SingleOrDefaultAsync(m => nameFilter.Contains(m.GivenName)
+                    && nameFilter.Contains(m.FamilyName));
     }
 }

@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Entities.Base;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -6,6 +7,15 @@ namespace FMS.Domain.Entities
 {
     public class ComplianceOfficer : BaseActiveModel, INamedModel
     {
+        public ComplianceOfficer() { }
+
+        public ComplianceOfficer(ComplianceOfficerCreateDto complianceOfficerCreateDto)
+        {
+            Active = complianceOfficerCreateDto.Active;
+            GivenName = complianceOfficerCreateDto.GivenName;
+            FamilyName = complianceOfficerCreateDto.FamilyName;
+        }
+
         [Display(Name = "Compliance Officer")]
         public string GivenName { get; set; }
 

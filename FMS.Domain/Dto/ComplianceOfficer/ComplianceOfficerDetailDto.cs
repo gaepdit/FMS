@@ -23,5 +23,7 @@ namespace FMS.Domain.Dto
         public string FamilyName { get; set; }
 
         public string Name => $"{FamilyName}, {GivenName}";
+
+        public string DisplayName => $"{GivenName} {FamilyName}";
     }
 }

@@ -1,5 +1,5 @@
 ﻿@page "{id:Guid?}"
-@using FMS.Domain.Entities.Users
+@*@using FMS.Domain.Entities.Users*@
 @model FMS.Pages.Admin.DetailsComplianceOfficerModel
 @{
     ViewData["Title"] = $"Compliance Officer: {Model.DisplayName}";
@@ -14,7 +14,9 @@
         <div class="container-fluid bg-light py-3">
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-
+                <input type="hidden" asp-for="IsCO" />
+                <input type="hidden" asp-for="IsUser" />
+                <input type="hidden" asp-for="Id" />
                 <div class="form-row">
                     <h2>
                         @Model.DisplayName
@@ -27,7 +29,7 @@
                 </div>
                 @if (Model.IsUser)
                 {
-                    <hr/>
+                    <hr />
                     <div class="form-row">
                         <div class="form-group col">
                             <div class="form-check">
@@ -51,18 +53,4 @@
         </div>
     </div>
 </div>
-@if (Model.Add == false)
-{
-    <br />
-    <div class="container-fluid">
-        <h5 class="alert alert-danger">Compliance Officer: @Model.DisplayName is currently Inactive and will not show in Drop-Down Menus.</h5>
-    </div>
-}
-@if (Model.ShowChange == true)
-{
-    <br />
-    <div class="container-fluid">
-        <h5 class="alert alert-success">Compliance Officer: @Model.DisplayName has changed successfully.</h5>
-        <br />
-    </div>
-}
+
