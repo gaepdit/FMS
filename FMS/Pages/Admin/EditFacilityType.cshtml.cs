@@ -50,9 +50,9 @@ namespace FMS.Pages.Admin
             FacilityType.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _facilityTypeRepository.FacilityTypeCodeExistsAsync(FacilityType.Code, Id))
+            if (await _facilityTypeRepository.FacilityTypeNameExistsAsync(FacilityType.Name, Id))
             {
-                ModelState.AddModelError("FacilityType.Code", "Code entered already exists.");
+                ModelState.AddModelError("FacilityType.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -75,7 +75,7 @@ namespace FMS.Pages.Admin
                     throw;
                 }
             }
-            TempData?.SetDisplayMessage(Context.Success, $"FacilityType {FacilityType.Name} successfully updated.");
+            TempData?.SetDisplayMessage(Context.Success, $"Facility Type {FacilityType.Name} successfully updated.");
 
             return RedirectToPage("./Index");
         }

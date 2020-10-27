@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,21 +14,18 @@ namespace FMS.Infrastructure.Repositories
     public class BudgetCodeRepository : IBudgetCodeRepository
     {
         private readonly FmsDbContext _context;
-
         public BudgetCodeRepository(FmsDbContext context) => _context = context;
 
         public async Task<bool> BudgetCodeExistsAsync(Guid id) =>
             await _context.BudgetCodes.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> BudgetCodeExistsAsync(string code) =>
-            await _context.BudgetCodes.AnyAsync(e => e.Code == code);
+        public async Task<bool> BudgetCodeCodeExistsAsync(string code, Guid? ignoreId = null) =>
+            await _context.BudgetCodes.AnyAsync(e =>
+                e.Code == code && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<bool> BudgetCodeCodeExistsAsync(string budgetCodeCode, Guid? ignoreId = null) => await _context.BudgetCodes.AnyAsync(e => e.Code == budgetCodeCode && (!ignoreId.HasValue || e.Id != ignoreId.Value));
-
-        public async Task<int> CountAsync()
-        {
-            return await _context.BudgetCodes.AsNoTracking().CountAsync();
-        }
+        public async Task<bool> BudgetCodeNameExistsAsync(string name, Guid? ignoreId = null) =>
+            await _context.BudgetCodes.AnyAsync(e =>
+                e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<BudgetCodeEditDto> GetBudgetCodeAsync(Guid id)
         {
@@ -42,20 +40,15 @@ namespace FMS.Infrastructure.Repositories
             return new BudgetCodeEditDto(budgetCode);
         }
 
-        public async Task<IReadOnlyList<BudgetCodeSummaryDto>> GetBudgetCodeListAsync()
-        {
-            return await _context.BudgetCodes.AsNoTracking()
+        public async Task<IReadOnlyList<BudgetCodeSummaryDto>> GetBudgetCodeListAsync() =>
+            await _context.BudgetCodes.AsNoTracking()
                 .OrderBy(e => e.Code)
                 .Select(e => new BudgetCodeSummaryDto(e))
                 .ToListAsync();
-        }
 
-        public async Task<Guid> CreateBudgetCodeAsync(BudgetCodeCreateDto budgetCode)
+        public Task<Guid> CreateBudgetCodeAsync(BudgetCodeCreateDto budgetCode)
         {
-            if(budgetCode == null)
-            {
-                throw new ArgumentException("Values required for new Budget Code.");
-            }
+            Prevent.Null(budgetCode, nameof(budgetCode));
 
             if (string.IsNullOrWhiteSpace(budgetCode.Code))
             {
@@ -67,14 +60,19 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("New Name for Budget Code is required.");
             }
 
-            return await CreateBudgetCodeInternalAsync(budgetCode);
+            return CreateBudgetCodeInternalAsync(budgetCode);
         }
 
-        public async Task<Guid> CreateBudgetCodeInternalAsync(BudgetCodeCreateDto budgetCode)
+        private async Task<Guid> CreateBudgetCodeInternalAsync(BudgetCodeCreateDto budgetCode)
         {
-            if (await BudgetCodeExistsAsync(budgetCode.Code))
+            if (await BudgetCodeCodeExistsAsync(budgetCode.Code))
             {
-                throw new ArgumentException($"Budget Code {budgetCode.Code} Already Exists.");
+                throw new ArgumentException($"Budget Code {budgetCode.Code} already exists.");
+            }
+
+            if (await BudgetCodeNameExistsAsync(budgetCode.Name))
+            {
+                throw new ArgumentException($"Budget Code Name {budgetCode.Name} already exists.");
             }
 
             var newBC = new BudgetCode(budgetCode);
@@ -91,14 +89,16 @@ namespace FMS.Infrastructure.Repositories
             {
                 throw new ArgumentException("Budget Code Code is required.");
             }
+
             if (string.IsNullOrWhiteSpace(budgetCodeUpdates.Name))
             {
                 throw new ArgumentException("Budget Code Name is required.");
             }
+
             return UpdateBudgetCodeInternalAsync(id, budgetCodeUpdates);
         }
 
-        public async Task UpdateBudgetCodeInternalAsync(Guid id, BudgetCodeEditDto budgetCodeUpdates)
+        private async Task UpdateBudgetCodeInternalAsync(Guid id, BudgetCodeEditDto budgetCodeUpdates)
         {
             var budgetCode = await _context.BudgetCodes.FindAsync(id);
 
@@ -107,16 +107,20 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Budget Code ID not found.", nameof(id));
             }
 
-            if (await BudgetCodeCodeExistsAsync(budgetCode.Code, id))
+            if (await BudgetCodeCodeExistsAsync(budgetCodeUpdates.Code, id))
             {
-                throw new ArgumentException($"Budget Code Code '{budgetCode.Code}' already exists.");
+                throw new ArgumentException($"Budget Code Code '{budgetCodeUpdates.Code}' already exists.");
+            }
+
+            if (await BudgetCodeNameExistsAsync(budgetCodeUpdates.Name, id))
+            {
+                throw new ArgumentException($"Budget Code Name '{budgetCodeUpdates.Name}' already exists.");
             }
 
             budgetCode.Code = budgetCodeUpdates.Code;
             budgetCode.Name = budgetCodeUpdates.Name;
             budgetCode.OrganizationNumber = budgetCodeUpdates.OrganizationNumber;
             budgetCode.ProjectNumber = budgetCodeUpdates.ProjectNumber;
-            budgetCode.Active = true;
 
             await _context.SaveChangesAsync();
         }

@@ -10,14 +10,10 @@ namespace FMS.Domain.Dto
         public FacilityTypeEditDto(FacilityType facilityType)
         {
             Active = facilityType.Active;
-            Code = facilityType.Code;
             Name = facilityType.Name;
         }
 
         public bool Active { get; set; }
-
-        // Existing numeric code
-        public int Code { get; set; }
 
         [Display(Name = "Facility Type")]
         public string Name { get; set; }

@@ -1,8 +1,11 @@
 ﻿@page
+@using FMS.Pages.Admin
 @model FMS.Pages.Admin.AddFacilityTypeModel
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
 @{
     ViewData["Title"] = $"Add Facility Type";
 }
@@ -12,24 +15,18 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <input type="hidden" asp-for="FacilityType.Active" />
-            <div class="form-group col-md-2">
-                <label>Facility Type Code <span class="text-danger">*</span></label>
-                <input asp-for="FacilityType.Code" class="form-control" />
-                <span asp-validation-for="FacilityType.Code" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-10">
+            <div class="form-group col">
                 <label>Facility Type Name <span class="text-danger">*</span></label>
                 <input asp-for="FacilityType.Name" class="form-control" />
                 <span asp-validation-for="FacilityType.Name" class="text-danger"></span>
             </div>
         </div>
+        <p class="text-danger">* denotes a required field</p>
         <hr />
-        <div class="form-row">
-            <div class="col">
-                <p class="text-danger">* denotes a required field</p>
-                <button id="SubmitButton" type="submit" class="btn btn-primary col-md-3">Add New Facility Type</button>
-                <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Return to Site Mainentance</a>
-            </div>
-        </div>
+        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-4 mb-3 mb-md-0">Add New Facility Type</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
+           asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityType">
+            Cancel
+        </a>
     </form>
 </div>

@@ -11,8 +11,8 @@ namespace FMS.Domain.Entities
         public FacilityType(FacilityTypeCreateDto newFacilityType)
         {
             Name = newFacilityType.Name;
-            Code = newFacilityType.Code;
         }
+        
         // Existing numeric code
         public int Code { get; set; }
 

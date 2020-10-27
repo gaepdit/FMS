@@ -1,5 +1,5 @@
 ﻿@page "{id:Guid?}"
-@*@using FMS.Domain.Entities.Users*@
+@using FMS.Pages.Admin
 @model FMS.Pages.Admin.DetailsComplianceOfficerModel
 @{
     ViewData["Title"] = $"Compliance Officer: {Model.DisplayName}";
@@ -11,46 +11,47 @@
         <div class="mr-2">
             <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
         </div>
-        <div class="container-fluid bg-light py-3">
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-                <input type="hidden" asp-for="IsCO" />
-                <input type="hidden" asp-for="IsUser" />
-                <input type="hidden" asp-for="Id" />
-                <div class="form-row">
-                    <h2>
-                        @Model.DisplayName
-                    </h2>
-                </div>
-                <div class="form-row">
-                    <h5>
-                        @Model.Email
-                    </h5>
-                </div>
-                @if (Model.IsUser)
-                {
-                    <hr />
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <div class="form-check">
-                                <input asp-for="Add" />
-                                <label asp-for="Add" class="form-check-label">Add/Remove from Compliance Officer list</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col">
-                            <button id="SubmitButton" type="submit" class="btn btn-primary col-md-3">Save Changes</button>
-                            <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Return to Site Maintenance</a>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Return to Site Maintenance</a>
-                }
-            </form>
+        <div>
+            <h2>
+                @Model.DisplayName
+            </h2>
+            <p>@Model.Email</p>
         </div>
     </div>
 </div>
 
+@if (Model.IsUser)
+{
+    <div class="container bg-light py-3">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <input type="hidden" asp-for="IsCO" />
+            <input type="hidden" asp-for="IsUser" />
+            <input type="hidden" asp-for="Id" />
+            <div class="form-row">
+                <div class="form-group col">
+                    <div class="form-check">
+                        <input asp-for="Add" />
+                        <label asp-for="Add" class="form-check-label">Add to Compliance Officer list</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <button id="SubmitButton" type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+                    <a asp-page="Index" class="btn btn-outline-secondary col-md-3" asp-route-handler="select"
+                       asp-route-MaintenanceSelection="@MaintenanceOptions.ComplianceOfficer">
+                        Return to Site Maintenance
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+else
+{
+    <a asp-page="Index" class="btn btn-outline-secondary col-md-3" asp-route-handler="select"
+       asp-route-MaintenanceSelection="@MaintenanceOptions.ComplianceOfficer">
+        Return to Site Maintenance
+    </a>
+}

@@ -65,7 +65,7 @@ namespace FMS.Pages.Admin
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _facilityStatusRepository.FacilityStatusExistsAsync(Status))
+                if (!await _facilityStatusRepository.FacilityStatusExistsAsync(Id))
                 {
                     return NotFound();
                 }

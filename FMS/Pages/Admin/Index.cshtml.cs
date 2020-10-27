@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Admin
 {
@@ -23,12 +23,12 @@ namespace FMS.Pages.Admin
         public IReadOnlyList<FacilityTypeSummaryDto> FacilityTypes { get; private set; }
         public IReadOnlyList<BudgetCodeSummaryDto> BudgetCodes { get; private set; }
         public IReadOnlyList<OrganizationalUnitSummaryDto> OrganizationalUnits { get; private set; }
-        public IReadOnlyList<ComplianceOfficerSummaryDto> ComplianceOfficers { get; set; }
-        
+        public IReadOnlyList<ComplianceOfficerSummaryDto> ComplianceOfficers { get; private set; }
+
         [Display(Name = "Select a Drop-Down Menu to Edit")]
-        [BindProperty(SupportsGet =true)]
-        public int DropDownSelection { get; set; }
-        public string Message { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string MaintenanceSelection { get; set; }
+
         public DisplayMessage DisplayMessage { get; set; }
 
         public IndexModel(
@@ -47,40 +47,44 @@ namespace FMS.Pages.Admin
 
         public void OnGet()
         {
-            DropDownSelection = 0;
             DisplayMessage = TempData?.GetDisplayMessage();
-            Message = "";
         }
 
-        public async Task<IActionResult> OnGetSearchAsync()
+        public async Task<IActionResult> OnGetSelectAsync()
         {
             await PopulateResultAsync();
-            if(DropDownSelection == 0) { Message = "Please Make A Selection"; }
             return Page();
         }
 
         private async Task PopulateResultAsync()
         {
-            switch (DropDownSelection)
+            switch (MaintenanceSelection)
             {
-                case 1:
+                case MaintenanceOptions.BudgetCode:
                     BudgetCodes = await _budgetCodeRepository.GetBudgetCodeListAsync();
                     break;
-                case 2:
+                case MaintenanceOptions.ComplianceOfficer:
                     ComplianceOfficers = await _complianceOfficerRepository.GetComplianceOfficerListAsync();
                     break;
-                case 4:
+                case MaintenanceOptions.FacilityStatus:
                     FacilityStatuses = await _facilityStatusRepository.GetFacilityStatusListAsync();
                     break;
-                case 5:
+                case MaintenanceOptions.FacilityType:
                     FacilityTypes = await _facilityTypeRepository.GetFacilityTypeListAsync();
                     break;
-                case 6:
+                case MaintenanceOptions.OrganizationalUnit:
                     OrganizationalUnits = await _organizationalUnitRepository.GetOrganizationalUnitListAsync();
-                    break;
-                default:
                     break;
             }
         }
+    }
+
+    public static class MaintenanceOptions
+    {
+        public const string BudgetCode = "Budget Code";
+        public const string ComplianceOfficer = "Compliance Officer";
+        public const string FacilityStatus = "Facility Status";
+        public const string FacilityType = "Facility Type";
+        public const string OrganizationalUnit = "Organizational Unit";
     }
 }

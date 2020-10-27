@@ -34,9 +34,9 @@ namespace FMS.Pages.Admin
             FacilityType.TrimAll();
 
             // When adding a new Facility Type, make sure the number doesn't already exist before trying to save.
-            if (await _facilityTypeRepository.FacilityTypeCodeExistsAsync(FacilityType.Code))
+            if (await _facilityTypeRepository.FacilityTypeNameExistsAsync(FacilityType.Name))
             {
-                ModelState.AddModelError("FacilityType.Code", "Code entered already exists.");
+                ModelState.AddModelError("FacilityType.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)

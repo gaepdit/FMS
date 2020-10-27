@@ -1,4 +1,5 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Pages.Admin
 @model FMS.Pages.Admin.EditFacilityStatusModel
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
@@ -13,8 +14,8 @@
         <span class="text-muted">(Deleted)</span>
     }
 </h1>
-<hr />
-<div class="container-fluid">
+
+<div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="FacilityStatus.Active" />
@@ -26,13 +27,12 @@
                 <span asp-validation-for="FacilityStatus.Status" class="text-danger"></span>
             </div>
         </div>
+        <p class="text-danger">* denotes a required field</p>
         <hr />
-        <div class="form-row">
-            <div class="col">
-                <p class="text-danger">* denotes a required field</p>
-                <button type="submit" class="btn btn-primary col-md-2">Save Changes</button>
-                <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
-            </div>
-        </div>
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
+           asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityStatus">
+            Cancel
+        </a>
     </form>
 </div>

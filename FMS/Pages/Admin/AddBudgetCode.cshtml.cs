@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Admin
 {
@@ -33,10 +33,15 @@ namespace FMS.Pages.Admin
 
             BudgetCode.TrimAll();
 
-            // When adding a new Budget Code, make sure the number doesn't already exist before trying to save.
+            // When adding a new Budget Code, make sure the code and number don't already exist before trying to save.
             if (await _budgetCodeRepository.BudgetCodeCodeExistsAsync(BudgetCode.Code))
             {
                 ModelState.AddModelError("BudgetCode.Code", "Code entered already exists.");
+            }
+
+            if (await _budgetCodeRepository.BudgetCodeNameExistsAsync(BudgetCode.Name))
+            {
+                ModelState.AddModelError("BudgetCode.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)

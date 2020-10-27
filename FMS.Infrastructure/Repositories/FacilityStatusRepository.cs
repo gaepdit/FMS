@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,32 +14,23 @@ namespace FMS.Infrastructure.Repositories
     public class FacilityStatusRepository : IFacilityStatusRepository
     {
         private readonly FmsDbContext _context;
-
         public FacilityStatusRepository(FmsDbContext context) => _context = context;
 
-        public async Task<int> CountAsync(FacilityStatusSpec spec)
+        public Task<Guid> CreateFacilityStatusAsync(FacilityStatusCreateDto facilityStatus)
         {
-            return await _context.FacilityStatuses.AsNoTracking().CountAsync();
-        }
-
-        public async Task<Guid> CreateFacilityStatusAsync(FacilityStatusCreateDto facilityStatus)
-        {
-            if (facilityStatus == null)
-            {
-                throw new ArgumentException("Values required for new Facility Status.");
-            }
+            Prevent.Null(facilityStatus, nameof(facilityStatus));
 
             if (string.IsNullOrWhiteSpace(facilityStatus.Status))
             {
                 throw new ArgumentException("New Name for Facility Status is required.");
             }
 
-            return await CreatefacilityStatusInternalAsync(facilityStatus);
+            return CreateFacilityStatusInternalAsync(facilityStatus);
         }
 
-        public async Task<Guid> CreatefacilityStatusInternalAsync(FacilityStatusCreateDto facilityStatus)
+        private async Task<Guid> CreateFacilityStatusInternalAsync(FacilityStatusCreateDto facilityStatus)
         {
-            if (await FacilityStatusExistsAsync(facilityStatus.Status))
+            if (await FacilityStatusStatusExistsAsync(facilityStatus.Status))
             {
                 throw new ArgumentException($"Facility Status {facilityStatus.Status} Already Exists.");
             }
@@ -54,10 +46,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> FacilityStatusExistsAsync(Guid id) =>
             await _context.FacilityStatuses.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> FacilityStatusExistsAsync(string status) =>
-            await _context.FacilityStatuses.AnyAsync(e => e.Status == status);
-
-        public async Task<bool> FacilityStatusStatusExistsAsync(string facilityStatusStatus, Guid? ignoreId = null) => await _context.FacilityStatuses.AnyAsync(e => e.Status == facilityStatusStatus && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+        public async Task<bool> FacilityStatusStatusExistsAsync(string status, Guid? ignoreId = null) =>
+            await _context.FacilityStatuses.AnyAsync(e =>
+                e.Status == status && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<FacilityStatusEditDto> GetFacilityStatusAsync(Guid id)
         {
@@ -72,13 +63,11 @@ namespace FMS.Infrastructure.Repositories
             return new FacilityStatusEditDto(facilityStatus);
         }
 
-        public async Task<IReadOnlyList<FacilityStatusSummaryDto>> GetFacilityStatusListAsync()
-        {
-            return await _context.FacilityStatuses.AsNoTracking()
+        public async Task<IReadOnlyList<FacilityStatusSummaryDto>> GetFacilityStatusListAsync() =>
+            await _context.FacilityStatuses.AsNoTracking()
                 .OrderBy(e => e.Status)
                 .Select(e => new FacilityStatusSummaryDto(e))
                 .ToListAsync();
-        }
 
         public Task UpdateFacilityStatusAsync(Guid id, FacilityStatusEditDto facilityStatusUpdates)
         {
@@ -86,11 +75,11 @@ namespace FMS.Infrastructure.Repositories
             {
                 throw new ArgumentException("Facility Status Name is required.");
             }
-            
-            return UpdateFacilityStatusUpdatesInternalAsync(id, facilityStatusUpdates);
+
+            return UpdateFacilityStatusInternalAsync(id, facilityStatusUpdates);
         }
 
-        public async Task UpdateFacilityStatusUpdatesInternalAsync(Guid id, FacilityStatusEditDto facilityStatusUpdates)
+        private async Task UpdateFacilityStatusInternalAsync(Guid id, FacilityStatusEditDto facilityStatusUpdates)
         {
             var facilityStatus = await _context.FacilityStatuses.FindAsync(id);
 
@@ -99,13 +88,12 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Facility Status ID not found.", nameof(id));
             }
 
-            if (await FacilityStatusStatusExistsAsync(facilityStatus.Status, id))
+            if (await FacilityStatusStatusExistsAsync(facilityStatusUpdates.Status, id))
             {
-                throw new ArgumentException($"Facility Status '{facilityStatus.Status}' already exists.");
+                throw new ArgumentException($"Facility Status '{facilityStatusUpdates.Status}' already exists.");
             }
 
             facilityStatus.Status = facilityStatusUpdates.Status;
-            facilityStatus.Active = true;
 
             await _context.SaveChangesAsync();
         }
@@ -124,7 +112,6 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-
         #region IDisposable Support
 
         private bool _disposedValue;
@@ -132,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
         protected virtual void Dispose(bool disposing)
         {
             if (_disposedValue) return;
-            
+
             if (disposing)
             {
                 // dispose managed state (managed objects)

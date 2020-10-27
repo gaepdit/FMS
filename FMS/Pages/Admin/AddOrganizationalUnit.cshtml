@@ -1,8 +1,11 @@
 ﻿@page
+@using FMS.Pages.Admin
 @model FMS.Pages.Admin.AddOrganizationalUnitModel
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
 @{
     ViewData["Title"] = $"Add Organizational Unit";
 }
@@ -18,13 +21,12 @@
                 <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
             </div>
         </div>
+        <p class="text-danger">* denotes a required field</p>
         <hr />
-        <div class="form-row">
-            <div class="col">
-                <p class="text-danger">* denotes a required field</p>
-                <button id="SubmitButton" type="submit" class="btn btn-primary col-md-3">Add New Organizational Unit</button>
-                <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Return to Site Mainentance</a>
-            </div>
-        </div>
+        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-5 mb-3 mb-md-0">Add New Organizational Unit</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
+           asp-route-MaintenanceSelection="@MaintenanceOptions.OrganizationalUnit">
+            Cancel
+        </a>
     </form>
 </div>

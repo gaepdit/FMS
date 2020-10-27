@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,21 +14,14 @@ namespace FMS.Infrastructure.Repositories
     public class FacilityTypeRepository : IFacilityTypeRepository
     {
         private readonly FmsDbContext _context;
-
         public FacilityTypeRepository(FmsDbContext context) => _context = context;
 
         public async Task<bool> FacilityTypeExistsAsync(Guid id) =>
             await _context.FacilityTypes.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> FacilityTypeExistsAsync(int code) =>
-            await _context.FacilityTypes.AnyAsync(e => e.Code == code);
-
-        public async Task<bool> FacilityTypeCodeExistsAsync(int facilityTypeCode, Guid? ignoreId = null) => await _context.FacilityTypes.AnyAsync(e => e.Code == facilityTypeCode && (!ignoreId.HasValue || e.Id != ignoreId.Value));
-
-        public async Task<int> CountAsync(FacilityTypeSpec spec)
-        {
-            return await _context.FacilityTypes.AsNoTracking().CountAsync();
-        }
+        public async Task<bool> FacilityTypeNameExistsAsync(string name, Guid? ignoreId = null) =>
+            await _context.FacilityTypes.AnyAsync(e =>
+                e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<FacilityTypeEditDto> GetFacilityTypeAsync(Guid id)
         {
@@ -42,39 +36,29 @@ namespace FMS.Infrastructure.Repositories
             return new FacilityTypeEditDto(facilityType);
         }
 
-        public async Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync()
-        {
-            return await _context.FacilityTypes.AsNoTracking()
-                .OrderBy(e => e.Code)
+        public async Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync() =>
+            await _context.FacilityTypes.AsNoTracking()
+                .OrderBy(e => e.Name)
                 .Select(e => new FacilityTypeSummaryDto(e))
                 .ToListAsync();
-        }
 
-        public async Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType)
+        public Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType)
         {
-            if (facilityType == null)
-            {
-                throw new ArgumentException("Values required for new Facility Type.");
-            }
-
-            if (facilityType.Code < 1)
-            {
-                throw new ArgumentException("New Code for Facility Type is required.");
-            }
+            Prevent.Null(facilityType, nameof(facilityType));
 
             if (string.IsNullOrWhiteSpace(facilityType.Name))
             {
                 throw new ArgumentException("New Name for Budget Code is required.");
             }
 
-            return await CreateFacilityTypeInternalAsync(facilityType);
+            return CreateFacilityTypeInternalAsync(facilityType);
         }
 
-        public async Task<Guid> CreateFacilityTypeInternalAsync(FacilityTypeCreateDto facilityType)
+        private async Task<Guid> CreateFacilityTypeInternalAsync(FacilityTypeCreateDto facilityType)
         {
-            if (await FacilityTypeExistsAsync(facilityType.Code))
+            if (await FacilityTypeNameExistsAsync(facilityType.Name))
             {
-                throw new ArgumentException($"Budget Code {facilityType.Code} Already Exists.");
+                throw new ArgumentException($"Budget Code {facilityType.Name} Already Exists.");
             }
 
             var newFT = new FacilityType(facilityType);
@@ -87,18 +71,15 @@ namespace FMS.Infrastructure.Repositories
 
         public Task UpdateFacilityTypeAsync(Guid id, FacilityTypeEditDto facilityTypeUpdates)
         {
-            if (facilityTypeUpdates.Code < 1)
-            {
-                throw new ArgumentException("Budget Code Code is required.");
-            }
             if (string.IsNullOrWhiteSpace(facilityTypeUpdates.Name))
             {
                 throw new ArgumentException("Budget Code Name is required.");
             }
+
             return UpdateFacilityTypeInternalAsync(id, facilityTypeUpdates);
         }
 
-        public async Task UpdateFacilityTypeInternalAsync(Guid id, FacilityTypeEditDto facilityTypeUpdates)
+        private async Task UpdateFacilityTypeInternalAsync(Guid id, FacilityTypeEditDto facilityTypeUpdates)
         {
             var facilityType = await _context.FacilityTypes.FindAsync(id);
 
@@ -107,14 +88,12 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Facility Type ID not found.", nameof(id));
             }
 
-            if (await FacilityTypeCodeExistsAsync(facilityType.Code, id))
+            if (await FacilityTypeNameExistsAsync(facilityTypeUpdates.Name, id))
             {
-                throw new ArgumentException($"Facility Type Code '{facilityType.Code}' already exists.");
+                throw new ArgumentException($"Facility Type '{facilityTypeUpdates.Name}' already exists.");
             }
 
-            facilityType.Code = facilityTypeUpdates.Code;
             facilityType.Name = facilityTypeUpdates.Name;
-            facilityType.Active = true;
 
             await _context.SaveChangesAsync();
         }
@@ -140,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
         protected virtual void Dispose(bool disposing)
         {
             if (_disposedValue) return;
-            
+
             if (disposing)
             {
                 // dispose managed state (managed objects)

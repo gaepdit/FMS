@@ -33,8 +33,8 @@ namespace FMS.Pages.Admin
 
             FacilityStatus.TrimAll();
 
-            // When adding a new Budget Code, make sure the number doesn't already exist before trying to save.
-            if (await _facilityStatusRepository.FacilityStatusExistsAsync(FacilityStatus.Status))
+            // When adding a new Facility Status, make sure the number doesn't already exist before trying to save.
+            if (await _facilityStatusRepository.FacilityStatusStatusExistsAsync(FacilityStatus.Status))
             {
                 ModelState.AddModelError("FacilityStatus.Name", "Name entered already exists.");
             }

@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,21 +14,14 @@ namespace FMS.Infrastructure.Repositories
     public class OrganizationalUnitRepository : IOrganizationalUnitRepository
     {
         private readonly FmsDbContext _context;
-
         public OrganizationalUnitRepository(FmsDbContext context) => _context = context;
-
-        public async Task<int> CountAsync(OrganizationalUnitSpec spec)
-        {
-            return await _context.OrganizationalUnits.AsNoTracking().CountAsync();
-        }
 
         public async Task<bool> OrganizationalUnitExistsAsync(Guid id) =>
             await _context.OrganizationalUnits.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> OrganizationalUnitExistsAsync(string name) =>
-            await _context.OrganizationalUnits.AnyAsync(e => e.Name == name);
-
-        public async Task<bool> OrganizationalUnitNameExistsAsync(string organizationalUnitName, Guid? ignoreId = null) => await _context.OrganizationalUnits.AnyAsync(e => e.Name == organizationalUnitName && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+        public async Task<bool> OrganizationalUnitNameExistsAsync(string name, Guid? ignoreId = null) =>
+            await _context.OrganizationalUnits.AnyAsync(e =>
+                e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<OrganizationalUnitEditDto> GetOrganizationalUnitAsync(Guid id)
         {
@@ -42,34 +36,29 @@ namespace FMS.Infrastructure.Repositories
             return new OrganizationalUnitEditDto(organizationalUnit);
         }
 
-        public async Task<IReadOnlyList<OrganizationalUnitSummaryDto>> GetOrganizationalUnitListAsync()
-        {
-            return await _context.OrganizationalUnits.AsNoTracking()
+        public async Task<IReadOnlyList<OrganizationalUnitSummaryDto>> GetOrganizationalUnitListAsync() =>
+            await _context.OrganizationalUnits.AsNoTracking()
                 .OrderBy(e => e.Name)
                 .Select(e => new OrganizationalUnitSummaryDto(e))
                 .ToListAsync();
-        }
 
-        public async Task<Guid> CreateOrganizationalUnitAsync(OrganizationalUnitCreateDto organizationalUnit)
+        public Task<Guid> CreateOrganizationalUnitAsync(OrganizationalUnitCreateDto organizationalUnit)
         {
-            if (organizationalUnit == null)
-            {
-                throw new ArgumentException("Values required for new Organizational Unit.");
-            }
+            Prevent.Null(organizationalUnit, nameof(organizationalUnit));
 
             if (string.IsNullOrWhiteSpace(organizationalUnit.Name))
             {
                 throw new ArgumentException("New Name for Budget Code is required.");
             }
 
-            return await CreateOrganizationalUnitInternalAsync(organizationalUnit);
+            return CreateOrganizationalUnitInternalAsync(organizationalUnit);
         }
 
-        public async Task<Guid> CreateOrganizationalUnitInternalAsync(OrganizationalUnitCreateDto organizationalUnit)
+        private async Task<Guid> CreateOrganizationalUnitInternalAsync(OrganizationalUnitCreateDto organizationalUnit)
         {
-            if (await OrganizationalUnitExistsAsync(organizationalUnit.Name))
+            if (await OrganizationalUnitNameExistsAsync(organizationalUnit.Name))
             {
-                throw new ArgumentException($"Organizational Unit {organizationalUnit.Name} Already Exists.");
+                throw new ArgumentException($"Organizational Unit {organizationalUnit.Name} already exists.");
             }
 
             var newOU = new OrganizationalUnit(organizationalUnit);
@@ -87,10 +76,11 @@ namespace FMS.Infrastructure.Repositories
             {
                 throw new ArgumentException("Organizational Unit Name is required.");
             }
-            return UpdateOrganizationalUnitUpdatesInternalAsync(id, organizationalUnitUpdates);
+
+            return UpdateOrganizationalUnitInternalAsync(id, organizationalUnitUpdates);
         }
 
-        public async Task UpdateOrganizationalUnitUpdatesInternalAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates)
+        private async Task UpdateOrganizationalUnitInternalAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates)
         {
             var organizationalUnit = await _context.OrganizationalUnits.FindAsync(id);
 
@@ -99,13 +89,12 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Organizational Unit ID not found.", nameof(id));
             }
 
-            if (await OrganizationalUnitNameExistsAsync(organizationalUnit.Name, id))
+            if (await OrganizationalUnitNameExistsAsync(organizationalUnitUpdates.Name, id))
             {
-                throw new ArgumentException($"Organizational Unit Name '{organizationalUnit.Name}' already exists.");
+                throw new ArgumentException($"Organizational Unit Name '{organizationalUnitUpdates.Name}' already exists.");
             }
 
             organizationalUnit.Name = organizationalUnitUpdates.Name;
-            organizationalUnit.Active = true;
 
             await _context.SaveChangesAsync();
         }
@@ -131,7 +120,7 @@ namespace FMS.Infrastructure.Repositories
         protected virtual void Dispose(bool disposing)
         {
             if (_disposedValue) return;
-            
+
             if (disposing)
             {
                 // dispose managed state (managed objects)

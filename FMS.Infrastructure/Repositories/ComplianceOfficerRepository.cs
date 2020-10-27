@@ -19,15 +19,6 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> ComplianceOfficerIdExistsAsync(Guid id) =>
             await _context.ComplianceOfficers.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> ComplianceOfficerNameExistsAsync(string name) =>
-            await _context.ComplianceOfficers.AnyAsync(m => name.Contains(m.GivenName)
-                    && name.Contains(m.FamilyName));
-
-        public async Task<int> CountAsync(ComplianceOfficerSpec spec)
-        {
-            return await _context.ComplianceOfficers.AsNoTracking().CountAsync();
-        }
-
         public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(Guid id)
         {
             var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
@@ -41,10 +32,10 @@ namespace FMS.Infrastructure.Repositories
             return new ComplianceOfficerDetailDto(complianceOfficer);
         }
 
-        public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string name)
+        public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string familyName, string givenName)
         {
             var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
-                .SingleOrDefaultAsync(e => name.Contains(e.FamilyName) && name.Contains(e.GivenName));
+                .SingleOrDefaultAsync(e => e.FamilyName == familyName && e.GivenName == givenName);
 
             if (complianceOfficer == null || complianceOfficer.Id == Guid.Empty)
             {
@@ -64,7 +55,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
         {
-            if(complianceOfficer == null)
+            if (complianceOfficer == null)
             {
                 return Guid.Empty;
             }
@@ -75,11 +66,6 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return newCO.Id;
-        }
-
-        public Task UpdateComplianceOfficerAsync(Guid id, ComplianceOfficerEditDto complianceOfficerUpdates)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task UpdateComplianceOfficerStatusAsync(Guid id, bool active)
@@ -103,7 +89,7 @@ namespace FMS.Infrastructure.Repositories
         protected virtual void Dispose(bool disposing)
         {
             if (_disposedValue) return;
-            
+
             if (disposing)
             {
                 // dispose managed state (managed objects)

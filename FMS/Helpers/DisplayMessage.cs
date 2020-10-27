@@ -19,6 +19,7 @@
             Context.Secondary => "alert-secondary",
             Context.Success => "alert-success",
             Context.Danger => "alert-danger",
+            Context.Info => "alert-info",
             _ => throw new System.NotImplementedException(),
         };
     }
@@ -28,6 +29,7 @@
         Primary,
         Secondary,
         Success,
-        Danger
+        Danger,
+        Info
     }
 }
