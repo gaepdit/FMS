@@ -19,13 +19,6 @@ namespace FMS.Infrastructure.SeedData
                 },
                 new FacilityType
                 {
-                    Id = new Guid("883B4581-2C73-429D-B198-82E352FD72F0"),
-                    Active = true,
-                    Code = 2,
-                    Name = "GFAC"
-                },
-                new FacilityType
-                {
                     Id = new Guid("1E51E549-9F79-42CE-8AA1-099A76E41BFC"),
                     Active = true,
                     Code = 3,
@@ -47,24 +40,17 @@ namespace FMS.Infrastructure.SeedData
                 },
                 new FacilityType
                 {
-                    Id = new Guid("4C30CECF-B53E-4D09-B919-A9E07E4E9782"),
-                    Active = true,
-                    Code = 6,
-                    Name = "PAF"
-                },
-                new FacilityType
-                {
                     Id = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"),
                     Active = true,
                     Code = 7,
-                    Name = "HSRA"
+                    Name = "HSI"
                 },
                 new FacilityType
                 {
                     Id = new Guid("3FE54579-1762-4A77-9AD7-9D185E000A79"),
                     Active = true,
                     Code = 8,
-                    Name = "TSD"
+                    Name = "TSD/CA"
                 },
                 new FacilityType
                 {
@@ -72,13 +58,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     Code = 9,
                     Name = "BROWN"
-                },
-                new FacilityType
-                {
-                    Id = new Guid("8671519B-0544-43A3-A1E3-0CC82BD4028F"),
-                    Active = true,
-                    Code = 10,
-                    Name = "PASI"
                 },
                 new FacilityType
                 {

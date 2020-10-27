@@ -1,0 +1,39 @@
+﻿@page "{id:Guid?}"
+@model FMS.Pages.Admin.DeleteFacilityStatusModel
+@{
+    ViewData["Title"] = $"Remove Facility Status: {Model.Status}";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+<hr />
+<div class="container-fluid">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <div class="form-group row">
+            <div class="form-group col">
+                <div class="form-check">
+                    <input asp-for="Delete" />
+                    <label asp-for="Delete" class="form-check-label">Remove from list</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-3">Back to Site Maintenance</a>
+    </form>
+</div>
+@if (Model.Delete == true)
+{
+    <br />
+    <div class="container-fluid">
+        <h5 class="alert alert-danger">This Facility Status is currently Inactive and will not show in Drop-Down Menus.</h5>
+    </div>
+}
+@if (Model.ShowChange == true)
+{
+    <br />
+    <div class="container-fluid">
+        <h5 class="alert alert-success">Facility Status: @Model.Status has changed successfully.</h5>
+        <br />
+    </div>
+}

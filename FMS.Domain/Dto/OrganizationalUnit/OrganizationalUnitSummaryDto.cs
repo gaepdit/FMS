@@ -1,8 +1,6 @@
 ﻿using FMS.Domain.Entities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace FMS.Domain.Dto
 {
@@ -13,7 +11,6 @@ namespace FMS.Domain.Dto
             Id = organizationalUnit.Id;
             Active = organizationalUnit.Active;
             Name = organizationalUnit.Name;
-            //ComplianceOfficerId = organizationalUnit.ComplianceOfficer.Id;
         }
 
         public Guid Id { get; set; }
@@ -23,6 +20,5 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Type")]
         public string Name { get; set; }
 
-        //public Guid ComplianceOfficerId { get; set; }
     }
 }

@@ -98,5 +98,9 @@ namespace FMS.Infrastructure.Services
                     || m.Email == emailFilter)
                 .OrderBy(m => m.FamilyName)
                 .ToListAsync();
+
+        public async Task<ApplicationUser> GetUserAsync(string familyName, string givenName) =>
+            await _context.Users.AsNoTracking()
+                .SingleOrDefaultAsync(m => m.FamilyName == familyName && m.GivenName == givenName);
     }
 }

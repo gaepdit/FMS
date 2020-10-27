@@ -40,7 +40,7 @@ namespace FMS.Infrastructure.SeedData
                     FacilityNumber = "BRF3191858",
                     FileId = new Guid("790B04E8-F5F5-412E-95E2-B785E630A2A7"), //248-0001
                     EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
-                    FacilityTypeId = new Guid("4C30CECF-B53E-4D09-B919-A9E07E4E9782"), //BROWN
+                    FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "TOONIGH VILLAGE BUILDING C",
@@ -62,7 +62,7 @@ namespace FMS.Infrastructure.SeedData
                     FacilityNumber = "BRF3471841",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //243-0085
                     EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
-                    FacilityTypeId = new Guid("4C30CECF-B53E-4D09-B919-A9E07E4E9782"), //BROWN
+                    FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "WOODSTOCK SHOPPING CENTER",
@@ -84,7 +84,7 @@ namespace FMS.Infrastructure.SeedData
                     FacilityNumber = "BRF341436",
                     FileId = new Guid("015A39B3-A522-4C13-9479-B17626247313"), //243-0068
                     EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
-                    FacilityTypeId = new Guid("4C30CECF-B53E-4D09-B919-A9E07E4E9782"), // BROWN
+                    FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "106 ARNOLD MILL ROAD",
@@ -106,7 +106,7 @@ namespace FMS.Infrastructure.SeedData
                     FacilityNumber = "BRF691433",
                     FileId = new Guid("47B44DDE-D9D0-4799-AB32-20E829F9D53C"), //243-0069
                     EnvironmentalInterestId = new Guid("C68D44B3-7283-40B1-8105-0B999CED87C5"), //BROWN
-                    FacilityTypeId = new Guid("4C30CECF-B53E-4D09-B919-A9E07E4E9782"), //BROWN
+                    FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "WOODSTOCK CROSSING",

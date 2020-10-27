@@ -8,10 +8,11 @@ namespace FMS.Domain.Repositories
     public interface IFacilityTypeRepository : IDisposable
     {
         Task<bool> FacilityTypeExistsAsync(Guid id);
-        Task<FacilityTypeDetailDto> GetFacilityTypeAsync(Guid id);
-        Task<int> CountAsync(FacilityTypeSpec spec);
+        Task<bool> FacilityTypeNameExistsAsync(string name, Guid? ignoreId = null);
+        Task<FacilityTypeEditDto> GetFacilityTypeAsync(Guid id);
         Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync();
-        Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityStatus);
+        Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType);
         Task UpdateFacilityTypeAsync(Guid id, FacilityTypeEditDto facilityTypeUpdates);
+        Task UpdateFacilityTypeStatusAsync(Guid id, bool active);
     }
 }

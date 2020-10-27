@@ -1,13 +1,15 @@
-﻿using FMS.Domain.Entities.Base;
-using System.Collections.Generic;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
     public class OrganizationalUnit : BaseActiveNamedModel
     {
-        //[Display(Name = "Organizational Unit")]
-        //public string Name { get; set; }
+        public OrganizationalUnit() { }
 
-        public ICollection<ComplianceOfficer> ComplianceOfficers { get; set; }
+        public OrganizationalUnit(OrganizationalUnitCreateDto newOrganizationalUnit)
+        {
+            Name = newOrganizationalUnit.Name;
+        }
     }
 }

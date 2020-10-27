@@ -1,0 +1,66 @@
+﻿@page
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Admin.AddComplianceOfficerModel
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+@{
+    ViewData["Title"] = $"Add Compliance Officer";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container bg-light py-3">
+    <form method="get">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        @*asp-fragment="SearchResults"*@
+        <div class="form-row">
+            <div class="form-group col">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" aria-describedby="nameHelpBlock" />
+                <small id="nameHelpBlock" class="form-text text-muted">First or last name</small>
+            </div>
+            <div class="form-group col">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+        </div>
+        <input type="hidden" name="handler" value="search" />
+        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Search</button>
+        <a asp-page="./AddComplianceOfficer" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
+    </form>
+</div>
+@if (Model.ShowResults)
+{
+    @*<a id="SearchResults"></a>*@
+
+    @if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+    {
+        <table class="table table-borderless">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Email)</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SearchResults)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.Name)</td>
+                        <td>@Html.DisplayFor(m => item.Email)</td>
+                        <td>
+                            <a asp-page="./DetailsComplianceOfficer" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">Add/Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="container mt-2">
+            <p class="lead text-info">No search results found.</p>
+        </div>
+    }
+}

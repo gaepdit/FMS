@@ -9,6 +9,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Environmental Interest")]
         public string Name { get; set; }
 
-        //public Guid BudgetCodeId { get; set; }
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }

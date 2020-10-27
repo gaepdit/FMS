@@ -15,7 +15,6 @@ namespace FMS.Domain.Dto
             Id = facilityStatus.Id;
             Active = facilityStatus.Active;
             Status = facilityStatus.Status;
-            //EnvironmentalInterestId = facilityStatus.EnvironmentalInterest.Id;
         }
 
         public Guid Id { get; set; }
@@ -25,6 +24,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Status")]
         public string Status { get; set; }
 
-        //public Guid EnvironmentalInterestId { get; set; }
+        public void TrimAll()
+        {
+            Status = Status?.Trim();
+        }
     }
 }

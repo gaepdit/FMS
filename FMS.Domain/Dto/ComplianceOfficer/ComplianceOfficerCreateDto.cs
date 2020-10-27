@@ -10,7 +10,5 @@ namespace FMS.Domain.Dto
         public string GivenName { get; set; }
 
         public string FamilyName { get; set; }
-
-        //public Guid OrganizationalUnitId { get; set; }
     }
 }

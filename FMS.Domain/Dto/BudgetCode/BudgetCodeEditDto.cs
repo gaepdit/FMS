@@ -10,25 +10,21 @@ namespace FMS.Domain.Dto
 
         public BudgetCodeEditDto(BudgetCode budgetCode)
         {
-            Id = budgetCode.Id;
             Active = budgetCode.Active;
-            //EnvironmentalInterestId = budgetCode.EnvironmentalInterest.Id;
             Code = budgetCode.Code;
             Name = budgetCode.Name;
             OrganizationNumber = budgetCode.OrganizationNumber;
             ProjectNumber = budgetCode.ProjectNumber;
         }
 
-        public Guid Id { get; set; }
-
         public bool Active { get; set; }
 
-        //public Guid EnvironmentalInterestId { get; set; }
-
         [StringLength(20)]
+        [Required]
         public string Code { get; set; }
 
         [Display(Name = "Budget Code")]
+        [Required]
         public string Name { get; set; }
 
         [StringLength(20)]
@@ -36,5 +32,13 @@ namespace FMS.Domain.Dto
 
         [StringLength(20)]
         public string ProjectNumber { get; set; }
+
+        public void TrimAll()
+        {
+            Code = Code?.Trim();
+            Name = Name?.Trim();
+            OrganizationNumber = OrganizationNumber?.Trim();
+            ProjectNumber = ProjectNumber?.Trim();
+        }
     }
 }

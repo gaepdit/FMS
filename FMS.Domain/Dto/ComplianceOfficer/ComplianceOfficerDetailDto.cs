@@ -12,7 +12,6 @@ namespace FMS.Domain.Dto
             Active = complianceOfficer.Active;
             GivenName = complianceOfficer.GivenName;
             FamilyName = complianceOfficer.FamilyName;
-            //OrganizationalUnitId = complianceOfficer.OrganizationalUnit.Id;
         }
 
         public Guid Id { get; set; }
@@ -23,6 +22,8 @@ namespace FMS.Domain.Dto
 
         public string FamilyName { get; set; }
 
-        //public Guid OrganizationalUnitId { get; set; }
+        public string Name => $"{FamilyName}, {GivenName}";
+
+        public string DisplayName => $"{GivenName} {FamilyName}";
     }
 }
