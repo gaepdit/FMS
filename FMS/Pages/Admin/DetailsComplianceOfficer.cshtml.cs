@@ -101,7 +101,7 @@ namespace FMS.Pages.Admin
 
             if (IsCO && IsUser)
             {
-                if(ComplianceOfficer.Active)
+                if (ComplianceOfficer.Active)
                 {
                     TempData?.SetDisplayMessage(Context.Success, $"User {AppUser?.DisplayName} is a current User and a Compliance Officer. You may change whether User is an Active Compliance Officer or not.");
                 }
@@ -146,7 +146,20 @@ namespace FMS.Pages.Admin
                 // User exists in FMS and in in CO table, so Update the CO Active status
                 try
                 {
-                    await _complianceOfficerRepository.UpdateComplianceOfficerStatusAsync(Id, Add);
+                    if (await _complianceOfficerRepository.ComplianceOfficerIdExistsAsync(Id))
+                    {
+                        await _complianceOfficerRepository.UpdateComplianceOfficerStatusAsync(Id, Add);
+                    }
+                    else
+                    {
+                        AppUser = await _userService.GetUserByIdAsync(Id);
+                        ComplianceOfficer = await _complianceOfficerRepository.GetComplianceOfficerAsync(AppUser.DisplayName);
+                        if (ComplianceOfficer != null)
+                        {
+                            await _complianceOfficerRepository.UpdateComplianceOfficerStatusAsync(ComplianceOfficer.Id, Add);
+                        }
+                    }
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
