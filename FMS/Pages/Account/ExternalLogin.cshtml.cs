@@ -3,7 +3,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FMS.App;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
+using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
@@ -20,15 +22,18 @@ namespace FMS.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IComplianceOfficerRepository _repository;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IComplianceOfficerRepository repository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
+            _repository = repository;
         }
 
         [BindProperty]
@@ -147,7 +152,14 @@ namespace FMS.Pages.Account
                     // Sign in the user.
                     await _signInManager.SignInAsync(newUser, true);
 
-                    // TODO #28: Add user to Compliance Officers list. 
+                    // Add user to Compliance Officers list.
+                    var complianceOfficer = new ComplianceOfficerCreateDto()
+                    {
+                        Email = newUser.Email,
+                        FamilyName = newUser.FamilyName,
+                        GivenName = newUser.GivenName
+                    };
+                    await _repository.TryCreateComplianceOfficerAsync(complianceOfficer);
 
                     return LocalRedirect(returnUrl);
                 }

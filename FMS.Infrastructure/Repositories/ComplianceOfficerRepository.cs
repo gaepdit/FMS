@@ -1,13 +1,13 @@
-﻿using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Domain.Repositories;
-using FMS.Infrastructure.Contexts;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Domain.Dto;
+using FMS.Domain.Entities;
+using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
+using FMS.Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -55,6 +55,16 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return newCO.Id;
+        }
+
+        public async Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
+        {
+            if (await _context.ComplianceOfficers.AnyAsync(e => e.Email == complianceOfficer.Email))
+            {
+                return null;
+            }
+
+            return await CreateComplianceOfficerAsync(complianceOfficer);
         }
 
         public async Task UpdateComplianceOfficerStatusAsync(Guid id, bool active)

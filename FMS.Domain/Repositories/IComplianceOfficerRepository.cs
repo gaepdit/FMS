@@ -1,9 +1,7 @@
-﻿using FMS.Domain.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using FMS.Domain.Entities;
+using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories
 {
@@ -14,6 +12,7 @@ namespace FMS.Domain.Repositories
         Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string email);
         Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync();
         Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer);
+        Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer);
         Task UpdateComplianceOfficerStatusAsync(Guid id, bool active);
     }
 }

@@ -178,7 +178,6 @@ namespace FMS.Pages.Admin
 
                         var newComplianceOfficer = new ComplianceOfficerCreateDto
                         {
-                            Active = true,
                             FamilyName = appUser.FamilyName,
                             GivenName = appUser.GivenName,
                             Email = appUser.Email,

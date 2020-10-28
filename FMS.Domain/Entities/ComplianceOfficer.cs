@@ -9,12 +9,11 @@ namespace FMS.Domain.Entities
     {
         public ComplianceOfficer() { }
 
-        public ComplianceOfficer(ComplianceOfficerCreateDto complianceOfficerCreateDto)
+        public ComplianceOfficer(ComplianceOfficerCreateDto complianceOfficer)
         {
-            Active = complianceOfficerCreateDto.Active;
-            GivenName = complianceOfficerCreateDto.GivenName;
-            FamilyName = complianceOfficerCreateDto.FamilyName;
-            Email = complianceOfficerCreateDto.Email;
+            GivenName = complianceOfficer.GivenName;
+            FamilyName = complianceOfficer.FamilyName;
+            Email = complianceOfficer.Email;
         }
 
         public string GivenName { get; set; }
