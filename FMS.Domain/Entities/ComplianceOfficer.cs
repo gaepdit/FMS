@@ -24,8 +24,6 @@ namespace FMS.Domain.Entities
         [StringLength(256)]
         public string Email { get; set; }
 
-        public OrganizationalUnit Unit { get; set; } //virtual
-
         public string Name => string.Join(", ", new[] {FamilyName, GivenName}.Where(s => !string.IsNullOrEmpty(s)));
     }
 }

@@ -16,6 +16,7 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Antonia",
                     FamilyName = "Beavers",
+                    Email = "example1@example.com",
                 },
                 new ComplianceOfficer
                 {
@@ -23,6 +24,7 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Tom",
                     FamilyName = "Brodell",
+                    Email = "example2@example.com",
                 },
                 new ComplianceOfficer
                 {
@@ -30,6 +32,7 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "David",
                     FamilyName = "Brownlee",
+                    Email = "example3@example.com",
                 },
                 new ComplianceOfficer
                 {
@@ -37,6 +40,7 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Jacob",
                     FamilyName = "Carpenter",
+                    Email = "example4@example.com",
                 },
                 new ComplianceOfficer
                 {
@@ -44,6 +48,7 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Kevin",
                     FamilyName = "Collins",
+                    Email = "example5@example.com",
                 },
                 new ComplianceOfficer
                 {
@@ -51,6 +56,7 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     GivenName = "Gary",
                     FamilyName = "Davis",
+                    Email = "example6@example.com",
                 }
             };
         }
