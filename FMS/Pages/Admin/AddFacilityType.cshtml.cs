@@ -54,7 +54,7 @@ namespace FMS.Pages.Admin
 
             TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully created.");
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityType});
         }
     }
 }

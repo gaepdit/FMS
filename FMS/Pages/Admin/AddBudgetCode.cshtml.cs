@@ -53,7 +53,7 @@ namespace FMS.Pages.Admin
 
             TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully created.");
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.BudgetCode});
         }
     }
 }

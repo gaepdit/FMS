@@ -79,7 +79,7 @@ namespace FMS.Pages.Admin
             }
             TempData?.SetDisplayMessage(Context.Success, $"Facility Status {FacilityStatus.Status} successfully updated.");
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityStatus});
         }
     }
 }

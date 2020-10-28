@@ -1,4 +1,4 @@
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -54,6 +54,7 @@ namespace FMS.Pages.Admin
         public async Task<IActionResult> OnGetSelectAsync()
         {
             await PopulateResultAsync();
+            DisplayMessage = TempData?.GetDisplayMessage();
             return Page();
         }
 

@@ -2,15 +2,21 @@
 @using FMS.Pages.Admin
 @model FMS.Pages.Admin.IndexModel
 @{
-    ViewData["Title"] = "Site Maintenance";
+    if (string.IsNullOrEmpty(Model.MaintenanceSelection))
+    {
+        ViewData["Title"] = $"Site Maintenance";
+    }
+    else
+    {
+        ViewData["Title"] = $"Site Maintenance: {Model.MaintenanceSelection}";
+    }
 }
 <h1>@ViewData["Title"]</h1>
-<hr />
 <partial name="_AlertPartial" for="DisplayMessage" />
 
-<form method="get" class="">
+<form method="get" class="container bg-light py-3">
     <div class="form-row">
-        <div class="form-group col-sm">
+        <div class="form-group col-md-4">
             <label asp-for="MaintenanceSelection"></label>
             <select asp-for="MaintenanceSelection" class="custom-select">
                 <option>@MaintenanceOptions.BudgetCode</option>
@@ -20,12 +26,13 @@
                 <option>@MaintenanceOptions.OrganizationalUnit</option>
             </select>
         </div>
-        <div class="form-group col-sm">
-            <span class="mb-sm-2 d-none d-sm-block">&nbsp;</span>
-            <button id="SearchButton" type="submit" class="btn btn-primary mb-3 mb-sm-0">Select</button>
-            <input type="hidden" name="handler" value="select" />
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <button type="submit" class="btn btn-primary col">Select</button>
         </div>
     </div>
+    <input type="hidden" name="handler" value="select" />
 </form>
 
 @switch (Model.MaintenanceSelection)
@@ -33,7 +40,7 @@
     case MaintenanceOptions.BudgetCode:
     {
         <table class="table">
-            <caption class="border-top">
+            <caption class="container border-top">
                 <a asp-page="AddBudgetCode" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New Budget Code</a>
             </caption>
             <thead class="thead-light">
@@ -76,7 +83,7 @@
     case MaintenanceOptions.ComplianceOfficer:
     {
         <table class="table">
-            <caption class="border-top">
+            <caption class="container border-top">
                 <a asp-page="./AddComplianceOfficer" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New Compliance Officer</a>
             </caption>
             <thead class="thead-light">
@@ -108,7 +115,7 @@
     case MaintenanceOptions.FacilityStatus:
     {
         <table class="table">
-            <caption class="border-top">
+            <caption class="container border-top">
                 <a asp-page="AddFacilityStatus" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New Facility Status</a>
             </caption>
             <thead class="thead-light">
@@ -141,7 +148,7 @@
     case MaintenanceOptions.FacilityType:
     {
         <table class="table">
-            <caption class="border-top">
+            <caption class="container border-top">
                 <a asp-page="AddFacilityType" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New @MaintenanceOptions.FacilityType</a>
             </caption>
             <thead class="thead-light">
@@ -176,7 +183,7 @@
     case MaintenanceOptions.OrganizationalUnit:
     {
         <table class="table">
-            <caption class="border-top">
+            <caption class="container border-top">
                 <a asp-page="AddOrganizationalUnit" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New Organizational Unit</a>
             </caption>
             <thead class="thead-light">

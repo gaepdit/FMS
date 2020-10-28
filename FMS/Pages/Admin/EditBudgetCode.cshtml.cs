@@ -77,7 +77,7 @@ namespace FMS.Pages.Admin
             }
             TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully updated.");
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.BudgetCode});
         }
     }
 }
