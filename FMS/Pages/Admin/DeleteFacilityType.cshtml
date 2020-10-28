@@ -1,7 +1,8 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Pages.Admin
 @model FMS.Pages.Admin.DeleteFacilityTypeModel
 @{
-    ViewData["Title"] = $"Remove Facility Type: {Model.Name}";
+    ViewData["Title"] = $"Remove {MaintenanceOptions.FacilityType}: {Model.Name}";
 }
 <h1>
     @ViewData["Title"]
@@ -26,14 +27,14 @@
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-danger">This Facility Type is currently Inactive and will not show in Drop-Down Menus.</h5>
+        <h5 class="alert alert-danger">This @MaintenanceOptions.FacilityType is currently Inactive and will not show in Drop-Down Menus.</h5>
     </div>
 }
 @if (Model.ShowChange == true)
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-success">Facility Type: @Model.Name has changed successfully.</h5>
+        <h5 class="alert alert-success">@MaintenanceOptions.FacilityType '@Model.Name' has changed successfully.</h5>
         <br />
     </div>
 }

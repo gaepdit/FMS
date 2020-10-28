@@ -54,7 +54,11 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetFacilityTypesItemListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<FacilityType>(includeInactive);
+            await _context.FacilityTypes.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() {Id = e.Id, Name = e.DisplayName})
+                .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<OrganizationalUnit>(includeInactive);
@@ -141,7 +145,7 @@ namespace FMS.Infrastructure.Repositories
         protected virtual void Dispose(bool disposing)
         {
             if (_disposedValue) return;
-            
+
             if (disposing)
             {
                 // dispose managed state (managed objects)

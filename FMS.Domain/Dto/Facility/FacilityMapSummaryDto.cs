@@ -19,7 +19,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Status")]
         public string FacilityStatus { get; set; }
 
-        [Display(Name = "Facility Type")]
+        [Display(Name = "Type/Environmental Interest")]
         public string FacilityType { get; set; }
 
         [Display(Name = "File Label")]

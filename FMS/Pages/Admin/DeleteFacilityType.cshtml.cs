@@ -43,7 +43,7 @@ namespace FMS.Pages.Admin
 
             Id = id.Value;
             Delete = !facilityType.Active;
-            Name = facilityType.Name;
+            Name = $"{facilityType.Name} ({facilityType.Description})";
             ShowChange = false;
 
             return Page();

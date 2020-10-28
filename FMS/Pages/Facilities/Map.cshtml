@@ -123,7 +123,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Type</th>
-                    <th scope="col">Status</th>
                     <th scope="col">Distance</th>
                 </tr>
                 </thead>
@@ -153,10 +152,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.FacilityType)
-                        </td>
-
-                        <td style="white-space: nowrap">
-                            @Html.DisplayFor(m => item.FacilityStatus)
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.Distance, "Distance")

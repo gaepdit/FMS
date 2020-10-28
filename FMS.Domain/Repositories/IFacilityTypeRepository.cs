@@ -9,6 +9,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> FacilityTypeExistsAsync(Guid id);
         Task<bool> FacilityTypeNameExistsAsync(string name, Guid? ignoreId = null);
+        Task<bool> FacilityTypeDescriptionExistsAsync(string description, Guid? ignoreId = null);
         Task<FacilityTypeEditDto> GetFacilityTypeAsync(Guid id);
         Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync();
         Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType);

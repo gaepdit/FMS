@@ -100,6 +100,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Include(e => e.RetentionRecords)
+                .Include(e => e.FacilityType)
                 .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(e => new FacilitySummaryDto(e))

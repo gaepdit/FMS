@@ -22,7 +22,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityStatusId { get; set; }
 
         [Required]
-        [Display(Name = "Facility Type")]
+        [Display(Name = "Type/Environmental Interest")]
         public Guid FacilityTypeId { get; set; }
 
         [Required]

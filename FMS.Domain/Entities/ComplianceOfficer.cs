@@ -16,7 +16,6 @@ namespace FMS.Domain.Entities
             FamilyName = complianceOfficerCreateDto.FamilyName;
         }
 
-        [Display(Name = "Compliance Officer")]
         public string GivenName { get; set; }
 
         public string FamilyName { get; set; }

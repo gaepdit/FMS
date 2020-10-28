@@ -1,6 +1,5 @@
-﻿using FMS.Domain.Entities;
+using FMS.Domain.Entities;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -17,7 +16,6 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
-        [Display(Name = "Facility Type")]
         public string Name { get; set; }
 
     }

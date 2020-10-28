@@ -101,7 +101,7 @@ namespace FMS.Pages.Facilities
                 Map(m => m.City).Index(4).Name("City");
                 Map(m => m.State).Index(5).Name("State");
                 Map(m => m.PostalCode).Index(6).Name("ZIP Code");
-                Map(m => m.FacilityType).Index(7).Name("Facility Type");
+                Map(m => m.FacilityType).Index(7).Name("Type/Environmental Interest");
                 Map(m => m.Latitude).Index(8).Name("Latitude");
                 Map(m => m.Longitude).Index(9).Name("Longitude");
                 Map(m => m.FacilityStatus).Index(10).Name("Facility Status");

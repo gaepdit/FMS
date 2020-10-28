@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
+    /// <summary>
+    /// Type/Environmental Interest
+    /// </summary>
     public class FacilityType : BaseActiveModel, INamedModel
     {
         public FacilityType() { }
@@ -11,13 +14,14 @@ namespace FMS.Domain.Entities
         public FacilityType(FacilityTypeCreateDto newFacilityType)
         {
             Name = newFacilityType.Name;
+            Description = newFacilityType.Description;
         }
-        
-        // Existing numeric code
-        public int Code { get; set; }
 
         [StringLength(20)]
-        [Display(Name = "Facility Type")]
         public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string DisplayName => $"{Name} ({Description})";
     }
 }

@@ -13,6 +13,7 @@ namespace FMS.Domain.Dto
             Id = facility.Id;
             FileLabel = facility.File.FileLabel;
             FacilityNumber = facility.FacilityNumber;
+            FacilityType = facility.FacilityType;
             Name = facility.Name;
             Active = facility.Active;
             Address = facility.Address;
@@ -34,6 +35,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; }
+
+        [Display(Name = "Type/Environmental Interest")]
+        public FacilityType FacilityType { get; }
 
         [Display(Name = "Facility Name")]
         public string Name { get; }

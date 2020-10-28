@@ -19,7 +19,7 @@ namespace FMS.Pages.Admin
 
         public IActionResult OnGet()
         {
-            FacilityType = new FacilityTypeCreateDto { Active = true };
+            FacilityType = new FacilityTypeCreateDto();
 
             return Page();
         }
@@ -33,10 +33,16 @@ namespace FMS.Pages.Admin
 
             FacilityType.TrimAll();
 
-            // When adding a new Facility Type, make sure the number doesn't already exist before trying to save.
+            // When adding a new Facility Type, make sure the Code and Description don't already exist
+            // before trying to save.
             if (await _facilityTypeRepository.FacilityTypeNameExistsAsync(FacilityType.Name))
             {
-                ModelState.AddModelError("FacilityType.Name", "Name entered already exists.");
+                ModelState.AddModelError("FacilityType.Name", "Code entered already exists.");
+            }
+
+            if (await _facilityTypeRepository.FacilityTypeDescriptionExistsAsync(FacilityType.Description))
+            {
+                ModelState.AddModelError("FacilityType.Description", "Description entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -46,7 +52,7 @@ namespace FMS.Pages.Admin
 
             await _facilityTypeRepository.CreateFacilityTypeAsync(FacilityType);
 
-            TempData?.SetDisplayMessage(Context.Success, $"Facility Type {FacilityType.Name} successfully created.");
+            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully created.");
 
             return RedirectToPage("./Index");
         }

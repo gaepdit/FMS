@@ -142,11 +142,12 @@
     {
         <table class="table">
             <caption class="border-top">
-                <a asp-page="AddFacilityType" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New Facility Type</a>
+                <a asp-page="AddFacilityType" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New @MaintenanceOptions.FacilityType</a>
             </caption>
             <thead class="thead-light">
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col">Code</th>
+                <th scope="col">Description</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -161,6 +162,7 @@
                             <span class="text-muted">(Removed)</span>
                         }
                     </td>
+                    <td>@Html.DisplayFor(m => item.Description, "StringOrNone")</td>
                     <td>
                         <a asp-page="EditFacilityType" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
                         <a asp-page="DeleteFacilityType" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Restore/Remove</a>

@@ -11,13 +11,16 @@ namespace FMS.Domain.Dto
             Id = facilityType.Id;
             Active = facilityType.Active;
             Name = facilityType.Name;
+            Description = facilityType.Description;
         }
 
         public Guid Id { get; }
 
         public bool Active { get; }
 
-        [Display(Name = "Facility Type")]
+        [Display(Name = "Code")]
         public string Name { get; }
+
+        public string Description { get; }
     }
 }

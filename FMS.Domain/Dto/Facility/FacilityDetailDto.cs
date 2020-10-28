@@ -54,7 +54,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Status")]
         public FacilityStatus FacilityStatus { get; }
 
-        [Display(Name = "Facility Type")]
+        [Display(Name = "Type/Environmental Interest")]
         public FacilityType FacilityType { get; }
 
         [Display(Name = "Budget Code")]

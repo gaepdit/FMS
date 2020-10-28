@@ -81,7 +81,7 @@ namespace FMS.Pages.Reports
                 Map(m => m.State).Index(6).Name("State");
                 Map(m => m.PostalCode).Index(7).Name("ZIP Code");
                 Map(m => m.Location).Index(8).Name("Location Description");
-                Map(m => m.FacilityType.Name).Index(9).Name("Facility Type");
+                Map(m => m.FacilityType.Name).Index(9).Name("Type/Environmental Interest");
                 Map(m => m.ComplianceOfficer.Name).Index(10).Name("Compliance Officer");
                 Map(m => m.OrganizationalUnit.Name).Index(11).Name("Organizational Unit");
                 Map(m => m.BudgetCode.Name).Index(12).Name("Budget Code");

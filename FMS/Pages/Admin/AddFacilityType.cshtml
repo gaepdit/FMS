@@ -7,23 +7,27 @@
 }
 
 @{
-    ViewData["Title"] = $"Add Facility Type";
+    ViewData["Title"] = $"Add {MaintenanceOptions.FacilityType}";
 }
 <h1>@ViewData["Title"]</h1>
 <div class="container-fluid bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
-            <input type="hidden" asp-for="FacilityType.Active" />
-            <div class="form-group col">
-                <label>Facility Type Name <span class="text-danger">*</span></label>
+            <div class="form-group col-md-3">
+                <label>Code <span class="text-danger">*</span></label>
                 <input asp-for="FacilityType.Name" class="form-control" />
                 <span asp-validation-for="FacilityType.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md">
+                <label asp-for="FacilityType.Description"></label>
+                <input asp-for="FacilityType.Description" class="form-control" />
+                <span asp-validation-for="FacilityType.Description" class="text-danger"></span>
             </div>
         </div>
         <p class="text-danger">* denotes a required field</p>
         <hr />
-        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-4 mb-3 mb-md-0">Add New Facility Type</button>
+        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-4 mb-3 mb-md-0">Add New @MaintenanceOptions.FacilityType</button>
         <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
            asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityType">
             Cancel
