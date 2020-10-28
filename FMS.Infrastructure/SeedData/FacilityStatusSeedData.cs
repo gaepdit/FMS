@@ -1,12 +1,12 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FMS.Domain.Entities;
 
 namespace FMS.Infrastructure.SeedData
 {
-    public static partial class DevSeedData
+    public static partial class ProdData
     {
-        public static List<FacilityStatus> GetFacilityStatuses()
+        public static IEnumerable<FacilityStatus> GetFacilityStatuses()
         {
             return new List<FacilityStatus>
             {

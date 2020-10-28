@@ -4,7 +4,7 @@ using FMS.Domain.Entities;
 
 namespace FMS.Infrastructure.SeedData
 {
-    public static partial class DevSeedData
+    public static partial class TestData
     {
         public static List<Facility> GetFacilities()
         {

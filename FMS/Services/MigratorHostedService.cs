@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace FMS.App
+namespace FMS.Services
 {
     /// <summary>
     /// Set up the database 
@@ -44,10 +44,14 @@ namespace FMS.App
                 await context.Database.MigrateAsync(cancellationToken);
             }
 
+            // Seed initial data
+            context.SeedData();
+
             if (env.IsDevelopment())
             {
                 // Test data: will not run in production
                 context.SeedTestData();
+
                 if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
                 {
                     context.CreateStoredProcedures();

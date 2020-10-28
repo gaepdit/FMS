@@ -1,10 +1,10 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FMS.Domain.Entities;
 
 namespace FMS.Infrastructure.SeedData
 {
-    public static partial class DevSeedData
+    public static partial class TestData
     {
         public static List<ComplianceOfficer> GetComplianceOfficers()
         {
