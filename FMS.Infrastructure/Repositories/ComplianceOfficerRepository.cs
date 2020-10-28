@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Domain.Utils;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -24,41 +25,29 @@ namespace FMS.Infrastructure.Repositories
             var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            if (complianceOfficer == null || complianceOfficer.Id == Guid.Empty)
-            {
-                return null;
-            }
-
-            return new ComplianceOfficerDetailDto(complianceOfficer);
+            return complianceOfficer == null ? null : new ComplianceOfficerDetailDto(complianceOfficer);
         }
 
-        public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string familyName, string givenName)
+        public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string email)
         {
             var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.FamilyName == familyName && e.GivenName == givenName);
+                .SingleOrDefaultAsync(e => e.Email == email);
 
-            if (complianceOfficer == null || complianceOfficer.Id == Guid.Empty)
-            {
-                return null;
-            }
-
-            return new ComplianceOfficerDetailDto(complianceOfficer);
+            return complianceOfficer == null ? null : new ComplianceOfficerDetailDto(complianceOfficer);
         }
 
         public async Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync()
         {
             return await _context.ComplianceOfficers.AsNoTracking()
                 .OrderBy(e => e.FamilyName)
+                .ThenBy(e => e.GivenName)
                 .Select(e => new ComplianceOfficerSummaryDto(e))
                 .ToListAsync();
         }
 
         public async Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
         {
-            if (complianceOfficer == null)
-            {
-                return Guid.Empty;
-            }
+            Prevent.Null(complianceOfficer, nameof(complianceOfficer));
 
             var newCO = new ComplianceOfficer(complianceOfficer);
 

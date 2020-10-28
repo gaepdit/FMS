@@ -14,7 +14,7 @@ namespace FMS.Domain.Dto
             Active = complianceOfficer.Active;
             GivenName = complianceOfficer.GivenName;
             FamilyName = complianceOfficer.FamilyName;
-            //OrganizationalUnitId = complianceOfficer.OrganizationalUnit.Id;
+            Email = complianceOfficer.Email;
         }
 
         public Guid Id { get; set; }
@@ -25,6 +25,7 @@ namespace FMS.Domain.Dto
 
         public string FamilyName { get; set; }
 
-        //public Guid OrganizationalUnitId { get; set; }
+        [StringLength(256)]
+        public string Email { get; set; }
     }
 }

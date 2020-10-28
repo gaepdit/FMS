@@ -22,6 +22,6 @@ namespace FMS.Domain.Services
 
         // User search
         public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter);
-        public Task<ApplicationUser> GetUserAsync(string familyName, string givenName);
+        public Task<ApplicationUser> GetUserAsync(string email);
     }
 }

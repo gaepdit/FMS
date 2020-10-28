@@ -10,5 +10,8 @@ namespace FMS.Domain.Dto
         public string GivenName { get; set; }
 
         public string FamilyName { get; set; }
+
+        [StringLength(256)]
+        public string Email { get; set; }
     }
 }

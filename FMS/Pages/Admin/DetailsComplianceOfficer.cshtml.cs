@@ -69,7 +69,7 @@ namespace FMS.Pages.Admin
                 // if IsUser is true, then see if the user is already in the Compliance Officer
                 // table, by using the User's full Name
                 complianceOfficer = await _complianceOfficerRepository
-                    .GetComplianceOfficerAsync(appUser.FamilyName, appUser.GivenName);
+                    .GetComplianceOfficerAsync(appUser.Email);
 
                 if (complianceOfficer != null)
                 {
@@ -80,14 +80,14 @@ namespace FMS.Pages.Admin
             {
                 Add = complianceOfficer.Active;
                 DisplayName = complianceOfficer.DisplayName;
+                Email = complianceOfficer.Email;
                 IsCO = true;
 
                 // if IsCO is true, then see if the user is already an FMS User, by using the User's full Name
-                appUser = await _userService.GetUserAsync(complianceOfficer.FamilyName, complianceOfficer.GivenName);
+                appUser = await _userService.GetUserAsync(complianceOfficer.Email);
 
                 if (appUser != null)
                 {
-                    Email = appUser.Email;
                     IsUser = true;
                 }
             }
@@ -149,7 +149,7 @@ namespace FMS.Pages.Admin
                         var appUser = await _userService.GetUserByIdAsync(Id);
                         var complianceOfficer =
                             await _complianceOfficerRepository
-                                .GetComplianceOfficerAsync(appUser.FamilyName, appUser.GivenName);
+                                .GetComplianceOfficerAsync(appUser.Email);
                         if (complianceOfficer != null)
                         {
                             await _complianceOfficerRepository
@@ -180,7 +180,8 @@ namespace FMS.Pages.Admin
                         {
                             Active = true,
                             FamilyName = appUser.FamilyName,
-                            GivenName = appUser.GivenName
+                            GivenName = appUser.GivenName,
+                            Email = appUser.Email,
                         };
 
                         Id = await _complianceOfficerRepository.CreateComplianceOfficerAsync(newComplianceOfficer);
@@ -191,10 +192,8 @@ namespace FMS.Pages.Admin
                         {
                             return NotFound();
                         }
-                        else
-                        {
-                            throw;
-                        }
+
+                        throw;
                     }
                 }
             }

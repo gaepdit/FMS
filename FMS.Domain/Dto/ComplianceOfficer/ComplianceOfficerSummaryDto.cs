@@ -12,17 +12,15 @@ namespace FMS.Domain.Dto
             Active = complianceOfficer.Active;
             GivenName = complianceOfficer.GivenName;
             FamilyName = complianceOfficer.FamilyName;
-            //OrganizationalUnitId = complianceOfficer.OrganizationalUnit.Id;
+            Email = complianceOfficer.Email;
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; }
+        public bool Active { get; }
+        public string GivenName { get; }
+        public string FamilyName { get; }
+        public string Email { get; }
 
-        public bool Active { get; set; }
-
-        public string GivenName { get; set; }
-        public string FamilyName { get; set; }
-
-        //public Guid? OrganizationalUnitId { get; set; }
         public string Name => FamilyName + ", " + GivenName;
     }
 }

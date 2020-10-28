@@ -14,14 +14,18 @@ namespace FMS.Domain.Entities
             Active = complianceOfficerCreateDto.Active;
             GivenName = complianceOfficerCreateDto.GivenName;
             FamilyName = complianceOfficerCreateDto.FamilyName;
+            Email = complianceOfficerCreateDto.Email;
         }
 
         public string GivenName { get; set; }
 
         public string FamilyName { get; set; }
 
-        public OrganizationalUnit Unit { get; set; }   //virtual
+        [StringLength(256)]
+        public string Email { get; set; }
 
-        public string Name => string.Join(", ", new[] { FamilyName, GivenName }.Where(s => !string.IsNullOrEmpty(s)));
+        public OrganizationalUnit Unit { get; set; } //virtual
+
+        public string Name => string.Join(", ", new[] {FamilyName, GivenName}.Where(s => !string.IsNullOrEmpty(s)));
     }
 }
