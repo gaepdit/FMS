@@ -2,6 +2,7 @@
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.SeedData;
+using FMS.Infrastructure.SeedData.TestData;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
 
@@ -16,6 +17,7 @@ namespace TestHelpers
             var context = new FmsDbContext(_options);
 
             context.Database.EnsureCreated();
+            context.SeedData();
             context.SeedTestData();
 
             if (!context.RetentionRecords.Any()) context.RetentionRecords.AddRange(TestData.GetRetentionRecords());

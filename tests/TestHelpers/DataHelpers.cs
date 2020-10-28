@@ -4,6 +4,7 @@ using System.Linq;
 using FMS.Domain.Data;
 using FMS.Domain.Entities;
 using FMS.Infrastructure.SeedData;
+using FMS.Infrastructure.SeedData.TestData;
 
 namespace TestHelpers
 {

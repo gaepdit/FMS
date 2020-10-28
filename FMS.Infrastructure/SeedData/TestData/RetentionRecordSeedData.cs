@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FMS.Domain.Entities;
 
-namespace FMS.Infrastructure.SeedData
+namespace FMS.Infrastructure.SeedData.TestData
 {
     public static partial class TestData
     {
