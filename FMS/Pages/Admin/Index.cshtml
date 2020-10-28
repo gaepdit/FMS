@@ -89,6 +89,7 @@
             <thead class="thead-light">
             <tr>
                 <th scope="col">Name</th>
+                <th scope="col">Email</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -103,6 +104,7 @@
                             <span class="text-muted">(Removed)</span>
                         }
                     </td>
+                    <td>@Html.DisplayFor(m => item.Email)</td>
                     <td>
                         <a asp-page="./DetailsComplianceOfficer" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Add/Remove</a>
                     </td>
