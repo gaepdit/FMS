@@ -131,7 +131,8 @@ namespace FMS.Pages.Account
                 if (seedAdminUsers != null &&
                     seedAdminUsers.Contains(newUser.Email, StringComparer.InvariantCultureIgnoreCase))
                 {
-                    await _userManager.AddToRoleAsync(newUser, UserRoles.UserAdmin);
+                    await _userManager.AddToRoleAsync(newUser, UserRoles.UserMaintenance);
+                    await _userManager.AddToRoleAsync(newUser, UserRoles.SiteMaintenance);
                 }
 
                 // Add external provider login info to the user.

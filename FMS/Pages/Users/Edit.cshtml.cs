@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Users
 {
-    [Authorize(Roles = UserRoles.UserAdmin)]
+    [Authorize(Roles = UserRoles.UserMaintenance)]
     public class EditModel : PageModel
     {
         private readonly IUserService _userService;
@@ -56,7 +56,7 @@ namespace FMS.Pages.Users
 
             var roleSettings = new Dictionary<string, bool>()
             {
-                {UserRoles.UserAdmin, HasUserAdminRole},
+                {UserRoles.UserMaintenance, HasUserAdminRole},
                 {UserRoles.SiteMaintenance, HasSiteMaintenanceRole},
                 {UserRoles.FileCreator, HasFileCreatorRole},
                 {UserRoles.FileEditor, HasFileEditorRole},
@@ -96,7 +96,7 @@ namespace FMS.Pages.Users
         private async Task GetUserRoles()
         {
             var roles = await _userService.GetUserRolesAsync(UserId);
-            HasUserAdminRole = roles.Contains(UserRoles.UserAdmin);
+            HasUserAdminRole = roles.Contains(UserRoles.UserMaintenance);
             HasSiteMaintenanceRole = roles.Contains(UserRoles.SiteMaintenance);
             HasFileCreatorRole = roles.Contains(UserRoles.FileCreator);
             HasFileEditorRole = roles.Contains(UserRoles.FileEditor);

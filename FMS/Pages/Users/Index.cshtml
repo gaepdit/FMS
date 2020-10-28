@@ -52,7 +52,7 @@
                     <td>@Html.DisplayFor(m => item.Email)</td>
                     <td class="text-center">
                         <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">View</a>
-                        @if (User.IsInRole(UserRoles.UserAdmin))
+                        @if (User.IsInRole(UserRoles.UserMaintenance))
                         {
                             <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
                         }

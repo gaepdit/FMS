@@ -16,9 +16,9 @@
         <div class="form-check mb-3">
             <input asp-for="HasUserAdminRole" class="form-check-input" aria-describedby="UserAdminRoleHelpBlock">
             <label asp-for="HasUserAdminRole" class="form-check-label font-weight-bold">
-                @UserRoles.DisplayName(UserRoles.UserAdmin)
+                @UserRoles.DisplayName(UserRoles.UserMaintenance)
                 <small id="UserAdminRoleHelpBlock" class="form-text text-muted">
-                    @UserRoles.Description(UserRoles.UserAdmin)
+                    @UserRoles.Description(UserRoles.UserMaintenance)
                 </small>
             </label>
         </div>

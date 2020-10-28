@@ -16,7 +16,7 @@
         <div>
             <h2>
                 @Model.DisplayName
-                @if (User.IsInRole(UserRoles.UserAdmin))
+                @if (User.IsInRole(UserRoles.UserMaintenance))
                 {
                     <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
                 }
