@@ -101,7 +101,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Include(e => e.RetentionRecords)
                 .Include(e => e.FacilityType)
-                .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
+                .OrderBy(e => e.Name).ThenBy(e => e.FacilityNumber)
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
@@ -138,7 +138,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Include(e => e.RetentionRecords)
-                .OrderBy(e => e.File.FileLabel).ThenBy(e => e.FacilityNumber)
+                .OrderBy(e => e.Name).ThenBy(e => e.FacilityNumber)
                 .Select(e => new FacilityDetailDto(e))
                 .ToListAsync();
         }
