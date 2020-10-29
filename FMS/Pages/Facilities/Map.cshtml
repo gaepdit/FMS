@@ -122,7 +122,7 @@
                     <th scope="col">File Label</th>
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Type</th>
+                    <th scope="col" class="text-center">Type</th>
                     <th scope="col">Distance</th>
                 </tr>
                 </thead>
@@ -150,9 +150,7 @@
                             @Html.DisplayFor(m => item.State)
                             @Html.DisplayFor(m => item.PostalCode)
                         </td>
-                        <td>
-                            @Html.DisplayFor(m => item.FacilityType)
-                        </td>
+                        <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
                         <td>
                             @Html.DisplayFor(m => item.Distance, "Distance")
                         </td>

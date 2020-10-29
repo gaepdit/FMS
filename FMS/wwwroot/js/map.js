@@ -47,7 +47,7 @@ function mapInitialize(lat, lng, inputRadius, markers, Localaddr) {
     var centermarker = new google.maps.Marker({
         position: myLatlng,
         map: map,
-        icon: '/images/center.png',
+        icon: '/images/type-icons/icon-map-center.svg',
         title: toolContent       
     });
 
@@ -80,43 +80,7 @@ function mapInitialize(lat, lng, inputRadius, markers, Localaddr) {
     for (i = 0; i < markers.length; i++) {
         var data = markers[i];
         //determine marker image
-        var imageName = '/images/icon_mix.png';
-        var Ftype = (data.facilityType).toUpperCase();
-        switch (Ftype) {
-            case 'GEN':
-                imageName = '/images/icon_gen.png';
-                break;
-            case 'NONGEN':
-                imageName = '/images/icon_nongen.png';
-                break;
-            case 'BROWN':
-                imageName = '/images/icon_bf.png';
-                break;
-            case 'NPL':
-                imageName = '/images/icon_npl.png';
-                break;
-            case 'DOD':
-                imageName = '/images/icon_dod.png';
-                break;
-            case 'PASI':
-                imageName = '/images/icon_pasi.png';
-                break;
-            case 'HSRA':
-                imageName = '/images/icon_hsra.png';
-                break;
-            case 'VRP':
-                imageName = '/images/icon_vrp.png';
-                break;
-            case 'PAF':
-                imageName = '/images/icon_paf.png';
-                break;
-            case 'SCRAPTIRE':
-                imageName = '/images/icon_scraptire.png';
-                break;
-            default:
-                imageName = '/images/icon_mix.png';
-        }
-
+        var imageName = '/images/type-icons/icon-' + data.facilityType + '.svg';
         var infowindow = new google.maps.InfoWindow();
         var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
         var marker = new google.maps.Marker({
@@ -131,14 +95,9 @@ function mapInitialize(lat, lng, inputRadius, markers, Localaddr) {
                 if (zip == undefined) {
                     zip = ""
                 }
-                if (data.facilityType == 'SCRAPTIRE') {
-                    infowindow.setContent('<span style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #333;"><a href=\"/prod/hwmb/search/facilityDetail.jsp?facilityID=' + data.facilityNumber + '&facilityName=' + data.name + '\">' + data.name + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">' + data.address + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">Estimate # tires: ' + data.numtires + '</span><br><span style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;">lat: ' + data.latitude + ' lng:' + data.longitude + '</span>');
-                }
-                else {
-                    var hyplink = "./Details/" + data.id;
-                    var hyplink2 = "../Files/Details/" + data.fileLabel;
-                    infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
-                }
+                var hyplink = "./Details/" + data.id;
+                var hyplink2 = "../Files/Details/" + data.fileLabel;
+                infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
                 //infowindow.setContent(data.name);
                 infowindow.open(map, marker);
             });

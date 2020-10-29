@@ -162,7 +162,7 @@
                     <th scope="col">File Label</th>
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Type</th>
+                    <th scope="col" class="text-center">Type</th>
                     <th scope="col">Records</th>
                 </tr>
                 </thead>
@@ -186,7 +186,7 @@
                             @Html.DisplayFor(m => item.State)
                             @Html.DisplayFor(m => item.PostalCode)
                         </td>
-                        <td>@Html.DisplayFor(m => item.FacilityType.Name)</td>
+                        <td class="text-center">@Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")</td>
                         <td>
                             @if (item.Cabinets.Count == 0 && item.RetentionRecords.Count == 0)
                             {

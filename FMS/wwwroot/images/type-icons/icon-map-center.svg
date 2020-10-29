@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+  <rect width="28" height="28" x="1" y="1" stroke="firebrick" stroke-width="2" fill-opacity="0" rx="3" />
+  <text text-anchor="middle" dominant-baseline="central" fill="firebrick" style="font:700 11px sans-serif;text-shadow:0 0 1px #fff,0 0 3px #fff;" transform="translate(15 6)">
+    <tspan x="1" y="1">You</tspan>
+    <tspan x="2" y="8">are</tspan>
+    <tspan x="0" y="16">here</tspan>
+  </text>
+</svg>

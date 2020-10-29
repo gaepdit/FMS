@@ -65,6 +65,7 @@
             @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
         </dt>
         <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
             @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
         </dd>
         <dt class="col-sm-3">

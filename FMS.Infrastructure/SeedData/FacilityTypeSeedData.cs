@@ -49,7 +49,7 @@ namespace FMS.Infrastructure.SeedData
                 {
                     Id = new Guid("3FE54579-1762-4A77-9AD7-9D185E000A79"),
                     Active = true,
-                    Name = "TSD/CA",
+                    Name = "TSDCA",
                     Description = "TSD/CA RCRA non-generator",
                 },
                 new FacilityType
