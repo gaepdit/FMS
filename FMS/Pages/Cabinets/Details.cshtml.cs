@@ -14,14 +14,14 @@ namespace FMS.Pages.Cabinets
         private readonly ICabinetRepository _repository;
         public DetailsModel(ICabinetRepository repository) => _repository = repository;
 
-        public async Task<IActionResult> OnGetAsync(string name)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(id))
             {
                 return NotFound();
             }
 
-            CabinetDetail = await _repository.GetCabinetDetailsAsync(name);
+            CabinetDetail = await _repository.GetCabinetDetailsAsync(id);
 
             if (CabinetDetail == null)
             {

@@ -31,7 +31,6 @@ namespace FMS.Infrastructure.SeedData.TestData
                 new Cabinet
                 {
                     Id = new Guid("6FCDA843-53DC-4846-8AC4-A55AD6D88B11"),
-                    Active = false,
                     Name = "C004",
                     FirstFileLabel = "170-0000",
                 },

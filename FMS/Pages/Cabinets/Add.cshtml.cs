@@ -11,6 +11,7 @@ namespace FMS.Pages.Cabinets
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class AddModel : PageModel
     {
+        [BindProperty]
         public CabinetEditDto NewCabinet { get; set; }
 
         private readonly ICabinetRepository _repository;
