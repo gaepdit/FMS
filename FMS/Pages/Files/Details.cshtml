@@ -26,7 +26,7 @@
     {
         @foreach (var c in Model.FileDetail.Cabinets)
         {
-            <a asp-page="/Cabinets/Details" asp-route-id="@c.CabinetNumber" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
+            <a asp-page="/Cabinets/Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
                 @c.Name @(c.Active ? "" : "(Deleted)")
             </a>
         }

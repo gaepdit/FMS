@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using FluentAssertions;
+using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
@@ -15,37 +15,40 @@ namespace FMS.App.Tests.Cabinets
     public class CabinetAddTests
     {
         [Fact]
-        public async Task OnGet_PopulatesThePageModel()
+        public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
-            const string newCabinetName = "C000";
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetNextCabinetName())
-                .ReturnsAsync(newCabinetName)
-                .Verifiable();
-            var pageModel = new AddModel(mockRepo.Object);
+            mockRepo.Setup(l => l.CabinetNameExistsAsync(It.IsAny<string>(), It.IsAny<Guid?>()))
+                .ReturnsAsync(false);
+            mockRepo.Setup(l => l.CreateCabinetAsync(It.IsAny<CabinetEditDto>()));
 
-            var result = await pageModel.OnGetAsync().ConfigureAwait(false);
+            var newCabinet = new CabinetEditDto()
+            {
+                Name = "New Cabinet",
+                FirstFileLabel = "999-9999",
+            };
 
-            result.Should().BeOfType<PageResult>();
-            pageModel.NewCabinetName.Should().Be(newCabinetName);
-        }
-
-        [Fact]
-        public async Task OnPost_AddNew_RedirectsToDetails()
-        {
-            var newCabinetNumber = Guid.NewGuid(); 
-            var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.CreateCabinetAsync())
-                .ReturnsAsync(newCabinetNumber)
-                .Verifiable();
-            var pageModel = new AddModel(mockRepo.Object);
+            var pageModel = new AddModel(mockRepo.Object) {NewCabinet = newCabinet};
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
-            pageModel.ModelState.IsValid.ShouldBeTrue();
             result.Should().BeOfType<RedirectToPageResult>();
-            ((RedirectToPageResult) result).PageName.Should().Be("./Edit");
-            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newCabinetNumber);
+            pageModel.ModelState.IsValid.ShouldBeTrue();
+            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newCabinet.Name);
+        }
+
+        [Fact]
+        public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
+        {
+            var mockRepo = new Mock<ICabinetRepository>();
+            var pageModel = new AddModel(mockRepo.Object);
+            pageModel.ModelState.AddModelError("Error", "Sample error description");
+
+            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+
+            result.Should().BeOfType<PageResult>();
+            pageModel.ModelState.IsValid.ShouldBeFalse();
         }
     }
 }

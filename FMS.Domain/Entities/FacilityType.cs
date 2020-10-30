@@ -1,6 +1,7 @@
-﻿using FMS.Domain.Dto;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -23,5 +24,10 @@ namespace FMS.Domain.Entities
         public string Description { get; set; }
 
         public string DisplayName => $"{Name} ({Description})";
+
+        public const string FacilityTypeNamePattern = @"^\w*$";
+
+        public static bool IsValidFacilityTypeName(string facilityTypeName) =>
+            Regex.IsMatch(facilityTypeName, FacilityTypeNamePattern);
     }
 }

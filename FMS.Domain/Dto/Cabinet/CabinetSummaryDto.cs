@@ -10,14 +10,12 @@ namespace FMS.Domain.Dto
         {
             Id = cabinet.Id;
             Active = cabinet.Active;
-            CabinetNumber = cabinet.CabinetNumber;
             Name = cabinet.Name;
             FirstFileLabel = cabinet.FirstFileLabel;
         }
 
         public Guid Id { get; }
         public bool Active { get; }
-        public int CabinetNumber { get; }
 
         [Display(Name = "Cabinet Number")]
         public string Name { get; }

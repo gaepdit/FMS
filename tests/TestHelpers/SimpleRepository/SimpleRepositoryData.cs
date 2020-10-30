@@ -82,12 +82,12 @@ namespace TestHelpers.SimpleRepository
 
         public static readonly List<Cabinet> Cabinets = new List<Cabinet>
         {
-            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 1, FirstFileLabel = "000-0000"},
-            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 2, FirstFileLabel = "103-0001"},
-            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 3, FirstFileLabel = "110-0001"},
-            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 4, FirstFileLabel = "111-0001"},
-            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 5, FirstFileLabel = "111-0001"},
-            new Cabinet {Id = Guid.NewGuid(), CabinetNumber = 6, FirstFileLabel = "999-0001", Active = false},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C001", FirstFileLabel = "000-0000"},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C002", FirstFileLabel = "103-0001"},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C003", FirstFileLabel = "110-0001"},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C004", FirstFileLabel = "111-0001"},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C005", FirstFileLabel = "111-0001"},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C006", FirstFileLabel = "999-0001", Active = false},
         };
 
         public static readonly List<CabinetFile> CabinetFiles = new List<CabinetFile>
