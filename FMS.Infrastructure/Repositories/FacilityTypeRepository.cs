@@ -32,12 +32,7 @@ namespace FMS.Infrastructure.Repositories
             var facilityType = await _context.FacilityTypes.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            if (facilityType == null)
-            {
-                return null;
-            }
-
-            return new FacilityTypeEditDto(facilityType);
+            return facilityType == null ? null : new FacilityTypeEditDto(facilityType);
         }
 
         public async Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync() =>
@@ -49,10 +44,11 @@ namespace FMS.Infrastructure.Repositories
         public Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType)
         {
             Prevent.Null(facilityType, nameof(facilityType));
+            Prevent.NullOrEmpty(facilityType.Name, nameof(facilityType.Name));
 
-            if (string.IsNullOrWhiteSpace(facilityType.Name))
+            if (!FacilityType.IsValidFacilityTypeName(facilityType.Name))
             {
-                throw new ArgumentException("Facility Type Name is required.");
+                throw new ArgumentException("The Facility Type Name is invalid.");
             }
 
             return CreateFacilityTypeInternalAsync(facilityType);
@@ -70,21 +66,17 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Facility Type description '{facilityType.Description}' already exists.");
             }
 
-            var newFT = new FacilityType(facilityType);
+            var newFacilityType = new FacilityType(facilityType);
 
-            await _context.FacilityTypes.AddAsync(newFT);
+            await _context.FacilityTypes.AddAsync(newFacilityType);
             await _context.SaveChangesAsync();
 
-            return newFT.Id;
+            return newFacilityType.Id;
         }
 
         public Task UpdateFacilityTypeAsync(Guid id, FacilityTypeEditDto facilityTypeUpdates)
         {
-            if (string.IsNullOrWhiteSpace(facilityTypeUpdates.Name))
-            {
-                throw new ArgumentException("Facility Type Name is required.");
-            }
-
+            Prevent.NullOrWhiteSpace(facilityTypeUpdates.Name, nameof(facilityTypeUpdates.Name));
             return UpdateFacilityTypeInternalAsync(id, facilityTypeUpdates);
         }
 
@@ -104,7 +96,8 @@ namespace FMS.Infrastructure.Repositories
 
             if (await FacilityTypeDescriptionExistsAsync(facilityTypeUpdates.Description, id))
             {
-                throw new ArgumentException($"Facility Type description '{facilityTypeUpdates.Description}' already exists.");
+                throw new ArgumentException(
+                    $"Facility Type description '{facilityTypeUpdates.Description}' already exists.");
             }
 
             facilityType.Name = facilityTypeUpdates.Name;
