@@ -19,10 +19,15 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> CabinetExistsAsync(Guid id) =>
             await _context.Cabinets.AnyAsync(e => e.Id == id);
 
+        public async Task<bool> CabinetNameExistsAsync(string name, Guid? ignoreId = null) =>
+            await _context.Cabinets.AnyAsync(e =>
+                e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true) =>
             await _context.Cabinets.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.CabinetNumber)
+                .OrderBy(e => e.FirstFileLabel)
+                .ThenBy(e => e.Name)
                 .Select(e => new CabinetSummaryDto(e))
                 .ToListAsync();
 
@@ -33,29 +38,12 @@ namespace FMS.Infrastructure.Repositories
 
             return cabinet == null ? null : new CabinetSummaryDto(cabinet);
         }
-
-        public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(string name)
+        
+        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(string name)
         {
             var cabinet = await _context.Cabinets.AsNoTracking()
+                .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
                 .SingleOrDefaultAsync(e => e.Name == name);
-
-            return cabinet == null ? null : new CabinetSummaryDto(cabinet);
-        }
-
-        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(Guid id)
-        {
-            var cabinet = await _context.Cabinets.AsNoTracking()
-                .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
-                .SingleOrDefaultAsync(e => e.Id == id);
-
-            return cabinet == null ? null : new CabinetDetailDto(cabinet);
-        }
-
-        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(int cabinetNumber)
-        {
-            var cabinet = await _context.Cabinets.AsNoTracking()
-                .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
-                .SingleOrDefaultAsync(e => e.CabinetNumber == cabinetNumber);
 
             if (cabinet == null) return null;
 
@@ -65,28 +53,41 @@ namespace FMS.Infrastructure.Repositories
             return new CabinetDetailDto(cabinet);
         }
 
-        private async Task<int> GetNextCabinetNumber() =>
-            1 + (await _context.Cabinets.MaxAsync(e => (int?) e.CabinetNumber) ?? 0);
-
-        public async Task<string> GetNextCabinetName() =>
-            Cabinet.CabinetNumberAsName(await GetNextCabinetNumber());
-
-        public async Task<Guid> CreateCabinetAsync()
+        public Task CreateCabinetAsync(CabinetEditDto cabinet)
         {
-            var cabinet = new Cabinet()
+            Prevent.Null(cabinet, nameof(cabinet));
+            Prevent.NullOrEmpty(cabinet.Name, nameof(cabinet.Name));
+            Prevent.NullOrEmpty(cabinet.FirstFileLabel, nameof(cabinet.FirstFileLabel));
+
+            if (!File.IsValidFileLabelFormat(cabinet.FirstFileLabel))
             {
-                CabinetNumber = await GetNextCabinetNumber(),
-                FirstFileLabel = "999-9999",
+                throw new ArgumentException("The File Label is invalid.");
+            }
+
+            return CreateCabinetInternalAsync(cabinet);
+        }
+
+        private async Task CreateCabinetInternalAsync(CabinetEditDto cabinet)
+        {
+            if (await CabinetNameExistsAsync(cabinet.Name))
+            {
+                throw new ArgumentException($"Cabinet Name {cabinet.Name} already exists.");
+            }
+
+            var newCabinet = new Cabinet()
+            {
+                Name = cabinet.Name,
+                FirstFileLabel = cabinet.FirstFileLabel,
             };
 
-            await _context.Cabinets.AddAsync(cabinet);
+            await _context.Cabinets.AddAsync(newCabinet);
             await _context.SaveChangesAsync();
-
-            return cabinet.Id;
         }
 
         public Task UpdateCabinetAsync(Guid id, CabinetEditDto cabinetEdit)
         {
+            Prevent.Null(cabinetEdit, nameof(cabinetEdit));
+            Prevent.NullOrEmpty(cabinetEdit.Name, nameof(cabinetEdit.Name));
             Prevent.NullOrEmpty(cabinetEdit.FirstFileLabel, nameof(cabinetEdit.FirstFileLabel));
 
             if (!File.IsValidFileLabelFormat(cabinetEdit.FirstFileLabel))
@@ -99,6 +100,11 @@ namespace FMS.Infrastructure.Repositories
 
         private async Task UpdateCabinetInternalAsync(Guid id, CabinetEditDto cabinetEdit)
         {
+            if (await CabinetNameExistsAsync(cabinetEdit.Name, id))
+            {
+                throw new ArgumentException($"Cabinet Name {cabinetEdit.Name} already exists.");
+            }
+
             var cabinet = await _context.Cabinets.FindAsync(id);
 
             if (cabinet == null)
@@ -106,6 +112,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Cabinet ID not found.");
             }
 
+            cabinet.Name = cabinetEdit.Name;
             cabinet.FirstFileLabel = cabinetEdit.FirstFileLabel;
             await _context.SaveChangesAsync();
         }

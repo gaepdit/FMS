@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -19,8 +20,7 @@ namespace FMS.Pages.Cabinets
         [BindProperty]
         public Guid Id { get; set; }
         
-        public int CabinetNumber { get; private set; }
-        public string CabinetName { get; private set; }
+        public string OriginalCabinetName { get; private set; }
         public DisplayMessage Message { get; private set; }
 
         private readonly ICabinetRepository _repository;
@@ -42,10 +42,8 @@ namespace FMS.Pages.Cabinets
 
             Id = id.Value;
             CabinetEdit = new CabinetEditDto(cabinet);
-            CabinetName = cabinet.Name;
-            CabinetNumber = cabinet.CabinetNumber;
+            OriginalCabinetName = cabinet.Name;
 
-            Message = TempData?.GetDisplayMessage();
             return Page();
         }
 
@@ -53,14 +51,25 @@ namespace FMS.Pages.Cabinets
         {
             if (!ModelState.IsValid)
             {
+                OriginalCabinetName = (await _repository.GetCabinetSummaryAsync(Id)).Name;
                 return Page();
             }
 
-            CabinetEdit.FirstFileLabel = CabinetEdit.FirstFileLabel?.Trim();
+            CabinetEdit.TrimAll();
+            
+            if (await _repository.CabinetNameExistsAsync(CabinetEdit.Name, Id))
+            {
+                ModelState.AddModelError("CabinetEdit.Name", "There is already a Cabinet with that name.");
+            }
 
             if (!Domain.Entities.File.IsValidFileLabelFormat(CabinetEdit.FirstFileLabel))
             {
                 ModelState.AddModelError("CabinetEdit.FirstFileLabel", "The File Label is invalid.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                OriginalCabinetName = (await _repository.GetCabinetSummaryAsync(Id)).Name;
                 return Page();
             }
 
@@ -78,9 +87,8 @@ namespace FMS.Pages.Cabinets
                 throw;
             }
             
-            var cabinet = await _repository.GetCabinetSummaryAsync(Id);
             TempData?.SetDisplayMessage(Context.Success, "Cabinet successfully updated.");
-            return RedirectToPage("./Details", new {id = cabinet.CabinetNumber});
+            return RedirectToPage("./Details", new {id = CabinetEdit.Name});
         }
     }
 }

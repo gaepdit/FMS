@@ -126,7 +126,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Cabinets.AsNoTracking()
                 .Where(e => e.Active)
                 .Where(e => !cabinetsForFile.Contains(e.Id))
-                .OrderBy(e => e.CabinetNumber)
+                .OrderBy(e => e.Name)
                 .Select(e => new CabinetSummaryDto(e))
                 .ToListAsync();
         }

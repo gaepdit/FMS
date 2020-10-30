@@ -48,7 +48,7 @@ namespace FMS.Domain.Entities
             return sequence.ToString().PadLeft(4, '0');
         }
 
-        private const string FileLabelPattern = @"^\d{3}-\d{4}$";
+        public const string FileLabelPattern = @"^\d{3}-\d{4}$";
 
         public static bool IsValidFileLabelFormat(string fileLabel) =>
             Regex.IsMatch(fileLabel, FileLabelPattern);

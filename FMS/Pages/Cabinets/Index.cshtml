@@ -36,7 +36,7 @@
         {
             <tr>
                 <td>
-                    <a asp-page="Details" asp-route-id="@item.CabinetNumber" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                    <a asp-page="Details" asp-route-id="@item.Name" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
                         @item.Name @(item.Active ? "" : "(Deleted)")
                     </a>
                 </td>

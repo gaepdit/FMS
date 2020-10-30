@@ -20,13 +20,13 @@ namespace FMS.App.Tests.Cabinets
             var item = SimpleRepositoryData.GetCabinetDetail(id);
 
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetDetailsAsync(It.IsAny<int>()))
+            mockRepo.Setup(l => l.GetCabinetDetailsAsync(It.IsAny<string>()))
                 .ReturnsAsync(item)
                 .Verifiable();
 
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(item.CabinetNumber).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(item.Name).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.CabinetDetail.Should().BeEquivalentTo(item);
@@ -38,7 +38,7 @@ namespace FMS.App.Tests.Cabinets
             var mockRepo = new Mock<ICabinetRepository>();
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(int.MinValue).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync("zzz").ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.CabinetDetail.ShouldBeNull();
@@ -50,7 +50,7 @@ namespace FMS.App.Tests.Cabinets
             var mockRepo = new Mock<ICabinetRepository>();
             var pageModel = new DetailsModel(mockRepo.Object);
 
-            var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(string.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.CabinetDetail.ShouldBeNull();

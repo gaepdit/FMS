@@ -319,7 +319,8 @@ namespace FMS.Infrastructure.Repositories
         {
             // Get last (active) cabinet where file label is less than the new file label alphabetically
             var cabinet = await _context.Cabinets.AsNoTracking()
-                .OrderBy(e => e.CabinetNumber)
+                .OrderBy(e => e.FirstFileLabel)
+                .ThenBy(e => e.Name)
                 .LastOrDefaultAsync(e => e.Active
                     && string.Compare(e.FirstFileLabel, fileLabel) <= 0);
 
