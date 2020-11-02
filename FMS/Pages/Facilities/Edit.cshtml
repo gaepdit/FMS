@@ -68,7 +68,7 @@
             <div class="form-group col-md">
                 <label>Compliance Officer <span class="text-danger">*</span></label>
                 <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
-                    <option value=""></option>
+                    <option value="">[not assigned]</option>
                 </select>
                 <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
             </div>

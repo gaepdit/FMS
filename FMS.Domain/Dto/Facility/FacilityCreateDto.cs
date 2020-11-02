@@ -33,7 +33,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Organizational Unit")]
         public Guid OrganizationalUnitId { get; set; }
 
-        [Required]
         [Display(Name = "Compliance Officer")]
         public Guid ComplianceOfficerId { get; set; }
 
