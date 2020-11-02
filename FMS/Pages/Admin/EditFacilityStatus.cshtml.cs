@@ -22,7 +22,9 @@ namespace FMS.Pages.Admin
         public Guid Id { get; set; }
 
         private readonly IFacilityStatusRepository _facilityStatusRepository;
-        public EditFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) => _facilityStatusRepository = facilityStatusRepository;
+
+        public EditFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
+            _facilityStatusRepository = facilityStatusRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -72,12 +74,12 @@ namespace FMS.Pages.Admin
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+
+                throw;
             }
-            TempData?.SetDisplayMessage(Context.Success, $"Facility Status {FacilityStatus.Status} successfully updated.");
+
+            TempData?.SetDisplayMessage(Context.Success,
+                $"Facility Status {FacilityStatus.Status} successfully updated.");
 
             return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityStatus});
         }
