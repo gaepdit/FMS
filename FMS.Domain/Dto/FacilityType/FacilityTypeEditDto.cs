@@ -5,7 +5,10 @@ namespace FMS.Domain.Dto
 {
     public class FacilityTypeEditDto
     {
-        public FacilityTypeEditDto() { }
+        public FacilityTypeEditDto()
+        {
+            // Required for EditFacilityType page
+        }
 
         public FacilityTypeEditDto(FacilityType facilityType)
         {
