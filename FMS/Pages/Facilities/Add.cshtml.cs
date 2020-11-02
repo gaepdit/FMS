@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -19,11 +20,12 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public FacilityCreateDto Facility { get; set; }
 
-        public int? CountyArg { get; set; }
+        public bool ConfirmFacility { get; private set; }
+        public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
         // Select Lists
-        public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
-        public SelectList States => new SelectList(Data.States);
+        public static SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
+        public static SelectList States => new SelectList(Data.States);
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }
@@ -47,6 +49,57 @@ namespace FMS.Pages.Facilities
         }
 
         public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            Facility.TrimAll();
+
+            // If File Label is provided, make sure it exists
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
+                !await _repository.FileLabelExists(Facility.FileLabel))
+            {
+                ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
+            }
+
+            // When adding a new facility number, make sure the number doesn't already exist before trying to save.
+            if (await _repository.FacilityNumberExists(Facility.FacilityNumber))
+            {
+                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            var mapSearchSpec = new FacilityMapSpec
+            {
+                Latitude = Facility.Latitude,
+                Longitude = Facility.Longitude,
+                Radius = 1.ToString(),
+            };
+
+            NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
+
+            if (NearbyFacilities != null && NearbyFacilities.Count > 0)
+            {
+                await PopulateSelectsAsync();
+                ConfirmFacility = true;
+                return Page();
+            }
+
+            var newFacilityId = await _repository.CreateFacilityAsync(Facility);
+
+            TempData?.SetDisplayMessage(Context.Success, "Facility successfully created.");
+            return RedirectToPage("./Details", new {id = newFacilityId});
+        }
+
+        public async Task<IActionResult> OnPostConfirmAsync()
         {
             if (!ModelState.IsValid)
             {
