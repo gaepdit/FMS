@@ -20,7 +20,7 @@
             </div>
             <div class="form-group col">
                 <label asp-for="NewCabinet.FirstFileLabel"></label>
-                <input asp-for="NewCabinet.FirstFileLabel" class="form-control" aria-describedby="FileLabelHelpBlock" />
+                <input asp-for="NewCabinet.FirstFileLabel" class="form-control" placeholder="000-0000" aria-describedby="FileLabelHelpBlock" />
                 <span asp-validation-for="NewCabinet.FirstFileLabel" class="text-danger"></span>
                 <small id="FileLabelHelpBlock" class="form-text text-muted">
                     <i>First File Label</i> is the first/lowest file label in the cabinet. It is used for determining
