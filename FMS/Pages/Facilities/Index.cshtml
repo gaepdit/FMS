@@ -158,10 +158,38 @@
                 </caption>
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col">Facility</th>
-                    <th scope="col">File Label</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
+                    <th scope="col" class="text-nowrap">
+                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FacilityNumber ? FacilitySort.FacilityNumberDesc : FacilitySort.FacilityNumber)">
+                            Facility
+                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                new {up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc})
+                        </a>
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
+                            File Label
+                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                new {up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc})
+                        </a>
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Name ? FacilitySort.NameDesc : FacilitySort.Name)">
+                            Name
+                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                new {up = FacilitySort.Name, down = FacilitySort.NameDesc})
+                        </a>
+                    </th>
+                    <th scope="col" class="text-nowrap">
+                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Address ? FacilitySort.AddressDesc : FacilitySort.Address)">
+                            Address
+                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                new {up = FacilitySort.Address, down = FacilitySort.AddressDesc})
+                        </a>
+                    </th>
                     <th scope="col" class="text-center">Type</th>
                     <th scope="col">Records</th>
                 </tr>

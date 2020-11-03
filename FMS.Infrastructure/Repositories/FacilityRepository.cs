@@ -51,27 +51,51 @@ namespace FMS.Infrastructure.Repositories
             return new FacilityDetailDto(facility);
         }
 
+        private IQueryable<Facility> QueryFacilities(FacilitySpec spec) => _context.Facilities.AsNoTracking()
+            .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
+            .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
+            .Where(e => spec.ShowDeleted || e.Active)
+            .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
+            .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
+            .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
+            .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
+            .Where(e => !spec.OrganizationalUnitId.HasValue ||
+                e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+            .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+            .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
+            .Where(e => string.IsNullOrEmpty(spec.Location) || e.Location.Contains(spec.Location))
+            .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
+            .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
+            .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
+            .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode));
+
+        private static IOrderedQueryable<Facility> OrderFacilityQuery(
+            IQueryable<Facility> included, FacilitySort sortBy) =>
+            sortBy switch
+            {
+                FacilitySort.NameDesc => included.OrderByDescending(e => e.Name)
+                    .ThenByDescending(e => e.FacilityNumber),
+                FacilitySort.Address => included.OrderBy(e => e.Address)
+                    .ThenBy(e => e.Name),
+                FacilitySort.AddressDesc => included.OrderByDescending(e => e.Address)
+                    .ThenByDescending(e => e.Name),
+                FacilitySort.FacilityNumber => included.OrderBy(e => e.FacilityNumber)
+                    .ThenBy(e => e.Name),
+                FacilitySort.FacilityNumberDesc => included.OrderByDescending(e => e.FacilityNumber)
+                    .ThenByDescending(e => e.Name),
+                FacilitySort.FileLabel => included.OrderBy(e => e.File.FileLabel)
+                    .ThenBy(e => e.Name),
+                FacilitySort.FileLabelDesc => included.OrderByDescending(e => e.File.FileLabel)
+                    .ThenByDescending(e => e.Name),
+                // FacilitySort.Name
+                _ => included.OrderBy(e => e.Name)
+                    .ThenBy(e => e.FacilityNumber)
+            };
+
         public async Task<int> CountAsync(FacilitySpec spec)
         {
-            return await _context.Facilities.AsNoTracking()
-                .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
-                .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
-                .Where(e => spec.ShowDeleted || e.Active)
-                .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
-                .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-                .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
-                .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-                .Where(e => !spec.OrganizationalUnitId.HasValue ||
-                    e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.ComplianceOfficerId.HasValue ||
-                    e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
-                .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
-                .Where(e => string.IsNullOrEmpty(spec.Location) || e.Location.Contains(spec.Location))
-                .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
-                .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
-                .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
-                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
-                .CountAsync();
+            var queried = QueryFacilities(spec);
+            return await queried.CountAsync();
         }
 
         public async Task<PaginatedList<FacilitySummaryDto>> GetFacilityPaginatedListAsync(
@@ -80,56 +104,29 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NegativeOrZero(pageNumber, nameof(pageNumber));
             Prevent.NegativeOrZero(pageSize, nameof(pageSize));
 
-            var items = await _context.Facilities.AsNoTracking()
-                .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
-                .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
-                .Where(e => spec.ShowDeleted || e.Active)
-                .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
-                .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-                .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
-                .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-                .Where(e => !spec.OrganizationalUnitId.HasValue ||
-                    e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.ComplianceOfficerId.HasValue ||
-                    e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
-                .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
-                .Where(e => string.IsNullOrEmpty(spec.Location) || e.Location.Contains(spec.Location))
-                .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
-                .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
-                .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
-                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
+            var queried = QueryFacilities(spec);
+
+            var included = queried
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Include(e => e.RetentionRecords)
-                .Include(e => e.FacilityType)
-                .OrderBy(e => e.Name).ThenBy(e => e.FacilityNumber)
+                .Include(e => e.FacilityType);
+
+            var ordered = OrderFacilityQuery(included, spec.SortBy);
+
+            var items = await ordered
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
 
-            var totalCount = await CountAsync(spec);
+            var totalCount = await queried.CountAsync();
             return new PaginatedList<FacilitySummaryDto>(items, totalCount, pageNumber, pageSize);
         }
 
         public async Task<IReadOnlyList<FacilityDetailDto>> GetFacilityDetailListAsync(FacilitySpec spec)
         {
-            return await _context.Facilities.AsNoTracking()
-                .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
-                .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
-                .Where(e => spec.ShowDeleted || e.Active)
-                .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
-                .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-                .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
-                .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-                .Where(e => !spec.OrganizationalUnitId.HasValue ||
-                    e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
-                .Where(e => !spec.ComplianceOfficerId.HasValue ||
-                    e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
-                .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
-                .Where(e => string.IsNullOrEmpty(spec.Location) || e.Location.Contains(spec.Location))
-                .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
-                .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
-                .Where(e => string.IsNullOrEmpty(spec.State) || e.State.Contains(spec.State))
-                .Where(e => string.IsNullOrEmpty(spec.PostalCode) || e.PostalCode.Contains(spec.PostalCode))
+            var queried = QueryFacilities(spec);
+
+            var included = queried
                 .Include(e => e.County)
                 .Include(e => e.FacilityStatus)
                 .Include(e => e.FacilityType)
@@ -137,10 +134,11 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
-                .Include(e => e.RetentionRecords)
-                .OrderBy(e => e.Name).ThenBy(e => e.FacilityNumber)
-                .Select(e => new FacilityDetailDto(e))
-                .ToListAsync();
+                .Include(e => e.RetentionRecords);
+
+            var ordered = OrderFacilityQuery(included, spec.SortBy);
+
+            return await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
         }
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)

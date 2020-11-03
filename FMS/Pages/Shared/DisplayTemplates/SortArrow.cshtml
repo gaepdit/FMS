@@ -1,0 +1,10 @@
+﻿@using FMS.Domain.Dto
+@model FMS.Domain.Dto.FacilitySort
+@if (Model == (FacilitySort) ViewData["up"])
+{
+    <text>▲</text>
+}
+else if (Model == (FacilitySort) ViewData["down"])
+{
+    <text>▼</text>
+}
