@@ -4,7 +4,10 @@ namespace FMS.Domain.Dto
 {
     public class RetentionRecordEditDto
     {
-        public RetentionRecordEditDto() { }
+        public RetentionRecordEditDto()
+        {
+            // Required for EditRetentionRecord page
+        }
 
         public RetentionRecordEditDto(RetentionRecordDetailDto record)
         {

@@ -24,7 +24,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
-        public Guid FileId { get; set; }
 
         [Display(Name = "Address")]
         public string Address { get; set; }
