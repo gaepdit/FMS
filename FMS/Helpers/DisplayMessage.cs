@@ -1,4 +1,6 @@
-﻿namespace FMS
+﻿using System;
+
+namespace FMS
 {
     public class DisplayMessage
     {
@@ -20,7 +22,7 @@
             Context.Success => "alert-success",
             Context.Danger => "alert-danger",
             Context.Info => "alert-info",
-            _ => throw new System.NotImplementedException(),
+            _ => string.Empty
         };
     }
 

@@ -718,8 +718,7 @@ namespace FMS.Infrastructure.Tests
         public async Task DeleteFacility_Succeeds()
         {
             var repositoryHelper = new SimpleRepositoryHelper();
-            var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => !e.Active);
-            if (facility == null) throw new NotImplementedException();
+            var facility = SimpleRepositoryData.Facilities.First(e => !e.Active);
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
@@ -750,9 +749,8 @@ namespace FMS.Infrastructure.Tests
         public async Task UndeleteFacility_Succeeds()
         {
             var repositoryHelper = new SimpleRepositoryHelper();
-            var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => e.Active);
-            if (facility == null) throw new NotImplementedException();
-
+            var facility = SimpleRepositoryData.Facilities.First(e => e.Active);
+            
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
                 await repository.UndeleteFacilityAsync(facility.Id);
