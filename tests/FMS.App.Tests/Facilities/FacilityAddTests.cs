@@ -1,12 +1,13 @@
-using FluentAssertions;
-using FMS.Domain.Dto;
-using FMS.Domain.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using FMS.Domain.Dto;
+using FMS.Domain.Repositories;
+using FMS.Pages.Facilities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Moq;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -19,7 +20,7 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object);
 
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
@@ -40,7 +41,7 @@ namespace FMS.App.Tests.Facilities
                 .ReturnsAsync(nearbyFacilities);
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object)
+            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
             {
                 Facility = new FacilityCreateDto {State = "Georgia"}
             };
@@ -72,7 +73,7 @@ namespace FMS.App.Tests.Facilities
                 .ReturnsAsync(nearbyFacilities);
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object)
+            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
             {
                 Facility = new FacilityCreateDto {State = "Georgia"}
             };
@@ -90,7 +91,7 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -112,7 +113,7 @@ namespace FMS.App.Tests.Facilities
                 .ReturnsAsync(true);
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object)
+            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
             {
                 Facility = new FacilityCreateDto {State = "Georgia"}
             };
@@ -131,7 +132,7 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostConfirmAsync().ConfigureAwait(false);

@@ -16,7 +16,7 @@ namespace FMS.Pages.Cabinets
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Cabinets = await _repository.GetCabinetListAsync(true);
+            Cabinets = await _repository.GetCabinetListAsync();
             return Page();
         }
     }

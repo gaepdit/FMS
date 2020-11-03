@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -21,8 +20,7 @@ namespace FMS.Pages.Cabinets
         public Guid Id { get; set; }
         
         public string OriginalCabinetName { get; private set; }
-        public DisplayMessage Message { get; private set; }
-
+        
         private readonly ICabinetRepository _repository;
         public EditModel(ICabinetRepository repository) => _repository = repository;
 

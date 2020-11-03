@@ -12,10 +12,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace FMS.Pages.Files
 {
     [Authorize(Roles = UserRoles.FileEditor)]
-    public class EditCabinets : PageModel
+    public class EditCabinetsModel : PageModel
     {
         private readonly IFileRepository _repository;
-        public EditCabinets(IFileRepository repository) => _repository = repository;
+        public EditCabinetsModel(IFileRepository repository) => _repository = repository;
 
         public FileDetailDto FileDetail { get; private set; }
         public DisplayMessage Message { get; private set; }
@@ -76,7 +76,7 @@ namespace FMS.Pages.Files
                 return Page();
             }
 
-            await _repository.AddCabinetToFileAsync(CabinetToAdd.Value, FileId);
+            await _repository.AddCabinetToFileAsync(CabinetToAdd!.Value, FileId);
 
             FileDetail = await _repository.GetFileAsync(FileId);
 
@@ -112,7 +112,7 @@ namespace FMS.Pages.Files
                 return Page();
             }
 
-            await _repository.RemoveCabinetFromFileAsync(CabinetToRemove.Value, FileId);
+            await _repository.RemoveCabinetFromFileAsync(CabinetToRemove!.Value, FileId);
 
             FileDetail = await _repository.GetFileAsync(FileId);
 

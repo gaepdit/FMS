@@ -7,14 +7,13 @@
 }
 
 @{
-    ViewData["Title"] = $"Add Facility Status";
+    ViewData["Title"] = $"Add {MaintenanceOptions.FacilityStatus}";
 }
 <h1>@ViewData["Title"]</h1>
 <div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
-            <input type="hidden" asp-for="FacilityStatus.Active" />
             <div class="form-group col-md-10">
                 <label>Facility Status Name <span class="text-danger">*</span></label>
                 <input asp-for="FacilityStatus.Status" class="form-control" />

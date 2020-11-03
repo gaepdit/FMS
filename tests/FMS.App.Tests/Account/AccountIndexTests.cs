@@ -12,28 +12,28 @@ namespace FMS.App.Tests.Account
 {
     public class AccountIndexTests
     {
-        private static readonly ApplicationUser _user = new ApplicationUser()
-        {
-            Id = Guid.Empty,
-            Email = "example.one@example.com",
-            GivenName = "Sample",
-            FamilyName = "User"
-        };
-
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
+            var user = new ApplicationUser()
+            {
+                Id = Guid.Empty,
+                Email = "example.one@example.com",
+                GivenName = "Sample",
+                FamilyName = "User"
+            };
+
             var mockUserService = new Mock<IUserService>();
             mockUserService.Setup(l => l.GetCurrentUserAsync())
-                .ReturnsAsync(_user)
+                .ReturnsAsync(user)
                 .Verifiable();
             var pageModel = new IndexModel(mockUserService.Object);
 
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.Email.Should().Be(_user.Email);
-            pageModel.DisplayName.Should().Be(_user.DisplayName);
+            pageModel.Email.Should().Be(user.Email);
+            pageModel.DisplayName.Should().Be(user.DisplayName);
         }
     }
 }

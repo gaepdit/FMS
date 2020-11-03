@@ -36,7 +36,10 @@ namespace FMS.Pages.Facilities
 
         public MapModel(IFacilityRepository repository) => _repository = repository;
 
-        public void OnGet() { }
+        public void OnGet()
+        {
+            // Method intentionally left empty.
+        }
 
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {

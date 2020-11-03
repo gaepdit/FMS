@@ -15,13 +15,13 @@ namespace FMS.Pages.Admin
         public BudgetCodeCreateDto BudgetCode { get; set; }
 
         private readonly IBudgetCodeRepository _budgetCodeRepository;
-        public AddBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) => _budgetCodeRepository = budgetCodeRepository;
 
-        public IActionResult OnGet()
+        public AddBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) =>
+            _budgetCodeRepository = budgetCodeRepository;
+
+        public void OnGet()
         {
-            BudgetCode = new BudgetCodeCreateDto { Active = true };
-
-            return Page();
+            // Method intentionally left empty.
         }
 
         public async Task<IActionResult> OnPostAsync()

@@ -1,5 +1,6 @@
 using FMS.Domain.Entities;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -12,11 +13,10 @@ namespace FMS.Domain.Dto
             Name = organizationalUnit.Name;
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; }
+        public bool Active { get; }
 
-        public bool Active { get; set; }
-
-        public string Name { get; set; }
-
+        [Display(Name = "Organizational Unit")]
+        public string Name { get; }
     }
 }

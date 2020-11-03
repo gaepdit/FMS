@@ -1,11 +1,12 @@
 ﻿@page
 @using FMS.Domain.Entities.Users
+@using FMS.Pages.Admin
 @model FMS.Pages.Admin.AddComplianceOfficerModel
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 @{
-    ViewData["Title"] = $"Add Compliance Officer";
+    ViewData["Title"] = $"Add {MaintenanceOptions.ComplianceOfficer}";
 }
 <h1>@ViewData["Title"]</h1>
 

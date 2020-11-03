@@ -1,9 +1,11 @@
 ﻿@page "{id:Guid?}"
 @using FMS.Pages.Admin
 @model FMS.Pages.Admin.EditFacilityStatusModel
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
 @{
     ViewData["Title"] = $"Edit Facility Status: {Model.FacilityStatus.Status}";
 }

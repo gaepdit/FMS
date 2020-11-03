@@ -1,4 +1,5 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Pages.Facilities
 @model FMS.Pages.Facilities.EditModel
 
 @section Scripts {
@@ -45,7 +46,7 @@
             </div>
             <div class="form-group col-md">
                 <label>County <span class="text-danger">*</span></label>
-                <select asp-for="Facility.CountyId" asp-items="Model.Counties" class="custom-select">
+                <select asp-for="Facility.CountyId" asp-items="EditModel.Counties" class="custom-select">
                 </select>
                 <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
             </div>
@@ -118,7 +119,7 @@
             </div>
             <div class="form-group col">
                 <label>State <span class="text-danger">*</span></label>
-                <select asp-for="Facility.State" asp-items="Model.States" class="custom-select">
+                <select asp-for="Facility.State" asp-items="EditModel.States" class="custom-select">
                 </select>
                 <span asp-validation-for="Facility.State" class="text-danger"></span>
             </div>

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+// ReSharper disable All
 
 namespace FMS.Domain.Utils
 {
@@ -61,7 +62,7 @@ namespace FMS.Domain.Utils
                 throw new ArgumentException($"Required input {parameterName} was empty.", parameterName);
             }
 
-            return input.Value;
+            return input!.Value;
         }
 
         /// <summary>

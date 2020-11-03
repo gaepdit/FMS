@@ -22,7 +22,10 @@ namespace FMS.Pages.Users
         public bool ShowResults { get; set; }
         public List<UserSearchResult> SearchResults { get; set; }
 
-        public void OnGet() { }
+        public void OnGet()
+        {
+            // Method intentionally left empty.
+        }
 
         public async Task<IActionResult> OnGetSearchAsync(string name, string email)
         {

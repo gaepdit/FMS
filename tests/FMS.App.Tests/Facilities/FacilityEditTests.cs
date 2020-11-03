@@ -1,11 +1,12 @@
+using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -26,7 +27,7 @@ namespace FMS.App.Tests.Facilities
                 .Verifiable();
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new EditModel(mockRepo.Object, mockSelectListHelper.Object);
 
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
@@ -44,7 +45,7 @@ namespace FMS.App.Tests.Facilities
                 .Verifiable();
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new EditModel(mockRepo.Object, mockSelectListHelper.Object);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -58,7 +59,7 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new EditModel(mockRepo.Object, mockSelectListHelper.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
@@ -75,7 +76,7 @@ namespace FMS.App.Tests.Facilities
             mockRepo.Setup(l => l.UpdateFacilityAsync(It.IsAny<Guid>(), It.IsAny<FacilityEditDto>()));
 
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object)
+            var pageModel = new EditModel(mockRepo.Object, mockSelectListHelper.Object)
             {
                 Id = id,
                 Facility = new FacilityEditDto()
@@ -94,7 +95,7 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = new Mock<IFacilityRepository>();
             var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.EditModel(mockRepo.Object, mockSelectListHelper.Object);
+            var pageModel = new EditModel(mockRepo.Object, mockSelectListHelper.Object);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
@@ -27,7 +25,9 @@ namespace FMS.Pages.Admin
         public bool ShowChange { get; set; }
 
         private readonly IFacilityStatusRepository _facilityStatusRepository;
-        public DeleteFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) => _facilityStatusRepository = facilityStatusRepository;
+
+        public DeleteFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
+            _facilityStatusRepository = facilityStatusRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -74,6 +74,7 @@ namespace FMS.Pages.Admin
                     throw;
                 }
             }
+
             Status = (await _facilityStatusRepository.GetFacilityStatusAsync(Id)).Status;
             ShowChange = true;
 
