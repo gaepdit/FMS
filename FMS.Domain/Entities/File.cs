@@ -29,8 +29,6 @@ namespace FMS.Domain.Entities
         public ICollection<CabinetFile> CabinetFiles { get; set; }
 
         public string Name => FileLabel;
-        public int CountyNumber => int.Parse(FileLabel.Substring(0, 3));
-        public int SequenceNumber => int.Parse(FileLabel.Substring(4, 4));
 
         public static string CountyString(int countyNum)
         {

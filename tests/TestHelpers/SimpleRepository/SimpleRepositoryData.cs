@@ -112,8 +112,5 @@ namespace TestHelpers.SimpleRepository
             var cabinet = Cabinets.Find(e => e.Id == id);
             return new CabinetDetailDto(cabinet);
         }
-
-        private static IEnumerable<CabinetFile> GetCabinetFileJoinsForCabinet(Guid cabinetId) =>
-            CabinetFiles.Where(e => e.CabinetId == cabinetId).ToList();
     }
 }

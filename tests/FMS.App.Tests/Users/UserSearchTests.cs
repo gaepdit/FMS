@@ -1,10 +1,11 @@
-﻿using FluentAssertions;
-using FMS.Domain.Services;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
+using FMS.Domain.Services;
+using FMS.Pages.Users;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Moq;
 using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -32,7 +33,7 @@ namespace FMS.App.Tests.Users
             mockUserService.Setup(l => l.GetUsersAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(DataHelpers.GetApplicationUsers())
                 .Verifiable();
-            var pageModel = new Pages.Users.IndexModel(mockUserService.Object);
+            var pageModel = new IndexModel(mockUserService.Object);
 
             var result = await pageModel.OnGetSearchAsync(name, email).ConfigureAwait(false);
 
@@ -45,7 +46,7 @@ namespace FMS.App.Tests.Users
         public async Task OnSearch_IfInvalidModel_ReturnPageWithInvalidModelState()
         {
             var mockUserService = new Mock<IUserService>();
-            var pageModel = new Pages.Users.IndexModel(mockUserService.Object);
+            var pageModel = new IndexModel(mockUserService.Object);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnGetSearchAsync(null, null).ConfigureAwait(false);

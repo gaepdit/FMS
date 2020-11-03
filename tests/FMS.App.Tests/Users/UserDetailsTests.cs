@@ -1,10 +1,11 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Threading.Tasks;
+using FluentAssertions;
 using FMS.Domain.Services;
+using FMS.Pages.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -23,7 +24,7 @@ namespace FMS.App.Tests.Users
                 .ReturnsAsync(user)
                 .Verifiable();
 
-            var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);
+            var pageModel = new DetailsModel(mockUserService.Object);
 
             var result = await pageModel.OnGetAsync(user.Id).ConfigureAwait(false);
 
@@ -37,7 +38,7 @@ namespace FMS.App.Tests.Users
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockUserService = new Mock<IUserService>();
-            var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);
+            var pageModel = new DetailsModel(mockUserService.Object);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -50,7 +51,7 @@ namespace FMS.App.Tests.Users
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockUserService = new Mock<IUserService>();
-            var pageModel = new Pages.Users.DetailsModel(mockUserService.Object);
+            var pageModel = new DetailsModel(mockUserService.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

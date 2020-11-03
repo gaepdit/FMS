@@ -1,13 +1,13 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using FluentAssertions;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Pages.Files;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -28,7 +28,7 @@ namespace FMS.App.Tests.Files
                 .ReturnsAsync(new List<CabinetSummaryDto>());
             mockRepository.Setup(l => l.GetCabinetsAvailableForFileAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(new List<CabinetSummaryDto>());
-            var pageModel = new Pages.Files.DetailsModel(mockRepository.Object);
+            var pageModel = new DetailsModel(mockRepository.Object);
 
             var result = await pageModel.OnGetAsync(file.FileLabel).ConfigureAwait(false);
 
@@ -40,7 +40,7 @@ namespace FMS.App.Tests.Files
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepository = new Mock<IFileRepository>();
-            var pageModel = new Pages.Files.DetailsModel(mockRepository.Object);
+            var pageModel = new DetailsModel(mockRepository.Object);
 
             var result = await pageModel.OnGetAsync("abcd").ConfigureAwait(false);
 
@@ -52,7 +52,7 @@ namespace FMS.App.Tests.Files
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockRepository = new Mock<IFileRepository>();
-            var pageModel = new Pages.Files.DetailsModel(mockRepository.Object);
+            var pageModel = new DetailsModel(mockRepository.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

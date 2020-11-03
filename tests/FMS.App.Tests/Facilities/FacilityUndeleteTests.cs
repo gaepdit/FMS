@@ -1,13 +1,13 @@
+using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using System;
-using System.Threading.Tasks;
 using TestHelpers;
-using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -25,7 +25,7 @@ namespace FMS.App.Tests.Facilities
             mockRepo.Setup(l => l.GetFacilityAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(facility)
                 .Verifiable();
-            var pageModel = new Pages.Facilities.UndeleteModel(mockRepo.Object);
+            var pageModel = new UndeleteModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
@@ -42,8 +42,7 @@ namespace FMS.App.Tests.Facilities
                 .ReturnsAsync((FacilityDetailDto) null)
                 .Verifiable();
 
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new Pages.Facilities.UndeleteModel(mockRepo.Object);
+            var pageModel = new UndeleteModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -56,7 +55,7 @@ namespace FMS.App.Tests.Facilities
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = new Mock<IFacilityRepository>();
-            var pageModel = new Pages.Facilities.UndeleteModel(mockRepo.Object);
+            var pageModel = new UndeleteModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
@@ -72,7 +71,7 @@ namespace FMS.App.Tests.Facilities
             var mockRepo = new Mock<IFacilityRepository>();
             mockRepo.Setup(l => l.UndeleteFacilityAsync(It.IsAny<Guid>()));
 
-            var pageModel = new Pages.Facilities.UndeleteModel(mockRepo.Object)
+            var pageModel = new UndeleteModel(mockRepo.Object)
             {
                 Id = id,
             };
