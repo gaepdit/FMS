@@ -5,7 +5,10 @@ namespace FMS.Domain.Dto
 {
     public class OrganizationalUnitEditDto
     {
-        public OrganizationalUnitEditDto() { }
+        public OrganizationalUnitEditDto()
+        {
+            // Required for EditOrganizationalUnit page
+        }
 
         public OrganizationalUnitEditDto(OrganizationalUnit organizationalUnit)
         {

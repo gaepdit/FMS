@@ -718,8 +718,7 @@ namespace FMS.Infrastructure.Tests
         public async Task DeleteFacility_Succeeds()
         {
             var repositoryHelper = new SimpleRepositoryHelper();
-            var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => !e.Active);
-            if (facility == null) throw new NotImplementedException();
+            var facility = SimpleRepositoryData.Facilities.First(e => !e.Active);
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
@@ -750,9 +749,8 @@ namespace FMS.Infrastructure.Tests
         public async Task UndeleteFacility_Succeeds()
         {
             var repositoryHelper = new SimpleRepositoryHelper();
-            var facility = SimpleRepositoryData.Facilities.FirstOrDefault(e => e.Active);
-            if (facility == null) throw new NotImplementedException();
-
+            var facility = SimpleRepositoryData.Facilities.First(e => e.Active);
+            
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
                 await repository.UndeleteFacilityAsync(facility.Id);
@@ -781,18 +779,18 @@ namespace FMS.Infrastructure.Tests
         // GetRecommendedCabinetForFile
 
         [Theory]
-        [InlineData("000-0000", 1)]
-        [InlineData("100-0001", 1)]
-        [InlineData("110-0000", 2)]
-        [InlineData("110-0001", 3)]
-        [InlineData("111-0001", 5)]
-        [InlineData("111-0002", 5)]
-        [InlineData("999-9999", 5)]
-        public async Task GetRecommendedCabinetForFile_Succeeds(string fileLabel, int cabinetNumber)
+        [InlineData("000-0000", "C001")]
+        [InlineData("100-0001", "C001")]
+        [InlineData("110-0000", "C002")]
+        [InlineData("110-0001", "C003")]
+        [InlineData("111-0001", "C005")]
+        [InlineData("111-0002", "C005")]
+        [InlineData("999-9999", "C005")]
+        public async Task GetRecommendedCabinetForFile_Succeeds(string fileLabel, string cabinetNumber)
         {
             var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.GetRecommendedCabinetForFile(fileLabel);
-            var cabinet = SimpleRepositoryData.Cabinets.Single(e => e.CabinetNumber == cabinetNumber);
+            var cabinet = SimpleRepositoryData.Cabinets.Single(e => e.Name == cabinetNumber);
             result.ShouldEqual(cabinet.Id);
         }
 

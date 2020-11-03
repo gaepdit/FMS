@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -6,7 +7,7 @@ namespace FMS.Domain.Dto
     {
         [Required]
         [StringLength(20)]
-        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Only letters and numbers allowed.")]
+        [RegularExpression(FacilityType.FacilityTypeNamePattern, ErrorMessage = "Only letters and numbers allowed.")]
         [Display(Name = "Code")]
         public string Name { get; set; }
 

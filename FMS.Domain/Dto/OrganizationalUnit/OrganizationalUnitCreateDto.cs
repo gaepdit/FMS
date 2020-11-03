@@ -4,8 +4,6 @@ namespace FMS.Domain.Dto
 {
     public class OrganizationalUnitCreateDto
     {
-        public bool Active { get; set; }
-
         [Display(Name = "Organizational Unit")]
         public string Name { get; set; }
 

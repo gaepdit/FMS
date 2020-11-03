@@ -6,15 +6,29 @@
 }
 
 @{
-    ViewData["Title"] = "New Cabinet";
+    ViewData["Title"] = "Add Cabinet";
 }
-<h1><i>Confirm</i> @ViewData["Title"]</h1>
+<h1>@ViewData["Title"]</h1>
 <div class="container bg-light py-3">
     <form method="post">
-        <p class="mt-2 mb-4">
-            Cabinet <span class="border border-secondary rounded px-2 py-1">@Model.NewCabinetName</span> will be created.
-        </p>
-        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Save New Cabinet</button>
-        <a asp-page="Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Cancel</a>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label asp-for="NewCabinet.Name"></label>
+                <input asp-for="NewCabinet.Name" class="form-control" />
+                <span asp-validation-for="NewCabinet.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col">
+                <label asp-for="NewCabinet.FirstFileLabel"></label>
+                <input asp-for="NewCabinet.FirstFileLabel" class="form-control" placeholder="000-0000" aria-describedby="FileLabelHelpBlock" />
+                <span asp-validation-for="NewCabinet.FirstFileLabel" class="text-danger"></span>
+                <small id="FileLabelHelpBlock" class="form-text text-muted">
+                    <i>First File Label</i> is the first/lowest file label in the cabinet. It is used for determining
+                    the appropriate cabinet to use when creating new files.
+                </small>
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Create New Cabinet</button>
     </form>
 </div>

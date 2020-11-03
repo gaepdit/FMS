@@ -15,13 +15,13 @@ namespace FMS.Pages.Admin
         public FacilityStatusCreateDto FacilityStatus { get; set; }
 
         private readonly IFacilityStatusRepository _facilityStatusRepository;
-        public AddFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) => _facilityStatusRepository = facilityStatusRepository;
 
-        public IActionResult OnGet()
+        public AddFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
+            _facilityStatusRepository = facilityStatusRepository;
+
+        public void OnGet()
         {
-            FacilityStatus = new FacilityStatusCreateDto { Active = true };
-
-            return Page();
+            // Method intentionally left empty.
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -46,7 +46,8 @@ namespace FMS.Pages.Admin
 
             await _facilityStatusRepository.CreateFacilityStatusAsync(FacilityStatus);
 
-            TempData?.SetDisplayMessage(Context.Success, $"Facility Status {FacilityStatus.Status} successfully created.");
+            TempData?.SetDisplayMessage(Context.Success,
+                $"Facility Status {FacilityStatus.Status} successfully created.");
 
             return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityStatus});
         }

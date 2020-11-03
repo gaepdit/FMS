@@ -16,20 +16,19 @@ namespace FMS.Domain.Dto
             ProjectNumber = budgetCode.ProjectNumber;
         }
 
-        public Guid Id { get; set; }
-
-        public bool Active { get; set; }
-
-        [StringLength(20)]
-        public string Code { get; set; }
-
+        public Guid Id { get; }
+        public bool Active { get; }
+        
         [Display(Name = "Budget Code")]
-        public string Name { get; set; }
+        public string Code { get; }
 
-        [StringLength(20)]
-        public string OrganizationNumber { get; set; }
+        [Display(Name = "Budget Code Name")]
+        public string Name { get; }
 
-        [StringLength(20)]
-        public string ProjectNumber { get; set; }
+        [Display(Name = "Organization Number")]
+        public string OrganizationNumber { get; }
+        
+        [Display(Name = "Project Number")]
+        public string ProjectNumber { get; }
     }
 }

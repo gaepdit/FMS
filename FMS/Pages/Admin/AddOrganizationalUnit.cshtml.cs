@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
@@ -18,13 +15,13 @@ namespace FMS.Pages.Admin
         public OrganizationalUnitCreateDto OrganizationalUnit { get; set; }
 
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
-        public AddOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) => _organizationalUnitRepository = organizationalUnitRepository;
 
-        public IActionResult OnGet()
+        public AddOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) =>
+            _organizationalUnitRepository = organizationalUnitRepository;
+
+        public void OnGet()
         {
-            OrganizationalUnit = new OrganizationalUnitCreateDto { Active = true };
-
-            return Page();
+            // Method intentionally left empty.
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -49,9 +46,11 @@ namespace FMS.Pages.Admin
 
             await _organizationalUnitRepository.CreateOrganizationalUnitAsync(OrganizationalUnit);
 
-            TempData?.SetDisplayMessage(Context.Success, $"Organizational Unit {OrganizationalUnit.Name} successfully created.");
+            TempData?.SetDisplayMessage(Context.Success,
+                $"Organizational Unit {OrganizationalUnit.Name} successfully created.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.OrganizationalUnit});
+            return RedirectToPage("./Index", "select",
+                new {MaintenanceSelection = MaintenanceOptions.OrganizationalUnit});
         }
     }
 }

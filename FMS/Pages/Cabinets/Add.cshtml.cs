@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -10,23 +11,46 @@ namespace FMS.Pages.Cabinets
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class AddModel : PageModel
     {
-        public string NewCabinetName { get; private set; }
+        [BindProperty]
+        public CabinetEditDto NewCabinet { get; set; }
 
         private readonly ICabinetRepository _repository;
         public AddModel(ICabinetRepository repository) => _repository = repository;
 
-        public async Task<IActionResult> OnGetAsync()
+        public void OnGet()
         {
-            NewCabinetName = await _repository.GetNextCabinetName();
-            return Page();
+            // Method intentionally left empty.
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var newCabinetId = await _repository.CreateCabinetAsync();
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            NewCabinet.TrimAll();
+            
+            if (await _repository.CabinetNameExistsAsync(NewCabinet.Name))
+            {
+                ModelState.AddModelError("CabinetEdit.Name", "There is already a Cabinet with that name.");
+            }
+
+            if (!Domain.Entities.File.IsValidFileLabelFormat(NewCabinet.FirstFileLabel))
+            {
+                ModelState.AddModelError("CabinetEdit.FirstFileLabel", "The File Label is invalid.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            await _repository.CreateCabinetAsync(NewCabinet);
+            
             TempData?.SetDisplayMessage(Context.Success, 
-                "New Cabinet successfully created. Be sure to set the first File Label.");
-            return RedirectToPage("./Edit", new {id = newCabinetId});
+                "Cabinet successfully created. Be sure to check File Label sorting.");
+            return RedirectToPage("./Details", new {id = NewCabinet.Name});
         }
     }
 }

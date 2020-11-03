@@ -71,7 +71,7 @@ namespace FMS.Pages.Users
 
             foreach (var err in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, err.Description);
+                ModelState.AddModelError(string.Empty, string.Concat(err.Code, ": ", err.Description));
             }
 
             if (!await GetUserDetails()) return NotFound();

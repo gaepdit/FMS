@@ -26,14 +26,14 @@
         </a>
     </form>
 </div>
-@if (Model.Delete == true)
+@if (Model.Delete)
 {
     <br />
     <div class="container-fluid">
         <h5 class="alert alert-danger">This @MaintenanceOptions.FacilityType is currently Inactive and will not show in Drop-Down Menus.</h5>
     </div>
 }
-@if (Model.ShowChange == true)
+@if (Model.ShowChange)
 {
     <br />
     <div class="container-fluid">

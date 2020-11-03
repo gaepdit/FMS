@@ -20,7 +20,10 @@ namespace FMS.Pages.Files
         public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
         public bool ShowResults { get; private set; }
 
-        public void OnGet() { }
+        public void OnGet()
+        {
+            // Method intentionally left empty.
+        }
 
         public async Task<IActionResult> OnGetSearchAsync(FileSpec spec, [FromQuery] int p = 1)
         {

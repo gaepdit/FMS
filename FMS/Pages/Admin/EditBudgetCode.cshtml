@@ -1,9 +1,11 @@
 ﻿@page "{id:Guid?}"
 @using FMS.Pages.Admin
 @model FMS.Pages.Admin.EditBudgetCodeModel
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
 @{
     ViewData["Title"] = $"Edit Budget Code: {Model.BudgetCode.Code}";
 }
@@ -39,7 +41,7 @@
                 <span asp-validation-for="BudgetCode.OrganizationNumber" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label>ProjectNumber</label>
+                <label>Project Number</label>
                 <input asp-for="BudgetCode.ProjectNumber" class="form-control" />
                 <span asp-validation-for="BudgetCode.ProjectNumber" class="text-danger"></span>
             </div>

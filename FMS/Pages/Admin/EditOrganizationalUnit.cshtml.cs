@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
@@ -22,7 +20,9 @@ namespace FMS.Pages.Admin
         public Guid Id { get; set; }
 
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
-        public EditOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) => _organizationalUnitRepository = organizationalUnitRepository;
+
+        public EditOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) =>
+            _organizationalUnitRepository = organizationalUnitRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -72,14 +72,15 @@ namespace FMS.Pages.Admin
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
-            TempData?.SetDisplayMessage(Context.Success, $"Organizational Unit {OrganizationalUnit.Name} successfully updated.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.OrganizationalUnit});
+                throw;
+            }
+
+            TempData?.SetDisplayMessage(Context.Success,
+                $"Organizational Unit {OrganizationalUnit.Name} successfully updated.");
+
+            return RedirectToPage("./Index", "select",
+                new {MaintenanceSelection = MaintenanceOptions.OrganizationalUnit});
         }
     }
 }

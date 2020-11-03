@@ -15,13 +15,13 @@ namespace FMS.Pages.Admin
         public FacilityTypeCreateDto FacilityType { get; set; }
 
         private readonly IFacilityTypeRepository _facilityTypeRepository;
-        public AddFacilityTypeModel(IFacilityTypeRepository facilityTypeRepository) => _facilityTypeRepository = facilityTypeRepository;
 
-        public IActionResult OnGet()
+        public AddFacilityTypeModel(IFacilityTypeRepository facilityTypeRepository) =>
+            _facilityTypeRepository = facilityTypeRepository;
+
+        public void OnGet()
         {
-            FacilityType = new FacilityTypeCreateDto();
-
-            return Page();
+            // Method intentionally left empty.
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -52,7 +52,8 @@ namespace FMS.Pages.Admin
 
             await _facilityTypeRepository.CreateFacilityTypeAsync(FacilityType);
 
-            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully created.");
+            TempData?.SetDisplayMessage(Context.Success,
+                $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully created.");
 
             return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityType});
         }

@@ -16,12 +16,15 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
+<environment names="Development,Staging">
+    <div class="font-weight-bold text-uppercase text-center sticky-top"
+         style="opacity:0.8;background:repeating-linear-gradient(135deg,#f6da52,#f6da52 10px,#ffef80 10px,#ffef80 20px);">
+        Test Site
+    </div>
+</environment>
 <a class="skipnav" href="#main-content">Skip to main content</a>
 <header role="banner">
     <div class="container h3 my-2">
-        <environment names="Development,Staging">
-            <span class="bg-danger text-light rounded px-2">TEST SITE</span>
-        </environment>
         <img src="~/images/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
         <a href="/" aria-label="Home" class="text-dark">File Management System</a>
     </div>

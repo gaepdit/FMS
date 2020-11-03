@@ -36,11 +36,14 @@ namespace FMS.Pages.Facilities
 
         public MapModel(IFacilityRepository repository) => _repository = repository;
 
-        public void OnGet() { }
+        public void OnGet()
+        {
+            // Method intentionally left empty.
+        }
 
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {
-            if ((!string.IsNullOrEmpty(spec.GeocodeLat) && !string.IsNullOrEmpty(spec.GeocodeLng))
+            if (!string.IsNullOrEmpty(spec.GeocodeLat) && !string.IsNullOrEmpty(spec.GeocodeLng)
                 && decimal.Parse(spec.GeocodeLat) > 0 && decimal.Parse(spec.GeocodeLng) < 0)
             {
                 spec.Latitude = decimal.Parse(spec.GeocodeLat);

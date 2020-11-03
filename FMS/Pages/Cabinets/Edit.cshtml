@@ -6,18 +6,22 @@
 }
 
 @{
-    ViewData["Title"] = $"Edit Cabinet: {Model.CabinetName}";
+    ViewData["Title"] = $"Edit Cabinet: {Model.OriginalCabinetName}";
 }
 <h1>@ViewData["Title"]</h1>
-<partial name="_AlertPartial" for="Message" />
 
 <div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <div class="form-group col">
+                <label asp-for="CabinetEdit.Name"></label>
+                <input asp-for="CabinetEdit.Name" class="form-control" />
+                <span asp-validation-for="CabinetEdit.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col">
                 <label asp-for="CabinetEdit.FirstFileLabel"></label>
-                <input asp-for="CabinetEdit.FirstFileLabel" class="form-control" aria-describedby="FileLabelHelpBlock" />
+                <input asp-for="CabinetEdit.FirstFileLabel" class="form-control" placeholder="000-0000" aria-describedby="FileLabelHelpBlock" />
                 <span asp-validation-for="CabinetEdit.FirstFileLabel" class="text-danger"></span>
                 <small id="FileLabelHelpBlock" class="form-text text-muted">
                     <i>First File Label</i> is the first/lowest file label in the cabinet. It is used for determining
@@ -27,6 +31,6 @@
         </div>
         <hr />
         <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
-        <a asp-page="Details" asp-route-id="@Model.CabinetNumber" class="btn btn-outline-secondary col-md-2">Cancel</a>
+        <a asp-page="Details" asp-route-id="@Model.OriginalCabinetName" class="btn btn-outline-secondary col-md-2">Cancel</a>
     </form>
 </div>

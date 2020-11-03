@@ -29,8 +29,6 @@ namespace FMS.Domain.Entities
         public ICollection<CabinetFile> CabinetFiles { get; set; }
 
         public string Name => FileLabel;
-        public int CountyNumber => int.Parse(FileLabel.Substring(0, 3));
-        public int SequenceNumber => int.Parse(FileLabel.Substring(4, 4));
 
         public static string CountyString(int countyNum)
         {
@@ -48,7 +46,7 @@ namespace FMS.Domain.Entities
             return sequence.ToString().PadLeft(4, '0');
         }
 
-        private const string FileLabelPattern = @"^\d{3}-\d{4}$";
+        public const string FileLabelPattern = @"^\d{3}-\d{4}$";
 
         public static bool IsValidFileLabelFormat(string fileLabel) =>
             Regex.IsMatch(fileLabel, FileLabelPattern);

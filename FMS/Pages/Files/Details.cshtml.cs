@@ -16,7 +16,7 @@ namespace FMS.Pages.Files
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrEmpty(id))
             {
                 return NotFound();
             }
