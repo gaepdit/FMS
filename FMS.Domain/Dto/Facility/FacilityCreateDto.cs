@@ -34,7 +34,7 @@ namespace FMS.Domain.Dto
         public Guid OrganizationalUnitId { get; set; }
 
         [Display(Name = "Compliance Officer")]
-        public Guid ComplianceOfficerId { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
 
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
