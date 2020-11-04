@@ -4,37 +4,30 @@
 @{
     ViewData["Title"] = "User Profile: " + Model.DisplayName;
 }
-<h1>FMS User Profile</h1>
 
+<h1>FMS User Profile</h1>
+<hr />
 <partial name="_AlertPartial" for="Message" />
 
-<div class="container">
-    <div class="row my-3">
-        <div class="mr-2">
-            <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
-        </div>
-        <div>
-            <h2>
-                @Model.DisplayName
-                @if (User.IsInRole(UserRoles.UserMaintenance))
-                {
-                    <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
-                }
-            </h2>
-            <p>@Model.Email</p>
-            @if (Model.Roles != null && Model.Roles.Count > 0)
-            {
-                <h3>Roles</h3>
-                <dl>
-                    @foreach (var role in Model.Roles)
-                    {
-                        <dt>@UserRoles.DisplayName(role)</dt>
-                        <dd>
-                            <small class="text-muted">@UserRoles.Description(role)</small>
-                        </dd>
-                    }
-                </dl>
-            }
-        </div>
-    </div>
-</div>
+<h2>
+    @Model.DisplayName
+    @if (User.IsInRole(UserRoles.UserMaintenance))
+    {
+        <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
+    }
+</h2>
+<p>@Model.Email</p>
+
+@if (Model.Roles != null && Model.Roles.Count > 0)
+{
+    <h3>Roles</h3>
+    <dl>
+        @foreach (var role in Model.Roles)
+        {
+            <dt>@UserRoles.DisplayName(role)</dt>
+            <dd>
+                <small class="text-muted">@UserRoles.Description(role)</small>
+            </dd>
+        }
+    </dl>
+}
