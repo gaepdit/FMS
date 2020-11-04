@@ -1,18 +1,27 @@
-﻿using FMS.Domain.Data;
-using FMS.Domain.Entities;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace FMS.Infrastructure.Contexts
 {
     public class FmsDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-        public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) { }
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public FmsDbContext(DbContextOptions<FmsDbContext> options,
+            IHttpContextAccessor httpContextAccessor) : base(options) =>
+            _httpContextAccessor = httpContextAccessor;
 
         // App entities
         public DbSet<BudgetCode> BudgetCodes { get; set; }
@@ -41,7 +50,7 @@ namespace FMS.Infrastructure.Contexts
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
 
             // Configure many-to-many relationships
-            builder.Entity<CabinetFile>().HasKey(e => new { e.CabinetId, e.FileId });
+            builder.Entity<CabinetFile>().HasKey(e => new {e.CabinetId, e.FileId});
 
             // Unique indexes
             builder.Entity<File>().HasIndex(e => e.FileLabel).IsUnique();
@@ -59,6 +68,55 @@ namespace FMS.Infrastructure.Contexts
 
             // Data
             builder.Entity<County>().HasData(Data.Counties);
+
+            // Auditing
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                builder.Entity(entityType.ClrType).Property<DateTimeOffset?>(AuditProperties.InsertDateTime);
+                builder.Entity(entityType.ClrType).Property<DateTimeOffset?>(AuditProperties.UpdateDateTime);
+                builder.Entity(entityType.ClrType).Property<string>(AuditProperties.InsertUser);
+                builder.Entity(entityType.ClrType).Property<string>(AuditProperties.UpdateUser);
+            }
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        {
+            SetAuditProperties();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        public override int SaveChanges()
+        {
+            SetAuditProperties();
+            return base.SaveChanges();
+        }
+
+        private void SetAuditProperties()
+        {
+            var currentUser = _httpContextAccessor?.HttpContext?.User?.Identity?.Name;
+
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            foreach (var entry in entries)
+            {
+                entry.Property(AuditProperties.UpdateDateTime).CurrentValue = DateTimeOffset.Now;
+                entry.Property(AuditProperties.UpdateUser).CurrentValue = currentUser;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property(AuditProperties.InsertDateTime).CurrentValue = DateTimeOffset.Now;
+                    entry.Property(AuditProperties.InsertUser).CurrentValue = currentUser;
+                }
+            }
+        }
+
+        private static class AuditProperties
+        {
+            public const string InsertDateTime = "InsertDateTime";
+            public const string UpdateDateTime = "UpdateDateTime";
+            public const string InsertUser = "InsertUser";
+            public const string UpdateUser = "UpdateUser";
         }
     }
 }
