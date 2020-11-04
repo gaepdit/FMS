@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace FMS.Infrastructure.Contexts
 {
@@ -13,9 +14,9 @@ namespace FMS.Infrastructure.Contexts
     {
         public FmsDbContext(DbContextOptions<FmsDbContext> options) : base(options) { }
 
+        // App entities
         public DbSet<BudgetCode> BudgetCodes { get; set; }
         public DbSet<ComplianceOfficer> ComplianceOfficers { get; set; }
-        public DbSet<County> Counties { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<FacilityStatus> FacilityStatuses { get; set; }
         public DbSet<FacilityType> FacilityTypes { get; set; }
@@ -24,8 +25,15 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<CabinetFile> CabinetFileJoin { get; set; }
-        // FacilityList only needed for retrieving results from [dbo].[getNearbyFacilities] stored procedure
-        // This should not be needed in .NET Core 5
+
+        // The "Counties" entity is only used to add a County table and data to the database for 
+        // database-side use. Counties are stored in memory and never accessed from the database,
+        // but other entities store County Id as a foreign key.
+        // ReSharper disable once UnusedMember.Global
+        public DbSet<County> Counties { get; set; }
+
+        // The "FacilityList" entity is only used for retrieving results from the [dbo].[getNearbyFacilities]
+        // stored procedure. (This should not be needed in .NET Core 5.)
         public DbSet<FacilityMapSummaryDto> FacilityList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -52,7 +60,5 @@ namespace FMS.Infrastructure.Contexts
             // Data
             builder.Entity<County>().HasData(Data.Counties);
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.EnableSensitiveDataLogging();
     }
 }
