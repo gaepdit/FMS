@@ -6,21 +6,14 @@ namespace FMS
 {
     public static class StringExtensions
     {
-        public static string MD5Hash(this string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return null;
-            }
-
-            return string.Join("", System.Security.Cryptography.MD5.Create()
-                .ComputeHash(System.Text.Encoding.ASCII.GetBytes(value.Trim().ToLower()))
-                .Select(s => s.ToString("x2")));
-        }
-
+        /// <summary>
+        /// Returns a string representation of an object. If the object is null, returns an empty string.
+        /// </summary>
+        /// <param name="input">An object.</param>
+        /// <returns>A string.</returns>
         [DebuggerStepThrough]
         public static string ForceToString(this object input) =>
-            input == null || string.IsNullOrEmpty(input.ToString()) ? "" : input.ToString();
+            input == null || string.IsNullOrEmpty(input.ToString()) ? string.Empty : input.ToString();
 
         /// <summary>
         /// Implodes a collection of strings to a single string, concatenating the items using the separator,

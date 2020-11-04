@@ -4,21 +4,13 @@
 @{
     ViewData["Title"] = $"Compliance Officer: {Model.DisplayName}";
 }
+
 <h1>@ViewData["Title"]</h1>
+<hr />
 <partial name="_AlertPartial" for="Message" />
-<div class="container">
-    <div class="row my-3">
-        <div class="mr-2">
-            <img src="https://www.gravatar.com/avatar/@Model.Email.MD5Hash()?s=128&r=pg&d=identicon" class="img-thumbnail" alt="Account image" />
-        </div>
-        <div>
-            <h2>
-                @Model.DisplayName
-            </h2>
-            <p>@Model.Email</p>
-        </div>
-    </div>
-</div>
+
+<h2>@Model.DisplayName</h2>
+<p>@Model.Email</p>
 
 @if (Model.IsUser)
 {

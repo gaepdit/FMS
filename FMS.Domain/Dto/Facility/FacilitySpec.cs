@@ -6,6 +6,8 @@ namespace FMS.Domain.Dto
 {
     public class FacilitySpec
     {
+        public FacilitySort SortBy { get; set; } = FacilitySort.Name;
+
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
@@ -13,7 +15,7 @@ namespace FMS.Domain.Dto
         public string Name { get; set; }
 
         [Display(Name = "Include deleted records")]
-        public bool ShowDeleted { get; set; } 
+        public bool ShowDeleted { get; set; }
 
         [Display(Name = "County")]
         public int? CountyId { get; set; }
@@ -55,6 +57,7 @@ namespace FMS.Domain.Dto
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>
             {
+                {nameof(SortBy), SortBy.ToString()},
                 {nameof(ShowDeleted), ShowDeleted.ToString()},
                 {nameof(Address), Address},
                 {nameof(BudgetCodeId), BudgetCodeId?.ToString()},
