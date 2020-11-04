@@ -76,8 +76,10 @@ namespace FMS.Infrastructure.Repositories
                 FacilitySort.NameDesc => included.OrderByDescending(e => e.Name)
                     .ThenByDescending(e => e.FacilityNumber),
                 FacilitySort.Address => included.OrderBy(e => e.Address)
+                    .ThenBy(e => e.City).ThenBy(e => e.State)
                     .ThenBy(e => e.Name),
                 FacilitySort.AddressDesc => included.OrderByDescending(e => e.Address)
+                    .ThenByDescending(e => e.City).ThenByDescending(e => e.State)
                     .ThenByDescending(e => e.Name),
                 FacilitySort.FacilityNumber => included.OrderBy(e => e.FacilityNumber)
                     .ThenBy(e => e.Name),
