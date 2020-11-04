@@ -15,7 +15,7 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <div class="form-group col-md-10">
-                <label>Budget Code Name <span class="text-danger">*</span></label>
+                <label asp-for="OrganizationalUnit.Name">Organizational Unit Name <span class="text-danger">*</span></label>
                 <input asp-for="OrganizationalUnit.Name" class="form-control" />
                 <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
             </div>

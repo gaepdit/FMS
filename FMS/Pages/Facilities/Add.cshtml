@@ -22,12 +22,12 @@
                 <small id="FileIdHelpBlock" class="form-text text-muted">Enter an existing File or leave blank to create a new File.</small>
             </div>
             <div class="form-group col-md">
-                <label>Facility Number <span class="text-danger">*</span></label>
+                <label asp-for="Facility.FacilityNumber">Facility Number <span class="text-danger">*</span></label>
                 <input asp-for="Facility.FacilityNumber" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
             </div>
             <div class="form-group col-md">
-                <label>County <span class="text-danger">*</span></label>
+                <label asp-for="Facility.CountyId">County <span class="text-danger">*</span></label>
                 <select asp-for="Facility.CountyId" asp-items="AddModel.Counties" class="custom-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
@@ -36,21 +36,21 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md">
-                <label>Facility Type <span class="text-danger">*</span></label>
+                <label asp-for="Facility.FacilityTypeId">Facility Type <span class="text-danger">*</span></label>
                 <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
             </div>
             <div class="form-group col-md">
-                <label>Organizational Unit <span class="text-danger">*</span></label>
+                <label asp-for="Facility.OrganizationalUnitId">Organizational Unit <span class="text-danger">*</span></label>
                 <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
             </div>
             <div class="form-group col-md">
-                <label>Compliance Officer</label>
+                <label asp-for="Facility.ComplianceOfficerId">Compliance Officer</label>
                 <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select" disabled="@Model.ConfirmFacility">
                     <option value="">[not assigned]</option>
                 </select>
@@ -59,14 +59,14 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md">
-                <label>Budget Code <span class="text-danger">*</span></label>
+                <label asp-for="Facility.BudgetCodeId">Budget Code <span class="text-danger">*</span></label>
                 <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
             </div>
             <div class="form-group col-md">
-                <label>Facility Status <span class="text-danger">*</span></label>
+                <label asp-for="Facility.FacilityStatusId">Facility Status <span class="text-danger">*</span></label>
                 <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
@@ -75,7 +75,7 @@
         </div>
         <div class="form-row">
             <div class="form-group col">
-                <label>Facility Name <span class="text-danger">*</span></label>
+                <label asp-for="Facility.Name">Facility Name <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Name" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Name" class="text-danger"></span>
             </div>
@@ -89,37 +89,37 @@
         </div>
         <div class="form-row">
             <div class="form-group col">
-                <label>Street Address <span class="text-danger">*</span></label>
+                <label asp-for="Facility.Address">Street Address <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Address" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Address" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label>City <span class="text-danger">*</span></label>
+                <label asp-for="Facility.City">City <span class="text-danger">*</span></label>
                 <input asp-for="Facility.City" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.City" class="text-danger"></span>
             </div>
             <div class="form-group col">
-                <label>State <span class="text-danger">*</span></label>
+                <label asp-for="Facility.State">State <span class="text-danger">*</span></label>
                 <select asp-for="Facility.State" asp-items="AddModel.States" class="custom-select" disabled="@Model.ConfirmFacility">
                 </select>
                 <span asp-validation-for="Facility.State" class="text-danger"></span>
             </div>
             <div class="form-group col">
-                <label>ZIP Code <span class="text-danger">*</span></label>
+                <label asp-for="Facility.PostalCode">ZIP Code <span class="text-danger">*</span></label>
                 <input asp-for="Facility.PostalCode" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col">
-                <label>Latitude <span class="text-danger">*</span></label>
+                <label asp-for="Facility.Latitude">Latitude <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Latitude" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
             </div>
             <div class="form-group col">
-                <label>Longitude <span class="text-danger">*</span></label>
+                <label asp-for="Facility.Longitude">Longitude <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Longitude" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
             </div>
@@ -157,7 +157,7 @@
                     {
                         <tr>
                             <td>
-                                <a asp-page="Details" asp-route-id="@item.Id" target="_blank" rel="noreferrer noopener" title="Opens in a new tab" class="btn btn-outline-dark btn-sm">
+                                <a asp-page="Details" asp-route-id="@item.Id" target="_blank" rel="noreferrer noopener" title="Opens in a new tab" class="btn btn-outline-dark btn-sm text-nowrap">
                                     @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
                                 </a>
                                 @Html.DisplayFor(m => item.Active, "BoolDeleted")

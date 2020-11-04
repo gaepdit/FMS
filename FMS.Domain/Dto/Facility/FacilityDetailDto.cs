@@ -98,7 +98,7 @@ namespace FMS.Domain.Dto
 
         public List<RetentionRecordDetailDto> RetentionRecords { get; }
 
-        // Used for CSV file output to CSVhelper
+        // Used for CSV file output to CSV Helper
         public string CabinetsToString => string.Join(" & ", Cabinets);
     }
 }

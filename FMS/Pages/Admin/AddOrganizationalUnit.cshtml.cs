@@ -33,7 +33,7 @@ namespace FMS.Pages.Admin
 
             OrganizationalUnit.TrimAll();
 
-            // When adding a new Budget Code, make sure the number doesn't already exist before trying to save.
+            // When adding a new Org, make sure the number doesn't already exist before trying to save.
             if (await _organizationalUnitRepository.OrganizationalUnitNameExistsAsync(OrganizationalUnit.Name))
             {
                 ModelState.AddModelError("OrganizationalUnit.Name", "Name entered already exists.");

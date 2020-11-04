@@ -5,11 +5,11 @@ namespace FMS.Domain.Dto
     public class RetentionRecordCreateDto
     {
         [Required]
-        [Display(Name = "Start year")]
+        [Display(Name = "Start Year")]
         public int StartYear { get; set; }
 
         [Required]
-        [Display(Name = "End year")]
+        [Display(Name = "End Year")]
         public int EndYear { get; set; }
 
         [Required]
