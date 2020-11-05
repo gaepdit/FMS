@@ -23,7 +23,7 @@ namespace FMS.Infrastructure.Contexts
             IHttpContextAccessor httpContextAccessor) : base(options) =>
             _httpContextAccessor = httpContextAccessor;
 
-        // App entities
+        // App entity tables
         public DbSet<BudgetCode> BudgetCodes { get; set; }
         public DbSet<ComplianceOfficer> ComplianceOfficers { get; set; }
         public DbSet<Facility> Facilities { get; set; }
@@ -35,14 +35,15 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<CabinetFile> CabinetFileJoin { get; set; }
 
-        // The "Counties" entity is only used to add a County table and data to the database for 
-        // database-side use. Counties are stored in memory and never accessed from the database,
-        // but other entities store County Id as a foreign key.
+        // The "Counties" table is only used to add County data to the database for database-side use.
+        // Counties are stored in memory and never accessed from the database, but other entities
+        // store County Id as a foreign key.
         // ReSharper disable once UnusedMember.Global
         public DbSet<County> Counties { get; set; }
 
-        // The "FacilityList" entity is only used for retrieving results from the [dbo].[getNearbyFacilities]
-        // stored procedure. (This should not be needed in .NET Core 5.)
+        // The "FacilityList" table is only used for retrieving "FacilityMapSummaryDto" results from
+        // the [dbo].[getNearbyFacilities] stored procedure.
+        // (This should not be needed in .NET Core 5.)
         public DbSet<FacilityMapSummaryDto> FacilityList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -70,8 +71,12 @@ namespace FMS.Infrastructure.Contexts
             builder.Entity<County>().HasData(Data.Counties);
 
             // Auditing
-            foreach (var entityType in builder.Model.GetEntityTypes())
+            var entityTypes = builder.Model.GetEntityTypes();
+            foreach (var entityType in entityTypes)
             {
+                // Skip the "FacilityList" table
+                if (entityType.ClrType.Name == nameof(FacilityMapSummaryDto)) continue;
+                // Add auditing properties to all other entity tables
                 builder.Entity(entityType.ClrType).Property<DateTimeOffset?>(AuditProperties.InsertDateTime);
                 builder.Entity(entityType.ClrType).Property<DateTimeOffset?>(AuditProperties.UpdateDateTime);
                 builder.Entity(entityType.ClrType).Property<string>(AuditProperties.InsertUser);
