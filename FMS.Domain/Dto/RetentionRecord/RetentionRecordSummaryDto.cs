@@ -20,5 +20,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Box Number")]
         public string BoxNumber { get; }
+
+        public string Summary => string.Concat(StartYear, "–", EndYear, ": ", BoxNumber.Replace('-', '‑'));
     }
 }

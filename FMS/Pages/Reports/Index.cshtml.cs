@@ -21,10 +21,7 @@ namespace FMS.Pages.Reports
         public FacilitySpec Spec { get; set; }
 
         // Detailed Facility List to go to a report
-        public IReadOnlyList<FacilityDetailDto> FacilityList { get; set; }
-
-        // Select List 
-        public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
+        public IReadOnlyList<FacilityDetailDto> FacilityList { get; private set; }
 
         // Names from ItemList IDs
         public string CountyName { get; private set; }
@@ -86,7 +83,8 @@ namespace FMS.Pages.Reports
                 Map(m => m.OrganizationalUnit.Name).Index(11).Name("Organizational Unit");
                 Map(m => m.BudgetCode.Name).Index(12).Name("Budget Code");
                 Map(m => m.FacilityStatus.Name).Index(13).Name("Facility Status");
-                Map(m => m.CabinetsToString).Index(14).Name("Cabinet(s)");
+                Map(m => m.CabinetsToString).Index(14).Name("Cabinets");
+                Map(m => m.RetentionRecordsToString).Index(15).Name("Retention Records");
             }
         }
     }

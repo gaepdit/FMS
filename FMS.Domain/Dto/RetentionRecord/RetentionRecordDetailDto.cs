@@ -40,5 +40,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Retention Schedule Number")]
         public string RetentionSchedule { get; }
+
+        public string Summary => string.Concat(StartYear, "–", EndYear, ": ", BoxNumber.Replace('-', '‑'));
     }
 }
