@@ -13,7 +13,7 @@ namespace FMS.Infrastructure.SeedData.TestData
             if (!context.Files.Any()) context.Files.AddRange(GetFiles());
             if (!context.CabinetFileJoin.Any()) context.CabinetFileJoin.AddRange(GetCabinetFiles());
             if (!context.Facilities.Any()) context.Facilities.AddRange(GetFacilities());
-            // if (!context.RetentionRecords.Any()) context.RetentionRecords.AddRange(GetRetentionRecords());
+            if (!context.RetentionRecords.Any()) context.RetentionRecords.AddRange(GetRetentionRecords());
 
             context.SaveChanges();
         }
