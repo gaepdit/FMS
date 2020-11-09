@@ -60,10 +60,16 @@ namespace FMS.Pages.Facilities
             Facility.TrimAll();
 
             // If File Label is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
-                !await _repository.FileLabelExists(Facility.FileLabel))
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel))
             {
-                ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
+                if (!Domain.Entities.File.IsValidFileLabelFormat(Facility.FileLabel))
+                {
+                    ModelState.AddModelError("Facility.FileLabel", "File Label entered is not valid.");
+                }
+                else if (!await _repository.FileLabelExists(Facility.FileLabel))
+                {
+                    ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
+                }
             }
 
             // When adding a new facility number, make sure the number doesn't already exist before trying to save.
