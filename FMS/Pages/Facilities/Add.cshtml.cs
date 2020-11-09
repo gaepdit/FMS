@@ -21,6 +21,9 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public FacilityCreateDto Facility { get; set; }
 
+        [BindProperty]
+        public string ConfirmedFacilityFileLabel { get; set; }
+
         public bool ConfirmFacility { get; private set; }
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
@@ -95,6 +98,7 @@ namespace FMS.Pages.Facilities
 
             if (NearbyFacilities != null && NearbyFacilities.Count > 0)
             {
+                ConfirmedFacilityFileLabel = Facility.FileLabel ?? string.Empty;
                 await PopulateSelectsAsync();
                 ConfirmFacility = true;
                 return Page();
@@ -114,6 +118,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            Facility.FileLabel = ConfirmedFacilityFileLabel;
             Facility.TrimAll();
 
             // If File Label is provided, make sure it exists
