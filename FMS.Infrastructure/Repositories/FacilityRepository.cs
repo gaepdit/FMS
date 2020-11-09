@@ -145,16 +145,15 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
-            return default;
-            // var active = new SqlParameter("@active", !spec.ShowDeleted);
-            // var lat = new SqlParameter("@Lat", spec.Latitude);
-            // var lng = new SqlParameter("@Lng", spec.Longitude);
-            // var radius = new SqlParameter("@radius", spec.Radius);
-            //
-            // return await _context.FacilityList
-            //     .FromSqlRaw("EXEC dbo.getNearbyFacilities @Lat={0}, @Lng={1}, @radius={2}, @active={3}",
-            //         lat, lng, radius, active)
-            //     .ToListAsync();
+            var active = new SqlParameter("@active", !spec.ShowDeleted);
+            var lat = new SqlParameter("@Lat", spec.Latitude);
+            var lng = new SqlParameter("@Lng", spec.Longitude);
+            var radius = new SqlParameter("@radius", spec.Radius);
+
+            return await _context.FacilityList
+                .FromSqlRaw("EXEC dbo.getNearbyFacilities @Lat={0}, @Lng={1}, @radius={2}, @active={3}",
+                    lat, lng, radius, active)
+                .ToListAsync();
         }
 
         public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
