@@ -15,7 +15,7 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <div class="form-group col-md-10">
-                <label>Facility Status Name <span class="text-danger">*</span></label>
+                <label asp-for="FacilityStatus.Status">Facility Status Name <span class="text-danger">*</span></label>
                 <input asp-for="FacilityStatus.Status" class="form-control" />
                 <span asp-validation-for="FacilityStatus.Status" class="text-danger"></span>
             </div>

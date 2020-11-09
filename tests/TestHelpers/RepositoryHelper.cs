@@ -14,7 +14,7 @@ namespace TestHelpers
 
         public RepositoryHelper()
         {
-            var context = new FmsDbContext(_options);
+            var context = new FmsDbContext(_options, default);
 
             context.Database.EnsureCreated();
             context.SeedData();
@@ -25,9 +25,9 @@ namespace TestHelpers
         }
 
         public FacilityRepository GetFacilityRepository() =>
-            new FacilityRepository(new FmsDbContext(_options), GetFileRepository());
+            new FacilityRepository(new FmsDbContext(_options, default), GetFileRepository());
 
         public FileRepository GetFileRepository() =>
-            new FileRepository(new FmsDbContext(_options));
+            new FileRepository(new FmsDbContext(_options, default));
     }
 }

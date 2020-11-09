@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+
 // ReSharper disable All
 
 namespace FMS.Domain.Utils
@@ -43,7 +43,6 @@ namespace FMS.Domain.Utils
 
             return input;
         }
-
 
         /// <summary>
         /// Throws an <see cref="ArgumentNullException" /> if <paramref name="input" /> is null.
@@ -192,6 +191,44 @@ namespace FMS.Domain.Utils
             if (comparer.Compare(input, rangeFrom) < 0 || comparer.Compare(input, rangeTo) > 0)
             {
                 throw new ArgumentOutOfRangeException(parameterName, $"Input {parameterName} was out of range");
+            }
+
+            return input;
+        }
+
+        /// <summary>
+        /// Throws an <see cref="InvalidEnumArgumentException" /> if <paramref name="input"/> is not a valid enum value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="parameterName"></param>
+        /// <returns><paramref name="input" /> if the value is not out of range.</returns>
+        /// <exception cref="InvalidEnumArgumentException"></exception>
+        public static int OutOfRange<T>(int input, string parameterName) where T : struct, Enum
+        {
+            if (!Enum.IsDefined(typeof(T), input))
+            {
+                throw new InvalidEnumArgumentException(
+                    $"Required input {parameterName} was not a valid enum value for {typeof(T)}.");
+            }
+
+            return input;
+        }
+
+        /// <summary>
+        /// Throws an <see cref="InvalidEnumArgumentException" /> if <paramref name="input"/> is not a valid enum value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="input"></param>
+        /// <param name="parameterName"></param>
+        /// <returns><paramref name="input" /> if the value is not out of range.</returns>
+        /// <exception cref="InvalidEnumArgumentException"></exception>
+        public static T OutOfRange<T>(T input, string parameterName) where T : struct, Enum
+        {
+            if (!Enum.IsDefined(typeof(T), input))
+            {
+                throw new InvalidEnumArgumentException(
+                    $"Required input {parameterName} was not a valid enum value for {typeof(T)}.");
             }
 
             return input;
@@ -425,51 +462,13 @@ namespace FMS.Domain.Utils
         }
 
         /// <summary>
-        /// Throws an <see cref="InvalidEnumArgumentException" /> if <paramref name="input"/> is not a valid enum value.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="input"></param>
-        /// <param name="parameterName"></param>
-        /// <returns><paramref name="input" /> if the value is not out of range.</returns>
-        /// <exception cref="InvalidEnumArgumentException"></exception>
-        public static int OutOfRange<T>(int input, string parameterName) where T : struct, Enum
-        {
-            if (!Enum.IsDefined(typeof(T), input))
-            {
-                throw new InvalidEnumArgumentException(
-                    $"Required input {parameterName} was not a valid enum value for {typeof(T)}.");
-            }
-
-            return input;
-        }
-
-        /// <summary>
-        /// Throws an <see cref="InvalidEnumArgumentException" /> if <paramref name="input"/> is not a valid enum value.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="input"></param>
-        /// <param name="parameterName"></param>
-        /// <returns><paramref name="input" /> if the value is not out of range.</returns>
-        /// <exception cref="InvalidEnumArgumentException"></exception>
-        public static T OutOfRange<T>(T input, string parameterName) where T : struct, Enum
-        {
-            if (!Enum.IsDefined(typeof(T), input))
-            {
-                throw new InvalidEnumArgumentException(
-                    $"Required input {parameterName} was not a valid enum value for {typeof(T)}.");
-            }
-
-            return input;
-        }
-
-        /// <summary>
         /// Throws an <see cref="ArgumentException" /> if <paramref name="input" /> is default for that type.
         /// </summary>
         /// <param name="input"></param>
         /// <param name="parameterName"></param>
         /// <returns><paramref name="input" /> if the value is not default for that type.</returns>
         /// <exception cref="ArgumentException"></exception>
-        public static T Default<T>([AllowNull, NotNull] T input, string parameterName)
+        public static T Default<T>(T input, string parameterName)
         {
             if (EqualityComparer<T>.Default.Equals(input, default!) || input is null)
             {

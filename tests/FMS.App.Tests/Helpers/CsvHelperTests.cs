@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +64,26 @@ namespace FMS.App.Tests.Helpers
             var csvByteArray = await MyItems.GetCsvByteArrayAsync<MyClassMap>();
             var result = Encoding.UTF8.GetString(csvByteArray);
             result.Should().BeEquivalentTo(CsvOutput);
+        }
+
+        private static readonly List<MyClass> MyMultilineItems = new List<MyClass>()
+        {
+            new MyClass(1, 0, 0, 0, "abc"),
+            new MyClass(2, 0, 0, 0, "abc" + Environment.NewLine + "def"),
+            new MyClass(3, 0, 0, 0, "abc"),
+        };
+
+        private static readonly string MultilineCsvOutput = $"{Bom}MyInt,MyDecimal,MyDouble,MyFloat,MyString\r\n" +
+            "1,0,0,0,abc\r\n" +
+            "2,0,0,0,\"abc" + Environment.NewLine + "def\"\r\n" +
+            "3,0,0,0,abc\r\n";
+
+        [Fact]
+        public async Task GetCsv_Multiline_Succeeds()
+        {
+            var csvByteArray = await MyMultilineItems.GetCsvByteArrayAsync<MyClassMap>();
+            var result = Encoding.UTF8.GetString(csvByteArray);
+            result.Should().BeEquivalentTo(MultilineCsvOutput);
         }
     }
 }

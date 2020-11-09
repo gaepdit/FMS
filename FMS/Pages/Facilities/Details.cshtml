@@ -167,19 +167,19 @@
 
                 <div class="form-row">
                     <div class="form-group col-sm-4">
-                        <label asp-for="RecordCreate.StartYear"></label>
+                        <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
                         <input asp-for="RecordCreate.StartYear" class="form-control" />
                         <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label asp-for="RecordCreate.EndYear"></label>
+                        <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
                         <input asp-for="RecordCreate.EndYear" class="form-control" />
                         <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label asp-for="RecordCreate.BoxNumber"></label>
+                        <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
                         <input asp-for="RecordCreate.BoxNumber" class="form-control" />
                         <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
                     </div>
@@ -206,6 +206,8 @@
                 </div>
 
                 <input asp-for="FacilityId" />
+                <p class="text-danger">* denotes a required field</p>
+                <hr />
                 <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
             </form>
         </div>

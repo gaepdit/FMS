@@ -12,7 +12,7 @@ namespace TestHelpers.SimpleRepository
 
         public SimpleRepositoryHelper()
         {
-            var context = new FmsDbContext(_options);
+            var context = new FmsDbContext(_options, default);
             context.Database.EnsureCreated();
             context.Files.AddRange(SimpleRepositoryData.Files);
             context.Facilities.AddRange(SimpleRepositoryData.Facilities);
@@ -23,15 +23,15 @@ namespace TestHelpers.SimpleRepository
         }
 
         public IFacilityRepository GetFacilityRepository() =>
-            new FacilityRepository(new FmsDbContext(_options), GetFileRepository());
+            new FacilityRepository(new FmsDbContext(_options, default), GetFileRepository());
 
         public IFileRepository GetFileRepository() =>
-            new FileRepository(new FmsDbContext(_options));
+            new FileRepository(new FmsDbContext(_options, default));
 
         public IItemsListRepository GetItemsListRepository() =>
-            new ItemsListRepository(new FmsDbContext(_options));
+            new ItemsListRepository(new FmsDbContext(_options, default));
 
         public ICabinetRepository GetCabinetRepository() =>
-            new CabinetRepository(new FmsDbContext(_options));
+            new CabinetRepository(new FmsDbContext(_options, default));
     }
 }

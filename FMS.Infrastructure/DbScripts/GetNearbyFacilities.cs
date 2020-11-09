@@ -1,17 +1,17 @@
 ﻿using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Infrastructure.Procs
+namespace FMS.Infrastructure.DbScripts
 {
     public static class StoredProcedures
     {
         public static void CreateStoredProcedures(this FmsDbContext context)
         {
-            context.Database.ExecuteSqlRaw(GetNearbyFacilities);
+            context.Database.ExecuteSqlRaw(CreateSpGetNearbyFacilities);
         }
 
-        private const string GetNearbyFacilities = @"
-CREATE PROCEDURE [dbo].[getNearbyFacilities] 
+        public const string CreateSpGetNearbyFacilities = @"
+CREATE OR ALTER PROCEDURE [dbo].[getNearbyFacilities] 
     @active bit = null,
     @Lat float = NULL,
     @Lng float = NULL,
@@ -47,7 +47,7 @@ BEGIN
     WHERE T.distance <= @radius
     ORDER BY distance ASC;
 
-END;
+END
 ";
     }
 }

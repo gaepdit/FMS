@@ -1,9 +1,10 @@
 ﻿using System;
+using FMS.Infrastructure.DbScripts;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FMS.Infrastructure.Migrations
 {
-    public partial class ReAddMapResultsDto : Migration
+    public partial class AddSpGetNearbyFacilities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,23 +19,26 @@ namespace FMS.Infrastructure.Migrations
                     FacilityStatus = table.Column<string>(nullable: true),
                     FacilityType = table.Column<string>(nullable: true),
                     FileLabel = table.Column<string>(nullable: true),
-                    FileId = table.Column<Guid>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     PostalCode = table.Column<string>(nullable: true),
-                    Latitude = table.Column<decimal>(nullable: false),
-                    Longitude = table.Column<decimal>(nullable: false),
+                    Latitude = table.Column<decimal>(type: "decimal(8, 6)", nullable: false),
+                    Longitude = table.Column<decimal>(type: "decimal(9, 6)", nullable: false),
                     Distance = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FacilityList", x => x.Id);
                 });
+
+            migrationBuilder.Sql(StoredProcedures.CreateSpGetNearbyFacilities);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("drop procedure [dbo].[getNearbyFacilities]");
+            
             migrationBuilder.DropTable(
                 name: "FacilityList");
         }

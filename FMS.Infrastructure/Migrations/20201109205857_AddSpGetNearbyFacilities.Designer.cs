@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FmsDbContext))]
-    [Migration("20200918183304_getNearbyFacilities")]
-    partial class getNearbyFacilities
+    [Migration("20201109205857_AddSpGetNearbyFacilities")]
+    partial class AddSpGetNearbyFacilities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.6")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -36,8 +36,8 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Distance")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Distance")
+                        .HasColumnType("float");
 
                     b.Property<string>("FacilityNumber")
                         .HasColumnType("nvarchar(max)");
@@ -48,17 +48,14 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("FacilityType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("FileId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("FileLabel")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Latitude")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(8, 6)");
 
                     b.Property<decimal>("Longitude")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9, 6)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -87,8 +84,11 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.Property<Guid?>("EnvironmentalInterestId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -101,9 +101,13 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
-                    b.HasKey("Id");
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.HasIndex("EnvironmentalInterestId");
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("BudgetCodes");
                 });
@@ -117,9 +121,24 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstFileLabel")
+                        .HasColumnType("nvarchar(9)")
+                        .HasMaxLength(9);
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(5)")
-                        .HasMaxLength(5);
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -138,6 +157,18 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid>("FileId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CabinetId", "FileId");
 
                     b.HasIndex("FileId");
@@ -154,18 +185,29 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
                     b.Property<string>("FamilyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GivenName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UnitId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UnitId");
 
                     b.ToTable("ComplianceOfficers");
                 });
@@ -177,7 +219,19 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -987,23 +1041,6 @@ namespace FMS.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FMS.Domain.Entities.EnvironmentalInterest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EnvironmentalInterests");
-                });
-
             modelBuilder.Entity("FMS.Domain.Entities.Facility", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1017,33 +1054,36 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<Guid>("BudgetCodeId")
+                    b.Property<Guid?>("BudgetCodeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
-                    b.Property<Guid>("ComplianceOfficerId")
+                    b.Property<Guid?>("ComplianceOfficerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CountyId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("EnvironmentalInterestId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("FacilityNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("FacilityStatusId")
+                    b.Property<Guid?>("FacilityStatusId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FacilityTypeId")
+                    b.Property<Guid?>("FacilityTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("FileId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Latitude")
                         .HasColumnType("decimal(8, 6)");
@@ -1057,7 +1097,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OrganizationalUnitId")
+                    b.Property<Guid?>("OrganizationalUnitId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PostalCode")
@@ -1068,6 +1108,12 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BudgetCodeId");
@@ -1075,8 +1121,6 @@ namespace FMS.Infrastructure.Migrations
                     b.HasIndex("ComplianceOfficerId");
 
                     b.HasIndex("CountyId");
-
-                    b.HasIndex("EnvironmentalInterestId");
 
                     b.HasIndex("FacilityStatusId");
 
@@ -1098,15 +1142,22 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("EnvironmentalInterestId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
 
-                    b.HasIndex("EnvironmentalInterestId");
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("FacilityStatuses");
                 });
@@ -1120,14 +1171,30 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Code")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("FacilityTypes");
                 });
@@ -1144,6 +1211,18 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("FileLabel")
                         .HasColumnType("nvarchar(9)")
                         .HasMaxLength(9);
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1163,7 +1242,19 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1189,8 +1280,14 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<int>("EndYear")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("FacilityId")
+                    b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RetentionSchedule")
                         .HasColumnType("nvarchar(max)");
@@ -1200,6 +1297,12 @@ namespace FMS.Infrastructure.Migrations
 
                     b.Property<int>("StartYear")
                         .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1236,6 +1339,12 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -1271,6 +1380,12 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -1298,6 +1413,12 @@ namespace FMS.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -1305,6 +1426,12 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("NormalizedName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1329,8 +1456,20 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1352,6 +1491,18 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1370,7 +1521,19 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("ProviderKey")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -1391,6 +1554,18 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
@@ -1409,19 +1584,24 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AppUserTokens");
-                });
-
-            modelBuilder.Entity("FMS.Domain.Entities.BudgetCode", b =>
-                {
-                    b.HasOne("FMS.Domain.Entities.EnvironmentalInterest", "EnvironmentalInterest")
-                        .WithMany("BudgetCodes")
-                        .HasForeignKey("EnvironmentalInterestId");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.CabinetFile", b =>
@@ -1439,26 +1619,15 @@ namespace FMS.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FMS.Domain.Entities.ComplianceOfficer", b =>
-                {
-                    b.HasOne("FMS.Domain.Entities.OrganizationalUnit", "Unit")
-                        .WithMany("ComplianceOfficers")
-                        .HasForeignKey("UnitId");
-                });
-
             modelBuilder.Entity("FMS.Domain.Entities.Facility", b =>
                 {
                     b.HasOne("FMS.Domain.Entities.BudgetCode", "BudgetCode")
                         .WithMany()
-                        .HasForeignKey("BudgetCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BudgetCodeId");
 
                     b.HasOne("FMS.Domain.Entities.ComplianceOfficer", "ComplianceOfficer")
                         .WithMany()
-                        .HasForeignKey("ComplianceOfficerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ComplianceOfficerId");
 
                     b.HasOne("FMS.Domain.Entities.County", "County")
                         .WithMany()
@@ -1466,23 +1635,13 @@ namespace FMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FMS.Domain.Entities.EnvironmentalInterest", "EnvironmentalInterest")
-                        .WithMany()
-                        .HasForeignKey("EnvironmentalInterestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FMS.Domain.Entities.FacilityStatus", "FacilityStatus")
                         .WithMany()
-                        .HasForeignKey("FacilityStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacilityStatusId");
 
                     b.HasOne("FMS.Domain.Entities.FacilityType", "FacilityType")
                         .WithMany()
-                        .HasForeignKey("FacilityTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FacilityTypeId");
 
                     b.HasOne("FMS.Domain.Entities.File", "File")
                         .WithMany("Facilities")
@@ -1492,23 +1651,16 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasOne("FMS.Domain.Entities.OrganizationalUnit", "OrganizationalUnit")
                         .WithMany()
-                        .HasForeignKey("OrganizationalUnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FMS.Domain.Entities.FacilityStatus", b =>
-                {
-                    b.HasOne("FMS.Domain.Entities.EnvironmentalInterest", "EnvironmentalInterest")
-                        .WithMany()
-                        .HasForeignKey("EnvironmentalInterestId");
+                        .HasForeignKey("OrganizationalUnitId");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.RetentionRecord", b =>
                 {
                     b.HasOne("FMS.Domain.Entities.Facility", "Facility")
                         .WithMany("RetentionRecords")
-                        .HasForeignKey("FacilityId");
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

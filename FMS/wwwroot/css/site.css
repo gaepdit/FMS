@@ -245,6 +245,10 @@ caption {
     font-weight: 500 !important;
 }
 
+.text-pre-line{
+    white-space: pre-line !important;
+}
+
 /* External links
 -------------------------------------------------- */
 a[target]::after {

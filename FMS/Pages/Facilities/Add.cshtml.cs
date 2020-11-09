@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -19,6 +20,9 @@ namespace FMS.Pages.Facilities
 
         [BindProperty]
         public FacilityCreateDto Facility { get; set; }
+
+        [BindProperty]
+        public string ConfirmedFacilityFileLabel { get; set; }
 
         public bool ConfirmFacility { get; private set; }
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
@@ -59,10 +63,16 @@ namespace FMS.Pages.Facilities
             Facility.TrimAll();
 
             // If File Label is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
-                !await _repository.FileLabelExists(Facility.FileLabel))
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel))
             {
-                ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
+                if (!Domain.Entities.File.IsValidFileLabelFormat(Facility.FileLabel))
+                {
+                    ModelState.AddModelError("Facility.FileLabel", "File Label entered is not valid.");
+                }
+                else if (!await _repository.FileLabelExists(Facility.FileLabel))
+                {
+                    ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
+                }
             }
 
             // When adding a new facility number, make sure the number doesn't already exist before trying to save.
@@ -81,13 +91,14 @@ namespace FMS.Pages.Facilities
             {
                 Latitude = Facility.Latitude,
                 Longitude = Facility.Longitude,
-                Radius = 1.ToString(),
+                Radius = 0.5m.ToString(CultureInfo.InvariantCulture),
             };
 
             NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
 
             if (NearbyFacilities != null && NearbyFacilities.Count > 0)
             {
+                ConfirmedFacilityFileLabel = Facility.FileLabel ?? string.Empty;
                 await PopulateSelectsAsync();
                 ConfirmFacility = true;
                 return Page();
@@ -107,6 +118,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            Facility.FileLabel = ConfirmedFacilityFileLabel;
             Facility.TrimAll();
 
             // If File Label is provided, make sure it exists

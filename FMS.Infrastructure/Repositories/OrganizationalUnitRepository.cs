@@ -48,7 +48,7 @@ namespace FMS.Infrastructure.Repositories
 
             if (string.IsNullOrWhiteSpace(organizationalUnit.Name))
             {
-                throw new ArgumentException("New Name for Budget Code is required.");
+                throw new ArgumentException("New Name is required.");
             }
 
             return CreateOrganizationalUnitInternalAsync(organizationalUnit);

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using FMS.Domain.Extensions;
 
 namespace FMS.Domain.Dto
 {
@@ -98,7 +99,10 @@ namespace FMS.Domain.Dto
 
         public List<RetentionRecordDetailDto> RetentionRecords { get; }
 
-        // Used for CSV file output to CSVhelper
+        // Used for CSV file output to CSV Helper
         public string CabinetsToString => string.Join(" & ", Cabinets);
+
+        public string RetentionRecordsToString => 
+            RetentionRecords.Select(r => r.Summary).ConcatNonEmpty(Environment.NewLine);
     }
 }

@@ -246,7 +246,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                 {
                     Id = new Guid("754FEEE0-5167-4909-A587-51C0CE9DFEB6"),
                     Active = true,
-                    FacilityNumber = "ADD1",
+                    FacilityNumber = "ADD2",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // VRP
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
