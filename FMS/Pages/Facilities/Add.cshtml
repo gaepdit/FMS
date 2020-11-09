@@ -5,6 +5,15 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <partial name="_GeocodeScriptsPartial" />
+    <script>
+    $(document).ready(function domReady() {
+        $('.table-hover tbody tr').click(function() {
+            $(this).find('input[type=radio]').prop('checked', true);
+            $(this).parent().find('tr').removeClass('table-primary');
+            $(this).addClass('table-primary');
+        })
+    });
+    </script>
 }
 
 @{
@@ -12,200 +21,217 @@
 }
 <h1>@ViewData["Title"]</h1>
 <div class="container bg-light py-3">
-    <form method="post" asp-fragment="ConfirmFacility">
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <div class="form-row">
-            <div class="form-group col-md">
-                <label asp-for="Facility.FileLabel"></label>
-                <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
-                <small id="FileIdHelpBlock" class="form-text text-muted">Enter an existing File or leave blank to create a new File.</small>
-            </div>
-            <div class="form-group col-md">
-                <label asp-for="Facility.FacilityNumber">Facility Number <span class="text-danger">*</span></label>
-                <input asp-for="Facility.FacilityNumber" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md">
-                <label asp-for="Facility.CountyId">County <span class="text-danger">*</span></label>
-                <select asp-for="Facility.CountyId" asp-items="AddModel.Counties" class="custom-select" disabled="@Model.ConfirmFacility">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
-            </div>
+<form method="post" asp-fragment="ConfirmFacility">
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<div class="form-row">
+    <div class="form-group col-md">
+        <label asp-for="Facility.FileLabel"></label>
+        <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
+        <small id="FileIdHelpBlock" class="form-text text-muted">Enter an existing File or leave blank to create a new File.</small>
+    </div>
+    <div class="form-group col-md">
+        <label asp-for="Facility.FacilityNumber">Facility Number <span class="text-danger">*</span></label>
+        <input asp-for="Facility.FacilityNumber" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md">
+        <label asp-for="Facility.CountyId">County <span class="text-danger">*</span></label>
+        <select asp-for="Facility.CountyId" asp-items="AddModel.Counties" class="custom-select" disabled="@Model.ConfirmFacility">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md">
+        <label asp-for="Facility.FacilityTypeId">Facility Type <span class="text-danger">*</span></label>
+        <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select" disabled="@Model.ConfirmFacility">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md">
+        <label asp-for="Facility.OrganizationalUnitId">Organizational Unit <span class="text-danger">*</span></label>
+        <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select" disabled="@Model.ConfirmFacility">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md">
+        <label asp-for="Facility.ComplianceOfficerId">Compliance Officer</label>
+        <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select" disabled="@Model.ConfirmFacility">
+            <option value="">[not assigned]</option>
+        </select>
+        <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md">
+        <label asp-for="Facility.BudgetCodeId">Budget Code <span class="text-danger">*</span></label>
+        <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select" disabled="@Model.ConfirmFacility">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md">
+        <label asp-for="Facility.FacilityStatusId">Facility Status <span class="text-danger">*</span></label>
+        <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select" disabled="@Model.ConfirmFacility">
+            <option value=""></option>
+        </select>
+        <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col">
+        <label asp-for="Facility.Name">Facility Name <span class="text-danger">*</span></label>
+        <input asp-for="Facility.Name" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.Name" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col">
+        <label asp-for="Facility.Location"></label>
+        <input asp-for="Facility.Location" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.Location" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col">
+        <label asp-for="Facility.Address">Street Address <span class="text-danger">*</span></label>
+        <input asp-for="Facility.Address" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.Address" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label asp-for="Facility.City">City <span class="text-danger">*</span></label>
+        <input asp-for="Facility.City" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.City" class="text-danger"></span>
+    </div>
+    <div class="form-group col">
+        <label asp-for="Facility.State">State <span class="text-danger">*</span></label>
+        <select asp-for="Facility.State" asp-items="AddModel.States" class="custom-select" disabled="@Model.ConfirmFacility">
+        </select>
+        <span asp-validation-for="Facility.State" class="text-danger"></span>
+    </div>
+    <div class="form-group col">
+        <label asp-for="Facility.PostalCode">ZIP Code <span class="text-danger">*</span></label>
+        <input asp-for="Facility.PostalCode" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col">
+        <label asp-for="Facility.Latitude">Latitude <span class="text-danger">*</span></label>
+        <input asp-for="Facility.Latitude" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
+    </div>
+    <div class="form-group col">
+        <label asp-for="Facility.Longitude">Longitude <span class="text-danger">*</span></label>
+        <input asp-for="Facility.Longitude" class="form-control" disabled="@Model.ConfirmFacility" />
+        <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
+    </div>
+    @if (!Model.ConfirmFacility)
+    {
+        <div class="form-group col-md-4 col-lg-3">
+            <span class="mb-md-2 d-inline-block">
+                <span id="GeocodeAddressWarn" class="d-none text-danger">Please enter an address.</span> &nbsp;
+            </span>
+            <button id="GeocodeButton" class="btn btn-outline-primary form-control" aria-describedby="GeocodeHelpBlock">Geocode</button>
+            <small id="GeocodeHelpBlock" class="form-text text-muted">Street address is required for geocoding. City and ZIP Code are optional.</small>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md">
-                <label asp-for="Facility.FacilityTypeId">Facility Type <span class="text-danger">*</span></label>
-                <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select" disabled="@Model.ConfirmFacility">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md">
-                <label asp-for="Facility.OrganizationalUnitId">Organizational Unit <span class="text-danger">*</span></label>
-                <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select" disabled="@Model.ConfirmFacility">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md">
-                <label asp-for="Facility.ComplianceOfficerId">Compliance Officer</label>
-                <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select" disabled="@Model.ConfirmFacility">
-                    <option value="">[not assigned]</option>
-                </select>
-                <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md">
-                <label asp-for="Facility.BudgetCodeId">Budget Code <span class="text-danger">*</span></label>
-                <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select" disabled="@Model.ConfirmFacility">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md">
-                <label asp-for="Facility.FacilityStatusId">Facility Status <span class="text-danger">*</span></label>
-                <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select" disabled="@Model.ConfirmFacility">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Facility.Name">Facility Name <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Name" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.Name" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Facility.Location"></label>
-                <input asp-for="Facility.Location" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.Location" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Facility.Address">Street Address <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Address" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.Address" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Facility.City">City <span class="text-danger">*</span></label>
-                <input asp-for="Facility.City" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.City" class="text-danger"></span>
-            </div>
-            <div class="form-group col">
-                <label asp-for="Facility.State">State <span class="text-danger">*</span></label>
-                <select asp-for="Facility.State" asp-items="AddModel.States" class="custom-select" disabled="@Model.ConfirmFacility">
-                </select>
-                <span asp-validation-for="Facility.State" class="text-danger"></span>
-            </div>
-            <div class="form-group col">
-                <label asp-for="Facility.PostalCode">ZIP Code <span class="text-danger">*</span></label>
-                <input asp-for="Facility.PostalCode" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Facility.Latitude">Latitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Latitude" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
-            </div>
-            <div class="form-group col">
-                <label asp-for="Facility.Longitude">Longitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Longitude" class="form-control" disabled="@Model.ConfirmFacility" />
-                <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
-            </div>
-            @if (!Model.ConfirmFacility)
+    }
+</div>
+<p class="text-danger">* denotes a required field</p>
+<hr />
+@if (Model.ConfirmFacility)
+{
+    <div id="ConfirmFacility" class="container bg-dark py-3 text-light rounded">
+        <h2>Confirm New Facility</h2>
+        <p>The following facilities were found near this location (within a half mile). Please confirm that none of these is a duplicate:</p>
+        <table class="table table-sm table-hover bg-white">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">File Label<br /><em class="">Select to use</em></th>
+                <th scope="col">Facility</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col" class="text-center">Type</th>
+                <th scope="col">Distance</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.NearbyFacilities)
             {
-                <div class="form-group col-md-4 col-lg-3">
-                    <span class="mb-md-2 d-inline-block">
-                        <span id="GeocodeAddressWarn" class="d-none text-danger">Please enter an address.</span> &nbsp;
-                    </span>
-                    <button id="GeocodeButton" class="btn btn-outline-primary form-control" aria-describedby="GeocodeHelpBlock">Geocode</button>
-                    <small id="GeocodeHelpBlock" class="form-text text-muted">Street address is required for geocoding. City and ZIP Code are optional.</small>
-                </div>
+                <tr>
+                    <td class="text-nowrap">
+                        <label>
+                            @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, item.FileLabel)
+                            @Html.DisplayFor(m => item.FileLabel)
+                        </label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                        @Html.DisplayFor(m => item.Active, "BoolDeleted")
+                    </td>
+                    <td>@Html.DisplayFor(m => item.Name)</td>
+                    <td>
+                        @Html.DisplayFor(m => item.Address)<br />
+                        @Html.DisplayFor(m => item.City),
+                        @Html.DisplayFor(m => item.State)
+                        @Html.DisplayFor(m => item.PostalCode)
+                    </td>
+                    <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
+                    <td>@Html.DisplayFor(m => item.Distance, "Distance")</td>
+                </tr>
             }
-        </div>
-        <p class="text-danger">* denotes a required field</p>
-        <hr />
-        @if (Model.ConfirmFacility)
-        {
-            <div id="ConfirmFacility" class="container bg-dark py-3 text-light rounded">
-                <h2>Confirm New Facility</h2>
-                <p>The following facilities were found near this location. Please confirm that none of these is a duplicate:</p>
-                <table class="table table-sm bg-white">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Facility</th>
-                        <th scope="col">File Label</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Address</th>
-                        <th scope="col" class="text-center">Type</th>
-                        <th scope="col">Distance</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model.NearbyFacilities)
+            <tr class="table-primary">
+                <td colspan="6">
+                    @if (string.IsNullOrEmpty(Model.ConfirmedFacilityFileLabel))
                     {
-                        <tr>
-                            <td>
-                                <a asp-page="Details" asp-route-id="@item.Id" target="_blank" rel="noreferrer noopener" title="Opens in a new tab" class="btn btn-outline-dark btn-sm text-nowrap">
-                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                </a>
-                                @Html.DisplayFor(m => item.Active, "BoolDeleted")
-                            </td>
-                            <td class="text-nowrap">
-                                @Html.DisplayFor(m => item.FileLabel)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.Address)<br />
-                                @Html.DisplayFor(m => item.City),
-                                @Html.DisplayFor(m => item.State)
-                                @Html.DisplayFor(m => item.PostalCode)
-                            </td>
-                            <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
-                            <td>
-                                @Html.DisplayFor(m => item.Distance, "Distance")
-                            </td>
-                        </tr>
+                        <label>
+                            @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, string.Empty)
+                            Create new File Label
+                        </label>
                     }
-                    </tbody>
-                </table>
-                <p>Are you sure you want to create this facility?</p>
-                <button asp-page-handler="Confirm" type="submit" class="btn btn-warning col-sm-5 col-md-4 mb-3 mb-sm-0">Yes, create the facility</button>
-                <a asp-page="./Add" class="btn btn-outline-secondary text-dark bg-light col-sm-4 col-md-3">No, clear the form</a>
-                <input asp-for="Facility.Address" type="hidden" />
-                <input asp-for="Facility.City" type="hidden" />
-                <input asp-for="Facility.Latitude" type="hidden" />
-                <input asp-for="Facility.Location" type="hidden" />
-                <input asp-for="Facility.Longitude" type="hidden" />
-                <input asp-for="Facility.Name" type="hidden" />
-                <input asp-for="Facility.State" type="hidden" />
-                <input asp-for="Facility.CountyId" type="hidden" />
-                <input asp-for="Facility.FacilityNumber" type="hidden" />
-                <input asp-for="Facility.FileLabel" type="hidden" />
-                <input asp-for="Facility.PostalCode" type="hidden" />
-                <input asp-for="Facility.BudgetCodeId" type="hidden" />
-                <input asp-for="Facility.ComplianceOfficerId" type="hidden" />
-                <input asp-for="Facility.FacilityStatusId" type="hidden" />
-                <input asp-for="Facility.FacilityTypeId" type="hidden" />
-                <input asp-for="Facility.OrganizationalUnitId" type="hidden" />
-            </div>
-        }
-        else
-        {
-            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Create New Facility</button>
-        }
-    </form>
+                    else
+                    {
+                        <label>
+                            @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, Model.ConfirmedFacilityFileLabel)
+                            @Html.DisplayFor(m => Model.ConfirmedFacilityFileLabel) <i>(entered)</i>
+                        </label>
+                    }
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p>Are you sure you want to create this facility?</p>
+        <button asp-page-handler="Confirm" type="submit" class="btn btn-warning col-sm-5 col-md-4 mb-3 mb-sm-0">
+            Create the facility
+        </button>
+        <a asp-page="./Add" class="btn btn-outline-secondary text-dark bg-light col-sm-4 col-md-3">Cancel (clear the form)</a>
+        <input asp-for="Facility.Address" type="hidden" />
+        <input asp-for="Facility.City" type="hidden" />
+        <input asp-for="Facility.Latitude" type="hidden" />
+        <input asp-for="Facility.Location" type="hidden" />
+        <input asp-for="Facility.Longitude" type="hidden" />
+        <input asp-for="Facility.Name" type="hidden" />
+        <input asp-for="Facility.State" type="hidden" />
+        <input asp-for="Facility.CountyId" type="hidden" />
+        <input asp-for="Facility.FacilityNumber" type="hidden" />
+        <input asp-for="Facility.FileLabel" type="hidden" />
+        <input asp-for="Facility.PostalCode" type="hidden" />
+        <input asp-for="Facility.BudgetCodeId" type="hidden" />
+        <input asp-for="Facility.ComplianceOfficerId" type="hidden" />
+        <input asp-for="Facility.FacilityStatusId" type="hidden" />
+        <input asp-for="Facility.FacilityTypeId" type="hidden" />
+        <input asp-for="Facility.OrganizationalUnitId" type="hidden" />
+    </div>
+}
+else
+{
+    <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Create New Facility</button>
+}
+</form>
 </div>
