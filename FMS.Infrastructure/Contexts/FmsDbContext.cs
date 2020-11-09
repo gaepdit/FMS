@@ -44,7 +44,7 @@ namespace FMS.Infrastructure.Contexts
         // The "FacilityList" table is only used for retrieving "FacilityMapSummaryDto" results from
         // the [dbo].[getNearbyFacilities] stored procedure.
         // (This should not be needed in .NET Core 5.)
-        public DbSet<FacilityMapSummaryDto> FacilityList { get; set; }
+        // public DbSet<FacilityMapSummaryDto> FacilityList { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
