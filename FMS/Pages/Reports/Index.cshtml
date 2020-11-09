@@ -129,7 +129,8 @@
             <th scope="col">Organizational Unit</th>
             <th scope="col">Budget Code</th>
             <th scope="col">Facility Status</th>
-            <th scope="col">Cabinet(s)</th>
+            <th scope="col">Cabinets</th>
+            <th scope="col">Retention Records</th>
         </tr>
         </thead>
         <tbody>
@@ -152,12 +153,8 @@
                 <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name)</td>
                 <td>@Html.DisplayFor(m => item.BudgetCode.Name)</td>
                 <td>@Html.DisplayFor(m => item.FacilityStatus.Name)</td>
-                <td>
-                    @if (item.Cabinets.Count > 0)
-                    {
-                        @item.Cabinets.ConcatNonEmpty(" & ")
-                    }
-                </td>
+                <td>@Html.DisplayFor(m => item.CabinetsToString)</td>
+                <td>@Html.DisplayFor(m => item.RetentionRecordsToString)</td>
             </tr>
         }
         </tbody>

@@ -232,9 +232,9 @@
                                 <div>
                                     <b class="font-weight-medium">Offsite:</b><br />
                                     <ul class="list-unstyled">
-                                        @foreach (var r in item.RetentionRecords)
+                                        @foreach (var record in item.RetentionRecords)
                                         {
-                                            <li class="text-nowrap">@r.StartYear&ndash;@r.EndYear: @r.BoxNumber.Replace('-', '‑')</li>
+                                            <li class="text-nowrap">@record.Summary</li>
                                         }
                                     </ul>
                                 </div>
