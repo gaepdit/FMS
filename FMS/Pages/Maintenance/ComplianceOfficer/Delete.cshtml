@@ -1,6 +1,5 @@
 ﻿@page "{id:Guid?}"
-@using FMS.Pages.Maintenance
-@model FMS.Pages.Maintenance.DetailsComplianceOfficerModel
+@model FMS.Pages.Maintenance.ComplianceOfficer.DeleteModel
 @{
     ViewData["Title"] = $"Compliance Officer: {Model.DisplayName}";
 }
@@ -31,9 +30,8 @@
             <div class="form-row">
                 <div class="col">
                     <button id="SubmitButton" type="submit" class="btn btn-primary col-md-3">Save Changes</button>
-                    <a asp-page="Index" class="btn btn-outline-secondary col-md-3" asp-route-handler="select"
-                       asp-route-MaintenanceSelection="@MaintenanceOptions.ComplianceOfficer">
-                        Return to Site Maintenance
+                    <a asp-page="Index" class="btn btn-outline-secondary col-md-3">
+                        Return to Compliance Officers
                     </a>
                 </div>
             </div>
@@ -42,8 +40,7 @@
 }
 else
 {
-    <a asp-page="Index" class="btn btn-outline-secondary col-md-3" asp-route-handler="select"
-       asp-route-MaintenanceSelection="@MaintenanceOptions.ComplianceOfficer">
-        Return to Site Maintenance
+    <a asp-page="Index" class="btn btn-outline-secondary col-md-3">
+        Return to Compliance Officers
     </a>
 }

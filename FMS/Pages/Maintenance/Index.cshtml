@@ -43,37 +43,7 @@
     }
     case MaintenanceOptions.ComplianceOfficer:
     {
-        <table class="table">
-            <caption class="container border-top">
-                <a asp-page="./AddComplianceOfficer" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New Compliance Officer</a>
-            </caption>
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.ComplianceOfficers)
-            {
-                <tr>
-                    <td class="text-nowrap">
-                        @Html.DisplayFor(m => item.Name, "StringOrNone")
-                        @if (!item.Active)
-                        {
-                            <span class="text-muted">(Removed)</span>
-                        }
-                    </td>
-                    <td>@Html.DisplayFor(m => item.Email)</td>
-                    <td>
-                        <a asp-page="./DetailsComplianceOfficer" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Add/Remove</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-        break;
+       break;
     }
     case MaintenanceOptions.FacilityStatus:
     {

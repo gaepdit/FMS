@@ -1,0 +1,33 @@
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.ComplianceOfficer.IndexModel
+@{
+    ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.ComplianceOfficer}";
+}
+<h1>@ViewData["Title"]</h1>
+<partial name="_AlertPartial" for="DisplayMessage" />
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.ComplianceOfficers)
+    {
+        <tr class="@(!item.Active ? "table-secondary" : "")">
+            <td class="text-nowrap">
+                @Html.DisplayFor(m => item.Name, "StringOrNone")
+                @Html.DisplayFor(m => item.Active, "BoolRemoved")
+            </td>
+            <td>@Html.DisplayFor(m => item.Email)</td>
+            <td class="text-nowrap">
+                <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Restore/Remove</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.ComplianceOfficer
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class DetailsComplianceOfficerModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly IUserService _userService;
         private readonly IComplianceOfficerRepository _complianceOfficerRepository;
 
-        public DetailsComplianceOfficerModel(IUserService userService,
+        public DeleteModel(IUserService userService,
             IComplianceOfficerRepository complianceOfficerRepository)
         {
             _userService = userService;
@@ -197,7 +197,7 @@ namespace FMS.Pages.Maintenance
                 }
             }
 
-            return RedirectToPage("./DetailsComplianceOfficer", Id);
+            return RedirectToPage("./Delete", Id);
         }
     }
 }
