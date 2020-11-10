@@ -1,0 +1,27 @@
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.IndexModel
+@{
+    ViewData["Title"] = $"Site Maintenance";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p class="lead">Select a drop-down list to edit.</p>
+
+<ul>
+    <li>
+        <a class="nav-link" asp-page="BudgetCode/Index">@MaintenanceOptions.BudgetCode</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="ComplianceOfficer/Index">@MaintenanceOptions.ComplianceOfficer</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="FacilityStatus/Index">@MaintenanceOptions.FacilityStatus</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="FacilityType/Index">@MaintenanceOptions.FacilityType</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="OrganizationalUnit/Index">@MaintenanceOptions.OrganizationalUnit</a>
+    </li>
+</ul>

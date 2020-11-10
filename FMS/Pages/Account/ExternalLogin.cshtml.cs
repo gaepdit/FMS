@@ -130,7 +130,7 @@ namespace FMS.Pages.Account
             var userResult = await _userManager.CreateAsync(newUser);
             if (userResult.Succeeded)
             {
-                // Optionally add user to Admin Role.
+                // Optionally add user to Maintenance Roles.
                 var seedAdminUsers = _configuration.GetSection("SeedAdminUsers")
                     .Get<string[]>().AsEnumerable();
                 if (seedAdminUsers != null &&
