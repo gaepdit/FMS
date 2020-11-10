@@ -28,14 +28,6 @@ namespace FMS.Infrastructure.Repositories
             return complianceOfficer == null ? null : new ComplianceOfficerDetailDto(complianceOfficer);
         }
 
-        public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string email)
-        {
-            var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Email == email);
-
-            return complianceOfficer == null ? null : new ComplianceOfficerDetailDto(complianceOfficer);
-        }
-
         public async Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync()
         {
             return await _context.ComplianceOfficers.AsNoTracking()
@@ -45,9 +37,20 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
+        public Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
         {
             Prevent.Null(complianceOfficer, nameof(complianceOfficer));
+            Prevent.Null(complianceOfficer.Email, nameof(complianceOfficer.Email));
+
+            return CreateComplianceOfficerInternalAsync(complianceOfficer);
+        }
+
+        private async Task<Guid?> CreateComplianceOfficerInternalAsync(ComplianceOfficerCreateDto complianceOfficer)
+        {
+            if (await _context.ComplianceOfficers.AnyAsync(e => e.Email == complianceOfficer.Email))
+            {
+                return null;
+            }
 
             var newCO = new ComplianceOfficer(complianceOfficer);
 
@@ -55,16 +58,6 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return newCO.Id;
-        }
-
-        public async Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
-        {
-            if (await _context.ComplianceOfficers.AnyAsync(e => e.Email == complianceOfficer.Email))
-            {
-                return null;
-            }
-
-            return await CreateComplianceOfficerAsync(complianceOfficer);
         }
 
         public async Task UpdateComplianceOfficerStatusAsync(Guid id, bool active)

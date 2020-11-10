@@ -9,9 +9,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> ComplianceOfficerIdExistsAsync(Guid id);
         Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(Guid id);
-        Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(string email);
         Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync();
-        Task<Guid> CreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer);
         Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer);
         Task UpdateComplianceOfficerStatusAsync(Guid id, bool active);
     }
