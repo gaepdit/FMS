@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
@@ -6,6 +7,7 @@ using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Pages.Maintenance.FacilityType
 {
@@ -23,6 +25,49 @@ namespace FMS.Pages.Maintenance.FacilityType
             FacilityTypes = await _repository.GetFacilityTypeListAsync();
             DisplayMessage = TempData?.GetDisplayMessage();
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(Guid? itemId)
+        {
+            if (itemId == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var facilityType = await _repository.GetFacilityTypeAsync(itemId.Value);
+
+            if (facilityType == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                await _repository.UpdateFacilityTypeStatusAsync(itemId.Value, !facilityType.Active);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await _repository.FacilityTypeExistsAsync(itemId.Value))
+                {
+                    return NotFound();
+                }
+
+                throw;
+            }
+
+            FacilityTypes = await _repository.GetFacilityTypeListAsync();
+
+            TempData?.SetDisplayMessage(Context.Success,
+                facilityType.Active
+                    ? $"{MaintenanceOptions.FacilityType} \"{facilityType.Name}\" successfully removed from list."
+                    : $"{MaintenanceOptions.FacilityType} \"{facilityType.Name}\" successfully restored.");
+
+            return RedirectToPage("./Index");
         }
     }
 }
