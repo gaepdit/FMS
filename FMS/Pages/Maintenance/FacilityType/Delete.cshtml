@@ -1,6 +1,6 @@
 ﻿@page "{id:Guid?}"
 @using FMS.Pages.Maintenance
-@model FMS.Pages.Maintenance.DeleteFacilityTypeModel
+@model FMS.Pages.Maintenance.FacilityType.DeleteModel
 @{
     ViewData["Title"] = $"Remove {MaintenanceOptions.FacilityType}: {Model.Name}";
 }
@@ -20,9 +20,8 @@
         </div>
         <hr />
         <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
-        <a asp-page="Index" class="btn btn-outline-secondary col-md-3" asp-route-handler="select"
-           asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityType">
-            Back to Site Maintenance
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-3">
+            Back to Facility Types
         </a>
     </form>
 </div>

@@ -1,0 +1,37 @@
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.FacilityType.IndexModel
+@{
+    ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.FacilityType}";
+}
+<h1>@ViewData["Title"]</h1>
+<partial name="_AlertPartial" for="DisplayMessage" />
+
+<table class="table">
+    <caption class="container border-top">
+        <a asp-page="Add" class="btn btn-outline-primary btn-sm">Add New @MaintenanceOptions.FacilityType</a>
+    </caption>
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Code</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.FacilityTypes)
+    {
+        <tr class="@(!item.Active ? "table-secondary" : "")">
+            <td class="text-nowrap">
+                @Html.DisplayFor(m => item.Name, "StringOrNone")
+                @Html.DisplayFor(m => item.Active, "BoolRemoved")
+            </td>
+            <td>@Html.DisplayFor(m => item.Description, "StringOrNone")</td>
+            <td class="text-nowrap">
+                <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Restore/Remove</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

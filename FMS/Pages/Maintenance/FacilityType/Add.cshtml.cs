@@ -6,18 +6,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.FacilityType
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class AddFacilityTypeModel : PageModel
+    public class AddModel : PageModel
     {
+        private readonly IFacilityTypeRepository _repository;
+        public AddModel(IFacilityTypeRepository repository) => _repository = repository;
+
         [BindProperty]
         public FacilityTypeCreateDto FacilityType { get; set; }
-
-        private readonly IFacilityTypeRepository _facilityTypeRepository;
-
-        public AddFacilityTypeModel(IFacilityTypeRepository facilityTypeRepository) =>
-            _facilityTypeRepository = facilityTypeRepository;
 
         public void OnGet()
         {
@@ -35,12 +33,12 @@ namespace FMS.Pages.Maintenance
 
             // When adding a new Facility Type, make sure the Code and Description don't already exist
             // before trying to save.
-            if (await _facilityTypeRepository.FacilityTypeNameExistsAsync(FacilityType.Name))
+            if (await _repository.FacilityTypeNameExistsAsync(FacilityType.Name))
             {
                 ModelState.AddModelError("FacilityType.Name", "Code entered already exists.");
             }
 
-            if (await _facilityTypeRepository.FacilityTypeDescriptionExistsAsync(FacilityType.Description))
+            if (await _repository.FacilityTypeDescriptionExistsAsync(FacilityType.Description))
             {
                 ModelState.AddModelError("FacilityType.Description", "Description entered already exists.");
             }
@@ -50,12 +48,12 @@ namespace FMS.Pages.Maintenance
                 return Page();
             }
 
-            await _facilityTypeRepository.CreateFacilityTypeAsync(FacilityType);
+            await _repository.CreateFacilityTypeAsync(FacilityType);
 
             TempData?.SetDisplayMessage(Context.Success,
                 $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully created.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityType});
+            return RedirectToPage("./Index");
         }
     }
 }

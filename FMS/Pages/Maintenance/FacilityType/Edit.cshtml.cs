@@ -8,21 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.FacilityType
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditFacilityTypeModel : PageModel
+    public class EditModel : PageModel
     {
+        private readonly IFacilityTypeRepository _repository;
+        public EditModel(IFacilityTypeRepository repository) => _repository = repository;
+
         [BindProperty]
         public FacilityTypeEditDto FacilityType { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
-
-        private readonly IFacilityTypeRepository _facilityTypeRepository;
-
-        public EditFacilityTypeModel(IFacilityTypeRepository facilityTypeRepository) =>
-            _facilityTypeRepository = facilityTypeRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -32,7 +30,7 @@ namespace FMS.Pages.Maintenance
             }
 
             Id = id.Value;
-            FacilityType = await _facilityTypeRepository.GetFacilityTypeAsync(id.Value);
+            FacilityType = await _repository.GetFacilityTypeAsync(id.Value);
 
             if (FacilityType == null)
             {
@@ -53,12 +51,12 @@ namespace FMS.Pages.Maintenance
 
             // If editing Code and Description, make sure the new Code and Description don't already exist
             // before trying to save.
-            if (await _facilityTypeRepository.FacilityTypeNameExistsAsync(FacilityType.Name, Id))
+            if (await _repository.FacilityTypeNameExistsAsync(FacilityType.Name, Id))
             {
                 ModelState.AddModelError("FacilityType.Name", "Code entered already exists.");
             }
 
-            if (await _facilityTypeRepository.FacilityTypeDescriptionExistsAsync(FacilityType.Description, Id))
+            if (await _repository.FacilityTypeDescriptionExistsAsync(FacilityType.Description, Id))
             {
                 ModelState.AddModelError("FacilityType.Description", "Description entered already exists.");
             }
@@ -70,11 +68,11 @@ namespace FMS.Pages.Maintenance
 
             try
             {
-                await _facilityTypeRepository.UpdateFacilityTypeAsync(Id, FacilityType);
+                await _repository.UpdateFacilityTypeAsync(Id, FacilityType);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _facilityTypeRepository.FacilityTypeExistsAsync(Id))
+                if (!await _repository.FacilityTypeExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -82,9 +80,10 @@ namespace FMS.Pages.Maintenance
                 throw;
             }
 
-            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully updated.");
+            TempData?.SetDisplayMessage(Context.Success,
+                $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully updated.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityType});
+            return RedirectToPage("./Index");
         }
     }
 }

@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.FacilityType
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class DeleteFacilityTypeModel : PageModel
+    public class DeleteModel : PageModel
     {
         [BindProperty]
         public bool Delete { get; set; }
@@ -25,7 +25,7 @@ namespace FMS.Pages.Maintenance
         public bool ShowChange { get; set; }
 
         private readonly IFacilityTypeRepository _facilityTypeRepository;
-        public DeleteFacilityTypeModel(IFacilityTypeRepository facilityTypeRepository) => _facilityTypeRepository = facilityTypeRepository;
+        public DeleteModel(IFacilityTypeRepository facilityTypeRepository) => _facilityTypeRepository = facilityTypeRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
