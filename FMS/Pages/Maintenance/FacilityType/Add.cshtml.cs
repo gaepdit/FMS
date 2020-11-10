@@ -51,7 +51,7 @@ namespace FMS.Pages.Maintenance.FacilityType
             await _repository.CreateFacilityTypeAsync(FacilityType);
 
             TempData?.SetDisplayMessage(Context.Success,
-                $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully created.");
+                $"{MaintenanceOptions.FacilityType} \"{FacilityType.Name}\" successfully created.");
 
             return RedirectToPage("./Index");
         }

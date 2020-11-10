@@ -75,7 +75,7 @@ namespace FMS.Pages.Maintenance.FacilityStatus
             }
 
             TempData?.SetDisplayMessage(Context.Success,
-                $"Facility Status {FacilityStatus.Status} successfully updated.");
+                $"{MaintenanceOptions.FacilityStatus} \"{FacilityStatus.Status}\" successfully updated.");
 
             return RedirectToPage("./Index");
         }

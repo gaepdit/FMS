@@ -49,7 +49,7 @@ namespace FMS.Pages.Maintenance.BudgetCode
 
             await _repository.CreateBudgetCodeAsync(BudgetCode);
 
-            TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully created.");
+            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.BudgetCode} \"{BudgetCode.Code}\" successfully created.");
             return RedirectToPage("./Index");
         }
     }

@@ -7,7 +7,7 @@
 }
 
 @{
-    ViewData["Title"] = $"Edit Organizational Unit: {Model.OrganizationalUnit.Name}";
+    ViewData["Title"] = $"Edit {MaintenanceOptions.OrganizationalUnit}: {Model.OrganizationalUnit.Name}";
 }
 <h1>
     @ViewData["Title"]
@@ -24,7 +24,7 @@
         <input type="hidden" asp-for="Id" />
         <div class="form-row">
             <div class="form-group col-md-10">
-                <label asp-for="OrganizationalUnit.Name">Organizational Unit Name <span class="text-danger">*</span></label>
+                <label asp-for="OrganizationalUnit.Name">@MaintenanceOptions.OrganizationalUnit Name <span class="text-danger">*</span></label>
                 <input asp-for="OrganizationalUnit.Name" class="form-control" />
                 <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
             </div>

@@ -15,14 +15,14 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="form-row">
             <div class="form-group col-md-10">
-                <label asp-for="OrganizationalUnit.Name">Organizational Unit Name <span class="text-danger">*</span></label>
+                <label asp-for="OrganizationalUnit.Name">@MaintenanceOptions.OrganizationalUnit Name <span class="text-danger">*</span></label>
                 <input asp-for="OrganizationalUnit.Name" class="form-control" />
                 <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
             </div>
         </div>
         <p class="text-danger">* denotes a required field</p>
         <hr />
-        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-5 mb-3 mb-md-0">Add New Organizational Unit</button>
+        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-5 mb-3 mb-md-0">Add New @MaintenanceOptions.OrganizationalUnit</button>
         <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
            asp-route-MaintenanceSelection="@MaintenanceOptions.OrganizationalUnit">
             Cancel

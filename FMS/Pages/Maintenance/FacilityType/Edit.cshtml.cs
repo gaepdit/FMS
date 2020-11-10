@@ -81,7 +81,7 @@ namespace FMS.Pages.Maintenance.FacilityType
             }
 
             TempData?.SetDisplayMessage(Context.Success,
-                $"{MaintenanceOptions.FacilityType} '{FacilityType.Name}' successfully updated.");
+                $"{MaintenanceOptions.FacilityType} \"{FacilityType.Name}\" successfully updated.");
 
             return RedirectToPage("./Index");
         }

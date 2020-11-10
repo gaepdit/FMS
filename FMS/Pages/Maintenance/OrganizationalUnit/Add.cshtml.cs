@@ -45,7 +45,7 @@ namespace FMS.Pages.Maintenance.OrganizationalUnit
             await _repository.CreateOrganizationalUnitAsync(OrganizationalUnit);
 
             TempData?.SetDisplayMessage(Context.Success,
-                $"Organizational Unit {OrganizationalUnit.Name} successfully created.");
+                $"{MaintenanceOptions.OrganizationalUnit} \"{OrganizationalUnit.Name}\" successfully created.");
 
             return RedirectToPage("./Index", "select",
                 new {MaintenanceSelection = MaintenanceOptions.OrganizationalUnit});

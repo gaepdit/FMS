@@ -75,7 +75,7 @@ namespace FMS.Pages.Maintenance.OrganizationalUnit
             }
 
             TempData?.SetDisplayMessage(Context.Success,
-                $"Organizational Unit {OrganizationalUnit.Name} successfully updated.");
+                $"{MaintenanceOptions.OrganizationalUnit} \"{OrganizationalUnit.Name}\" successfully updated.");
 
             return RedirectToPage("./Index");
         }

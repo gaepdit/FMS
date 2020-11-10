@@ -7,7 +7,7 @@
 }
 
 @{
-    ViewData["Title"] = $"Edit Facility Status: {Model.FacilityStatus.Status}";
+    ViewData["Title"] = $"Edit {MaintenanceOptions.FacilityStatus}: {Model.FacilityStatus.Status}";
 }
 <h1>
     @ViewData["Title"]
@@ -24,7 +24,7 @@
         <input type="hidden" asp-for="Id" />
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="FacilityStatus.Status">Facility Status Name <span class="text-danger">*</span></label>
+                <label asp-for="FacilityStatus.Status">@MaintenanceOptions.FacilityStatus Name <span class="text-danger">*</span></label>
                 <input asp-for="FacilityStatus.Status" class="form-control" aria-describedby="FileIdHelpBlock" />
                 <span asp-validation-for="FacilityStatus.Status" class="text-danger"></span>
             </div>

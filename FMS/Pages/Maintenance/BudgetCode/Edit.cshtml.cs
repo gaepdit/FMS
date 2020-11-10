@@ -79,7 +79,7 @@ namespace FMS.Pages.Maintenance.BudgetCode
                 throw;
             }
 
-            TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully updated.");
+            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.BudgetCode} \"{BudgetCode.Code}\" successfully updated.");
             return RedirectToPage("./Index");
         }
     }
