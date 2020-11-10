@@ -1,18 +1,27 @@
-﻿@page
-@using FMS.Pages.Admin
-@model FMS.Pages.Admin.AddOrganizationalUnitModel
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.EditOrganizationalUnitModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 
 @{
-    ViewData["Title"] = $"Add {MaintenanceOptions.OrganizationalUnit}";
+    ViewData["Title"] = $"Edit Organizational Unit: {Model.OrganizationalUnit.Name}";
 }
-<h1>@ViewData["Title"]</h1>
+<h1>
+    @ViewData["Title"]
+    @if (!Model.OrganizationalUnit.Active)
+    {
+        <span class="text-muted">(Removed)</span>
+    }
+</h1>
+
 <div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="OrganizationalUnit.Active" />
+        <input type="hidden" asp-for="Id" />
         <div class="form-row">
             <div class="form-group col-md-10">
                 <label asp-for="OrganizationalUnit.Name">Organizational Unit Name <span class="text-danger">*</span></label>
@@ -22,7 +31,7 @@
         </div>
         <p class="text-danger">* denotes a required field</p>
         <hr />
-        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-5 mb-3 mb-md-0">Add New Organizational Unit</button>
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
         <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
            asp-route-MaintenanceSelection="@MaintenanceOptions.OrganizationalUnit">
             Cancel

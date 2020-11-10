@@ -1,37 +1,28 @@
-﻿@page "{id:Guid?}"
-@using FMS.Pages.Admin
-@model FMS.Pages.Admin.EditFacilityStatusModel
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.AddFacilityStatusModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 
 @{
-    ViewData["Title"] = $"Edit Facility Status: {Model.FacilityStatus.Status}";
+    ViewData["Title"] = $"Add {MaintenanceOptions.FacilityStatus}";
 }
-<h1>
-    @ViewData["Title"]
-    @if (!Model.FacilityStatus.Active)
-    {
-        <span class="text-muted">(Removed)</span>
-    }
-</h1>
-
+<h1>@ViewData["Title"]</h1>
 <div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <input type="hidden" asp-for="FacilityStatus.Active" />
-        <input type="hidden" asp-for="Id" />
         <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-10">
                 <label asp-for="FacilityStatus.Status">Facility Status Name <span class="text-danger">*</span></label>
-                <input asp-for="FacilityStatus.Status" class="form-control" aria-describedby="FileIdHelpBlock" />
+                <input asp-for="FacilityStatus.Status" class="form-control" />
                 <span asp-validation-for="FacilityStatus.Status" class="text-danger"></span>
             </div>
         </div>
         <p class="text-danger">* denotes a required field</p>
         <hr />
-        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-4 mb-3 mb-md-0">Add New Facility Status</button>
         <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
            asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityStatus">
             Cancel

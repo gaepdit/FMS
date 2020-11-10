@@ -1,12 +1,12 @@
+using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 
-namespace FMS.Pages.Admin
+namespace FMS.Pages.Maintenance
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class AddBudgetCodeModel : PageModel

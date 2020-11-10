@@ -8,19 +8,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Admin
+namespace FMS.Pages.Maintenance
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditBudgetCodeModel : PageModel
+    public class EditFacilityStatusModel : PageModel
     {
         [BindProperty]
-        public BudgetCodeEditDto BudgetCode { get; set; }
+        public FacilityStatusEditDto FacilityStatus { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
 
-        private readonly IBudgetCodeRepository _budgetCodeRepository;
-        public EditBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) => _budgetCodeRepository = budgetCodeRepository;
+        private readonly IFacilityStatusRepository _facilityStatusRepository;
+
+        public EditFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
+            _facilityStatusRepository = facilityStatusRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -30,9 +32,9 @@ namespace FMS.Pages.Admin
             }
 
             Id = id.Value;
-            BudgetCode = await _budgetCodeRepository.GetBudgetCodeAsync(id.Value);
+            FacilityStatus = await _facilityStatusRepository.GetFacilityStatusAsync(id.Value);
 
-            if (BudgetCode == null)
+            if (FacilityStatus == null)
             {
                 return NotFound();
             }
@@ -47,12 +49,12 @@ namespace FMS.Pages.Admin
                 return Page();
             }
 
-            BudgetCode.TrimAll();
+            FacilityStatus.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _budgetCodeRepository.BudgetCodeCodeExistsAsync(BudgetCode.Code, Id))
+            if (await _facilityStatusRepository.FacilityStatusStatusExistsAsync(FacilityStatus.Status, Id))
             {
-                ModelState.AddModelError("BudgetCode.Code", "Code entered already exists.");
+                ModelState.AddModelError("FacilityStatus.Status", "Status entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -62,20 +64,22 @@ namespace FMS.Pages.Admin
 
             try
             {
-                await _budgetCodeRepository.UpdateBudgetCodeAsync(Id, BudgetCode);
+                await _facilityStatusRepository.UpdateFacilityStatusAsync(Id, FacilityStatus);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _budgetCodeRepository.BudgetCodeExistsAsync(Id))
+                if (!await _facilityStatusRepository.FacilityStatusExistsAsync(Id))
                 {
                     return NotFound();
                 }
 
                 throw;
             }
-            TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully updated.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.BudgetCode});
+            TempData?.SetDisplayMessage(Context.Success,
+                $"Facility Status {FacilityStatus.Status} successfully updated.");
+
+            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityStatus});
         }
     }
 }

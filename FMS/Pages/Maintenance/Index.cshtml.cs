@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace FMS.Pages.Admin
+namespace FMS.Pages.Maintenance
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class IndexModel : PageModel

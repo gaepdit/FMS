@@ -1,17 +1,17 @@
 ﻿@page "{id:Guid?}"
-@using FMS.Pages.Admin
-@model FMS.Pages.Admin.EditOrganizationalUnitModel
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.EditFacilityStatusModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 
 @{
-    ViewData["Title"] = $"Edit Organizational Unit: {Model.OrganizationalUnit.Name}";
+    ViewData["Title"] = $"Edit Facility Status: {Model.FacilityStatus.Status}";
 }
 <h1>
     @ViewData["Title"]
-    @if (!Model.OrganizationalUnit.Active)
+    @if (!Model.FacilityStatus.Active)
     {
         <span class="text-muted">(Removed)</span>
     }
@@ -20,20 +20,20 @@
 <div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <input type="hidden" asp-for="OrganizationalUnit.Active" />
+        <input type="hidden" asp-for="FacilityStatus.Active" />
         <input type="hidden" asp-for="Id" />
         <div class="form-row">
-            <div class="form-group col-md-10">
-                <label asp-for="OrganizationalUnit.Name">Organizational Unit Name <span class="text-danger">*</span></label>
-                <input asp-for="OrganizationalUnit.Name" class="form-control" />
-                <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
+            <div class="form-group col-md-6">
+                <label asp-for="FacilityStatus.Status">Facility Status Name <span class="text-danger">*</span></label>
+                <input asp-for="FacilityStatus.Status" class="form-control" aria-describedby="FileIdHelpBlock" />
+                <span asp-validation-for="FacilityStatus.Status" class="text-danger"></span>
             </div>
         </div>
         <p class="text-danger">* denotes a required field</p>
         <hr />
         <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
         <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
-           asp-route-MaintenanceSelection="@MaintenanceOptions.OrganizationalUnit">
+           asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityStatus">
             Cancel
         </a>
     </form>

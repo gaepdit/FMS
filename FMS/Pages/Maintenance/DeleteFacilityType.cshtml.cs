@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Admin
+namespace FMS.Pages.Maintenance
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class DeleteOrganizationalUnitModel : PageModel
+    public class DeleteFacilityTypeModel : PageModel
     {
         [BindProperty]
         public bool Delete { get; set; }
@@ -24,8 +24,8 @@ namespace FMS.Pages.Admin
         [BindProperty]
         public bool ShowChange { get; set; }
 
-        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
-        public DeleteOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) => _organizationalUnitRepository = organizationalUnitRepository;
+        private readonly IFacilityTypeRepository _facilityTypeRepository;
+        public DeleteFacilityTypeModel(IFacilityTypeRepository facilityTypeRepository) => _facilityTypeRepository = facilityTypeRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -34,16 +34,16 @@ namespace FMS.Pages.Admin
                 return NotFound();
             }
 
-            var organizationalUnit = await _organizationalUnitRepository.GetOrganizationalUnitAsync(id.Value);
+            var facilityType = await _facilityTypeRepository.GetFacilityTypeAsync(id.Value);
 
-            if (organizationalUnit == null)
+            if (facilityType == null)
             {
                 return NotFound();
             }
 
             Id = id.Value;
-            Delete = !organizationalUnit.Active;
-            Name = organizationalUnit.Name;
+            Delete = !facilityType.Active;
+            Name = $"{facilityType.Name} ({facilityType.Description})";
             ShowChange = false;
 
             return Page();
@@ -53,17 +53,17 @@ namespace FMS.Pages.Admin
         {
             if (!ModelState.IsValid)
             {
-                Name = (await _organizationalUnitRepository.GetOrganizationalUnitAsync(Id)).Name;
+                Name = (await _facilityTypeRepository.GetFacilityTypeAsync(Id)).Name;
                 return Page();
             }
 
             try
             {
-                await _organizationalUnitRepository.UpdateOrganizationalUnitStatusAsync(Id, !Delete);
+                await _facilityTypeRepository.UpdateFacilityTypeStatusAsync(Id, !Delete);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _organizationalUnitRepository.OrganizationalUnitExistsAsync(Id))
+                if (!await _facilityTypeRepository.FacilityTypeExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -72,7 +72,7 @@ namespace FMS.Pages.Admin
                     throw;
                 }
             }
-            Name = (await _organizationalUnitRepository.GetOrganizationalUnitAsync(Id)).Name;
+            Name = (await _facilityTypeRepository.GetFacilityTypeAsync(Id)).Name;
             ShowChange = true;
 
             return Page();

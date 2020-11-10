@@ -1,8 +1,8 @@
 ﻿@page "{id:Guid?}"
-@using FMS.Pages.Admin
-@model FMS.Pages.Admin.DeleteFacilityTypeModel
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.DeleteFacilityStatusModel
 @{
-    ViewData["Title"] = $"Remove {MaintenanceOptions.FacilityType}: {Model.Name}";
+    ViewData["Title"] = $"Remove Facility Status: {Model.Status}";
 }
 <h1>
     @ViewData["Title"]
@@ -21,7 +21,7 @@
         <hr />
         <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
         <a asp-page="Index" class="btn btn-outline-secondary col-md-3" asp-route-handler="select"
-           asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityType">
+           asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityStatus">
             Back to Site Maintenance
         </a>
     </form>
@@ -30,14 +30,14 @@
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-danger">This @MaintenanceOptions.FacilityType is currently Inactive and will not show in Drop-Down Menus.</h5>
+        <h5 class="alert alert-danger">This Facility Status is currently Inactive and will not show in Drop-Down Menus.</h5>
     </div>
 }
 @if (Model.ShowChange)
 {
     <br />
     <div class="container-fluid">
-        <h5 class="alert alert-success">@MaintenanceOptions.FacilityType '@Model.Name' has changed successfully.</h5>
+        <h5 class="alert alert-success">Facility Status: @Model.Status has changed successfully.</h5>
         <br />
     </div>
 }

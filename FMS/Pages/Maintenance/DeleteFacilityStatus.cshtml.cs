@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -8,20 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Admin
+namespace FMS.Pages.Maintenance
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditFacilityStatusModel : PageModel
+    public class DeleteFacilityStatusModel : PageModel
     {
         [BindProperty]
-        public FacilityStatusEditDto FacilityStatus { get; set; }
+        public bool Delete { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
 
+        [BindProperty]
+        public string Status { get; set; }
+
+        [BindProperty]
+        public bool ShowChange { get; set; }
+
         private readonly IFacilityStatusRepository _facilityStatusRepository;
 
-        public EditFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
+        public DeleteFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
             _facilityStatusRepository = facilityStatusRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
@@ -31,13 +36,17 @@ namespace FMS.Pages.Admin
                 return NotFound();
             }
 
-            Id = id.Value;
-            FacilityStatus = await _facilityStatusRepository.GetFacilityStatusAsync(id.Value);
+            var facilityStatus = await _facilityStatusRepository.GetFacilityStatusAsync(id.Value);
 
-            if (FacilityStatus == null)
+            if (facilityStatus == null)
             {
                 return NotFound();
             }
+
+            Id = id.Value;
+            Delete = !facilityStatus.Active;
+            Status = facilityStatus.Status;
+            ShowChange = false;
 
             return Page();
         }
@@ -46,25 +55,13 @@ namespace FMS.Pages.Admin
         {
             if (!ModelState.IsValid)
             {
-                return Page();
-            }
-
-            FacilityStatus.TrimAll();
-
-            // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _facilityStatusRepository.FacilityStatusStatusExistsAsync(FacilityStatus.Status, Id))
-            {
-                ModelState.AddModelError("FacilityStatus.Status", "Status entered already exists.");
-            }
-
-            if (!ModelState.IsValid)
-            {
+                Status = (await _facilityStatusRepository.GetFacilityStatusAsync(Id)).Status;
                 return Page();
             }
 
             try
             {
-                await _facilityStatusRepository.UpdateFacilityStatusAsync(Id, FacilityStatus);
+                await _facilityStatusRepository.UpdateFacilityStatusStatusAsync(Id, !Delete);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -72,14 +69,16 @@ namespace FMS.Pages.Admin
                 {
                     return NotFound();
                 }
-
-                throw;
+                else
+                {
+                    throw;
+                }
             }
 
-            TempData?.SetDisplayMessage(Context.Success,
-                $"Facility Status {FacilityStatus.Status} successfully updated.");
+            Status = (await _facilityStatusRepository.GetFacilityStatusAsync(Id)).Status;
+            ShowChange = true;
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityStatus});
+            return Page();
         }
     }
 }
