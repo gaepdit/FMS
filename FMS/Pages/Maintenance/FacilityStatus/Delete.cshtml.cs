@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.FacilityStatus
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class DeleteFacilityStatusModel : PageModel
+    public class DeleteModel : PageModel
     {
         [BindProperty]
         public bool Delete { get; set; }
@@ -26,7 +26,7 @@ namespace FMS.Pages.Maintenance
 
         private readonly IFacilityStatusRepository _facilityStatusRepository;
 
-        public DeleteFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
+        public DeleteModel(IFacilityStatusRepository facilityStatusRepository) =>
             _facilityStatusRepository = facilityStatusRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)

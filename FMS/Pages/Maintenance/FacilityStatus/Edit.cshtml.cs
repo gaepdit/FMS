@@ -8,21 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.FacilityStatus
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditFacilityStatusModel : PageModel
+    public class EditModel : PageModel
     {
+        private readonly IFacilityStatusRepository _repository;
+        public EditModel(IFacilityStatusRepository repository) => _repository = repository;
+
         [BindProperty]
         public FacilityStatusEditDto FacilityStatus { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
-
-        private readonly IFacilityStatusRepository _facilityStatusRepository;
-
-        public EditFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
-            _facilityStatusRepository = facilityStatusRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -32,7 +30,7 @@ namespace FMS.Pages.Maintenance
             }
 
             Id = id.Value;
-            FacilityStatus = await _facilityStatusRepository.GetFacilityStatusAsync(id.Value);
+            FacilityStatus = await _repository.GetFacilityStatusAsync(id.Value);
 
             if (FacilityStatus == null)
             {
@@ -52,7 +50,7 @@ namespace FMS.Pages.Maintenance
             FacilityStatus.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _facilityStatusRepository.FacilityStatusStatusExistsAsync(FacilityStatus.Status, Id))
+            if (await _repository.FacilityStatusStatusExistsAsync(FacilityStatus.Status, Id))
             {
                 ModelState.AddModelError("FacilityStatus.Status", "Status entered already exists.");
             }
@@ -64,11 +62,11 @@ namespace FMS.Pages.Maintenance
 
             try
             {
-                await _facilityStatusRepository.UpdateFacilityStatusAsync(Id, FacilityStatus);
+                await _repository.UpdateFacilityStatusAsync(Id, FacilityStatus);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _facilityStatusRepository.FacilityStatusExistsAsync(Id))
+                if (!await _repository.FacilityStatusExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -79,7 +77,7 @@ namespace FMS.Pages.Maintenance
             TempData?.SetDisplayMessage(Context.Success,
                 $"Facility Status {FacilityStatus.Status} successfully updated.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityStatus});
+            return RedirectToPage("./Index");
         }
     }
 }

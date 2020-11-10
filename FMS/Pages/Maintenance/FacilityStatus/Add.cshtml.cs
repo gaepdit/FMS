@@ -6,18 +6,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.FacilityStatus
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class AddFacilityStatusModel : PageModel
+    public class AddModel : PageModel
     {
+        private readonly IFacilityStatusRepository _repository;
+        public AddModel(IFacilityStatusRepository repository) => _repository = repository;
+
         [BindProperty]
         public FacilityStatusCreateDto FacilityStatus { get; set; }
-
-        private readonly IFacilityStatusRepository _facilityStatusRepository;
-
-        public AddFacilityStatusModel(IFacilityStatusRepository facilityStatusRepository) =>
-            _facilityStatusRepository = facilityStatusRepository;
 
         public void OnGet()
         {
@@ -34,9 +32,9 @@ namespace FMS.Pages.Maintenance
             FacilityStatus.TrimAll();
 
             // When adding a new Facility Status, make sure the number doesn't already exist before trying to save.
-            if (await _facilityStatusRepository.FacilityStatusStatusExistsAsync(FacilityStatus.Status))
+            if (await _repository.FacilityStatusStatusExistsAsync(FacilityStatus.Status))
             {
-                ModelState.AddModelError("FacilityStatus.Name", "Name entered already exists.");
+                ModelState.AddModelError("FacilityStatus.Status", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -44,12 +42,12 @@ namespace FMS.Pages.Maintenance
                 return Page();
             }
 
-            await _facilityStatusRepository.CreateFacilityStatusAsync(FacilityStatus);
+            await _repository.CreateFacilityStatusAsync(FacilityStatus);
 
             TempData?.SetDisplayMessage(Context.Success,
                 $"Facility Status {FacilityStatus.Status} successfully created.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.FacilityStatus});
+            return RedirectToPage("./Index");
         }
     }
 }

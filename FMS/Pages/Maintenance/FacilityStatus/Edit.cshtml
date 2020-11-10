@@ -1,6 +1,6 @@
 ﻿@page "{id:Guid?}"
 @using FMS.Pages.Maintenance
-@model FMS.Pages.Maintenance.EditFacilityStatusModel
+@model FMS.Pages.Maintenance.FacilityStatus.EditModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
@@ -32,9 +32,6 @@
         <p class="text-danger">* denotes a required field</p>
         <hr />
         <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
-        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
-           asp-route-MaintenanceSelection="@MaintenanceOptions.FacilityStatus">
-            Cancel
-        </a>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
     </form>
 </div>
