@@ -4,13 +4,13 @@
 @{
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.OrganizationalUnit}";
 }
-<h1>@ViewData["Title"]</h1>
+<a asp-page="../Index">← Site Maintenance</a>
+<h1>
+    @MaintenanceOptions.OrganizationalUnit <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
+</h1>
 <partial name="_AlertPartial" for="DisplayMessage" />
 
 <table class="table">
-    <caption class="container border-top">
-        <a asp-page="Add" class="btn btn-outline-primary btn-sm">Add New @MaintenanceOptions.OrganizationalUnit</a>
-    </caption>
     <thead class="thead-light">
     <tr>
         <th scope="col">Name</th>

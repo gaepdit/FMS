@@ -2,59 +2,26 @@
 @using FMS.Pages.Maintenance
 @model FMS.Pages.Maintenance.IndexModel
 @{
-    if (string.IsNullOrEmpty(Model.MaintenanceSelection))
-    {
-        ViewData["Title"] = $"Site Maintenance";
-    }
-    else
-    {
-        ViewData["Title"] = $"Site Maintenance: {Model.MaintenanceSelection}";
-    }
+    ViewData["Title"] = $"Site Maintenance";
 }
 <h1>@ViewData["Title"]</h1>
-<partial name="_AlertPartial" for="DisplayMessage" />
 
-<form method="get" class="container bg-light py-3">
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label asp-for="MaintenanceSelection"></label>
-            <select asp-for="MaintenanceSelection" class="custom-select">
-                <option>@MaintenanceOptions.BudgetCode</option>
-                <option>@MaintenanceOptions.ComplianceOfficer</option>
-                <option>@MaintenanceOptions.FacilityStatus</option>
-                <option>@MaintenanceOptions.FacilityType</option>
-                <option>@MaintenanceOptions.OrganizationalUnit</option>
-            </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <button type="submit" class="btn btn-primary col">Select</button>
-        </div>
-    </div>
-    <input type="hidden" name="handler" value="select" />
-</form>
+<p class="lead">Select a drop-down list to edit.</p>
 
-@switch (Model.MaintenanceSelection)
-{
-    case MaintenanceOptions.BudgetCode:
-    {
-        break;
-    }
-    case MaintenanceOptions.ComplianceOfficer:
-    {
-       break;
-    }
-    case MaintenanceOptions.FacilityStatus:
-    {
-        break;
-    }
-    case MaintenanceOptions.FacilityType:
-    {
-        break;
-    }
-    case MaintenanceOptions.OrganizationalUnit:
-    {
-        break;
-    }
-}
+<ul>
+    <li>
+        <a class="nav-link" asp-page="BudgetCode/Index">@MaintenanceOptions.BudgetCode</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="ComplianceOfficer/Index">@MaintenanceOptions.ComplianceOfficer</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="FacilityStatus/Index">@MaintenanceOptions.FacilityStatus</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="FacilityType/Index">@MaintenanceOptions.FacilityType</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="OrganizationalUnit/Index">@MaintenanceOptions.OrganizationalUnit</a>
+    </li>
+</ul>

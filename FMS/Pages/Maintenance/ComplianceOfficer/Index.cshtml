@@ -4,7 +4,10 @@
 @{
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.ComplianceOfficer}";
 }
-<h1>@ViewData["Title"]</h1>
+<a asp-page="../Index">← Site Maintenance</a>
+<h1>
+    @MaintenanceOptions.ComplianceOfficer
+</h1>
 <partial name="_AlertPartial" for="DisplayMessage" />
 
 <table class="table">
