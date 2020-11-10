@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.BudgetCode
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditBudgetCodeModel : PageModel
+    public class EditModel : PageModel
     {
+        private readonly IBudgetCodeRepository _repository;
+        public EditModel(IBudgetCodeRepository repository) => _repository = repository;
+
         [BindProperty]
         public BudgetCodeEditDto BudgetCode { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
-
-        private readonly IBudgetCodeRepository _budgetCodeRepository;
-        public EditBudgetCodeModel(IBudgetCodeRepository budgetCodeRepository) => _budgetCodeRepository = budgetCodeRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -30,7 +30,7 @@ namespace FMS.Pages.Maintenance
             }
 
             Id = id.Value;
-            BudgetCode = await _budgetCodeRepository.GetBudgetCodeAsync(id.Value);
+            BudgetCode = await _repository.GetBudgetCodeAsync(id.Value);
 
             if (BudgetCode == null)
             {
@@ -50,9 +50,14 @@ namespace FMS.Pages.Maintenance
             BudgetCode.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _budgetCodeRepository.BudgetCodeCodeExistsAsync(BudgetCode.Code, Id))
+            if (await _repository.BudgetCodeCodeExistsAsync(BudgetCode.Code, Id))
             {
                 ModelState.AddModelError("BudgetCode.Code", "Code entered already exists.");
+            }
+
+            if (await _repository.BudgetCodeNameExistsAsync(BudgetCode.Name))
+            {
+                ModelState.AddModelError("BudgetCode.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -62,20 +67,20 @@ namespace FMS.Pages.Maintenance
 
             try
             {
-                await _budgetCodeRepository.UpdateBudgetCodeAsync(Id, BudgetCode);
+                await _repository.UpdateBudgetCodeAsync(Id, BudgetCode);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _budgetCodeRepository.BudgetCodeExistsAsync(Id))
+                if (!await _repository.BudgetCodeExistsAsync(Id))
                 {
                     return NotFound();
                 }
 
                 throw;
             }
-            TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully updated.");
 
-            return RedirectToPage("./Index", "select", new {MaintenanceSelection = MaintenanceOptions.BudgetCode});
+            TempData?.SetDisplayMessage(Context.Success, $"Budget Code {BudgetCode.Code} successfully updated.");
+            return RedirectToPage("./Index");
         }
     }
 }

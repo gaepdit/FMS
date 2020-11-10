@@ -1,18 +1,27 @@
-﻿@page
+﻿@page "{id:Guid?}"
 @using FMS.Pages.Maintenance
-@model FMS.Pages.Maintenance.AddBudgetCodeModel
+@model FMS.Pages.Maintenance.BudgetCode.EditModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
 
 @{
-    ViewData["Title"] = $"Add {MaintenanceOptions.BudgetCode}";
+    ViewData["Title"] = $"Edit Budget Code: {Model.BudgetCode.Code}";
 }
-<h1>@ViewData["Title"]</h1>
+<h1>
+    @ViewData["Title"]
+    @if (!Model.BudgetCode.Active)
+    {
+        <span class="text-muted">(Removed)</span>
+    }
+</h1>
+
 <div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="BudgetCode.Active" />
+        <input type="hidden" asp-for="Id" />
         <div class="form-row">
             <div class="form-group col-md-2">
                 <label asp-for="BudgetCode.Code">Budget Code <span class="text-danger">*</span></label>
@@ -39,10 +48,7 @@
         </div>
         <p class="text-danger">* denotes a required field</p>
         <hr />
-        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-4 mb-3 mb-md-0">Add New Budget Code</button>
-        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
-           asp-route-MaintenanceSelection="@MaintenanceOptions.BudgetCode">
-            Cancel
-        </a>
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
     </form>
 </div>
