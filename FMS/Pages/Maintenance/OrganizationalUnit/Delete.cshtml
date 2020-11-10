@@ -1,6 +1,6 @@
 ﻿@page "{id:Guid?}"
 @using FMS.Pages.Maintenance
-@model FMS.Pages.Maintenance.DeleteOrganizationalUnitModel
+@model FMS.Pages.Maintenance.OrganizationalUnit.DeleteModel
 @{
     ViewData["Title"] = $"Remove Organizational Unit: {Model.Name}";
 }
@@ -20,9 +20,8 @@
         </div>
         <hr />
         <button type="submit" class="btn btn-primary col-md-3">Save Changes</button>
-        <a asp-page="Index" class="btn btn-outline-secondary col-md-3" asp-route-handler="select"
-           asp-route-MaintenanceSelection="@MaintenanceOptions.OrganizationalUnit">
-            Back to Site Maintenance
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-3">
+            Back to Organizational Units
         </a>
     </form>
 </div>

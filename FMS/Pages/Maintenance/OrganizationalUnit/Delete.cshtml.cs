@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.OrganizationalUnit
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class DeleteOrganizationalUnitModel : PageModel
+    public class DeleteModel : PageModel
     {
         [BindProperty]
         public bool Delete { get; set; }
@@ -25,7 +25,7 @@ namespace FMS.Pages.Maintenance
         public bool ShowChange { get; set; }
 
         private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
-        public DeleteOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) => _organizationalUnitRepository = organizationalUnitRepository;
+        public DeleteModel(IOrganizationalUnitRepository organizationalUnitRepository) => _organizationalUnitRepository = organizationalUnitRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {

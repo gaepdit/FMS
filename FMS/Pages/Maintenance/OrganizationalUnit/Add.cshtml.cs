@@ -6,18 +6,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.OrganizationalUnit
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class AddOrganizationalUnitModel : PageModel
+    public class AddModel : PageModel
     {
+        private readonly IOrganizationalUnitRepository _repository;
+        public AddModel(IOrganizationalUnitRepository repository) => _repository = repository;
+
         [BindProperty]
         public OrganizationalUnitCreateDto OrganizationalUnit { get; set; }
-
-        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
-
-        public AddOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) =>
-            _organizationalUnitRepository = organizationalUnitRepository;
 
         public void OnGet()
         {
@@ -34,7 +32,7 @@ namespace FMS.Pages.Maintenance
             OrganizationalUnit.TrimAll();
 
             // When adding a new Org, make sure the number doesn't already exist before trying to save.
-            if (await _organizationalUnitRepository.OrganizationalUnitNameExistsAsync(OrganizationalUnit.Name))
+            if (await _repository.OrganizationalUnitNameExistsAsync(OrganizationalUnit.Name))
             {
                 ModelState.AddModelError("OrganizationalUnit.Name", "Name entered already exists.");
             }
@@ -44,7 +42,7 @@ namespace FMS.Pages.Maintenance
                 return Page();
             }
 
-            await _organizationalUnitRepository.CreateOrganizationalUnitAsync(OrganizationalUnit);
+            await _repository.CreateOrganizationalUnitAsync(OrganizationalUnit);
 
             TempData?.SetDisplayMessage(Context.Success,
                 $"Organizational Unit {OrganizationalUnit.Name} successfully created.");

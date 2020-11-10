@@ -85,35 +85,6 @@
     }
     case MaintenanceOptions.OrganizationalUnit:
     {
-        <table class="table">
-            <caption class="container border-top">
-                <a asp-page="AddOrganizationalUnit" asp-route-id="" class="btn btn-outline-primary btn-sm">Add New Organizational Unit</a>
-            </caption>
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model.OrganizationalUnits)
-            {
-                <tr>
-                    <td class="text-nowrap">
-                        @Html.DisplayFor(m => item.Name, "StringOrNone")
-                        @if (!item.Active)
-                        {
-                            <span class="text-muted">(Removed)</span>
-                        }
-                    </td>
-                    <td>
-                        <a asp-page="EditOrganizationalUnit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
-                        <a asp-page="DeleteOrganizationalUnit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Restore/Remove</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
         break;
     }
 }

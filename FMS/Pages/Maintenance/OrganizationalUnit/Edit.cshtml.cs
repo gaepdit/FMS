@@ -8,21 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance
+namespace FMS.Pages.Maintenance.OrganizationalUnit
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditOrganizationalUnitModel : PageModel
+    public class EditModel : PageModel
     {
+        private readonly IOrganizationalUnitRepository _repository;
+        public EditModel(IOrganizationalUnitRepository repository) => _repository = repository;
+
         [BindProperty]
         public OrganizationalUnitEditDto OrganizationalUnit { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
-
-        private readonly IOrganizationalUnitRepository _organizationalUnitRepository;
-
-        public EditOrganizationalUnitModel(IOrganizationalUnitRepository organizationalUnitRepository) =>
-            _organizationalUnitRepository = organizationalUnitRepository;
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -32,7 +30,7 @@ namespace FMS.Pages.Maintenance
             }
 
             Id = id.Value;
-            OrganizationalUnit = await _organizationalUnitRepository.GetOrganizationalUnitAsync(id.Value);
+            OrganizationalUnit = await _repository.GetOrganizationalUnitAsync(id.Value);
 
             if (OrganizationalUnit == null)
             {
@@ -52,7 +50,7 @@ namespace FMS.Pages.Maintenance
             OrganizationalUnit.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _organizationalUnitRepository.OrganizationalUnitNameExistsAsync(OrganizationalUnit.Name, Id))
+            if (await _repository.OrganizationalUnitNameExistsAsync(OrganizationalUnit.Name, Id))
             {
                 ModelState.AddModelError("OrganizationalUnit.Name", "Name entered already exists.");
             }
@@ -64,11 +62,11 @@ namespace FMS.Pages.Maintenance
 
             try
             {
-                await _organizationalUnitRepository.UpdateOrganizationalUnitAsync(Id, OrganizationalUnit);
+                await _repository.UpdateOrganizationalUnitAsync(Id, OrganizationalUnit);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _organizationalUnitRepository.OrganizationalUnitExistsAsync(Id))
+                if (!await _repository.OrganizationalUnitExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -79,8 +77,7 @@ namespace FMS.Pages.Maintenance
             TempData?.SetDisplayMessage(Context.Success,
                 $"Organizational Unit {OrganizationalUnit.Name} successfully updated.");
 
-            return RedirectToPage("./Index", "select",
-                new {MaintenanceSelection = MaintenanceOptions.OrganizationalUnit});
+            return RedirectToPage("./Index");
         }
     }
 }
