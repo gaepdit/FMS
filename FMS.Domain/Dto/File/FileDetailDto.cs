@@ -17,10 +17,7 @@ namespace FMS.Domain.Dto
                     .Where(e => e.Active)
                     .Select(e => new FacilitySummaryDto(e)).ToList()
                 ?? new List<FacilitySummaryDto>();
-            Cabinets = file.CabinetFiles?
-                    .Select(e => new CabinetSummaryDto(e.Cabinet))
-                    .OrderBy(e => e.Name).ToList()
-                ?? new List<CabinetSummaryDto>();
+            Cabinets = new List<CabinetSummaryDto>();
         }
 
         public Guid Id { get; }

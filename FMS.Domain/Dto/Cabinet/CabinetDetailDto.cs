@@ -14,9 +14,7 @@ namespace FMS.Domain.Dto
             Active = cabinet.Active;
             Name = cabinet.Name;
             FirstFileLabel = cabinet.FirstFileLabel;
-            Files = cabinet.CabinetFiles?
-                    .Select(c => new FileSummaryDto(c.File)).ToList()
-                ?? new List<FileSummaryDto>();
+            Facilities = new List<FacilitySummaryDto>();
         }
 
         public Guid Id { get; }
@@ -28,6 +26,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "First File Label")]
         public string FirstFileLabel { get; }
 
-        public List<FileSummaryDto> Files { get; }
+        public List<FacilitySummaryDto> Facilities { get; }
     }
 }

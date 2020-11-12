@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
@@ -12,8 +11,5 @@ namespace FMS.Domain.Entities
         /// </summary>
         [StringLength(9)]
         public string FirstFileLabel { get; set; }
-
-        // Files and Cabinets have a many-to-many relationship
-        public ICollection<CabinetFile> CabinetFiles { get; set; }
     }
 }

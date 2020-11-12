@@ -1,15 +1,16 @@
-using FMS.Domain.Dto;
-using FMS.Domain.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
     public class Facility : BaseActiveModel
     {
         public Facility() { }
+
         public Facility(FacilityCreateDto newFacility)
         {
             FacilityNumber = newFacility.FacilityNumber;
@@ -26,7 +27,7 @@ namespace FMS.Domain.Entities
             State = newFacility.State;
             PostalCode = newFacility.PostalCode;
             Latitude = newFacility.Latitude ?? 0;
-            Longitude = newFacility.Longitude ?? 0; 
+            Longitude = newFacility.Longitude ?? 0;
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
@@ -81,9 +82,10 @@ namespace FMS.Domain.Entities
         [Column(TypeName = "decimal(9, 6)")]
         public decimal Longitude { get; set; }
 
-        // County for use to simplify queries, ease searching, etc.
         public int CountyId { get; set; }
         public County County { get; set; }
+
+        public bool IsRetained { get; set; } = true;
 
         // List of retention records for this Facility
         public ICollection<RetentionRecord> RetentionRecords { get; set; }

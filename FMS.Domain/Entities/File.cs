@@ -25,11 +25,10 @@ namespace FMS.Domain.Entities
 
         public ICollection<Facility> Facilities { get; set; }
 
-        // Files and Cabinets have a many-to-many relationship
-        public ICollection<CabinetFile> CabinetFiles { get; set; }
-
+        // Readonly properties
         public string Name => FileLabel;
 
+        // Static methods
         public static string CountyString(int countyNum)
         {
             if (Counties.All(e => e.Id != countyNum))

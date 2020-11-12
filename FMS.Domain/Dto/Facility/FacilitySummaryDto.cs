@@ -1,8 +1,8 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -20,9 +20,8 @@ namespace FMS.Domain.Dto
             City = facility.City;
             State = facility.State;
             PostalCode = facility.PostalCode;
-            Cabinets = facility.File.CabinetFiles?
-                    .Select(c => c.Cabinet.Name).ToList()
-                ?? new List<string>();
+            IsRetained = facility.IsRetained;
+            Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
                     .Select(e => new RetentionRecordSummaryDto(e)).ToList()
                 ?? new List<RetentionRecordSummaryDto>();
@@ -57,8 +56,12 @@ namespace FMS.Domain.Dto
         [Display(Name = "ZIP Code")]
         public string PostalCode { get; }
 
+        [Display(Name = "Is Retained")]
+        public bool IsRetained { get; }
+
         public List<string> Cabinets { get; }
 
+        [Display(Name = "Retention Records")]
         public List<RetentionRecordSummaryDto> RetentionRecords { get; }
     }
 }

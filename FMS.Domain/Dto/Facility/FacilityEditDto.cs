@@ -25,6 +25,7 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
+            IsRetained = facility.IsRetained;
         }
 
         [Required]
@@ -96,6 +97,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}", ApplyFormatInEditMode = true)]
         public decimal Longitude { get; set; }
+
+        [Display(Name = "Is Retained")]
+        public bool IsRetained { get; set; }
 
         public void TrimAll()
         {
