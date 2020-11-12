@@ -55,7 +55,7 @@ namespace FMS.Pages.Maintenance.BudgetCode
                 ModelState.AddModelError("BudgetCode.Code", "Code entered already exists.");
             }
 
-            if (await _repository.BudgetCodeNameExistsAsync(BudgetCode.Name))
+            if (await _repository.BudgetCodeNameExistsAsync(BudgetCode.Name, Id))
             {
                 ModelState.AddModelError("BudgetCode.Name", "Name entered already exists.");
             }
