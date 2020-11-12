@@ -49,16 +49,8 @@ namespace FMS.Infrastructure.Repositories
         public Task<Guid> CreateBudgetCodeAsync(BudgetCodeCreateDto budgetCode)
         {
             Prevent.Null(budgetCode, nameof(budgetCode));
-
-            if (string.IsNullOrWhiteSpace(budgetCode.Code))
-            {
-                throw new ArgumentException("New Code for Budget Code is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(budgetCode.Name))
-            {
-                throw new ArgumentException("New Name for Budget Code is required.");
-            }
+            Prevent.NullOrEmpty(budgetCode.Code, nameof(budgetCode.Code));
+            Prevent.NullOrEmpty(budgetCode.Name, nameof(budgetCode.Name));
 
             return CreateBudgetCodeInternalAsync(budgetCode);
         }
@@ -85,15 +77,8 @@ namespace FMS.Infrastructure.Repositories
 
         public Task UpdateBudgetCodeAsync(Guid id, BudgetCodeEditDto budgetCodeUpdates)
         {
-            if (string.IsNullOrWhiteSpace(budgetCodeUpdates.Code))
-            {
-                throw new ArgumentException("Budget Code Code is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(budgetCodeUpdates.Name))
-            {
-                throw new ArgumentException("Budget Code Name is required.");
-            }
+            Prevent.NullOrEmpty(budgetCodeUpdates.Code, nameof(budgetCodeUpdates.Code));
+            Prevent.NullOrEmpty(budgetCodeUpdates.Name, nameof(budgetCodeUpdates.Name));
 
             return UpdateBudgetCodeInternalAsync(id, budgetCodeUpdates);
         }

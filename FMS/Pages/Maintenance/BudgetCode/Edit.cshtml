@@ -1,0 +1,54 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.BudgetCode.EditModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = $"Edit {MaintenanceOptions.BudgetCode}: {Model.BudgetCode.Code}";
+}
+<h1>
+    @ViewData["Title"]
+    @if (!Model.BudgetCode.Active)
+    {
+        <span class="text-muted">(Removed)</span>
+    }
+</h1>
+
+<div class="container bg-light py-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="BudgetCode.Active" />
+        <input type="hidden" asp-for="Id" />
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label asp-for="BudgetCode.Code">@MaintenanceOptions.BudgetCode <span class="text-danger">*</span></label>
+                <input asp-for="BudgetCode.Code" class="form-control" aria-describedby="FileIdHelpBlock" />
+                <span asp-validation-for="BudgetCode.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-10">
+                <label asp-for="BudgetCode.Name">@MaintenanceOptions.BudgetCode Name <span class="text-danger">*</span></label>
+                <input asp-for="BudgetCode.Name" class="form-control" />
+                <span asp-validation-for="BudgetCode.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="BudgetCode.OrganizationNumber">Organization Number</label>
+                <input asp-for="BudgetCode.OrganizationNumber" class="form-control" />
+                <span asp-validation-for="BudgetCode.OrganizationNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="BudgetCode.ProjectNumber">Project Number</label>
+                <input asp-for="BudgetCode.ProjectNumber" class="form-control" />
+                <span asp-validation-for="BudgetCode.ProjectNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <p class="text-danger">* denotes a required field</p>
+        <hr />
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
+    </form>
+</div>

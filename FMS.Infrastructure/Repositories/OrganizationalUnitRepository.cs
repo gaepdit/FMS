@@ -45,11 +45,7 @@ namespace FMS.Infrastructure.Repositories
         public Task<Guid> CreateOrganizationalUnitAsync(OrganizationalUnitCreateDto organizationalUnit)
         {
             Prevent.Null(organizationalUnit, nameof(organizationalUnit));
-
-            if (string.IsNullOrWhiteSpace(organizationalUnit.Name))
-            {
-                throw new ArgumentException("New Name is required.");
-            }
+            Prevent.NullOrEmpty(organizationalUnit.Name, nameof(organizationalUnit.Name));
 
             return CreateOrganizationalUnitInternalAsync(organizationalUnit);
         }
@@ -72,10 +68,7 @@ namespace FMS.Infrastructure.Repositories
 
         public Task UpdateOrganizationalUnitAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates)
         {
-            if (string.IsNullOrWhiteSpace(organizationalUnitUpdates.Name))
-            {
-                throw new ArgumentException("Organizational Unit Name is required.");
-            }
+            Prevent.NullOrEmpty(organizationalUnitUpdates.Name, nameof(organizationalUnitUpdates.Name));
 
             return UpdateOrganizationalUnitInternalAsync(id, organizationalUnitUpdates);
         }

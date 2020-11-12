@@ -1,0 +1,54 @@
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.BudgetCode.IndexModel
+@{
+    ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.BudgetCode}";
+}
+<a asp-page="../Index">← Site Maintenance</a>
+<h1>
+    @MaintenanceOptions.BudgetCode <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
+</h1>
+<partial name="_AlertPartial" for="DisplayMessage" />
+
+<form method="post">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Name</th>
+            <th scope="col">Organization Number</th>
+            <th scope="col">Project Number</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.BudgetCodes)
+        {
+            <tr class="@(!item.Active ? "table-secondary" : "")">
+                <td class="text-nowrap">
+                    @Html.DisplayFor(m => item.Code, "StringOrNone")
+                    @Html.DisplayFor(m => item.Active, "BoolRemoved")
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.Name, "StringOrNone")
+                </td>
+                <td>@Html.DisplayFor(m => item.OrganizationNumber, "StringOrNone")</td>
+                <td>
+                    @Html.DisplayFor(m => item.ProjectNumber, "StringOrNone")<br />
+                </td>
+                <td class="text-nowrap">
+                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                    @if (item.Active)
+                    {
+                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning text-dark btn-sm">Remove from list</button>
+                    }
+                    else
+                    {
+                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning text-dark btn-sm">Restore to list</button>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</form>

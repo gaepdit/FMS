@@ -19,11 +19,7 @@ namespace FMS.Infrastructure.Repositories
         public Task<Guid> CreateFacilityStatusAsync(FacilityStatusCreateDto facilityStatus)
         {
             Prevent.Null(facilityStatus, nameof(facilityStatus));
-
-            if (string.IsNullOrWhiteSpace(facilityStatus.Status))
-            {
-                throw new ArgumentException("New Name for Facility Status is required.");
-            }
+            Prevent.NullOrEmpty(facilityStatus.Status, nameof(facilityStatus.Status));
 
             return CreateFacilityStatusInternalAsync(facilityStatus);
         }
@@ -71,10 +67,8 @@ namespace FMS.Infrastructure.Repositories
 
         public Task UpdateFacilityStatusAsync(Guid id, FacilityStatusEditDto facilityStatusUpdates)
         {
-            if (string.IsNullOrWhiteSpace(facilityStatusUpdates.Status))
-            {
-                throw new ArgumentException("Facility Status Name is required.");
-            }
+            Prevent.Null(facilityStatusUpdates, nameof(facilityStatusUpdates));
+            Prevent.NullOrEmpty(facilityStatusUpdates.Status, nameof(facilityStatusUpdates.Status));
 
             return UpdateFacilityStatusInternalAsync(id, facilityStatusUpdates);
         }
