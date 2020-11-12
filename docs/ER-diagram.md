@@ -3,87 +3,86 @@
 ```mermaid
 
 classDiagram
-    File <--> CabinetFile
-    CabinetFile <--> Cabinet
+    File ..> Cabinet : implied
     File <-- Facility
-        
+    Cabinet <.. Facility : implied
+
     Facility <-- RetentionRecord
     Facility --> BudgetCode
+    Facility --> FacilityStatus
     Facility --> EnvironmentalInterest
     Facility --> ComplianceOfficer
     Facility --> OrganizationalUnit
 
-    BudgetCode --> EnvironmentalInterest
-
-    OrganizationalUnit <-- ComplianceOfficer
-
 %% Classes
 
 class File {
+    Name
     FileLabel
-    List~Cabinets~
     List~Facilities~
-}
-
-class CabinetFile{
-    File
-    Cabinet
+    [List~Cabinets~]
 }
 
 class Cabinet {
-    List~File~
+    Name
+    FileSequence
 }
 
 class Facility {
-    File
-    FacilityLabel
-    EnvironmentalInterest
+    FileLabel
+    FacilityNumber
     Name
-    FacilityStatus
     County
     LocationDescription
-    StreetLine1
-    StreetLine2
+    Address
     City
     State
     PostalCode
     Latitude
     Longitude
+    EnvironmentalInterest
+    FacilityStatus
     BudgetCode
     ComplianceOfficer
     OrganizationalUnit
     List~RetentionRecords~
+    [List~Cabinets~]
 }
 
 class RetentionRecord {
     Facility
-    BoxNumber
-    ConsignmentNumber
-    LocationNumber
     StartYear
     EndYear
+    BoxNumber
+    ConsignmentNumber
+    ShelfNumber
+    RetentionSchedule
 }
 
 class EnvironmentalInterest {
     Name
-    List~BudgetCodes~
+    Description
 }
 
 %% Lookup tables
 
 class BudgetCode {
-    EnvironmentalInterest
+    Code
     OrganizationNumber
     ProjectNumber
 }
 
 class OrganizationalUnit {
-    List~ComplianceOfficers~
+    Name
+}
+
+class FacilityStatus {
+    Status
 }
 
 class ComplianceOfficer {
     Name
-    OrganizationalUnit
+    Email
 }
 
 ```
