@@ -4,7 +4,7 @@ using FMS.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
 
-namespace TestHelpers.SimpleRepository
+namespace TestHelpers
 {
     public class SimpleRepositoryHelper
     {
@@ -14,10 +14,16 @@ namespace TestHelpers.SimpleRepository
         {
             var context = new FmsDbContext(_options, default);
             context.Database.EnsureCreated();
+
+            context.BudgetCodes.AddRange(SimpleRepositoryData.BudgetCodes);
+            context.FacilityStatuses.AddRange(SimpleRepositoryData.FacilityStatuses);
+            context.FacilityTypes.AddRange(SimpleRepositoryData.FacilityTypes);
+            context.OrganizationalUnits.AddRange(SimpleRepositoryData.OrganizationalUnits);
             context.Files.AddRange(SimpleRepositoryData.Files);
             context.Facilities.AddRange(SimpleRepositoryData.Facilities);
-            context.BudgetCodes.AddRange(SimpleRepositoryData.BudgetCodes);
+            context.RetentionRecords.AddRange(SimpleRepositoryData.RetentionRecords);
             context.Cabinets.AddRange(SimpleRepositoryData.Cabinets);
+            
             context.SaveChanges();
         }
 

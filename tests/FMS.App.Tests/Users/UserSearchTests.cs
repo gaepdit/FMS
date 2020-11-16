@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Services;
 using FMS.Pages.Users;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 using static FMS.Pages.Users.IndexModel;
@@ -15,23 +13,18 @@ namespace FMS.App.Tests.Users
 {
     public class UserSearchTests
     {
-        private readonly List<UserSearchResult> _searchResults = DataHelpers
-            .GetApplicationUsers()
-            .Select(e => new UserSearchResult()
-            {
-                Email = e.Email,
-                Name = e.SortableFullName,
-                Id = e.Id
-            }).ToList();
-
         [Theory]
         [InlineData(null, null)]
         [InlineData("a", "b")]
         public async Task OnSearch_IfValidModel_ReturnPage(string name, string email)
         {
+            var searchResults = UserTestData.ApplicationUsers
+                .Select(e => new UserSearchResult() {Email = e.Email, Name = e.SortableFullName, Id = e.Id})
+                .ToList();
+
             var mockUserService = new Mock<IUserService>();
             mockUserService.Setup(l => l.GetUsersAsync(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(DataHelpers.GetApplicationUsers())
+                .ReturnsAsync(UserTestData.ApplicationUsers)
                 .Verifiable();
             var pageModel = new IndexModel(mockUserService.Object);
 
@@ -39,7 +32,7 @@ namespace FMS.App.Tests.Users
 
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
-            pageModel.SearchResults.Should().BeEquivalentTo(_searchResults);
+            pageModel.SearchResults.Should().BeEquivalentTo(searchResults);
         }
 
         [Fact]

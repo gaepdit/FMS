@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using FMS.Domain.Entities;
 
-namespace TestHelpers.SimpleRepository
+namespace TestHelpers
 {
     public static partial class SimpleRepositoryData
     {
-        public static readonly List<FacilityType> FacilityTypes = new List<FacilityType>
-        {
-            new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "GEN", Description = "GEN1"},
-            new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "NPL", Description = "NPL1"}
-        };
-
         public static readonly List<BudgetCode> BudgetCodes = new List<BudgetCode>
         {
             new BudgetCode {Id = Guid.NewGuid(), Name = "BC001"},
@@ -19,16 +13,22 @@ namespace TestHelpers.SimpleRepository
             new BudgetCode {Id = Guid.NewGuid(), Name = "BC003", Active = false},
         };
 
-        public static readonly List<OrganizationalUnit> OrganizationalUnits = new List<OrganizationalUnit>
-        {
-            new OrganizationalUnit {Id = Guid.NewGuid(), Name = "Org One"},
-            new OrganizationalUnit {Id = Guid.NewGuid(), Name = "Org Two"}
-        };
-
         public static readonly List<FacilityStatus> FacilityStatuses = new List<FacilityStatus>
         {
             new FacilityStatus {Id = Guid.NewGuid(), Status = "Active"},
             new FacilityStatus {Id = Guid.NewGuid(), Status = "Inactive"}
+        };
+
+        public static readonly List<FacilityType> FacilityTypes = new List<FacilityType>
+        {
+            new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "GEN", Description = "GEN1"},
+            new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "NPL", Description = "NPL1"}
+        };
+
+        public static readonly List<OrganizationalUnit> OrganizationalUnits = new List<OrganizationalUnit>
+        {
+            new OrganizationalUnit {Id = Guid.NewGuid(), Name = "Org One"},
+            new OrganizationalUnit {Id = Guid.NewGuid(), Name = "Org Two"}
         };
 
         public static readonly List<File> Files = new List<File>

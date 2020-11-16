@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
-using TestHelpers.SimpleRepository;
+using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 

@@ -6,7 +6,6 @@ using FMS.Pages.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -17,7 +16,7 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var user = DataHelpers.GetApplicationUsers()[0];
+            var user = UserTestData.ApplicationUsers[0];
 
             var mockUserService = new Mock<IUserService>();
             mockUserService.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))

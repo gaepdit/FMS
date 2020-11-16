@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using FMS.Domain.Dto;
 using FMS.Domain.Data;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 
-namespace TestHelpers.SimpleRepository
+namespace TestHelpers
 {
     public static partial class SimpleRepositoryData
     {
@@ -52,6 +51,7 @@ namespace TestHelpers.SimpleRepository
         private static FacilityType GetFacilityType(Guid? id) => FacilityTypes.Find(e => e.Id == id);
         private static BudgetCode GetBudgetCode(Guid? id) => BudgetCodes.Find(e => e.Id == id);
         private static OrganizationalUnit GetOrganizationalUnit(Guid? id) => OrganizationalUnits.Find(e => e.Id == id);
+
         private static IEnumerable<RetentionRecordDetailDto> GetRetentionRecordsForFacility(Guid id) =>
             RetentionRecords.Where(e => e.FacilityId == id)
                 .Select(e => new RetentionRecordDetailDto(e)).ToList();
