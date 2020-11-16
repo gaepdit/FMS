@@ -38,12 +38,18 @@ namespace FMS.Infrastructure.SeedData.TestData
                 {
                     Id = new Guid("20FDB0C9-F173-414F-96DA-9CA63EB4065F"),
                     Name = "C005",
-                    FirstFileLabel = "180-0000",
+                    FirstFileLabel = "180-0001",
+                },
+                new Cabinet
+                {
+                    Id = new Guid("67092F63-03F3-4DF8-BDB9-17753553F42D"),
+                    Name = "C006",
+                    FirstFileLabel = "180-0001",
                 },
                 new Cabinet
                 {
                     Id = new Guid("C8124DAF-D088-4B67-B846-AF5622FA4D9E"),
-                    Name = "C006",
+                    Name = "C007",
                     FirstFileLabel = "200-0000",
                 }
             };
