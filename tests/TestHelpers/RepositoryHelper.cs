@@ -25,7 +25,7 @@ namespace TestHelpers
         }
 
         public FacilityRepository GetFacilityRepository() =>
-            new FacilityRepository(new FmsDbContext(_options, default), GetFileRepository());
+            new FacilityRepository(new FmsDbContext(_options, default), GetFileRepository(), default);
 
         public FileRepository GetFileRepository() =>
             new FileRepository(new FmsDbContext(_options, default));

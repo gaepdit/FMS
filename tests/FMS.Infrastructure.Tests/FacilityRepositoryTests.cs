@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
-using TestHelpers;
 using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -305,24 +304,36 @@ namespace FMS.Infrastructure.Tests
             result.TotalPages.ShouldEqual(1);
         }
 
+        // GetFacilityDetailListAsync
+
+        [Fact]
+        public async Task GetFacilityDetailListAsync_DefaultSpec_ReturnsActiveFacilities()
+        {
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+
+            var result = await repository.GetFacilityDetailListAsync(new FacilitySpec());
+            var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.Active);
+
+            result.Count.ShouldEqual(expectedCount);
+        }
+
         // CreateFacilityAsync
 
         [Fact]
         public async Task CreateFacility_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
+            var repositoryHelper = new SimpleRepositoryHelper();
 
             Guid newFacilityId;
             var newFacility = new FacilityCreateDto()
             {
                 FacilityNumber = "ABC",
                 Name = "New Facility",
-                FileLabel = "243-0001",
-                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
-                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
-                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
-                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
-                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                FileLabel = SimpleRepositoryData.Files[0].Name,
+                FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
+                OrganizationalUnitId = SimpleRepositoryData.OrganizationalUnits[0].Id,
+                BudgetCodeId = SimpleRepositoryData.BudgetCodes[0].Id,
+                FacilityStatusId = SimpleRepositoryData.FacilityStatuses[0].Id,
                 Location = "Description of Location",
                 Address = "123 Fake St.",
                 City = "WOODSTOCK",
@@ -351,7 +362,7 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateFacility_WithoutFileLabel_SucceedsAndCreatesNewFile()
         {
-            var repositoryHelper = new RepositoryHelper();
+            var repositoryHelper = new SimpleRepositoryHelper();
 
             Guid newFacilityId;
             var newFacility = new FacilityCreateDto()
@@ -359,11 +370,10 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = "ABC",
                 Name = "New Facility",
                 FileLabel = null,
-                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
-                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
-                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
-                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
-                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
+                OrganizationalUnitId = SimpleRepositoryData.OrganizationalUnits[0].Id,
+                BudgetCodeId = SimpleRepositoryData.BudgetCodes[0].Id,
+                FacilityStatusId = SimpleRepositoryData.FacilityStatuses[0].Id,
                 Location = "Description of Location",
                 Address = "123 Fake St.",
                 City = "WOODSTOCK",
@@ -391,18 +401,17 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task CreateFacility_WithEmptyFacilityNumber_ThrowsException()
+        public async Task CreateFacility_WithWhitespaceFacilityNumber_ThrowsException()
         {
             var newFacility = new FacilityCreateDto()
             {
                 FacilityNumber = " ",
                 Name = "New Facility",
                 FileLabel = null,
-                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
-                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
-                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
-                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
-                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
+                OrganizationalUnitId = SimpleRepositoryData.OrganizationalUnits[0].Id,
+                BudgetCodeId = SimpleRepositoryData.BudgetCodes[0].Id,
+                FacilityStatusId = SimpleRepositoryData.FacilityStatuses[0].Id,
                 Location = "Description of Location",
                 Address = "123 Fake St.",
                 City = "WOODSTOCK",
@@ -415,7 +424,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.CreateFacilityAsync(newFacility);
             };
 
@@ -426,12 +435,12 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateFacility_WithExistingNumber_ThrowsException()
         {
-            var existingNumber = DataHelpers.Facilities[0].FacilityNumber;
+            var existingNumber = SimpleRepositoryData.Facilities[0].FacilityNumber;
             var facilityCreate = new FacilityCreateDto() {FacilityNumber = existingNumber, CountyId = 123};
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.CreateFacilityAsync(facilityCreate);
             };
 
@@ -446,18 +455,18 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.CreateFacilityAsync(facilityCreate);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"County ID 999 does not exist.");
+                .WithMessage("County ID 999 does not exist.");
         }
 
         [Fact]
         public async Task CreateFacility_WithWhitespaceFileLabel_SucceedsAndCreatesNewFile()
         {
-            var repositoryHelper = new RepositoryHelper();
+            var repositoryHelper = new SimpleRepositoryHelper();
 
             Guid newFacilityId;
             var newFacility = new FacilityCreateDto()
@@ -465,11 +474,10 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = "ABC",
                 Name = "New Facility",
                 FileLabel = " ",
-                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
-                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
-                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
-                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
-                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
+                OrganizationalUnitId = SimpleRepositoryData.OrganizationalUnits[0].Id,
+                BudgetCodeId = SimpleRepositoryData.BudgetCodes[0].Id,
+                FacilityStatusId = SimpleRepositoryData.FacilityStatuses[0].Id,
                 Location = "Description of Location",
                 Address = "123 Fake St.",
                 City = "WOODSTOCK",
@@ -504,11 +512,10 @@ namespace FMS.Infrastructure.Tests
                 FacilityNumber = "ABC",
                 Name = "New Facility",
                 FileLabel = "ABC999",
-                FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // GEN
-                OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), // Org Unit
-                BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), // HWRCRA
-                ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), // 01069946 
-                FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // NON-RCRA
+                FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
+                OrganizationalUnitId = SimpleRepositoryData.OrganizationalUnits[0].Id,
+                BudgetCodeId = SimpleRepositoryData.BudgetCodes[0].Id,
+                FacilityStatusId = SimpleRepositoryData.FacilityStatuses[0].Id,
                 Location = "Description of Location",
                 Address = "123 Fake St.",
                 City = "WOODSTOCK",
@@ -521,7 +528,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.CreateFacilityAsync(newFacility);
             };
 
@@ -534,13 +541,13 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFacility_County_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
-            int newCountyId = 99;
-            Guid facilityId = DataHelpers.Facilities[0].Id;
+            var repositoryHelper = new SimpleRepositoryHelper();
+            const int newCountyId = 99;
+            var facilityId = SimpleRepositoryData.Facilities[0].Id;
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
                 var updates = new FacilityEditDto(facility) {CountyId = newCountyId};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
@@ -548,8 +555,8 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var expected = DataHelpers.GetFacilityDetail(facilityId);
-                expected.County = DataHelpers.GetCounty(newCountyId);
+                var expected = SimpleRepositoryData.GetFacilityDetail(facilityId);
+                expected.County = SimpleRepositoryData.GetCounty(newCountyId);
 
                 var updatedFacility = await repository.GetFacilityAsync(facilityId);
 
@@ -560,13 +567,13 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFacility_State_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
-            string newState = "Alabama";
-            Guid facilityId = DataHelpers.Facilities[0].Id;
+            var repositoryHelper = new SimpleRepositoryHelper();
+            const string newState = "Alabama";
+            var facilityId = SimpleRepositoryData.Facilities[0].Id;
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
                 var updates = new FacilityEditDto(facility) {State = newState};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
@@ -574,7 +581,7 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var expected = DataHelpers.GetFacilityDetail(facilityId);
+                var expected = SimpleRepositoryData.GetFacilityDetail(facilityId);
                 expected.State = newState;
 
                 var updatedFacility = await repository.GetFacilityAsync(facilityId);
@@ -586,13 +593,13 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFacility_ChangeFile_Succeeds()
         {
-            var repositoryHelper = new RepositoryHelper();
-            Guid facilityId = DataHelpers.Facilities[0].Id;
-            File newFile = DataHelpers.Files.Single(e => e.FileLabel == "248-0001");
+            var repositoryHelper = new SimpleRepositoryHelper();
+            var facilityId = SimpleRepositoryData.Facilities[0].Id;
+            var newFile = SimpleRepositoryData.Files[1];
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
                 var updates = new FacilityEditDto(facility) {FileLabel = newFile.FileLabel};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
@@ -610,12 +617,12 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFacility_WithBlankFile_SucceedsAndCreatesNewFile()
         {
-            var repositoryHelper = new RepositoryHelper();
-            Guid facilityId = DataHelpers.Facilities[0].Id;
+            var repositoryHelper = new SimpleRepositoryHelper();
+            var facilityId = SimpleRepositoryData.Facilities[0].Id;
 
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
-                var facility = DataHelpers.GetFacilityDetail(facilityId);
+                var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
                 var updates = new FacilityEditDto(facility) {FileLabel = ""};
 
                 await repository.UpdateFacilityAsync(facilityId, updates);
@@ -626,7 +633,7 @@ namespace FMS.Infrastructure.Tests
                 var updatedFacility = await repository.GetFacilityAsync(facilityId);
 
                 updatedFacility.FileLabel.ShouldNotBeNull();
-                updatedFacility.FileLabel.Should().StartWith(DataHelpers.Facilities[0].CountyId.ToString());
+                updatedFacility.FileLabel.Should().StartWith(SimpleRepositoryData.Facilities[0].CountyId.ToString());
             }
         }
 
@@ -637,7 +644,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.UpdateFacilityAsync(Guid.Empty, updates);
             };
 
@@ -652,7 +659,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.UpdateFacilityAsync(Guid.Empty, updates);
             };
 
@@ -667,7 +674,7 @@ namespace FMS.Infrastructure.Tests
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.UpdateFacilityAsync(Guid.Empty, updates);
             };
 
@@ -680,13 +687,13 @@ namespace FMS.Infrastructure.Tests
         {
             const string newFileLabel = "999-9999";
 
-            var facilityId = DataHelpers.Facilities[0].Id;
-            var facility = DataHelpers.GetFacilityDetail(facilityId);
+            var facilityId = SimpleRepositoryData.Facilities[0].Id;
+            var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
             var updates = new FacilityEditDto(facility) {FileLabel = newFileLabel};
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.UpdateFacilityAsync(facilityId, updates);
             };
 
@@ -697,14 +704,14 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task UpdateFacility_WithExistingNumber_ThrowsException()
         {
-            var existingNumber = DataHelpers.Facilities[1].FacilityNumber;
-            var facilityId = DataHelpers.Facilities[0].Id;
-            var facility = DataHelpers.GetFacilityDetail(facilityId);
+            var existingNumber = SimpleRepositoryData.Facilities[1].FacilityNumber;
+            var facilityId = SimpleRepositoryData.Facilities[0].Id;
+            var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
             var updates = new FacilityEditDto(facility) {FacilityNumber = existingNumber};
 
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.UpdateFacilityAsync(facilityId, updates);
             };
 
@@ -737,7 +744,7 @@ namespace FMS.Infrastructure.Tests
         {
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.DeleteFacilityAsync(Guid.Empty);
             };
 
@@ -750,7 +757,7 @@ namespace FMS.Infrastructure.Tests
         {
             var repositoryHelper = new SimpleRepositoryHelper();
             var facility = SimpleRepositoryData.Facilities.First(e => e.Active);
-            
+
             using (var repository = repositoryHelper.GetFacilityRepository())
             {
                 await repository.UndeleteFacilityAsync(facility.Id);
@@ -768,30 +775,12 @@ namespace FMS.Infrastructure.Tests
         {
             Func<Task> action = async () =>
             {
-                using var repository = new RepositoryHelper().GetFacilityRepository();
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
                 await repository.UndeleteFacilityAsync(Guid.Empty);
             };
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("Facility ID not found. (Parameter 'id')");
-        }
-
-        // GetRecommendedCabinetForFile
-
-        [Theory]
-        [InlineData("000-0000", "C001")]
-        [InlineData("100-0001", "C001")]
-        [InlineData("110-0000", "C002")]
-        [InlineData("110-0001", "C003")]
-        [InlineData("111-0001", "C005")]
-        [InlineData("111-0002", "C005")]
-        [InlineData("999-9999", "C005")]
-        public async Task GetRecommendedCabinetForFile_Succeeds(string fileLabel, string cabinetNumber)
-        {
-            var repository = new SimpleRepositoryHelper().GetFacilityRepository();
-            var result = await repository.GetRecommendedCabinetForFile(fileLabel);
-            var cabinet = SimpleRepositoryData.Cabinets.Single(e => e.Name == cabinetNumber);
-            result.ShouldEqual(cabinet.Id);
         }
 
         // FacilityNumberExists
@@ -846,15 +835,15 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task RetentionRecord_Exists_ReturnsTrue()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            var result = await repository.RetentionRecordExistsAsync(DataHelpers.RetentionRecords[0].Id);
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.RetentionRecordExistsAsync(SimpleRepositoryData.RetentionRecords[0].Id);
             result.ShouldBeTrue();
         }
 
         [Fact]
         public async Task RetentionRecord_NotExists_ReturnsFalse()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.RetentionRecordExistsAsync(Guid.Empty);
             result.ShouldBeFalse();
         }
@@ -864,8 +853,8 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task GetRetentionRecord_ReturnsCorrectItem()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
-            var expected = new RetentionRecordDetailDto(DataHelpers.RetentionRecords[0]);
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var expected = new RetentionRecordDetailDto(SimpleRepositoryData.RetentionRecords[0]);
 
             var result = await repository.GetRetentionRecordAsync(expected.Id);
 
@@ -873,9 +862,9 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetNonexistentRetentionRecord_ReturnsNull()
+        public async Task GetRetentionRecord_Nonexistent_ReturnsNull()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.GetRetentionRecordAsync(Guid.Empty);
             result.ShouldBeNull();
         }
@@ -885,14 +874,14 @@ namespace FMS.Infrastructure.Tests
         [Fact]
         public async Task CreateRecord_Succeeds()
         {
-            using var repository = new RepositoryHelper().GetFacilityRepository();
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var record = new RetentionRecord()
             {
                 Active = true,
                 BoxNumber = "NewBox",
                 ConsignmentNumber = "CN",
                 EndYear = 2020,
-                FacilityId = DataHelpers.Facilities[0].Id,
+                FacilityId = SimpleRepositoryData.Facilities[0].Id,
                 RetentionSchedule = "RS",
                 ShelfNumber = "SN",
                 StartYear = 2000,

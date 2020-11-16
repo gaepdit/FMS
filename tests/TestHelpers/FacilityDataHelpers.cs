@@ -19,7 +19,6 @@ namespace TestHelpers
             facility.ComplianceOfficer = GetComplianceOfficer(facility.ComplianceOfficerId);
 
             var facilityDetail = new FacilityDetailDto(facility);
-            facilityDetail.Cabinets.AddRange(GetCabinetsForFile(facility.FileId));
             facilityDetail.RetentionRecords.AddRange(GetRetentionRecordDetailsForFacility(id));
 
             return facilityDetail;

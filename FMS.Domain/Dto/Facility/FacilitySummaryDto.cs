@@ -59,7 +59,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Is Retained")]
         public bool IsRetained { get; }
 
-        public List<string> Cabinets { get; }
+        public List<string> Cabinets { get; set; }
 
         [Display(Name = "Retention Records")]
         public List<RetentionRecordSummaryDto> RetentionRecords { get; }
