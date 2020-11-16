@@ -17,18 +17,7 @@ namespace FMS.Infrastructure.Repositories
     public class FacilityRepository : IFacilityRepository
     {
         private readonly FmsDbContext _context;
-        private readonly IFileRepository _fileRepository;
-        private readonly ICabinetRepository _cabinetRepository;
-
-        public FacilityRepository(
-            FmsDbContext context,
-            IFileRepository fileRepository,
-            ICabinetRepository cabinetRepository)
-        {
-            _context = context;
-            _fileRepository = fileRepository;
-            _cabinetRepository = cabinetRepository;
-        }
+        public FacilityRepository(FmsDbContext context) => _context = context;
 
         public async Task<bool> FacilityExistsAsync(Guid id) =>
             await _context.Facilities.AnyAsync(e => e.Id == id);
@@ -55,7 +44,7 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-            facilityDetail.Cabinets = (await _cabinetRepository.GetCabinetListAsync(false))
+            facilityDetail.Cabinets = (await GetCabinetListAsync(false))
                 .GetCabinetsForFile(facilityDetail.FileLabel);
 
             return facilityDetail;
@@ -130,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
 
-            var cabinets = await _cabinetRepository.GetCabinetListAsync(false);
+            var cabinets = await GetCabinetListAsync(false);
             foreach (var item in items)
             {
                 item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
@@ -158,7 +147,7 @@ namespace FMS.Infrastructure.Repositories
 
             var items = await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
 
-            var cabinets = await _cabinetRepository.GetCabinetListAsync(false);
+            var cabinets = await GetCabinetListAsync(false);
             foreach (var item in items)
             {
                 item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
@@ -297,10 +286,20 @@ namespace FMS.Infrastructure.Repositories
         private async Task<File> CreateFileInternal(int countyId)
         {
             // Generate new File
-            var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(countyId);
+            var nextSequence = await GetNextSequenceForCountyAsync(countyId);
             var file = new File(countyId, nextSequence);
             await _context.Files.AddAsync(file);
             return file;
+        }
+
+        private async Task<int> GetNextSequenceForCountyAsync(int countyId)
+        {
+            var countyString = File.CountyString(countyId);
+            var allSequencesForCounty = await _context.Files.AsNoTracking()
+                .Where(e => e.FileLabel.StartsWith(countyString))
+                .Select(e => int.Parse(e.FileLabel.Substring(4, 4)))
+                .ToListAsync();
+            return allSequencesForCounty.Count == 0 ? 1 : allSequencesForCounty.Max() + 1;
         }
 
         public async Task DeleteFacilityAsync(Guid id)
@@ -328,7 +327,7 @@ namespace FMS.Infrastructure.Repositories
             facility.Active = true;
             await _context.SaveChangesAsync();
         }
-        
+
         public async Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null) =>
             await _context.Facilities.AnyAsync(e =>
                 e.FacilityNumber == facilityNumber
@@ -395,6 +394,23 @@ namespace FMS.Infrastructure.Repositories
             }
 
             return new FacilityBasicDto(facility);
+        }
+
+        private async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true)
+        {
+            var cabinets = await _context.Cabinets.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.FirstFileLabel)
+                .ThenBy(e => e.Name)
+                .Select(e => new CabinetSummaryDto(e)).ToListAsync();
+
+            // loop through all the cabinets except the last one and set last file label
+            for (var i = 0; i < cabinets.Count - 1; i++)
+            {
+                cabinets[i].LastFileLabel = cabinets[i + 1].FirstFileLabel;
+            }
+
+            return cabinets;
         }
 
         #region IDisposable Support

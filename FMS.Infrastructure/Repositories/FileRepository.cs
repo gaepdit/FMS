@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
@@ -14,13 +15,8 @@ namespace FMS.Infrastructure.Repositories
     public class FileRepository : IFileRepository
     {
         private readonly FmsDbContext _context;
-        private readonly ICabinetRepository _cabinetRepository;
 
-        public FileRepository(FmsDbContext context, ICabinetRepository cabinetRepository)
-        {
-            _context = context;
-            _cabinetRepository = cabinetRepository;
-        }
+        public FileRepository(FmsDbContext context) => _context = context;
 
         public async Task<bool> FileExistsAsync(Guid id) =>
             await _context.Files.AnyAsync(e => e.Id == id);
@@ -34,7 +30,7 @@ namespace FMS.Infrastructure.Repositories
             if (file == null) return null;
 
             var fileDetail = new FileDetailDto(file);
-            fileDetail.Cabinets = (await _cabinetRepository.GetCabinetListAsync(false))
+            fileDetail.Cabinets = (await GetCabinetListAsync(false))
                 .GetCabinetsForFile(fileDetail.FileLabel);
 
             return fileDetail;
@@ -49,7 +45,7 @@ namespace FMS.Infrastructure.Repositories
             if (file == null) return null;
 
             var fileDetail = new FileDetailDto(file);
-            fileDetail.Cabinets = (await _cabinetRepository.GetCabinetListAsync(false))
+            fileDetail.Cabinets = (await GetCabinetListAsync(false))
                 .GetCabinetsForFile(fileDetail.FileLabel);
 
             return fileDetail;
@@ -82,7 +78,7 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new FileDetailDto(e))
                 .ToListAsync();
 
-            var cabinets = await _cabinetRepository.GetCabinetListAsync(false);
+            var cabinets = await GetCabinetListAsync(false);
             foreach (var item in items)
             {
                 item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
@@ -114,6 +110,23 @@ namespace FMS.Infrastructure.Repositories
             file.Active = active;
 
             await _context.SaveChangesAsync();
+        }
+
+        private async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true)
+        {
+            var cabinets = await _context.Cabinets.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.FirstFileLabel)
+                .ThenBy(e => e.Name)
+                .Select(e => new CabinetSummaryDto(e)).ToListAsync();
+
+            // loop through all the cabinets except the last one and set last file label
+            for (var i = 0; i < cabinets.Count - 1; i++)
+            {
+                cabinets[i].LastFileLabel = cabinets[i + 1].FirstFileLabel;
+            }
+
+            return cabinets;
         }
 
         #region IDisposable Support

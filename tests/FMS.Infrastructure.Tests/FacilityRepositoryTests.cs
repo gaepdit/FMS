@@ -82,9 +82,9 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityCount_ByCounty_ReturnsCorrectCount()
         {
             const int countyId = 131;
-            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() {CountyId = countyId};
 
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var result = await repository.CountAsync(spec);
             var expected = SimpleRepositoryData.Facilities
                 .Count(e => e.CountyId == countyId && e.Active);
@@ -124,8 +124,8 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityCount_ByInactiveFacilityNumber_ReturnsZero()
         {
             const string facilityNumber = "DEF";
-            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() {FacilityNumber = facilityNumber};
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
 
             var result = await repository.CountAsync(spec);
 
@@ -214,8 +214,8 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_ByMissingCounty_ReturnsNone()
         {
             const int countySpec = 243;
-            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
             var spec = new FacilitySpec() {CountyId = countySpec, ShowDeleted = true};
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
             var expectedCount = SimpleRepositoryData.Facilities.Count(e => e.CountyId == countySpec);
@@ -549,7 +549,6 @@ namespace FMS.Infrastructure.Tests
             {
                 var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
                 var updates = new FacilityEditDto(facility) {CountyId = newCountyId};
-
                 await repository.UpdateFacilityAsync(facilityId, updates);
             }
 
@@ -687,13 +686,14 @@ namespace FMS.Infrastructure.Tests
         {
             const string newFileLabel = "999-9999";
 
-            var facilityId = SimpleRepositoryData.Facilities[0].Id;
-            var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
-            var updates = new FacilityEditDto(facility) {FileLabel = newFileLabel};
-
             Func<Task> action = async () =>
             {
                 using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+                
+                var facilityId = SimpleRepositoryData.Facilities[0].Id;
+                var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
+                var updates = new FacilityEditDto(facility) {FileLabel = newFileLabel};
+
                 await repository.UpdateFacilityAsync(facilityId, updates);
             };
 
@@ -705,13 +705,15 @@ namespace FMS.Infrastructure.Tests
         public async Task UpdateFacility_WithExistingNumber_ThrowsException()
         {
             var existingNumber = SimpleRepositoryData.Facilities[1].FacilityNumber;
-            var facilityId = SimpleRepositoryData.Facilities[0].Id;
-            var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
-            var updates = new FacilityEditDto(facility) {FacilityNumber = existingNumber};
 
             Func<Task> action = async () =>
             {
                 using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+
+                var facilityId = SimpleRepositoryData.Facilities[0].Id;
+                var facility = SimpleRepositoryData.GetFacilityDetail(facilityId);
+                var updates = new FacilityEditDto(facility) {FacilityNumber = existingNumber};
+
                 await repository.UpdateFacilityAsync(facilityId, updates);
             };
 
