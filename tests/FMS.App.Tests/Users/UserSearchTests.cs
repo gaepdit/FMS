@@ -18,13 +18,14 @@ namespace FMS.App.Tests.Users
         [InlineData("a", "b")]
         public async Task OnSearch_IfValidModel_ReturnPage(string name, string email)
         {
-            var searchResults = UserTestData.ApplicationUsers
+            var users = UserTestData.ApplicationUsers;
+            var searchResults = users
                 .Select(e => new UserSearchResult() {Email = e.Email, Name = e.SortableFullName, Id = e.Id})
                 .ToList();
 
             var mockUserService = new Mock<IUserService>();
             mockUserService.Setup(l => l.GetUsersAsync(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(UserTestData.ApplicationUsers)
+                .ReturnsAsync(users)
                 .Verifiable();
             var pageModel = new IndexModel(mockUserService.Object);
 

@@ -327,7 +327,7 @@ namespace FMS.Infrastructure.Tests
             Guid newFacilityId;
             var newFacility = new FacilityCreateDto()
             {
-                FacilityNumber = "ABC",
+                FacilityNumber = "QRS1",
                 Name = "New Facility",
                 FileLabel = SimpleRepositoryData.Files[0].Name,
                 FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
@@ -367,7 +367,7 @@ namespace FMS.Infrastructure.Tests
             Guid newFacilityId;
             var newFacility = new FacilityCreateDto()
             {
-                FacilityNumber = "ABC",
+                FacilityNumber = "QRS1",
                 Name = "New Facility",
                 FileLabel = null,
                 FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
@@ -471,7 +471,7 @@ namespace FMS.Infrastructure.Tests
             Guid newFacilityId;
             var newFacility = new FacilityCreateDto()
             {
-                FacilityNumber = "ABC",
+                FacilityNumber = "QRS1",
                 Name = "New Facility",
                 FileLabel = " ",
                 FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,
@@ -509,7 +509,7 @@ namespace FMS.Infrastructure.Tests
         {
             var newFacility = new FacilityCreateDto()
             {
-                FacilityNumber = "ABC",
+                FacilityNumber = "QRS1",
                 Name = "New Facility",
                 FileLabel = "ABC999",
                 FacilityTypeId = SimpleRepositoryData.FacilityTypes[0].Id,

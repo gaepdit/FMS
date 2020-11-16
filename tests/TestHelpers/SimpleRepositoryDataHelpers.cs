@@ -40,7 +40,8 @@ namespace TestHelpers
             facility.OrganizationalUnit = GetOrganizationalUnit(facility.OrganizationalUnitId);
 
             var facilityDetail = new FacilityDetailDto(facility);
-            facilityDetail.RetentionRecords.AddRange(GetRetentionRecordsForFacility(id));
+            facilityDetail.Cabinets = GetCabinetSummaries(false).GetCabinetsForFile(facilityDetail.FileLabel);
+
             return facilityDetail;
         }
 
