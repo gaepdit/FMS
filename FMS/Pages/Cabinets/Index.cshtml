@@ -14,8 +14,8 @@
 </h1>
 
 <p>
-    <i>First File Label</i> is the first/lowest file label in the cabinet. It is used for determining 
-    the appropriate cabinet to use when creating new files.
+    <i>File Label Range</i> is used for displaying the storage cabinet use by each File or Facility. The range is the
+    First File Label for the cabinet up to (but not including) the First File Label for the next cabinet.
 </p>
 
 @if (Model.Cabinets != null && Model.Cabinets.Count > 0)
@@ -24,7 +24,7 @@
         <thead class="thead-light">
         <tr>
             <th scope="col">Cabinet</th>
-            <th scope="col">First File Label</th>
+            <th scope="col">File Label Range</th>
             @if (User.IsInRole(UserRoles.SiteMaintenance))
             {
                 <th scope="col" class="text-center">Actions</th>
@@ -40,7 +40,7 @@
                         @item.Name @(item.Active ? "" : "(Deleted)")
                     </a>
                 </td>
-                <td>@item.FirstFileLabel</td>
+                <td>@item.FirstFileLabel — (@item.LastFileLabel)</td>
                 @if (User.IsInRole(UserRoles.SiteMaintenance))
                 {
                     <td class="text-center">

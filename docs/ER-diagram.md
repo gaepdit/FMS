@@ -20,12 +20,15 @@ class File {
     Name
     FileLabel
     List~Facilities~
-    [List~Cabinets~]
+
+    List<Cabinets> (implied)
 }
 
 class Cabinet {
     Name
-    FileSequence
+    FirstFileLabel
+
+    LastFileLabel (implied)
 }
 
 class Facility {
@@ -46,7 +49,8 @@ class Facility {
     ComplianceOfficer
     OrganizationalUnit
     List~RetentionRecords~
-    [List~Cabinets~]
+
+    List<Cabinets> (implied)
 }
 
 class RetentionRecord {
