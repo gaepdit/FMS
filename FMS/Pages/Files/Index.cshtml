@@ -1,5 +1,6 @@
 ﻿@page
 @using FMS.Domain.Dto
+@using FMS.Pages.Files
 @model FMS.Pages.Files.IndexModel
 @{
     ViewData["Title"] = "File Search";
@@ -16,7 +17,7 @@
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Spec.CountyId"></label>
-                <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="custom-select">
+                <select asp-for="Spec.CountyId" asp-items="IndexModel.Counties" class="custom-select">
                     <option value=""></option>
                 </select>
             </div>
@@ -66,7 +67,7 @@
                         </a>
                         @Html.DisplayFor(m => item.Active, "BoolDeleted")
                     </td>
-                    <td>@item.Cabinets.Select(e => e.Name).ConcatNonEmpty(", ")</td>
+                    <td>@item.Cabinets.ConcatNonEmpty(", ")</td>
                     <td>
                         @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
                     </td>
