@@ -22,5 +22,14 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "First File Label")]
         public string FirstFileLabel { get; }
+
+        [Display(Name = "Last File Label")]
+        public string LastFileLabel
+        {
+            get => _lastFileLabel ?? "999-9999";
+            set => _lastFileLabel = value;
+        }
+
+        private string _lastFileLabel;
     }
 }

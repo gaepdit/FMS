@@ -46,6 +46,7 @@ namespace TestHelpers.SimpleRepository
                 CountyId = 131,
                 Location = "",
                 Active = false,
+                IsRetained = false,
             },
             new Facility
             {
@@ -87,30 +88,30 @@ namespace TestHelpers.SimpleRepository
             new Cabinet {Id = Guid.NewGuid(), Name = "C003", FirstFileLabel = "110-0001"},
             new Cabinet {Id = Guid.NewGuid(), Name = "C004", FirstFileLabel = "111-0001"},
             new Cabinet {Id = Guid.NewGuid(), Name = "C005", FirstFileLabel = "111-0001"},
-            new Cabinet {Id = Guid.NewGuid(), Name = "C006", FirstFileLabel = "999-0001", Active = false},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C006", FirstFileLabel = "150-0001", Active = false},
+            new Cabinet {Id = Guid.NewGuid(), Name = "C007", FirstFileLabel = "150-0001"},
         };
-
-        public static readonly List<CabinetFile> CabinetFiles = new List<CabinetFile>
-        {
-            new CabinetFile {FileId = Files[0].Id, CabinetId = Cabinets[0].Id},
-            new CabinetFile {FileId = Files[1].Id, CabinetId = Cabinets[3].Id},
-            new CabinetFile {FileId = Files[1].Id, CabinetId = Cabinets[4].Id},
-            new CabinetFile {FileId = Files[2].Id, CabinetId = Cabinets[0].Id},
-            new CabinetFile {FileId = Files[3].Id, CabinetId = Cabinets[0].Id},
-            new CabinetFile {FileId = Files[4].Id, CabinetId = Cabinets[2].Id},
-            new CabinetFile {FileId = Files[5].Id, CabinetId = Cabinets[2].Id},
-        };
-
 
         // DTO helpers
 
-        public static CabinetSummaryDto GetCabinetSummary(Guid id) =>
-            new CabinetSummaryDto(Cabinets.Find(e => e.Id == id));
-
-        public static CabinetDetailDto GetCabinetDetail(Guid id)
+        public static List<CabinetSummaryDto> GetCabinetSummaries(bool includeInactive)
         {
-            var cabinet = Cabinets.Find(e => e.Id == id);
-            return new CabinetDetailDto(cabinet);
+            var cabinets = Cabinets
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.FirstFileLabel)
+                .ThenBy(e => e.Name)
+                .Select(e => new CabinetSummaryDto(e)).ToList();
+
+            // loop through all the cabinets except the last one and set last file label
+            for (var i = 0; i < cabinets.Count - 1; i++)
+            {
+                cabinets[i].LastFileLabel = cabinets[i + 1].FirstFileLabel;
+            }
+
+            return cabinets;
         }
+
+        public static CabinetSummaryDto GetCabinetSummary(Guid id) =>
+            GetCabinetSummaries(true).Find(e => e.Id == id);
     }
 }

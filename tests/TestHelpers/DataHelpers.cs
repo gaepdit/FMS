@@ -19,7 +19,6 @@ namespace TestHelpers
         public static readonly List<ComplianceOfficer> ComplianceOfficers = TestData.GetComplianceOfficers();
         public static readonly List<File> Files = TestData.GetFiles();
         public static readonly List<Cabinet> Cabinets = TestData.GetCabinets();
-        public static readonly List<CabinetFile> CabinetFiles = TestData.GetCabinetFiles();
         public static readonly List<RetentionRecord> RetentionRecords = TestData.GetRetentionRecords();
 
         // Item retrieval

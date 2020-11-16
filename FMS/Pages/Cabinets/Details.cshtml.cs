@@ -21,7 +21,7 @@ namespace FMS.Pages.Cabinets
                 return NotFound();
             }
 
-            CabinetDetail = await _repository.GetCabinetDetailsAsync(id);
+            CabinetDetail = await _repository.GetCabinetSummaryAsync(id);
 
             if (CabinetDetail == null)
             {

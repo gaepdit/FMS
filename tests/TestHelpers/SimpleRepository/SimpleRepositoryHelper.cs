@@ -18,12 +18,11 @@ namespace TestHelpers.SimpleRepository
             context.Facilities.AddRange(SimpleRepositoryData.Facilities);
             context.BudgetCodes.AddRange(SimpleRepositoryData.BudgetCodes);
             context.Cabinets.AddRange(SimpleRepositoryData.Cabinets);
-            context.CabinetFileJoin.AddRange(SimpleRepositoryData.CabinetFiles);
             context.SaveChanges();
         }
 
         public IFacilityRepository GetFacilityRepository() =>
-            new FacilityRepository(new FmsDbContext(_options, default), GetFileRepository());
+            new FacilityRepository(new FmsDbContext(_options, default), GetFileRepository(), GetCabinetRepository());
 
         public IFileRepository GetFileRepository() =>
             new FileRepository(new FmsDbContext(_options, default));

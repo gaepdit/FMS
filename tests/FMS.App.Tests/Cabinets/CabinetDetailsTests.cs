@@ -20,7 +20,7 @@ namespace FMS.App.Tests.Cabinets
             var item = SimpleRepositoryData.GetCabinetDetail(id);
 
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetDetailsAsync(It.IsAny<string>()))
+            mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<string>()))
                 .ReturnsAsync(item)
                 .Verifiable();
 
