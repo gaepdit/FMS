@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
@@ -15,7 +14,13 @@ namespace FMS.Infrastructure.Repositories
     public class FileRepository : IFileRepository
     {
         private readonly FmsDbContext _context;
-        public FileRepository(FmsDbContext context) => _context = context;
+        private readonly ICabinetRepository _cabinetRepository;
+
+        public FileRepository(FmsDbContext context, ICabinetRepository cabinetRepository)
+        {
+            _context = context;
+            _cabinetRepository = cabinetRepository;
+        }
 
         public async Task<bool> FileExistsAsync(Guid id) =>
             await _context.Files.AnyAsync(e => e.Id == id);
@@ -24,25 +29,30 @@ namespace FMS.Infrastructure.Repositories
         {
             var file = await _context.Files.AsNoTracking()
                 .Include(e => e.Facilities)
-                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            if (file == null)
-            {
-                return null;
-            }
+            if (file == null) return null;
 
-            return new FileDetailDto(file);
+            var fileDetail = new FileDetailDto(file);
+            fileDetail.Cabinets = (await _cabinetRepository.GetCabinetListAsync(false))
+                .GetCabinetsForFile(fileDetail.FileLabel);
+
+            return fileDetail;
         }
 
-        public async Task<FileDetailDto> GetFileAsync(string id)
+        public async Task<FileDetailDto> GetFileAsync(string fileLabel)
         {
             var file = await _context.Files.AsNoTracking()
                 .Include(e => e.Facilities)
-                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
-                .SingleOrDefaultAsync(e => e.FileLabel == id);
+                .SingleOrDefaultAsync(e => e.FileLabel == fileLabel);
 
-            return file == null ? null : new FileDetailDto(file);
+            if (file == null) return null;
+
+            var fileDetail = new FileDetailDto(file);
+            fileDetail.Cabinets = (await _cabinetRepository.GetCabinetListAsync(false))
+                .GetCabinetsForFile(fileDetail.FileLabel);
+
+            return fileDetail;
         }
 
         public async Task<bool> FileHasActiveFacilities(Guid id) =>
@@ -64,7 +74,6 @@ namespace FMS.Infrastructure.Repositories
 
             var items = await _context.Files.AsNoTracking()
                 .Include(e => e.Facilities)
-                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
                 .Where(e => spec.ShowInactive || e.Active)
                 .Where(e => string.IsNullOrWhiteSpace(spec.FileLabel) || e.FileLabel.Contains(spec.FileLabel))
                 .Where(e => !spec.CountyId.HasValue || e.FileLabel.StartsWith(File.CountyString(spec.CountyId.Value)))
@@ -72,6 +81,12 @@ namespace FMS.Infrastructure.Repositories
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(e => new FileDetailDto(e))
                 .ToListAsync();
+
+            var cabinets = await _cabinetRepository.GetCabinetListAsync(false);
+            foreach (var item in items)
+            {
+                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+            }
 
             var totalCount = await CountAsync(spec);
             return new PaginatedList<FileDetailDto>(items, totalCount, pageNumber, pageSize);
@@ -99,61 +114,6 @@ namespace FMS.Infrastructure.Repositories
             file.Active = active;
 
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<List<CabinetSummaryDto>> GetCabinetsForFileAsync(Guid id)
-        {
-            var file = await _context.Files.AsNoTracking()
-                .Include(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
-                .SingleOrDefaultAsync(e => e.Id == id);
-
-            if (file == null)
-            {
-                throw new ArgumentException("File ID not found.");
-            }
-
-            return file.CabinetFiles.Select(e => new CabinetSummaryDto(e.Cabinet))
-                .OrderBy(e => e.Name).ToList();
-        }
-
-        public async Task<List<CabinetSummaryDto>> GetCabinetsAvailableForFileAsync(Guid id)
-        {
-            var cabinetsForFile = await _context.CabinetFileJoin.AsNoTracking()
-                .Where(e => e.FileId == id)
-                .Select(e => e.CabinetId)
-                .ToArrayAsync();
-
-            return await _context.Cabinets.AsNoTracking()
-                .Where(e => e.Active)
-                .Where(e => !cabinetsForFile.Contains(e.Id))
-                .OrderBy(e => e.Name)
-                .Select(e => new CabinetSummaryDto(e))
-                .ToListAsync();
-        }
-
-        public async Task AddCabinetToFileAsync(Guid cabinetId, Guid fileId)
-        {
-            if (await _context.CabinetFileJoin.AnyAsync(e => e.CabinetId == cabinetId && e.FileId == fileId))
-            {
-                return;
-            }
-
-            var cf = new CabinetFile() {CabinetId = cabinetId, FileId = fileId};
-            await _context.CabinetFileJoin.AddAsync(cf);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task RemoveCabinetFromFileAsync(Guid cabinetId, Guid fileId)
-        {
-            var cf = await _context.CabinetFileJoin
-                .Where(e => e.CabinetId == cabinetId && e.FileId == fileId)
-                .FirstOrDefaultAsync();
-
-            if (cf != null)
-            {
-                _context.CabinetFileJoin.Remove(cf);
-                await _context.SaveChangesAsync();
-            }
         }
 
         #region IDisposable Support

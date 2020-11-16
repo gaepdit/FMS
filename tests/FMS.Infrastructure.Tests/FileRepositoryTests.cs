@@ -34,7 +34,7 @@ namespace FMS.Infrastructure.Tests
         // GetFileAsync
 
         [Fact]
-        public async Task GetFile_ById_ReturnsCorrectFile()
+        public async Task GetFileById_ReturnsCorrectFile()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var file = SimpleRepositoryData.Files[0];
@@ -46,7 +46,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetNonexistentFile_ById_ReturnsNull()
+        public async Task GetFileById_Nonexistent_ReturnsNull()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(Guid.Empty);
@@ -54,7 +54,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetFile_ByName_ReturnsCorrectFile()
+        public async Task GetFileByName_ReturnsCorrectFile()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var file = SimpleRepositoryData.Files[0];
@@ -63,7 +63,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetNonexistentFile_ByName_ReturnsNull()
+        public async Task GetFileByName_Nonexistent_ReturnsNull()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(string.Empty);
@@ -308,63 +308,6 @@ namespace FMS.Infrastructure.Tests
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("File ID not found.");
-        }
-
-        // GetCabinetsForFileAsync
-
-        [Fact]
-        public async Task GetCabinetsForFileAsync()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var file = DataHelpers.Files.FirstOrDefault(e => e.Name == "180-0001");
-
-            var result = await repository.GetCabinetsForFileAsync(file.Id);
-
-            result.Should().BeEquivalentTo(DataHelpers.GetCabinetSummariesForFile(file.Id));
-        }
-
-        // GetCabinetsNotAssociatedWithFileAsync
-
-        [Fact]
-        public async Task GetCabinetsNotAssociatedWithFileAsync()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var file = DataHelpers.Files.FirstOrDefault(e => e.Name == "180-0001");
-            var cabs = DataHelpers.GetCabinetSummariesForFile(file.Id);
-
-            var result = await repository.GetCabinetsAvailableForFileAsync(file.Id);
-
-            result.Should().NotContain(cabs);
-        }
-
-        // AddCabinetToFileAsync
-
-        [Fact]
-        public async Task AddCabinetFile_Succeeds()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var cabinet = DataHelpers.Cabinets.FirstOrDefault();
-            var file = DataHelpers.Files.FirstOrDefault();
-
-            await repository.AddCabinetToFileAsync(cabinet.Id, file.Id);
-
-            var result = await repository.GetFileAsync(file.Id);
-            result.Cabinets.Should().BeEquivalentTo(new List<CabinetSummaryDto> {new CabinetSummaryDto(cabinet)});
-        }
-
-        // RemoveCabinetFromFileAsync
-
-        [Fact]
-        public async Task RemoveCabinetFile_Succeeds()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var cf = DataHelpers.CabinetFiles[0];
-            var cabinet = DataHelpers.GetCabinetSummary(cf.CabinetId);
-
-            await repository.RemoveCabinetFromFileAsync(cf.CabinetId, cf.FileId);
-
-            var file = await repository.GetFileAsync(cf.FileId);
-            file.Cabinets.Should().NotContain(cabinet);
         }
     }
 }

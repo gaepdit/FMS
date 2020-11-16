@@ -25,7 +25,7 @@ namespace TestHelpers.SimpleRepository
             new FacilityRepository(new FmsDbContext(_options, default), GetFileRepository(), GetCabinetRepository());
 
         public IFileRepository GetFileRepository() =>
-            new FileRepository(new FmsDbContext(_options, default));
+            new FileRepository(new FmsDbContext(_options, default), GetCabinetRepository());
 
         public IItemsListRepository GetItemsListRepository() =>
             new ItemsListRepository(new FmsDbContext(_options, default));
