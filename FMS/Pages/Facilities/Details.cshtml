@@ -46,14 +46,7 @@
             @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
         </dt>
         <dd class="col-sm-9">
-            @if (Model.FacilityDetail.Cabinets.Count > 0)
-            {
-                @Model.FacilityDetail.Cabinets.ConcatNonEmpty(", ")
-            }
-            else
-            {
-                <span class="text-muted">none</span>
-            }
+            @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new {Model.FacilityDetail.IsRetained})
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
@@ -206,8 +199,8 @@
                 </div>
 
                 <input asp-for="FacilityId" />
-                <p class="text-danger">* denotes a required field</p>
                 <hr />
+                <p class="text-danger">* denotes a required field</p>
                 <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
             </form>
         </div>

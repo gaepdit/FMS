@@ -1,0 +1,16 @@
+@model List<string>
+@if ((bool) ViewData["IsRetained"])
+{
+    @if (Model.Count > 0)
+    {
+        @Model.ConcatNonEmpty(", ")
+    }
+    else
+    {
+        <span class="text-muted">none</span>
+    }
+}
+else
+{
+    <text>Not retained</text>
+}

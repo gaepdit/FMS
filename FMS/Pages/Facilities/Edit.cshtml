@@ -148,8 +148,16 @@
                 <small id="GeocodeHelpBlock" class="form-text text-muted">Street address is required for geocoding. City and ZIP Code are optional.</small>
             </div>
         </div>
-        <p class="text-danger">* denotes a required field</p>
+        <div class="form-row">
+            <div class="col">
+                <div class="form-check">
+                    <input asp-for="Facility.IsRetained" class="form-check-input" />
+                    <label asp-for="Facility.IsRetained" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
         <hr />
+        <p class="text-danger">* denotes a required field</p>
         <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
         <a asp-page="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary col-sm-3 col-md-2">Cancel</a>
     </form>

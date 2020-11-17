@@ -94,18 +94,20 @@ namespace FMS.Domain.Dto
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; }
 
-        [Display(Name = "Is Retained")]
+        [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
 
+        [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }
 
         [Display(Name = "Retention Records")]
         public List<RetentionRecordDetailDto> RetentionRecords { get; }
 
         // Used for CSV file output to CSV Helper
-        public string CabinetsToString => string.Join(" & ", Cabinets);
+        public string CabinetsToString => IsRetained ? string.Join(", ", Cabinets) : "Not retained";
 
-        public string RetentionRecordsToString =>
-            RetentionRecords.Select(r => r.Summary).ConcatNonEmpty(Environment.NewLine);
+        public string RetentionRecordsToString => RetentionRecords.Count > 0
+            ? RetentionRecords.Select(r => r.Summary).ConcatNonEmpty(Environment.NewLine)
+            : "none";
     }
 }

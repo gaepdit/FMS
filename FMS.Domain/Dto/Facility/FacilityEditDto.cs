@@ -98,7 +98,7 @@ namespace FMS.Domain.Dto
         [DisplayFormat(DataFormatString = "{0:F6}", ApplyFormatInEditMode = true)]
         public decimal Longitude { get; set; }
 
-        [Display(Name = "Is Retained")]
+        [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; set; }
 
         public void TrimAll()

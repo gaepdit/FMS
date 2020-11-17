@@ -56,9 +56,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "ZIP Code")]
         public string PostalCode { get; }
 
-        [Display(Name = "Is Retained")]
+        [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
 
+        [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }
 
         [Display(Name = "Retention Records")]

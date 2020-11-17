@@ -26,7 +26,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "File Label")]
         public string FileLabel { get; }
 
+        [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }
+
+        [Display(Name = "Facilities")]
         public List<FacilitySummaryDto> Facilities { get; }
     }
 }
