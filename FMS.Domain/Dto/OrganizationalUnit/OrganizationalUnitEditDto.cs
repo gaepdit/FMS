@@ -18,6 +18,7 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
+        [Required(ErrorMessage = "Organizational Unit Name is required.")]
         [Display(Name = "Organizational Unit")]
         public string Name { get; set; }
 

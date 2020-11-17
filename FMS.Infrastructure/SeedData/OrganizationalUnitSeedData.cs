@@ -142,12 +142,6 @@ namespace FMS.Infrastructure.SeedData
                     Active = true,
                     Name = "Treatment & Storage",
                 },
-                new OrganizationalUnit
-                {
-                    Id = new Guid("00B39C4D-374C-44CF-8701-F9B7E73FEA5D"),
-                    Active = true,
-                    Name = "NA",
-                }
             };
         }
     }
