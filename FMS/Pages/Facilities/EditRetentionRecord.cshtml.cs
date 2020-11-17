@@ -44,6 +44,11 @@ namespace FMS.Pages.Facilities
 
             Facility = await _repository.GetFacilityForRetentionRecord(Id);
 
+            if (!Facility.Active)
+            {
+                return RedirectToPage("./Details", new {id = Facility.Id});
+            }
+
             return Page();
         }
 

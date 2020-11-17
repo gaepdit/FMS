@@ -9,11 +9,13 @@ namespace FMS.Domain.Dto
         public FacilityBasicDto(Facility facility)
         {
             Id = facility.Id;
+            Active = facility.Active;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
         }
 
         public Guid Id { get; }
+        public bool Active { get; }
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; }

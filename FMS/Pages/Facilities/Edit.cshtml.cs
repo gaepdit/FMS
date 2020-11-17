@@ -48,15 +48,20 @@ namespace FMS.Pages.Facilities
                 return NotFound();
             }
 
-            var fac = await _repository.GetFacilityAsync(id.Value);
+            var facilityDetail = await _repository.GetFacilityAsync(id.Value);
 
-            if (fac == null)
+            if (facilityDetail == null)
             {
                 return NotFound();
             }
 
+            if (!facilityDetail.Active)
+            {
+                return RedirectToPage("./Details", new {id});
+            }
+
             Id = id.Value;
-            Facility = new FacilityEditDto(fac);
+            Facility = new FacilityEditDto(facilityDetail);
 
             await PopulateSelectsAsync();
             return Page();

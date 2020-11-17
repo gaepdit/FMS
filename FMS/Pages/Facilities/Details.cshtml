@@ -12,9 +12,9 @@
     }
     @if (User.IsInRole(UserRoles.FileEditor))
     {
-        <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
         @if (Model.FacilityDetail.Active)
         {
+            <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
             <a asp-page="Delete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-danger">Delete</a>
         }
         else
@@ -126,7 +126,7 @@
                 <th scope="col">Shelf Number</th>
                 <th scope="col">Retention Schedule Number</th>
                 <th scope="col" class="text-center">Retained</th>
-                @if (User.IsInRole(UserRoles.FileEditor))
+                @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                 {
                     <th scope="col" class="text-center">Actions</th>
                 }
@@ -142,7 +142,7 @@
                     <td>@r.ShelfNumber</td>
                     <td>@r.RetentionSchedule</td>
                     <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
-                    @if (User.IsInRole(UserRoles.FileEditor))
+                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                     {
                         <td>
                             <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
