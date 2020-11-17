@@ -151,7 +151,8 @@
         <span class="text-muted">none</span>
     }
 
-    @if (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor))
+    @if (Model.FacilityDetail.Active &&
+        (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor)))
     {
         <div class="container bg-light pt-3 mt-5">
             <h3 class="h5">Add a Retention Record</h3>
@@ -206,9 +207,3 @@
         </div>
     }
 </div>
-
-@* <div class="row"> *@
-@*     <div class="col"> *@
-@*         <a href="javascript: history.go(-1)" class="btn btn-outline-secondary col-md-2">Back</a> *@
-@*     </div> *@
-@* </div> *@
