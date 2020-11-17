@@ -19,9 +19,9 @@ namespace FMS.Domain.Repositories
         Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates);
         Task DeleteFacilityAsync(Guid id);
         Task UndeleteFacilityAsync(Guid id);
-        Task<Guid?> GetRecommendedCabinetForFile(string fileLabel);
         Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null);
         Task<bool> FileLabelExists(string fileLabel);
+        Task<int> GetNextSequenceForCountyAsync(int countyId);
 
         // Retention Records
         Task<bool> RetentionRecordExistsAsync(Guid id);

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model FMS.Pages.Facilities.DeleteModel
 
 @{
@@ -26,14 +26,7 @@
             @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
         </dt>
         <dd class="col-sm-9">
-            @if (Model.FacilityDetail.Cabinets.Count > 0)
-            {
-                @Model.FacilityDetail.Cabinets.ConcatNonEmpty(", ")
-            }
-            else
-            {
-                <span class="text-muted">none</span>
-            }
+            @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new {Model.FacilityDetail.IsRetained})
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)

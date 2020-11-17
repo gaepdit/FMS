@@ -1,5 +1,4 @@
 @page "{id}"
-@using FMS.Domain.Entities.Users
 @model FMS.Pages.Files.DetailsModel
 @{
     ViewData["Title"] = $"File {Model.FileDetail.FileLabel}";
@@ -15,26 +14,21 @@
 <partial name="_AlertPartial" for="Message" />
 
 <div class="my-3">
-    <h2>
-        Cabinets
-        @if (User.IsInRole(UserRoles.FileEditor))
+    <dl class="row">
+        <dt class="col-sm-2">Cabinets</dt>
+        @if (Model.FileDetail.Cabinets != null && Model.FileDetail.Cabinets.Count > 0)
         {
-            <a asp-page="EditCabinets" asp-route-id="@Model.FileDetail.Id" class="btn btn-sm btn-outline-primary">Edit Cabinets</a>
+            <dd class="col-sm-10">
+                @Model.FileDetail.Cabinets.ConcatNonEmpty(", ")
+            </dd>
         }
-    </h2>
-    @if (Model.FileDetail.Cabinets != null && Model.FileDetail.Cabinets.Count > 0)
-    {
-        @foreach (var c in Model.FileDetail.Cabinets)
+        else
         {
-            <a asp-page="/Cabinets/Details" asp-route-id="@c.Name" class="btn @(c.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm m-1">
-                @c.Name @(c.Active ? "" : "(Deleted)")
-            </a>
+            <dd class="col-sm-10">
+                No cabinets found for this File.
+            </dd>
         }
-    }
-    else
-    {
-        <p class="lead text-info">No cabinets found for this File.</p>
-    }
+    </dl>
 </div>
 
 <div class="my-3">

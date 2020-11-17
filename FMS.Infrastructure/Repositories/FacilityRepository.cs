@@ -17,13 +17,7 @@ namespace FMS.Infrastructure.Repositories
     public class FacilityRepository : IFacilityRepository
     {
         private readonly FmsDbContext _context;
-        private readonly IFileRepository _fileRepository;
-
-        public FacilityRepository(FmsDbContext context, IFileRepository fileRepository)
-        {
-            _context = context;
-            _fileRepository = fileRepository;
-        }
+        public FacilityRepository(FmsDbContext context) => _context = context;
 
         public async Task<bool> FacilityExistsAsync(Guid id) =>
             await _context.Facilities.AnyAsync(e => e.Id == id);
@@ -37,7 +31,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.BudgetCode)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
-                .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Include(e => e.File)
                 .Include(e => e.RetentionRecords)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
@@ -48,7 +42,12 @@ namespace FMS.Infrastructure.Repositories
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
 
-            return new FacilityDetailDto(facility);
+            var facilityDetail = new FacilityDetailDto(facility);
+
+            facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
+                .GetCabinetsForFile(facilityDetail.FileLabel);
+
+            return facilityDetail;
         }
 
         private IQueryable<Facility> QueryFacilities(FacilitySpec spec) => _context.Facilities.AsNoTracking()
@@ -59,8 +58,8 @@ namespace FMS.Infrastructure.Repositories
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
             .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
             .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
-            .Where(e => !spec.OrganizationalUnitId.HasValue ||
-                e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+            .Where(e =>
+                !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
             .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
             .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
             .Where(e => string.IsNullOrEmpty(spec.Location) || e.Location.Contains(spec.Location))
@@ -109,7 +108,7 @@ namespace FMS.Infrastructure.Repositories
             var queried = QueryFacilities(spec);
 
             var included = queried
-                .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Include(e => e.File)
                 .Include(e => e.RetentionRecords)
                 .Include(e => e.FacilityType);
 
@@ -119,6 +118,12 @@ namespace FMS.Infrastructure.Repositories
                 .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
+
+            var cabinets = await _context.GetCabinetListAsync(false);
+            foreach (var item in items)
+            {
+                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+            }
 
             var totalCount = await queried.CountAsync();
             return new PaginatedList<FacilitySummaryDto>(items, totalCount, pageNumber, pageSize);
@@ -135,12 +140,20 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.BudgetCode)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
-                .Include(e => e.File).ThenInclude(e => e.CabinetFiles).ThenInclude(c => c.Cabinet)
+                .Include(e => e.File)
                 .Include(e => e.RetentionRecords);
 
             var ordered = OrderFacilityQuery(included, spec.SortBy);
 
-            return await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
+            var items = await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
+
+            var cabinets = await _context.GetCabinetListAsync(false);
+            foreach (var item in items)
+            {
+                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+            }
+
+            return items;
         }
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
@@ -266,6 +279,7 @@ namespace FMS.Infrastructure.Repositories
             facility.State = facilityUpdates.State;
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
+            facility.IsRetained = facilityUpdates.IsRetained;
 
             await _context.SaveChangesAsync();
         }
@@ -273,19 +287,20 @@ namespace FMS.Infrastructure.Repositories
         private async Task<File> CreateFileInternal(int countyId)
         {
             // Generate new File
-            var nextSequence = await _fileRepository.GetNextSequenceForCountyAsync(countyId);
+            var nextSequence = await GetNextSequenceForCountyAsync(countyId);
             var file = new File(countyId, nextSequence);
             await _context.Files.AddAsync(file);
-
-            // Add Cabinet to new File
-            var cabinetId = await GetRecommendedCabinetForFile(file.FileLabel);
-            if (cabinetId.HasValue)
-            {
-                await _context.CabinetFileJoin
-                    .AddAsync(new CabinetFile() {CabinetId = cabinetId.Value, FileId = file.Id});
-            }
-
             return file;
+        }
+
+        public async Task<int> GetNextSequenceForCountyAsync(int countyId)
+        {
+            var countyString = File.CountyString(countyId);
+            var allSequencesForCounty = await _context.Files.AsNoTracking()
+                .Where(e => e.FileLabel.StartsWith(countyString))
+                .Select(e => int.Parse(e.FileLabel.Substring(4, 4)))
+                .ToListAsync();
+            return allSequencesForCounty.Count == 0 ? 1 : allSequencesForCounty.Max() + 1;
         }
 
         public async Task DeleteFacilityAsync(Guid id)
@@ -312,19 +327,6 @@ namespace FMS.Infrastructure.Repositories
 
             facility.Active = true;
             await _context.SaveChangesAsync();
-        }
-
-        // ReSharper disable once StringCompareIsCultureSpecific.1
-        public async Task<Guid?> GetRecommendedCabinetForFile(string fileLabel)
-        {
-            // Get last (active) cabinet where file label is less than the new file label alphabetically
-            var cabinet = await _context.Cabinets.AsNoTracking()
-                .OrderBy(e => e.FirstFileLabel)
-                .ThenBy(e => e.Name)
-                .LastOrDefaultAsync(e => e.Active
-                    && string.Compare(e.FirstFileLabel, fileLabel) <= 0);
-
-            return cabinet?.Id;
         }
 
         public async Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null) =>

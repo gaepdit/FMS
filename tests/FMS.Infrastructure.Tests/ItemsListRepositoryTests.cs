@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Repositories;
-using TestHelpers.SimpleRepository;
+using TestHelpers;
 using Xunit;
 
 namespace FMS.Infrastructure.Tests

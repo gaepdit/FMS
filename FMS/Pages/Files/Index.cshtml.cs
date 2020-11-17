@@ -17,7 +17,7 @@ namespace FMS.Pages.Files
 
         public FileSpec Spec { get; set; }
         public IPaginatedResult FileList { get; private set; }
-        public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
+        public static SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
         public bool ShowResults { get; private set; }
 
         public void OnGet()

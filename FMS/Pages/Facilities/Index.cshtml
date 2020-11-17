@@ -217,20 +217,12 @@
                         </td>
                         <td class="text-center">@Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")</td>
                         <td>
-                            @if (item.Cabinets.Count == 0 && item.RetentionRecords.Count == 0)
-                            {
-                                <span class="text-muted">none</span>
-                            }
-                            @if (item.Cabinets.Count > 0)
-                            {
-                                <b class="font-weight-medium">Cabinets:</b>
-                                <br />
-                                @item.Cabinets.ConcatNonEmpty(", ")
-                            }
+                            <i class="font-weight-medium">Cabinets:</i><br />
+                            @Html.DisplayFor(m => item.Cabinets, "Cabinets", new {item.IsRetained})
                             @if (item.RetentionRecords.Count > 0)
                             {
                                 <div>
-                                    <b class="font-weight-medium">Offsite:</b><br />
+                                    <i class="font-weight-medium">Retention Records:</i><br />
                                     <ul class="list-unstyled">
                                         @foreach (var record in item.RetentionRecords)
                                         {

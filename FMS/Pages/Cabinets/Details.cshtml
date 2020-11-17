@@ -2,42 +2,29 @@
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Cabinets.DetailsModel
 @{
-    ViewData["Title"] = $"Cabinet {Model.CabinetDetail.Name}";
+    ViewData["Title"] = $"Cabinet {Model.CabinetSummary.Name}";
 }
 <h1>
     @ViewData["Title"]
-    @if (!Model.CabinetDetail.Active)
+    @if (!Model.CabinetSummary.Active)
     {
         <span class="text-muted">(Deleted)</span>
     }
     @if (User.IsInRole(UserRoles.SiteMaintenance))
     {
-        <a asp-page="Edit" asp-route-id="@Model.CabinetDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+        <a asp-page="Edit" asp-route-id="@Model.CabinetSummary.Id" class="btn btn-sm btn-outline-primary">Edit</a>
     }
 </h1>
 <hr />
 <partial name="_AlertPartial" for="Message" />
 
 <div class="container">
+    <p>
+        <i>File Label Range</i> is used for displaying the storage cabinets used for each File or Facility. The range is
+        from the First File Label for the cabinet up to (but not including) the First File Label for the next cabinet.
+    </p>
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CabinetDetail.FirstFileLabel)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CabinetDetail.FirstFileLabel)
-        </dd>
+        <dt class="col-sm-2">File Label Range</dt>
+        <dd class="col-sm-10">@Model.CabinetSummary.FirstFileLabel — (@Model.CabinetSummary.LastFileLabel)</dd>
     </dl>
-
-    <h2>Files</h2>
-    @if (Model.CabinetDetail.Files != null && Model.CabinetDetail.Files.Count > 0)
-    {
-        @foreach (var c in Model.CabinetDetail.Files)
-        {
-            <a asp-page="/Files/Details" asp-route-id="@c.FileLabel" class="btn btn-sm btn-outline-info m-1">@c.FileLabel</a>
-        }
-    }
-    else
-    {
-        <p class="lead text-info">No Files found for this Cabinet.</p>
-    }
 </div>

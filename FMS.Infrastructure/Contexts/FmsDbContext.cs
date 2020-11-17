@@ -33,7 +33,6 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<Cabinet> Cabinets { get; set; }
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
-        public DbSet<CabinetFile> CabinetFileJoin { get; set; }
 
         // The "Counties" table is only used to add County data to the database for database-side use.
         // Counties are stored in memory and never accessed from the database, but other entities
@@ -49,9 +48,6 @@ namespace FMS.Infrastructure.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));
-
-            // Configure many-to-many relationships
-            builder.Entity<CabinetFile>().HasKey(e => new {e.CabinetId, e.FileId});
 
             // Unique indexes
             builder.Entity<File>().HasIndex(e => e.FileLabel).IsUnique();

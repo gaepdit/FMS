@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
-using TestHelpers.SimpleRepository;
+using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -46,6 +45,7 @@ namespace FMS.Infrastructure.Tests
             var cabinet = SimpleRepositoryData.Cabinets[0];
 
             var result = await repository.CabinetNameExistsAsync(cabinet.Name);
+
             result.ShouldBeTrue();
         }
 
@@ -56,6 +56,7 @@ namespace FMS.Infrastructure.Tests
             var cabinet = SimpleRepositoryData.Cabinets[0];
 
             var result = await repository.CabinetNameExistsAsync(cabinet.Name, cabinet.Id);
+
             result.ShouldBeFalse();
         }
 
@@ -74,6 +75,7 @@ namespace FMS.Infrastructure.Tests
             var cabinet = SimpleRepositoryData.Cabinets[0];
 
             var result = await repository.CabinetNameExistsAsync(cabinet.Name, Guid.Empty);
+
             result.ShouldBeTrue();
         }
 
@@ -83,20 +85,21 @@ namespace FMS.Infrastructure.Tests
         public async Task GetCabinetList_ReturnsAll()
         {
             using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+
             var result = await repository.GetCabinetListAsync();
-            var expected = SimpleRepositoryData.Cabinets
-                .Select(e => new CabinetSummaryDto(e));
+
+            var expected = SimpleRepositoryData.GetCabinetSummaries(true);
             result.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
-        public async Task GetCabinetList_WithoutInactive_ReturnsAll()
+        public async Task GetCabinetList_WithoutInactive_ReturnsAllActive()
         {
             using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
+
             var result = await repository.GetCabinetListAsync(false);
-            var expected = SimpleRepositoryData.Cabinets
-                .Where(e => e.Active)
-                .Select(e => new CabinetSummaryDto(e));
+
+            var expected = SimpleRepositoryData.GetCabinetSummaries(false);
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -108,9 +111,9 @@ namespace FMS.Infrastructure.Tests
             using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
             var cabinet = SimpleRepositoryData.Cabinets[0];
 
-            var expected = SimpleRepositoryData.GetCabinetSummary(cabinet.Id);
             var result = await repository.GetCabinetSummaryAsync(cabinet.Id);
 
+            var expected = SimpleRepositoryData.GetCabinetSummary(cabinet.Id);
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -122,7 +125,7 @@ namespace FMS.Infrastructure.Tests
             result.ShouldBeNull();
         }
 
-        // GetCabinetDetailsAsync (by cabinet number)
+        // GetCabinetSummaryAsync (by cabinet number)
 
         [Fact]
         public async Task GetCabinetByNumber_ReturnsCorrectCabinet()
@@ -130,9 +133,9 @@ namespace FMS.Infrastructure.Tests
             using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
             var cabinet = SimpleRepositoryData.Cabinets[0];
 
-            var expected = SimpleRepositoryData.GetCabinetDetail(cabinet.Id);
-            var result = await repository.GetCabinetDetailsAsync(cabinet.Name);
+            var result = await repository.GetCabinetSummaryAsync(cabinet.Name);
 
+            var expected = SimpleRepositoryData.GetCabinetSummary(cabinet.Id);
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -140,7 +143,7 @@ namespace FMS.Infrastructure.Tests
         public async Task GetCabinetByNumber_Nonexistent_ReturnsNull()
         {
             using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
-            var result = await repository.GetCabinetDetailsAsync("zzz");
+            var result = await repository.GetCabinetSummaryAsync("zzz");
             result.ShouldBeNull();
         }
 
@@ -164,7 +167,7 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var cabinet = await repository.GetCabinetDetailsAsync(newCabinet.Name);
+                var cabinet = await repository.GetCabinetSummaryAsync(newCabinet.Name);
 
                 cabinet.Active.ShouldBeTrue();
                 cabinet.Name.Should().Be(newCabinet.Name);
@@ -323,7 +326,7 @@ namespace FMS.Infrastructure.Tests
 
             using (var repository = repositoryHelper.GetCabinetRepository())
             {
-                var updatedCabinet = await repository.GetCabinetDetailsAsync(cabinet.Name);
+                var updatedCabinet = await repository.GetCabinetSummaryAsync(cabinet.Name);
                 updatedCabinet.Name.Should().Be(cabinetEdit.Name);
                 updatedCabinet.FirstFileLabel.Should().Be(cabinetEdit.FirstFileLabel);
                 updatedCabinet.Active.Should().Be(cabinet.Active);

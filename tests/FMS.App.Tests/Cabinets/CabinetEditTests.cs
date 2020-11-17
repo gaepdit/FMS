@@ -7,7 +7,7 @@ using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using TestHelpers.SimpleRepository;
+using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 

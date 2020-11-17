@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using TestHelpers;
-using TestHelpers.SimpleRepository;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -34,7 +32,7 @@ namespace FMS.Infrastructure.Tests
         // GetFileAsync
 
         [Fact]
-        public async Task GetFile_ById_ReturnsCorrectFile()
+        public async Task GetFileById_ReturnsCorrectFile()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var file = SimpleRepositoryData.Files[0];
@@ -46,7 +44,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetNonexistentFile_ById_ReturnsNull()
+        public async Task GetFileById_Nonexistent_ReturnsNull()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(Guid.Empty);
@@ -54,7 +52,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetFile_ByName_ReturnsCorrectFile()
+        public async Task GetFileByName_ReturnsCorrectFile()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var file = SimpleRepositoryData.Files[0];
@@ -63,7 +61,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetNonexistentFile_ByName_ReturnsNull()
+        public async Task GetFileByName_Nonexistent_ReturnsNull()
         {
             using var repository = new SimpleRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(string.Empty);
@@ -213,69 +211,6 @@ namespace FMS.Infrastructure.Tests
             result.Items.Count.Should().Be(expectedCount);
         }
 
-        // GetNextSequenceForCounty
-
-        [Fact]
-        public async Task GetNextSequenceForCounty_Succeeds()
-        {
-            const int countyNum = 111;
-            using var repository = new SimpleRepositoryHelper().GetFileRepository();
-            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
-            result.Should().Be(2);
-        }
-
-
-        [Fact]
-        public async Task GetNextSequenceForCounty_TwoDigit_Succeeds()
-        {
-            const int countyNum = 99;
-            using var repository = new SimpleRepositoryHelper().GetFileRepository();
-            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
-            result.Should().Be(2);
-        }
-
-        [Fact]
-        public async Task GetNextSequenceForCounty_NoCurrentLabel_ReturnsOne()
-        {
-            const int countyNum = 101;
-            using var repository = new SimpleRepositoryHelper().GetFileRepository();
-            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
-            result.Should().Be(1);
-        }
-
-        [Fact]
-        public async Task GetNextSequenceForCounty_CurrentLabelSkipsNumber_Succeeds()
-        {
-            const int countyNum = 102;
-            using var repository = new SimpleRepositoryHelper().GetFileRepository();
-            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
-            result.Should().Be(4);
-        }
-
-        [Fact]
-        public async Task GetNextSequenceForCounty_LatestLabelInactive_Succeeds()
-        {
-            const int countyNum = 103;
-            using var repository = new SimpleRepositoryHelper().GetFileRepository();
-            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
-            result.Should().Be(3);
-        }
-
-        [Fact]
-        public async Task GetNextSequenceForCounty_NoSuchCounty_ThrowsException()
-        {
-            const int countyNum = 999;
-
-            Func<Task> action = async () =>
-            {
-                using var repository = new SimpleRepositoryHelper().GetFileRepository();
-                await repository.GetNextSequenceForCountyAsync(countyNum);
-            };
-
-            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyNum')");
-        }
-
         // UpdateFileAsync
 
         [Fact]
@@ -308,63 +243,6 @@ namespace FMS.Infrastructure.Tests
 
             (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
                 .WithMessage("File ID not found.");
-        }
-
-        // GetCabinetsForFileAsync
-
-        [Fact]
-        public async Task GetCabinetsForFileAsync()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var file = DataHelpers.Files.FirstOrDefault(e => e.Name == "180-0001");
-
-            var result = await repository.GetCabinetsForFileAsync(file.Id);
-
-            result.Should().BeEquivalentTo(DataHelpers.GetCabinetSummariesForFile(file.Id));
-        }
-
-        // GetCabinetsNotAssociatedWithFileAsync
-
-        [Fact]
-        public async Task GetCabinetsNotAssociatedWithFileAsync()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var file = DataHelpers.Files.FirstOrDefault(e => e.Name == "180-0001");
-            var cabs = DataHelpers.GetCabinetSummariesForFile(file.Id);
-
-            var result = await repository.GetCabinetsAvailableForFileAsync(file.Id);
-
-            result.Should().NotContain(cabs);
-        }
-
-        // AddCabinetToFileAsync
-
-        [Fact]
-        public async Task AddCabinetFile_Succeeds()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var cabinet = DataHelpers.Cabinets.FirstOrDefault();
-            var file = DataHelpers.Files.FirstOrDefault();
-
-            await repository.AddCabinetToFileAsync(cabinet.Id, file.Id);
-
-            var result = await repository.GetFileAsync(file.Id);
-            result.Cabinets.Should().BeEquivalentTo(new List<CabinetSummaryDto> {new CabinetSummaryDto(cabinet)});
-        }
-
-        // RemoveCabinetFromFileAsync
-
-        [Fact]
-        public async Task RemoveCabinetFile_Succeeds()
-        {
-            using var repository = new RepositoryHelper().GetFileRepository();
-            var cf = DataHelpers.CabinetFiles[0];
-            var cabinet = DataHelpers.GetCabinetSummary(cf.CabinetId);
-
-            await repository.RemoveCabinetFromFileAsync(cf.CabinetId, cf.FileId);
-
-            var file = await repository.GetFileAsync(cf.FileId);
-            file.Cabinets.Should().NotContain(cabinet);
         }
     }
 }

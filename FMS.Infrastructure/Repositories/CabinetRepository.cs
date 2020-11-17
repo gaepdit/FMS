@@ -23,35 +23,16 @@ namespace FMS.Infrastructure.Repositories
             await _context.Cabinets.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true) =>
-            await _context.Cabinets.AsNoTracking()
-                .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.FirstFileLabel)
-                .ThenBy(e => e.Name)
-                .Select(e => new CabinetSummaryDto(e))
-                .ToListAsync();
+        public Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true) =>
+            _context.GetCabinetListAsync(includeInactive);
 
-        public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(Guid id)
-        {
-            var cabinet = await _context.Cabinets.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
+        public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(Guid id) =>
+            (await _context.GetCabinetListAsync())
+            .SingleOrDefault(e => e.Id == id);
 
-            return cabinet == null ? null : new CabinetSummaryDto(cabinet);
-        }
-        
-        public async Task<CabinetDetailDto> GetCabinetDetailsAsync(string name)
-        {
-            var cabinet = await _context.Cabinets.AsNoTracking()
-                .Include(e => e.CabinetFiles).ThenInclude(c => c.File)
-                .SingleOrDefaultAsync(e => e.Name == name);
-
-            if (cabinet == null) return null;
-
-            cabinet.CabinetFiles = cabinet.CabinetFiles
-                .OrderBy(e => e.File.Name).ToList();
-
-            return new CabinetDetailDto(cabinet);
-        }
+        public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(string name) =>
+            (await _context.GetCabinetListAsync())
+            .SingleOrDefault(e => e.Name == name);
 
         public Task CreateCabinetAsync(CabinetEditDto cabinet)
         {

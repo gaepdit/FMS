@@ -16,19 +16,14 @@ namespace FMS.App.Tests.Users
 {
     public class UserEditTests
     {
-        private readonly ApplicationUser _user = new ApplicationUser
-        {
-            Email = "example@example.com",
-            FamilyName = "FamilyName",
-            GivenName = "GivenName",
-        };
-
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
+            var user = UserTestData.ApplicationUsers[0];
+
             var mockRepo = new Mock<IUserService>();
             mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(_user);
+                .ReturnsAsync(user);
             mockRepo.Setup(l => l.GetUserRolesAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(new List<string>());
 
@@ -38,8 +33,8 @@ namespace FMS.App.Tests.Users
 
             result.Should().BeOfType<PageResult>();
             pageModel.UserId.ShouldEqual(Guid.Empty);
-            pageModel.DisplayName.ShouldEqual(_user.DisplayName);
-            pageModel.Email.ShouldEqual(_user.Email);
+            pageModel.DisplayName.ShouldEqual(user.DisplayName);
+            pageModel.Email.ShouldEqual(user.Email);
             pageModel.HasFileCreatorRole.ShouldBeFalse();
             pageModel.HasFileEditorRole.ShouldBeFalse();
             pageModel.HasSiteMaintenanceRole.ShouldBeFalse();
@@ -49,6 +44,7 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_WithRoles_PopulatesThePageModel()
         {
+            var user = UserTestData.ApplicationUsers[0];
             var roles = new List<string>()
             {
                 UserRoles.FileCreator,
@@ -59,7 +55,7 @@ namespace FMS.App.Tests.Users
 
             var mockRepo = new Mock<IUserService>();
             mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(_user);
+                .ReturnsAsync(user);
             mockRepo.Setup(l => l.GetUserRolesAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(roles);
 
@@ -69,8 +65,8 @@ namespace FMS.App.Tests.Users
 
             result.Should().BeOfType<PageResult>();
             pageModel.UserId.ShouldEqual(Guid.Empty);
-            pageModel.DisplayName.ShouldEqual(_user.DisplayName);
-            pageModel.Email.ShouldEqual(_user.Email);
+            pageModel.DisplayName.ShouldEqual(user.DisplayName);
+            pageModel.Email.ShouldEqual(user.Email);
             pageModel.HasFileCreatorRole.ShouldBeTrue();
             pageModel.HasFileEditorRole.ShouldBeTrue();
             pageModel.HasSiteMaintenanceRole.ShouldBeTrue();
@@ -140,6 +136,7 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnPost_UpdateRolesFails_ReturnsPageWithInvalidModelState()
         {
+            var user = UserTestData.ApplicationUsers[0];
             var identityResult = IdentityResult.Failed(
                 new IdentityError() {Code = "CODE", Description = "DESCRIPTION"});
 
@@ -147,7 +144,7 @@ namespace FMS.App.Tests.Users
             mockRepo.Setup(l => l.UpdateUserRolesAsync(It.IsAny<Guid>(), It.IsAny<Dictionary<string, bool>>()))
                 .ReturnsAsync(identityResult);
             mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(_user);
+                .ReturnsAsync(user);
             mockRepo.Setup(l => l.GetUserRolesAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(new List<string>());
 

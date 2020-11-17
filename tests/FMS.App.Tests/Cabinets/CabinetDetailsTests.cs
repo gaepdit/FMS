@@ -5,7 +5,7 @@ using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
-using TestHelpers.SimpleRepository;
+using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -17,10 +17,10 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnGet_PopulatesThePageModel()
         {
             var id = SimpleRepositoryData.Cabinets[0].Id;
-            var item = SimpleRepositoryData.GetCabinetDetail(id);
+            var item = SimpleRepositoryData.GetCabinetSummary(id);
 
             var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetDetailsAsync(It.IsAny<string>()))
+            mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<string>()))
                 .ReturnsAsync(item)
                 .Verifiable();
 
@@ -29,7 +29,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnGetAsync(item.Name).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.CabinetDetail.Should().BeEquivalentTo(item);
+            pageModel.CabinetSummary.Should().BeEquivalentTo(item);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnGetAsync("zzz").ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.CabinetDetail.ShouldBeNull();
+            pageModel.CabinetSummary.ShouldBeNull();
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnGetAsync(string.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.CabinetDetail.ShouldBeNull();
+            pageModel.CabinetSummary.ShouldBeNull();
         }
     }
 }
