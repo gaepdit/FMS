@@ -44,7 +44,7 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-            facilityDetail.Cabinets = (await GetCabinetListAsync(false))
+            facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
                 .GetCabinetsForFile(facilityDetail.FileLabel);
 
             return facilityDetail;
@@ -119,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new FacilitySummaryDto(e))
                 .ToListAsync();
 
-            var cabinets = await GetCabinetListAsync(false);
+            var cabinets = await _context.GetCabinetListAsync(false);
             foreach (var item in items)
             {
                 item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
@@ -147,7 +147,7 @@ namespace FMS.Infrastructure.Repositories
 
             var items = await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
 
-            var cabinets = await GetCabinetListAsync(false);
+            var cabinets = await _context.GetCabinetListAsync(false);
             foreach (var item in items)
             {
                 item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
@@ -279,6 +279,7 @@ namespace FMS.Infrastructure.Repositories
             facility.State = facilityUpdates.State;
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
+            facility.IsRetained = facilityUpdates.IsRetained;
 
             await _context.SaveChangesAsync();
         }
@@ -292,7 +293,7 @@ namespace FMS.Infrastructure.Repositories
             return file;
         }
 
-        private async Task<int> GetNextSequenceForCountyAsync(int countyId)
+        public async Task<int> GetNextSequenceForCountyAsync(int countyId)
         {
             var countyString = File.CountyString(countyId);
             var allSequencesForCounty = await _context.Files.AsNoTracking()
@@ -394,23 +395,6 @@ namespace FMS.Infrastructure.Repositories
             }
 
             return new FacilityBasicDto(facility);
-        }
-
-        private async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true)
-        {
-            var cabinets = await _context.Cabinets.AsNoTracking()
-                .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.FirstFileLabel)
-                .ThenBy(e => e.Name)
-                .Select(e => new CabinetSummaryDto(e)).ToListAsync();
-
-            // loop through all the cabinets except the last one and set last file label
-            for (var i = 0; i < cabinets.Count - 1; i++)
-            {
-                cabinets[i].LastFileLabel = cabinets[i + 1].FirstFileLabel;
-            }
-
-            return cabinets;
         }
 
         #region IDisposable Support

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
@@ -30,7 +29,7 @@ namespace FMS.Infrastructure.Repositories
             if (file == null) return null;
 
             var fileDetail = new FileDetailDto(file);
-            fileDetail.Cabinets = (await GetCabinetListAsync(false))
+            fileDetail.Cabinets = (await _context.GetCabinetListAsync(false))
                 .GetCabinetsForFile(fileDetail.FileLabel);
 
             return fileDetail;
@@ -45,7 +44,7 @@ namespace FMS.Infrastructure.Repositories
             if (file == null) return null;
 
             var fileDetail = new FileDetailDto(file);
-            fileDetail.Cabinets = (await GetCabinetListAsync(false))
+            fileDetail.Cabinets = (await _context.GetCabinetListAsync(false))
                 .GetCabinetsForFile(fileDetail.FileLabel);
 
             return fileDetail;
@@ -78,7 +77,7 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new FileDetailDto(e))
                 .ToListAsync();
 
-            var cabinets = await GetCabinetListAsync(false);
+            var cabinets = await _context.GetCabinetListAsync(false);
             foreach (var item in items)
             {
                 item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
@@ -86,16 +85,6 @@ namespace FMS.Infrastructure.Repositories
 
             var totalCount = await CountAsync(spec);
             return new PaginatedList<FileDetailDto>(items, totalCount, pageNumber, pageSize);
-        }
-
-        public async Task<int> GetNextSequenceForCountyAsync(int countyId)
-        {
-            var countyString = File.CountyString(countyId);
-            var allSequencesForCounty = await _context.Files.AsNoTracking()
-                .Where(e => e.FileLabel.StartsWith(countyString))
-                .Select(e => int.Parse(e.FileLabel.Substring(4, 4)))
-                .ToListAsync();
-            return allSequencesForCounty.Count == 0 ? 1 : allSequencesForCounty.Max() + 1;
         }
 
         public async Task UpdateFileAsync(Guid id, bool active)
@@ -110,23 +99,6 @@ namespace FMS.Infrastructure.Repositories
             file.Active = active;
 
             await _context.SaveChangesAsync();
-        }
-
-        private async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true)
-        {
-            var cabinets = await _context.Cabinets.AsNoTracking()
-                .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.FirstFileLabel)
-                .ThenBy(e => e.Name)
-                .Select(e => new CabinetSummaryDto(e)).ToListAsync();
-
-            // loop through all the cabinets except the last one and set last file label
-            for (var i = 0; i < cabinets.Count - 1; i++)
-            {
-                cabinets[i].LastFileLabel = cabinets[i + 1].FirstFileLabel;
-            }
-
-            return cabinets;
         }
 
         #region IDisposable Support

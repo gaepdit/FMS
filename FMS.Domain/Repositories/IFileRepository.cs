@@ -13,7 +13,6 @@ namespace FMS.Domain.Repositories
         Task<bool> FileHasActiveFacilities(Guid id);
         Task<int> CountAsync(FileSpec spec);
         Task<PaginatedList<FileDetailDto>> GetFileListAsync(FileSpec spec, int pageNumber, int pageSize);
-        Task<int> GetNextSequenceForCountyAsync(int countyId);
         Task UpdateFileAsync(Guid id, bool active);
     }
 }

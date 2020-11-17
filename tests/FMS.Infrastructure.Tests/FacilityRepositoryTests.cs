@@ -721,6 +721,69 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"Facility Number '{existingNumber}' already exists.");
         }
 
+                // GetNextSequenceForCounty
+
+        [Fact]
+        public async Task GetNextSequenceForCounty_Succeeds()
+        {
+            const int countyNum = 111;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
+            result.Should().Be(2);
+        }
+
+
+        [Fact]
+        public async Task GetNextSequenceForCounty_TwoDigit_Succeeds()
+        {
+            const int countyNum = 99;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
+            result.Should().Be(2);
+        }
+
+        [Fact]
+        public async Task GetNextSequenceForCounty_NoCurrentLabel_ReturnsOne()
+        {
+            const int countyNum = 101;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public async Task GetNextSequenceForCounty_CurrentLabelSkipsNumber_Succeeds()
+        {
+            const int countyNum = 102;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
+            result.Should().Be(4);
+        }
+
+        [Fact]
+        public async Task GetNextSequenceForCounty_LatestLabelInactive_Succeeds()
+        {
+            const int countyNum = 103;
+            using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+            var result = await repository.GetNextSequenceForCountyAsync(countyNum);
+            result.Should().Be(3);
+        }
+
+        [Fact]
+        public async Task GetNextSequenceForCounty_NoSuchCounty_ThrowsException()
+        {
+            const int countyNum = 999;
+
+            Func<Task> action = async () =>
+            {
+                using var repository = new SimpleRepositoryHelper().GetFacilityRepository();
+                await repository.GetNextSequenceForCountyAsync(countyNum);
+            };
+
+            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
+                .WithMessage($"County ID {countyNum} does not exist. (Parameter 'countyNum')");
+        }
+
         // Delete/Undelete
 
         [Fact]

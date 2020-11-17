@@ -93,7 +93,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
-        public async Task GetCabinetList_WithoutInactive_ReturnsAll()
+        public async Task GetCabinetList_WithoutInactive_ReturnsAllActive()
         {
             using var repository = new SimpleRepositoryHelper().GetCabinetRepository();
 

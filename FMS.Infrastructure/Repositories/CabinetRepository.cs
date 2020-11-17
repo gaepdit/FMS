@@ -23,29 +23,15 @@ namespace FMS.Infrastructure.Repositories
             await _context.Cabinets.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true)
-        {
-            var cabinets = await _context.Cabinets.AsNoTracking()
-                .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.FirstFileLabel)
-                .ThenBy(e => e.Name)
-                .Select(e => new CabinetSummaryDto(e)).ToListAsync();
-
-            // loop through all the cabinets except the last one and set last file label
-            for (var i = 0; i < cabinets.Count - 1; i++)
-            {
-                cabinets[i].LastFileLabel = cabinets[i + 1].FirstFileLabel;
-            }
-
-            return cabinets;
-        }
+        public Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true) =>
+            _context.GetCabinetListAsync(includeInactive);
 
         public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(Guid id) =>
-            (await GetCabinetListAsync())
+            (await _context.GetCabinetListAsync())
             .SingleOrDefault(e => e.Id == id);
 
         public async Task<CabinetSummaryDto> GetCabinetSummaryAsync(string name) =>
-            (await GetCabinetListAsync())
+            (await _context.GetCabinetListAsync())
             .SingleOrDefault(e => e.Name == name);
 
         public Task CreateCabinetAsync(CabinetEditDto cabinet)
@@ -111,7 +97,7 @@ namespace FMS.Infrastructure.Repositories
             cabinet.FirstFileLabel = cabinetEdit.FirstFileLabel;
             await _context.SaveChangesAsync();
         }
-        
+
         #region IDisposable Support
 
         private bool _disposedValue;
