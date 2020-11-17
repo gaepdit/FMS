@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FMS.Domain.Data;
@@ -42,6 +42,7 @@ namespace TestHelpers
 
             var facilityDetail = new FacilityDetailDto(facility);
             facilityDetail.Cabinets = GetCabinetSummaries(false).GetCabinetsForFile(facilityDetail.FileLabel);
+            facilityDetail.RetentionRecords.AddRange(GetRetentionRecordsForFacility(facility.Id));
 
             return facilityDetail;
         }

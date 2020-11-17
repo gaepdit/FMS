@@ -45,7 +45,7 @@ namespace TestHelpers
         {
             new Facility
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("4C730563-8D90-4C34-B0C9-059A3E066267"),
                 FacilityNumber = "ABC",
                 FileId = Files[0].Id,
                 CountyId = 131,
@@ -53,7 +53,7 @@ namespace TestHelpers
             },
             new Facility
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("26DCA0FD-F586-4D0D-AF2D-865E2B7922A2"),
                 FacilityNumber = "ABC123",
                 FileId = Files[0].Id,
                 CountyId = 131,
@@ -61,7 +61,7 @@ namespace TestHelpers
             },
             new Facility
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("885F8638-2FF6-4E7A-ADE9-13FEAA34ABD2"),
                 FacilityNumber = "DEF",
                 FileId = Files[1].Id,
                 CountyId = 131,
@@ -71,7 +71,7 @@ namespace TestHelpers
             },
             new Facility
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("633ACE4C-39B8-48EA-A5BC-6AF5DA56244F"),
                 FacilityNumber = "GHI",
                 FileId = Files[0].Id,
                 CountyId = 99,
@@ -79,7 +79,7 @@ namespace TestHelpers
             },
             new Facility
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("61A70D58-F3EF-4716-93EC-698A8FABAE19"),
                 FacilityNumber = "JKL",
                 FileId = Files[3].Id,
                 CountyId = 102,
@@ -87,7 +87,7 @@ namespace TestHelpers
             },
             new Facility
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("08E54076-392C-46B8-883E-B302E215B053"),
                 FacilityNumber = "MNO",
                 FileId = Files[4].Id,
                 CountyId = 103,
@@ -99,21 +99,21 @@ namespace TestHelpers
         {
             new RetentionRecord
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("66400D35-0B56-46C8-B5E4-A569664DD589"),
                 FacilityId = Facilities[0].Id,
                 StartYear = 2003, EndYear = 2009,
                 BoxNumber = "BOX1"
             },
             new RetentionRecord
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("0F829C6B-4800-4B08-B779-48FC85A01338"),
                 FacilityId = Facilities[0].Id,
                 StartYear = 2010, EndYear = 2016,
                 BoxNumber = "BOX2"
             },
             new RetentionRecord
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid("3B4E47D6-FEE4-4AA0-ACF4-5CCA4AF13537"),
                 FacilityId = Facilities[1].Id,
                 StartYear = 2001, EndYear = 2002,
                 BoxNumber = "BOX3"
