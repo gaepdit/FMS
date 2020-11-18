@@ -130,7 +130,7 @@ namespace FMS.Pages.Account
             var userResult = await _userManager.CreateAsync(newUser);
             if (userResult.Succeeded)
             {
-                // Optionally add user to Maintenance Roles.
+                // Optionally add user to selected Roles.
                 var seedAdminUsers = _configuration.GetSection("SeedAdminUsers")
                     .Get<string[]>().AsEnumerable();
                 if (seedAdminUsers != null &&
@@ -138,6 +138,7 @@ namespace FMS.Pages.Account
                 {
                     await _userManager.AddToRoleAsync(newUser, UserRoles.UserMaintenance);
                     await _userManager.AddToRoleAsync(newUser, UserRoles.SiteMaintenance);
+                    await _userManager.AddToRoleAsync(newUser, UserRoles.FileEditor);
                 }
 
                 // Add external provider login info to the user.
