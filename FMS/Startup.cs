@@ -90,6 +90,12 @@ namespace FMS
 
             // Configure Razor pages 
             services.AddRazorPages();
+            
+            // Configure HSTS
+            services.AddHsts(opts =>
+            {
+                opts.MaxAge = TimeSpan.FromDays(365 * 2);
+            });
 
             // Configure Raygun
             services.AddRaygun(Configuration, new RaygunMiddlewareSettings()
