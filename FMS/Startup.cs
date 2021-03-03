@@ -159,7 +159,7 @@ namespace FMS
         {
             // Base path for persisted files
             var basePath = string.IsNullOrWhiteSpace(Configuration["PersistedFilesBasePath"])
-                ? "../_GeneratedFiles"
+                ? "../../_GeneratedFiles"
                 : Configuration["PersistedFilesBasePath"].ForceToString();
 
             // Data protection keys folder
