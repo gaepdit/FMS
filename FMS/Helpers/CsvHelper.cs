@@ -19,12 +19,13 @@ namespace FMS
 
             try
             {
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture) {SanitizeForInjection = true};
+
                 ms = new MemoryStream();
                 writer = new StreamWriter(ms, Encoding.UTF8);
-                csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                csv = new CsvWriter(writer,config);
 
-                csv.Configuration.SanitizeForInjection = true;
-                csv.Configuration.RegisterClassMap<T>();
+                csv.Context.RegisterClassMap<T>();
                 await csv.WriteRecordsAsync(list);
 
                 await csv.FlushAsync();
