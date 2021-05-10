@@ -46,7 +46,9 @@ namespace FMS.Pages.Account
         public IActionResult OnPost(string returnUrl = null)
         {
             // Request a redirect to the external login provider.
+#pragma warning disable 618
             const string provider = AzureADDefaults.AuthenticationScheme;
+#pragma warning restore 618
             var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new {returnUrl});
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);

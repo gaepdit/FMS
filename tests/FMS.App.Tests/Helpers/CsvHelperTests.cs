@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CsvHelper.Configuration;
 using FluentAssertions;
+using JetBrains.Annotations;
 using Xunit;
 
 namespace FMS.App.Tests.Helpers
@@ -22,14 +23,23 @@ namespace FMS.App.Tests.Helpers
                 MyString = s;
             }
 
+            [UsedImplicitly]
             public int MyInt { get; }
+
+            [UsedImplicitly]
             public decimal MyDecimal { get; }
+
+            [UsedImplicitly]
             public double MyDouble { get; }
+
+            [UsedImplicitly]
             public float MyFloat { get; }
+
+            [UsedImplicitly]
             public string MyString { get; }
         }
 
-        private static readonly List<MyClass> MyItems = new List<MyClass>()
+        private static readonly List<MyClass> MyItems = new()
         {
             new MyClass(1, 2, 3, 4, "abc"),
             new MyClass(1, 2.0m, 3.0d, 4.0f, "🐛👍😜"),
@@ -37,12 +47,10 @@ namespace FMS.App.Tests.Helpers
             new MyClass(0, 0, 0, 0, null),
         };
 
+        [UsedImplicitly]
         private sealed class MyClassMap : ClassMap<MyClass>
         {
-            public MyClassMap()
-            {
-                AutoMap(CultureInfo.InvariantCulture);
-            }
+            public MyClassMap() => AutoMap(CultureInfo.InvariantCulture);
         }
 
         /// U+FEFF BYTE ORDER MARK
@@ -66,7 +74,7 @@ namespace FMS.App.Tests.Helpers
             result.Should().BeEquivalentTo(CsvOutput);
         }
 
-        private static readonly List<MyClass> MyMultilineItems = new List<MyClass>()
+        private static readonly List<MyClass> MyMultilineItems = new()
         {
             new MyClass(1, 0, 0, 0, "abc"),
             new MyClass(2, 0, 0, 0, "abc" + Environment.NewLine + "def"),

@@ -16,11 +16,11 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public CabinetRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> CabinetExistsAsync(Guid id) =>
-            await _context.Cabinets.AnyAsync(e => e.Id == id);
+        public Task<bool> CabinetExistsAsync(Guid id) =>
+            _context.Cabinets.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> CabinetNameExistsAsync(string name, Guid? ignoreId = null) =>
-            await _context.Cabinets.AnyAsync(e =>
+        public Task<bool> CabinetNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.Cabinets.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public Task<IReadOnlyList<CabinetSummaryDto>> GetCabinetListAsync(bool includeInactive = true) =>

@@ -8,10 +8,12 @@ namespace FMS.Pages.Account
     [AllowAnonymous]
     public class LogoutModel : PageModel
     {
-        public IActionResult OnGet() => 
+#pragma warning disable 618
+        public IActionResult OnGet() =>
             SignOut("Identity.Application", "Identity.External", AzureADDefaults.OpenIdScheme);
 
         public IActionResult OnPost() =>
             SignOut("Identity.Application", "Identity.External", AzureADDefaults.OpenIdScheme);
+#pragma warning restore 618
     }
 }

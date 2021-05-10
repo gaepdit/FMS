@@ -19,8 +19,8 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public FacilityRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> FacilityExistsAsync(Guid id) =>
-            await _context.Facilities.AnyAsync(e => e.Id == id);
+        public Task<bool> FacilityExistsAsync(Guid id) =>
+            _context.Facilities.AnyAsync(e => e.Id == id);
 
         public async Task<FacilityDetailDto> GetFacilityAsync(Guid id)
         {
@@ -93,10 +93,10 @@ namespace FMS.Infrastructure.Repositories
                     .ThenBy(e => e.FacilityNumber)
             };
 
-        public async Task<int> CountAsync(FacilitySpec spec)
+        public Task<int> CountAsync(FacilitySpec spec)
         {
             var queried = QueryFacilities(spec);
-            return await queried.CountAsync();
+            return queried.CountAsync();
         }
 
         public async Task<PaginatedList<FacilitySummaryDto>> GetFacilityPaginatedListAsync(
@@ -329,18 +329,18 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null) =>
-            await _context.Facilities.AnyAsync(e =>
+        public Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null) =>
+            _context.Facilities.AnyAsync(e =>
                 e.FacilityNumber == facilityNumber
                 && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<bool> FileLabelExists(string fileLabel) =>
-            await _context.Files.AnyAsync(e => e.FileLabel == fileLabel);
+        public Task<bool> FileLabelExists(string fileLabel) =>
+            _context.Files.AnyAsync(e => e.FileLabel == fileLabel);
 
         // Retention Records
 
-        public async Task<bool> RetentionRecordExistsAsync(Guid id) =>
-            await _context.RetentionRecords.AnyAsync(e => e.Id == id);
+        public Task<bool> RetentionRecordExistsAsync(Guid id) =>
+            _context.RetentionRecords.AnyAsync(e => e.Id == id);
 
         public async Task<RetentionRecordDetailDto> GetRetentionRecordAsync(Guid id)
         {

@@ -41,8 +41,8 @@ namespace FMS.Infrastructure.Services
         }
 
         // Any user
-        public async Task<ApplicationUser> GetUserByIdAsync(Guid id) =>
-            await _userManager.FindByIdAsync(id.ToString());
+        public Task<ApplicationUser> GetUserByIdAsync(Guid id) =>
+            _userManager.FindByIdAsync(id.ToString());
 
         public async Task<IList<string>> GetUserRolesAsync(Guid id)
         {
@@ -89,8 +89,8 @@ namespace FMS.Infrastructure.Services
         }
 
         // User search
-        public async Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter) =>
-            await _context.Users.AsNoTracking()
+        public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter) =>
+            _context.Users.AsNoTracking()
                 .Where(m => string.IsNullOrEmpty(nameFilter)
                     || m.GivenName.Contains(nameFilter)
                     || m.FamilyName.Contains(nameFilter))
@@ -99,8 +99,8 @@ namespace FMS.Infrastructure.Services
                 .OrderBy(m => m.FamilyName)
                 .ToListAsync();
 
-        public async Task<ApplicationUser> GetUserAsync(string email) =>
-            await _context.Users.AsNoTracking()
+        public Task<ApplicationUser> GetUserAsync(string email) =>
+            _context.Users.AsNoTracking()
                 .SingleOrDefaultAsync(m => m.Email == email);
     }
 }

@@ -17,8 +17,8 @@ namespace FMS.Infrastructure.Repositories
 
         public ComplianceOfficerRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> ComplianceOfficerIdExistsAsync(Guid id) =>
-            await _context.ComplianceOfficers.AnyAsync(e => e.Id == id);
+        public Task<bool> ComplianceOfficerIdExistsAsync(Guid id) =>
+            _context.ComplianceOfficers.AnyAsync(e => e.Id == id);
 
         public async Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(Guid id)
         {

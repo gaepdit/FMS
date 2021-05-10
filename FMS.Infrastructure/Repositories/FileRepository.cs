@@ -17,8 +17,8 @@ namespace FMS.Infrastructure.Repositories
 
         public FileRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> FileExistsAsync(Guid id) =>
-            await _context.Files.AnyAsync(e => e.Id == id);
+        public Task<bool> FileExistsAsync(Guid id) =>
+            _context.Files.AnyAsync(e => e.Id == id);
 
         public async Task<FileDetailDto> GetFileAsync(Guid id)
         {
@@ -50,12 +50,12 @@ namespace FMS.Infrastructure.Repositories
             return fileDetail;
         }
 
-        public async Task<bool> FileHasActiveFacilities(Guid id) =>
-            await _context.Facilities.AsNoTracking()
+        public Task<bool> FileHasActiveFacilities(Guid id) =>
+            _context.Facilities.AsNoTracking()
                 .AnyAsync(e => e.FileId == id && e.Active);
 
-        public async Task<int> CountAsync(FileSpec spec) =>
-            await _context.Files.AsNoTracking()
+        public Task<int> CountAsync(FileSpec spec) =>
+            _context.Files.AsNoTracking()
                 .Where(e => spec.ShowInactive || e.Active)
                 .Where(e => string.IsNullOrWhiteSpace(spec.FileLabel) || e.FileLabel.Contains(spec.FileLabel))
                 .Where(e => !spec.CountyId.HasValue || e.FileLabel.StartsWith(File.CountyString(spec.CountyId.Value)))

@@ -1,7 +1,7 @@
-﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor ContextAccessor
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _contextAccessor
 @{
-    var identity = ContextAccessor.HttpContext?.User?.Identity;
+    var identity = _contextAccessor.HttpContext?.User.Identity;
     var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 }
 <script>
@@ -12,7 +12,7 @@
     e:g})}}(window,document,"script","//cdn.raygun.io/raygun4js/raygun.min.js","rg4js");
 </script>
 <script>
-    rg4js('apiKey', '@Configuration["RaygunSettings:ApiKey"]');
+    rg4js('apiKey', '@_configuration["RaygunSettings:ApiKey"]');
     rg4js('enableCrashReporting', true);
     rg4js('withTags', ['@environment']);
     @if (identity?.IsAuthenticated == true)

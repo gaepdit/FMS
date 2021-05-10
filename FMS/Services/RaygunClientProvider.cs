@@ -14,7 +14,7 @@ namespace FMS.Services
             var client = base.GetClient(settings, context);
             client.IgnoreFormFieldNames("*Password");
             client.ApplicationVersion = typeof(Program).Assembly.GetName().Version?.ToString(3);
-            client.SendingMessage += (sender, args) =>
+            client.SendingMessage += (_, args) =>
             {
                 args.Message.Details.Tags ??= new List<string>();
                 args.Message.Details.Tags.Add(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));

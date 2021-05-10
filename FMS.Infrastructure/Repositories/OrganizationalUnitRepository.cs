@@ -16,11 +16,11 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public OrganizationalUnitRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> OrganizationalUnitExistsAsync(Guid id) =>
-            await _context.OrganizationalUnits.AnyAsync(e => e.Id == id);
+        public Task<bool> OrganizationalUnitExistsAsync(Guid id) =>
+            _context.OrganizationalUnits.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> OrganizationalUnitNameExistsAsync(string name, Guid? ignoreId = null) =>
-            await _context.OrganizationalUnits.AnyAsync(e =>
+        public Task<bool> OrganizationalUnitNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.OrganizationalUnits.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<OrganizationalUnitEditDto> GetOrganizationalUnitAsync(Guid id)
@@ -73,7 +73,8 @@ namespace FMS.Infrastructure.Repositories
             return UpdateOrganizationalUnitInternalAsync(id, organizationalUnitUpdates);
         }
 
-        private async Task UpdateOrganizationalUnitInternalAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates)
+        private async Task UpdateOrganizationalUnitInternalAsync(Guid id,
+            OrganizationalUnitEditDto organizationalUnitUpdates)
         {
             var organizationalUnit = await _context.OrganizationalUnits.FindAsync(id);
 
@@ -84,7 +85,8 @@ namespace FMS.Infrastructure.Repositories
 
             if (await OrganizationalUnitNameExistsAsync(organizationalUnitUpdates.Name, id))
             {
-                throw new ArgumentException($"Organizational Unit Name '{organizationalUnitUpdates.Name}' already exists.");
+                throw new ArgumentException(
+                    $"Organizational Unit Name '{organizationalUnitUpdates.Name}' already exists.");
             }
 
             organizationalUnit.Name = organizationalUnitUpdates.Name;

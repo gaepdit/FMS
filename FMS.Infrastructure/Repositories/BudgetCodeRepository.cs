@@ -1,30 +1,30 @@
-﻿using FMS.Domain.Dto;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
-    public class BudgetCodeRepository : IBudgetCodeRepository
+    public sealed class BudgetCodeRepository : IBudgetCodeRepository
     {
         private readonly FmsDbContext _context;
         public BudgetCodeRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> BudgetCodeExistsAsync(Guid id) =>
-            await _context.BudgetCodes.AnyAsync(e => e.Id == id);
+        public Task<bool> BudgetCodeExistsAsync(Guid id) =>
+            _context.BudgetCodes.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> BudgetCodeCodeExistsAsync(string code, Guid? ignoreId = null) =>
-            await _context.BudgetCodes.AnyAsync(e =>
+        public Task<bool> BudgetCodeCodeExistsAsync(string code, Guid? ignoreId = null) =>
+            _context.BudgetCodes.AnyAsync(e =>
                 e.Code == code && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<bool> BudgetCodeNameExistsAsync(string name, Guid? ignoreId = null) =>
-            await _context.BudgetCodes.AnyAsync(e =>
+        public Task<bool> BudgetCodeNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.BudgetCodes.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<BudgetCodeEditDto> GetBudgetCodeAsync(Guid id)
@@ -128,7 +128,7 @@ namespace FMS.Infrastructure.Repositories
 
         private bool _disposedValue;
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposedValue) return;
 

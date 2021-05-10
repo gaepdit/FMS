@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
@@ -64,7 +62,7 @@ namespace TestHelpers
             return new CabinetRepository(new FmsDbContext(_options, default));
         }
 
-                // Copies of same data from RepositoryData
+        // Copies of same data from RepositoryData
         // to prevent entity tracking errors when seeding
         // test database above 
 

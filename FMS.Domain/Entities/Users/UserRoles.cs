@@ -7,11 +7,10 @@ namespace FMS.Domain.Entities.Users
     /// </summary>
     public static class UserRoles
     {
-        /// Roles
-        /// (These are the strings that are stored in the AppRoles table in the database.
-        /// Avoid modifying these strings.) 
+        // Roles
+        // (These are the strings that are stored in the AppRoles table in the database.
+        // Avoid modifying these strings.) 
         public const string UserMaintenance = "Administrator";
-
         public const string SiteMaintenance = "SiteMaintenance";
         public const string FileCreator = "FileCreator";
         public const string FileEditor = "FileEditor";

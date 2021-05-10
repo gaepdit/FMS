@@ -74,6 +74,10 @@ namespace FMS
             services.Configure<CookiePolicyOptions>(opts => opts.MinimumSameSitePolicy = SameSiteMode.None);
 
             // Configure authentication
+            // (AddAzureAD is marked as obsolete and will be removed in a future version, but
+            // the replacement, Microsoft Identity Web, is net yet compatible with RoleManager.)
+            // Follow along at https://github.com/AzureAD/microsoft-identity-web/issues/1091
+#pragma warning disable 618
             services.AddAuthentication().AddAzureAD(opts =>
             {
                 Configuration.Bind(AzureADDefaults.AuthenticationScheme, opts);
@@ -86,19 +90,18 @@ namespace FMS
                 opts.TokenValidationParameters.ValidateIssuer = true;
                 opts.UsePkce = true;
             });
+#pragma warning restore 618
+
             services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(_dataProtectionKeysFolder));
 
             // Configure Razor pages 
             services.AddRazorPages();
-            
+
             // Configure HSTS
-            services.AddHsts(opts =>
-            {
-                opts.MaxAge = TimeSpan.FromDays(365 * 2);
-            });
+            services.AddHsts(opts => { opts.MaxAge = TimeSpan.FromDays(365 * 2); });
 
             // Configure Raygun
-            services.AddRaygun(Configuration, new RaygunMiddlewareSettings()
+            services.AddRaygun(Configuration, new RaygunMiddlewareSettings
             {
                 ClientProvider = new RaygunClientProvider()
             });

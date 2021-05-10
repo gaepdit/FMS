@@ -1,6 +1,6 @@
-﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
 <script src="~/js/map.js" asp-append-version="true"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=@Configuration["GoogleMapSettings:ApiKey"]"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@_configuration["GoogleMapSettings:ApiKey"]"></script>
 <script>
     let bool = true;   
     $(document).ready(function domReady() {

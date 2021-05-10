@@ -39,11 +39,11 @@ namespace FMS.Infrastructure.Repositories
             return newFS.Id;
         }
 
-        public async Task<bool> FacilityStatusExistsAsync(Guid id) =>
-            await _context.FacilityStatuses.AnyAsync(e => e.Id == id);
+        public Task<bool> FacilityStatusExistsAsync(Guid id) =>
+            _context.FacilityStatuses.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> FacilityStatusStatusExistsAsync(string status, Guid? ignoreId = null) =>
-            await _context.FacilityStatuses.AnyAsync(e =>
+        public Task<bool> FacilityStatusStatusExistsAsync(string status, Guid? ignoreId = null) =>
+            _context.FacilityStatuses.AnyAsync(e =>
                 e.Status == status && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<FacilityStatusEditDto> GetFacilityStatusAsync(Guid id)

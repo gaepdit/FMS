@@ -1,11 +1,11 @@
-﻿using System;
-
-namespace FMS
+﻿namespace FMS
 {
     public class DisplayMessage
     {
-        public Context Context { get; set; }
-        public string Message { get; set; }
+        // ReSharper disable once MemberCanBePrivate.Global
+        // Context must be public so it works with deserialization in TempDataExtensions class
+        public Context Context { get; }
+        public string Message { get; }
 
         public DisplayMessage() { }
 

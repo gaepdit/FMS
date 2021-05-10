@@ -25,10 +25,10 @@ namespace FMS.Infrastructure.Repositories
         /// <typeparam name="TEntity">The Entity type.</typeparam>
         /// <param name="includeInactive">Whether to include records that have been marked as inactive.</param>
         /// <returns>A List of Entity key/value pairs of the ListItem type.</returns>
-        private async Task<List<ListItem>> GetItemListAsync<TEntity>(bool includeInactive)
+        private Task<List<ListItem>> GetItemListAsync<TEntity>(bool includeInactive)
             where TEntity : BaseActiveModel, INamedModel
         {
-            return await _context.Set<TEntity>().AsNoTracking()
+            return _context.Set<TEntity>().AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
                 .Select(e => new ListItem {Id = e.Id, Name = e.Name})

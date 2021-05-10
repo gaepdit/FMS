@@ -16,15 +16,15 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public FacilityTypeRepository(FmsDbContext context) => _context = context;
 
-        public async Task<bool> FacilityTypeExistsAsync(Guid id) =>
-            await _context.FacilityTypes.AnyAsync(e => e.Id == id);
+        public Task<bool> FacilityTypeExistsAsync(Guid id) =>
+            _context.FacilityTypes.AnyAsync(e => e.Id == id);
 
-        public async Task<bool> FacilityTypeNameExistsAsync(string name, Guid? ignoreId = null) =>
-            await _context.FacilityTypes.AnyAsync(e =>
+        public Task<bool> FacilityTypeNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.FacilityTypes.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<bool> FacilityTypeDescriptionExistsAsync(string description, Guid? ignoreId = null) =>
-            await _context.FacilityTypes.AnyAsync(e =>
+        public Task<bool> FacilityTypeDescriptionExistsAsync(string description, Guid? ignoreId = null) =>
+            _context.FacilityTypes.AnyAsync(e =>
                 e.Description == description && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<FacilityTypeEditDto> GetFacilityTypeAsync(Guid id)
