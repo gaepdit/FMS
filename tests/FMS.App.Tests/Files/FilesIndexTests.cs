@@ -19,7 +19,7 @@ namespace FMS.App.Tests.Files
         [Fact]
         public async Task OnSearch_DefaultSpec_ReturnsActiveFiles()
         {
-            var items = SimpleRepositoryData.Files
+            var items = RepositoryData.Files
                 .Where(e => e.Active)
                 .Select(e => new FileDetailDto(e))
                 .ToList();

@@ -18,7 +18,7 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var cabinet = SimpleRepositoryData.Cabinets[0];
+            var cabinet = RepositoryData.Cabinets[0];
             var expected = new CabinetSummaryDto(cabinet);
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.GetCabinetSummaryAsync(cabinet.Id))
@@ -69,7 +69,7 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
-            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
 
             var mockRepo = new Mock<ICabinetRepository>();
 
@@ -94,7 +94,7 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
-            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
 
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<Guid>()))
@@ -113,7 +113,7 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnPost_NameExists_ReturnsPageWithInvalidModelState()
         {
-            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
 
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.CabinetNameExistsAsync(It.IsAny<string>(), It.IsAny<Guid>()))
@@ -140,7 +140,7 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnPost_InvalidFileLabel_ReturnsPageWithInvalidModelState()
         {
             const string newFileLabel = "abc";
-            var cabinet = new CabinetSummaryDto(SimpleRepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
 
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.CabinetNameExistsAsync(It.IsAny<string>(), It.IsAny<Guid>()))

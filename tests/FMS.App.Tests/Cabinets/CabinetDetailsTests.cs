@@ -16,8 +16,8 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var id = SimpleRepositoryData.Cabinets[0].Id;
-            var item = SimpleRepositoryData.GetCabinetSummary(id);
+            var id = RepositoryData.Cabinets[0].Id;
+            var item = ResourceHelper.GetCabinetSummary(id);
 
             var mockRepo = new Mock<ICabinetRepository>();
             mockRepo.Setup(l => l.GetCabinetSummaryAsync(It.IsAny<string>()))

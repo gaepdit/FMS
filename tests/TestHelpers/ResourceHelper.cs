@@ -4,10 +4,11 @@ using System.Linq;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
+using static TestHelpers.RepositoryData;
 
 namespace TestHelpers
 {
-    public static partial class SimpleRepositoryData
+    public static class ResourceHelper
     {
         public static List<CabinetSummaryDto> GetCabinetSummaries(bool includeInactive)
         {
@@ -31,7 +32,8 @@ namespace TestHelpers
 
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
-            var facility = Facilities.Find(e => e.Id == id);
+            var facility = Facilities().Find(e => e.Id == id);
+            if (facility == null) throw new ArgumentException("Invalid Facility ID");
 
             facility.File = GetFile(facility.FileId);
             facility.County = GetCounty(facility.CountyId);

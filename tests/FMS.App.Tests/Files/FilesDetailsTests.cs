@@ -17,7 +17,7 @@ namespace FMS.App.Tests.Files
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var file = SimpleRepositoryData.Files[0];
+            var file = RepositoryData.Files[0];
 
             var mockRepository = new Mock<IFileRepository>();
             mockRepository.Setup(l => l.GetFileAsync(file.FileLabel))
