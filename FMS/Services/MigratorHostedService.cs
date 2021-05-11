@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using FMS.Domain.Entities.Users;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.DbScripts;
-using FMS.Infrastructure.SeedData;
-using FMS.Infrastructure.SeedData.TestData;
+using FMS.Platform.Extensions.DevHelpers;
+using FMS.Platform.Extensions.DevHelpers.SeedData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,53 +20,49 @@ namespace FMS.Services
     /// </summary>
     public class MigratorHostedService : IHostedService
     {
-        // We need to inject the IServiceProvider so we can create the DbContext scoped service
+        // We need to inject the IServiceProvider so we can create the DbContext scoped service.
         private readonly IServiceProvider _serviceProvider;
         public MigratorHostedService(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            // Create a new scope to retrieve scoped services
+            // Create a new scope to retrieve scoped services.
             using var scope = _serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<FmsDbContext>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
-            // Initialize database
-            if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
+            // Initialize database.
+            if (env.IsLocalDev())
             {
-                // Using "TempDb" launch profile causes the database to be recreated on launch.
-                await context.Database.EnsureDeletedAsync(cancellationToken);
-                await context.Database.EnsureCreatedAsync(cancellationToken);
+                if (Environment.GetEnvironmentVariable("ENABLE_EF_MIGRATIONS") == "true")
+                {
+                    // If EF migrations are enabled, preserve database and run migrations.
+                    // (If the database needs to be rebuilt from scratch, manually delete it first.) 
+                    await context.Database.MigrateAsync(cancellationToken);
+                }
+                else
+                {
+                    // Otherwise, delete and re-create database as currently defined.
+                    await context.Database.EnsureDeletedAsync(cancellationToken);
+                    await context.Database.EnsureCreatedAsync(cancellationToken);
+                    await context.CreateStoredProceduresAsync();
+                }
+
+                // Seed data only in local environment.
+                await context.SeedDataAsync(cancellationToken);
             }
             else
             {
-                // Otherwise, the database is set up using EF migrations and preserved between restarts.
+                // Run database migrations if not local.
                 await context.Database.MigrateAsync(cancellationToken);
             }
 
-            // Seed initial data
-            context.SeedData();
 
-            if (env.IsDevelopment())
-            {
-                // Test data: will not run in production
-                context.SeedTestData();
-
-                if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
-                {
-                    context.CreateStoredProcedures();
-                }
-            }
-
-            // Initialize roles
+            // Initialize any new roles.
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
             foreach (var role in UserRoles.AllRoles)
-            {
                 if (!await context.Roles.AnyAsync(e => e.Name == role, cancellationToken))
-                {
                     await roleManager.CreateAsync(new IdentityRole<Guid>(role));
-                }
-            }
         }
 
         // noop

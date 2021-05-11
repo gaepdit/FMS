@@ -2,10 +2,10 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using FMS.App;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
@@ -43,8 +43,11 @@ namespace FMS.Pages.Account
         public IActionResult OnGetAsync() => RedirectToPage("./Login");
 
         // This Post method is called by the Login page
-        public IActionResult OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            // If "test" users is enabled, create user information and sign in locally.
+            if (Environment.GetEnvironmentVariable("ENABLE_TEST_USER") == "true") return await SignInAsTestUser();
+
             // Request a redirect to the external login provider.
 #pragma warning disable 618
             const string provider = AzureADDefaults.AuthenticationScheme;
@@ -52,6 +55,22 @@ namespace FMS.Pages.Account
             var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new {returnUrl});
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
+
+            async Task<IActionResult> SignInAsTestUser()
+            {
+                var user = new ApplicationUser();
+                _configuration.Bind("FakeUser", user);
+
+                var userExists = await _userManager.FindByEmailAsync(user.Email);
+                if (userExists == null)
+                {
+                    await _userManager.CreateAsync(user);
+                    foreach (var role in UserRoles.AllRoles) await _userManager.AddToRoleAsync(user, role);
+                }
+
+                await _signInManager.SignInAsync(userExists ?? user, false);
+                return LocalRedirect(returnUrl);
+            }
         }
 
         // This method is called by the external login provider

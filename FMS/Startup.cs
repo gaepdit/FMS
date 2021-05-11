@@ -6,6 +6,7 @@ using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
+using FMS.Platform.Extensions.DevHelpers;
 using FMS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
@@ -25,44 +26,16 @@ namespace FMS
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
-        {
-            Configuration = configuration;
-            _env = env;
-            CreateFolders();
-        }
-
+        public Startup(IConfiguration configuration) => Configuration = configuration;
         private IConfiguration Configuration { get; }
-        private readonly IWebHostEnvironment _env;
-        private string _dataProtectionKeysFolder;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure database
             services.AddDbContext<FmsDbContext>(opts =>
-            {
-                var connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-                if (_env.IsDevelopment())
-                {
-                    if (Environment.GetEnvironmentVariable("RECREATE_DB") == "true")
-                    {
-                        // The "TempDb" launch profiles must use LocalDB
-                        connectionString =
-                            "Server=(localdb)\\mssqllocaldb;Database=fms-temp;Trusted_Connection=True;MultipleActiveResultSets=true";
-                    }
-                    else
-                    {
-                        // In dev environment, use connection string if specified; otherwise, use LocalDB.
-                        // (In prod environment, connection string is required.)
-                        connectionString ??=
-                            "Server=(localdb)\\mssqllocaldb;Database=fms-local;Trusted_Connection=True;MultipleActiveResultSets=true";
-                    }
-                }
-
-                opts.UseSqlServer(connectionString);
-            });
+                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    x => x.MigrationsAssembly("FMS.Infrastructure")));
 
             // Configure Identity
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
@@ -91,8 +64,8 @@ namespace FMS
                 opts.UsePkce = true;
             });
 #pragma warning restore 618
-
-            services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(_dataProtectionKeysFolder));
+            var keysFolder = Path.Combine(Configuration["PersistedFilesBasePath"], "DataProtectionKeys");
+            services.AddDataProtection().PersistKeysToFileSystem(Directory.CreateDirectory(keysFolder));
 
             // Configure Razor pages 
             services.AddRazorPages();
@@ -101,8 +74,7 @@ namespace FMS
             services.AddHsts(opts => { opts.MaxAge = TimeSpan.FromDays(365 * 2); });
 
             // Configure Raygun
-            services.AddRaygun(Configuration, new RaygunMiddlewareSettings
-            {
+            services.AddRaygun(Configuration, new RaygunMiddlewareSettings {
                 ClientProvider = new RaygunClientProvider()
             });
 
@@ -133,20 +105,27 @@ namespace FMS
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            if (env.IsLocalDev())
+            {
+                // Local development environment
+                app.UseDeveloperExceptionPage();
+            }
             if (env.IsDevelopment())
             {
+                // Dev web server
                 app.UseDeveloperExceptionPage();
+                app.UseRaygun();
+                app.UseHsts();
             }
             else
             {
+                // Staging & Production web servers
                 app.UseExceptionHandler("/Error");
                 app.UseStatusCodePages();
-
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseRaygun();
                 app.UseHsts();
             }
 
-            app.UseRaygun();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
@@ -156,18 +135,6 @@ namespace FMS
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => endpoints.MapRazorPages().RequireAuthorization());
-        }
-
-        private void CreateFolders()
-        {
-            // Base path for persisted files
-            var basePath = string.IsNullOrWhiteSpace(Configuration["PersistedFilesBasePath"])
-                ? "../../_GeneratedFiles"
-                : Configuration["PersistedFilesBasePath"].ForceToString();
-
-            // Data protection keys folder
-            _dataProtectionKeysFolder = Path.Combine(basePath, "DataProtectionKeys");
-            Directory.CreateDirectory(_dataProtectionKeysFolder);
         }
     }
 }

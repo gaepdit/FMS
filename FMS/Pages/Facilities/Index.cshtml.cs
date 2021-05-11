@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using FMS.App;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -51,7 +51,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
             // Get the list of facilities matching the "Spec" criteria
-            FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, Globals.PageSize);
+            FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
             ShowResults = true;
             await PopulateSelectsAsync();

@@ -2,15 +2,17 @@ using System;
 using System.Collections.Generic;
 using FMS.Domain.Entities;
 
-namespace FMS.Infrastructure.SeedData.TestData
+// ReSharper disable StringLiteralTypo
+
+namespace FMS.Platform.Extensions.DevHelpers.SeedData
 {
-    public static partial class TestData
+    public static partial class SeedData
     {
-        public static List<Facility> GetFacilities()
+        private static IEnumerable<Facility> GetFacilities()
         {
             return new List<Facility>
             {
-                new Facility
+                new()
                 {
                     Id = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
                     Active = true,
@@ -33,7 +35,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, //Id = 243, Name = "Cherokee"
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("AB44F9C7-C2EC-47BC-8886-60D72B5BD5EB"),
                     Active = true,
@@ -55,7 +57,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 261, // new County{ },  // CHEROKEE
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     Active = true,
@@ -77,7 +79,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("7B20DE98-4726-4789-9AEA-2D995FF6839A"),
                     Active = true,
@@ -99,7 +101,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     Active = true,
@@ -121,7 +123,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("E697F074-9C1C-4CEF-93F0-FCD9610ECCD3"),
                     Active = true,
@@ -143,7 +145,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("D6C596EA-0530-460F-A105-2FB772F8F0B2"),
                     Active = true,
@@ -165,7 +167,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("309436BC-F7E7-4BFD-8455-E868129D6F45"),
                     Active = true,
@@ -187,7 +189,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, // CHEROKEE
                     IsRetained = false,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("109436BC-F7E7-4BFD-8455-E868129D6F45"),
                     Active = false,
@@ -209,7 +211,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("810DDE72-5459-4ECC-81D8-A51554C9FF3F"),
                     Active = true,
@@ -231,7 +233,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243,
                     IsRetained = false,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("BF25C413-0EE1-4280-84BD-0B2631F4EEC7"),
                     Active = true,
@@ -253,7 +255,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     CountyId = 243,
                     IsRetained = true,
                 },
-                new Facility
+                new()
                 {
                     Id = new Guid("754FEEE0-5167-4909-A587-51C0CE9DFEB6"),
                     Active = true,

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using FMS.Domain.Entities;
 
-namespace FMS.Infrastructure.SeedData.TestData
+namespace FMS.Platform.Extensions.DevHelpers.SeedData
 {
-    public static partial class TestData
+    public static partial class SeedData
     {
-        public static List<RetentionRecord> GetRetentionRecords()
+        private static IEnumerable<RetentionRecord> GetRetentionRecords()
         {
             return new List<RetentionRecord>
             {
-                new RetentionRecord
+                new()
                 {
                     Id = new Guid("6781CB75-2573-4095-B4CF-18596B4E9D58"),
                     Active = true,
@@ -19,7 +19,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     EndYear = 2009,
                     BoxNumber = "2014L249CA"
                 },
-                new RetentionRecord
+                new()
                 {
                     Id = new Guid("852617B3-D76A-48E5-A765-E391956E3AB4"),
                     Active = true,
@@ -28,7 +28,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     EndYear = 2016,
                     BoxNumber = "2018LT254P"
                 },
-                new RetentionRecord
+                new()
                 {
                     Id = new Guid("890e5de1-6499-41fe-969e-bdaac9e4bed9"),
                     Active = true,
@@ -37,7 +37,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     EndYear = 2002,
                     BoxNumber = "2014L249CA"
                 },
-                new RetentionRecord
+                new()
                 {
                     Id = new Guid("0e9456c2-b360-4b5c-bf7a-132a8a01978c"),
                     Active = true,
@@ -46,7 +46,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     EndYear = 2005,
                     BoxNumber = "2018LT254P"
                 },
-                new RetentionRecord
+                new()
                 {
                     Id = new Guid("b6c3fa12-72e8-4f79-a882-aac873612753"),
                     Active = true,
@@ -55,7 +55,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     EndYear = 2002,
                     BoxNumber = "2016L046RC"
                 },
-                new RetentionRecord
+                new()
                 {
                     Id = new Guid("f75ea5d0-a759-4366-b056-081913e5f473"),
                     Active = true,

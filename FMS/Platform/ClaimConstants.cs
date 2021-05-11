@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace FMS.App
+namespace FMS.Platform.Extensions
 {
     /// <summary>
     /// Constants for claim types.

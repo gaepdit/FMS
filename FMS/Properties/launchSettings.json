@@ -8,41 +8,65 @@
     }
   },
   "profiles": {
-    "IISX-Migrate": {
+    "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
+        "ENABLE_TEST_USER": "true"
       }
     },
-    "IISX-TempDb": {
+    "IIS-EF-Migrations": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Local",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
-        "RECREATE_DB": "true"
+        "ENABLE_TEST_USER": "true",
+        "ENABLE_EF_MIGRATIONS": "true"
       }
     },
-    "FMS-Migrate": {
-      "applicationUrl": "https://localhost:44362;http://localhost:53734",
-      "commandName": "Project",
+    "IIS-External-Login": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Local",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
-      },
-      "launchBrowser": true
+      }
     },
-    "FMS-TempDb": {
-      "applicationUrl": "https://localhost:44362;http://localhost:53734",
+    "FMS": {
       "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:44362;http://localhost:53734",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_ENVIRONMENT": "Local",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
-        "RECREATE_DB": "true"
-      },
-      "launchBrowser": true
+        "ENABLE_TEST_USER": "true"
+      }
+    },
+    "FMS-EF-Migrations": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:44362;http://localhost:53734",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
+        "ENABLE_TEST_USER": "true",
+        "ENABLE_EF_MIGRATIONS": "true"
+      }
+    },
+    "FMS-External-Login": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:44362;http://localhost:53734",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+      }
     }
   }
 }

@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using FMS.Domain.Entities;
 
-namespace FMS.Infrastructure.SeedData.TestData
+// ReSharper disable StringLiteralTypo
+
+namespace FMS.Platform.Extensions.DevHelpers.SeedData
 {
-    public static partial class TestData
+    public static partial class SeedData
     {
-        public static List<ComplianceOfficer> GetComplianceOfficers()
+        private static IEnumerable<ComplianceOfficer> GetComplianceOfficers()
         {
             return new List<ComplianceOfficer>
             {
-                new ComplianceOfficer
+                new()
                 {
                     Id = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"),
                     Active = true,
@@ -18,7 +20,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     FamilyName = "Beavers",
                     Email = "example1@example.com",
                 },
-                new ComplianceOfficer
+                new()
                 {
                     Id = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     Active = true,
@@ -26,7 +28,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     FamilyName = "Brodell",
                     Email = "example2@example.com",
                 },
-                new ComplianceOfficer
+                new()
                 {
                     Id = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),
                     Active = true,
@@ -34,7 +36,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     FamilyName = "Brownlee",
                     Email = "example3@example.com",
                 },
-                new ComplianceOfficer
+                new()
                 {
                     Id = new Guid("255ACC97-1C23-4621-A08A-FE77B500BDD0"),
                     Active = true,
@@ -42,7 +44,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     FamilyName = "Carpenter",
                     Email = "example4@example.com",
                 },
-                new ComplianceOfficer
+                new()
                 {
                     Id = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"),
                     Active = true,
@@ -50,7 +52,7 @@ namespace FMS.Infrastructure.SeedData.TestData
                     FamilyName = "Collins",
                     Email = "example5@example.com",
                 },
-                new ComplianceOfficer
+                new()
                 {
                     Id = new Guid("63B66867-0961-4ADE-99D2-85D6D4FED985"),
                     Active = true,

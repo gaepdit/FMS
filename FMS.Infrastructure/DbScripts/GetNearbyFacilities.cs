@@ -1,14 +1,13 @@
-﻿using FMS.Infrastructure.Contexts;
+﻿using System.Threading.Tasks;
+using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.DbScripts
 {
     public static class StoredProcedures
     {
-        public static void CreateStoredProcedures(this FmsDbContext context)
-        {
-            context.Database.ExecuteSqlRaw(CreateSpGetNearbyFacilities);
-        }
+        public static Task CreateStoredProceduresAsync(this FmsDbContext context) => 
+            context.Database.ExecuteSqlRawAsync(CreateSpGetNearbyFacilities);
 
         public const string CreateSpGetNearbyFacilities = @"
 CREATE OR ALTER PROCEDURE [dbo].[getNearbyFacilities] 

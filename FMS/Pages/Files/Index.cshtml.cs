@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using FMS.App;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -27,7 +27,7 @@ namespace FMS.Pages.Files
 
         public async Task<IActionResult> OnGetSearchAsync(FileSpec spec, [FromQuery] int p = 1)
         {
-            FileList = await _repository.GetFileListAsync(spec, p, Globals.PageSize);
+            FileList = await _repository.GetFileListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
             ShowResults = true;
             return Page();

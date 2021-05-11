@@ -1,19 +1,19 @@
-### App-specific ###
-
-# Server settings files
-appsettings\.Production\.json
-appsettings\.Staging\.json
-appsettings\.Development\.json
-
-# Content folders
-_GeneratedFiles/
-
 ### Generic ###
+# Generated 2021-05-11
 
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,jetbrains
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,jetbrains
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,rider,cypressio
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,rider,cypressio
 
-### JetBrains ###
+### CypressIO ###
+# gitignore template for the CypressIO, browser test framework
+# website: https://www.cypress.io/
+
+cypress/results/*
+cypress/reports/*
+cypress/screenshots/*
+cypress/videos/*
+
+### Rider ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -86,36 +86,6 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-### JetBrains Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
-
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
-
-# Sonarlint plugin
-# https://plugins.jetbrains.com/plugin/7973-sonarlint
-.idea/**/sonarlint/
-
-# SonarQube Plugin
-# https://plugins.jetbrains.com/plugin/7238-sonarqube-community-plugin
-.idea/**/sonarIssues.xml
-
-# Markdown Navigator plugin
-# https://plugins.jetbrains.com/plugin/7896-markdown-navigator-enhanced
-.idea/**/markdown-navigator.xml
-.idea/**/markdown-navigator-enh.xml
-.idea/**/markdown-navigator/
-
-# Cache file creation bug
-# See https://youtrack.jetbrains.com/issue/JBR-2257
-.idea/$CACHE_FILE$
-
-# CodeStream plugin
-# https://plugins.jetbrains.com/plugin/12206-codestream
-.idea/codestream.xml
-
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -127,6 +97,7 @@ fabric.properties
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+.ionide
 
 ### VisualStudio ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -154,6 +125,7 @@ mono_crash.*
 [Rr]eleases/
 x64/
 x86/
+[Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
@@ -191,6 +163,9 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
 
 # StyleCop
 StyleCopReport.xml
@@ -269,7 +244,8 @@ _TeamCity*
 !.axoCover/settings.json
 
 # Coverlet is a free, cross platform Code Coverage Tool
-coverage*[.json, .xml, .info]
+coverage*.[ji][sn][of][no]
+coverage*.xml
 
 # Visual Studio code coverage results
 *.coverage
@@ -483,4 +459,23 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,jetbrains
+# Fody - auto-generated XML schema
+FodyWeavers.xsd
+
+### VisualStudio Patch ###
+# Additional files built by Visual Studio
+*.tlog
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,rider,cypressio
+
+### Repo-specific ###
+
+# Server settings files
+appsettings\.Production\.json
+appsettings\.Staging\.json
+appsettings\.Development\.json
+appsettings\.Local\.json
+
+# Content folders
+_GeneratedFiles/
+

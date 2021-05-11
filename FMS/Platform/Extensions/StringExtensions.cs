@@ -1,20 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
-namespace FMS
+namespace FMS.Platform.Extensions
 {
     public static class StringExtensions
     {
-        /// <summary>
-        /// Returns a string representation of an object. If the object is null, returns an empty string.
-        /// </summary>
-        /// <param name="input">An object.</param>
-        /// <returns>A string.</returns>
-        [DebuggerStepThrough]
-        public static string ForceToString(this object input) =>
-            input == null || string.IsNullOrEmpty(input.ToString()) ? string.Empty : input.ToString();
-
         /// <summary>
         /// Implodes a collection of strings to a single string, concatenating the items using the separator,
         /// and ignoring null or empty string items.

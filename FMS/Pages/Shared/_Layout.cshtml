@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FMS - @ViewData["Title"]</title>
-    <environment names="Development">
+    <environment names="Local,Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
     </environment>
     <environment names="Staging,Production">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-<environment names="Development,Staging">
+<environment names="Local,Development,Staging">
     <div class="font-weight-bold text-uppercase text-center sticky-top"
          style="text-shadow: 0 0 4px white;opacity:0.8;background:repeating-linear-gradient(135deg,#f6da52,#f6da52 10px,#ffef80 10px,#ffef80 20px);">
         Test Site

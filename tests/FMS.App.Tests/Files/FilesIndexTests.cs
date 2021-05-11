@@ -6,6 +6,7 @@ using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
 using FMS.Pages.Files;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Moq;
 using TestHelpers;
@@ -23,7 +24,7 @@ namespace FMS.App.Tests.Files
                 .Where(e => e.Active)
                 .Select(e => new FileDetailDto(e))
                 .ToList();
-            var expected = new PaginatedList<FileDetailDto>(items, items.Count, 1, Globals.PageSize);
+            var expected = new PaginatedList<FileDetailDto>(items, items.Count, 1, GlobalConstants.PageSize);
 
             var mockRepository = new Mock<IFileRepository>();
             var spec = new FileSpec();
@@ -45,7 +46,7 @@ namespace FMS.App.Tests.Files
         {
             var mockRepository = new Mock<IFileRepository>();
             var spec = new FileSpec();
-            var expected = new PaginatedList<FileDetailDto>(new List<FileDetailDto>(), 0, 1, Globals.PageSize);
+            var expected = new PaginatedList<FileDetailDto>(new List<FileDetailDto>(), 0, 1, GlobalConstants.PageSize);
             mockRepository.Setup(l =>
                     l.GetFileListAsync(It.IsAny<FileSpec>(), It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(expected).Verifiable();
