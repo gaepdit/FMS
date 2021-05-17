@@ -202,12 +202,12 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"), //00943668
                     FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Shopping center parking lot",
-                    Address = "5329 OLD HWY 5",
+                    Address = "5400 OLD HWY 5",
                     City = "WOODSTOCK",
                     State = "Georgia",
                     PostalCode = "30188",
-                    Latitude = 34.141353m,
-                    Longitude = -84.505629m,
+                    Latitude =34.1396m,
+                    Longitude = -84.5040m,
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,
                 },

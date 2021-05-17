@@ -40,11 +40,6 @@ namespace FMS.Infrastructure.Contexts
         // ReSharper disable once UnusedMember.Global
         public DbSet<County> Counties { get; set; }
 
-        // The "FacilityList" table is only used for retrieving "FacilityMapSummaryDto" results from
-        // the [dbo].[getNearbyFacilities] stored procedure.
-        // (This should not be needed in .NET Core 5.)
-        public DbSet<FacilityMapSummaryDto> FacilityList { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder ?? throw new ArgumentNullException(nameof(builder)));

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
@@ -9,7 +11,6 @@ using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.Repositories
@@ -158,15 +159,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
-            var active = new SqlParameter("@active", !spec.ShowDeleted);
-            var lat = new SqlParameter("@Lat", spec.Latitude);
-            var lng = new SqlParameter("@Lng", spec.Longitude);
-            var radius = new SqlParameter("@radius", spec.Radius);
-
-            return await _context.FacilityList
-                .FromSqlRaw("EXEC dbo.getNearbyFacilities @Lat={0}, @Lng={1}, @radius={2}, @active={3}",
-                    lat, lng, radius, active)
-                .ToListAsync();
+            await using var conn = _context.Database.GetDbConnection();
+            return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
+                new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius},
+                commandType: CommandType.StoredProcedure)).ToList();
         }
 
         public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
