@@ -7,8 +7,6 @@
         public Context Context { get; }
         public string Message { get; }
 
-        public DisplayMessage() { }
-
         public DisplayMessage(Context context, string message)
         {
             Context = context;

@@ -22,7 +22,7 @@ namespace FMS.Pages.Facilities
 
         public FacilityDetailDto FacilityDetail { get; set; }
 
-        public DisplayMessage Message { get; set; }
+        public DisplayMessage Message { get; private set; }
 
         [TempData]
         public Guid HighlightRecord { get; set; }
