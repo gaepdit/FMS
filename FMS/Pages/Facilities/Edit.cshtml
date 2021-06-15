@@ -2,20 +2,11 @@
 @using FMS.Pages.Facilities
 @model FMS.Pages.Facilities.EditModel
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <partial name="_GeocodeScriptsPartial" />
-    <script>
-        $(document).ready(function domReady() {
-            $("#Facility_FileLabel").on("input", function () {
-                if ($(this).val().trim() === "") {
-                    $("#FileIdHelpBlock").removeClass("d-none");
-                } else {
-                    $("#FileIdHelpBlock").addClass("d-none");
-                }
-            });
-        });
-    </script>
+@section ScriptFiles {
+    <partial name="_GoogleMapsApiPartial" />
+    <script src="~/dist/mapGeocode.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
+    <script src="~/dist/formValidation.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
+    <script src="~/dist/formEdit.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
 }
 
 @{

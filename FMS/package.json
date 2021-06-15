@@ -1,0 +1,32 @@
+{
+  "name": "fms",
+  "version": "1.0.0",
+  "description": "File Management System for GAEPD Hazardous Waste",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaepdit/fms.git"
+  },
+  "homepage": "https://github.com/gaepdit/fms#readme",
+  "license": "UNLICENSED",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/gaepdit/fms/issues"
+  },
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.6.0",
+    "jquery-validation": "^1.19.3",
+    "jquery-validation-unobtrusive": "^3.2.12",
+    "popper.js": "^1.16.1"
+  },
+  "devDependencies": {
+    "css-loader": "^5.2.6",
+    "mini-css-extract-plugin": "^1.6.0",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "scripts": {
+    "pack": "webpack --mode=development",
+    "pack-prod": "webpack --mode=production"
+  }
+}

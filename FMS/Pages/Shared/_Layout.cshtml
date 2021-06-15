@@ -4,16 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FMS - @ViewData["Title"]</title>
-    <environment names="Local,Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css"
-              integrity="sha512-oc9+XSs1H243/FRN9Rw62Fn8EtxjEYWHXRvjS43YtueEewbS6ObfXcJNyohjHqVKFPoXXUxwc+q1K7Dee6vv9g==" crossorigin="anonymous"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute">
-    </environment>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <partial name="_FaviconPartial" />
+    <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
+    <partial name="_RaygunScriptsPartial" />
+    <script src="~/dist/site.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
+    @await RenderSectionAsync("ScriptFiles", required: false)
 </head>
 <body>
 <environment names="Local,Development,Staging">
@@ -46,15 +41,13 @@
     <div class="bg-brand text-light">
         <div class="container">
             &copy; @DateTime.Now.Year Environmental Protection Division IT -
-            <a href="http://georgia.gov/accessibility" target="_blank">Accessibility</a> |
-            <a href="http://www.gadnr.org/ada" target="_blank">DNR Accessibility Notice</a> |
-            <a href="http://georgia.gov/privacysecurity" target="_blank">Privacy/Security</a>
+            <a href="https://georgia.gov/accessibility" target="_blank">Accessibility</a> |
+            <a href="https://www.gadnr.org/ada" target="_blank">DNR Accessibility Notice</a> |
+            <a href="https://georgia.gov/privacysecurity" target="_blank">Privacy/Security</a>
         </div>
     </div>
 </footer>
 
-<partial name="_RaygunScriptsPartial" />
-<partial name="_StandardScriptsPartial" />
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
