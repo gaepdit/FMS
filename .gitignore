@@ -470,6 +470,9 @@ FodyWeavers.xsd
 
 ### Repo-specific ###
 
+# Build artifacts
+**/wwwroot/dist/
+
 # Server settings files
 appsettings\.Production\.json
 appsettings\.Staging\.json
