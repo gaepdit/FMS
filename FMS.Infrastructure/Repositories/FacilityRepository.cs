@@ -275,6 +275,7 @@ namespace FMS.Infrastructure.Repositories
             facility.State = facilityUpdates.State;
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
+            facility.Longitude = facilityUpdates.Longitude;
             facility.IsRetained = facilityUpdates.IsRetained;
 
             await _context.SaveChangesAsync();

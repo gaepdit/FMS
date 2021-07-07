@@ -569,6 +569,24 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Fact]
+        public async Task UpdateFacility_Longitude_Succeeds()
+        {
+            const decimal newLongitude = 1.0m;
+            var facilityId = RepositoryData.Facilities()[0].Id;
+
+            using var repositoryHelper = CreateRepositoryHelper();
+            using var repository = repositoryHelper.GetFacilityRepository();
+            var facility = ResourceHelper.GetFacilityDetail(facilityId);
+            var updates = new FacilityEditDto(facility) {Longitude = newLongitude};
+
+            await repository.UpdateFacilityAsync(facilityId, updates);
+            repositoryHelper.ClearChangeTracker();
+
+            var updatedFacility = await repository.GetFacilityAsync(facilityId);
+            updatedFacility.Longitude.Should().Be(newLongitude);
+        }
+
+        [Fact]
         public async Task UpdateFacility_ChangeFile_Succeeds()
         {
             var facilityId = RepositoryData.Facilities()[0].Id;
