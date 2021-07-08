@@ -6,7 +6,7 @@ using Xunit;
 
 namespace PlaywrightTests
 {
-    public class FacilitiesTests
+    public class AddFacilitiesTests
     {
         [Fact]
         public async Task FacilityWithUniqueCoordinatesCanBeAdded()
@@ -34,8 +34,8 @@ namespace PlaywrightTests
             await page.FillAsync("input[name=\"Facility.Address\"]", "2");
             await page.FillAsync("input[name=\"Facility.City\"]", "B");
             await page.FillAsync("input[name=\"Facility.PostalCode\"]", "12345");
-            await page.FillAsync("input[name=\"Facility.Latitude\"]", "33.1");
-            await page.FillAsync("input[name=\"Facility.Longitude\"]", "-83.5");
+            await page.FillAsync("input[name=\"Facility.Latitude\"]", "30");
+            await page.FillAsync("input[name=\"Facility.Longitude\"]", "-80");
 
             // Submit form
             await page.ClickAsync("text=Create New Facility");
@@ -73,8 +73,8 @@ namespace PlaywrightTests
             await page.FillAsync("input[name=\"Facility.Address\"]", "2");
             await page.FillAsync("input[name=\"Facility.City\"]", "B");
             await page.FillAsync("input[name=\"Facility.PostalCode\"]", "12345");
-            await page.FillAsync("input[name=\"Facility.Latitude\"]", "34.1");
-            await page.FillAsync("input[name=\"Facility.Longitude\"]", "-84.5");
+            await page.FillAsync("input[name=\"Facility.Latitude\"]", "33.1");
+            await page.FillAsync("input[name=\"Facility.Longitude\"]", "-83.5");
 
             // Submit form
             await page.ClickAsync("text=Create New Facility");

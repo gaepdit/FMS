@@ -50,14 +50,12 @@ namespace PlaywrightTests
             await page.GotoAsync("https://localhost:44362");
             await page.ClickAsync("button:has-text(\"Sign in\")");
             await context.StorageStateAsync(
-                new BrowserContextStorageStateOptions
-                { Path = "temp-auth-state.json" });
+                new BrowserContextStorageStateOptions { Path = "temp-auth-state.json" });
             await context.CloseAsync();
 
             // Open a new browser context
             var newContext = await browser.NewContextAsync(
-                new BrowserNewContextOptions
-                { StorageStatePath = "temp-auth-state.json" });
+                new BrowserNewContextOptions { StorageStatePath = "temp-auth-state.json" });
 
             // Root page should redirect to Facilities page
             var newPage = await newContext.NewPageAsync();

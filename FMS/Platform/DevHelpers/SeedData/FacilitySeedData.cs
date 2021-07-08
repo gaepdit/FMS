@@ -277,6 +277,28 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     CountyId = 243,
                     IsRetained = true,
                 },
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Active = true,
+                    FacilityNumber = "FMS-183",
+                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
+                    FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // VRP
+                    OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
+                    BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
+                    Name = "Facility for testing Stored Procedure math error",
+                    ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"), //00943668
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
+                    Location = "N/A",
+                    Address = "N/A",
+                    City = "N/A",
+                    State = "Georgia",
+                    PostalCode = "12345",
+                    Latitude = 33.1m,
+                    Longitude = -83.5m,
+                    CountyId = 243,
+                    IsRetained = true,
+                },
             };
         }
     }

@@ -21,7 +21,9 @@ playwright install
 
 ## Running tests
 
-Playwright requires that the application already be running on localhost in order to run the tests. The quickest way to do this is to open a command prompt in the FMS application folder and run the app with `dotnet run`. Then open a new command prompt in the Playwright.Tests folder and run the tests with:
+Playwright requires that the application already be running on localhost in order to run the tests. The quickest way to
+do this is to open a command prompt in the FMS application folder and run the app with `dotnet run`. Then open a new
+command prompt in the Playwright.Tests folder and run the tests with:
 
 ```
 dotnet test
