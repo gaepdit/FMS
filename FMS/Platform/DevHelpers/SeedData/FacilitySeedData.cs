@@ -206,7 +206,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     City = "WOODSTOCK",
                     State = "Georgia",
                     PostalCode = "30188",
-                    Latitude =34.1396m,
+                    Latitude = 34.1396m,
                     Longitude = -84.5040m,
                     CountyId = 243, // CHEROKEE
                     IsRetained = true,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CsvHelper.Configuration;
 using FMS.Domain.Dto;
@@ -50,6 +51,9 @@ namespace FMS.Pages.Facilities
                 spec.Longitude = decimal.Parse(spec.GeocodeLng);
             }
 
+            // Radius is limited to values in Select list.
+            if (!new[] {0.25m, 0.5m, 1m, 3m, 5m}.Contains(spec.Radius)) spec.Radius = 0.25m;
+
             if (spec.Latitude > 0 && spec.Longitude < 0)
             {
                 FacilityList = await _repository.GetFacilityListAsync(spec);
@@ -64,7 +68,7 @@ namespace FMS.Pages.Facilities
                     ShowMap = true;
                 }
 
-                if (spec.Output == "2" && FacilityList != null && FacilityList.Count > 0)
+                if (spec.Output == "2" && FacilityList is {Count: > 0})
                 {
                     ShowTable = true;
                 }

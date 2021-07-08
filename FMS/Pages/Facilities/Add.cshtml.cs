@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -92,7 +91,7 @@ namespace FMS.Pages.Facilities
             {
                 Latitude = Facility.Latitude,
                 Longitude = Facility.Longitude,
-                Radius = 0.5m.ToString(CultureInfo.InvariantCulture),
+                Radius = 0.5m,
             };
 
             NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);

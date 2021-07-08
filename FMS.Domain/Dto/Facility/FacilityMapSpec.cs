@@ -27,7 +27,7 @@ namespace FMS.Domain.Dto
         public decimal? Longitude { get; set; }
 
         [Display(Name = "Radius")]
-        public string Radius { get; set; }
+        public decimal Radius { get; set; }
 
         [Display(Name = "Output")]
         public string Output { get; set; }
