@@ -23,6 +23,12 @@
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
             </div>
+            <div class="form-group col">
+                <label asp-for="Role"></label>
+                <select asp-for="Role" asp-items="Model.RoleItems" class="custom-select">
+                    <option value="">(any)</option>
+                </select>
+            </div>
         </div>
         <input type="hidden" name="handler" value="search" />
         <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Search</button>
@@ -34,7 +40,7 @@
 {
     <a id="SearchResults"></a>
 
-    @if (Model.SearchResults != null && Model.SearchResults.Count > 0)
+    @if (Model.SearchResults is {Count: > 0 })
     {
         <table class="table table-borderless">
             <thead class="thead-light">
@@ -48,7 +54,7 @@
             @foreach (var item in Model.SearchResults)
             {
                 <tr>
-                    <td>@Html.DisplayFor(m => item.Name)</td>
+                    <td>@Html.DisplayFor(m => item.DisplayName)</td>
                     <td>@Html.DisplayFor(m => item.Email)</td>
                     <td class="text-center">
                         <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">View</a>

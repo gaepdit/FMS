@@ -15,25 +15,25 @@ namespace FMS.App.Tests.Account
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var user = new ApplicationUser()
+            var userView = new UserView(new ApplicationUser
             {
                 Id = Guid.Empty,
                 Email = "example.one@example.com",
                 GivenName = "Sample",
                 FamilyName = "User"
-            };
+            });
 
             var mockUserService = new Mock<IUserService>();
             mockUserService.Setup(l => l.GetCurrentUserAsync())
-                .ReturnsAsync(user)
+                .ReturnsAsync(userView)
                 .Verifiable();
             var pageModel = new IndexModel(mockUserService.Object);
 
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.Email.Should().Be(user.Email);
-            pageModel.DisplayName.Should().Be(user.DisplayName);
+            pageModel.CurrentUser.Email.Should().Be(userView.Email);
+            pageModel.CurrentUser.DisplayName.Should().Be(userView.DisplayName);
         }
     }
 }

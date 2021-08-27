@@ -32,11 +32,12 @@
                 i <= Math.Min(Model.paging.PageNumber + 2, Model.paging.TotalPages);
                 i++)
             {
-                @if (i == Model.paging.PageNumber)
+                var index = i;
+                @if (index == Model.paging.PageNumber)
                 {
                     <li class="page-item active" aria-current="page">
                         <span class="page-link">
-                            @i.ToString() <span class="sr-only">(current)</span>
+                            @index.ToString() <span class="sr-only">(current)</span>
                         </span>
                     </li>
                 }
@@ -45,8 +46,8 @@
                     <li class="page-item">
                         <a class="page-link" asp-fragment="SearchResults"
                            asp-all-route-data="@Model.routeValues" asp-route-handler="search"
-                           asp-route-p="@i">
-                            @i.ToString()
+                           asp-route-p="@index">
+                            @index.ToString()
                         </a>
                     </li>
                 }

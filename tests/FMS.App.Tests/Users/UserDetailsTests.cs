@@ -16,7 +16,7 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var user = UserTestData.ApplicationUsers[0];
+            var user = new UserView(UserTestData.ApplicationUsers[0]);
 
             var mockUserService = new Mock<IUserService>();
             mockUserService.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))

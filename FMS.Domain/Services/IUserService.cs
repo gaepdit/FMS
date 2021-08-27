@@ -1,8 +1,7 @@
-﻿using FMS.Domain.Entities.Users;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace FMS.Domain.Services
 {
@@ -12,16 +11,15 @@ namespace FMS.Domain.Services
     public interface IUserService
     {
         // Current user
-        public Task<ApplicationUser> GetCurrentUserAsync();
+        public Task<UserView> GetCurrentUserAsync();
         public Task<IList<string>> GetCurrentUserRolesAsync();
 
         // Any user        
-        public Task<ApplicationUser> GetUserByIdAsync(Guid id);
+        public Task<UserView> GetUserByIdAsync(Guid id);
         public Task<IList<string>> GetUserRolesAsync(Guid id);
         public Task<IdentityResult> UpdateUserRolesAsync(Guid id, Dictionary<string, bool> roleSettings);
 
         // User search
-        public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter);
-        public Task<ApplicationUser> GetUserAsync(string email);
+        public Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role);
     }
 }

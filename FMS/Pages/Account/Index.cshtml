@@ -8,8 +8,8 @@
 <h1>@ViewData["Title"]</h1>
 <hr />
 
-<h2>@Model.DisplayName</h2>
-<p>@Model.Email</p>
+<h2>@Model.CurrentUser.DisplayName</h2>
+<p>@Model.CurrentUser.Email</p>
 
 @if (Model.Roles != null && Model.Roles.Count > 0)
 {

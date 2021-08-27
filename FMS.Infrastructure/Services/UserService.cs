@@ -1,13 +1,13 @@
-﻿using FMS.Domain.Entities.Users;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Services
 {
@@ -28,31 +28,37 @@ namespace FMS.Infrastructure.Services
         }
 
         // Current user
-        public async Task<ApplicationUser> GetCurrentUserAsync()
+        private async Task<ApplicationUser> GetCurrentApplicationUserAsync()
         {
             var principal = _httpContextAccessor?.HttpContext?.User;
             return principal == null ? null : await _userManager.GetUserAsync(principal);
         }
 
-        public async Task<IList<string>> GetCurrentUserRolesAsync()
+        public async Task<UserView> GetCurrentUserAsync()
         {
-            var user = await GetCurrentUserAsync();
-            return await _userManager.GetRolesAsync(user);
+            var user = await GetCurrentApplicationUserAsync();
+            return user == null ? null : new UserView(user);
         }
 
+        public async Task<IList<string>> GetCurrentUserRolesAsync() =>
+            await _userManager.GetRolesAsync(await GetCurrentApplicationUserAsync());
+
         // Any user
-        public Task<ApplicationUser> GetUserByIdAsync(Guid id) =>
-            _userManager.FindByIdAsync(id.ToString());
+        public async Task<UserView> GetUserByIdAsync(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            return user == null ? null : new UserView(user);
+        }
 
         public async Task<IList<string>> GetUserRolesAsync(Guid id)
         {
-            var user = await GetUserByIdAsync(id);
-            return await _userManager.GetRolesAsync(user);
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            return user == null ? null : await _userManager.GetRolesAsync(user);
         }
 
         private async Task<IdentityResult> UpdateUserRoleAsync(Guid id, string role, bool addToRole)
         {
-            var user = await GetUserByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
             {
                 return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
@@ -60,17 +66,17 @@ namespace FMS.Infrastructure.Services
 
             var isInRole = await _userManager.IsInRoleAsync(user, role);
 
-            if (addToRole && !isInRole)
+            // If (addToRole == isInRole), then no change is needed to the user.
+            if (addToRole == isInRole)
             {
-                return await _userManager.AddToRoleAsync(user, role);
+                return IdentityResult.Success;
             }
 
-            if (!addToRole && isInRole)
+            return addToRole switch
             {
-                return await _userManager.RemoveFromRoleAsync(user, role);
-            }
-
-            return IdentityResult.Success;
+                true => await _userManager.AddToRoleAsync(user, role),
+                false => await _userManager.RemoveFromRoleAsync(user, role)
+            };
         }
 
         public async Task<IdentityResult> UpdateUserRolesAsync(Guid id, Dictionary<string, bool> roleSettings)
@@ -78,7 +84,6 @@ namespace FMS.Infrastructure.Services
             foreach (var (key, value) in roleSettings)
             {
                 var result = await UpdateUserRoleAsync(id, key, value);
-
                 if (result != IdentityResult.Success)
                 {
                     return result;
@@ -89,18 +94,31 @@ namespace FMS.Infrastructure.Services
         }
 
         // User search
-        public Task<List<ApplicationUser>> GetUsersAsync(string nameFilter, string emailFilter) =>
+        private Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter) =>
             _context.Users.AsNoTracking()
                 .Where(m => string.IsNullOrEmpty(nameFilter)
                     || m.GivenName.Contains(nameFilter)
                     || m.FamilyName.Contains(nameFilter))
-                .Where(m => string.IsNullOrEmpty(emailFilter)
-                    || m.Email == emailFilter)
-                .OrderBy(m => m.FamilyName)
+                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email == emailFilter)
+                .OrderBy(m => m.FamilyName).ThenBy(m => m.GivenName)
+                .Select(e => new UserView(e))
                 .ToListAsync();
 
-        public Task<ApplicationUser> GetUserAsync(string email) =>
-            _context.Users.AsNoTracking()
-                .SingleOrDefaultAsync(m => m.Email == email);
+        public async Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role)
+        {
+            if (string.IsNullOrEmpty(role))
+            {
+                return await GetUsersAsync(nameFilter, emailFilter);
+            }
+
+            return (await _userManager.GetUsersInRoleAsync(role))
+                .Where(m => string.IsNullOrEmpty(nameFilter)
+                    || m.GivenName.Contains(nameFilter)
+                    || m.FamilyName.Contains(nameFilter))
+                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email == emailFilter)
+                .OrderBy(m => m.FamilyName).ThenBy(m => m.GivenName)
+                .Select(e => new UserView(e))
+                .ToList();
+        }
     }
 }

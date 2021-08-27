@@ -1,9 +1,9 @@
-using FMS.Domain.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FMS.Domain.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Account
 {
@@ -12,19 +12,14 @@ namespace FMS.Pages.Account
         private readonly IUserService _userService;
         public IndexModel(IUserService userService) => _userService = userService;
 
-        public string DisplayName { get; private set; }
-        public string Email { get; private set; }
+        public UserView CurrentUser { get; private set; }
         public IList<string> Roles { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var currentUser = await _userService.GetCurrentUserAsync()
+            CurrentUser = await _userService.GetCurrentUserAsync()
                 ?? throw new Exception("Current user not found");
-
-            DisplayName = currentUser.DisplayName;
-            Email = currentUser.Email;
             Roles = await _userService.GetCurrentUserRolesAsync();
-
             return Page();
         }
     }

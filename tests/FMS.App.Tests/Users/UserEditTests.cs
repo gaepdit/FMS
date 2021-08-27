@@ -19,7 +19,7 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var user = UserTestData.ApplicationUsers[0];
+            var user = new UserView(UserTestData.ApplicationUsers[0]);
 
             var mockRepo = new Mock<IUserService>();
             mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
@@ -44,7 +44,7 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_WithRoles_PopulatesThePageModel()
         {
-            var user = UserTestData.ApplicationUsers[0];
+            var user = new UserView(UserTestData.ApplicationUsers[0]);
             var roles = new List<string>()
             {
                 UserRoles.FileCreator,
@@ -90,7 +90,7 @@ namespace FMS.App.Tests.Users
         {
             var mockRepo = new Mock<IUserService>();
             mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((ApplicationUser) null);
+                .ReturnsAsync((UserView)null);
             var pageModel = new EditModel(mockRepo.Object);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
@@ -115,8 +115,8 @@ namespace FMS.App.Tests.Users
 
             pageModel.ModelState.IsValid.ShouldBeTrue();
             result.Should().BeOfType<RedirectToPageResult>();
-            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(Guid.Empty);
+            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(Guid.Empty);
         }
 
         [Fact]
@@ -136,9 +136,9 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnPost_UpdateRolesFails_ReturnsPageWithInvalidModelState()
         {
-            var user = UserTestData.ApplicationUsers[0];
+            var user = new UserView(UserTestData.ApplicationUsers[0]);
             var identityResult = IdentityResult.Failed(
-                new IdentityError() {Code = "CODE", Description = "DESCRIPTION"});
+                new IdentityError() { Code = "CODE", Description = "DESCRIPTION" });
 
             var mockRepo = new Mock<IUserService>();
             mockRepo.Setup(l => l.UpdateUserRolesAsync(It.IsAny<Guid>(), It.IsAny<Dictionary<string, bool>>()))
