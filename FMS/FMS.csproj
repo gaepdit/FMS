@@ -99,8 +99,9 @@
     <Exec Command="npm run pack-prod" Condition=" '$(NpmExitCode)' == '0' " />
   </Target>
 
-  <Target Name="NpmClean" BeforeTargets="Clean">
-    <RemoveDir Directories="$(WebRoot)dist" />
+  <!-- Remove generated www asset files on Clean -->
+  <Target Name="DistClean" BeforeTargets="Clean">
+    <RemoveDir Directories="wwwroot/dist" />
   </Target>
 
 </Project>
