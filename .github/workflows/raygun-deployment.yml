@@ -1,0 +1,31 @@
+name: Raygun Deployment Tracking
+
+on:
+  push:
+    tags: prod/*
+
+jobs:
+  raygun-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the version number
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/prod/}
+
+      - name: Send to the Raygun Deployments API
+        id: send_deployment
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: https://app.raygun.com/deployments?authToken=${{ secrets.RAYGUN_AUTHTOKEN }}
+          method: POST
+          data: >-
+            {
+              "apiKey": "${{ secrets.RAYGUN_APIKEY }}",
+              "version": "${{ steps.get_version.outputs.VERSION }}",
+              "ownerName": "${{ github.event.pusher.name }}",
+              "emailAddress": "${{ github.event.pusher.email }}",
+              "scmIdentifier": "${{ github.sha }}"
+            }
+
+      - name: Show response
+        run: echo ${{ steps.send_deployment.outputs.response }}
