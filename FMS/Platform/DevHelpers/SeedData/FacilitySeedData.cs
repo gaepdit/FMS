@@ -261,7 +261,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     FacilityNumber = "ADD2",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
-                    FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // VRP
+                    FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
                     Name = "No address 2",
