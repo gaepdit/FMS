@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import oms from './oms.min';
 
 let searchBool = true;
 $(document).ready(function domReady() {
@@ -132,6 +133,12 @@ $(document).ready(function domReady() {
 
         var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
+        const spiderfy = new oms.OverlappingMarkerSpiderfier(map, {
+            markersWontMove: true,
+            markersWontHide: true,
+            basicFormatEvents: true
+        });
+
         var toolContent = Localaddr;
         var centermarker = new google.maps.Marker({
             position: myLatlng,
@@ -166,31 +173,32 @@ $(document).ready(function domReady() {
             });
         });
 
+        var infowindow = new google.maps.InfoWindow();
+
         for (let i = 0; i < markers.length; i++) {
+            (function () {
             var data = markers[i];
             //determine marker image
             var imageName = '/images/type-icons/icon-' + data.facilityType + '.svg';
-            var infowindow = new google.maps.InfoWindow();
             var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
             var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                icon: imageName
-            });
+                    position: myLatlng,
+                    icon: imageName
+                });
+                var zip = data.postalCode;
+                if (zip == undefined) {
+                    zip = ""
+                }
+                var hyplink = "./Details/" + data.id;
+                var hyplink2 = "../Files/Details/" + data.fileLabel;
 
-            (function (marker, data) {
-                google.maps.event.addListener(marker, "click", function (e) {
-                    var zip = data.postalCode;
-                    if (zip == undefined) {
-                        zip = ""
-                    }
-                    var hyplink = "./Details/" + data.id;
-                    var hyplink2 = "../Files/Details/" + data.fileLabel;
+                google.maps.event.addListener(marker, "spider_click", function (e) {
                     infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
-                    //infowindow.setContent(data.name);
                     infowindow.open(map, marker);
                 });
-            })(marker, data);
+
+                spiderfy.addMarker(marker);
+            })();
         }
     }
 

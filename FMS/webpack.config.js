@@ -25,8 +25,12 @@ module.exports = {
             import: './Client/mapGeocode.js'
         },
         mapSearch: {
-            dependOn: 'site',
+            dependOn: 'oms',
             import: './Client/mapSearch.js'
+        },
+        oms: {
+            dependOn: 'site',
+            import: './Client/oms.min.js'
         },
     },
     output: {
