@@ -133,6 +133,7 @@ $(document).ready(function domReady() {
 
         var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
+        // This encapsulates the map to use Spiderfy to determine marker behavior
         const spiderfy = new oms.OverlappingMarkerSpiderfier(map, {
             markersWontMove: true,
             markersWontHide: true,
@@ -191,16 +192,20 @@ $(document).ready(function domReady() {
                 }
                 var hyplink = "./Details/" + data.id;
                 var hyplink2 = "../Files/Details/" + data.fileLabel;
-
+                // This defines the contents of the InfoWindow that pops up when a marker is clicked on.
                 google.maps.event.addListener(marker, "spider_click", function (e) {
                     infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
                     infowindow.open(map, marker);
                 });
-
+                // This adds listener to say, if the marker is "Spiderfiable" then Use the image with the "+" plus sign.
                 google.maps.event.addListener(marker, 'spider_format', function (status) {
                     marker.setIcon({
                         url: status === 'SPIDERFIABLE' ? multiImageName : imageName
                     });
+                });
+                // This closes the infowindow if some other part of the map is clicked on.
+                google.maps.event.addListener(map, 'click', function () {
+                    infowindow.close(map, marker)
                 });
 
                 spiderfy.addMarker(marker);
