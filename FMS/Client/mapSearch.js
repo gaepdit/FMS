@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import oms from './oms.min';
 
 let searchBool = true;
 $(document).ready(function domReady() {
@@ -132,6 +133,12 @@ $(document).ready(function domReady() {
 
         var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
+        // This encapsulates the map to use Spiderfy to determine marker behavior
+        const spiderfy = new oms.OverlappingMarkerSpiderfier(map, {
+            markersWontMove: true,
+            markersWontHide: true,
+        });
+
         var toolContent = Localaddr;
         var centermarker = new google.maps.Marker({
             position: myLatlng,
@@ -166,31 +173,43 @@ $(document).ready(function domReady() {
             });
         });
 
+        var infowindow = new google.maps.InfoWindow();
+        const multiImageName = '/images/type-icons/icon-multi.svg';
+
         for (let i = 0; i < markers.length; i++) {
+            (function () {
             var data = markers[i];
             //determine marker image
             var imageName = '/images/type-icons/icon-' + data.facilityType + '.svg';
-            var infowindow = new google.maps.InfoWindow();
             var myLatlng = new google.maps.LatLng(data.latitude, data.longitude);
             var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map,
-                icon: imageName
-            });
-
-            (function (marker, data) {
-                google.maps.event.addListener(marker, "click", function (e) {
-                    var zip = data.postalCode;
-                    if (zip == undefined) {
-                        zip = ""
-                    }
-                    var hyplink = "./Details/" + data.id;
-                    var hyplink2 = "../Files/Details/" + data.fileLabel;
+                    position: myLatlng,
+                    icon: imageName
+                });
+                var zip = data.postalCode;
+                if (zip == undefined) {
+                    zip = ""
+                }
+                var hyplink = "./Details/" + data.id;
+                var hyplink2 = "../Files/Details/" + data.fileLabel;
+                // This defines the contents of the InfoWindow that pops up when a marker is clicked on.
+                google.maps.event.addListener(marker, "spider_click", function (e) {
                     infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
-                    //infowindow.setContent(data.name);
                     infowindow.open(map, marker);
                 });
-            })(marker, data);
+                // This adds listener to say, if the marker is "Spiderfiable" then Use the image with the "+" plus sign.
+                google.maps.event.addListener(marker, 'spider_format', function (status) {
+                    marker.setIcon({
+                        url: status === 'SPIDERFIABLE' ? multiImageName : imageName
+                    });
+                });
+                // This closes the infowindow if some other part of the map is clicked on.
+                google.maps.event.addListener(map, 'click', function () {
+                    infowindow.close(map, marker)
+                });
+
+                spiderfy.addMarker(marker);
+            })();
         }
     }
 
