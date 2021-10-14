@@ -171,6 +171,10 @@ $(document).ready(function domReady() {
                 infoWndw.close();
                 centermarker.open = false;
             });
+            google.maps.event.addListener(circle, 'click', function () {
+                infoWndw.close();
+                centermarker.open = false;
+            });
         });
 
         var infowindow = new google.maps.InfoWindow();
@@ -206,6 +210,10 @@ $(document).ready(function domReady() {
                 // This closes the infowindow if some other part of the map is clicked on.
                 google.maps.event.addListener(map, 'click', function () {
                     infowindow.close(map, marker)
+                });
+
+                google.maps.event.addListener(circle, 'click', function () {
+                    infowindow.close(circle, marker)
                 });
 
                 spiderfy.addMarker(marker);
