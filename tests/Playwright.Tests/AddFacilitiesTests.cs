@@ -6,6 +6,7 @@ using Xunit;
 
 namespace PlaywrightTests
 {
+    [Collection("Test collection")]
     public class AddFacilitiesTests
     {
         [Fact]
