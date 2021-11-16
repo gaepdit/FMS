@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Playwright;
-using Xunit;
+using NUnit.Framework;
 
 namespace PlaywrightTests
 {
-    [Collection("Test collection")]
+    [TestFixture]
     public class AuthTests
     {
-        [Fact]
+        [Test]
         public async Task CanSignInAndSignOut()
         {
             using var playwright = await Playwright.CreateAsync();
@@ -39,7 +39,7 @@ namespace PlaywrightTests
             (await page.TitleAsync()).Should().EndWith("Login");
         }
 
-        [Fact]
+        [Test]
         public async Task AuthIsPreservedBetweenSessions()
         {
             using var playwright = await Playwright.CreateAsync();

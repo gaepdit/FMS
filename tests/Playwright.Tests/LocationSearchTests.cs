@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Playwright;
-using Xunit;
+using NUnit.Framework;
 
 namespace PlaywrightTests
 {
-    [Collection("Test collection")]
+    [TestFixture]
     public class LocationSearchTests
     {
-        [Fact]
+        [Test]
         public async Task LocationSearch_WithExistingCoordinates_ReturnsTable()
         {
             using var playwright = await Playwright.CreateAsync();
@@ -32,7 +32,7 @@ namespace PlaywrightTests
             (await page.TextContentAsync("tbody td a")).Should().Contain("ADD1");
         }
 
-        [Fact]
+        [Test]
         public async Task LocationSearch_WithDangerousCoordinates_ReturnsTable()
         {
             using var playwright = await Playwright.CreateAsync();

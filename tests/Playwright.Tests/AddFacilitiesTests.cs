@@ -2,14 +2,14 @@ using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Playwright;
-using Xunit;
+using NUnit.Framework;
 
 namespace PlaywrightTests
 {
-    [Collection("Test collection")]
+    [TestFixture]
     public class AddFacilitiesTests
     {
-        [Fact]
+        [Test]
         public async Task FacilityWithUniqueCoordinatesCanBeAdded()
         {
             using var playwright = await Playwright.CreateAsync();
@@ -48,7 +48,7 @@ namespace PlaywrightTests
             await page.ClickAsync("button:has-text(\"Delete Facility\")");
         }
 
-        [Fact]
+        [Test]
         public async Task FacilityWithDuplicateCoordinatesRequiresConfirmation()
         {
             using var playwright = await Playwright.CreateAsync();
