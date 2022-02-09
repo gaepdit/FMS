@@ -126,10 +126,11 @@
         else
         {
             <table class="table">
-                <caption class="container py-3">
+                <caption class="container py-3"> 
                     <div class="row">
                         <div class="col-md mb-3 mb-md-0">
-                            <form method="get" asp-page="/Reports/Index">
+                            @*<form method="get" asp-page="/Reports/Index">*@
+                            <form method="post">
                                 <input type="hidden" asp-for="Spec.FileLabel" />
                                 <input type="hidden" asp-for="Spec.FacilityNumber" />
                                 <input type="hidden" asp-for="Spec.FacilityTypeId" />
