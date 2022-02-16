@@ -21,6 +21,10 @@ namespace FMS.Pages.Facilities
         // "Spec" is the Facility DTO bound to the HTML Page elements
         public FacilitySpec Spec { get; set; }
 
+        // "ReportSpec" is the Facility DTO Bound to Export Results to Excel (csv file)
+        [BindProperty]
+        public FacilitySpec ReportSpec { get; set; }
+
         // List of facilities resulting from the search
         public IPaginatedResult FacilityList { get; private set; }
 
@@ -59,6 +63,7 @@ namespace FMS.Pages.Facilities
             // Get the list of facilities matching the "Spec" criteria
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
+            ReportSpec = new FacilitySpec();
             ShowResults = true;
             await PopulateSelectsAsync();
             return Page();
@@ -66,10 +71,10 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
-            FacilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
+            FacilityReportList = await _repository.GetFacilityDetailListAsync(ReportSpec);
             return File(await FacilityReportList.GetCsvByteArrayAsync<FacilityReportMap>(), "text/csv",
                 $"FMS_export_{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.csv");
-            //return RedirectToPage("../Reports/Index", spec);
+            //return RedirectToPage("../Reports/Index", ReportSpec);
         }
 
         private async Task PopulateSelectsAsync()
