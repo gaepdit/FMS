@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Reports\**" />
-    <Content Remove="Pages\Reports\**" />
-    <EmbeddedResource Remove="Pages\Reports\**" />
-    <None Remove="Pages\Reports\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Helpers\ReportHelper.cs" />
   </ItemGroup>
 
