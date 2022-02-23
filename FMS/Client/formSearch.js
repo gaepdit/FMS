@@ -2,7 +2,7 @@
 
 // Don't submit empty form fields
 $(document).ready(function domReady() {
-    $('#SearchButton,#ExportButton').click(function DisableEmptyInputs() {
+    $('#SearchButton').click(function DisableEmptyInputs() {
         $('input').each(function (i) {
             const $input = $(this);
             if ($input.val() === '')
