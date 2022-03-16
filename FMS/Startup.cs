@@ -115,7 +115,6 @@ namespace FMS
                 // Dev web server
                 app.UseDeveloperExceptionPage();
                 app.UseRaygun();
-                app.UseHsts();
             }
             else
             {
