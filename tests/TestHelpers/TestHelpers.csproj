@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EfCore.TestSupport" Version="5.0.0" />
+    <PackageReference Include="EfCore.TestSupport" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>
