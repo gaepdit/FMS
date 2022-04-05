@@ -245,7 +245,7 @@ caption {
     font-weight: 500 !important;
 }
 
-.text-pre-line{
+.text-pre-line {
     white-space: pre-line !important;
 }
 
@@ -253,4 +253,37 @@ caption {
 -------------------------------------------------- */
 a[target]::after {
     content: ' \1f5d7';
+}
+
+/* Test site banner */
+
+.banner-test-site {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    opacity: .9;
+    color: #333;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: system-ui;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 0 4px white;
+    background: repeating-linear-gradient(135deg, #f6da52bb, #f6da52bb 10px, #ffef80bb 10px, #ffef80bb 20px);
+    box-shadow: 0 4px 8px rgba(130, 106, 15, 0.37);
+}
+
+/* Print styles
+-------------------------------------------------- */
+@media print {
+    .banner-test-site {
+        position: static;
+        text-shadow: none;
+        box-shadow: none;
+        border: 1px solid;
+    }
+
+    .banner-test-site::after {
+        content: "—Not for public distribution";
+    }
 }
