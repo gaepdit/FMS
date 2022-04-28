@@ -1,0 +1,11 @@
+<Project>
+
+    <PropertyGroup>
+        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory).sonarlint\gaepdit_fmscsharp.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory).sonarlint\gaepdit_fms\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+    </ItemGroup>
+
+</Project>
