@@ -7,6 +7,7 @@ using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -66,8 +67,8 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnPostAsync()
         {
             // "FacilityReportList" Detailed Facility List to go to a report
-            IReadOnlyList<FacilityDetailDto> FacilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
-            return File(await FacilityReportList.GetCsvByteArrayAsync<FacilityReportMap>(), "text/csv",
+            IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
+            return File(await facilityReportList.GetCsvByteArrayAsync<FacilityReportMap>(), "text/csv",
                 $"FMS_export_{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.csv");
         }
 
@@ -82,6 +83,7 @@ namespace FMS.Pages.Facilities
 
         private sealed class FacilityReportMap : ClassMap<FacilityDetailDto>
         {
+            [UsedImplicitly]
             public FacilityReportMap()
             {
                 Map(m => m.FacilityNumber).Index(0).Name("Facility Number");

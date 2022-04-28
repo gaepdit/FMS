@@ -78,7 +78,7 @@ namespace FMS.Pages.Account
         {
             if (remoteError != null)
             {
-                TempData?.SetDisplayMessage(Context.Danger, $"Error from work account provider: {remoteError}");
+                TempData.SetDisplayMessage(Context.Danger, $"Error from work account provider: {remoteError}");
                 return RedirectToPage("./Login", new {ReturnUrl = returnUrl});
             }
 

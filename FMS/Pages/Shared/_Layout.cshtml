@@ -22,7 +22,7 @@
         <img src="~/images/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
         <a href="/" aria-label="Home" class="text-dark">File Management System</a>
     </div>
-    @if (User.Identity.IsAuthenticated)
+    @if (User.Identity?.IsAuthenticated ?? false)
     {
         <partial name="_MenuPartial" />
     }

@@ -1,2 +1,2 @@
-﻿@inject Microsoft.Extensions.Configuration.IConfiguration _configuration
-<script src="https://maps.googleapis.com/maps/api/js?key=@_configuration["GoogleMapSettings:ApiKey"]"></script>
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+<script src="https://maps.googleapis.com/maps/api/js?key=@Configuration["GoogleMapSettings:ApiKey"]"></script>

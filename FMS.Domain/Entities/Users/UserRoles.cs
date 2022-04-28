@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Immutable;
 
 namespace FMS.Domain.Entities.Users
 {
@@ -15,8 +15,8 @@ namespace FMS.Domain.Entities.Users
         public const string FileCreator = "FileCreator";
         public const string FileEditor = "FileEditor";
 
-        public static readonly List<string> AllRoles = new List<string>
-            {UserMaintenance, SiteMaintenance, FileCreator, FileEditor};
+        public static readonly ImmutableArray<string> AllRoles =
+            ImmutableArray.Create(UserMaintenance, SiteMaintenance, FileCreator, FileEditor);
 
         public static string DisplayName(string role) =>
             role switch
@@ -25,7 +25,7 @@ namespace FMS.Domain.Entities.Users
                 SiteMaintenance => "Site Maintenance",
                 FileCreator => "Facility Creator",
                 FileEditor => "Facility Editor",
-                _ => role
+                _ => role,
             };
 
         public static string Description(string role) =>
@@ -42,7 +42,7 @@ namespace FMS.Domain.Entities.Users
                 FileEditor =>
                     "Users with the Facility Editor role are able to add and edit facilities, files, and " +
                     "retention records, and delete files.",
-                _ => DisplayName(role)
+                _ => DisplayName(role),
             };
     }
 }

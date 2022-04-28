@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CsvHelper.Configuration;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -99,6 +100,7 @@ namespace FMS.Pages.Facilities
 
         private sealed class FacilityMapReportMap : ClassMap<FacilityMapSummaryDto>
         {
+            [UsedImplicitly]
             public FacilityMapReportMap()
             {
                 Map(m => m.FacilityNumber).Index(0).Name("Facility Number");

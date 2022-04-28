@@ -63,15 +63,15 @@ namespace FMS.Infrastructure.Contexts
 
             // Auditing
             var entityTypes = builder.Model.GetEntityTypes();
-            foreach (var entityType in entityTypes)
+            foreach (var entityType in entityTypes.Select(e => e.ClrType)
+                         // Skip the "FacilityList" table
+                         .Where(e => e.Name != nameof(FacilityMapSummaryDto)))
             {
-                // Skip the "FacilityList" table
-                if (entityType.ClrType.Name == nameof(FacilityMapSummaryDto)) continue;
                 // Add auditing properties to all other entity tables
-                builder.Entity(entityType.ClrType).Property<DateTimeOffset?>(AuditProperties.InsertDateTime);
-                builder.Entity(entityType.ClrType).Property<DateTimeOffset?>(AuditProperties.UpdateDateTime);
-                builder.Entity(entityType.ClrType).Property<string>(AuditProperties.InsertUser);
-                builder.Entity(entityType.ClrType).Property<string>(AuditProperties.UpdateUser);
+                builder.Entity(entityType).Property<DateTimeOffset?>(AuditProperties.InsertDateTime);
+                builder.Entity(entityType).Property<DateTimeOffset?>(AuditProperties.UpdateDateTime);
+                builder.Entity(entityType).Property<string>(AuditProperties.InsertUser);
+                builder.Entity(entityType).Property<string>(AuditProperties.UpdateUser);
             }
         }
 
