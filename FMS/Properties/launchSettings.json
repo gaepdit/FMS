@@ -8,63 +8,23 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
+    "FMS Local": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
       "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
-        "ENABLE_TEST_USER": "true"
-      }
-    },
-    "IIS-EF-Migrations": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
-        "ENABLE_TEST_USER": "true",
-        "ENABLE_EF_MIGRATIONS": "true"
-      }
-    },
-    "IIS-External-Login": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
+      "applicationUrl": "https://localhost:44362;http://localhost:53734",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Local",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       }
     },
-    "FMS": {
+    "FMS Dev Server": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:44362;http://localhost:53734",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
-        "ENABLE_TEST_USER": "true"
-      }
-    },
-    "FMS-EF-Migrations": {
-      "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:44362;http://localhost:53734",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation",
-        "ENABLE_TEST_USER": "true",
-        "ENABLE_EF_MIGRATIONS": "true"
-      }
-    },
-    "FMS-External-Login": {
-      "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:44362;http://localhost:53734",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       }
     }

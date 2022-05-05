@@ -43,6 +43,9 @@
     <Content Update="appsettings.Local.json">
       <DependentUpon>appsettings.json</DependentUpon>
     </Content>
+    <Content Update="appsettings.Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Content>
   </ItemGroup>
 
   <!-- Determine if Node.js and either PNPM or NPM are installed. -->

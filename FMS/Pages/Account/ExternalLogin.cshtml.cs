@@ -6,9 +6,11 @@ using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
+using FMS.Platform.Extensions.DevHelpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,17 +24,20 @@ namespace FMS.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _environment;
         private readonly IComplianceOfficerRepository _repository;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IConfiguration configuration,
+            IWebHostEnvironment environment,
             IComplianceOfficerRepository repository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
+            _environment = environment;
             _repository = repository;
         }
 
@@ -46,7 +51,7 @@ namespace FMS.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             // If "test" users is enabled, create user information and sign in locally.
-            if (Environment.GetEnvironmentVariable("ENABLE_TEST_USER") == "true") return await SignInAsTestUser();
+            if (_environment.IsLocalEnv()) return await SignInAsLocalUser();
 
             // Request a redirect to the external login provider.
 #pragma warning disable 618
@@ -56,10 +61,10 @@ namespace FMS.Pages.Account
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return new ChallengeResult(provider, properties);
 
-            async Task<IActionResult> SignInAsTestUser()
+            async Task<IActionResult> SignInAsLocalUser()
             {
                 var user = new ApplicationUser();
-                _configuration.Bind("FakeUser", user);
+                _configuration.Bind("LocalUser", user);
 
                 var userExists = await _userManager.FindByEmailAsync(user.Email);
                 if (userExists == null)

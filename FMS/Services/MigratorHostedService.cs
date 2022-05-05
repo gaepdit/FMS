@@ -32,21 +32,12 @@ namespace FMS.Services
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
             // Initialize database.
-            if (env.IsLocalDev())
+            if (env.IsLocalEnv())
             {
-                if (Environment.GetEnvironmentVariable("ENABLE_EF_MIGRATIONS") == "true")
-                {
-                    // If EF migrations are enabled, preserve database and run migrations.
-                    // (If the database needs to be rebuilt from scratch, manually delete it first.) 
-                    await context.Database.MigrateAsync(cancellationToken);
-                }
-                else
-                {
-                    // Otherwise, delete and re-create database as currently defined.
-                    await context.Database.EnsureDeletedAsync(cancellationToken);
-                    await context.Database.EnsureCreatedAsync(cancellationToken);
-                    await context.CreateStoredProceduresAsync();
-                }
+                // Delete and re-create database as currently defined.
+                await context.Database.EnsureDeletedAsync(cancellationToken);
+                await context.Database.EnsureCreatedAsync(cancellationToken);
+                await context.CreateStoredProceduresAsync();
 
                 // Seed data only in local environment.
                 await context.SeedDataAsync(cancellationToken);
@@ -56,7 +47,6 @@ namespace FMS.Services
                 // Run database migrations if not local.
                 await context.Database.MigrateAsync(cancellationToken);
             }
-
 
             // Initialize any new roles.
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
