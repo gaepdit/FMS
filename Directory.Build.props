@@ -1,4 +1,8 @@
 <Project>
+    <PropertyGroup>
+        <BaseOutputPath>$(MSBuildThisFileDirectory)artifacts\$(MSBuildProjectName)\bin\</BaseOutputPath>
+        <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)artifacts\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
+    </PropertyGroup>
 
     <PropertyGroup>
         <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory).sonarlint\gaepdit_fmscsharp.ruleset</CodeAnalysisRuleSet>
@@ -7,5 +11,4 @@
     <ItemGroup>
         <AdditionalFiles Include="$(MSBuildThisFileDirectory).sonarlint\gaepdit_fms\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     </ItemGroup>
-
 </Project>

@@ -9,9 +9,6 @@ appsettings\.Staging\.json
 appsettings\.Development\.json
 appsettings\.Local\.json
 
-# Content folders
-_GeneratedFiles/
-
 # SonarLint Rider plugin
 .idea/.idea.FMS/.idea/sonarlint-state.xml
 
