@@ -690,26 +690,6 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"File Label {newFileLabel} does not exist.");
         }
 
-        [Fact]
-        public async Task UpdateFacility_WithExistingNumber_ThrowsException()
-        {
-            var existingNumber = RepositoryData.Facilities()[1].FacilityNumber;
-
-            Func<Task> action = async () =>
-            {
-                using var repository = CreateRepositoryHelper().GetFacilityRepository();
-
-                var facilityId = RepositoryData.Facilities()[0].Id;
-                var facility = ResourceHelper.GetFacilityDetail(facilityId);
-                var updates = new FacilityEditDto(facility) {FacilityNumber = existingNumber};
-
-                await repository.UpdateFacilityAsync(facilityId, updates);
-            };
-
-            (await action.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false))
-                .WithMessage($"Facility Number '{existingNumber}' already exists.");
-        }
-
         // GetNextSequenceForCounty
 
         [Fact]
