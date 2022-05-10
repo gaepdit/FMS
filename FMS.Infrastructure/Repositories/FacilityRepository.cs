@@ -238,11 +238,6 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Facility ID not found.", nameof(id));
             }
 
-            if (await FacilityNumberExists(facilityUpdates.FacilityNumber, id))
-            {
-                throw new ArgumentException($"Facility Number '{facilityUpdates.FacilityNumber}' already exists.");
-            }
-
             if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
             {
                 // Generate new File if File Label is empty

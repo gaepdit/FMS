@@ -91,12 +91,6 @@ namespace FMS.Pages.Facilities
                 }
             }
 
-            // If editing facility number, make sure the new number doesn't already exist before trying to save.
-            if (await _repository.FacilityNumberExists(Facility.FacilityNumber, Id))
-            {
-                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists.");
-            }
-
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
