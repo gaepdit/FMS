@@ -7,7 +7,6 @@
 appsettings\.Production\.json
 appsettings\.Staging\.json
 appsettings\.Development\.json
-appsettings\.Local\.json
 
 # Content folders
 _GeneratedFiles/
