@@ -8,76 +8,76 @@
 @section ScriptFiles {
     <partial name="_GoogleMapsApiPartial" />
     <script>
-    window.FMS_RESOURCES = {
-        showMap: @Html.Raw(Json.Serialize(Model.ShowMap)),
-        markers: @Html.Raw(Json.Serialize(Model.FacilityList)),
-    }
+        window.FMS_RESOURCES = {
+            showMap: @Html.Raw(Json.Serialize(Model.ShowMap)),
+            markers: @Html.Raw(Json.Serialize(Model.FacilityList)),
+        }
     </script>
     <script src="~/dist/formSearch.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
     <script src="~/dist/mapSearch.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
     <script src="~/dist/oms.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
 }
 
-<h1>
-    Search a Location
-    <small class="text-muted">(See what's near any address)</small>
-</h1>
+    <h1>
+        Search a Location
+        <small class="text-muted">(See what's near any address)</small>
+    </h1>
 
-<div class="container bg-light py-3">
-    <form method="get" asp-fragment="SearchResults">
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Spec.Address"></label>
-                <input id="Address" asp-for="Spec.Address" class="form-control" />
-                <input id="LocalAddress" asp-for="Spec.GeocodeAddress" type="hidden" />
+    <div class="container bg-light py-3">
+        <form method="get" asp-fragment="SearchResults">
+            <div class="form-row">
+                <div class="form-group col">
+                    <label asp-for="Spec.Address"></label>
+                    <input id="Address" asp-for="Spec.Address" class="form-control" />
+                    <input id="LocalAddress" asp-for="Spec.GeocodeAddress" type="hidden" />
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Spec.City"></label>
-                <input id="City" asp-for="Spec.City" class="form-control" />
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Spec.City"></label>
+                    <input id="City" asp-for="Spec.City" class="form-control" />
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Spec.State"></label>
+                    <input class="form-control" type="text" value="Georgia" disabled>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Spec.PostalCode"></label>
+                    <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
+                </div>
             </div>
-            <div class="form-group col">
-                <label asp-for="Spec.State"></label>
-                <input class="form-control" type="text" value="Georgia" disabled>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label asp-for="Spec.Radius"></label>
+                    <select id="Radius" asp-for="Spec.Radius" class="custom-select">
+                        <option selected value="0.25">1/4 Mile</option>
+                        <option value="0.5">1/2 Mile</option>
+                        <option value="1">1 Mile</option>
+                        <option value="3">3 Miles</option>
+                        <option value="5">5 Miles</option>
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Spec.Latitude"></label>
+                    <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
+                    <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.1)</small>
+                    <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
+                </div>
+                <div class="form-group col">
+                    <label asp-for="Spec.Longitude"></label>
+                    <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
+                    <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.5)</small>
+                    <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-check-label" asp-for="Spec.Output"></label>
+                    <select id="Output" asp-for="Spec.Output" class="custom-select mt-md-2">
+                        <option selected value="1">Map</option>
+                        <option value="2">Table</option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group col">
-                <label asp-for="Spec.PostalCode"></label>
-                <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label asp-for="Spec.Radius"></label>
-                <select id="Radius" asp-for="Spec.Radius" class="custom-select">
-                    <option selected value="0.25">1/4 Mile</option>
-                    <option value="0.5">1/2 Mile</option>
-                    <option value="1">1 Mile</option>
-                    <option value="3">3 Miles</option>
-                    <option value="5">5 Miles</option>
-                </select>
-            </div>
-            <div class="form-group col">
-                <label asp-for="Spec.Latitude"></label>
-                <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
-                <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.1)</small>
-                <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
-            </div>
-            <div class="form-group col">
-                <label asp-for="Spec.Longitude"></label>
-                <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
-                <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.5)</small>
-                <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
-            </div>
-            <div class="form-group col-md-3">
-                <label class="form-check-label" asp-for="Spec.Output"></label>
-                <select id="Output" asp-for="Spec.Output" class="custom-select mt-md-2">
-                    <option selected value="1">Map</option>
-                    <option value="2">Table</option>
-                </select>
-            </div>
-        </div>
-        @if (User.IsInRole(UserRoles.FileEditor))
+            @if (User.IsInRole(UserRoles.FileEditor))
         {
             <div class="form-group row">
                 <div class="form-check">
@@ -104,15 +104,21 @@
         else
         {
             <div class="container py-3">
-                <form method="post">
-                    <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
-                        Export to Excel
-                    </button>
-                    <input type="hidden" asp-for="ExportSpec.ShowDeleted" />
-                    <input type="hidden" asp-for="ExportSpec.Latitude" />
-                    <input type="hidden" asp-for="ExportSpec.Longitude" />
-                    <input type="hidden" asp-for="ExportSpec.Radius" />
-                </form>
+                <div class="col-md mb-3 mb-md-0">
+                    <form method="post">
+                        <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
+                            Export to Excel
+                        </button>
+                        <input type="hidden" asp-for="ExportSpec.ShowDeleted" />
+                        <input type="hidden" asp-for="ExportSpec.Latitude" />
+                        <input type="hidden" asp-for="ExportSpec.Longitude" />
+                        <input type="hidden" asp-for="ExportSpec.Radius" />
+                    </form>
+                </div>
+                <div class="col-md text-md-right small">
+                    Total results:
+                    @Html.DisplayFor(m => Model.FacilityList.Count)
+                </div>
             </div>
         }
 
@@ -125,45 +131,45 @@
         {
             <table class="table">
                 <thead class="thead-light">
-                <tr>
-                    <th scope="col">Facility</th>
-                    <th scope="col">File Label</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col" class="text-center">Type</th>
-                    <th scope="col">Distance</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Facility</th>
+                        <th scope="col">File Label</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col" class="text-center">Type</th>
+                        <th scope="col">Distance</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in Model.FacilityList)
-                {
-                    <tr class="@(!item.Active ? "table-secondary" : "")">
-                        <td>
-                            <a asp-page="Details" asp-route-id="@item.Id" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                            </a>
-                            @Html.DisplayFor(m => item.Active, "BoolDeleted")
-                        </td>
-                        <td class="text-nowrap">
-                            <a asp-page="../Files/Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                @Html.DisplayFor(m => item.FileLabel)
-                            </a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => item.Address)<br />
-                            @Html.DisplayFor(m => item.City),
-                            @Html.DisplayFor(m => item.State)
-                            @Html.DisplayFor(m => item.PostalCode)
-                        </td>
-                        <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
-                        <td>
-                            @Html.DisplayFor(m => item.Distance, "Distance")
-                        </td>
-                    </tr>
-                }
+                    @foreach (var item in Model.FacilityList)
+                    {
+                        <tr class="@(!item.Active ? "table-secondary" : "")">
+                            <td>
+                                <a asp-page="Details" asp-route-id="@item.Id" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                </a>
+                                @Html.DisplayFor(m => item.Active, "BoolDeleted")
+                            </td>
+                            <td class="text-nowrap">
+                                <a asp-page="../Files/Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                                    @Html.DisplayFor(m => item.FileLabel)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Address)<br />
+                                @Html.DisplayFor(m => item.City),
+                                @Html.DisplayFor(m => item.State)
+                                @Html.DisplayFor(m => item.PostalCode)
+                            </td>
+                            <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
+                            <td>
+                                @Html.DisplayFor(m => item.Distance, "Distance")
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         }
