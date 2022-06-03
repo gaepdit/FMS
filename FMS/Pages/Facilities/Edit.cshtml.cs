@@ -78,6 +78,22 @@ namespace FMS.Pages.Facilities
 
             Facility.TrimAll();
 
+            // If Latitude and/or Longitude fall outside State of Georgia, then alert user
+            decimal nullLatLong = 0.0m;
+            decimal upperLat = 35.0m;
+            decimal lowerLat = 30.36m;
+            if (Facility.Latitude != nullLatLong && (Facility.Latitude > upperLat || Facility.Latitude < lowerLat))
+            {
+                ModelState.AddModelError("Facility.Latitude", "Latitude entered is outside State of Georgia. Must be between 30.36 and 35.0 North Latitude or zero if unknown.");
+            }
+
+            decimal easternLong = -80.84m;
+            decimal westernLong = -85.61m;
+            if (Facility.Longitude != nullLatLong && (Facility.Longitude > easternLong || Facility.Longitude < westernLong))
+            {
+                ModelState.AddModelError("Facility.Longitude", "Longitude entered is outside State of Georgia. Must be between -80.84 and -85.61 West Longitude or zero if unknown.");
+            }
+
             // If new File Label is provided, make sure it exists
             if (!string.IsNullOrWhiteSpace(Facility.FileLabel))
             {
