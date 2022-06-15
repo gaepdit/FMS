@@ -94,7 +94,7 @@
 
 @if (Model.ShowResults)
 {
-    <div class="border-top" id="SearchResults">
+    <div class="border-top text-muted" id="SearchResults">
         @if (Model.ShowNone)
         {
             <div class="container pt-3">
@@ -104,20 +104,22 @@
         else
         {
             <div class="container py-3">
-                <div class="col-md mb-3 mb-md-0">
-                    <form method="post">
-                        <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
-                            Export to Excel
-                        </button>
-                        <input type="hidden" asp-for="ExportSpec.ShowDeleted" />
-                        <input type="hidden" asp-for="ExportSpec.Latitude" />
-                        <input type="hidden" asp-for="ExportSpec.Longitude" />
-                        <input type="hidden" asp-for="ExportSpec.Radius" />
-                    </form>
-                </div>
-                <div class="col-md text-md-right small">
-                    Total results:
-                    @Html.DisplayFor(m => Model.FacilityList.Count)
+                <div class="row align-items-center">
+                    <div class="col-md mb-3 mb-md-0">
+                        <form method="post">
+                            <button id="ExportButton" type="submit" class="btn btn-sm btn-outline-primary">
+                                Export to Excel
+                            </button>
+                            <input type="hidden" asp-for="ExportSpec.ShowDeleted" />
+                            <input type="hidden" asp-for="ExportSpec.Latitude" />
+                            <input type="hidden" asp-for="ExportSpec.Longitude" />
+                            <input type="hidden" asp-for="ExportSpec.Radius" />
+                        </form>
+                    </div>
+                    <div class="col-md text-md-right small">
+                        Total results:
+                        @Html.DisplayFor(m => Model.FacilityList.Count)
+                    </div>
                 </div>
             </div>
         }
