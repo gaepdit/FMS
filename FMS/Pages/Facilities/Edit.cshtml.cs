@@ -77,6 +77,12 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.TrimAll();
+            
+            // If Latitude is 0.00 then Longitude must also be 0.00
+            if (!GeoCoordHelper.BothZeros(Facility.Latitude, Facility.Longitude))
+            {
+                ModelState.AddModelError("Facility.Latitude", "Latitude and Longitude must both be zero(0) or both valid coordinates. ");
+            }
 
             // If Latitude and/or Longitude fall outside State of Georgia, then alert user
             if (GeoCoordHelper.InvalidLat(Facility.Latitude))
