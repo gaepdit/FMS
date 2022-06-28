@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Threading.Tasks;
-using CsvHelper.Configuration;
-using FluentAssertions;
-using JetBrains.Annotations;
-using Xunit;
+﻿using Xunit;
 
 namespace FMS.App.Tests.Helpers
 {

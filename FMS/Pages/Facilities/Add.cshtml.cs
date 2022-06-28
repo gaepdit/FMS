@@ -63,18 +63,18 @@ namespace FMS.Pages.Facilities
             Facility.TrimAll();
 
             // If Latitude is 0.00 then Longitude must also be 0.00
-            if (!GeoCoordHelper.BothZeros((decimal)Facility.Latitude, (decimal)Facility.Longitude))
+            if (Facility.Latitude != null && (!GeoCoordHelper.BothZeros((decimal)Facility.Latitude, (decimal)Facility.Longitude)))
             {
                 ModelState.AddModelError("Facility.Latitude", "Latitude and Longitude must both be zero(0) or both valid coordinates. ");
             }
 
             // If Latitude and/or Longitude fall outside State of Georgia, then alert user
-            if (GeoCoordHelper.InvalidLat((decimal)Facility.Latitude))
+            if (Facility.Latitude != null && (GeoCoordHelper.InvalidLat((decimal)Facility.Latitude)))
             {
                 ModelState.AddModelError("Facility.Latitude", "Latitude entered is outside State of Georgia. Must be between 30.36 and 35.0 North Latitude or zero if unknown.");
             }
 
-            if (GeoCoordHelper.InvalidLong((decimal)Facility.Longitude))
+            if (Facility.Longitude != null && (GeoCoordHelper.InvalidLong((decimal)Facility.Longitude)))
             {
                 ModelState.AddModelError("Facility.Longitude", "Longitude entered is outside State of Georgia. Must be between -80.84 and -85.61 West Longitude or zero if unknown.");
             }
