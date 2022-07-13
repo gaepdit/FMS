@@ -2,16 +2,16 @@
 {
     public static class GeoCoordHelper
     {
-        private const decimal NULL_LAT_LONG = 0.0m;
-        private const decimal UPPER_LAT = 35.0m;
-        private const decimal LOWER_LAT = 30.36m;
-        private const decimal EASTERN_LONG = -80.84m;
-        private const decimal WESTERN_LONG = -85.61m;
+        private const decimal NullLatLong = 0.0m;
+        public const decimal UpperLat = 35.0m;
+        public const decimal LowerLat = 30.36m;
+        public const decimal EasternLong = -80.84m;
+        public const decimal WesternLong = -85.61m;
 
-        public static bool InvalidLat(decimal lat) => _ = lat != NULL_LAT_LONG && (lat > UPPER_LAT || lat < LOWER_LAT);
+        public static bool ValidLat(decimal lat) => lat is NullLatLong or <= UpperLat and >= LowerLat;
 
-        public static bool InvalidLong(decimal lng) => _ = lng != NULL_LAT_LONG && (lng > EASTERN_LONG || lng < WESTERN_LONG);
+        public static bool ValidLong(decimal lng) => lng is NullLatLong or <= EasternLong and >= WesternLong;
 
-        public static bool BothZeros(decimal lat, decimal lng) => _ = (lat == 0 && lng == 0) || (lat != 0 && lng != 0);
+        public static bool BothZeroOrBothNonzero(decimal lat, decimal lng) => (lat == 0 && lng == 0) || (lat != 0 && lng != 0);
     }
 }

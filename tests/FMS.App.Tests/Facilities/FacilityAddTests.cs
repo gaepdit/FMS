@@ -43,7 +43,7 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = new Mock<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
             {
-                Facility = new FacilityCreateDto {State = "Georgia"}
+                Facility = new FacilityCreateDto {State = "Georgia", Latitude = 0, Longitude = 0},
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -75,7 +75,7 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = new Mock<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
             {
-                Facility = new FacilityCreateDto {State = "Georgia"}
+                Facility = new FacilityCreateDto {State = "Georgia", Latitude = 0, Longitude = 0},
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);

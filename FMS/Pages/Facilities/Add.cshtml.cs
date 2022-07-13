@@ -63,20 +63,24 @@ namespace FMS.Pages.Facilities
             Facility.TrimAll();
 
             // If Latitude is 0.00 then Longitude must also be 0.00
-            if (Facility.Latitude != null && (!GeoCoordHelper.BothZeros((decimal)Facility.Latitude, (decimal)Facility.Longitude)))
+            if (!GeoCoordHelper.BothZeroOrBothNonzero(Facility.Latitude!.Value, Facility.Longitude!.Value))
             {
-                ModelState.AddModelError("Facility.Latitude", "Latitude and Longitude must both be zero(0) or both valid coordinates. ");
+                ModelState.AddModelError("Facility.Latitude", "Latitude and Longitude must both be zero (0) or both valid coordinates.");
             }
-
-            // If Latitude and/or Longitude fall outside State of Georgia, then alert user
-            if (Facility.Latitude != null && (GeoCoordHelper.InvalidLat((decimal)Facility.Latitude)))
+            else
             {
-                ModelState.AddModelError("Facility.Latitude", "Latitude entered is outside State of Georgia. Must be between 30.36 and 35.0 North Latitude or zero if unknown.");
-            }
+                // If Latitude and/or Longitude fall outside State of Georgia, then alert user
+                if (!GeoCoordHelper.ValidLat(Facility.Latitude!.Value))
+                {
+                    ModelState.AddModelError("Facility.Latitude", 
+                        $"Latitude entered is outside State of Georgia. Must be between {GeoCoordHelper.UpperLat} and {GeoCoordHelper.LowerLat} North Latitude or zero if unknown.");
+                }
 
-            if (Facility.Longitude != null && (GeoCoordHelper.InvalidLong((decimal)Facility.Longitude)))
-            {
-                ModelState.AddModelError("Facility.Longitude", "Longitude entered is outside State of Georgia. Must be between -80.84 and -85.61 West Longitude or zero if unknown.");
+                if (!GeoCoordHelper.ValidLong(Facility.Longitude!.Value))
+                {
+                    ModelState.AddModelError("Facility.Longitude",
+                        $"Longitude entered is outside State of Georgia. Must be between {GeoCoordHelper.EasternLong} and {GeoCoordHelper.WesternLong} West Longitude or zero if unknown.");
+                }
             }
 
             // If File Label is provided, make sure it exists
