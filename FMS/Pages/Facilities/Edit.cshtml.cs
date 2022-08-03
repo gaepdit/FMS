@@ -77,6 +77,27 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.TrimAll();
+            
+            // If Latitude is 0.00 then Longitude must also be 0.00
+            if (!GeoCoordHelper.BothZeroOrBothNonzero(Facility.Latitude, Facility.Longitude))
+            {
+                ModelState.AddModelError("Facility.Latitude", "Latitude and Longitude must both be zero (0) or both valid coordinates.");
+            }
+            else
+            {
+                // If Latitude and/or Longitude fall outside State of Georgia, then alert user
+                if (!GeoCoordHelper.ValidLat(Facility.Latitude))
+                {
+                    ModelState.AddModelError("Facility.Latitude",
+                        $"Latitude entered is outside State of Georgia. Must be between {GeoCoordHelper.UpperLat} and {GeoCoordHelper.LowerLat} North Latitude or zero if unknown.");
+                }
+
+                if (!GeoCoordHelper.ValidLong(Facility.Longitude))
+                {
+                    ModelState.AddModelError("Facility.Longitude",
+                        $"Longitude entered is outside State of Georgia. Must be between {GeoCoordHelper.EasternLong} and {GeoCoordHelper.WesternLong} West Longitude or zero if unknown.");
+                }
+            }
 
             // If new File Label is provided, make sure it exists
             if (!string.IsNullOrWhiteSpace(Facility.FileLabel))
