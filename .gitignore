@@ -9,6 +9,7 @@ appsettings\.Staging\.json
 appsettings\.Development\.json
 
 # SonarLint Rider plugin
+.idea/**/sonarlint/
 .idea/.idea.FMS/.idea/sonarlint-state.xml
 
 ### Generic ###
