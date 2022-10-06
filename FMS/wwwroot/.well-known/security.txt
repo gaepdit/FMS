@@ -1,4 +1,5 @@
 Contact: mailto:support@gaepd.zendesk.com
 Expires: 2023-09-27T03:59:00.000Z
 Preferred-Languages: en
-Policy: https://github.com/gaepdit/EPD-IT/security/policy
+Policy: https://github.com/gaepdit/.github/blob/main/SECURITY.md
+
