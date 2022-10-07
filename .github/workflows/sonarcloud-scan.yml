@@ -40,12 +40,19 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Install Coverlet as global dotnet tool
+        shell: powershell
+        run: |
+          dotnet tool install --global coverlet.console
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"gaepdit_FMS" /o:"gaepdit" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"gaepdit_FMS" /o:"gaepdit" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.exclusions=FMS.Infrastructure/Migrations/**,FMS/Platform/DevHelpers/SeedData/**
           dotnet build
+          coverlet .\artifacts\FMS.Domain.Tests\bin\Debug\net6.0\FMS.Domain.Tests.dll --target "dotnet" --targetargs "test tests/FMS.Domain.Tests --no-build"
+          coverlet .\artifacts\FMS.App.Tests\bin\Debug\net6.0\FMS.App.Tests.dll --target "dotnet" --targetargs "test tests/FMS.App.Tests --no-build" --exclude "[TestHelpers]*" --exclude "[FMS.Infrastructure]FMS.Infrastructure.Migrations.*" --merge-with "coverage.json"
+          coverlet .\artifacts\FMS.Infrastructure.Tests\bin\Debug\net6.0\FMS.Infrastructure.Tests.dll --target "dotnet" --targetargs "test tests/FMS.Infrastructure.Tests --no-build" --exclude "[TestHelpers]*" --exclude "[FMS.Infrastructure]FMS.Infrastructure.Migrations.*" --merge-with "coverage.json" -f=opencover -o="coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
