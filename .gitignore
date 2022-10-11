@@ -1,24 +1,10 @@
-### Project-specific ###
+### NOTE: Project-specific rules are at the bottom of this file.
 
-# Build artifacts
-**/wwwroot/dist/
+### Generic rules ###
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,jetbrains
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,jetbrains
 
-# Server settings files
-appsettings\.Production\.json
-appsettings\.Staging\.json
-appsettings\.Development\.json
-
-# SonarLint Rider plugin
-.idea/**/sonarlint/
-.idea/.idea.FMS/.idea/sonarlint-state.xml
-
-### Generic ###
-# Generated 2022-04-28
-
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,rider
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,rider
-
-### Rider ###
+### JetBrains ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -96,6 +82,40 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+### JetBrains Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+
+# *.iml
+# modules.xml
+# .idea/misc.xml
+# *.ipr
+
+# Sonarlint plugin
+# https://plugins.jetbrains.com/plugin/7973-sonarlint
+.idea/**/sonarlint/
+
+# SonarQube Plugin
+# https://plugins.jetbrains.com/plugin/7238-sonarqube-community-plugin
+.idea/**/sonarIssues.xml
+
+# Markdown Navigator plugin
+# https://plugins.jetbrains.com/plugin/7896-markdown-navigator-enhanced
+.idea/**/markdown-navigator.xml
+.idea/**/markdown-navigator-enh.xml
+.idea/**/markdown-navigator/
+
+# Cache file creation bug
+# See https://youtrack.jetbrains.com/issue/JBR-2257
+.idea/$CACHE_FILE$
+
+# CodeStream plugin
+# https://plugins.jetbrains.com/plugin/12206-codestream
+.idea/codestream.xml
+
+# Azure Toolkit for IntelliJ plugin
+# https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
+.idea/**/azureSettings.xml
 
 ### VisualStudioCode ###
 .vscode/*
@@ -309,7 +329,7 @@ publish/
 *.azurePubxml
 # Note: Comment the next line if you want to checkin your web deploy settings,
 # but database connection strings (with potential passwords) will be unencrypted
-# *.pubxml
+*.pubxml
 *.publishproj
 
 # Microsoft Azure Web App publish settings. Comment the next line if you want to
@@ -516,4 +536,23 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,rider
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,jetbrains
+
+########################
+### Project-specific ###
+
+# Web deploy settings
+!**/PublishProfiles/*.pubxml
+
+# Environment settings files
+appsettings.*.json
+
+# Build artifacts
+artifacts/
+**/wwwroot/dist/
+
+# SonarLint Rider plugin
+.idea/.idea.FMS/.idea/sonarlint-state.xml
+
+# Code coverage report from ReportGenerator
+coveragereport/
