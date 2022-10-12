@@ -100,6 +100,9 @@ namespace FMS
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();
+            
+            // Configure bundling and minification.
+            services.AddWebOptimizer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -126,6 +129,7 @@ namespace FMS
             }
 
             app.UseHttpsRedirection();
+            app.UseWebOptimizer();
             app.UseStaticFiles();
             app.UseRouting();
 
