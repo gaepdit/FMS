@@ -1,6 +1,3 @@
-import $ from 'jquery';
-import oms from './oms.min';
-
 let searchBool = true;
 $(document).ready(function domReady() {
     $("#Address,#City,#PostalCode").change(function () {
@@ -134,7 +131,7 @@ $(document).ready(function domReady() {
         var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
         // This encapsulates the map to use Spiderfy to determine marker behavior
-        const spiderfy = new oms.OverlappingMarkerSpiderfier(map, {
+        const spiderfy = new OverlappingMarkerSpiderfier(map, {
             markersWontMove: true,
             markersWontHide: true,
         });

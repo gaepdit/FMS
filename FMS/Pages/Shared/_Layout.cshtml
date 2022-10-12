@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FMS - @ViewData["Title"]</title>
     <partial name="_FaviconPartial" />
-    <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
     <partial name="_RaygunScriptsPartial" />
-    <script src="~/dist/site.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
-    @await RenderSectionAsync("ScriptFiles", required: false)
 </head>
 <body>
 <environment exclude="Production">
@@ -47,6 +47,8 @@
     </div>
 </footer>
 
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

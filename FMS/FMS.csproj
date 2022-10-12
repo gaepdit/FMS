@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,10 +7,6 @@
     <UserSecretsId>9eaa6ee0-f5de-4484-8e00-194a201392e7</UserSecretsId>
     <AssemblyVersion>2020.10.20</AssemblyVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Helpers\ReportHelper.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="wwwroot\.well-known\security.txt" />
@@ -30,6 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
     <PackageReference Include="Mindscape.Raygun4Net.AspNetCore" Version="6.6.6" />
     <PackageReference Include="CsvHelper" Version="27.2.1" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.38.0.46746" Condition="'$(Configuration)' == 'Debug'">
@@ -51,57 +48,5 @@
       <DependentUpon>appsettings.json</DependentUpon>
     </Content>
   </ItemGroup>
-
-  <!-- Determine if Node.js and either PNPM or NPM are installed. -->
-  <Target Name="TestForPackageManager" BeforeTargets="Build">
-    <!-- Ensure Node.js is installed -->
-    <Exec Command="node --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="NodeExitCode" />
-    </Exec>
-    <Error Condition=" '$(NodeExitCode)' != '0' " Text="This project requires Node.js. To continue, please install Node.js." />
-
-    <!-- Ensure pnpm or npm is installed -->
-    <Exec Command="pnpm --version" ContinueOnError="true">
-      <Output TaskParameter="ExitCode" PropertyName="PnpmExitCode" />
-    </Exec>
-    <Exec Command="npm --version" ContinueOnError="true" Condition=" '$(PnpmExitCode)' != '0' ">
-      <Output TaskParameter="ExitCode" PropertyName="NpmExitCode" />
-    </Exec>
-    <Error Condition=" '$(PnpmExitCode)' != '0' And '$(NpmExitCode)' != '0' " Text="This project requires either pnpm or npm. To continue, please install pnpm or npm." />
-  </Target>
-
-  <!-- Install node modules if node_modules folder is missing. -->
-  <Target Name="InstallNodeModules" BeforeTargets="Build" DependsOnTargets="TestForPackageManager" Condition="!Exists('node_modules') ">
-    <Message Importance="high" Condition=" '$(PnpmExitCode)' == '0' " Text="Restoring dependencies using 'pnpm'. This may take several minutes..." />
-    <Exec Command="pnpm install" Condition=" '$(PnpmExitCode)' == '0' " />
-    <Message Importance="high" Condition=" '$(NpmExitCode)' == '0' " Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec Command="npm install" Condition=" '$(NpmExitCode)' == '0' " />
-  </Target>
-
-  <!-- Run webpack if JS source file has changed... -->
-  <Target Name="RunWebpackJs" BeforeTargets="Build" DependsOnTargets="InstallNodeModules" Condition=" '$(Configuration)' == 'Debug' " Inputs="Client/site.js" Outputs="wwwroot/dist/site.bundle.js">
-    <Message Importance="high" Text="Running webpack (JS file updated)..." />
-    <Exec Command="pnpm run pack" Condition=" '$(PnpmExitCode)' == '0' " />
-    <Exec Command="npm run pack" Condition=" '$(NpmExitCode)' == '0' " />
-  </Target>
-
-  <!-- ... or run webpack if CSS source file has changed. -->
-  <Target Name="RunWebpackCss" BeforeTargets="Build" DependsOnTargets="InstallNodeModules" Condition=" '$(Configuration)' == 'Debug' " Inputs="Client/site.css" Outputs="wwwroot/dist/site.css">
-    <Message Importance="high" Text="Running webpack (CSS file updated)..." />
-    <Exec Command="pnpm run pack" Condition=" '$(PnpmExitCode)' == '0' " />
-    <Exec Command="npm run pack" Condition=" '$(NpmExitCode)' == '0' " />
-  </Target>
-
-  <!-- Run webpack in prod mode if building for Release. -->
-  <Target Name="RunWebpackProd" BeforeTargets="Build" DependsOnTargets="InstallNodeModules" Condition=" '$(Configuration)' != 'Debug' ">
-    <Message Importance="high" Text="Running webpack (prod)..." />
-    <Exec Command="pnpm run pack-prod" Condition=" '$(PnpmExitCode)' == '0' " />
-    <Exec Command="npm run pack-prod" Condition=" '$(NpmExitCode)' == '0' " />
-  </Target>
-
-  <!-- Remove generated www asset files on Clean -->
-  <Target Name="DistClean" BeforeTargets="Clean">
-    <RemoveDir Directories="wwwroot/dist" />
-  </Target>
 
 </Project>

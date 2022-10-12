@@ -1,6 +1,11 @@
 @page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Facilities.DetailsModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
 @{
     ViewData["Title"] = $"Facility {Model.FacilityDetail.FacilityNumber}";
 }

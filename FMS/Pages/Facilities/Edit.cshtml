@@ -2,11 +2,12 @@
 @using FMS.Pages.Facilities
 @model FMS.Pages.Facilities.EditModel
 
-@section ScriptFiles {
+@section Scripts
+{
     <partial name="_GoogleMapsApiPartial" />
-    <script src="~/dist/mapGeocode.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
-    <script src="~/dist/formValidation.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
-    <script src="~/dist/formEdit.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
+    <script src="~/js/mapGeocode.js" asp-append-version="true"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/formEdit.js" asp-append-version="true"></script>
 }
 
 @{

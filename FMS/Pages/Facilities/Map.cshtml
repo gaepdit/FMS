@@ -5,7 +5,8 @@
     ViewData["Title"] = "Location Search";
 }
 
-@section ScriptFiles {
+@section Scripts
+{
     <partial name="_GoogleMapsApiPartial" />
     <script>
         window.FMS_RESOURCES = {
@@ -13,9 +14,9 @@
             markers: @Html.Raw(Json.Serialize(Model.FacilityList)),
         }
     </script>
-    <script src="~/dist/formSearch.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
-    <script src="~/dist/mapSearch.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
-    <script src="~/dist/oms.bundle.js" asp-append-version="true" type="text/javascript" defer></script>
+    <script src="~/js/formSearch.js" asp-append-version="true"></script>
+    <script src="~/lib/OverlappingMarkerSpiderfier/oms.min.js" asp-append-version="true"></script>
+    <script src="~/js/mapSearch.js" asp-append-version="true"></script>
 }
 
     <h1>

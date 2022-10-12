@@ -1,6 +1,4 @@
-﻿import $ from 'jquery';
-
-// Don't submit empty form fields
+﻿// Don't submit empty form fields
 $(document).ready(function domReady() {
     $('#SearchButton').click(function DisableEmptyInputs() {
         $('input').each(function (i) {
