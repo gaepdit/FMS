@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function mapGeocode() {
     $("form input").keypress(function (e) {
         if (e.which === 13) {
             $("#SubmitButton").click();
