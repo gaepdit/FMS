@@ -13,7 +13,7 @@
 <div class="container bg-light py-3">
     <form method="post" asp-fragment="retention-records">
         <p>
-            For Facility <b>@Html.DisplayFor(e => e.Facility.FacilityNumber):</b> 
+            For Facility <strong>@Html.DisplayFor(e => e.Facility.FacilityNumber):</strong> 
             @Html.DisplayFor(e => e.Facility.Name)
         </p>
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
