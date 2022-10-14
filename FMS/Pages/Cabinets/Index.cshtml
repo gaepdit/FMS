@@ -14,13 +14,14 @@
 </h1>
 
 <p>
-    <i>File Label Range</i> is used for displaying the storage cabinets used for each File or Facility. The range is 
+    <em>File Label Range</em> is used for displaying the storage cabinets used for each File or Facility. The range is 
     from the First File Label for the cabinet up to (but not including) the First File Label for the next cabinet.
 </p>
 
 @if (Model.Cabinets != null && Model.Cabinets.Count > 0)
 {
     <table class="table">
+        <caption>The table below contains the File Label for each cabinet</caption>
         <thead class="thead-light">
         <tr>
             <th scope="col">Cabinet</th>
