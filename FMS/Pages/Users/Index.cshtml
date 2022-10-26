@@ -55,7 +55,7 @@
                 {
                     <tr>
                         <td>
-                            @if (item.Email.Equals(User.Identity.Name))
+                            @if (item.Email.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 <span class="badge badge-primary">YOU</span>
                             }
