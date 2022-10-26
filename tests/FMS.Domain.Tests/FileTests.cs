@@ -1,6 +1,7 @@
-using System;
 using FluentAssertions;
 using FMS.Domain.Entities;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 // ReSharper disable ObjectCreationAsStatement
@@ -24,6 +25,7 @@ namespace FMS.Domain.Tests
         }
 
         [Fact]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results")]
         public void File_InvalidCounty_ThrowsException()
         {
             const int countyNum = 999;
@@ -36,6 +38,7 @@ namespace FMS.Domain.Tests
         [InlineData(0)]
         [InlineData(-1)]
         [InlineData(10000)]
+        [SuppressMessage("Performance", "CA1806:Do not ignore method results")]
         public void File_InvalidSequence_ThrowsException(int sequence)
         {
             Action action = () => new File(131, sequence);
