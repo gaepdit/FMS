@@ -144,7 +144,7 @@
     <div id="ConfirmFacility" class="container bg-dark py-3 text-light rounded">
         <h2>Confirm New Facility</h2>
         <p>The following facilities were found near this location (within a half mile). Please confirm that none of these is a duplicate:</p>
-        <table class="table table-sm table-hover bg-white">
+        <table class="table table-sm table-hover bg-white" aria-label="List of nearby facilities">
             <thead class="thead-light">
             <tr>
                 <th scope="col">File Label<br /><em class="">Select to use</em></th>
@@ -193,7 +193,7 @@
                     {
                         <label>
                             @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, Model.ConfirmedFacilityFileLabel)
-                            @Html.DisplayFor(m => Model.ConfirmedFacilityFileLabel) <i>(entered)</i>
+                            @Html.DisplayFor(m => Model.ConfirmedFacilityFileLabel) <em>(entered)</em>
                         </label>
                     }
                 </td>

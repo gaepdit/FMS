@@ -125,7 +125,7 @@
         }
         else
         {
-            <table class="table">
+            <table class="table" aria-label="Facility search results">
                 <caption class="container py-3"> 
                     <div class="row align-items-center">
                         <div class="col-md mb-3 mb-md-0">
@@ -217,12 +217,12 @@
                         </td>
                         <td class="text-center">@Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")</td>
                         <td>
-                            <i class="font-weight-medium">Cabinets:</i><br />
+                            <em class="font-weight-medium">Cabinets:</em><br />
                             @Html.DisplayFor(m => item.Cabinets, "Cabinets", new {item.IsRetained})
                             @if (item.RetentionRecords.Count > 0)
                             {
                                 <div>
-                                    <i class="font-weight-medium">Retention Records:</i><br />
+                                    <em class="font-weight-medium">Retention Records:</em><br />
                                     <ul class="list-unstyled">
                                         @foreach (var record in item.RetentionRecords)
                                         {

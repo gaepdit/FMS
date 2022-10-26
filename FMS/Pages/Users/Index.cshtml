@@ -42,7 +42,7 @@
 
     @if (Model.SearchResults is { Count: > 0 })
     {
-        <table class="table table-borderless">
+        <table class="table table-borderless" aria-label="User information">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
@@ -55,7 +55,7 @@
                 {
                     <tr>
                         <td>
-                            @if (item.Email.Equals(User.Identity.Name))
+                            @if (item.Email.Equals(User.Identity.Name, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 <span class="badge badge-primary">YOU</span>
                             }
