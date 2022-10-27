@@ -5,7 +5,7 @@
     <RootNamespace>FMS</RootNamespace>
     <StartupObject>FMS.Program</StartupObject>
     <UserSecretsId>9eaa6ee0-f5de-4484-8e00-194a201392e7</UserSecretsId>
-    <AssemblyVersion>2022.10.14</AssemblyVersion>
+    <AssemblyVersion>2022.10.27</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
