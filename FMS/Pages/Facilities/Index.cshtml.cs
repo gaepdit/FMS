@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CsvHelper.Configuration;
+using DocumentFormat.OpenXml.Office2016.Excel;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
@@ -66,10 +68,29 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
+            var fileName = $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "FacilityReportList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
-            return File(await facilityReportList.GetCsvByteArrayAsync<FacilityReportMap>(), "text/csv",
-                $"FMS_export_{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.csv");
+            var facilityDetailList = from p in facilityReportList select new
+            {
+                FacilityNumber = p.FacilityNumber,
+                FileLabel = p.FileLabel,
+                Name = p.Name,
+                Address = p.Address,
+                City = p.City,
+                County = p.County.Name,
+                State = p.State,
+                PostalCode = p.PostalCode,
+                Location = p.Location,
+                FacilityType = p.FacilityType.Name,
+                ComplianceOfficer = p.ComplianceOfficer.Name,
+                OrganizationalUnit = p.OrganizationalUnit.Name,
+                BudgetCode = p.BudgetCode.Name,
+                FacilityStatus = p.FacilityStatus.Name,
+                CabinetsToString = p.CabinetsToString,
+                RetentionRecords = p.RetentionRecordsToString
+            };
+            return File(await facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
         }
 
         private async Task PopulateSelectsAsync()
@@ -81,28 +102,5 @@ namespace FMS.Pages.Facilities
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
         }
 
-        private sealed class FacilityReportMap : ClassMap<FacilityDetailDto>
-        {
-            [UsedImplicitly]
-            public FacilityReportMap()
-            {
-                Map(m => m.FacilityNumber).Index(0).Name("Facility Number");
-                Map(m => m.FileLabel).Index(1).Name("File Label");
-                Map(m => m.Name).Index(2).Name("Facility Name");
-                Map(m => m.Address).Index(3).Name("Street Address");
-                Map(m => m.City).Index(4).Name("City");
-                Map(m => m.County.Name).Index(5).Name("County");
-                Map(m => m.State).Index(6).Name("State");
-                Map(m => m.PostalCode).Index(7).Name("ZIP Code");
-                Map(m => m.Location).Index(8).Name("Location Description");
-                Map(m => m.FacilityType.Name).Index(9).Name("Type/Environmental Interest");
-                Map(m => m.ComplianceOfficer.Name).Index(10).Name("Compliance Officer");
-                Map(m => m.OrganizationalUnit.Name).Index(11).Name("Organizational Unit");
-                Map(m => m.BudgetCode.Name).Index(12).Name("Budget Code");
-                Map(m => m.FacilityStatus.Name).Index(13).Name("Facility Status");
-                Map(m => m.CabinetsToString).Index(14).Name("Cabinets");
-                Map(m => m.RetentionRecordsToString).Index(15).Name("Retention Records");
-            }
-        }
     }
 }

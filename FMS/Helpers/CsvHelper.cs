@@ -1,8 +1,11 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClosedXML.Excel;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -40,6 +43,21 @@ namespace FMS
                 if (writer != null) await writer.DisposeAsync();
                 if (ms != null) await ms.DisposeAsync();
             }
+        }
+        public static async Task<byte[]> ExportExcelAsByteArray<T>(this IEnumerable<T> list)
+        {
+            var ms = new MemoryStream();
+            await Task.Run(() =>
+            {
+                var wb = new XLWorkbook();
+                var ws = wb.AddWorksheet("FMS_Search_Results");
+                // insert the IEnumberable data
+                ws.Cell(1, 1).InsertTable(list);
+                ws.Columns().AdjustToContents();
+
+                wb.SaveAs(ms);
+            });
+            return ms.ToArray();
         }
     }
 }
