@@ -32,72 +32,72 @@ namespace FMS.Domain.Dto
             Cabinets = facility.CabinetsToString;
             RetentionRecords = facility.RetentionRecordsToString;
         }
-        [Display(Name = "Facility Guid")]
+        [XLColumn(Header = "Facility Guid")]
         public String FacilityGuid { get; }
 
-        [Display(Name = "Facility Number")]
+        [XLColumn(Header = "Facility Number")]
         public string FacilityNumber { get; }
 
-        [Display(Name = "Facility Name")]
+        [XLColumn(Header = "Facility Name")]
         public string Name { get; }
 
-        [Display(Name = "Active Site")]
+        [XLColumn(Header = "Active Site")]
         public bool Active { get; }
 
-        [Display(Name = "County")]
+        [XLColumn(Header = "County")]
         public string County { get; }
 
-        [Display(Name = "Facility Status")]
+        [XLColumn(Header = "Facility Status")]
         public string FacilityStatus { get; }
 
-        [Display(Name = "Type/Environmental Interest")]
+        [XLColumn(Header = "Type/Environmental Interest")]
         public string FacilityType { get; }
 
-        [Display(Name = "Budget Code")]
+        [XLColumn(Header = "Budget Code")]
         public string BudgetCode { get; }
 
-        [Display(Name = "Organizational Unit")]
+        [XLColumn(Header = "Organizational Unit")]
         public string OrganizationalUnit { get; }
 
-        [Display(Name = "Compliance Officer")]
+        [XLColumn(Header = "Compliance Officer")]
         public string ComplianceOfficer { get; }
 
-        [Display(Name = "File Label")]
+        [XLColumn(Header = "File Label")]
         public string FileLabel { get; }
 
-        [Display(Name = "File Guid")]
+        [XLColumn(Header = "File Guid")]
         public string FileGuid { get; }
 
-        [Display(Name = "Location Description")]
+        [XLColumn(Header = "Location Description")]
         public string Location { get; }
 
-        [Display(Name = "Street Address")]
+        [XLColumn(Header = "Street Address")]
         public string Address { get; }
 
-        [Display(Name = "City")]
+        [XLColumn(Header = "City")]
         public string City { get; }
 
-        [Display(Name = "State")]
+        [XLColumn(Header = "State")]
         public string State { get; }
 
-        [Display(Name = "ZIP Code")]
+        [XLColumn(Header = "ZIP Code")]
         public string PostalCode { get; }
 
-        [Display(Name = "Latitude")]
+        [XLColumn(Header = "Latitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Latitude { get; }
 
-        [Display(Name = "Longitude")]
+        [XLColumn(Header = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; }
 
-        [Display(Name = "Is Retained Onsite")]
+        [XLColumn(Header = "Is Retained Onsite")]
         public bool IsRetained { get; }
 
-        [Display(Name = "Cabinets")]
+        [XLColumn(Header = "Cabinets")]
         public string Cabinets { get; }
 
-        [Display(Name = "Retention Records")]
+        [XLColumn(Header = "Retention Records")]
         public string RetentionRecords { get; }
     }
 }

@@ -68,7 +68,7 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var fileName = $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var fileName = $"FMS_Facility_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "FacilityReportList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
             var facilityDetailList = from p in facilityReportList select new FacilityDetailDto_Scalar(p);
