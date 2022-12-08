@@ -71,25 +71,7 @@ namespace FMS.Pages.Facilities
             var fileName = $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "FacilityReportList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
-            var facilityDetailList = from p in facilityReportList select new 
-            {
-                FacilityNumber = p.FacilityNumber,
-                FileLabel = p.FileLabel,
-                Name = p.Name,
-                Address = p.Address,
-                City = p.City,
-                County = p.County.Name,
-                State = p.State,
-                PostalCode = p.PostalCode,
-                Location = p.Location,
-                FacilityType = p.FacilityType.Name,
-                ComplianceOfficer = p.ComplianceOfficer.Name,
-                OrganizationalUnit = p.OrganizationalUnit.Name,
-                BudgetCode = p.BudgetCode.Name,
-                FacilityStatus = p.FacilityStatus.Name,
-                CabinetsToString = p.CabinetsToString,
-                RetentionRecords = p.RetentionRecordsToString
-            };
+            var facilityDetailList = from p in facilityReportList select new FacilityDetailDto_Scalar(p);
             return File(facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
         }
 

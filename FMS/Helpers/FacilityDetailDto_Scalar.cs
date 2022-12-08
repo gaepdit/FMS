@@ -1,9 +1,7 @@
+using ClosedXML.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using FMS.Domain.Entities;
-using FMS.Domain.Extensions;
 
 namespace FMS.Domain.Dto
 {
