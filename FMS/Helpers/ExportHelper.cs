@@ -11,7 +11,7 @@ using CsvHelper.Configuration;
 
 namespace FMS
 {
-    public static class CsvHelper
+    public static class ExportHelper
     {
         public static async Task<byte[]> GetCsvByteArrayAsync<T>(this IEnumerable list)
             where T : ClassMap
