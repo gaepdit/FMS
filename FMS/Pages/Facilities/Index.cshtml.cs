@@ -71,7 +71,7 @@ namespace FMS.Pages.Facilities
             var fileName = $"FMS_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "FacilityReportList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
-            var facilityDetailList = from p in facilityReportList select new
+            var facilityDetailList = from p in facilityReportList select new 
             {
                 FacilityNumber = p.FacilityNumber,
                 FileLabel = p.FileLabel,
@@ -90,7 +90,7 @@ namespace FMS.Pages.Facilities
                 CabinetsToString = p.CabinetsToString,
                 RetentionRecords = p.RetentionRecordsToString
             };
-            return File(await facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
+            return File(facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
         }
 
         private async Task PopulateSelectsAsync()

@@ -44,19 +44,16 @@ namespace FMS
                 if (ms != null) await ms.DisposeAsync();
             }
         }
-        public static async Task<byte[]> ExportExcelAsByteArray<T>(this IEnumerable<T> list)
+        public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list)
         {
             var ms = new MemoryStream();
-            await Task.Run(() =>
-            {
-                var wb = new XLWorkbook();
-                var ws = wb.AddWorksheet("FMS_Search_Results");
-                // insert the IEnumberable data
-                ws.Cell(1, 1).InsertTable(list);
-                ws.Columns().AdjustToContents();
+            var wb = new XLWorkbook();
+            var ws = wb.AddWorksheet("FMS_Search_Results");
+            // insert the IEnumberable data
+            ws.Cell(1, 1).InsertTable(list);
+            ws.Columns().AdjustToContents();
 
-                wb.SaveAs(ms);
-            });
+            wb.SaveAs(ms);
             return ms.ToArray();
         }
     }
