@@ -9,18 +9,16 @@ namespace FMS.Domain.Dto
     {
         public FacilityDetailDto_Scalar(FacilityDetailDto facility)
         {
-            FacilityGuid = facility.Id.ToString();
             FileLabel = facility.FileLabel;
-            FileGuid = facility.Id.ToString();
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
-            County = facility.County.ToString();
-            FacilityStatus = facility.FacilityStatus.ToString();
-            FacilityType = facility.FacilityType.ToString();
-            BudgetCode = facility.BudgetCode.ToString();
-            OrganizationalUnit = facility.OrganizationalUnit.ToString();
-            ComplianceOfficer = facility.ComplianceOfficer.ToString();
+            County = facility.County.Name;
+            FacilityStatus = facility.FacilityStatus.Name;
+            FacilityType = facility.FacilityType.Name;
+            BudgetCode = facility.BudgetCode.Name;
+            OrganizationalUnit = facility.OrganizationalUnit.Name;
+            ComplianceOfficer = facility.ComplianceOfficer.Name;
             Location = facility.Location;
             Address = facility.Address;
             City = facility.City;
@@ -32,8 +30,6 @@ namespace FMS.Domain.Dto
             Cabinets = facility.CabinetsToString;
             RetentionRecords = facility.RetentionRecordsToString;
         }
-        [XLColumn(Header = "Facility Guid")]
-        public String FacilityGuid { get; }
 
         [XLColumn(Header = "Facility Number")]
         public string FacilityNumber { get; }
@@ -64,9 +60,6 @@ namespace FMS.Domain.Dto
 
         [XLColumn(Header = "File Label")]
         public string FileLabel { get; }
-
-        [XLColumn(Header = "File Guid")]
-        public string FileGuid { get; }
 
         [XLColumn(Header = "Location Description")]
         public string Location { get; }
