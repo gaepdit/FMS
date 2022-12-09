@@ -14,11 +14,11 @@ namespace FMS.Domain.Dto
             Name = facility.Name;
             Active = facility.Active;
             County = facility.County.Name;
-            FacilityStatus = facility.FacilityStatus.Name;
-            FacilityType = facility.FacilityType.Name;
-            BudgetCode = facility.BudgetCode.Name;
-            OrganizationalUnit = facility.OrganizationalUnit.Name;
-            ComplianceOfficer = facility.ComplianceOfficer.Name;
+            FacilityStatus = facility.FacilityStatus?.Name;
+            FacilityType = facility.FacilityType?.Name;
+            BudgetCode = facility.BudgetCode?.Name;
+            OrganizationalUnit = facility.OrganizationalUnit?.Name;
+            ComplianceOfficer = facility.ComplianceOfficer?.Name;
             Location = facility.Location;
             Address = facility.Address;
             City = facility.City;
