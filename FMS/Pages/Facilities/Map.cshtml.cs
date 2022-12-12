@@ -99,8 +99,8 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnPostAsync()
 
         {
-            var fileName = $"FMS_Map_export{DateTime.Now:yyyy-MM-dd.HH-MapModel-SortedSet.FF}.xlsx";
-            IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(Spec);
+            var fileName = $"FMS_Map_export{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.xlsx";
+            IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(ExportSpec);
             var facilityMapDetail = from p in facilityMapSummaries select new FacilityMapSummaryDto_Scalar(p);
             return File(facilityMapDetail.ExportExcelAsByteArray(), "application/vnd.ms.excel", fileName);
 

@@ -28,8 +28,6 @@ namespace FMS.Domain.Dto.Facility
             Longitude = mapSummaryDto.Longitude;
             Distance = mapSummaryDto.Distance;
         }
-        public Guid Id { get; set; }
-
         [XLColumn(Header= "Facility Number")]
         public string FacilityNumber { get; set; }
 
