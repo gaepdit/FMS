@@ -51,7 +51,7 @@ namespace FMS
             var ws = wb.AddWorksheet("FMS_Search_Results");
             // insert the IEnumberable data
             ws.Cell(1, 1).InsertTable(list);
-            ws.Columns().AdjustToContents();
+            ws.Columns().AdjustToContents(1, 100);
 
             wb.SaveAs(ms);
             return ms.ToArray();
