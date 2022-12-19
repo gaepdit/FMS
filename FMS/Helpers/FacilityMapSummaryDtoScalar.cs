@@ -9,10 +9,9 @@ using ClosedXML.Attributes;
 
 namespace FMS.Domain.Dto.Facility
 {
-    public class FacilityMapSummaryDto_Scalar
+    public class FacilityMapSummaryDtoScalar
     {
-        public FacilityMapSummaryDto_Scalar(FacilityMapSummaryDto mapSummaryDto)
-            
+        public FacilityMapSummaryDtoScalar(FacilityMapSummaryDto mapSummaryDto)
         {
             FacilityNumber = mapSummaryDto.FacilityNumber;
             Name = mapSummaryDto.Name;
@@ -35,7 +34,7 @@ namespace FMS.Domain.Dto.Facility
         public string Name { get; set; }
 
         [XLColumn(Header= "Active Site")]
-        public bool Active { get; set; } = true;
+        public bool Active { get; set; }
 
         [XLColumn(Header= "Facility Status")]
         public string FacilityStatus { get; set; }

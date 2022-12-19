@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
-    public class FacilityDetailDto_Scalar
+    public class FacilityDetailDtoScalar
     {
-        public FacilityDetailDto_Scalar(FacilityDetailDto facility)
+        public FacilityDetailDtoScalar(FacilityDetailDto facility)
         {
             FileLabel = facility.FileLabel;
             FacilityNumber = facility.FacilityNumber;
