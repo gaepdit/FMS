@@ -15,6 +15,7 @@ namespace FMS.Domain.Repositories
             FacilitySpec spec, int pageNumber, int pageSize);
         Task<IReadOnlyList<FacilityDetailDto>> GetFacilityDetailListAsync(FacilitySpec spec);
         Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec);
+        Task<IEnumerable<RetentionRecordDetailDto>> GetRetentionRecordsListAsync(FacilitySpec spec);
         Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility);
         Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates);
         Task DeleteFacilityAsync(Guid id);

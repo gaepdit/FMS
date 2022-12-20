@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Office2016.Excel;
@@ -65,13 +66,21 @@ namespace FMS.Pages.Facilities
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostExportButtonAsync()
         {
             var fileName = $"FMS_Facility_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "FacilityReportList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
             var facilityDetailList = from p in facilityReportList select new FacilityDetailDtoScalar(p);
             return File(facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
+        }
+        
+        public async Task<IActionResult> OnPostDownloadRetentionRecordsAsync()
+        {
+            var fileName = $"FMS_Retention_Records_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.pdf";
+            // "FacilityReportList" Detailed Retention Record List to export
+            IEnumerable<RetentionRecordDetailDto> retentionRecordDetailList = await _repository.GetRetentionRecordsListAsync(Spec);
+            return null;
         }
 
         private async Task PopulateSelectsAsync()
