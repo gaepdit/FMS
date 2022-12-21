@@ -170,13 +170,6 @@ namespace FMS.Infrastructure.Repositories
             var queried = QueryFacilities(spec);
 
             var included = queried
-                .Include(e => e.County)
-                .Include(e => e.FacilityStatus)
-                .Include(e => e.FacilityType)
-                .Include(e => e.BudgetCode)
-                .Include(e => e.OrganizationalUnit)
-                .Include(e => e.ComplianceOfficer)
-                .Include(e => e.File)
                 .Include(e => e.RetentionRecords);
 
             var ordered = OrderFacilityQuery(included, spec.SortBy);

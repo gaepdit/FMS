@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
 using FMS.Domain.Dto;
+using FMS.Domain.Services;
 using Spire.Pdf;
 using Spire.Pdf.Fields;
 using Spire.Pdf.Widget;
@@ -35,12 +36,13 @@ namespace FMS
         /// accordingly, and convert it to a byte array.
         /// </summary>
         /// <param name="list">A list of RetentionRecordDetailDto</param>
+        /// <param name="currentUser">The current user of the program</param>
         /// <param name="maxCol">The maximum number of rows the current blank pdf doc can support</param>
         /// <param name="blankFilePath">The path to the blank Pdf document</param>
         /// <param name="freeTierLimit">The max number of pages the program can generate</param>
         /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportPdfAsByteArray(
-            IEnumerable<RetentionRecordDetailDto> list, int maxCol=18,
+            IEnumerable<RetentionRecordDetailDto> list, UserView currentUser, int maxCol=18,
             string blankFilePath="../FMS/wwwroot/BlankRequestForm.pdf", int freeTierLimit=10)
         {
             PdfDocument mainDoc = new PdfDocument();
@@ -51,7 +53,7 @@ namespace FMS
             List<PdfDocument> pdfDocuments = new List<PdfDocument>();
             foreach (var smallerList in smallerLists)
             {
-                PdfDocument currDocument = GeneratePdfPage(smallerList, maxCol, blankFilePath);
+                PdfDocument currDocument = GeneratePdfPage(smallerList, currentUser, maxCol, blankFilePath);
                 pdfDocuments.Add(currDocument);
                 // limit for the free tier
                 if (pdfDocuments.Count >= freeTierLimit)
@@ -78,18 +80,19 @@ namespace FMS
         /// information from the list into the Pdf page and returns it.
         /// </summary>
         /// <param name="smallerList">The chunked/smaller list of RetentionRecordDetailDto</param>
+        /// <param name="currentUser">The current user of the program</param>
         /// <param name="maxCol">The maximum number of rows the current blank pdf doc can support</param>
         /// <param name="blankFilePath">The path to the blank Pdf document</param>
         /// <returns>A Pdf page</returns>
         /// <exception cref="ArgumentException">A page can have at most 18 rows</exception>
         private static PdfDocument GeneratePdfPage(RetentionRecordDetailDto[] smallerList,
-            int maxCol, string blankFilePath)
+            UserView currentUser, int maxCol, string blankFilePath)
         {
             if (smallerList.Length > maxCol)
                 throw new ArgumentException("The input list's length should not exceed " + maxCol);
             PdfDocument currDocument = new PdfDocument();
             currDocument.LoadFromFile(blankFilePath);
-            Dictionary<string, string> dictionaryTextbox = GenerateRetentionRecordDictionary(smallerList);
+            Dictionary<string, string> dictionaryTextbox = GenerateRetentionRecordDictionary(smallerList, currentUser);
             // iterate through all user fill-able widget
             PdfFormWidget formWidget = (PdfFormWidget) currDocument.Form;
             for (int i = 0; i < formWidget.FieldsWidget.List.Count; i++)
@@ -111,9 +114,10 @@ namespace FMS
         /// to be filled in in the pdf.
         /// </summary>
         /// <param name="list">A list of RetentionRecordDetailDto</param>
+        /// <param name="currentUser">The current user of the program</param>
         /// <returns>A dictionary with the key represents the cell name and the value represents the value</returns>
         private static Dictionary<string, string> GenerateRetentionRecordDictionary(
-            RetentionRecordDetailDto[] list)
+            RetentionRecordDetailDto[] list, UserView currentUser)
         {
             Dictionary<string, string> dictionaryTextbox = new Dictionary<string, string>();
             // start from 1 to name the key
@@ -130,6 +134,11 @@ namespace FMS
             }
             // add key-value pair for the date
             dictionaryTextbox.Add("Date of Request", DateTime.Now.ToString("MM/dd/yyyy"));
+            // add key-value pair for the user information
+            dictionaryTextbox.Add("Name of Requestor",
+                currentUser.DisplayName == null ? "" : currentUser.DisplayName);
+            dictionaryTextbox.Add("EMail",
+                currentUser.Email == null ? "" : currentUser.Email);
             return dictionaryTextbox;
         }
     }
