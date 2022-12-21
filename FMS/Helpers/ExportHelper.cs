@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
+using FMS.Domain.Dto;
 using Spire.Pdf;
 using Spire.Pdf.Fields;
 using Spire.Pdf.Widget;
@@ -23,7 +24,7 @@ namespace FMS
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
             var ws = wb.AddWorksheet("Search_Results");
-            // insert the Enumberable data
+            // insert the enumerable data
             ws.Cell(1, 1).InsertTable(list);
             ws.Columns().AdjustToContents(1, 100);
             wb.SaveAs(ms);
@@ -37,9 +38,9 @@ namespace FMS
         /// <param name="list">A list of RetentionRecordDetailDto</param>
         /// <param name="maxCol">The maximum number of rows the current blank pdf doc can support</param>
         /// <param name="blankFilePath">The path to the blank Pdf document</param>
-        /// <typeparam name="T">RetentionRecordDetailDto</typeparam>
         /// <returns></returns>
-        public static byte[] ExportPdfAsByteArray<T>(this IEnumerable<T> list, int maxCol=18,
+        public static byte[] ExportPdfAsByteArray(
+            IEnumerable<RetentionRecordDetailDto> list, int maxCol=18,
             string blankFilePath="../FMS/wwwroot/BlankRequestForm.pdf")
         {
             PdfDocument mainDoc = new PdfDocument();
@@ -50,7 +51,7 @@ namespace FMS
             List<PdfDocument> pdfDocuments = new List<PdfDocument>();
             foreach (var smallerList in smallerLists)
             {
-                PdfDocument currDocument = smallerList.GeneratePdfPage(maxCol, blankFilePath);
+                PdfDocument currDocument = GeneratePdfPage(smallerList, maxCol, blankFilePath);
                 pdfDocuments.Add(currDocument);
                 // 10 is the limit for the free tier
                 if (pdfDocuments.Count >= 10)
@@ -80,35 +81,48 @@ namespace FMS
         /// <param name="smallerList">The chunked/smaller list of RetentionRecordDetailDto</param>
         /// <param name="maxCol">The maximum number of rows the current blank pdf doc can support</param>
         /// <param name="blankFilePath">The path to the blank Pdf document</param>
-        /// <typeparam name="T">RetentionRecordDetailDto</typeparam>
         /// <returns>A Pdf page</returns>
         /// <exception cref="ArgumentException">A page can have at most 18 rows</exception>
-        private static PdfDocument GeneratePdfPage<T>(this T[] smallerList, int maxCol, string blankFilePath)
+        private static PdfDocument GeneratePdfPage(RetentionRecordDetailDto[] smallerList,
+            int maxCol, string blankFilePath)
         {
             if (smallerList.Length > maxCol)
                 throw new ArgumentException("The input list's length should not exceed " + maxCol);
             PdfDocument currDocument = new PdfDocument();
             currDocument.LoadFromFile(blankFilePath);
-            for (int index = 1; index <= smallerList.Length; index++)
+            Dictionary<string, string> dictionaryTextbox = GenerateRetentionRecordDictionary(smallerList);
+            // iterate through all user fill-able widget
+            PdfFormWidget formWidget = (PdfFormWidget) currDocument.Form;
+            for (int i = 0; i < formWidget.FieldsWidget.List.Count; i++)
             {
-                var currRetentionRecordDetail = smallerList[index - 1];
-                    
-                PdfFormWidget formWidget = (PdfFormWidget) currDocument.Form;
-                for (int i = 0; i < formWidget.FieldsWidget.List.Count; i++)
+                //Fill the data for Text Box field
+                PdfField field = (PdfField) formWidget.FieldsWidget.List[i];
+                if (field is PdfTextBoxFieldWidget)
                 {
-                    //Fill the data for Text Box field
-                    PdfField field = (PdfField) formWidget.FieldsWidget.List[i];
-                    if (field is PdfTextBoxFieldWidget)
-                    {
-                        PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
-                        // if (sampleDataTextbox.ContainsKey(textBoxField.Name))
-                        // {
-                        //     textBoxField.Text = sampleDataTextbox[textBoxField.Name];
-                        // }
-                    }
+                    PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
+                    // if (sampleDataTextbox.ContainsKey(textBoxField.Name))
+                    // {
+                    //     textBoxField.Text = sampleDataTextbox[textBoxField.Name];
+                    // }
                 }
             }
             return currDocument;
+        }
+
+        private static Dictionary<string, string> GenerateRetentionRecordDictionary(
+            RetentionRecordDetailDto[] list)
+        {
+            Dictionary<string, string> dictionaryTextbox = new Dictionary<string, string>();
+            // start from 1 to name the key
+            int i = 1;
+            foreach (var retentionRecord in list)
+            {
+                dictionaryTextbox.Add("Consignment Number" + i, retentionRecord.ConsignmentNumber);
+                dictionaryTextbox.Add("Item" + i, retentionRecord.BoxNumber);
+                dictionaryTextbox.Add("Location number from transmittal" + i, retentionRecord.ShelfNumber);
+                i++;
+            }
+            return dictionaryTextbox;
         }
     }
 }

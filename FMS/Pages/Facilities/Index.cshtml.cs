@@ -82,7 +82,7 @@ namespace FMS.Pages.Facilities
             IEnumerable<RetentionRecordDetailDto> retentionRecordDetailList = await _repository.GetRetentionRecordsListAsync(Spec);
             //var curr = retentionRecordDetailList.First();
             
-            return File(retentionRecordDetailList.ExportPdfAsByteArray(), "application/pdf", fileName);
+            return File(ExportHelper.ExportPdfAsByteArray(retentionRecordDetailList), "application/pdf", fileName);
         }
 
         private async Task PopulateSelectsAsync()
