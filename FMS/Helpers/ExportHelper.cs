@@ -96,13 +96,11 @@ namespace FMS
             {
                 //Fill the data for Text Box field
                 PdfField field = (PdfField) formWidget.FieldsWidget.List[i];
-                if (field is PdfTextBoxFieldWidget)
+                PdfTextBoxFieldWidget textBoxField = field as PdfTextBoxFieldWidget;
+                if (textBoxField != null)
                 {
-                    PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
                     if (dictionaryTextbox.ContainsKey(textBoxField.Name))
-                    {
                         textBoxField.Text = dictionaryTextbox[textBoxField.Name];
-                    }
                 }
             }
             return currDocument;
