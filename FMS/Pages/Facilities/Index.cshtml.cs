@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Office2016.Excel;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
-using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -80,8 +77,6 @@ namespace FMS.Pages.Facilities
             var fileName = $"FMS_Retention_Records_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.pdf";
             // "FacilityReportList" Detailed Retention Record List to export
             IEnumerable<RetentionRecordDetailDto> retentionRecordDetailList = await _repository.GetRetentionRecordsListAsync(Spec);
-            //var curr = retentionRecordDetailList.First();
-            
             return File(ExportHelper.ExportPdfAsByteArray(retentionRecordDetailList), "application/pdf", fileName);
         }
 

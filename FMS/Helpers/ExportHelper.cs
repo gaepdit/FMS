@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
@@ -38,10 +37,11 @@ namespace FMS
         /// <param name="list">A list of RetentionRecordDetailDto</param>
         /// <param name="maxCol">The maximum number of rows the current blank pdf doc can support</param>
         /// <param name="blankFilePath">The path to the blank Pdf document</param>
-        /// <returns></returns>
+        /// <param name="freeTierLimit">The max number of pages the program can generate</param>
+        /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportPdfAsByteArray(
             IEnumerable<RetentionRecordDetailDto> list, int maxCol=18,
-            string blankFilePath="../FMS/wwwroot/BlankRequestForm.pdf")
+            string blankFilePath="../FMS/wwwroot/BlankRequestForm.pdf", int freeTierLimit=10)
         {
             PdfDocument mainDoc = new PdfDocument();
             // break the list into chunks of 18 elements
@@ -53,11 +53,10 @@ namespace FMS
             {
                 PdfDocument currDocument = GeneratePdfPage(smallerList, maxCol, blankFilePath);
                 pdfDocuments.Add(currDocument);
-                // 10 is the limit for the free tier
-                if (pdfDocuments.Count >= 10)
+                // limit for the free tier
+                if (pdfDocuments.Count >= freeTierLimit)
                     break;
             }
-            
             // add all of the pages to the main document
             foreach (var pdfDocument in pdfDocuments)
                 mainDoc.AppendPage(pdfDocument);
@@ -100,15 +99,22 @@ namespace FMS
                 if (field is PdfTextBoxFieldWidget)
                 {
                     PdfTextBoxFieldWidget textBoxField = (PdfTextBoxFieldWidget) field;
-                    // if (sampleDataTextbox.ContainsKey(textBoxField.Name))
-                    // {
-                    //     textBoxField.Text = sampleDataTextbox[textBoxField.Name];
-                    // }
+                    if (dictionaryTextbox.ContainsKey(textBoxField.Name))
+                    {
+                        textBoxField.Text = dictionaryTextbox[textBoxField.Name];
+                    }
                 }
             }
             return currDocument;
         }
-
+        
+        /// <summary>
+        /// A helper method to convert a list of RetentionRecordDetailDto to a dictionary.
+        /// The key of the dictionary represents the cell name in the pdf, and the value represents the value
+        /// to be filled in in the pdf.
+        /// </summary>
+        /// <param name="list">A list of RetentionRecordDetailDto</param>
+        /// <returns>A dictionary with the key represents the cell name and the value represents the value</returns>
         private static Dictionary<string, string> GenerateRetentionRecordDictionary(
             RetentionRecordDetailDto[] list)
         {
@@ -117,11 +123,16 @@ namespace FMS
             int i = 1;
             foreach (var retentionRecord in list)
             {
-                dictionaryTextbox.Add("Consignment Number" + i, retentionRecord.ConsignmentNumber);
-                dictionaryTextbox.Add("Item" + i, retentionRecord.BoxNumber);
-                dictionaryTextbox.Add("Location number from transmittal" + i, retentionRecord.ShelfNumber);
+                dictionaryTextbox.Add("Consignment Number" + i,
+                    retentionRecord.ConsignmentNumber == null ? "" : retentionRecord.ConsignmentNumber);
+                dictionaryTextbox.Add("Item" + i,
+                    retentionRecord.BoxNumber == null ? "" : retentionRecord.BoxNumber);
+                dictionaryTextbox.Add("Location number from transmittal" + i,
+                    retentionRecord.ShelfNumber == null ? "" : retentionRecord.ShelfNumber);
                 i++;
             }
+            // add key-value pair for the date
+            dictionaryTextbox.Add("Date of Request", DateTime.Now.ToString("MM/dd/yyyy"));
             return dictionaryTextbox;
         }
     }
