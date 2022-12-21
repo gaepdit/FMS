@@ -80,7 +80,9 @@ namespace FMS.Pages.Facilities
             var fileName = $"FMS_Retention_Records_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.pdf";
             // "FacilityReportList" Detailed Retention Record List to export
             IEnumerable<RetentionRecordDetailDto> retentionRecordDetailList = await _repository.GetRetentionRecordsListAsync(Spec);
-            return null;
+            //var curr = retentionRecordDetailList.First();
+            
+            return File(retentionRecordDetailList.ExportPdfAsByteArray(), "application/pdf", fileName);
         }
 
         private async Task PopulateSelectsAsync()
