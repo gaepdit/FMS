@@ -1,17 +1,12 @@
-﻿using System;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto.Facility;
+using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FMS.Domain.Dto;
-using FMS.Domain.Dto.Facility;
-using FMS.Domain.Repositories;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Diagnostics;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using FMS.Domain.Data;
-using FMS.Domain.Dto.PaginatedList;
-using DocumentFormat.OpenXml.Office2016.Excel;
 
 namespace FMS.Pages.Facilities
 {
@@ -102,8 +97,6 @@ namespace FMS.Pages.Facilities
             IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(ExportSpec);
             var facilityMapDetail = from p in facilityMapSummaries select new FacilityMapSummaryDtoScalar(p);
             return File(facilityMapDetail.ExportExcelAsByteArray(), "application/vnd.ms.excel", fileName);
-
-            
         }
     }
 }

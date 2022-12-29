@@ -1,11 +1,6 @@
-﻿using System.Collections;
+﻿using ClosedXML.Excel;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClosedXML.Excel;
 
 namespace FMS
 {
@@ -16,7 +11,7 @@ namespace FMS
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
             var ws = wb.AddWorksheet("Search_Results");
-            // insert the IEnumberable data
+            // insert the IEnumerable data
             ws.Cell(1, 1).InsertTable(list);
             ws.Columns().AdjustToContents(1, 100);
 
