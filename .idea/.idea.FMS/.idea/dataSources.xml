@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="LocalDB" uuid="e30b3572-23a2-4420-8fa2-d6e0c10afe69">
+    <data-source source="LOCAL" name="Microsoft SQL Server LocalDB (JetBrains)" uuid="6ce0c3a2-209e-4ed4-9de3-5680e108c881">
       <driver-ref>sqlserver.localdb.jb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
-      <jdbc-url>Server=(localdb)\MSSQLLocalDB;Database=fms-temp</jdbc-url>
+      <jdbc-url>Server=(localdb)\MSSQLLocalDB</jdbc-url>
       <jdbc-additional-properties>
         <property name="LOCAL_DB_INSTANCE" value="MSSQLLocalDB" />
       </jdbc-additional-properties>
