@@ -1,13 +1,12 @@
-﻿using System;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto.Facility;
+using FMS.Domain.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CsvHelper.Configuration;
-using FMS.Domain.Dto;
-using FMS.Domain.Repositories;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Facilities
 {
@@ -92,30 +91,12 @@ namespace FMS.Pages.Facilities
         }
 
         public async Task<IActionResult> OnPostAsync()
-        {
-            FacilityList = await _repository.GetFacilityListAsync(ExportSpec);
-            return File(await FacilityList.GetCsvByteArrayAsync<FacilityMapReportMap>(), "text/csv",
-                $"FMS_export_{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.csv");
-        }
 
-        private sealed class FacilityMapReportMap : ClassMap<FacilityMapSummaryDto>
         {
-            [UsedImplicitly]
-            public FacilityMapReportMap()
-            {
-                Map(m => m.FacilityNumber).Index(0).Name("Facility Number");
-                Map(m => m.FileLabel).Index(1).Name("File Label");
-                Map(m => m.Name).Index(2).Name("Facility Name");
-                Map(m => m.Address).Index(3).Name("Street Address");
-                Map(m => m.City).Index(4).Name("City");
-                Map(m => m.State).Index(5).Name("State");
-                Map(m => m.PostalCode).Index(6).Name("ZIP Code");
-                Map(m => m.FacilityType).Index(7).Name("Type/Environmental Interest");
-                Map(m => m.Latitude).Index(8).Name("Latitude");
-                Map(m => m.Longitude).Index(9).Name("Longitude");
-                Map(m => m.FacilityStatus).Index(10).Name("Facility Status");
-                Map(m => m.Distance).Index(11).Name("Distance (miles)");
-            }
+            var fileName = $"FMS_Map_export{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.xlsx";
+            IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(ExportSpec);
+            var facilityMapDetail = from p in facilityMapSummaries select new FacilityMapSummaryDtoScalar(p);
+            return File(facilityMapDetail.ExportExcelAsByteArray(), "application/vnd.ms.excel", fileName);
         }
     }
 }
