@@ -164,6 +164,25 @@ namespace FMS.Infrastructure.Repositories
                 new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius},
                 commandType: CommandType.StoredProcedure)).ToList();
         }
+        
+        public async Task<IEnumerable<RetentionRecordDetailDto>> GetRetentionRecordsListAsync(FacilitySpec spec)
+        {
+            var queried = QueryFacilities(spec);
+
+            var included = queried
+                .Include(e => e.RetentionRecords);
+
+            var ordered = OrderFacilityQuery(included, spec.SortBy);
+            
+            // create a List<RetentionRecord>
+            var retentionRecordsList = await ordered.SelectMany(e => e.RetentionRecords).ToListAsync();
+            
+            // convert the List<RetentionRecord> to IEnumerable<RetentionRecordDetailDto>
+            var returnList = from retentionRecord in retentionRecordsList
+                select new RetentionRecordDetailDto(retentionRecord);
+
+            return returnList;
+        }
 
         public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
