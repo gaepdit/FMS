@@ -43,7 +43,7 @@ namespace FMS
         /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportPdfAsByteArray(
             IEnumerable<RetentionRecordDetailDto> list, UserView currentUser, int maxCol=18,
-            string blankFilePath="~/wwwroot/BlankRequestForm.pdf", int freeTierLimit=10)
+            string blankFilePath="./wwwroot/BlankRequestForm.pdf", int freeTierLimit=10)
         {
             PdfDocument mainDoc = new PdfDocument();
             // break the list into chunks of 18 elements
