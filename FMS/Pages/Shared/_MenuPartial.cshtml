@@ -25,15 +25,23 @@
                        aria-haspopup="true" aria-expanded="false">
                         More
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="MoreDropdown">
-                        <a class="dropdown-item" asp-page="/Files/Index">Files</a>
-                        <a class="dropdown-item" asp-page="/Cabinets/Index">Cabinets</a>
-                        <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item" asp-page="/Files/Index">Files</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-page="/Cabinets/Index">Cabinets</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-page="/Users/Index">FMS Users</a>
+                        </li>
                         @if (User.IsInRole(UserRoles.SiteMaintenance))
                         {
-                            <a class="dropdown-item" asp-page="/Maintenance/Index">Site Maintenance</a>
+                            <li>
+                                <a class="dropdown-item" asp-page="/Maintenance/Index">Site Maintenance</a>
+                            </li>
                         }
-                    </div>
+                    </ul>
                 </li>
             </ul>
             <ul class="navbar-nav">
@@ -42,12 +50,19 @@
                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="View account menu">
                         Account
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownMenuLink">
-                        <a class="dropdown-item" asp-page="/Account/Index">Your profile</a>
-                        <form class="form-inline dropdown-item p-0" asp-page="/Account/Logout" method="post">
-                            <button type="submit" class="dropdown-item bg-danger text-light px-4 py-2">Sign out</button>
-                        </form>
-                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item text-dark-emphasis" asp-page="/Account/Index">Your profile</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form class="form-inline py-0 px-2" asp-page="/Account/Logout" method="post">
+                                <button type="submit" class="btn btn-outline-danger d-block w-100 px-4 py-2">Sign out</button>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
