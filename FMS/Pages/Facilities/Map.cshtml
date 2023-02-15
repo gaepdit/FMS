@@ -26,56 +26,72 @@
 
     <div class="container bg-light py-3">
         <form method="get" asp-fragment="SearchResults">
-            <div class="form-row">
-                <div class="form-group col">
-                    <label asp-for="Spec.Address"></label>
-                    <input id="Address" asp-for="Spec.Address" class="form-control" />
-                    <input id="LocalAddress" asp-for="Spec.GeocodeAddress" type="hidden" />
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input id="Address" asp-for="Spec.Address" class="form-control" />
+                        <input id="LocalAddress" asp-for="Spec.GeocodeAddress" type="hidden" />
+                        <label asp-for="Spec.Address"></label>
+                    </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label asp-for="Spec.City"></label>
-                    <input id="City" asp-for="Spec.City" class="form-control" />
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input id="City" asp-for="Spec.City" class="form-control" />
+                        <label asp-for="Spec.City"></label>
+                    </div>
                 </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.State"></label>
-                    <input class="form-control" type="text" value="Georgia" disabled>
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input class="form-control" type="text" value="Georgia" disabled>
+                        <label asp-for="Spec.State"></label>
+                    </div>
                 </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.PostalCode"></label>
-                    <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
+                        <label asp-for="Spec.PostalCode"></label>
+                    </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label asp-for="Spec.Radius"></label>
-                    <select id="Radius" asp-for="Spec.Radius" class="custom-select">
-                        <option selected value="0.25">1/4 Mile</option>
-                        <option value="0.5">1/2 Mile</option>
-                        <option value="1">1 Mile</option>
-                        <option value="3">3 Miles</option>
-                        <option value="5">5 Miles</option>
-                    </select>
+            <div class="row">
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <select id="Radius" asp-for="Spec.Radius" class="form-select">
+                            <option selected value="0.25">1/4 Mile</option>
+                            <option value="0.5">1/2 Mile</option>
+                            <option value="1">1 Mile</option>
+                            <option value="3">3 Miles</option>
+                            <option value="5">5 Miles</option>
+                        </select>
+                        <label asp-for="Spec.Radius"></label>
+                    </div>
                 </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.Latitude"></label>
-                    <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
-                    <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.1)</small>
-                    <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                       <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
+                                           <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.1)</small>
+                       <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
+                       <label asp-for="Spec.Latitude"></label>
+                    </div>
                 </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.Longitude"></label>
-                    <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
-                    <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.5)</small>
-                    <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
+                        <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.5)</small>
+                        <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
+                        <label asp-for="Spec.Longitude"></label>
+                    </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label class="form-check-label" asp-for="Spec.Output"></label>
-                    <select id="Output" asp-for="Spec.Output" class="custom-select mt-md-2">
-                        <option selected value="1">Map</option>
-                        <option value="2">Table</option>
-                    </select>
+                <div class="col-md mb-3">
+                    <div class="form-floating">
+                        <select id="Output" asp-for="Spec.Output" class="form-select mt-md-2">
+                            <option selected value="1">Map</option>
+                            <option value="2">Table</option>
+                        </select>
+                        <label class="form-check-label" asp-for="Spec.Output"></label>
+                    </div>
                 </div>
             </div>
             @if (User.IsInRole(UserRoles.FileEditor))
