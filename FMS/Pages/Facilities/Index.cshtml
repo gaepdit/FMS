@@ -15,88 +15,116 @@
 <div class="container bg-light py-3">
     <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <div class="form-row">
-            <div class="form-group col-md">
-                <label asp-for="Spec.FileLabel"></label>
-                <input asp-for="Spec.FileLabel" class="form-control" />
+        <div class="row">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input asp-for="Spec.FileLabel" class="form-control"/>
+                    <label asp-for="Spec.FileLabel"></label>
+                </div>
             </div>
-            <div class="form-group col-md">
-                <label asp-for="Spec.FacilityNumber"></label>
-                <input asp-for="Spec.FacilityNumber" class="form-control" />
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input asp-for="Spec.FacilityNumber" class="form-control"/>
+                    <label asp-for="Spec.FacilityNumber"></label>
+                </div>
             </div>
-            <div class="form-group col">
-                <label asp-for="Spec.CountyId"></label>
-                <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="custom-select">
-                    <option value=""></option>
-                </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md">
-                <label asp-for="Spec.FacilityTypeId"></label>
-                <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="form-group col-md">
-                <label asp-for="Spec.OrganizationalUnitId"></label>
-                <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
-                    <option value=""></option>
-                </select>
-            </div>
-            <div class="form-group col-md">
-                <label asp-for="Spec.ComplianceOfficerId"></label>
-                <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
-                    <option value=""></option>
-                </select>
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Spec.CountyId"></label>
+                </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md">
-                <label asp-for="Spec.BudgetCodeId"></label>
-                <select asp-for="Spec.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
-                    <option value=""></option>
-                </select>
+        <div class="row">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Spec.FacilityTypeId"></label>
+                </div>
             </div>
-            <div class="form-group col-md">
-                <label asp-for="Spec.FacilityStatusId"></label>
-                <select asp-for="Spec.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
-                    <option value=""></option>
-                </select>
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Spec.OrganizationalUnitId"></label>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Spec.Name"></label>
-                <input asp-for="Spec.Name" class="form-control" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Spec.Location"></label>
-                <input asp-for="Spec.Location" class="form-control" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col">
-                <label asp-for="Spec.Address"></label>
-                <input asp-for="Spec.Address" class="form-control" />
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Spec.ComplianceOfficerId"></label>
+                </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Spec.City"></label>
-                <input asp-for="Spec.City" class="form-control" />
+        <div class="row">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <select asp-for="Spec.BudgetCodeId" asp-items="Model.BudgetCodes" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Spec.BudgetCodeId"></label>
+                </div>
             </div>
-            <div class="form-group col">
-                <label asp-for="Spec.State"></label>
-                <select asp-for="Spec.State" asp-items="Model.States" class="custom-select">
-                    <option value=""></option>
-                </select>
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <select asp-for="Spec.FacilityStatusId" asp-items="Model.FacilityStatuses" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Spec.FacilityStatusId"></label>
+                </div>
             </div>
-            <div class="form-group col">
-                <label asp-for="Spec.PostalCode"></label>
-                <input asp-for="Spec.PostalCode" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input asp-for="Spec.Name" class="form-control" />
+                    <label asp-for="Spec.Name"></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input asp-for="Spec.Location" class="form-control" />
+                    <label asp-for="Spec.Location"></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input asp-for="Spec.Address" class="form-control" />
+                    <label asp-for="Spec.Address"></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input asp-for="Spec.City" class="form-control" />
+                    <label asp-for="Spec.City"></label>
+                </div>
+            </div>
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <select asp-for="Spec.State" asp-items="Model.States" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <label asp-for="Spec.State"></label>
+                </div>
+            </div>
+            <div class="col-md mb-3">
+                <div class="form-floating">
+                    <input asp-for="Spec.PostalCode" class="form-control" />
+                    <label asp-for="Spec.PostalCode"></label>
+                </div>
             </div>
         </div>
         @if (User.IsInRole(UserRoles.FileEditor))
