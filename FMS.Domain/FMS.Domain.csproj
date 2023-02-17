@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.5.1" Condition="'$(Configuration)' == 'Debug'">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.4" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.38.0.46746" Condition="'$(Configuration)' == 'Debug'">
       <PrivateAssets>all</PrivateAssets>
