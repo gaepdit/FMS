@@ -14,13 +14,11 @@
     <PackageReference Include="JetBrains.Annotations" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Condition="'$(Configuration)' == 'Debug'" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Condition="'$(Configuration)' == 'Debug'" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" />
     <PackageReference Include="Mindscape.Raygun4Net.AspNetCore" />
     <PackageReference Include="SonarAnalyzer.CSharp" Condition="'$(Configuration)' == 'Debug'">

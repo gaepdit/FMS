@@ -14,8 +14,7 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:44362;http://localhost:53734",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+        "ASPNETCORE_ENVIRONMENT": "Local"
       }
     },
     "FMS Dev Server": {
@@ -24,8 +23,7 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:44362;http://localhost:53734",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
