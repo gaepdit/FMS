@@ -43,7 +43,7 @@ namespace FMS
         /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportPdfAsByteArray(
             IEnumerable<RetentionRecordDetailDto> list, UserView currentUser, int maxCol=18,
-            string blankFilePath="./wwwroot/BlankRequestForm.pdf", int freeTierLimit=10)
+            string blankFilePath="./Helpers/BlankRequestForm.pdf", int freeTierLimit=10)
         {
             PdfDocument mainDoc = new PdfDocument();
             // break the list into chunks of 18 elements
@@ -94,16 +94,12 @@ namespace FMS
             currDocument.LoadFromFile(blankFilePath);
             Dictionary<string, string> dictionaryTextbox = GenerateRetentionRecordDictionary(smallerList, currentUser);
             // iterate through all user fill-able widget
-            PdfFormWidget formWidget = (PdfFormWidget) currDocument.Form;
-            for (int i = 0; i < formWidget.FieldsWidget.List.Count; i++)
+            PdfFormWidget formWidget = (PdfFormWidget)currDocument.Form;
+            foreach (PdfField field in formWidget.FieldsWidget.List)
             {
                 //Fill the data for Text Box field
-                PdfField field = (PdfField) formWidget.FieldsWidget.List[i];
-                PdfTextBoxFieldWidget textBoxField = field as PdfTextBoxFieldWidget;
-                if (textBoxField != null && dictionaryTextbox.ContainsKey(textBoxField.Name))
-                {
+                if (field is PdfTextBoxFieldWidget textBoxField && dictionaryTextbox.ContainsKey(textBoxField.Name))
                     textBoxField.Text = dictionaryTextbox[textBoxField.Name];
-                }
             }
             return currDocument;
         }
@@ -124,21 +120,16 @@ namespace FMS
             int i = 1;
             foreach (var retentionRecord in list)
             {
-                dictionaryTextbox.Add("Consignment Number" + i,
-                    retentionRecord.ConsignmentNumber == null ? "" : retentionRecord.ConsignmentNumber);
-                dictionaryTextbox.Add("Item" + i,
-                    retentionRecord.BoxNumber == null ? "" : retentionRecord.BoxNumber);
-                dictionaryTextbox.Add("Location number from transmittal" + i,
-                    retentionRecord.ShelfNumber == null ? "" : retentionRecord.ShelfNumber);
+                dictionaryTextbox.Add("Consignment Number" + i, retentionRecord.ConsignmentNumber ?? "");
+                dictionaryTextbox.Add("Item" + i, retentionRecord.BoxNumber ?? "");
+                dictionaryTextbox.Add("Location number from transmittal" + i, retentionRecord.ShelfNumber ?? "");
                 i++;
             }
             // add key-value pair for the date
             dictionaryTextbox.Add("Date of Request", DateTime.Now.ToString("MM/dd/yyyy"));
             // add key-value pair for the user information
-            dictionaryTextbox.Add("Name of Requestor",
-                currentUser.DisplayName == null ? "" : currentUser.DisplayName);
-            dictionaryTextbox.Add("EMail",
-                currentUser.Email == null ? "" : currentUser.Email);
+            dictionaryTextbox.Add("Name of Requestor", currentUser.DisplayName ?? "");
+            dictionaryTextbox.Add("EMail", currentUser.Email ?? "");
             return dictionaryTextbox;
         }
     }

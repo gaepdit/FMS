@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Helpers\BlankRequestForm.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" />
     <PackageReference Include="FreeSpire.PDF" />
     <PackageReference Include="JetBrains.Annotations" />
