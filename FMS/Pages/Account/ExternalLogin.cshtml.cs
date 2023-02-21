@@ -1,48 +1,52 @@
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
 using FMS.Platform.Extensions.DevHelpers;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Account
 {
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
+        public ApplicationUser DisplayFailedUser { get; set; }
+        public string ReturnUrl { get; private set; } = "/";
+
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _environment;
         private readonly IComplianceOfficerRepository _repository;
+        private readonly ILogger<ExternalLoginModel> _logger;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IConfiguration configuration,
             IWebHostEnvironment environment,
-            IComplianceOfficerRepository repository)
+            IComplianceOfficerRepository repository,
+            ILogger<ExternalLoginModel> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
             _environment = environment;
             _repository = repository;
+            _logger = logger;
         }
-
-        [BindProperty]
-        public ApplicationUser DisplayFailedUser { get; set; }
 
         // Don't call the page directly
         public IActionResult OnGetAsync() => RedirectToPage("./Login");
@@ -50,61 +54,81 @@ namespace FMS.Pages.Account
         // This Post method is called by the Login page
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            // If "test" users is enabled, create user information and sign in locally.
-            if (_environment.IsLocalEnv()) return await SignInAsLocalUser();
+            ReturnUrl = returnUrl ?? "/";
+
+            // If a local user is enabled, create user information and sign in locally.
+            if (_environment.IsLocalEnv())
+            {
+                return await SignInAsLocalUser();
+            }
 
             // Request a redirect to the external login provider.
-#pragma warning disable 618
-            const string provider = AzureADDefaults.AuthenticationScheme;
-#pragma warning restore 618
-            var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new {returnUrl});
+            const string provider = OpenIdConnectDefaults.AuthenticationScheme;
+            var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-            return new ChallengeResult(provider, properties);
-
-            async Task<IActionResult> SignInAsLocalUser()
-            {
-                var user = new ApplicationUser();
-                _configuration.Bind("LocalUser", user);
-
-                var userExists = await _userManager.FindByEmailAsync(user.Email);
-                if (userExists == null)
-                {
-                    await _userManager.CreateAsync(user);
-                    foreach (var role in UserRoles.AllRoles) await _userManager.AddToRoleAsync(user, role);
-                }
-
-                await _signInManager.SignInAsync(userExists ?? user, false);
-                return LocalRedirect(returnUrl);
-            }
+            return Challenge(properties, provider);
         }
 
-        // This method is called by the external login provider
+        private async Task<IActionResult> SignInAsLocalUser()
+        {
+            _logger.LogInformation("Local user signin attempted");
+
+            var user = new ApplicationUser();
+            _configuration.Bind("LocalUser", user);
+
+            var userExists = await _userManager.FindByEmailAsync(user.Email);
+            if (userExists == null)
+            {
+                await _userManager.CreateAsync(user);
+                foreach (var role in UserRoles.AllRoles) await _userManager.AddToRoleAsync(user, role);
+                // Add user to Compliance Officers list.
+                await CreateComplianceOfficeAsync(user);
+            }
+
+            await _signInManager.SignInAsync(userExists ?? user, false);
+            return LocalRedirect(ReturnUrl);
+        }
+
+        // This callback method is called by the external login provider.
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
-            if (remoteError != null)
+            ReturnUrl = returnUrl ?? "/";
+
+            // Handle errors returned from the external provider.
+            if (remoteError is not null)
             {
-                TempData.SetDisplayMessage(Context.Danger, $"Error from work account provider: {remoteError}");
-                return RedirectToPage("./Login", new {ReturnUrl = returnUrl});
+                return RedirectToLoginPageWithError($"Error from work account provider: {remoteError}");
             }
 
             // Get information about the user from the external provider.
             var externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
-
-            if (externalLoginInfo == null
-                || !externalLoginInfo.Principal.HasClaim(c => c.Type == ClaimTypes.NameIdentifier)
-                || !externalLoginInfo.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+            if (externalLoginInfo?.Principal is null)
             {
-                TempData?.SetDisplayMessage(Context.Danger, "Error loading work account information.");
-                return RedirectToPage("./Login", new {ReturnUrl = returnUrl});
+                return RedirectToLoginPageWithError("Error loading work account information.");
             }
 
-            // Sign in the user with the external provider.
+            var preferredUserName = externalLoginInfo.Principal.FindFirstValue(ClaimConstants.PreferredUserName);
+            if (preferredUserName is null)
+            {
+                return RedirectToLoginPageWithError("Error loading detailed work account information.");
+            }
+
+            // Determine if a user account already exists.
+            var user = await _userManager.FindByNameAsync(preferredUserName);
+
+            // If the user does not have an account yet, then create one and sign in.
+            if (user is null)
+            {
+                return await CreateUserAndSignInAsync(externalLoginInfo);
+            }
+
+            // Sign in the user locally with the external provider key.
             var signInResult = await _signInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider,
                 externalLoginInfo.ProviderKey, true, true);
 
             if (signInResult.Succeeded)
             {
-                return LocalRedirect(returnUrl);
+                return await RefreshUserInfoAndSignInAsync(user, externalLoginInfo);
             }
 
             if (signInResult.IsLockedOut || signInResult.IsNotAllowed || signInResult.RequiresTwoFactor)
@@ -112,92 +136,114 @@ namespace FMS.Pages.Account
                 return RedirectToPage("./Unavailable");
             }
 
-            // If ExternalLoginSignInAsync failed, see if user account exists.
-            var userEmail = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email);
-            var existingUser = await _userManager.FindByNameAsync(userEmail);
+            // If ExternalLoginInfo successfully returned from external provider, and the user exists, but
+            // ExternalLoginSignInAsync failed, then add the external provider info to the user and sign in.
+            return await AddLoginProviderAndSignInAsync(user, externalLoginInfo);
+        }
 
-            if (existingUser != null)
+        // Redirect to Login page with error message.
+        private IActionResult RedirectToLoginPageWithError(string message)
+        {
+            _logger.LogWarning("External login error: {Message}", message);
+            TempData.SetDisplayMessage(Context.Danger, message);
+            return RedirectToPage("./Login", new { ReturnUrl });
+        }
+
+        // Create a new user account and sign in.
+        private async Task<IActionResult> CreateUserAndSignInAsync(ExternalLoginInfo info)
+        {
+            var user = new ApplicationUser
             {
-                // Add external provider info to the user and sign in.
-                var addLoginResult = await _userManager.AddLoginAsync(existingUser, externalLoginInfo);
-                if (!addLoginResult.Succeeded)
-                {
-                    foreach (var error in addLoginResult.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-
-                    DisplayFailedUser = existingUser;
-                    return Page();
-                }
-
-                // Include the access token in the properties.
-                var props = new AuthenticationProperties();
-                props.StoreTokens(externalLoginInfo.AuthenticationTokens);
-                props.IsPersistent = true;
-
-                // Sign in the user.
-                await _signInManager.SignInAsync(existingUser, true);
-                return LocalRedirect(returnUrl);
-            }
-
-            // If the user does not have an account, then create one.
-            var newUser = new ApplicationUser
-            {
-                Email = userEmail,
-                UserName = externalLoginInfo.Principal.FindFirstValue(ClaimConstants.PreferredUserName) ?? userEmail,
-                SubjectId = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.NameIdentifier),
-                ObjectId = externalLoginInfo.Principal.FindFirstValue(ClaimConstants.ObjectId),
-                GivenName = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.GivenName),
-                FamilyName = externalLoginInfo.Principal.FindFirstValue(ClaimConstants.FamilyName)
+                Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                UserName = info.Principal.FindFirstValue(ClaimConstants.PreferredUserName),
+                ObjectId = info.Principal.FindFirstValue(ClaimConstants.ObjectId),
+                GivenName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                FamilyName = info.Principal.FindFirstValue(ClaimTypes.Surname),
             };
 
             // Create the user in the backing store.
-            var userResult = await _userManager.CreateAsync(newUser);
-            if (userResult.Succeeded)
+            var createUserResult = await _userManager.CreateAsync(user);
+            if (!createUserResult.Succeeded)
             {
-                // Optionally add user to selected Roles.
-                var seedAdminUsers = _configuration.GetSection("SeedAdminUsers")
-                    .Get<string[]>().AsEnumerable();
-                if (seedAdminUsers != null &&
-                    seedAdminUsers.Contains(newUser.Email, StringComparer.InvariantCultureIgnoreCase))
-                {
-                    await _userManager.AddToRoleAsync(newUser, UserRoles.UserMaintenance);
-                    await _userManager.AddToRoleAsync(newUser, UserRoles.SiteMaintenance);
-                    await _userManager.AddToRoleAsync(newUser, UserRoles.FileEditor);
-                }
-
-                // Add external provider login info to the user.
-                userResult = await _userManager.AddLoginAsync(newUser, externalLoginInfo);
-                if (userResult.Succeeded)
-                {
-                    // Include the access token in the properties.
-                    var props = new AuthenticationProperties();
-                    props.StoreTokens(externalLoginInfo.AuthenticationTokens);
-                    props.IsPersistent = true;
-
-                    // Sign in the user.
-                    await _signInManager.SignInAsync(newUser, true);
-
-                    // Add user to Compliance Officers list.
-                    var complianceOfficer = new ComplianceOfficerCreateDto()
-                    {
-                        Email = newUser.Email,
-                        FamilyName = newUser.FamilyName,
-                        GivenName = newUser.GivenName
-                    };
-                    await _repository.TryCreateComplianceOfficerAsync(complianceOfficer);
-
-                    return LocalRedirect(returnUrl);
-                }
+                _logger.LogWarning("Failed to create new user {UserName}", user.UserName);
+                return FailedLogin(createUserResult, user);
             }
 
-            foreach (var error in userResult.Errors)
+            _logger.LogInformation("Created new user {UserName}", user.UserName);
+
+            // Add user to Compliance Officers list.
+            await CreateComplianceOfficeAsync(user);
+
+            // Optionally add user to selected Roles.
+            var seedAdminUsers = _configuration.GetSection("SeedAdminUsers")
+                .Get<string[]>().AsEnumerable();
+            if (seedAdminUsers != null &&
+                seedAdminUsers.Contains(user.Email, StringComparer.InvariantCultureIgnoreCase))
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                _logger.LogInformation("Seeding roles for new user {UserName}", user.UserName);
+                await _userManager.AddToRoleAsync(user, UserRoles.UserMaintenance);
+                await _userManager.AddToRoleAsync(user, UserRoles.SiteMaintenance);
+                await _userManager.AddToRoleAsync(user, UserRoles.FileEditor);
             }
 
-            DisplayFailedUser = newUser;
+            // Add the external provider info to the user and sign in.
+            return await AddLoginProviderAndSignInAsync(user, info);
+        }
+
+        private async Task CreateComplianceOfficeAsync(ApplicationUser user)
+        {
+            var complianceOfficer = new ComplianceOfficerCreateDto
+            {
+                Email = user.Email,
+                FamilyName = user.FamilyName,
+                GivenName = user.GivenName,
+            };
+            var coId = await _repository.TryCreateComplianceOfficerAsync(complianceOfficer);
+            _logger.LogInformation("Created new compliance officer {Id}", coId);
+        }
+
+        // Update local store with from external provider. 
+        private async Task<IActionResult> RefreshUserInfoAndSignInAsync(ApplicationUser user, ExternalLoginInfo info)
+        {
+            _logger.LogInformation("Existing user {UserName} logged in with {LoginProvider} provider",
+                user.UserName, info.LoginProvider);
+            user.Email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            user.GivenName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
+            user.FamilyName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+            await _userManager.UpdateAsync(user);
+            await _signInManager.RefreshSignInAsync(user);
+            return LocalRedirect(ReturnUrl);
+        }
+
+        // Add external login provider to user account and sign in user.
+        private async Task<IActionResult> AddLoginProviderAndSignInAsync(ApplicationUser user, ExternalLoginInfo info)
+        {
+            var addLoginResult = await _userManager.AddLoginAsync(user, info);
+
+            if (!addLoginResult.Succeeded)
+            {
+                _logger.LogWarning("Failed to add login provider {LoginProvider} for user {UserName}",
+                    info.LoginProvider, user.UserName);
+                return FailedLogin(addLoginResult, user);
+            }
+
+            _logger.LogInformation("Login provider {LoginProvider} added for user {UserName}",
+                info.LoginProvider, user.UserName);
+
+            // Include the access token in the properties.
+            var props = new AuthenticationProperties();
+            props.StoreTokens(info.AuthenticationTokens);
+            props.IsPersistent = true;
+
+            await _signInManager.SignInAsync(user, props, info.LoginProvider);
+            return LocalRedirect(ReturnUrl);
+        }
+
+        // Add error info and return this Page.
+        private IActionResult FailedLogin(IdentityResult result, ApplicationUser user)
+        {
+            DisplayFailedUser = user;
+            foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
             return Page();
         }
     }
