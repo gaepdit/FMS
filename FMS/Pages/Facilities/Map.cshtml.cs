@@ -44,47 +44,75 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {
-            if (!string.IsNullOrEmpty(spec.GeocodeLat) && !string.IsNullOrEmpty(spec.GeocodeLng)
-                && decimal.Parse(spec.GeocodeLat) > 0 && decimal.Parse(spec.GeocodeLng) < 0)
+            // If Latitude is 0.00 then Longitude must also be 0.00
+            if (!GeoCoordHelper.BothZeroOrBothNonzero(spec.Latitude, spec.Longitude))
             {
-                spec.Latitude = decimal.Parse(spec.GeocodeLat);
-                spec.Longitude = decimal.Parse(spec.GeocodeLng);
+                ModelState.AddModelError("Spec.Latitude", "Latitude and Longitude must both be zero (0) or both valid coordinates.");
+            }
+            else
+            {
+                // If Latitude and/or Longitude fall outside State of Georgia, then alert user
+                if (!GeoCoordHelper.ValidLat(spec.Latitude))
+                {
+                    ModelState.AddModelError("Spec.Latitude",
+                        $"Latitude entered is outside State of Georgia. Must be between {GeoCoordHelper.UpperLat} and {GeoCoordHelper.LowerLat} North Latitude or zero if unknown.");
+                }
+
+                if (!GeoCoordHelper.ValidLong(spec.Longitude))
+                {
+                    ModelState.AddModelError("Spec.Longitude",
+                        $"Longitude entered is outside State of Georgia. Must be between {GeoCoordHelper.EasternLong} and {GeoCoordHelper.WesternLong} West Longitude or zero if unknown.");
+                }
             }
 
-            // Radius is limited to values in Select list.
-            if (!new[] {0.25m, 0.5m, 1m, 3m, 5m}.Contains(spec.Radius)) spec.Radius = 0.25m;
+            //Radius is limited to values in Select list.
+            if (!new[] { 0.25m, 0.5m, 1m, 3m, 5m }.Contains(spec.Radius)) spec.Radius = 0.25m; 
 
-            if (spec.Latitude > 0 && spec.Longitude < 0)
+            if (ModelState.IsValid)
             {
-                FacilityList = await _repository.GetFacilityListAsync(spec);
+                if (!string.IsNullOrEmpty(spec.GeocodeLat) && !string.IsNullOrEmpty(spec.GeocodeLng))
+                {
+                    spec.Latitude = decimal.Parse(spec.GeocodeLat);
+                    spec.Longitude = decimal.Parse(spec.GeocodeLng);
+                }
+         
+                if (spec.Latitude > 0 && spec.Longitude < 0)
+                {
+                    FacilityList = await _repository.GetFacilityListAsync(spec);
 
-                if (FacilityList == null || FacilityList.Count == 0)
+                    if (FacilityList == null || FacilityList.Count == 0)
+                    {
+                        ShowNone = true;
+                    }
+
+                    if (spec.Output == "1")
+                    {
+                        ShowMap = true;
+                    }
+
+                    if (spec.Output == "2" && FacilityList is { Count: > 0 })
+                    {
+                        ShowTable = true;
+                    }
+                }
+                else
                 {
                     ShowNone = true;
                 }
 
-                if (spec.Output == "1")
+                ExportSpec = new FacilityMapSpec()
                 {
-                    ShowMap = true;
-                }
+                    Latitude = spec.Latitude,
+                    Longitude = spec.Longitude,
+                    ShowDeleted = spec.ShowDeleted,
+                    Radius = spec.Radius
+                };
 
-                if (spec.Output == "2" && FacilityList is {Count: > 0})
-                {
-                    ShowTable = true;
-                }
             }
             else
             {
                 ShowNone = true;
             }
-
-            ExportSpec = new FacilityMapSpec()
-            {
-                Latitude = spec.Latitude,
-                Longitude = spec.Longitude,
-                ShowDeleted = spec.ShowDeleted,
-                Radius = spec.Radius
-            };
 
             ShowResults = true;
             return Page();
