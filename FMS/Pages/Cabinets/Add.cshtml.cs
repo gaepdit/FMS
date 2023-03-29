@@ -34,12 +34,12 @@ namespace FMS.Pages.Cabinets
             
             if (await _repository.CabinetNameExistsAsync(NewCabinet.Name))
             {
-                ModelState.AddModelError("CabinetEdit.Name", "There is already a Cabinet with that name.");
+                ModelState.AddModelError("NewCabinet.Name", "There is already a Cabinet with that name.");
             }
 
             if (!Domain.Entities.File.IsValidFileLabelFormat(NewCabinet.FirstFileLabel))
             {
-                ModelState.AddModelError("CabinetEdit.FirstFileLabel", "The File Label is invalid.");
+                ModelState.AddModelError("NewCabinet.FirstFileLabel", "The File Label is invalid.");
             }
 
             if (!ModelState.IsValid)
