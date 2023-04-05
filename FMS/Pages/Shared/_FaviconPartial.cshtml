@@ -1,11 +1,21 @@
-﻿<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#e5f6fa">
+﻿<environment include="Production">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#e5f6fa">
+</environment>
 <environment include="Development,Local">
-    <link rel="icon" href="/icon-dev.svg" type="image/svg+xml">
+    <link rel="icon" href="/dev/dev-favicon.ico" sizes="any">
+    <link rel="icon" href="/dev/dev-icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/dev/dev-apple-touch-icon.png">
+    <link rel="manifest" href="/dev/dev-site.webmanifest">
+    <meta name="theme-color" content="#333333">
 </environment>
 <environment include="Staging">
-    <link rel="icon" href="/icon-uat.svg" type="image/svg+xml">
+    <link rel="icon" href="/uat/uat-favicon.ico" sizes="any">
+    <link rel="icon" href="/uat/uat-icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/uat/uat-apple-touch-icon.png">
+    <link rel="manifest" href="/uat/uat-site.webmanifest">
+    <meta name="theme-color" content="#e5f6fa">
 </environment>
