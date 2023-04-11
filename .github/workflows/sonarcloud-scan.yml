@@ -17,10 +17,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up .NET 6
+      - name: Set up .NET 7
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 7.0.x
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -52,7 +52,7 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"gaepdit_FMS" /o:"gaepdit" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=coverage.xml /d:sonar.exclusions=FMS.Infrastructure/Migrations/**,FMS/Platform/DevHelpers/SeedData/**
           dotnet build
-          coverlet .\artifacts\FMS.Domain.Tests\bin\Debug\net6.0\FMS.Domain.Tests.dll --target "dotnet" --targetargs "test tests/FMS.Domain.Tests --no-build"
-          coverlet .\artifacts\FMS.App.Tests\bin\Debug\net6.0\FMS.App.Tests.dll --target "dotnet" --targetargs "test tests/FMS.App.Tests --no-build" --exclude "[TestHelpers]*" --exclude "[FMS.Infrastructure]FMS.Infrastructure.Migrations.*" --merge-with "coverage.json"
-          coverlet .\artifacts\FMS.Infrastructure.Tests\bin\Debug\net6.0\FMS.Infrastructure.Tests.dll --target "dotnet" --targetargs "test tests/FMS.Infrastructure.Tests --no-build" --exclude "[TestHelpers]*" --exclude "[FMS.Infrastructure]FMS.Infrastructure.Migrations.*" --merge-with "coverage.json" -f=opencover -o="coverage.xml"
+          coverlet .\artifacts\FMS.Domain.Tests\bin\Debug\net7.0\FMS.Domain.Tests.dll --target "dotnet" --targetargs "test tests/FMS.Domain.Tests --no-build"
+          coverlet .\artifacts\FMS.App.Tests\bin\Debug\net7.0\FMS.App.Tests.dll --target "dotnet" --targetargs "test tests/FMS.App.Tests --no-build" --exclude "[TestHelpers]*" --exclude "[FMS.Infrastructure]FMS.Infrastructure.Migrations.*" --merge-with "coverage.json"
+          coverlet .\artifacts\FMS.Infrastructure.Tests\bin\Debug\net7.0\FMS.Infrastructure.Tests.dll --target "dotnet" --targetargs "test tests/FMS.Infrastructure.Tests --no-build" --exclude "[TestHelpers]*" --exclude "[FMS.Infrastructure]FMS.Infrastructure.Migrations.*" --merge-with "coverage.json" -f=opencover -o="coverage.xml"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
