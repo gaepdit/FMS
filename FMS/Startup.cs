@@ -45,7 +45,7 @@ namespace FMS
             // Note: `cookieScheme: null` is mandatory. See https://github.com/AzureAD/microsoft-identity-web/issues/133#issuecomment-739550416
 
             // Persist data protection keys
-            var keysFolder = Path.Combine(Configuration["PersistedFilesBasePath"], "DataProtectionKeys");
+            var keysFolder = Path.Combine(Configuration["PersistedFilesBasePath"] ?? "", "DataProtectionKeys");
             services.AddDataProtection().PersistKeysToFileSystem(Directory.CreateDirectory(keysFolder));
 
             // Configure Razor pages 
