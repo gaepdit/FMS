@@ -1,20 +1,23 @@
+# Workflow to register a new application deployment with Raygun.
+
 name: Raygun Deployment Tracking
 
 on:
   push:
-    tags: prod/*
+    tags: [prod/*]
 
 jobs:
   raygun-deployment:
+    name: Send deployment info to Raygun
     runs-on: ubuntu-latest
     steps:
       - name: Get the version number
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/prod/}
+        run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
 
       - name: Send to the Raygun Deployments API
         id: send_deployment
-        uses: fjogeleit/http-request-action@master
+        uses: fjogeleit/http-request-action@v1.11.1
         with:
           url: https://app.raygun.com/deployments?authToken=${{ secrets.RAYGUN_AUTHTOKEN }}
           method: POST
