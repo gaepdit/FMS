@@ -7,6 +7,7 @@ classDiagram
     File <-- Facility
     Cabinet <.. Facility : implied
 
+    Facility <--> Notification
     Facility <-- RetentionRecord
     Facility --> BudgetCode
     Facility --> FacilityStatus
@@ -24,6 +25,11 @@ class File {
     List<Cabinets> (implied)
 }
 
+class Notification {
+    HSI Number
+    Name
+}
+
 class Cabinet {
     Name
     FirstFileLabel
@@ -34,6 +40,7 @@ class Cabinet {
 class Facility {
     FileLabel
     FacilityNumber
+    HSI Number
     Name
     County
     LocationDescription

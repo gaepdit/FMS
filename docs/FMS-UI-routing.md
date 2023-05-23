@@ -1,18 +1,24 @@
-# File Management System Routing
+# File Management System (FMS) Site Map
 
-## FMS pages
+## Landing page
 
-- `/` (Redirects to Login or Facilities)
-- `/Account/` (View account profile)
-- `/Account/AccessDenied/` (Access denied alert)
-- `/Account/Lockout/` (Locked out alert)
-- `/Account/Login/` (Log in)
-- `/Account/Logout/` (Log out)
-- `/Cabinets/` (List cabinets)
-- `/Cabinets/Add/` (Add a new cabinet)
-- `/Cabinets/Details/?` (Cabinet details)
-- `/Cabinets/Edit/?` (Edit cabinet details)
-- `/Facilities/` (Facilities search)
+- `/` (Redirects to Login Page or Facilities Search Page)
+
+| Redirect  | To  |
+|---|---|
+| `/`  | `/Account/Login?` (To Login) |
+| `/`  | `/Facilities` (If Logged in) |
+
+## Menu Bar
+
+- `Facility Search` (Links to `/Facilities`)
+- `Location Search` (Links to `/Facilities/Map/`)
+- `Add Facility` (Links to `/Facilities/Add/`)
+- `More (Drop-Down)` (links to `/Files`, `/Cabinets/`, `/Users`, `/Maintenance`)
+
+## Facilities Pages
+
+- `/Facilities` (Facilities search)
 - `/Facilities/Add/` (Add a new facility/file)
 - `/Facilities/Delete/` (Delete a facility)
 - `/Facilities/Details/?` (Facility details)
@@ -21,11 +27,65 @@
 - `/Facilities/EditRetentionRecord/?` (Edit retention record)
 - `/Facilities/Map/` (Facilities location search)
 - `/Facilities/Undelete/` (Restore a deleted facility)
-- `/Files/` (Files search)
-- `/Files/Details/?` (File details)
-- `/Files/Edit/?` (Edit file details)
-- `/Maintenance/` (Edit lists, etc.)
-- `/Reports/` (View reports)
-- `/Users/` (Search Users)
-- `/Users/Details/?` (View user profile)
-- `/Users/Edit/?` (Edit user roles)
+
+## Account Pages
+
+- `/Account` (View account profile or Sign out)
+- `/Account/AccessDenied` (Access denied alert)
+- `/Account/Lockout` (Locked out alert)
+- `/Account/Login` (Log in)
+
+## Cabinet Pages
+- `/Cabinets/` (List cabinets)
+- `/Cabinets/Add/` (Add a new cabinet)
+- `/Cabinets/Details/{Cabinet Number}` (Cabinet details by Cabinet Number)
+- `/Cabinets/Edit/{id}}` (Edit cabinet details by id)
+
+## Files Pages 
+
+- `/Files` (Files search)
+- `/Files/Details/{File Number}` (File details by File Number. ***List of Facilities within a File***)
+
+## Maintenance Pages
+
+- `/Maintenance` (List of Drop-Down Menues to Edit)
+
+>#### Budget Code Pages
+
+>- `/Maintenance/BudgetCode` (List of all Budget Codes, Includes remove from and restore to list)
+>- `/Maintenance/BudgetCode/Add` (Add New Budget Code)
+>- `/Maintenance/BudgetCode/Edit/{id}` (Edit Budget Code by id)
+
+>#### Compliance Officer Pages
+
+>- `/Maintenance/ComplianceOfficer` (List of all Users that have ever logged in. Includes removed and restored to List)
+
+>#### Facility Status Pages
+
+>- `/Maintenance/FacilityStatus` (List of all Facility Statuses. Includes remove from and restore to List)
+>- `/Maintenance/FacilityStatus/Add` (Add New Facility Status)
+>- `/Maintenance/FacilityStatus/Edit/{id}` (Edit New Facility Status by id)
+
+>#### Type/Environmental Interest Pages
+
+>- `/Maintenance/FacilityType` (List of Facility Types. Includes remove from and restore to List)
+>- `/Maintenance/FacilityType/Add` (Add New Facility Type)
+>- `/Maintenance/FacilityType/Edit{id}` (Edit Facility Type by id)
+
+>#### Organizational Unit Pages
+
+>- `/Maintenance/OrganizationalUnit` (List of Organizational Units. Includes remove from and restore to List)
+>- `/Maintenance/OrganizationalUnit/Add` (Add New Organizational Unit)
+>- `/Maintenance/OrganizationalUnit/Edit/{id}` (Edit Organizational Unit by id)
+
+## Report Pages (Under Construction)
+
+- `/Reports/` (View Report Preview. Allow Export to MS Excel) 
+-  ***Todo - Additional Report Pages***
+
+## User Pages
+
+- `/Users` (Search Users)
+- `/Users/Details/{id}` (View user profile by id)
+- `/Users/Edit/{id}` (Edit user roles by id)
+
