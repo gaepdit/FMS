@@ -5,7 +5,7 @@ using FMS.Domain.Repositories;
 using FMS.Pages.Files;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -19,10 +19,9 @@ namespace FMS.App.Tests.Files
         {
             var file = RepositoryData.Files[0];
 
-            var mockRepository = new Mock<IFileRepository>();
-            mockRepository.Setup(l => l.GetFileAsync(file.FileLabel))
-                .ReturnsAsync(new FileDetailDto(file));
-            var pageModel = new DetailsModel(mockRepository.Object);
+            var mockRepository = Substitute.For<IFileRepository>();
+            mockRepository.GetFileAsync(file.FileLabel).Returns(new FileDetailDto(file));
+            var pageModel = new DetailsModel(mockRepository);
 
             var result = await pageModel.OnGetAsync(file.FileLabel).ConfigureAwait(false);
 
@@ -33,11 +32,10 @@ namespace FMS.App.Tests.Files
         [Fact]
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
-            var mockRepository = new Mock<IFileRepository>();
-            mockRepository.Setup(l => l.GetFileAsync(It.IsAny<string>()))
-                .ReturnsAsync((FileDetailDto) null);
+            var mockRepository = Substitute.For<IFileRepository>();
+            mockRepository.GetFileAsync(Arg.Any<string>()).Returns((FileDetailDto) null);
 
-            var pageModel = new DetailsModel(mockRepository.Object);
+            var pageModel = new DetailsModel(mockRepository);
 
             var result = await pageModel.OnGetAsync("Test").ConfigureAwait(false);
 
@@ -48,8 +46,8 @@ namespace FMS.App.Tests.Files
         [Fact]
         public async Task OnGet_MissingIdReturnsNotFound()
         {
-            var mockRepository = new Mock<IFileRepository>();
-            var pageModel = new DetailsModel(mockRepository.Object);
+            var mockRepository = Substitute.For<IFileRepository>();
+            var pageModel = new DetailsModel(mockRepository);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

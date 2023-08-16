@@ -5,7 +5,7 @@ using FMS.Domain.Services;
 using FMS.Pages.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -18,12 +18,10 @@ namespace FMS.App.Tests.Users
         {
             var user = new UserView(UserTestData.ApplicationUsers[0]);
 
-            var mockUserService = new Mock<IUserService>();
-            mockUserService.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(user)
-                .Verifiable();
+            var mockUserService = Substitute.For<IUserService>();
+            mockUserService.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
 
-            var pageModel = new DetailsModel(mockUserService.Object);
+            var pageModel = new DetailsModel(mockUserService);
 
             var result = await pageModel.OnGetAsync(user.Id).ConfigureAwait(false);
 
@@ -36,8 +34,8 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
-            var mockUserService = new Mock<IUserService>();
-            var pageModel = new DetailsModel(mockUserService.Object);
+            var mockUserService = Substitute.For<IUserService>();
+            var pageModel = new DetailsModel(mockUserService);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -49,8 +47,8 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_MissingIdReturnsNotFound()
         {
-            var mockUserService = new Mock<IUserService>();
-            var pageModel = new DetailsModel(mockUserService.Object);
+            var mockUserService = Substitute.For<IUserService>();
+            var pageModel = new DetailsModel(mockUserService);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

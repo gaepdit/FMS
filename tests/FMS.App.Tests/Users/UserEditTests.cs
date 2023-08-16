@@ -8,7 +8,7 @@ using FMS.Pages.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -21,13 +21,11 @@ namespace FMS.App.Tests.Users
         {
             var user = new UserView(UserTestData.ApplicationUsers[0]);
 
-            var mockRepo = new Mock<IUserService>();
-            mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(user);
-            mockRepo.Setup(l => l.GetUserRolesAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(new List<string>());
+            var mockRepo = Substitute.For<IUserService>();
+            mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
+            mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(new List<string>());
 
-            var pageModel = new EditModel(mockRepo.Object);
+            var pageModel = new EditModel(mockRepo);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -53,13 +51,11 @@ namespace FMS.App.Tests.Users
                 UserRoles.UserMaintenance,
             };
 
-            var mockRepo = new Mock<IUserService>();
-            mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(user);
-            mockRepo.Setup(l => l.GetUserRolesAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(roles);
+            var mockRepo = Substitute.For<IUserService>();
+            mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
+            mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(roles);
 
-            var pageModel = new EditModel(mockRepo.Object);
+            var pageModel = new EditModel(mockRepo);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -76,8 +72,8 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
-            var mockRepo = new Mock<IUserService>();
-            var pageModel = new EditModel(mockRepo.Object);
+            var mockRepo = Substitute.For<IUserService>();
+            var pageModel = new EditModel(mockRepo);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
@@ -88,10 +84,9 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnGet_NonexistentId_ReturnsNotFound()
         {
-            var mockRepo = new Mock<IUserService>();
-            mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((UserView)null);
-            var pageModel = new EditModel(mockRepo.Object);
+            var mockRepo = Substitute.For<IUserService>();
+            mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns((UserView)null);
+            var pageModel = new EditModel(mockRepo);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -102,11 +97,10 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
-            var mockRepo = new Mock<IUserService>();
-            mockRepo.Setup(l => l.UpdateUserRolesAsync(It.IsAny<Guid>(), It.IsAny<Dictionary<string, bool>>()))
-                .ReturnsAsync(IdentityResult.Success);
+            var mockRepo = Substitute.For<IUserService>();
+            mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(IdentityResult.Success);
 
-            var pageModel = new EditModel(mockRepo.Object)
+            var pageModel = new EditModel(mockRepo)
             {
                 UserId = Guid.Empty
             };
@@ -122,8 +116,8 @@ namespace FMS.App.Tests.Users
         [Fact]
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
-            var mockRepo = new Mock<IUserService>();
-            var pageModel = new EditModel(mockRepo.Object);
+            var mockRepo = Substitute.For<IUserService>();
+            var pageModel = new EditModel(mockRepo);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -140,15 +134,12 @@ namespace FMS.App.Tests.Users
             var identityResult = IdentityResult.Failed(
                 new IdentityError() { Code = "CODE", Description = "DESCRIPTION" });
 
-            var mockRepo = new Mock<IUserService>();
-            mockRepo.Setup(l => l.UpdateUserRolesAsync(It.IsAny<Guid>(), It.IsAny<Dictionary<string, bool>>()))
-                .ReturnsAsync(identityResult);
-            mockRepo.Setup(l => l.GetUserByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(user);
-            mockRepo.Setup(l => l.GetUserRolesAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(new List<string>());
+            var mockRepo = Substitute.For<IUserService>();
+            mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(identityResult);
+            mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
+            mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(new List<string>());
 
-            var pageModel = new EditModel(mockRepo.Object);
+            var pageModel = new EditModel(mockRepo);
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 

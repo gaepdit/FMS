@@ -7,7 +7,7 @@ using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -18,9 +18,9 @@ namespace FMS.App.Tests.Facilities
         [Fact]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var mockRepo = new Mock<IFacilityRepository>();
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new AddModel(mockRepo, mockSelectListHelper);
 
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
@@ -34,14 +34,12 @@ namespace FMS.App.Tests.Facilities
             // ReSharper disable once CollectionNeverUpdated.Local
             var nearbyFacilities = new List<FacilityMapSummaryDto>();
             var newId = Guid.NewGuid();
-            var mockRepo = new Mock<IFacilityRepository>();
-            mockRepo.Setup(l => l.CreateFacilityAsync(It.IsAny<FacilityCreateDto>()))
-                .ReturnsAsync(newId);
-            mockRepo.Setup(l => l.GetFacilityListAsync(It.IsAny<FacilityMapSpec>()))
-                .ReturnsAsync(nearbyFacilities);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            mockRepo.CreateFacilityAsync(Arg.Any<FacilityCreateDto>()).Returns(newId);
+            mockRepo.GetFacilityListAsync(Arg.Any<FacilityMapSpec>()).Returns(nearbyFacilities);
 
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new AddModel(mockRepo, mockSelectListHelper)
             {
                 Facility = new FacilityCreateDto {State = "Georgia", Latitude = 0, Longitude = 0},
             };
@@ -68,12 +66,11 @@ namespace FMS.App.Tests.Facilities
                 }
             };
 
-            var mockRepo = new Mock<IFacilityRepository>();
-            mockRepo.Setup(l => l.GetFacilityListAsync(It.IsAny<FacilityMapSpec>()))
-                .ReturnsAsync(nearbyFacilities);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            mockRepo.GetFacilityListAsync(Arg.Any<FacilityMapSpec>()).Returns(nearbyFacilities);
 
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new AddModel(mockRepo, mockSelectListHelper)
             {
                 Facility = new FacilityCreateDto {State = "Georgia", Latitude = 0, Longitude = 0},
             };
@@ -89,9 +86,9 @@ namespace FMS.App.Tests.Facilities
         [Fact]
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
-            var mockRepo = new Mock<IFacilityRepository>();
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new AddModel(mockRepo, mockSelectListHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -105,15 +102,12 @@ namespace FMS.App.Tests.Facilities
         public async Task OnPostConfirm_ValidModel_ReturnsDetailsPage()
         {
             var newId = Guid.NewGuid();
-            var mockRepo = new Mock<IFacilityRepository>();
-            mockRepo.Setup(l => l.CreateFacilityAsync(It.IsAny<FacilityCreateDto>()))
-                .ReturnsAsync(newId)
-                .Verifiable();
-            mockRepo.Setup(l => l.FileLabelExists(It.IsAny<string>()))
-                .ReturnsAsync(true);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            mockRepo.CreateFacilityAsync(Arg.Any<FacilityCreateDto>()).Returns(newId);
+            mockRepo.FileLabelExists(Arg.Any<string>()).Returns(true);
 
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object)
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new AddModel(mockRepo, mockSelectListHelper)
             {
                 Facility = new FacilityCreateDto {State = "Georgia"}
             };
@@ -130,9 +124,9 @@ namespace FMS.App.Tests.Facilities
         [Fact]
         public async Task OnPostConfirm_InvalidModel_ReturnsPageWithInvalidModelState()
         {
-            var mockRepo = new Mock<IFacilityRepository>();
-            var mockSelectListHelper = new Mock<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo.Object, mockSelectListHelper.Object);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new AddModel(mockRepo, mockSelectListHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostConfirmAsync().ConfigureAwait(false);

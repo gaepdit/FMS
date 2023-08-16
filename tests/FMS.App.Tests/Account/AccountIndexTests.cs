@@ -5,7 +5,7 @@ using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
 using FMS.Pages.Account;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace FMS.App.Tests.Account
@@ -23,11 +23,9 @@ namespace FMS.App.Tests.Account
                 FamilyName = "User"
             });
 
-            var mockUserService = new Mock<IUserService>();
-            mockUserService.Setup(l => l.GetCurrentUserAsync())
-                .ReturnsAsync(userView)
-                .Verifiable();
-            var pageModel = new IndexModel(mockUserService.Object);
+            var mockUserService = Substitute.For<IUserService>();
+            mockUserService.GetCurrentUserAsync().Returns(userView);
+            var pageModel = new IndexModel(mockUserService);
 
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 
