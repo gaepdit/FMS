@@ -6,7 +6,7 @@ using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using TestHelpers;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
@@ -21,11 +21,9 @@ namespace FMS.App.Tests.Facilities
             var facilityId = RepositoryData.Facilities()[0].Id;
             var facility = ResourceHelper.GetFacilityDetail(facilityId);
 
-            var mockRepo = new Mock<IFacilityRepository>();
-            mockRepo.Setup(l => l.GetFacilityAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(facility)
-                .Verifiable();
-            var pageModel = new UndeleteModel(mockRepo.Object);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns(facility);
+            var pageModel = new UndeleteModel(mockRepo);
 
             var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
 
@@ -37,12 +35,10 @@ namespace FMS.App.Tests.Facilities
         [Fact]
         public async Task OnGet_NonexistentId_ReturnsNotFound()
         {
-            var mockRepo = new Mock<IFacilityRepository>();
-            mockRepo.Setup(l => l.GetFacilityAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((FacilityDetailDto) null)
-                .Verifiable();
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns((FacilityDetailDto) null);
 
-            var pageModel = new UndeleteModel(mockRepo.Object);
+            var pageModel = new UndeleteModel(mockRepo);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -54,8 +50,8 @@ namespace FMS.App.Tests.Facilities
         [Fact]
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
-            var mockRepo = new Mock<IFacilityRepository>();
-            var pageModel = new UndeleteModel(mockRepo.Object);
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            var pageModel = new UndeleteModel(mockRepo);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
@@ -68,10 +64,9 @@ namespace FMS.App.Tests.Facilities
         public async Task OnPost_IfValidModel_ReturnsDetailsPage()
         {
             var id = Guid.NewGuid();
-            var mockRepo = new Mock<IFacilityRepository>();
-            mockRepo.Setup(l => l.UndeleteFacilityAsync(It.IsAny<Guid>()));
-
-            var pageModel = new UndeleteModel(mockRepo.Object)
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            
+            var pageModel = new UndeleteModel(mockRepo)
             {
                 Id = id,
             };

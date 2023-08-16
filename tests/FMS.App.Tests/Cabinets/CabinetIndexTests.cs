@@ -3,7 +3,7 @@ using FluentAssertions;
 using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using TestHelpers;
 using Xunit;
 
@@ -16,12 +16,10 @@ namespace FMS.App.Tests.Cabinets
         {
             var cabinets = ResourceHelper.GetCabinetSummaries(true);
 
-            var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.GetCabinetListAsync(true))
-                .ReturnsAsync(cabinets)
-                .Verifiable();
+            var mockRepo = Substitute.For<ICabinetRepository>();
+            mockRepo.GetCabinetListAsync(true).Returns(cabinets);
 
-            var pageModel = new IndexModel(mockRepo.Object);
+            var pageModel = new IndexModel(mockRepo);
 
             var result = await pageModel.OnGetAsync().ConfigureAwait(false);
 

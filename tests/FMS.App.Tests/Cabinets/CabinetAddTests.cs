@@ -6,7 +6,7 @@ using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Moq;
+using NSubstitute;
 using Xunit;
 using Xunit.Extensions.AssertExtensions;
 
@@ -17,10 +17,8 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
-            var mockRepo = new Mock<ICabinetRepository>();
-            mockRepo.Setup(l => l.CabinetNameExistsAsync(It.IsAny<string>(), It.IsAny<Guid?>()))
-                .ReturnsAsync(false);
-            mockRepo.Setup(l => l.CreateCabinetAsync(It.IsAny<CabinetEditDto>()));
+            var mockRepo = Substitute.For<ICabinetRepository>();
+            mockRepo.CabinetNameExistsAsync(Arg.Any<string>(), Arg.Any<Guid?>()).Returns(false);
 
             var newCabinet = new CabinetEditDto()
             {
@@ -28,7 +26,7 @@ namespace FMS.App.Tests.Cabinets
                 FirstFileLabel = "999-9999",
             };
 
-            var pageModel = new AddModel(mockRepo.Object) {NewCabinet = newCabinet};
+            var pageModel = new AddModel(mockRepo) {NewCabinet = newCabinet};
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
@@ -41,8 +39,8 @@ namespace FMS.App.Tests.Cabinets
         [Fact]
         public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
         {
-            var mockRepo = new Mock<ICabinetRepository>();
-            var pageModel = new AddModel(mockRepo.Object);
+            var mockRepo = Substitute.For<ICabinetRepository>();
+            var pageModel = new AddModel(mockRepo);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
