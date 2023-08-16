@@ -26,7 +26,7 @@
     <PackageVersion Include="Microsoft.Identity.Web" Version="2.7.0" />
     <PackageVersion Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
     <PackageVersion Include="Mindscape.Raygun4Net.AspNetCore" Version="6.6.6" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="8.55.0.65544">
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.7.0.75501">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
