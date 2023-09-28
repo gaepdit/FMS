@@ -5,14 +5,12 @@
         @* navbar-toggleable-sm border-bottom box-shadow mb-3 *@
         <div class="container-fluid">
             @* <a class="navbar-brand" asp-page="/Index">FMS</a> *@
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMain"
+                    aria-controls="navbarTogglerMain" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span> <span class="align-middle">Menu</span>
             </button>
-            <div class="collapse navbar-collapse">
-                @* d-sm-inline-flex *@
-                <ul class="navbar-nav">
-                    @* flex-grow-1 mr-auto *@
+            <div class="collapse navbar-collapse d-sm-inline-flex" id="navbarTogglerMain">
+                <ul class="navbar-nav flex-grow-1 mr-auto">
                     <li class="nav-item">
                         <a class="nav-link text-white" asp-page="/Facilities/Index">Facility Search</a>
                     </li>
@@ -41,7 +39,7 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav d-flex">
-                    <li class="nav-item dropdown text-dark">
+                    <ul class="nav-item dropdown text-dark">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="accountDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="View account menu">
                             Account
                         </a>
@@ -49,12 +47,11 @@
                             <li><a class="dropdown-item" asp-page="/Account/Index">Your profile</a></li>
                             <li>
                                 <form class="form-inline dropdown-item p-0" asp-page="/Account/Logout" method="post">
-                                    <button type="submit" class="dropdown-item bg-danger text-light">Sign out</button>
-                                    @* px-4 py-2 *@
+                                    <button type="submit" class="dropdown-item bg-danger text-light px-4 py-2">Sign out</button>
                                 </form>
                             </li>
                         </ul>
-                    </li>
+                    </ul>
                 </ul>
             </div>
         </div>
