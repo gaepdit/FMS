@@ -2,9 +2,7 @@
 
 <div class="container">
     <nav class="navbar navbar-expand-sm navbar-dark bg-brand">
-        @* navbar-toggleable-sm border-bottom box-shadow mb-3 *@
         <div class="container-fluid">
-            @* <a class="navbar-brand" asp-page="/Index">FMS</a> *@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMain"
                     aria-controls="navbarTogglerMain" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span> <span class="align-middle">Menu</span>
@@ -39,11 +37,11 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav d-flex">
-                    <ul class="nav-item dropdown text-dark">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="accountDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="View account menu">
+                    <li class="nav-item dropdown text-dark">
+                        <button class="nav-link dropdown-toggle text-white" id="accountDropdownMenuLink" role="button" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="View account menu">
                             Account
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownMenuLink">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="accountDropdownMenuLink">
                             <li><a class="dropdown-item" asp-page="/Account/Index">Your profile</a></li>
                             <li>
                                 <form class="form-inline dropdown-item p-0" asp-page="/Account/Logout" method="post">
@@ -51,7 +49,7 @@
                                 </form>
                             </li>
                         </ul>
-                    </ul>
+                    </li>
                 </ul>
             </div>
         </div>
