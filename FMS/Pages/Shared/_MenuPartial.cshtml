@@ -1,8 +1,8 @@
 @using FMS.Domain.Entities.Users
 
-<div class="container">
+<div class="container-fluid">
     <nav class="navbar navbar-expand-sm navbar-dark bg-brand">
-        <div class="container-fluid">
+        <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMain"
                     aria-controls="navbarTogglerMain" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span> <span class="align-middle">Menu</span>
@@ -41,7 +41,7 @@
                         <button class="nav-link dropdown-toggle text-white" id="accountDropdownMenuLink" role="button" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="View account menu">
                             Account
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="accountDropdownMenuLink">
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdownMenuLink">
                             <li><a class="dropdown-item" asp-page="/Account/Index">Your profile</a></li>
                             <li>
                                 <form class="form-inline dropdown-item p-0" asp-page="/Account/Logout" method="post">

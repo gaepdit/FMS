@@ -15,14 +15,14 @@
 
 <div class="container bg-light py-3">
     <form method="get" asp-fragment="SearchResults">
-        <div class="form-row">
-            <div class="form-group col-md-3">
+        <div class="mb-3 row">
+            <div class="col-md-3">
                 <label asp-for="Spec.CountyId"></label>
-                <select asp-for="Spec.CountyId" asp-items="IndexModel.Counties" class="custom-select">
+                <select asp-for="Spec.CountyId" asp-items="IndexModel.Counties" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col-md-3">
+            <div class="col-md-3">
                 <label asp-for="Spec.FileLabel"></label>
                 <input asp-for="Spec.FileLabel" class="form-control" />
             </div>
@@ -46,34 +46,34 @@
                     <div class="col-md">
                         <partial name="_PaginationNav" model="(Model.FileList, Model.Spec.AsRouteValues)" />
                     </div>
-                    <div class="col-md text-md-right small">
+                    <div class="col-md text-md-end small">
                         <partial name="_PaginatedResultsCount" model="Model.FileList" />
                     </div>
                 </div>
             </caption>
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">File Label</th>
-                <th scope="col">Cabinets</th>
-                <th scope="col">Facilities</th>
-            </tr>
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">File Label</th>
+                    <th scope="col">Cabinets</th>
+                    <th scope="col">Facilities</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (FileDetailDto item in Model.FileList.Items)
-            {
-                <tr class="@(!item.Active ? "table-secondary" : "")">
-                    <td>
-                        <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                            @Html.DisplayFor(m => item.FileLabel)
-                        </a>
-                        @Html.DisplayFor(m => item.Active, "BoolDeleted")
-                    </td>
-                    <td>@item.Cabinets.ConcatNonEmpty(", ")</td>
-                    <td>
-                        @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
-                    </td>
-                </tr>
-            }
+                @foreach (FileDetailDto item in Model.FileList.Items)
+                {
+                    <tr class="@(!item.Active ? "table-secondary" : "")">
+                        <td>
+                            <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                                @Html.DisplayFor(m => item.FileLabel)
+                            </a>
+                            @Html.DisplayFor(m => item.Active, "BoolDeleted")
+                        </td>
+                        <td>@item.Cabinets.ConcatNonEmpty(", ")</td>
+                        <td>
+                            @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
 
