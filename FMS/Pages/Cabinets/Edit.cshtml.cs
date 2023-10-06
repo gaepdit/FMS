@@ -63,7 +63,7 @@ namespace FMS.Pages.Cabinets
 
             if (!Domain.Entities.File.IsValidFileLabelFormat(CabinetEdit.FirstFileLabel))
             {
-                ModelState.AddModelError("CabinetEdit.FirstFileLabel", "The File Label is invalid. Must be in the format: 000-0000");
+                ModelState.AddModelError("CabinetEdit.FirstFileLabel", "The File Label is invalid");
             }
 
             if (!ModelState.IsValid)
