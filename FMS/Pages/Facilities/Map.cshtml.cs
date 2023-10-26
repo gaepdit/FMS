@@ -42,26 +42,22 @@ namespace FMS.Pages.Facilities
             // Method intentionally left empty.
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {
-            // If Latitude is 0.00 then Longitude must also be 0.00
-            if (!GeoCoordHelper.BothZeroOrBothNonzero(spec.Latitude, spec.Longitude))
-            {
-                ModelState.AddModelError("Spec.Latitude", "Latitude and Longitude must both be zero (0) or both valid coordinates.");
-            }
-            else
-            {
-                // If Latitude and/or Longitude fall outside State of Georgia, then alert user
-                if (!GeoCoordHelper.ValidLat(spec.Latitude))
-                {
-                    ModelState.AddModelError("Spec.Latitude",
-                        $"Latitude entered is outside State of Georgia. Must be between {GeoCoordHelper.UpperLat} and {GeoCoordHelper.LowerLat} North Latitude or zero if unknown.");
-                }
+            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
+            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(spec.Latitude, spec.Longitude);
+            string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
 
-                if (!GeoCoordHelper.ValidLong(spec.Longitude))
+            if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)
+            {
+                if (EnumVal == GeoCoordHelper.CoordinateValidation.LongNotInGeorgia)
                 {
-                    ModelState.AddModelError("Spec.Longitude",
-                        $"Longitude entered is outside State of Georgia. Must be between {GeoCoordHelper.EasternLong} and {GeoCoordHelper.WesternLong} West Longitude or zero if unknown.");
+                    ModelState.AddModelError("spec.Longitude", ValidationString);
+                }
+                else
+                {
+                    ModelState.AddModelError("spec.Latitude", ValidationString);
                 }
             }
 

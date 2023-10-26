@@ -12,5 +12,8 @@
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations" />
   </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
 
 </Project>

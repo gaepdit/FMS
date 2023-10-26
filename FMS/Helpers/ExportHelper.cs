@@ -45,12 +45,12 @@ namespace FMS
             IEnumerable<RetentionRecordDetailDto> list, UserView currentUser, int maxCol=18,
             string blankFilePath="./Helpers/BlankRequestForm.pdf", int freeTierLimit=10)
         {
-            PdfDocument mainDoc = new PdfDocument();
+            PdfDocument mainDoc = new();
             // break the list into chunks of 18 elements
             var smallerLists = list.Chunk(maxCol);
             // need to create a list to keep all object references.
             // declare a variable inside the scope will not work
-            List<PdfDocument> pdfDocuments = new List<PdfDocument>();
+            List<PdfDocument> pdfDocuments = new();
             foreach (var smallerList in smallerLists)
             {
                 PdfDocument currDocument = GeneratePdfPage(smallerList, currentUser, maxCol, blankFilePath);
@@ -64,7 +64,7 @@ namespace FMS
                 mainDoc.AppendPage(pdfDocument);
             
             // Creates a new Memory stream
-            MemoryStream stream = new MemoryStream();
+            MemoryStream stream = new();
             // Saves the document as stream
             mainDoc.SaveToStream(stream, FileFormat.PDF);
             // dispose all of the pages
@@ -90,7 +90,7 @@ namespace FMS
         {
             if (smallerList.Length > maxCol)
                 throw new ArgumentException("The input list's length should not exceed " + maxCol);
-            PdfDocument currDocument = new PdfDocument();
+            PdfDocument currDocument = new();
             currDocument.LoadFromFile(blankFilePath);
             Dictionary<string, string> dictionaryTextbox = GenerateRetentionRecordDictionary(smallerList, currentUser);
             // iterate through all user fill-able widget
@@ -115,7 +115,7 @@ namespace FMS
         private static Dictionary<string, string> GenerateRetentionRecordDictionary(
             RetentionRecordDetailDto[] list, UserView currentUser)
         {
-            Dictionary<string, string> dictionaryTextbox = new Dictionary<string, string>();
+            Dictionary<string, string> dictionaryTextbox = new();
             // start from 1 to name the key
             int i = 1;
             foreach (var retentionRecord in list)

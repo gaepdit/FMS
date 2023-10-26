@@ -28,8 +28,8 @@ namespace FMS.Pages.Facilities
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
         // Select Lists
-        public static SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
-        public static SelectList States => new SelectList(Data.States);
+        public static SelectList Counties => new(Data.Counties, "Id", "Name");
+        public static SelectList States => new(Data.States);
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }
@@ -62,24 +62,19 @@ namespace FMS.Pages.Facilities
 
             Facility.TrimAll();
 
-            // If Latitude is 0.00 then Longitude must also be 0.00
-            if (!GeoCoordHelper.BothZeroOrBothNonzero(Facility.Latitude!.Value, Facility.Longitude!.Value))
-            {
-                ModelState.AddModelError("Facility.Latitude", "Latitude and Longitude must both be zero (0) or both valid coordinates.");
-            }
-            else
-            {
-                // If Latitude and/or Longitude fall outside State of Georgia, then alert user
-                if (!GeoCoordHelper.ValidLat(Facility.Latitude!.Value))
-                {
-                    ModelState.AddModelError("Facility.Latitude", 
-                        $"Latitude entered is outside State of Georgia. Must be between {GeoCoordHelper.UpperLat} and {GeoCoordHelper.LowerLat} North Latitude or zero if unknown.");
-                }
+            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
+            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(Facility.Latitude, Facility.Longitude);
+            string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
 
-                if (!GeoCoordHelper.ValidLong(Facility.Longitude!.Value))
+            if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)
+            {
+                if (EnumVal == GeoCoordHelper.CoordinateValidation.LongNotInGeorgia)
                 {
-                    ModelState.AddModelError("Facility.Longitude",
-                        $"Longitude entered is outside State of Georgia. Must be between {GeoCoordHelper.EasternLong} and {GeoCoordHelper.WesternLong} West Longitude or zero if unknown.");
+                    ModelState.AddModelError("Facility.Longitude", ValidationString);
+                }
+                else
+                {
+                    ModelState.AddModelError("Facility.Latitude", ValidationString);
                 }
             }
 
