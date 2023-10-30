@@ -99,5 +99,27 @@ namespace FMS.App.Tests.Facilities
             pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
+
+        [Fact]
+        public async Task OnPost_IfInActiveModel_ReturnsDetailsPage()
+        {
+            var id = Guid.NewGuid();
+            var mockRepo = Substitute.For<IFacilityRepository>();
+
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, mockSelectListHelper)
+            {
+                Id = id,
+                Active = false,
+                Facility = new FacilityEditDto()
+            };
+
+            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+
+            result.Should().BeOfType<RedirectToPageResult>();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
+            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
+        }
     }
 }

@@ -30,6 +30,7 @@ namespace FMS.Pages.Facilities
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
+        public bool Active { get; set; }
 
         private readonly IFacilityRepository _repository;
         private readonly ISelectListHelper _listHelper;
@@ -70,18 +71,18 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var facilityDetail = await _repository.GetFacilityAsync(Id);
-
-            if (!facilityDetail.Active)
-            {
-                TempData?.SetDisplayMessage(Context.Danger, "Facility deleted by another user.");
-                return RedirectToPage("./Details", new { Id });
-            }
-
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
                 return Page();
+            }
+
+            // Reload facility and see if it has been deleted by another user
+            var facilityDetail = await _repository.GetFacilityAsync(Id);
+            if (facilityDetail is not null && !facilityDetail.Active)
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "Facility deleted by another user.");
+                return RedirectToPage("./Details", new { Id });
             }
 
             Facility.TrimAll();

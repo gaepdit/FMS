@@ -1,4 +1,5 @@
 ﻿using Xunit;
+using FMS;
 
 namespace FMS.App.Tests.Helpers
 {
