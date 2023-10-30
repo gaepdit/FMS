@@ -105,14 +105,10 @@ namespace FMS.App.Tests.Facilities
         {
             var id = Guid.NewGuid();
             var mockRepo = Substitute.For<IFacilityRepository>();
+            mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns(new FacilityDetailDto(new Domain.Entities.Facility { Active = false }));
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, mockSelectListHelper)
-            {
-                Id = id,
-                Active = false,
-                Facility = new FacilityEditDto()
-            };
+            var pageModel = new EditModel(mockRepo, mockSelectListHelper);
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 

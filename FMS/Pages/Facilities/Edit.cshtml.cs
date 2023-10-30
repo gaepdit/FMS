@@ -30,7 +30,6 @@ namespace FMS.Pages.Facilities
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
-        public bool Active { get; set; }
 
         private readonly IFacilityRepository _repository;
         private readonly ISelectListHelper _listHelper;
