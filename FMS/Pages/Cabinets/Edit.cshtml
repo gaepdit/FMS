@@ -13,13 +13,13 @@
 <div class="container bg-light py-3">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="row">
+            <div class="col">
                 <label asp-for="CabinetEdit.Name"></label>
                 <input asp-for="CabinetEdit.Name" class="form-control" />
                 <span asp-validation-for="CabinetEdit.Name" class="text-danger"></span>
             </div>
-            <div class="form-group col">
+            <div class="col">
                 <label asp-for="CabinetEdit.FirstFileLabel"></label>
                 <input asp-for="CabinetEdit.FirstFileLabel" class="form-control" placeholder="000-0000" aria-describedby="FileLabelHelpBlock" />
                 <span asp-validation-for="CabinetEdit.FirstFileLabel" class="text-danger"></span>

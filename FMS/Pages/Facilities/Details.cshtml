@@ -117,37 +117,37 @@
     {
         <table class="table table-sm" aria-label="Retention Records of other Facilities">
             <thead class="thead-light">
-            <tr>
-                <th scope="col">Years</th>
-                <th scope="col">Box Number</th>
-                <th scope="col">Consignment Number</th>
-                <th scope="col">Shelf Number</th>
-                <th scope="col">Retention Schedule Number</th>
-                <th scope="col" class="text-center">Retained</th>
-                @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                {
-                    <th scope="col" class="text-center">Actions</th>
-                }
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var r in Model.FacilityDetail.RetentionRecords)
-            {
-                <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
-                    <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
-                    <td>@r.BoxNumber</td>
-                    <td>@r.ConsignmentNumber</td>
-                    <td>@r.ShelfNumber</td>
-                    <td>@r.RetentionSchedule</td>
-                    <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
+                <tr>
+                    <th scope="col">Years</th>
+                    <th scope="col">Box Number</th>
+                    <th scope="col">Consignment Number</th>
+                    <th scope="col">Shelf Number</th>
+                    <th scope="col">Retention Schedule Number</th>
+                    <th scope="col" class="text-center">Retained</th>
                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                     {
-                        <td>
-                            <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                        </td>
+                        <th scope="col" class="text-center">Actions</th>
                     }
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var r in Model.FacilityDetail.RetentionRecords)
+                {
+                    <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
+                        <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
+                        <td>@r.BoxNumber</td>
+                        <td>@r.ConsignmentNumber</td>
+                        <td>@r.ShelfNumber</td>
+                        <td>@r.RetentionSchedule</td>
+                        <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
+                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                        {
+                            <td>
+                                <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                            </td>
+                        }
+                    </tr>
+                }
             </tbody>
         </table>
     }
@@ -157,47 +157,47 @@
     }
 
     @if (Model.FacilityDetail.Active &&
-        (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor)))
+    (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor)))
     {
         <div class="container bg-light pt-3 mt-5">
             <h3 class="h5">Add a Retention Record</h3>
             <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-                <div class="form-row">
-                    <div class="form-group col-sm-4">
+                <div class="mb-3 row">
+                    <div class="col-sm-4">
                         <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
                         <input asp-for="RecordCreate.StartYear" class="form-control" />
                         <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group col-sm-4">
+                    <div class="col-sm-4">
                         <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
                         <input asp-for="RecordCreate.EndYear" class="form-control" />
                         <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group col-sm-4">
+                    <div class="col-sm-4">
                         <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
                         <input asp-for="RecordCreate.BoxNumber" class="form-control" />
                         <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
                     </div>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group col-sm-4">
+                <div class="mb-3 row">
+                    <div class="col-sm-4">
                         <label asp-for="RecordCreate.ConsignmentNumber"></label>
                         <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
                         <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group col-sm-4">
+                    <div class="col-sm-4">
                         <label asp-for="RecordCreate.ShelfNumber"></label>
                         <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
                         <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
                     </div>
 
-                    <div class="form-group col-sm-4">
+                    <div class="col-sm-4">
                         <label asp-for="RecordCreate.RetentionSchedule"></label>
                         <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
                         <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>

@@ -12,105 +12,107 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<div class="container bg-light py-3">
+<div class="p-3 rounded-3 bg-light">
     <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <div class="form-row">
-            <div class="form-group col-md">
+        <div class="mb-3 row">
+            <div class="col-md-4">
                 <label asp-for="Spec.FileLabel"></label>
                 <input asp-for="Spec.FileLabel" class="form-control" />
             </div>
-            <div class="form-group col-md">
+            <div class="col-md-4">
                 <label asp-for="Spec.FacilityNumber"></label>
                 <input asp-for="Spec.FacilityNumber" class="form-control" />
             </div>
-            <div class="form-group col">
+            <div class="col-md-4">
                 <label asp-for="Spec.CountyId"></label>
-                <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="custom-select">
+                <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md">
+        <div class="mb-3 row">
+            <div class="col-md-4">
                 <label asp-for="Spec.FacilityTypeId"></label>
-                <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
+                <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md-4">
                 <label asp-for="Spec.OrganizationalUnitId"></label>
-                <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
+                <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md-4">
                 <label asp-for="Spec.ComplianceOfficerId"></label>
-                <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
+                <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md">
+        <div class="mb-3 row">
+            <div class="col-md">
                 <label asp-for="Spec.BudgetCodeId"></label>
-                <select asp-for="Spec.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
+                <select asp-for="Spec.BudgetCodeId" asp-items="Model.BudgetCodes" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md">
                 <label asp-for="Spec.FacilityStatusId"></label>
-                <select asp-for="Spec.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
+                <select asp-for="Spec.FacilityStatusId" asp-items="Model.FacilityStatuses" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="mb-3 row">
+            <div class="col">
                 <label asp-for="Spec.Name"></label>
                 <input asp-for="Spec.Name" class="form-control" />
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="mb-3 row">
+            <div class="col">
                 <label asp-for="Spec.Location"></label>
                 <input asp-for="Spec.Location" class="form-control" />
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="mb-3 row">
+            <div class="col">
                 <label asp-for="Spec.Address"></label>
                 <input asp-for="Spec.Address" class="form-control" />
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
+        <div class="mb-3 row">
+            <div class="col-md-6">
                 <label asp-for="Spec.City"></label>
                 <input asp-for="Spec.City" class="form-control" />
             </div>
-            <div class="form-group col">
+            <div class="col-md">
                 <label asp-for="Spec.State"></label>
-                <select asp-for="Spec.State" asp-items="Model.States" class="custom-select">
+                <select asp-for="Spec.State" asp-items="Model.States" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
-            <div class="form-group col">
+            <div class="col-md">
                 <label asp-for="Spec.PostalCode"></label>
                 <input asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
         @if (User.IsInRole(UserRoles.FileEditor))
         {
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <div class="form-check">
                     <input asp-for="Spec.ShowDeleted" />
                     <label asp-for="Spec.ShowDeleted" class="form-check-label"></label>
                 </div>
             </div>
         }
-        <input type="hidden" name="handler" value="search" />
-        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Search</button>
-        <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
+        <div class="mt-3 mb-1">
+            <input type="hidden" name="handler" value="search" />
+            <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 me-2">Search</button>
+            <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
+        </div>
     </form>
 </div>
 
@@ -126,7 +128,7 @@
         else
         {
             <table class="table" aria-label="Facility search results">
-                <caption class="container py-3"> 
+                <caption class="container py-3">
                     <div class="row align-items-center">
                         <div class="col-md mb-3 mb-md-0">
                             <form method="post">
@@ -147,96 +149,100 @@
                                 <input type="hidden" asp-for="Spec.ShowDeleted" />
                                 <input type="hidden" asp-for="Spec.SortBy" />
                                 <button id="ExportButton" asp-page-handler="ExportButton"
-                                        class="btn btn-sm btn-outline-primary mb-1">Export to Excel</button>
+                                        class="btn btn-sm btn-outline-primary mb-1">
+                                    Export to Excel
+                                </button>
                                 <button id="DownloadRetentionRecords" asp-page-handler="DownloadRetentionRecords"
-                                        class="btn btn-sm btn-outline-primary mb-1">Download Retention Records</button>
+                                        class="btn btn-sm btn-outline-primary mb-1">
+                                    Download Retention Records
+                                </button>
                             </form>
                         </div>
                         <div class="col-md mb-1">
                             <partial name="_PaginationNav" model="(Model.FacilityList, Model.Spec.AsRouteValues)" />
                         </div>
-                        <div class="col-md text-md-right small mb-1">
+                        <div class="col-md text-md-end small mb-1">
                             <partial name="_PaginatedResultsCount" model="Model.FacilityList" />
                         </div>
                     </div>
                 </caption>
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col" class="text-nowrap">
-                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
-                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FacilityNumber ? FacilitySort.FacilityNumberDesc : FacilitySort.FacilityNumber)">
-                            Facility
-                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                new {up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc})
-                        </a>
-                    </th>
-                    <th scope="col" class="text-nowrap">
-                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
-                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
-                            File Label
-                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                new {up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc})
-                        </a>
-                    </th>
-                    <th scope="col" class="text-nowrap">
-                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
-                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Name ? FacilitySort.NameDesc : FacilitySort.Name)">
-                            Name
-                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                new {up = FacilitySort.Name, down = FacilitySort.NameDesc})
-                        </a>
-                    </th>
-                    <th scope="col" class="text-nowrap">
-                        <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
-                           asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Address ? FacilitySort.AddressDesc : FacilitySort.Address)">
-                            Address
-                            @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                new {up = FacilitySort.Address, down = FacilitySort.AddressDesc})
-                        </a>
-                    </th>
-                    <th scope="col" class="text-center">Type</th>
-                    <th scope="col">Records</th>
-                </tr>
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="text-nowrap">
+                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                               asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FacilityNumber ? FacilitySort.FacilityNumberDesc : FacilitySort.FacilityNumber)">
+                                Facility
+                                @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                        new {up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc})
+                            </a>
+                        </th>
+                        <th scope="col" class="text-nowrap">
+                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                               asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
+                                File Label
+                                @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                        new {up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc})
+                            </a>
+                        </th>
+                        <th scope="col" class="text-nowrap">
+                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                               asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Name ? FacilitySort.NameDesc : FacilitySort.Name)">
+                                Name
+                                @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                        new {up = FacilitySort.Name, down = FacilitySort.NameDesc})
+                            </a>
+                        </th>
+                        <th scope="col" class="text-nowrap">
+                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                               asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Address ? FacilitySort.AddressDesc : FacilitySort.Address)">
+                                Address
+                                @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                        new {up = FacilitySort.Address, down = FacilitySort.AddressDesc})
+                            </a>
+                        </th>
+                        <th scope="col" class="text-center">Type</th>
+                        <th scope="col">Records</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach (FacilitySummaryDto item in Model.FacilityList.Items)
-                {
-                    <tr class="@(!item.Active ? "table-secondary" : "")">
-                        <td>
-                            <a asp-page="Details" asp-route-id="@item.Id" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                            </a>
-                            @Html.DisplayFor(m => item.Active, "BoolDeleted")
-                        </td>
-                        <td class="text-nowrap">
-                            @Html.DisplayFor(m => item.FileLabel, "StringOrNone")
-                        </td>
-                        <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
-                        <td>
-                            @Html.DisplayFor(m => item.Address)<br />
-                            @Html.DisplayFor(m => item.City),
-                            @Html.DisplayFor(m => item.State)
-                            @Html.DisplayFor(m => item.PostalCode)
-                        </td>
-                        <td class="text-center">@Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")</td>
-                        <td>
-                            <em class="font-weight-medium">Cabinets:</em><br />
-                            @Html.DisplayFor(m => item.Cabinets, "Cabinets", new {item.IsRetained})
-                            @if (item.RetentionRecords.Count > 0)
-                            {
-                                <div>
-                                    <em class="font-weight-medium">Retention Records:</em><br />
-                                    <ul class="list-unstyled">
-                                        @foreach (var record in item.RetentionRecords)
-                                        {
-                                            <li class="text-nowrap">@record.Summary</li>
-                                        }
-                                    </ul>
-                                </div>
-                            }
-                        </td>
-                    </tr>
-                }
+                    @foreach (FacilitySummaryDto item in Model.FacilityList.Items)
+                    {
+                        <tr class="@(!item.Active ? "table-secondary" : "")">
+                            <td>
+                                <a asp-page="Details" asp-route-id="@item.Id" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                </a>
+                                @Html.DisplayFor(m => item.Active, "BoolDeleted")
+                            </td>
+                            <td class="text-nowrap">
+                                @Html.DisplayFor(m => item.FileLabel, "StringOrNone")
+                            </td>
+                            <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
+                            <td>
+                                @Html.DisplayFor(m => item.Address)<br />
+                                @Html.DisplayFor(m => item.City),
+                                @Html.DisplayFor(m => item.State)
+                                @Html.DisplayFor(m => item.PostalCode)
+                            </td>
+                            <td class="text-center">@Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")</td>
+                            <td>
+                                <em class="font-weight-medium">Cabinets:</em><br />
+                                @Html.DisplayFor(m => item.Cabinets, "Cabinets", new {item.IsRetained})
+                                @if (item.RetentionRecords.Count > 0)
+                                {
+                                    <div>
+                                        <em class="font-weight-medium">Retention Records:</em><br />
+                                        <ul class="list-unstyled">
+                                            @foreach (var record in item.RetentionRecords)
+                                            {
+                                                <li class="text-nowrap">@record.Summary</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
 

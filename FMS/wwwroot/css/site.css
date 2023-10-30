@@ -77,10 +77,11 @@ body {
 -------------------------------------------------- */
 a:focus {
     color: #0056b3;
+    text-decoration: underline;
 }
 
 a:focus:not(.btn) {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .btn-primary:focus {
