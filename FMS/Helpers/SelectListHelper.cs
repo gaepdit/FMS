@@ -41,6 +41,6 @@ namespace FMS
     public static class SelectListExtensions
     {
         public static SelectList ToSelectList(this IEnumerable<ListItem> listItems) =>
-            new SelectList(listItems, nameof(ListItem.Id), nameof(ListItem.Name));
+            new(listItems, nameof(ListItem.Id), nameof(ListItem.Name));
     }
 }

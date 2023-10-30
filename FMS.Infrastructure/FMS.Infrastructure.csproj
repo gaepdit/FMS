@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
     </PropertyGroup>
-
     <ItemGroup>
         <PackageReference Include="Dapper" />
         <PackageReference Include="JetBrains.Annotations" />
@@ -26,5 +24,4 @@
     <ItemGroup>
         <ProjectReference Include="..\FMS.Domain\FMS.Domain.csproj" />
     </ItemGroup>
-
 </Project>

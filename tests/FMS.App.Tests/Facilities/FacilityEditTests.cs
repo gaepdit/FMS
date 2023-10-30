@@ -27,7 +27,7 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new EditModel(mockRepo, mockSelectListHelper);
 
-            var result = await pageModel.OnGetAsync(facility.Id).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(facility.Id);
 
             result.Should().BeOfType<PageResult>();
             pageModel.Id.Should().Be(facility.Id);
@@ -43,7 +43,7 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new EditModel(mockRepo, mockSelectListHelper);
 
-            var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(Guid.Empty);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
@@ -57,7 +57,7 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new EditModel(mockRepo, mockSelectListHelper);
 
-            var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(null);
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
@@ -77,7 +77,7 @@ namespace FMS.App.Tests.Facilities
                 Facility = new FacilityEditDto()
             };
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+            var result = await pageModel.OnPostAsync();
 
             result.Should().BeOfType<RedirectToPageResult>();
             pageModel.ModelState.IsValid.ShouldBeTrue();
@@ -93,11 +93,29 @@ namespace FMS.App.Tests.Facilities
             var pageModel = new EditModel(mockRepo, mockSelectListHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+            var result = await pageModel.OnPostAsync();
 
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
+        }
+
+        [Fact]
+        public async Task OnPost_IfInActiveModel_ReturnsDetailsPage()
+        {
+            var id = Guid.NewGuid();
+            var mockRepo = Substitute.For<IFacilityRepository>();
+            mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns(new FacilityDetailDto(new Domain.Entities.Facility { Active = false, File = new Domain.Entities.File(111, 0001) }));
+
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, mockSelectListHelper) { Id = id };
+
+            var result = await pageModel.OnPostAsync();
+
+            result.Should().BeOfType<RedirectToPageResult>();
+            pageModel.ModelState.IsValid.ShouldBeTrue();
+            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
         }
     }
 }
