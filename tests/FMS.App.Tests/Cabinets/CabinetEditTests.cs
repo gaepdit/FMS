@@ -151,7 +151,7 @@ namespace FMS.App.Tests.Cabinets
             result.Should().BeOfType<PageResult>();
             pageModel.ModelState.IsValid.ShouldBeFalse();
             pageModel.ModelState["CabinetEdit.FirstFileLabel"].Errors[0].ErrorMessage.Should()
-                .Be("The File Label is invalid.");
+                .Be("The File Label is invalid");
         }
     }
 }

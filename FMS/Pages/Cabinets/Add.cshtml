@@ -23,11 +23,12 @@
                 <input asp-for="NewCabinet.FirstFileLabel" class="form-control" placeholder="000-0000" aria-describedby="FileLabelHelpBlock" />
                 <span asp-validation-for="NewCabinet.FirstFileLabel" class="text-danger"></span>
                 <small id="FileLabelHelpBlock" class="form-text text-muted">
-                    <em>First File Label</em> is the first/lowest file label in the cabinet.
+                    <em>First File Label</em> is the first/lowest file label in the cabinet. The first three numbers denote the county number.
                 </small>
             </div>
         </div>
         <hr />
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Create New Cabinet</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
     </form>
 </div>
