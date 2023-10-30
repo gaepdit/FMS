@@ -6,7 +6,7 @@
 }
 
 @section Scripts
-{
+    {
     <partial name="_GoogleMapsApiPartial" />
     <script>
         window.FMS_RESOURCES = {
@@ -19,70 +19,70 @@
     <script src="~/js/mapSearch.js"></script>
 }
 
-    <h1>
-        Search a Location
-        <small class="text-muted">(See what's near any address)</small>
-    </h1>
+<h1>
+    Search a Location
+    <small class="text-muted">(See what's near any address)</small>
+</h1>
 
-    <div class="container bg-light py-3">
-        <form method="get" asp-fragment="SearchResults">
-            <div class="form-row">
-                <div class="form-group col">
-                    <label asp-for="Spec.Address"></label>
-                    <input id="Address" asp-for="Spec.Address" class="form-control" />
-                    <input id="LocalAddress" asp-for="Spec.GeocodeAddress" type="hidden" />
-                </div>
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="get" asp-fragment="SearchResults">
+        <div class="mb-3 row">
+            <div class="col">
+                <label asp-for="Spec.Address"></label>
+                <input id="Address" asp-for="Spec.Address" class="form-control" />
+                <input id="LocalAddress" asp-for="Spec.GeocodeAddress" type="hidden" />
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label asp-for="Spec.City"></label>
-                    <input id="City" asp-for="Spec.City" class="form-control" />
-                </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.State"></label>
-                    <input class="form-control" type="text" value="Georgia" disabled>
-                </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.PostalCode"></label>
-                    <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
-                </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-md-6">
+                <label asp-for="Spec.City"></label>
+                <input id="City" asp-for="Spec.City" class="form-control" />
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label asp-for="Spec.Radius"></label>
-                    <select id="Radius" asp-for="Spec.Radius" class="custom-select">
-                        <option selected value="0.25">1/4 Mile</option>
-                        <option value="0.5">1/2 Mile</option>
-                        <option value="1">1 Mile</option>
-                        <option value="3">3 Miles</option>
-                        <option value="5">5 Miles</option>
-                    </select>
-                </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.Latitude"></label>
-                    <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
-                    <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.1)</small>
-                    <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
-                    <span asp-validation-for="Spec.Latitude" class="text-danger"></span>
-                </div>
-                <div class="form-group col">
-                    <label asp-for="Spec.Longitude"></label>
-                    <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
-                    <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.5)</small>
-                    <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
-                    <span asp-validation-for="Spec.Longitude" class="text-danger"></span>
-                </div>
-                <div class="form-group col-md-3">
-                    <label class="form-check-label" asp-for="Spec.Output"></label>
-                    <select id="Output" asp-for="Spec.Output" class="custom-select mt-md-2">
-                        <option selected value="1">Map</option>
-                        <option value="2">Table</option>
-                    </select>
-                </div>
+            <div class="col">
+                <label asp-for="Spec.State"></label>
+                <input class="form-control" type="text" value="Georgia" disabled>
             </div>
-            @if (User.IsInRole(UserRoles.FileEditor))
+            <div class="col">
+                <label asp-for="Spec.PostalCode"></label>
+                <input id="PostalCode" asp-for="Spec.PostalCode" class="form-control" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-md-3">
+                <label asp-for="Spec.Radius"></label>
+                <select id="Radius" asp-for="Spec.Radius" class="form-select">
+                    <option selected value="0.25">1/4 Mile</option>
+                    <option value="0.5">1/2 Mile</option>
+                    <option value="1">1 Mile</option>
+                    <option value="3">3 Miles</option>
+                    <option value="5">5 Miles</option>
+                </select>
+            </div>
+            <div class="col">
+                <label asp-for="Spec.Latitude"></label>
+                <input id="Latitude" asp-for="Spec.Latitude" class="form-control" aria-describedby="LatHelpBlock" />
+                <small id="LatHelpBlock" class="form-text text-muted">(Example: 34.1)</small>
+                <input id="LocalLat" asp-for="Spec.GeocodeLat" type="hidden" />
+                <span asp-validation-for="Spec.Latitude" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="Spec.Longitude"></label>
+                <input id="Longitude" asp-for="Spec.Longitude" class="form-control" aria-describedby="LonHelpBlock" />
+                <small id="LonHelpBlock" class="form-text text-muted">(Example: -84.5)</small>
+                <input id="LocalLng" asp-for="Spec.GeocodeLng" type="hidden" />
+                <span asp-validation-for="Spec.Longitude" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label class="form-check-label" asp-for="Spec.Output"></label>
+                <select id="Output" asp-for="Spec.Output" class="form-select">
+                    <option selected value="1">Map</option>
+                    <option value="2">Table</option>
+                </select>
+            </div>
+        </div>
+        @if (User.IsInRole(UserRoles.FileEditor))
         {
-            <div class="form-group row">
+            <div class="mb-3 row">
                 <div class="form-check">
                     <input asp-for="Spec.ShowDeleted" />
                     <label asp-for="Spec.ShowDeleted" class="form-check-label"></label>
@@ -119,7 +119,7 @@
                             <input type="hidden" asp-for="ExportSpec.Radius" />
                         </form>
                     </div>
-                    <div class="col-md text-md-right small">
+                    <div class="col-md text-md-end small mb-1">
                         Total results:
                         @Html.DisplayFor(m => Model.FacilityList.Count)
                     </div>

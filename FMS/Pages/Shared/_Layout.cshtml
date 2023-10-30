@@ -10,45 +10,51 @@
     @await RenderSectionAsync("Styles", required: false)
     <partial name="_RaygunScriptsPartial" />
 </head>
-<body>
-<environment exclude="Production">
-    <div class="banner-test-site">
-        Test Site
-    </div>
-</environment>
-<a class="skipnav" href="#main-content">Skip to main content</a>
-<header role="banner">
-    <div class="container h3 my-2">
-        <img src="~/images/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
-        <a href="/" aria-label="Home" class="text-dark">File Management System</a>
-    </div>
-    @if (User.Identity?.IsAuthenticated ?? false)
-    {
-        <partial name="_MenuPartial" />
-    }
-</header>
-<div class="container">
-    <main id="main-content" role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
 
-<footer class="border-top footer">
-    <div class="container text-brand">
-        <a href="#">Return to top</a>
-    </div>
-    <div class="bg-brand text-light">
-        <div class="container">
-            &copy; @DateTime.Now.Year Environmental Protection Division IT -
-            <a href="https://georgia.gov/accessibility" target="_blank" rel="noopener">Accessibility</a> |
-            <a href="https://gadnr.org/ada" target="_blank" rel="noopener">DNR Accessibility Notice</a> |
-            <a href="https://georgia.gov/privacysecurity" target="_blank" rel="noopener">Privacy/Security</a>
+<body id="top" class="d-flex flex-column">
+    <environment exclude="Production">
+        <div class="banner-test-site">
+            Test Site
         </div>
-    </div>
-</footer>
+    </environment>
+    <a class="skipnav" href="#main-content">Skip to main content</a>
+    <header role="banner">
+        <div class="container h3 my-2">
+            <img src="~/images/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
+            <a href="/" aria-label="Home" class="link-dark link-offset-1 link-underline-opacity-0 link-underline-opacity-100-hover">File Management System</a>
+        </div>
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <partial name="_MenuPartial" />
+        }
+    </header>
 
-<script src="~/lib/jquery/jquery.min.js"></script>
-<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <main id="main-content" role="main" class="pb-3">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer pt-3">
+        <div class="container text-brand">
+            <a href="#">↑ Return to top</a>
+        </div>
+        <div class="bg-brand text-light">
+            <div class="container">
+                <small>
+                    &copy; @DateTime.Now.Year Environmental Protection Division IT
+                    <span class="d-print-none">
+                        | <a href="https://georgia.gov/accessibility" target="_blank" rel="noopener">Accessibility</a>
+                        | <a href="https://gadnr.org/ada" target="_blank" rel="noopener">DNR Accessibility Notice</a>
+                        | <a href="https://georgia.gov/privacysecurity" target="_blank" rel="noopener">Privacy/Security</a>
+                    </span>
+                </small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

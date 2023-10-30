@@ -17,127 +17,127 @@
     @ViewData["Title"]
 </h1>
 
-<div class="container bg-light py-3">
+<div class="p-3 rounded-3 bg-light">
     <form method="post">
         <input type="hidden" asp-for="Facility.Active" />
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <div class="form-row">
-            <div class="form-group col-md">
+        <div class="mb-3 row">
+            <div class="col-md-4">
                 <label asp-for="Facility.FileLabel"></label>
                 <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" />
                 <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
                 <small id="FileIdHelpBlock" class="d-none form-text px-1 rounded bg-info text-white">A blank File Label will create a new File.</small>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md-4">
                 <label asp-for="Facility.FacilityNumber">Facility Number <span class="text-danger">*</span></label>
                 <input asp-for="Facility.FacilityNumber" class="form-control" />
                 <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md-4">
                 <label asp-for="Facility.CountyId">County <span class="text-danger">*</span></label>
-                <select asp-for="Facility.CountyId" asp-items="EditModel.Counties" class="custom-select">
+                <select asp-for="Facility.CountyId" asp-items="EditModel.Counties" class="form-select">
                 </select>
                 <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md">
+        <div class="mb-3 row">
+            <div class="col-md-4">
                 <label asp-for="Facility.FacilityTypeId">Type/Environmental Interest <span class="text-danger">*</span></label>
-                <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="custom-select">
+                <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md-4">
                 <label asp-for="Facility.OrganizationalUnitId">Organizational Unit <span class="text-danger">*</span></label>
-                <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="custom-select">
+                <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md-4">
                 <label asp-for="Facility.ComplianceOfficerId">Compliance Officer</label>
-                <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="custom-select">
+                <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
                     <option value="">[not assigned]</option>
                 </select>
                 <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md">
+        <div class="mb-3 row">
+            <div class="col-md">
                 <label asp-for="Facility.BudgetCodeId">Budget Code <span class="text-danger">*</span></label>
-                <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="custom-select">
+                <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
             </div>
-            <div class="form-group col-md">
+            <div class="col-md">
                 <label asp-for="Facility.FacilityStatusId">Facility Status <span class="text-danger">*</span></label>
-                <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="custom-select">
+                <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="mb-3 row">
+            <div class="col">
                 <label asp-for="Facility.Name">Facility Name <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Name" class="form-control" />
                 <span asp-validation-for="Facility.Name" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="mb-3 row">
+            <div class="col">
                 <label asp-for="Facility.Location"></label>
                 <input asp-for="Facility.Location" class="form-control" />
                 <span asp-validation-for="Facility.Location" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="mb-3 row">
+            <div class="col">
                 <label asp-for="Facility.Address">Street Address <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Address" class="form-control" />
                 <span asp-validation-for="Facility.Address" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
+        <div class="mb-3 row">
+            <div class="col-md-6">
                 <label asp-for="Facility.City">City <span class="text-danger">*</span></label>
                 <input asp-for="Facility.City" class="form-control" />
                 <span asp-validation-for="Facility.City" class="text-danger"></span>
             </div>
-            <div class="form-group col">
+            <div class="col">
                 <label asp-for="Facility.State">State <span class="text-danger">*</span></label>
-                <select asp-for="Facility.State" asp-items="EditModel.States" class="custom-select">
+                <select asp-for="Facility.State" asp-items="EditModel.States" class="form-select">
                 </select>
                 <span asp-validation-for="Facility.State" class="text-danger"></span>
             </div>
-            <div class="form-group col">
+            <div class="col">
                 <label asp-for="Facility.PostalCode">ZIP Code <span class="text-danger">*</span></label>
                 <input asp-for="Facility.PostalCode" class="form-control" />
                 <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col">
+        <div class="mb-3 row">
+            <div class="col">
                 <label asp-for="Facility.Latitude">Latitude <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Latitude" class="form-control" />
                 <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
             </div>
-            <div class="form-group col">
+            <div class="col">
                 <label asp-for="Facility.Longitude">Longitude <span class="text-danger">*</span></label>
                 <input asp-for="Facility.Longitude" class="form-control" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-4 col-lg-3">
-                <span class="mb-md-2 d-inline-block">
+            <div class="col-md-3">
+                <span class="mb-md-2">
                     <span id="GeocodeAddressWarn" class="d-none text-danger">Please enter an address.</span> &nbsp;
                 </span>
                 <button id="GeocodeButton" class="btn btn-outline-primary form-control" aria-describedby="GeocodeHelpBlock">Geocode</button>
                 <small id="GeocodeHelpBlock" class="form-text text-muted">Street address is required for geocoding. City and ZIP Code are optional.</small>
             </div>
         </div>
-        <div class="form-row">
+        <div class="mb-3 row">
             <div class="col">
                 <div class="form-check">
                     <input asp-for="Facility.IsRetained" class="form-check-input" />

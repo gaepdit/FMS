@@ -7,7 +7,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<div class="container bg-light py-3">
+<div class="container bg-light-subtle py-3">
     <form method="post">
         <p>Roles for: <strong>@Model.DisplayName</strong> (@Model.Email)</p>
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
@@ -16,7 +16,8 @@
         <div class="form-check mb-3">
             <input asp-for="HasUserAdminRole" class="form-check-input" aria-describedby="UserAdminRoleHelpBlock">
             <label asp-for="HasUserAdminRole" class="form-check-label font-weight-bold">
-                @UserRoles.DisplayName(UserRoles.UserMaintenance)
+                <strong>@UserRoles.DisplayName(UserRoles.UserMaintenance)</strong>
+                <br />
                 <small id="UserAdminRoleHelpBlock" class="form-text text-muted">
                     @UserRoles.Description(UserRoles.UserMaintenance)
                 </small>
@@ -25,7 +26,8 @@
         <div class="form-check mb-3">
             <input asp-for="HasSiteMaintenanceRole" class="form-check-input" aria-describedby="SiteMaintenanceRoleHelpBlock">
             <label asp-for="HasSiteMaintenanceRole" class="form-check-label font-weight-bold">
-                @UserRoles.DisplayName(UserRoles.SiteMaintenance)
+                <strong>@UserRoles.DisplayName(UserRoles.SiteMaintenance)</strong>
+                <br />
                 <small id="SiteMaintenanceRoleHelpBlock" class="form-text text-muted">
                     @UserRoles.Description(UserRoles.SiteMaintenance)
                 </small>
@@ -34,7 +36,8 @@
         <div class="form-check mb-3">
             <input asp-for="HasFileCreatorRole" class="form-check-input" aria-describedby="CreatorRoleHelpBlock">
             <label asp-for="HasFileCreatorRole" class="form-check-label font-weight-bold">
-                @UserRoles.DisplayName(UserRoles.FileCreator)
+                <strong>@UserRoles.DisplayName(UserRoles.FileCreator)</strong>
+                <br />
                 <small id="CreatorRoleHelpBlock" class="form-text text-muted">
                     @UserRoles.Description(UserRoles.FileCreator)
                 </small>
@@ -43,7 +46,8 @@
         <div class="form-check mb-3">
             <input asp-for="HasFileEditorRole" class="form-check-input" aria-describedby="EditorRoleHelpBlock">
             <label asp-for="HasFileEditorRole" class="form-check-label font-weight-bold">
-                @UserRoles.DisplayName(UserRoles.FileEditor)
+                <strong>@UserRoles.DisplayName(UserRoles.FileEditor)</strong>
+                <br />
                 <small id="EditorRoleHelpBlock" class="form-text text-muted">
                     @UserRoles.Description(UserRoles.FileEditor)
                 </small>
