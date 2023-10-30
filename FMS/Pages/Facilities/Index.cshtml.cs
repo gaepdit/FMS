@@ -32,8 +32,8 @@ namespace FMS.Pages.Facilities
         public bool ShowResults { get; private set; }
 
         // Select Lists
-        public SelectList Counties => new SelectList(Data.Counties, "Id", "Name");
-        public SelectList States => new SelectList(Data.States);
+        public SelectList Counties => new(Data.Counties, "Id", "Name");
+        public SelectList States => new(Data.States);
         public SelectList FacilityStatuses { get; private set; }
         public SelectList FacilityTypes { get; private set; }
         public SelectList BudgetCodes { get; private set; }

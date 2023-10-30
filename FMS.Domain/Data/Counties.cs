@@ -5,7 +5,7 @@ namespace FMS.Domain.Data
 {
     public static partial class Data
     {
-        public static List<County> Counties => new List<County>
+        public static List<County> Counties => new()
         {
             new County { Id = 131, Name = "Appling" },
             new County { Id = 122, Name = "Atkinson" },

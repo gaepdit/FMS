@@ -31,7 +31,7 @@ namespace FMS.Domain.Entities
         // Static methods
         public static string CountyString(int countyNum)
         {
-            if (Counties.All(e => e.Id != countyNum))
+            if (Counties.TrueForAll(e => e.Id != countyNum))
             {
                 throw new ArgumentException($"County ID {countyNum} does not exist.", nameof(countyNum));
             }

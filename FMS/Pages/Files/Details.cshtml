@@ -38,31 +38,31 @@
     @if (Model.FileDetail.Facilities != null && Model.FileDetail.Facilities.Count > 0)
     {
         <table class="table table-borderless" aria-label="List of facilities in this file">
-            <thead class="thead-light">
-            <tr>
-                <th scope="col">Facility</th>
-                <th scope="col">Name</th>
-                <th scope="col">Address</th>
-            </tr>
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Facility</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.FileDetail.Facilities)
-            {
-                <tr>
-                    <td>
-                        <a asp-page="/Facilities/Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
-                            @Html.DisplayFor(m => item.FacilityNumber)
-                        </a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.Address)<br />
-                        @Html.DisplayFor(m => item.City), @Html.DisplayFor(m => item.State) @Html.DisplayFor(m => item.PostalCode)
-                    </td>
-                </tr>
-            }
+                @foreach (var item in Model.FileDetail.Facilities)
+                {
+                    <tr>
+                        <td>
+                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                                @Html.DisplayFor(m => item.FacilityNumber)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Address)<br />
+                            @Html.DisplayFor(m => item.City), @Html.DisplayFor(m => item.State) @Html.DisplayFor(m => item.PostalCode)
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     }
