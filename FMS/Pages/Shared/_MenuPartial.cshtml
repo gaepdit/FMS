@@ -37,14 +37,13 @@
                 </li>
             </ul>
             <ul class="navbar-nav d-flex">
-                <li class="nav-item dropdown">
-                    @*  text-dark *@
+                <li class="nav-item dropdown text-body">
                     <button class="nav-link dropdown-toggle text-white" id="accountDropdownMenuLink" role="button" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="View account menu">
                         Account
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdownMenuLink">
                         <li>
-                            <a class="dropdown-item" asp-page="/Account/Index">Your profile</a>
+                            <a class="dropdown-item text-body" asp-page="/Account/Index">Your profile</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -52,7 +51,6 @@
                         <li>
                             <form class="form-inline dropdown-item p-0" asp-page="/Account/Logout" method="post">
                                 <button type="submit" class="dropdown-item bg-danger  px-4 py-2">Sign out</button>
-                                @* text-light *@
                             </form>
                         </li>
                     </ul>

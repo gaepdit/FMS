@@ -22,7 +22,7 @@
     <header role="banner">
         <div class="container h3 my-2">
             <img src="~/images/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
-            <a href="/" aria-label="Home" class="link-dark link-offset-1 link-underline-opacity-0 link-underline-opacity-100-hover">File Management System</a>
+            <a href="/" aria-label="Home" class="nav-link d-inline-block">File Management System</a>
         </div>
         @if (User.Identity?.IsAuthenticated ?? false)
         {
@@ -30,13 +30,13 @@
         }
     </header>
 
-    <main id="main-content" role="main" class="pb-3">
+    <main id="main-content" role="main" class="pb-0">
         <div class="container">
             @RenderBody()
         </div>
     </main>
 
-    <footer class="footer pt-3">
+    <footer class="footer py-0">
         <div class="container text-brand">
             <a href="#">↑ Return to top</a>
         </div>

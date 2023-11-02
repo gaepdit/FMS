@@ -159,7 +159,7 @@
     @if (Model.FacilityDetail.Active &&
     (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor)))
     {
-        <div class="container bg-light pt-3 mt-5">
+        <div class="container bg-light-subtle pt-3 mt-5 rounded-3">
             <h3 class="h5">Add a Retention Record</h3>
             <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
