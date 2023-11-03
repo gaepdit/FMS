@@ -14,7 +14,7 @@
     ViewData["Title"] = "Add Facility";
 }
 <h1>@ViewData["Title"]</h1>
-<div class="p-3 rounded-3 bg-light">
+<div class="p-3 rounded-3 bg-light-subtle">
     <form method="post" asp-fragment="ConfirmFacility">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="mb-3 row">
@@ -204,7 +204,7 @@
                 <button asp-page-handler="Confirm" type="submit" class="btn btn-warning col-sm-5 col-md-4 mb-3 mb-sm-0">
                     Create the facility
                 </button>
-                <a asp-page="./Add" class="btn btn-outline-secondary text-dark bg-light col-sm-4 col-md-3">Cancel (clear the form)</a>
+                <a asp-page="./Add" class="btn btn-outline-secondary text-body bg-light-subtle col-sm-4 col-md-3">Cancel (clear the form)</a>
                 <input asp-for="Facility.Address" type="hidden" />
                 <input asp-for="Facility.City" type="hidden" />
                 <input asp-for="Facility.Latitude" type="hidden" />

@@ -13,7 +13,7 @@
 <p>New users are added to the Compliance Officers list the first time they sign into FMS.</p>
 <form method="post">
     <table class="table" aria-label="List of compliance officers">
-        <thead class="table-light">
+        <thead class="thead-light">
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
@@ -32,11 +32,11 @@
                 <td class="text-nowrap">
                     @if (item.Active)
                     {
-                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning text-dark btn-sm">Remove from list</button>
+                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
                     }
                     else
                     {
-                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning text-dark btn-sm">Restore to list</button>
+                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
                     }
                 </td>
             </tr>
