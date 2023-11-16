@@ -15,7 +15,6 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 await context.FacilityTypes.AddRangeAsync(GetFacilityTypes(), token);
             if (!await context.OrganizationalUnits.AnyAsync(token))
                 await context.OrganizationalUnits.AddRangeAsync(GetOrganizationalUnits(), token);
-
             if (!await context.BudgetCodes.AnyAsync(token))
                 await context.BudgetCodes.AddRangeAsync(GetBudgetCodes(), token);
             if (!await context.ComplianceOfficers.AnyAsync(token))

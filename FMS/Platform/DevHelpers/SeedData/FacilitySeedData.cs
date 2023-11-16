@@ -299,6 +299,28 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     CountyId = 243,
                     IsRetained = true,
                 },
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Active = true,
+                    FacilityNumber = "RN10235",
+                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), 
+                    FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"), 
+                    OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"), 
+                    BudgetCodeId = new Guid("5B4D0049-3AA3-4FC7-A8FE-59A771D0F7F8"), 
+                    Name = "Facility RElease Notification",
+                    ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"), 
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
+                    Location = "N/A",
+                    Address = "10917 HWY 92",
+                    City = "Woodstock",
+                    State = "Georgia",
+                    PostalCode = "30188",
+                    Latitude = 34.086774m,
+                    Longitude = -84.505922m,
+                    CountyId = 243,
+                    IsRetained = true,
+                }
             };
         }
     }
