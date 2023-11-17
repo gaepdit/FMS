@@ -23,8 +23,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
                     Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",
                     ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), //01069946 
-                    FacilityStatusId =
-                        new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), // // new  FacilityStatus{ },   //NON-RCRA
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), 
                     Location = "Description of Location",
                     Address = "102 THREE BRANCHES DR.",
                     City = "WOODSTOCK",
@@ -128,7 +127,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = new Guid("E697F074-9C1C-4CEF-93F0-FCD9610ECCD3"),
                     Active = true,
                     FacilityNumber = "GAR000068791",
-                    FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //243-0075
+                    FileId = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"), //243-0075
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // VRP
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
@@ -172,7 +171,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = new Guid("309436BC-F7E7-4BFD-8455-E868129D6F45"),
                     Active = true,
                     FacilityNumber = "GAR000068759",
-                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
+                    FileId = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"), // 180-0001
                     FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // VRP
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
@@ -304,14 +303,14 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = Guid.NewGuid(),
                     Active = true,
                     FacilityNumber = "RN10235",
-                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), 
-                    FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"), 
-                    OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"), 
-                    BudgetCodeId = new Guid("5B4D0049-3AA3-4FC7-A8FE-59A771D0F7F8"), 
-                    Name = "Facility RElease Notification",
-                    ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"), 
+                    FileId = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"),
+                    FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
+                    OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"),
+                    BudgetCodeId = new Guid("5B4D0049-3AA3-4FC7-A8FE-59A771D0F7F8"),
+                    Name = "New Business in Woodstock Release Notification",
+                    ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
-                    Location = "N/A",
+                    Location = "A spot in a strip mall",
                     Address = "10917 HWY 92",
                     City = "Woodstock",
                     State = "Georgia",
@@ -320,6 +319,44 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Longitude = -84.505922m,
                     CountyId = 243,
                     IsRetained = true,
+                    HSInumber = "10234",
+                    NonHSILetterDate = new DateOnly(2018, 2, 13),
+                    Comments = "Just some comments about this facility",
+                    PreRQSMcleanup = false,
+                    ImageChecked = true,
+                    DeferredOnSiteScoring = true,
+                    AdditionalDataRequested = false,
+                    VRPReferral = false
+                },
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    Active = true,
+                    FacilityNumber = "RN102412",
+                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"),
+                    FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
+                    OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"),
+                    BudgetCodeId = new Guid("5B4D0049-3AA3-4FC7-A8FE-59A771D0F7F8"),
+                    Name = "Facility Test-4 Release Notification",
+                    ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
+                    Location = "Some Random Strip Mall",
+                    Address = "10919 HWY 92",
+                    City = "Woodstock",
+                    State = "Georgia",
+                    PostalCode = "30188",
+                    Latitude = 34.086774m,
+                    Longitude = -84.506122m,
+                    CountyId = 243,
+                    IsRetained = true,
+                    HSInumber = "10251",
+                    NonHSILetterDate = new DateOnly(2020, 11, 17),
+                    Comments = "Strip that looks like every other strip mall",
+                    PreRQSMcleanup = false,
+                    ImageChecked = false,
+                    DeferredOnSiteScoring = true,
+                    AdditionalDataRequested = true,
+                    VRPReferral = false
                 }
             };
         }
