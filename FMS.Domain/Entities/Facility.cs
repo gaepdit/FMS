@@ -28,6 +28,14 @@ namespace FMS.Domain.Entities
             PostalCode = newFacility.PostalCode;
             Latitude = newFacility.Latitude ?? 0;
             Longitude = newFacility.Longitude ?? 0;
+            HSInumber = newFacility.HSInumber;
+            NonHSILetterDate = newFacility.NonHSILetterDate;
+            Comments = newFacility.Comments;
+            PreRQSMcleanup = newFacility.PreRQSMcleanup;
+            ImageChecked = newFacility.ImageChecked;
+            DeferredOnSiteScoring = newFacility.DeferredOnSiteScoring;
+            AdditionalDataRequested = newFacility.AdditionalDataRequested;
+            VRPReferral = newFacility.VRPReferral;
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
@@ -83,9 +91,31 @@ namespace FMS.Domain.Entities
         public decimal Longitude { get; set; }
 
         public int CountyId { get; set; }
+
         public County County { get; set; }
 
         public bool IsRetained { get; set; } = true;
+
+        [StringLength(5)]
+        public string HSInumber { get; set; }
+
+        [NotMapped]
+        [Column(TypeName = "DateOnly")]
+        public DateOnly NonHSILetterDate { get; set; }
+
+        [StringLength(200)]
+        public string Comments { get; set; }
+
+        public bool PreRQSMcleanup { get; set; } = true;
+
+        public bool ImageChecked { get; set; } = true;
+
+        public bool DeferredOnSiteScoring { get; set; } = true;
+
+        public bool AdditionalDataRequested { get; set; } = true;
+
+        public bool VRPReferral { get; set; } = true;
+
 
         // List of retention records for this Facility
         public ICollection<RetentionRecord> RetentionRecords { get; set; }

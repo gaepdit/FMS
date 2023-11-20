@@ -67,6 +67,13 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     Name = "FUDS",
                     Description = "FUDS",
+                },
+                new()
+                {
+                    Id = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
+                    Active = true,
+                    Name = "RN",
+                    Description = "Release Notification",
                 }
             };
         }
