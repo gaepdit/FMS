@@ -21,6 +21,7 @@ namespace FMS.Domain.Dto
             State = facility.State;
             PostalCode = facility.PostalCode;
             IsRetained = facility.IsRetained;
+            HasERecord = facility.HasERecord;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
                     .Select(e => new RetentionRecordSummaryDto(e)).ToList()
@@ -58,6 +59,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
+
+        [Display(Name = "Has E-Records")]
+        public bool HasERecord { get; }
 
         [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }
