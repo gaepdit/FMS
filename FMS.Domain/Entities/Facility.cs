@@ -36,6 +36,7 @@ namespace FMS.Domain.Entities
             DeferredOnSiteScoring = newFacility.DeferredOnSiteScoring;
             AdditionalDataRequested = newFacility.AdditionalDataRequested;
             VRPReferral = newFacility.VRPReferral;
+            HasERecord = newFacility.HasERecord;
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
@@ -115,6 +116,8 @@ namespace FMS.Domain.Entities
         public bool AdditionalDataRequested { get; set; } = true;
 
         public bool VRPReferral { get; set; } = true;
+
+        public bool HasERecord { get; set; } = true;
 
 
         // List of retention records for this Facility
