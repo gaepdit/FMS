@@ -100,8 +100,6 @@ namespace FMS.Domain.Entities
         [StringLength(5)]
         public string HSInumber { get; set; }
 
-        [NotMapped]
-        [Column(TypeName = "DateOnly")]
         public DateOnly NonHSILetterDate { get; set; }
 
         [StringLength(200)]

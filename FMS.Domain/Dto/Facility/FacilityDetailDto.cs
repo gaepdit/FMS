@@ -129,7 +129,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
 
-        [Display(Name = "Has E-Records")]
+        [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
         [Display(Name = "Is Retained Onsite")]
