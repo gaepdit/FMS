@@ -320,7 +320,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     CountyId = 243,
                     IsRetained = true,
                     HSInumber = "10234",
-                    NonHSILetterDate = new DateOnly(2018, 2, 13),
+                    NonHSILetterDate = new(2018, 2, 13),
                     Comments = "Just some comments about this facility",
                     PreRQSMcleanup = false,
                     ImageChecked = true,

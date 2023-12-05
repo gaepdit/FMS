@@ -201,6 +201,7 @@
                             </a>
                         </th>
                         <th scope="col" class="text-center">Type</th>
+                        <th scope="col">OnLine</th>
                         <th scope="col">Records</th>
                     </tr>
                 </thead>
@@ -225,6 +226,7 @@
                                 @Html.DisplayFor(m => item.PostalCode)
                             </td>
                             <td class="text-center">@Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")</td>
+                            <td>@Html.DisplayFor(m => item.HasERecord)</td>
                             <td>
                                 <em class="font-weight-medium">Cabinets:</em><br />
                                 @Html.DisplayFor(m => item.Cabinets, "Cabinets", new {item.IsRetained})

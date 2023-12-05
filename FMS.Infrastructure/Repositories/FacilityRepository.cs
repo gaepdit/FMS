@@ -192,7 +192,7 @@ namespace FMS.Infrastructure.Repositories
             }
 
             if (string.IsNullOrWhiteSpace(newFacility.FileLabel) &&
-                Data.Counties.All(e => e.Id != newFacility.CountyId))
+                Data.Counties.TrueForAll(e => e.Id != newFacility.CountyId))
             {
                 throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
             }
@@ -240,7 +240,7 @@ namespace FMS.Infrastructure.Repositories
             }
 
             if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel) &&
-                Data.Counties.All(e => e.Id != facilityUpdates.CountyId))
+                Data.Counties.TrueForAll(e => e.Id != facilityUpdates.CountyId))
             {
                 throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
             }

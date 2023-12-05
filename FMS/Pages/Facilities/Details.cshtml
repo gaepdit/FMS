@@ -51,7 +51,7 @@
             @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new {Model.FacilityDetail.IsRetained})
+            @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
         </dd>
         <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
@@ -111,6 +111,67 @@
             @Html.DisplayFor(model => model.FacilityDetail.Longitude)
         </dd>
     </dl>
+
+    @if (Model.FacilityDetail.FacilityType.Name == "RN")
+    {
+        <H4>Release Notification Information</H4>
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.HSInumber)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.HSInumber, "StringOrNone")
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.NonHSILetterDate)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.NonHSILetterDate, "MM/dd/yyyy")
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.PreRQSMcleanup)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.PreRQSMcleanup)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.ImageChecked)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.ImageChecked)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.HasERecord)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.AdditionalDataRequested)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.AdditionalDataRequested)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.FacilityDetail.VRPReferral)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.FacilityDetail.VRPReferral)
+            </dd>
+        </dl>
+    }
 
     <h2 id="retention-records">Retention Records</h2>
     @if (Model.FacilityDetail.RetentionRecords.Count > 0)
