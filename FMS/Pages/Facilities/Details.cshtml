@@ -194,7 +194,7 @@
             <tbody>
                 @foreach (var r in Model.FacilityDetail.RetentionRecords)
                 {
-                    <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
+                    <tclass ="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
                         <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
                         <td>@r.BoxNumber</td>
                         <td>@r.ConsignmentNumber</td>
@@ -207,7 +207,7 @@
                                 <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                             </td>
                         }
-                    </tr>
+                    </tclass>
                 }
             </tbody>
         </table>
