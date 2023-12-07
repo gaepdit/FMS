@@ -60,6 +60,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
 
+        // Defines if electronic records are availble on Sharepoint
         [Display(Name = "Has E-Records")]
         public bool HasERecord { get; }
 

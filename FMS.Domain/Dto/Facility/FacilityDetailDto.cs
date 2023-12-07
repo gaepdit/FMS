@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Numerics;
-using System.Xml.Linq;
 using FMS.Domain.Entities;
 using FMS.Domain.Extensions;
 
@@ -105,6 +103,7 @@ namespace FMS.Domain.Dto
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; }
 
+        // The following properties only apply to Release Notifications
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 

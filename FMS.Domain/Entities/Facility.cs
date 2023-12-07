@@ -28,6 +28,7 @@ namespace FMS.Domain.Entities
             PostalCode = newFacility.PostalCode;
             Latitude = newFacility.Latitude ?? 0;
             Longitude = newFacility.Longitude ?? 0;
+            // The following properties only apply to Release Notifications
             HSInumber = newFacility.HSInumber;
             NonHSILetterDate = newFacility.NonHSILetterDate;
             Comments = newFacility.Comments;
@@ -97,6 +98,7 @@ namespace FMS.Domain.Entities
 
         public bool IsRetained { get; set; } = true;
 
+        // The following properties only apply to Release Notifications
         [StringLength(5)]
         public string HSInumber { get; set; }
 
