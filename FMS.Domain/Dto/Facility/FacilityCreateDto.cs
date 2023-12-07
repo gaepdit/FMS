@@ -96,6 +96,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
 
+        [Display(Name = "Has E-Records")]
+        public bool HasERecord { get; set; }
+
         public void TrimAll()
         {
             FacilityNumber = FacilityNumber?.Trim();

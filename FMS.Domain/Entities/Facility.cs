@@ -28,6 +28,7 @@ namespace FMS.Domain.Entities
             PostalCode = newFacility.PostalCode;
             Latitude = newFacility.Latitude ?? 0;
             Longitude = newFacility.Longitude ?? 0;
+            // The following properties only apply to Release Notifications
             HSInumber = newFacility.HSInumber;
             NonHSILetterDate = newFacility.NonHSILetterDate;
             Comments = newFacility.Comments;
@@ -36,6 +37,7 @@ namespace FMS.Domain.Entities
             DeferredOnSiteScoring = newFacility.DeferredOnSiteScoring;
             AdditionalDataRequested = newFacility.AdditionalDataRequested;
             VRPReferral = newFacility.VRPReferral;
+            HasERecord = newFacility.HasERecord;
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
@@ -96,11 +98,10 @@ namespace FMS.Domain.Entities
 
         public bool IsRetained { get; set; } = true;
 
+        // The following properties only apply to Release Notifications
         [StringLength(5)]
         public string HSInumber { get; set; }
 
-        [NotMapped]
-        [Column(TypeName = "DateOnly")]
         public DateOnly NonHSILetterDate { get; set; }
 
         [StringLength(200)]
@@ -115,6 +116,8 @@ namespace FMS.Domain.Entities
         public bool AdditionalDataRequested { get; set; } = true;
 
         public bool VRPReferral { get; set; } = true;
+
+        public bool HasERecord { get; set; } = true;
 
 
         // List of retention records for this Facility
