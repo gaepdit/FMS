@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FMS.Domain.Dto
 {
@@ -78,6 +79,19 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
+
+        [AllowNull]
+        [Display(Name = "Date Received")]
+        public DateOnly RNDateReceived { get; set; }
+
+        [Display(Name = "Historical Unit")]
+        public string HistoricalUnit { get; set; }
+
+        [Display(Name = "Historical Compliance Officer")]
+        public string HistoricalComplianceOfficer { get; set; }
+
+        [Display(Name = "Tax ID")]
+        public string TaxId { get; set; }
 
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }

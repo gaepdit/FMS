@@ -121,6 +121,14 @@ namespace FMS.Domain.Entities
 
         public bool HasERecord { get; set; } = true;
 
+        [AllowNull]
+        public DateOnly RNDateReceived { get; set; }
+
+        public string HistoricalUnit { get; set; }
+
+        public string HistoricalComplianceOfficer { get; set; }
+
+        public string TaxId { get; set; }
 
         // List of retention records for this Facility
         public ICollection<RetentionRecord> RetentionRecords { get; set; }
