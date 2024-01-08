@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
@@ -47,7 +48,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetAsync()
         {
             await PopulateSelectsAsync();
-            Facility = new FacilityCreateDto {State = "Georgia"};
+            Facility = new FacilityCreateDto { State = "Georgia", NonHSILetterDate = DateOnly.FromDateTime(DateTime.Now) };
 
             return Page();
         }

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Dapper;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -290,6 +292,17 @@ namespace FMS.Infrastructure.Repositories
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
             facility.Longitude = facilityUpdates.Longitude;
+            // added for release notifications
+            facility.HSInumber = facilityUpdates.HSInumber;
+            facility.NonHSILetterDate = facilityUpdates.NonHSILetterDate;
+            facility.Comments = facilityUpdates.Comments;
+            facility.PreRQSMcleanup = facilityUpdates.PreRQSMcleanup;
+            facility.ImageChecked = facilityUpdates.ImageChecked;
+            facility.DeferredOnSiteScoring = facilityUpdates.DeferredOnSiteScoring;
+            facility.AdditionalDataRequested = facilityUpdates.AdditionalDataRequested;
+            facility.VRPReferral = facilityUpdates.VRPReferral;
+            facility.HasERecord = facilityUpdates.HasERecord;
+            // ******************
             facility.IsRetained = facilityUpdates.IsRetained;
 
             await _context.SaveChangesAsync();

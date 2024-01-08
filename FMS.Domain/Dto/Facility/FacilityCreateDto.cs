@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -75,7 +76,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 
-        [Display(Name = "Non-HSI Letter Date")]
+        [Display(Name = "Determination Letter Date")]
         public DateOnly NonHSILetterDate { get; set; }
 
         [Display(Name = "Comments")]
@@ -96,7 +97,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
 
-        [Display(Name = "Has E-Records")]
+        [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
         public void TrimAll()

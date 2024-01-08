@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
@@ -102,6 +103,7 @@ namespace FMS.Domain.Entities
         [StringLength(5)]
         public string HSInumber { get; set; }
 
+        [AllowNull]
         public DateOnly NonHSILetterDate { get; set; }
 
         [StringLength(200)]

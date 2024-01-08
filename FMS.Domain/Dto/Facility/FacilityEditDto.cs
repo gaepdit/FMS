@@ -25,6 +25,15 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
+            HSInumber = facility.HSInumber;
+            NonHSILetterDate = facility.NonHSILetterDate;
+            Comments = facility.Comments;
+            PreRQSMcleanup = facility.PreRQSMcleanup;
+            ImageChecked = facility.ImageChecked;
+            DeferredOnSiteScoring = facility.DeferredOnSiteScoring;
+            AdditionalDataRequested = facility.AdditionalDataRequested;
+            VRPReferral = facility.VRPReferral;
+            HasERecord = facility.HasERecord;
             IsRetained = facility.IsRetained;
         }
 
@@ -100,6 +109,34 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; set; }
+
+        // The following properties only apply to Release Notifications
+        [Display(Name = "HSI Number")]
+        public string HSInumber { get; set; }
+
+        [Display(Name = "Determination Letter Date")]
+        public DateOnly NonHSILetterDate { get; set; }
+
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
+
+        [Display(Name = "Pre-RQSM Cleanup")]
+        public bool PreRQSMcleanup { get; set; }
+
+        [Display(Name = "Image Checked")]
+        public bool ImageChecked { get; set; }
+
+        [Display(Name = "Deferred OnSite Scoring")]
+        public bool DeferredOnSiteScoring { get; set; }
+
+        [Display(Name = "Additional Data Requested")]
+        public bool AdditionalDataRequested { get; set; }
+
+        [Display(Name = "VRP Referral")]
+        public bool VRPReferral { get; set; }
+
+        [Display(Name = "Has Electronic Records")]
+        public bool HasERecord { get; set; }
 
         public void TrimAll()
         {
