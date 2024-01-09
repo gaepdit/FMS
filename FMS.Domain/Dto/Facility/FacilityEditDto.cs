@@ -16,6 +16,7 @@ namespace FMS.Domain.Dto
             CountyId = facility.County.Id;
             FacilityStatusId = facility.FacilityStatus?.Id;
             FacilityTypeId = facility.FacilityType?.Id;
+            FacilityTypeName = facility.FacilityType?.Name;
             BudgetCodeId = facility.BudgetCode?.Id;
             OrganizationalUnitId = facility.OrganizationalUnit?.Id;
             ComplianceOfficerId = facility.ComplianceOfficer?.Id;
@@ -64,6 +65,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Type/Environmental Interest")]
         public Guid? FacilityTypeId { get; set; }
+        public string FacilityTypeName { get; set; }
 
         [Required]
         [Display(Name = "Budget Code")]
@@ -120,7 +122,7 @@ namespace FMS.Domain.Dto
         public string HSInumber { get; set; }
 
         [Display(Name = "Determination Letter Date")]
-        public DateOnly NonHSILetterDate { get; set; }
+        public DateOnly? NonHSILetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -140,9 +142,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
 
-        [AllowNull]
         [Display(Name = "Date Received")]
-        public DateOnly RNDateReceived { get; set; }
+        public DateOnly? RNDateReceived { get; set; }
 
         [Display(Name = "Historical Unit")]
         public string HistoricalUnit { get; set; }

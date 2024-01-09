@@ -87,7 +87,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Historical Unit")]
         public string HistoricalUnit { get; set; }
 
-        [Display(Name = "Historical Compliance Officer")]
+        [Display(Name = "Historical C.O.")]
         public string HistoricalComplianceOfficer { get; set; }
 
         [Display(Name = "Tax ID")]

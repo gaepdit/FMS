@@ -22,6 +22,12 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public Guid Id { get; set; }
 
+        //[BindProperty]
+        //public DateOnly NonHSILetterDate { get; set; }
+
+        //[BindProperty]
+        //public DateOnly RNDateReceived { get; set; }
+
         // Select Lists
         public static SelectList Counties => new(Data.Counties, "Id", "Name");
         public static SelectList States => new(Data.States);
@@ -64,6 +70,9 @@ namespace FMS.Pages.Facilities
             Id = id.Value;
             Facility = new FacilityEditDto(facilityDetail);
 
+            //NonHSILetterDate = Facility.NonHSILetterDate;
+            //RNDateReceived = Facility.RNDateReceived;
+
             await PopulateSelectsAsync();
             return Page();
         }
@@ -83,6 +92,9 @@ namespace FMS.Pages.Facilities
                 TempData?.SetDisplayMessage(Context.Danger, "Facility deleted by another user.");
                 return RedirectToPage("./Details", new { Id });
             }
+
+            //Facility.NonHSILetterDate = NonHSILetterDate;
+            //Facility.RNDateReceived = RNDateReceived;
 
             Facility.TrimAll();
 

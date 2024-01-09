@@ -113,7 +113,7 @@ namespace FMS.Domain.Dto
         public string HSInumber { get; set; }
 
         [Display(Name = "Non-HSI Letter Date")]
-        public DateOnly NonHSILetterDate { get; set; }
+        public DateOnly? NonHSILetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -133,14 +133,13 @@ namespace FMS.Domain.Dto
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
 
-        [AllowNull]
         [Display(Name = "Date Received")]
-        public DateOnly RNDateReceived { get; set; }
+        public DateOnly? RNDateReceived { get; set; }
 
         [Display(Name = "Historical Unit")]
         public string HistoricalUnit { get; set; }
 
-        [Display(Name = "Historical Compliance Officer")]
+        [Display(Name = "Historical C.O.")]
         public string HistoricalComplianceOfficer { get; set; }
 
         [Display(Name = "Tax ID")]

@@ -6,4 +6,12 @@ $(document).ready(function formEdit() {
             $("#FileIdHelpBlock").addClass("d-none");
         }
     });
+
+    $("#Facility_FacilityTypeId").on("change", function () {
+        if ($("#Facility_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)") {
+            $("#RNBlock").removeClass("d-none");
+        } else {
+            $("#RNBlock").addClass("d-none");
+        }
+    });
 });

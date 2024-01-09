@@ -8,6 +8,21 @@
     <script src="~/js/mapGeocode.js"></script>
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/formEdit.js"></script>
+    @* <script>
+        function ShowRNBlock() {
+            // Get Element by id
+            var select = document.getElementById("FileTypeSelect");
+            //Get the option text
+            var index = select.selectedIndex;
+            var text = select.options[index].text;
+            // show or hide the RN Block
+            if (text === "RN (Release Notification)") {
+                document.getElementById("RNBlock").style.display = "block";
+            } else {
+                document.getElementById("RNBlock").style.display = "none";
+            }
+        }
+    </script> *@
 }
 
 @{
@@ -149,53 +164,65 @@
                 <textarea asp-for="Facility.Comments" class="form-control"></textarea>
             </div>
         </div>
-        <hr />
-        <h4>Release Notification Properties</h4>
-        <div class="mb-3 row">
-            <div class="col-md-4">
-                <div class="form-check">
-                    <input asp-for="Facility.PreRQSMcleanup" />
-                    <label asp-for="Facility.PreRQSMcleanup" class="form-check-label"></label>
+        <div id="RNBlock" class="@(Model.Facility.FacilityTypeName == "RN" ? "" : "d-none")">
+            <hr />
+            <h4>Release Notification Properties</h4>
+            <div class="mb-3 row">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.PreRQSMcleanup" />
+                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.ImageChecked" />
+                        <label asp-for="Facility.ImageChecked" class="form-check-label"></label>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-check">
-                    <input asp-for="Facility.ImageChecked" />
-                    <label asp-for="Facility.ImageChecked" class="form-check-label"></label>
+            <div class="mb-3 row">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.DeferredOnSiteScoring" />
+                        <label asp-for="Facility.DeferredOnSiteScoring" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.AdditionalDataRequested" />
+                        <label asp-for="Facility.AdditionalDataRequested" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.VRPReferral" />
+                        <label asp-for="Facility.VRPReferral" class="form-check-label"></label>
+                    </div>
                 </div>
             </div>
+            <div class="mb-3 row">
+                <div class="col-md-6">
+                    <label asp-for="Facility.HSInumber"></label>
+                    <input asp-for="Facility.HSInumber" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Facility.TaxId"></label>
+                    <input asp-for="Facility.TaxId" class="form-control" />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-md-6">
+                    <label asp-for="Facility.RNDateReceived"></label>
+                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Facility.NonHSILetterDate"></label>
+                    <input asp-for="Facility.NonHSILetterDate" class="form-control datepicker" type="date" />
+                </div>
+            </div>
+            <hr />
         </div>
-        <div class="mb-3 row">
-            <div class="col-md-4">
-                <div class="form-check">
-                    <input asp-for="Facility.DeferredOnSiteScoring" />
-                    <label asp-for="Facility.DeferredOnSiteScoring" class="form-check-label"></label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-check">
-                    <input asp-for="Facility.AdditionalDataRequested" />
-                    <label asp-for="Facility.AdditionalDataRequested" class="form-check-label"></label>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-check">
-                    <input asp-for="Facility.VRPReferral" />
-                    <label asp-for="Facility.VRPReferral" class="form-check-label"></label>
-                </div>
-            </div>
-        </div>
-        <div class="mb-3 row">
-            <div class="col-md-6">
-                <label asp-for="Facility.HSInumber"></label>
-                <input asp-for="Facility.HSInumber" class="form-control" />
-            </div>
-            <div class="col-md-6">
-                <label asp-for="Facility.NonHSILetterDate"></label>
-                <input asp-for="Facility.NonHSILetterDate" class="form-control" />
-            </div>
-        </div>
-        <hr />
         <div class="mb-3 row">
             <div class="col">
                 <div class="form-check">

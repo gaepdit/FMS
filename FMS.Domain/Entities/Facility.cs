@@ -103,26 +103,24 @@ namespace FMS.Domain.Entities
         [StringLength(5)]
         public string HSInumber { get; set; }
 
-        [AllowNull]
-        public DateOnly NonHSILetterDate { get; set; }
+        public DateOnly? NonHSILetterDate { get; set; }
 
-        [StringLength(200)]
+        [StringLength(1000)]
         public string Comments { get; set; }
 
-        public bool PreRQSMcleanup { get; set; } = true;
+        public bool PreRQSMcleanup { get; set; } = false;
 
-        public bool ImageChecked { get; set; } = true;
+        public bool ImageChecked { get; set; } = false;
 
-        public bool DeferredOnSiteScoring { get; set; } = true;
+        public bool DeferredOnSiteScoring { get; set; } = false;
 
-        public bool AdditionalDataRequested { get; set; } = true;
+        public bool AdditionalDataRequested { get; set; } = false;
 
-        public bool VRPReferral { get; set; } = true;
+        public bool VRPReferral { get; set; } = false;
 
-        public bool HasERecord { get; set; } = true;
+        public bool HasERecord { get; set; } = false;
 
-        [AllowNull]
-        public DateOnly RNDateReceived { get; set; }
+        public DateOnly? RNDateReceived { get; set; }
 
         public string HistoricalUnit { get; set; }
 

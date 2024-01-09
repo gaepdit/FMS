@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using FMS.Domain.Entities;
 
 // ReSharper disable StringLiteralTypo
@@ -23,7 +24,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
                     Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",
                     ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), //01069946 
-                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), 
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Description of Location",
                     Address = "102 THREE BRANCHES DR.",
                     City = "WOODSTOCK",
@@ -326,8 +327,12 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     ImageChecked = true,
                     DeferredOnSiteScoring = true,
                     AdditionalDataRequested = false,
-                    VRPReferral = false
-                },
+                    VRPReferral = false,
+                    RNDateReceived = null,
+                    HistoricalUnit = "Old RRP Unit",
+                    HistoricalComplianceOfficer = "Someone Retired",
+                    TaxId = "ABC-2637485-11"
+        },
                 new()
                 {
                     Id = Guid.NewGuid(),
@@ -351,12 +356,16 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     IsRetained = true,
                     HSInumber = "10251",
                     NonHSILetterDate = new DateOnly(2020, 11, 17),
-                    Comments = "Strip that looks like every other strip mall",
-                    PreRQSMcleanup = false,
+                    Comments = "Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page.",
+                    PreRQSMcleanup = true,
                     ImageChecked = false,
                     DeferredOnSiteScoring = true,
                     AdditionalDataRequested = true,
-                    VRPReferral = false
+                    VRPReferral = false,
+                    RNDateReceived = new(2018, 2, 13),
+                    HistoricalUnit = "Old RRP Unit",
+                    HistoricalComplianceOfficer = "Another Retired",
+                    TaxId = "DEF-123456789-11"
                 }
             };
         }

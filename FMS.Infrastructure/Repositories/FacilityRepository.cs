@@ -302,6 +302,10 @@ namespace FMS.Infrastructure.Repositories
             facility.AdditionalDataRequested = facilityUpdates.AdditionalDataRequested;
             facility.VRPReferral = facilityUpdates.VRPReferral;
             facility.HasERecord = facilityUpdates.HasERecord;
+            facility.RNDateReceived = facilityUpdates.RNDateReceived;
+            facility.HistoricalUnit = facilityUpdates.HistoricalUnit;
+            facility.HistoricalComplianceOfficer = facilityUpdates.HistoricalComplianceOfficer;
+            facility.TaxId = facilityUpdates.TaxId;
             // ******************
             facility.IsRetained = facilityUpdates.IsRetained;
 
