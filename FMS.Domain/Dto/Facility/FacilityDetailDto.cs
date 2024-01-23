@@ -32,7 +32,7 @@ namespace FMS.Domain.Dto
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
             HSInumber = facility.HSInumber;
-            NonHSILetterDate = facility.NonHSILetterDate;
+            DeterminationLetterDate = facility.DeterminationLetterDate;
             Comments = facility.Comments;
             PreRQSMcleanup = facility.PreRQSMcleanup;
             ImageChecked = facility.ImageChecked;
@@ -112,8 +112,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 
-        [Display(Name = "Non-HSI Letter Date")]
-        public DateOnly? NonHSILetterDate { get; set; }
+        [Display(Name = "Determination Letter Date")]
+        public DateOnly? DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }

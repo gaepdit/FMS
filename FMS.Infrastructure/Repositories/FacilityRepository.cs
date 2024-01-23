@@ -294,7 +294,7 @@ namespace FMS.Infrastructure.Repositories
             facility.Longitude = facilityUpdates.Longitude;
             // added for release notifications
             facility.HSInumber = facilityUpdates.HSInumber;
-            facility.NonHSILetterDate = facilityUpdates.NonHSILetterDate;
+            facility.DeterminationLetterDate = facilityUpdates.DeterminationLetterDate;
             facility.Comments = facilityUpdates.Comments;
             facility.PreRQSMcleanup = facilityUpdates.PreRQSMcleanup;
             facility.ImageChecked = facilityUpdates.ImageChecked;

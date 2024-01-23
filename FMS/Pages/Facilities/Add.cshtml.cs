@@ -55,7 +55,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetAsync()
         {
             await PopulateSelectsAsync();
-            Facility = new FacilityCreateDto { State = "Georgia", NonHSILetterDate = DateOnly.FromDateTime(DateTime.Now), RNDateReceived = DateOnly.FromDateTime(DateTime.Now) };
+            Facility = new FacilityCreateDto { State = "Georgia", DeterminationLetterDate = DateOnly.FromDateTime(DateTime.Now), RNDateReceived = DateOnly.FromDateTime(DateTime.Now) };
 
             return Page();
         }
@@ -68,7 +68,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            Facility.NonHSILetterDate = NonHSILetterDate;
+            Facility.DeterminationLetterDate = NonHSILetterDate;
             Facility.RNDateReceived = RNDateReceived;   
 
             Facility.TrimAll();

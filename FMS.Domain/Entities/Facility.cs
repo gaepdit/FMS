@@ -31,7 +31,7 @@ namespace FMS.Domain.Entities
             Longitude = newFacility.Longitude ?? 0;
             // The following properties only apply to Release Notifications
             HSInumber = newFacility.HSInumber;
-            NonHSILetterDate = newFacility.NonHSILetterDate;
+            DeterminationLetterDate = newFacility.DeterminationLetterDate;
             Comments = newFacility.Comments;
             PreRQSMcleanup = newFacility.PreRQSMcleanup;
             ImageChecked = newFacility.ImageChecked;
@@ -39,7 +39,11 @@ namespace FMS.Domain.Entities
             AdditionalDataRequested = newFacility.AdditionalDataRequested;
             VRPReferral = newFacility.VRPReferral;
             HasERecord = newFacility.HasERecord;
-        }
+            RNDateReceived = newFacility.RNDateReceived;
+            HistoricalUnit = newFacility.HistoricalUnit;
+            HistoricalComplianceOfficer = newFacility.HistoricalComplianceOfficer;
+            TaxId = newFacility.TaxId;
+    }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
         public string FacilityNumber { get; set; }
@@ -103,7 +107,7 @@ namespace FMS.Domain.Entities
         [StringLength(5)]
         public string HSInumber { get; set; }
 
-        public DateOnly? NonHSILetterDate { get; set; }
+        public DateOnly? DeterminationLetterDate { get; set; }
 
         [StringLength(1000)]
         public string Comments { get; set; }

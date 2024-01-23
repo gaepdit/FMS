@@ -28,7 +28,7 @@ namespace FMS.Domain.Dto
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
             HSInumber = facility.HSInumber;
-            NonHSILetterDate = facility.NonHSILetterDate;
+            DeterminationLetterDate = facility.DeterminationLetterDate;
             Comments = facility.Comments;
             PreRQSMcleanup = facility.PreRQSMcleanup;
             ImageChecked = facility.ImageChecked;
@@ -122,7 +122,7 @@ namespace FMS.Domain.Dto
         public string HSInumber { get; set; }
 
         [Display(Name = "Determination Letter Date")]
-        public DateOnly? NonHSILetterDate { get; set; }
+        public DateOnly? DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -166,6 +166,9 @@ namespace FMS.Domain.Dto
             Address = Address?.Trim();
             City = City?.Trim();
             PostalCode = PostalCode?.Trim();
+            HSInumber = HSInumber?.Trim();
+            HistoricalUnit = HistoricalUnit?.Trim();
+            TaxId = TaxId?.Trim();
         }
     }
 }

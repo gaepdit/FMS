@@ -26,6 +26,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Type/Environmental Interest")]
         public Guid FacilityTypeId { get; set; }
+        public string FacilityTypeName {get; set; }
 
         [Required]
         [Display(Name = "Budget Code")]
@@ -78,7 +79,7 @@ namespace FMS.Domain.Dto
         public string HSInumber { get; set; }
 
         [Display(Name = "Determination Letter Date")]
-        public DateOnly? NonHSILetterDate { get; set; }
+        public DateOnly? DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }

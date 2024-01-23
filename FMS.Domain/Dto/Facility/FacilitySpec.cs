@@ -59,8 +59,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 
-        [Display(Name = "Non-HSI Letter Date")]
-        public DateOnly NonHSILetterDate { get; set; }
+        [Display(Name = "Determination Letter Date")]
+        public DateOnly DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -115,6 +115,11 @@ namespace FMS.Domain.Dto
                 {nameof(OrganizationalUnitId), OrganizationalUnitId?.ToString()},
                 {nameof(PostalCode), PostalCode},
                 {nameof(State), State},
+                {nameof(HSInumber), HSInumber},
+                {nameof(Comments), Comments },
+                {nameof(HistoricalUnit), HistoricalUnit },
+                {nameof(HistoricalComplianceOfficer), HistoricalComplianceOfficer },
+                {nameof(TaxId), TaxId}
             };
     }
 }
