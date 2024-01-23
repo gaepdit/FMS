@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -9,7 +10,7 @@ namespace FMS.Domain.Dto
         public bool ShowDeleted { get; set; }
 
         [Display(Name = "Type/Environmental Interest")]
-        public FacilityType FacilityType { get; set; }
+        public Guid? FacilityTypeId { get; set; }
 
         [Display(Name = "Street Address")]
         public string Address { get; set; }

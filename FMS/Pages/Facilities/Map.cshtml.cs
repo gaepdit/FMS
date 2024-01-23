@@ -1,8 +1,11 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Dto.Facility;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +16,7 @@ namespace FMS.Pages.Facilities
     public class MapModel : PageModel
     {
         private readonly IFacilityRepository _repository;
+        private readonly ISelectListHelper _listHelper;
 
         // "Spec" is the Facility DTO bound to the HTML Page elements
         public FacilityMapSpec Spec { get; set; }
@@ -32,14 +36,23 @@ namespace FMS.Pages.Facilities
         // Shows if there are no results in result set
         public bool ShowNone { get; private set; }
 
+        public SelectList FacilityTypes { get; private set; }
+
         [BindProperty]
         public FacilityMapSpec ExportSpec { get; set; }
 
-        public MapModel(IFacilityRepository repository) => _repository = repository;
-
-        public void OnGet()
+        public MapModel(
+            IFacilityRepository repository,
+            ISelectListHelper listHelper)
         {
-            // Method intentionally left empty.
+            _repository = repository;
+            _listHelper = listHelper;
+        }
+
+        public async Task<IActionResult> OnGet()
+        {
+            await PopulateSelectsAsync();
+            return Page();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
@@ -111,6 +124,7 @@ namespace FMS.Pages.Facilities
             }
 
             ShowResults = true;
+            await PopulateSelectsAsync();
             return Page();
         }
 
@@ -121,6 +135,11 @@ namespace FMS.Pages.Facilities
             IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(ExportSpec);
             var facilityMapDetail = from p in facilityMapSummaries select new FacilityMapSummaryDtoScalar(p);
             return File(facilityMapDetail.ExportExcelAsByteArray(), "application/vnd.ms.excel", fileName);
+        }
+
+        private async Task PopulateSelectsAsync()
+        {
+            FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
         }
     }
 }
