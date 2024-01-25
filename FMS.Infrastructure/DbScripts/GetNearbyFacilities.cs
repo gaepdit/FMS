@@ -51,7 +51,7 @@ BEGIN
             ON a.FacilityTypeId = c.Id
             INNER JOIN [dbo].[Files] as d
             ON a.FileId = d.Id
-        where (a.Active = 1 AND a.FacilityTypeId = @FacilityTypeId)
+        where (a.Active = 1 AND ( @FacilityTypeId IS NULL OR a.FacilityTypeId = @FacilityTypeId ))
            or @Active = 0
     ) AS T
     WHERE T.distance <= @Radius
