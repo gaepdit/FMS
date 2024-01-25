@@ -162,8 +162,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
             var conn = _context.Database.GetDbConnection();
+
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius},
+                new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
                 commandType: CommandType.StoredProcedure)).ToList();
         }
         
