@@ -355,7 +355,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     CountyId = 243,
                     IsRetained = true,
                     HSInumber = "10251",
-                    DeterminationLetterDate = new DateOnly(2020, 11, 17),
+                    DeterminationLetterDate = null,
                     Comments = "Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page.",
                     PreRQSMcleanup = true,
                     ImageChecked = false,
