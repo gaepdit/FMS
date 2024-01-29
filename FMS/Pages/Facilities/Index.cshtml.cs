@@ -17,8 +17,8 @@ namespace FMS.Pages.Facilities
     public class IndexModel : PageModel
     {
         private readonly IFacilityRepository _repository;
+        private readonly IFacilityTypeRepository _repositoryType;
         private readonly ISelectListHelper _listHelper;
-        
         private readonly IUserService _userService;
 
         // "Spec" is the Facility DTO bound to the HTML Page elements
@@ -31,6 +31,8 @@ namespace FMS.Pages.Facilities
         // Shows results section after searching
         public bool ShowResults { get; private set; }
 
+        public bool ShowPendingOnly { get; private set; }
+
         // Select Lists
         public SelectList Counties => new(Data.Counties, "Id", "Name");
         public SelectList States => new(Data.States);
@@ -42,10 +44,12 @@ namespace FMS.Pages.Facilities
 
         public IndexModel(
             IFacilityRepository repository,
+            IFacilityTypeRepository repositoryType,
             ISelectListHelper listHelper,
             IUserService userService)
         {
             _repository = repository;
+            _repositoryType = repositoryType;
             _listHelper = listHelper;
             _userService = userService;
         }
@@ -62,9 +66,13 @@ namespace FMS.Pages.Facilities
             // Get the list of facilities matching the "Spec" criteria
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
-
+            
             ShowResults = true;
             await PopulateSelectsAsync();
+
+            ShowPendingOnly = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
+            if (!ShowPendingOnly) { Spec.ShowPendingOnly = false; }
+
             return Page();
         }
 

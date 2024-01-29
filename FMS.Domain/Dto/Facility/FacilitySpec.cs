@@ -18,6 +18,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Include deleted records")]
         public bool ShowDeleted { get; set; }
 
+        [Display(Name = "Show Only Pending Notifications")]
+        public bool ShowPendingOnly { get; set; }
+
         [Display(Name = "County")]
         public int? CountyId { get; set; }
 
@@ -115,11 +118,7 @@ namespace FMS.Domain.Dto
                 {nameof(OrganizationalUnitId), OrganizationalUnitId?.ToString()},
                 {nameof(PostalCode), PostalCode},
                 {nameof(State), State},
-                {nameof(HSInumber), HSInumber},
-                {nameof(Comments), Comments },
-                {nameof(HistoricalUnit), HistoricalUnit },
-                {nameof(HistoricalComplianceOfficer), HistoricalComplianceOfficer },
-                {nameof(TaxId), TaxId}
+                {nameof(ShowPendingOnly), ShowPendingOnly.ToString()},
             };
     }
 }

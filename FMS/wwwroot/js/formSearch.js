@@ -13,4 +13,11 @@ $(document).ready(function formSearch() {
         });
         return true;
     });
+    $("#Spec_FacilityTypeId").on("change", function () {
+        if ($("#Spec_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)") {
+            $("#RNBlock").removeClass("d-none");
+        } else {
+            $("#RNBlock").addClass("d-none");
+        }
+    });
 });
