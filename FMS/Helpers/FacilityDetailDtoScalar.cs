@@ -1,5 +1,8 @@
 using ClosedXML.Attributes;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace FMS.Domain.Dto
 {
@@ -24,6 +27,19 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
+            HSInumber = facility.HSInumber;
+            DeterminationLetterDate = facility.DeterminationLetterDate;
+            Comments = facility.Comments;
+            PreRQSMcleanup = facility.PreRQSMcleanup;
+            ImageChecked = facility.ImageChecked;
+            DeferredOnSiteScoring = facility.DeferredOnSiteScoring;
+            AdditionalDataRequested = facility.AdditionalDataRequested;
+            VRPReferral = facility.VRPReferral;
+            RNDateReceived = facility.RNDateReceived;
+            HistoricalUnit = facility.HistoricalUnit;
+            HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
+            TaxId = facility.TaxId;
+            HasERecord = facility.HasERecord;
             IsRetained = facility.IsRetained;
             Cabinets = facility.CabinetsToString;
             RetentionRecords = facility.RetentionRecordsToString;
@@ -81,6 +97,46 @@ namespace FMS.Domain.Dto
         [XLColumn(Header = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; }
+
+        // The following properties only apply to Release Notifications
+        [XLColumn(Header = "HSI Number")]
+        public string HSInumber { get; set; }
+
+        [XLColumn(Header = "Determination Letter Date")]
+        public DateOnly? DeterminationLetterDate { get; set; }
+
+        [XLColumn(Header = "Comments")]
+        public string Comments { get; set; }
+
+        [XLColumn(Header = "Pre-RQSM Cleanup")]
+        public bool PreRQSMcleanup { get; set; }
+
+        [XLColumn(Header = "Image Checked")]
+        public bool ImageChecked { get; set; }
+
+        [XLColumn(Header = "Deferred OnSite Scoring")]
+        public bool DeferredOnSiteScoring { get; set; }
+
+        [XLColumn(Header = "Additional Data Requested")]
+        public bool AdditionalDataRequested { get; set; }
+
+        [XLColumn(Header = "VRP Referral")]
+        public bool VRPReferral { get; set; }
+
+        [XLColumn(Header = "Date Received")]
+        public DateOnly? RNDateReceived { get; set; }
+
+        [XLColumn(Header = "Historical Unit")]
+        public string HistoricalUnit { get; set; }
+
+        [XLColumn(Header = "Historical C.O.")]
+        public string HistoricalComplianceOfficer { get; set; }
+
+        [XLColumn(Header = "Tax ID")]
+        public string TaxId { get; set; }
+
+        [XLColumn(Header = "Has Electronic Records")]
+        public bool HasERecord { get; set; }
 
         [XLColumn(Header = "Is Retained Onsite")]
         public bool IsRetained { get; }

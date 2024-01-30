@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
@@ -25,7 +26,14 @@ namespace FMS.Pages.Facilities
         public string ConfirmedFacilityFileLabel { get; set; }
 
         public bool ConfirmFacility { get; private set; }
+
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
+
+        [BindProperty]
+        public DateOnly NonHSILetterDate { get; set; }
+
+        [BindProperty]
+        public DateOnly RNDateReceived { get; set; }
 
         // Select Lists
         public static SelectList Counties => new(Data.Counties, "Id", "Name");
@@ -47,7 +55,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetAsync()
         {
             await PopulateSelectsAsync();
-            Facility = new FacilityCreateDto {State = "Georgia"};
+            Facility = new FacilityCreateDto { State = "Georgia", DeterminationLetterDate = DateOnly.FromDateTime(DateTime.Now), RNDateReceived = DateOnly.FromDateTime(DateTime.Now) };
 
             return Page();
         }
@@ -59,6 +67,9 @@ namespace FMS.Pages.Facilities
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            Facility.DeterminationLetterDate = NonHSILetterDate;
+            Facility.RNDateReceived = RNDateReceived;   
 
             Facility.TrimAll();
 

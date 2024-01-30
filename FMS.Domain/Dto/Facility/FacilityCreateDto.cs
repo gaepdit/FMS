@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FMS.Domain.Dto
 {
@@ -24,6 +26,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Type/Environmental Interest")]
         public Guid FacilityTypeId { get; set; }
+        public string FacilityTypeName {get; set; }
 
         [Required]
         [Display(Name = "Budget Code")]
@@ -75,8 +78,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 
-        [Display(Name = "Non-HSI Letter Date")]
-        public DateOnly NonHSILetterDate { get; set; }
+        [Display(Name = "Determination Letter Date")]
+        public DateOnly? DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -96,7 +99,19 @@ namespace FMS.Domain.Dto
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
 
-        [Display(Name = "Has E-Records")]
+        [Display(Name = "Date Received")]
+        public DateOnly? RNDateReceived { get; set; }
+
+        [Display(Name = "Historical Unit")]
+        public string HistoricalUnit { get; set; }
+
+        [Display(Name = "Historical C.O.")]
+        public string HistoricalComplianceOfficer { get; set; }
+
+        [Display(Name = "Tax ID")]
+        public string TaxId { get; set; }
+
+        [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
         public void TrimAll()
@@ -109,6 +124,8 @@ namespace FMS.Domain.Dto
             City = City?.Trim();
             PostalCode = PostalCode?.Trim();
             HSInumber = HSInumber?.Trim();
+            HistoricalUnit = HistoricalUnit?.Trim();
+            TaxId = TaxId?.Trim();
         }
     }
 }

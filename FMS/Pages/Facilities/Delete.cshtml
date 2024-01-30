@@ -7,87 +7,176 @@
 
 <h1><em>Confirm</em> @ViewData["Title"]</h1>
 
-<div class="container bg-light-subtle p-3 rounded-3">
+<div class="container-fluid">
     <p class="lead text-danger font-weight-medium">Are you sure you want to delete this Facility?</p>
-    <dl class="row">
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Name)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new {Model.FacilityDetail.IsRetained})
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Location)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Address)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
-            @Html.DisplayFor(model => model.FacilityDetail.City),
-            @Html.DisplayFor(model => model.FacilityDetail.State)
-            @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.County)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Latitude),
-            @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-        </dd>
-    </dl>
+    <div class="parent-container d-lg-inline-flex">
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <dl class="row">
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Name)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Location)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Address)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
+                    @Html.DisplayFor(model => model.FacilityDetail.City),
+                    @Html.DisplayFor(model => model.FacilityDetail.State)
+                    @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.County)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Latitude),
+                    @Html.DisplayFor(model => model.FacilityDetail.Longitude)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.HasERecord)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
+                </dd>
+            </dl>
+        </div>
+        @if (Model.FacilityDetail.FacilityType.Name == "RN")
+        {
+            <div class="container bg-light-subtle p-3 m-1 rounded-3">
+                <H2>Release Notification Information</H2>
+                <dl class="row">
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.HSInumber)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.HSInumber, "StringOrNone")
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.DeterminationLetterDate)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.DeterminationLetterDate, "MM/dd/yyyy")
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.PreRQSMcleanup)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.PreRQSMcleanup)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.ImageChecked)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.ImageChecked)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.AdditionalDataRequested)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.AdditionalDataRequested)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.VRPReferral)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.VRPReferral)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.RNDateReceived)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.RNDateReceived)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.HistoricalUnit)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalUnit)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.HistoricalComplianceOfficer)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalComplianceOfficer)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.TaxId)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.TaxId)
+                    </dd>
+                </dl>
+            </div>
+        }
+    </div>
     <hr />
     <form method="post">
         <input asp-for="Id" />

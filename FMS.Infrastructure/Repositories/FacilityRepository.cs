@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Dapper;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -55,6 +57,7 @@ namespace FMS.Infrastructure.Repositories
             .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
             .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
             .Where(e => spec.ShowDeleted || e.Active)
+            .Where(e => !spec.ShowPendingOnly || (spec.ShowPendingOnly && !e.DeterminationLetterDate.HasValue))
             .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
             .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
@@ -160,8 +163,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
             var conn = _context.Database.GetDbConnection();
+
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius},
+                new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
                 commandType: CommandType.StoredProcedure)).ToList();
         }
         
@@ -290,6 +294,21 @@ namespace FMS.Infrastructure.Repositories
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
             facility.Longitude = facilityUpdates.Longitude;
+            // added for release notifications
+            facility.HSInumber = facilityUpdates.HSInumber;
+            facility.DeterminationLetterDate = facilityUpdates.DeterminationLetterDate;
+            facility.Comments = facilityUpdates.Comments;
+            facility.PreRQSMcleanup = facilityUpdates.PreRQSMcleanup;
+            facility.ImageChecked = facilityUpdates.ImageChecked;
+            facility.DeferredOnSiteScoring = facilityUpdates.DeferredOnSiteScoring;
+            facility.AdditionalDataRequested = facilityUpdates.AdditionalDataRequested;
+            facility.VRPReferral = facilityUpdates.VRPReferral;
+            facility.HasERecord = facilityUpdates.HasERecord;
+            facility.RNDateReceived = facilityUpdates.RNDateReceived;
+            facility.HistoricalUnit = facilityUpdates.HistoricalUnit;
+            facility.HistoricalComplianceOfficer = facilityUpdates.HistoricalComplianceOfficer;
+            facility.TaxId = facilityUpdates.TaxId;
+            // ******************
             facility.IsRetained = facilityUpdates.IsRetained;
 
             await _context.SaveChangesAsync();

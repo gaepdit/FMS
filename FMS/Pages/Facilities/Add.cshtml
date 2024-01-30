@@ -3,7 +3,7 @@
 @model FMS.Pages.Facilities.AddModel
 
 @section Scripts
-    {
+{
     <partial name="_GoogleMapsApiPartial" />
     <script src="~/js/mapGeocode.js"></script>
     <partial name="_ValidationScriptsPartial" />
@@ -137,6 +137,79 @@
                 </div>
             }
         </div>
+        <div class="mb-3 row">
+            <div class="col-md-3">
+                <div class="form-check">
+                    <input asp-for="Facility.HasERecord" />
+                    <label asp-for="Facility.HasERecord" class="form-check-label"></label>
+                </div>
+            </div>
+            <div class="col">
+                <label asp-for="Facility.Comments"></label>
+                <textarea asp-for="Facility.Comments" class="form-control"></textarea>
+            </div>
+        </div>
+        <div id="RNBlock" class="@(Model.Facility.FacilityTypeName == "RN" ? "" : "d-none")">
+            <hr />
+            <h4>Release Notification Properties</h4>
+            <div class="mb-3 row">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.PreRQSMcleanup" />
+                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.ImageChecked" />
+                        <label asp-for="Facility.ImageChecked" class="form-check-label"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.DeferredOnSiteScoring" />
+                        <label asp-for="Facility.DeferredOnSiteScoring" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.AdditionalDataRequested" />
+                        <label asp-for="Facility.AdditionalDataRequested" class="form-check-label"></label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.VRPReferral" />
+                        <label asp-for="Facility.VRPReferral" class="form-check-label"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-md-6">
+                    <label asp-for="Facility.HSInumber"></label>
+                    <input asp-for="Facility.HSInumber" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Facility.TaxId"></label>
+                    <input asp-for="Facility.TaxId" class="form-control" />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-md-6">
+                    <label asp-for="Facility.RNDateReceived"></label>
+                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" />
+                    <span asp-validation-for="Facility.RNDateReceived" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Facility.DeterminationLetterDate"></label>
+                    <input asp-for="Facility.DeterminationLetterDate" class="form-control datepicker" type="date" />
+                    <span asp-validation-for="Facility.DeterminationLetterDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
         <hr />
         <p class="text-danger">* denotes a required field</p>
         @if (Model.ConfirmFacility)
@@ -221,6 +294,17 @@
                 <input asp-for="Facility.FacilityStatusId" type="hidden" />
                 <input asp-for="Facility.FacilityTypeId" type="hidden" />
                 <input asp-for="Facility.OrganizationalUnitId" type="hidden" />
+                <input asp-for="Facility.HasERecord" type="hidden" />
+                <input asp-for="Facility.PreRQSMcleanup" type="hidden" />
+                <input asp-for="Facility.ImageChecked" type="hidden" />
+                <input asp-for="Facility.DeferredOnSiteScoring" type="hidden" />
+                <input asp-for="Facility.AdditionalDataRequested" type="hidden" />
+                <input asp-for="Facility.VRPReferral" type="hidden" />
+                <input asp-for="Facility.HSInumber" type="hidden" />
+                <input asp-for="Facility.DeterminationLetterDate" type="hidden" />
+                <input asp-for="Facility.Comments" type="hidden" />
+                <input asp-for="Facility.TaxId" type="hidden" />
+                <input asp-for="Facility.RNDateReceived" type="hidden" />
             </div>
         }
         else

@@ -35,6 +35,14 @@ namespace FMS.Infrastructure.Repositories
             return facilityType == null ? null : new FacilityTypeEditDto(facilityType);
         }
 
+        public async Task<string> GetFacilityTypeNameAsync(Guid? id)
+        {
+            var facilityType = await _context.FacilityTypes.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            return facilityType?.Name;
+        }
+
         public async Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync() =>
             await _context.FacilityTypes.AsNoTracking()
                 .OrderBy(e => e.Name)

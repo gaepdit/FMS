@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FMS.Domain.Entities;
 using FMS.Domain.Extensions;
@@ -31,13 +32,17 @@ namespace FMS.Domain.Dto
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
             HSInumber = facility.HSInumber;
-            NonHSILetterDate = facility.NonHSILetterDate;
+            DeterminationLetterDate = facility.DeterminationLetterDate;
             Comments = facility.Comments;
             PreRQSMcleanup = facility.PreRQSMcleanup;
             ImageChecked = facility.ImageChecked;
             DeferredOnSiteScoring = facility.DeferredOnSiteScoring;
             AdditionalDataRequested = facility.AdditionalDataRequested;
             VRPReferral = facility.VRPReferral;
+            RNDateReceived = facility.RNDateReceived;
+            HistoricalUnit = facility.HistoricalUnit;
+            HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
+            TaxId = facility.TaxId;
             HasERecord = facility.HasERecord;
             IsRetained = facility.IsRetained;
             Cabinets = new List<string>();
@@ -107,8 +112,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 
-        [Display(Name = "Non-HSI Letter Date")]
-        public DateOnly NonHSILetterDate { get; set; }
+        [Display(Name = "Determination Letter Date")]
+        public DateOnly? DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -127,6 +132,18 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
+
+        [Display(Name = "Date Received")]
+        public DateOnly? RNDateReceived { get; set; }
+
+        [Display(Name = "Historical Unit")]
+        public string HistoricalUnit { get; set; }
+
+        [Display(Name = "Historical C.O.")]
+        public string HistoricalComplianceOfficer { get; set; }
+
+        [Display(Name = "Tax ID")]
+        public string TaxId { get; set; }
 
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }

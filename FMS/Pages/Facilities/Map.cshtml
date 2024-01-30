@@ -27,10 +27,16 @@
 <div class="p-3 rounded-3 bg-light-subtle">
     <form method="get" asp-fragment="SearchResults">
         <div class="mb-3 row">
-            <div class="col">
+            <div class="col-md-8">
                 <label asp-for="Spec.Address"></label>
                 <input id="Address" asp-for="Spec.Address" class="form-control" />
                 <input id="LocalAddress" asp-for="Spec.GeocodeAddress" type="hidden" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Spec.FacilityTypeId"></label>
+                <select asp-for="Spec.FacilityTypeId" asp-items="Model.FacilityTypes" class="form-select">
+                    <option value=""></option>
+                </select>
             </div>
         </div>
         <div class="mb-3 row">

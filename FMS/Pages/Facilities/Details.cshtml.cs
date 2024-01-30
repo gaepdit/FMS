@@ -27,6 +27,12 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
+        public string HSInumber { get; set; } = string.Empty;
+
+        public string TemplateFolderLink { get; set; } = "https://gets.sharepoint.com/sites/RRP-Templates";
+
+        public string WorkingFolderLink { get; set; } = string.Empty;
+
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
             if (id == null)
@@ -45,6 +51,9 @@ namespace FMS.Pages.Facilities
             {
                 HighlightRecord = hr.Value;
             }
+
+            HSInumber = FacilityDetail.HSInumber;
+            WorkingFolderLink = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/HSI/Shared%20Documents/" + HSInumber + "/Working-Docs";  
 
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
