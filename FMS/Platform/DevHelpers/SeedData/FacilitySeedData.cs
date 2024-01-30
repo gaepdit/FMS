@@ -318,15 +318,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.505922m,
                     CountyId = 243,
-                    IsRetained = true,
-                    HSInumber = "10234",
-                    NonHSILetterDate = new DateOnly(2018, 2, 13),
-                    Comments = "Just some comments about this facility",
-                    PreRQSMcleanup = false,
-                    ImageChecked = true,
-                    DeferredOnSiteScoring = true,
-                    AdditionalDataRequested = false,
-                    VRPReferral = false
+                    IsRetained = true
                 },
                 new()
                 {
@@ -348,15 +340,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.506122m,
                     CountyId = 243,
-                    IsRetained = true,
-                    HSInumber = "10251",
-                    NonHSILetterDate = new DateOnly(2020, 11, 17),
-                    Comments = "Strip that looks like every other strip mall",
-                    PreRQSMcleanup = false,
-                    ImageChecked = false,
-                    DeferredOnSiteScoring = true,
-                    AdditionalDataRequested = true,
-                    VRPReferral = false
+                    IsRetained = true
                 }
             };
         }
