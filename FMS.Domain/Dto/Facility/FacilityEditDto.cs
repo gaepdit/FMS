@@ -81,7 +81,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
-        [Display(Name = "Location Description")]
+        [Display(Name = "Location Description/Tax Parcel ID")]
         public string Location { get; set; }
 
         [Required]
@@ -133,13 +133,13 @@ namespace FMS.Domain.Dto
         [Display(Name = "Image Checked")]
         public bool ImageChecked { get; set; }
 
-        [Display(Name = "Deferred OnSite Scoring")]
+        [Display(Name = "Brownfield Deferral")]
         public bool DeferredOnSiteScoring { get; set; }
 
         [Display(Name = "Additional Data Requested")]
         public bool AdditionalDataRequested { get; set; }
 
-        [Display(Name = "VRP Referral")]
+        [Display(Name = "VRP Deferral")]
         public bool VRPReferral { get; set; }
 
         [Required]

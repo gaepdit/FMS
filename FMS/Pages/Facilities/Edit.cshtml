@@ -169,10 +169,12 @@
             <h4>Release Notification Properties</h4>
             <div class="mb-3 row">
                 <div class="col-md-4">
-                    <div class="form-check">
-                        <input asp-for="Facility.PreRQSMcleanup" />
-                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label"></label>
-                    </div>
+                    <label asp-for="Facility.RNDateReceived"></label>
+                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="Facility.DeterminationLetterDate"></label>
+                    <input asp-for="Facility.DeterminationLetterDate" class="form-control datepicker" type="date" />
                 </div>
                 <div class="col-md-4">
                     <div class="form-check">
@@ -180,6 +182,19 @@
                         <label asp-for="Facility.ImageChecked" class="form-check-label"></label>
                     </div>
                 </div>
+            </div>
+            <div class="mb-3 row">
+                <div class="col-md-4">
+                    <label asp-for="Facility.HSInumber"></label>
+                    <input asp-for="Facility.HSInumber" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input asp-for="Facility.PreRQSMcleanup" />
+                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label"></label>
+                    </div>
+                </div>
+                
             </div>
             <div class="mb-3 row">
                 <div class="col-md-4">
@@ -199,26 +214,6 @@
                         <input asp-for="Facility.VRPReferral" />
                         <label asp-for="Facility.VRPReferral" class="form-check-label"></label>
                     </div>
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <div class="col-md-6">
-                    <label asp-for="Facility.HSInumber"></label>
-                    <input asp-for="Facility.HSInumber" class="form-control" />
-                </div>
-                <div class="col-md-6">
-                    <label asp-for="Facility.TaxId"></label>
-                    <input asp-for="Facility.TaxId" class="form-control" />
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <div class="col-md-6">
-                    <label asp-for="Facility.RNDateReceived"></label>
-                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" />
-                </div>
-                <div class="col-md-6">
-                    <label asp-for="Facility.DeterminationLetterDate"></label>
-                    <input asp-for="Facility.DeterminationLetterDate" class="form-control datepicker" type="date" />
                 </div>
             </div>
             <hr />

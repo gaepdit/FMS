@@ -31,6 +31,7 @@ namespace FMS.Pages.Facilities
         // Shows results section after searching
         public bool ShowResults { get; private set; }
 
+        // Shows Checkbox for Pending RNs
         public bool ShowPendingOnly { get; private set; }
 
         // Select Lists
@@ -67,12 +68,10 @@ namespace FMS.Pages.Facilities
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
             
+            ShowPendingOnly = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
+
             ShowResults = true;
             await PopulateSelectsAsync();
-
-            ShowPendingOnly = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
-            if (!ShowPendingOnly) { Spec.ShowPendingOnly = false; }
-
             return Page();
         }
 
