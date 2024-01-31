@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Threading.Tasks;
 using FMS.Platform.Extensions;
+using FMS.Helpers;
 
 namespace FMS.Pages.Facilities
 {
@@ -27,9 +28,7 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
-        public string HSInumber { get; set; } = string.Empty;
-
-        public string TemplateFolderLink { get; set; } = "https://gets.sharepoint.com/sites/RRP-Templates";
+        public string TemplateFolderLink { get; set; } = URLHelper.GetTemplateFolderLink();
 
         public string WorkingFolderLink { get; set; } = string.Empty;
 
@@ -52,8 +51,7 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
-            HSInumber = FacilityDetail.HSInumber;
-            WorkingFolderLink = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/HSI/Shared%20Documents/" + HSInumber + "/Working-Docs";  
+            WorkingFolderLink = URLHelper.GetWorkingFolderLink(FacilityDetail.HSInumber);
 
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
