@@ -29,12 +29,6 @@ namespace FMS.Pages.Facilities
 
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
-        [BindProperty]
-        public DateOnly NonHSILetterDate { get; set; }
-
-        [BindProperty]
-        public DateOnly RNDateReceived { get; set; }
-
         // Select Lists
         public static SelectList Counties => new(Data.Counties, "Id", "Name");
         public static SelectList States => new(Data.States);
@@ -55,8 +49,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetAsync()
         {
             await PopulateSelectsAsync();
-            Facility = new FacilityCreateDto { State = "Georgia", DeterminationLetterDate = DateOnly.FromDateTime(DateTime.Now), RNDateReceived = DateOnly.FromDateTime(DateTime.Now) };
-
+            Facility = new FacilityCreateDto { State = "Georgia" };
             return Page();
         }
 
@@ -67,9 +60,6 @@ namespace FMS.Pages.Facilities
                 await PopulateSelectsAsync();
                 return Page();
             }
-
-            Facility.DeterminationLetterDate = NonHSILetterDate;
-            Facility.RNDateReceived = RNDateReceived;   
 
             Facility.TrimAll();
 

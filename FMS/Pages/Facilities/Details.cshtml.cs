@@ -28,7 +28,7 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
-        public string TemplateFolderLink { get; set; } = URLHelper.GetTemplateFolderLink();
+        public string TemplateFolderLink { get; set; } = UrlHelper.GetTemplateFolderLink();
 
         public string WorkingFolderLink { get; set; } = string.Empty;
 
@@ -51,7 +51,7 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
-            WorkingFolderLink = URLHelper.GetWorkingFolderLink(FacilityDetail.HSInumber);
+            WorkingFolderLink = UrlHelper.GetWorkingFolderLink(FacilityDetail.HSInumber);
 
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();

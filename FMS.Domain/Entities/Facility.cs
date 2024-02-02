@@ -43,7 +43,7 @@ namespace FMS.Domain.Entities
             HistoricalUnit = newFacility.HistoricalUnit;
             HistoricalComplianceOfficer = newFacility.HistoricalComplianceOfficer;
             TaxId = newFacility.TaxId;
-    }
+        }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
         public string FacilityNumber { get; set; }

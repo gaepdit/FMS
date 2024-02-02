@@ -12,6 +12,9 @@ $(document).ready(function formEdit() {
             $("#RNBlock").removeClass("d-none");
         } else {
             $("#RNBlock").addClass("d-none");
+            if ($("#Facility_RNDateReceived").val === null) {
+                $("#Facility_RNDateReceived").val = Date.now;
+            }
         }
     });
 });

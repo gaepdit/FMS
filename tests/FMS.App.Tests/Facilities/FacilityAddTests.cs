@@ -22,7 +22,7 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo, mockSelectListHelper);
 
-            var result = await pageModel.OnGetAsync().ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync();
 
             result.Should().BeOfType<PageResult>();
             pageModel.Facility.Should().BeEquivalentTo(new FacilityCreateDto {State = "Georgia"});
@@ -91,7 +91,7 @@ namespace FMS.App.Tests.Facilities
             var pageModel = new AddModel(mockRepo, mockSelectListHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+            var result = await pageModel.OnPostAsync();
 
             result.Should().BeOfType<PageResult>();
             pageModel.ConfirmFacility.ShouldBeFalse();
