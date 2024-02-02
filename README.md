@@ -28,3 +28,5 @@ Instructions for adding a new Entity Framework database migration:
 2. Run the following command with an appropriate migration name:
 
    `dotnet ef migrations add NAME_OF_MIGRATION --msbuildprojectextensionspath ..\artifacts\FMS.Infrastructure\obj\`
+
+   `TK's path: repos\FMS> dotnet ef migrations add NAME_OF_MIGRATION --msbuildprojectextensionspath ..\artifacts\FMS.Infrastructure\obj\`
