@@ -55,11 +55,6 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (Facility.DeterminationLetterDate == null && Facility.FacilityTypeName != "RN")
-            {
-                Facility.DeterminationLetterDate = DateOnly.FromDateTime(DateTime.Now);
-            }
-
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();

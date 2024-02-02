@@ -365,8 +365,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     RNDateReceived = new(2018, 2, 13),
                     HistoricalUnit = "Old RRP Unit",
                     HistoricalComplianceOfficer = "Another Retired",
-                    TaxId = "DEF-123456789-11",
-                    IsRetained = true
+                    TaxId = "DEF-123456789-11"
                 }
             };
         }

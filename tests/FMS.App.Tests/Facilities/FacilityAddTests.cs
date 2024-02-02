@@ -91,7 +91,7 @@ namespace FMS.App.Tests.Facilities
             var pageModel = new AddModel(mockRepo, mockSelectListHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+            var result = await pageModel.OnPostAsync();
 
             result.Should().BeOfType<PageResult>();
             pageModel.ConfirmFacility.ShouldBeFalse();
