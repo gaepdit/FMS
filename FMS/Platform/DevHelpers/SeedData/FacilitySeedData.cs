@@ -319,7 +319,6 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.505922m,
                     CountyId = 243,
-                    IsRetained = true,
                     HSInumber = "10234",
                     DeterminationLetterDate = new(2018, 2, 13),
                     Comments = "Just some comments about this facility",
@@ -331,8 +330,9 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     RNDateReceived = null,
                     HistoricalUnit = "Old RRP Unit",
                     HistoricalComplianceOfficer = "Someone Retired",
-                    TaxId = "ABC-2637485-11"
-        },
+                    TaxId = "ABC-2637485-11",
+                    IsRetained = true
+                },
                 new()
                 {
                     Id = Guid.NewGuid(),
@@ -365,7 +365,8 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     RNDateReceived = new(2018, 2, 13),
                     HistoricalUnit = "Old RRP Unit",
                     HistoricalComplianceOfficer = "Another Retired",
-                    TaxId = "DEF-123456789-11"
+                    TaxId = "DEF-123456789-11",
+                    IsRetained = true
                 }
             };
         }
