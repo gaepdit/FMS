@@ -53,6 +53,7 @@ namespace FMS.Infrastructure.Repositories
             return facilityDetail;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         private IQueryable<Facility> QueryFacilities(FacilitySpec spec) => _context.Facilities.AsNoTracking()
             .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
             .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
