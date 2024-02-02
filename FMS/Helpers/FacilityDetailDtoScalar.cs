@@ -38,7 +38,6 @@ namespace FMS.Domain.Dto
             RNDateReceived = facility.RNDateReceived;
             HistoricalUnit = facility.HistoricalUnit;
             HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
-            TaxId = facility.TaxId;
             HasERecord = facility.HasERecord;
             IsRetained = facility.IsRetained;
             Cabinets = facility.CabinetsToString;
@@ -131,9 +130,6 @@ namespace FMS.Domain.Dto
 
         [XLColumn(Header = "Historical C.O.")]
         public string HistoricalComplianceOfficer { get; set; }
-
-        [XLColumn(Header = "Tax ID")]
-        public string TaxId { get; set; }
 
         [XLColumn(Header = "Has Electronic Records")]
         public bool HasERecord { get; set; }

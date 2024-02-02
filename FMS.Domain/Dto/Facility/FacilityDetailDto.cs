@@ -42,7 +42,6 @@ namespace FMS.Domain.Dto
             RNDateReceived = facility.RNDateReceived;
             HistoricalUnit = facility.HistoricalUnit;
             HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
-            TaxId = facility.TaxId;
             HasERecord = facility.HasERecord;
             IsRetained = facility.IsRetained;
             Cabinets = new List<string>();
@@ -141,9 +140,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Historical C.O.")]
         public string HistoricalComplianceOfficer { get; set; }
-
-        [Display(Name = "Tax ID")]
-        public string TaxId { get; set; }
 
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }

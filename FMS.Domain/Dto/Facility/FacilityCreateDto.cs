@@ -108,9 +108,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Historical C.O.")]
         public string HistoricalComplianceOfficer { get; set; }
 
-        [Display(Name = "Tax ID")]
-        public string TaxId { get; set; }
-
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
@@ -125,7 +122,6 @@ namespace FMS.Domain.Dto
             PostalCode = PostalCode?.Trim();
             HSInumber = HSInumber?.Trim();
             HistoricalUnit = HistoricalUnit?.Trim();
-            TaxId = TaxId?.Trim();
         }
     }
 }

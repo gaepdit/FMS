@@ -330,7 +330,6 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     RNDateReceived = null,
                     HistoricalUnit = "Old RRP Unit",
                     HistoricalComplianceOfficer = "Someone Retired",
-                    TaxId = "ABC-2637485-11",
                     IsRetained = true
                 },
                 new()
@@ -353,7 +352,6 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.506122m,
                     CountyId = 243,
-                    IsRetained = true,
                     HSInumber = "10251",
                     DeterminationLetterDate = null,
                     Comments = "Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page.",
@@ -365,7 +363,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     RNDateReceived = new(2018, 2, 13),
                     HistoricalUnit = "Old RRP Unit",
                     HistoricalComplianceOfficer = "Another Retired",
-                    TaxId = "DEF-123456789-11"
+                    IsRetained = true,
                 }
             };
         }

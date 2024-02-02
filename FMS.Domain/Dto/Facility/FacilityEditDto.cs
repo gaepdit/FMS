@@ -38,7 +38,6 @@ namespace FMS.Domain.Dto
             RNDateReceived = facility.RNDateReceived;
             HistoricalUnit = facility.HistoricalUnit;
             HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
-            TaxId = facility.TaxId;
             HasERecord = facility.HasERecord;
             IsRetained = facility.IsRetained;
         }
@@ -151,9 +150,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Historical Compliance Officer")]
         public string HistoricalComplianceOfficer { get; set; }
 
-        [Display(Name = "Tax ID")]
-        public string TaxId { get; set; }
-
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
@@ -168,7 +164,6 @@ namespace FMS.Domain.Dto
             PostalCode = PostalCode?.Trim();
             HSInumber = HSInumber?.Trim();
             HistoricalUnit = HistoricalUnit?.Trim();
-            TaxId = TaxId?.Trim();
         }
     }
 }
