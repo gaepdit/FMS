@@ -28,7 +28,7 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
-        public string TemplateFolderLink { get; set; } = UrlHelper.GetTemplateFolderLink();
+        public string TemplateFolderLink { get; set; } = GlobalConstants.TemplateFolderLink;
 
         public string WorkingFolderLink { get; set; } = string.Empty;
 

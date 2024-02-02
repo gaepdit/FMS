@@ -1,10 +1,10 @@
 ﻿using System.Numerics;
+using System.Reflection.Metadata;
 
 namespace FMS.Helpers
 {
     public static class UrlHelper
     {
-        public static string GetTemplateFolderLink() => "https://gets.sharepoint.com/sites/RRP-Templates";
         public static string GetWorkingFolderLink(string hsiNumber)
         {
             return hsiNumber == string.Empty
