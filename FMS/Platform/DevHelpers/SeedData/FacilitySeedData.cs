@@ -344,7 +344,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Name = "Facility Test-4 Release Notification",
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
-                    Location = "Some Random Strip Mall",
+                    Location = "Some Random Strip Mall <TaxID>102-395763-tk^other data",
                     Address = "10919 HWY 92",
                     City = "Woodstock",
                     State = "Georgia",
