@@ -83,7 +83,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "VRP Referral")]
         public bool VRPReferral { get; set; }
 
-        [AllowNull]
         [Display(Name = "Date Received")]
         public DateOnly RNDateReceived { get; set; }
 

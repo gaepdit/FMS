@@ -9,7 +9,7 @@ namespace FMS.Helpers
         {
             return hsiNumber == string.Empty
                 ? string.Empty
-                : string.Concat("https://gets.sharepoint.com/sites/ResponseandRemediationProgram/HSI/Shared%20Documents/", hsiNumber, "/Working-Docs");
+                : string.Concat("https://gets.sharepoint.com/sites/ResponseandRemediationProgram/HSI/Shared%20Documents/", hsiNumber);
         }
     }
 }

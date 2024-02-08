@@ -29,16 +29,16 @@ namespace FMS.Domain.Entities
             PostalCode = newFacility.PostalCode;
             Latitude = newFacility.Latitude ?? 0;
             Longitude = newFacility.Longitude ?? 0;
+            HasERecord = newFacility.HasERecord;
+            Comments = newFacility.Comments;
             // The following properties only apply to Release Notifications
             HSInumber = newFacility.HSInumber;
             DeterminationLetterDate = newFacility.DeterminationLetterDate;
-            Comments = newFacility.Comments;
             PreRQSMcleanup = newFacility.PreRQSMcleanup;
             ImageChecked = newFacility.ImageChecked;
             DeferredOnSiteScoring = newFacility.DeferredOnSiteScoring;
             AdditionalDataRequested = newFacility.AdditionalDataRequested;
             VRPReferral = newFacility.VRPReferral;
-            HasERecord = newFacility.HasERecord;
             RNDateReceived = newFacility.RNDateReceived;
             HistoricalUnit = newFacility.HistoricalUnit;
             HistoricalComplianceOfficer = newFacility.HistoricalComplianceOfficer;
@@ -103,14 +103,16 @@ namespace FMS.Domain.Entities
 
         public bool IsRetained { get; set; } = true;
 
+        public bool HasERecord { get; set; } = false;
+
+        [StringLength(1000)]
+        public string Comments { get; set; }
+
         // The following properties only apply to Release Notifications
         [StringLength(5)]
         public string HSInumber { get; set; }
 
         public DateOnly? DeterminationLetterDate { get; set; }
-
-        [StringLength(1000)]
-        public string Comments { get; set; }
 
         public bool PreRQSMcleanup { get; set; } = false;
 
@@ -121,8 +123,6 @@ namespace FMS.Domain.Entities
         public bool AdditionalDataRequested { get; set; } = false;
 
         public bool VRPReferral { get; set; } = false;
-
-        public bool HasERecord { get; set; } = false;
 
         public DateOnly? RNDateReceived { get; set; }
 

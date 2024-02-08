@@ -31,9 +31,11 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
+            HasERecord = facility.HasERecord;
+            Comments = facility.Comments;
+            // *** these properties only apply to Release Notifications ***
             HSInumber = facility.HSInumber;
             DeterminationLetterDate = facility.DeterminationLetterDate;
-            Comments = facility.Comments;
             PreRQSMcleanup = facility.PreRQSMcleanup;
             ImageChecked = facility.ImageChecked;
             DeferredOnSiteScoring = facility.DeferredOnSiteScoring;
@@ -43,7 +45,7 @@ namespace FMS.Domain.Dto
             HistoricalUnit = facility.HistoricalUnit;
             HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
             TaxId = facility.TaxId;
-            HasERecord = facility.HasERecord;
+            // *** End release Notification Only Properties
             IsRetained = facility.IsRetained;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
@@ -112,7 +114,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 
-        [Display(Name = "Determination Letter Date")]
+        [Display(Name = "Determination Letter Date", Prompt = "None Entered")]
         public DateOnly? DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
@@ -144,6 +146,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Tax ID")]
         public string TaxId { get; set; }
+
+        // End release notification Only Properties
 
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
