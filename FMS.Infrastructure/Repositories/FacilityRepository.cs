@@ -58,7 +58,7 @@ namespace FMS.Infrastructure.Repositories
             .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
             .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
             .Where(e => spec.ShowDeleted || e.Active)
-            .Where(e => !spec.ShowPendingOnly || (spec.ShowPendingOnly && !e.DeterminationLetterDate.HasValue))
+            .Where(e => !spec.ShowPendingOnly || !e.DeterminationLetterDate.HasValue)
             .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
             .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))

@@ -149,7 +149,7 @@
                 <textarea asp-for="Facility.Comments" class="form-control"></textarea>
             </div>
         </div>
-        <div id="RNBlock" class="@(Model.Facility.FacilityTypeName == "RN" ? "" : "d-none")">
+        <div id="RNBlock" class="d-none")">
             <hr />
             <h4>Release Notification Properties</h4>
             <div class="mb-3 row">
@@ -199,7 +199,7 @@
             <div class="mb-3 row">
                 <div class="col-md-6">
                     <label asp-for="Facility.RNDateReceived"></label>
-                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" />
+                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" placeholder=""/>
                     <span asp-validation-for="Facility.RNDateReceived" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">

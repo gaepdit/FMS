@@ -18,7 +18,7 @@ $(document).ready(function formSearch() {
             $("#RNBlock").removeClass("d-none");
         } else {
             $("#RNBlock").addClass("d-none");
-            $("#ShowPendingCB").prop("checked",false)
+            $("#Spec_ShowPendingOnly").prop("checked",false)
         }
     });
 });

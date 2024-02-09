@@ -28,8 +28,6 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
-        public string TemplateFolderLink { get; set; } = GlobalConstants.TemplateFolderLink;
-
         public string WorkingFolderLink { get; set; } = string.Empty;
 
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
@@ -69,18 +67,16 @@ namespace FMS.Pages.Facilities
                     return NotFound();
                 }
 
+                WorkingFolderLink = UrlHelper.GetWorkingFolderLink(FacilityDetail.HSInumber);
+
+                FacilityId = FacilityDetail.Id;
+
                 return Page();
             }
 
             RecordCreate.TrimAll();
 
             HighlightRecord = await _repository.CreateRetentionRecordAsync(FacilityId, RecordCreate);
-            FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
-
-            if (FacilityDetail == null)
-            {
-                return NotFound();
-            }
 
             return RedirectToPage();
         }

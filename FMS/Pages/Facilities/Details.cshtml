@@ -1,5 +1,6 @@
 @page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
+@using FMS.Platform.Extensions
 @model FMS.Pages.Facilities.DetailsModel
 
 @section Scripts {
@@ -204,10 +205,10 @@
     </div>
 
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <a class="btn btn-sm btn-primary" target="_blank" href=@Model.TemplateFolderLink>RRP Template Folder</a>
+        <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
         @if (Model.FacilityDetail.HSInumber != null)
         {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.WorkingFolderLink>HSI Working Docs Folder</a>
+            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.WorkingFolderLink>HSI Folder</a>
         }
     </div>
      
