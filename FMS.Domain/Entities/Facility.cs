@@ -42,7 +42,6 @@ namespace FMS.Domain.Entities
             RNDateReceived = newFacility.RNDateReceived;
             HistoricalUnit = newFacility.HistoricalUnit;
             HistoricalComplianceOfficer = newFacility.HistoricalComplianceOfficer;
-            TaxId = newFacility.TaxId;
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
@@ -129,8 +128,6 @@ namespace FMS.Domain.Entities
         public string HistoricalUnit { get; set; }
 
         public string HistoricalComplianceOfficer { get; set; }
-
-        public string TaxId { get; set; }
 
         // List of retention records for this Facility
         public ICollection<RetentionRecord> RetentionRecords { get; set; }

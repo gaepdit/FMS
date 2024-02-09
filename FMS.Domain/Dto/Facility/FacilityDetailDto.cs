@@ -44,8 +44,6 @@ namespace FMS.Domain.Dto
             RNDateReceived = facility.RNDateReceived;
             HistoricalUnit = facility.HistoricalUnit;
             HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
-            TaxId = facility.TaxId;
-            // *** End release Notification Only Properties
             IsRetained = facility.IsRetained;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
@@ -143,11 +141,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Historical C.O.")]
         public string HistoricalComplianceOfficer { get; set; }
-
-        [Display(Name = "Tax ID")]
-        public string TaxId { get; set; }
-
-        // End release notification Only Properties
 
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }

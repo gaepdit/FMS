@@ -308,7 +308,6 @@ namespace FMS.Infrastructure.Repositories
             facility.RNDateReceived = facilityUpdates.RNDateReceived;
             facility.HistoricalUnit = facilityUpdates.HistoricalUnit;
             facility.HistoricalComplianceOfficer = facilityUpdates.HistoricalComplianceOfficer;
-            facility.TaxId = facilityUpdates.TaxId;
             // ******************
             facility.IsRetained = facilityUpdates.IsRetained;
 
