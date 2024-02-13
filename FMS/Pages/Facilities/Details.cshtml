@@ -45,11 +45,20 @@
                 <dt class="col-sm-5">
                     @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
                 </dt>
-                <dd class="col-sm-7">
-                    <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
-                        @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
-                    </a>
-                </dd>
+                @if (Model.FacilityDetail.FileId is not null)
+                {
+                    <dd class="col-sm-7">
+                        <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
+                            @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
+                        </a>
+                    </dd>
+                }
+                else
+                {
+                    <dd class="col-sm-7">
+                        <span class="text-info">No File Label</span>
+                    </dd>
+                }
                 <dt class="col-sm-5">
                     @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
                 </dt>

@@ -14,6 +14,7 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -47,9 +48,12 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-            facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
+            if(!facilityDetail.FileLabel.IsNullOrEmpty())
+            {
+                facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
                 .GetCabinetsForFile(facilityDetail.FileLabel);
-
+            }
+            
             return facilityDetail;
         }
 
@@ -214,16 +218,17 @@ namespace FMS.Infrastructure.Repositories
 
             File file;
 
-            if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
+            if (string.IsNullOrWhiteSpace(newFacility.FileLabel) && newFacility.FacilityTypeName != "RN")
             {
                 // If File Label is empty, generate new File
+                // Release Notificatiopns are allowed to have no File Label
                 file = await CreateFileInternal(newFacility.CountyId);
             }
             else
             {
                 // Otherwise, if File Label is provided, make sure it exists
-                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel);
-                if (file == null) throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
+                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel );
+                if (file == null && newFacility.FacilityTypeName != "RN") throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
             var newFac = new Facility(newFacility)
@@ -262,21 +267,23 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Facility ID not found.", nameof(id));
             }
 
-            if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
+            if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel) && facilityUpdates.FacilityTypeName != "RN")
             {
                 // Generate new File if File Label is empty
+                // Release Notificatiopns are allowed to have no File Label
                 facility.File = await CreateFileInternal(facilityUpdates.CountyId);
             }
             else
             {
                 // Otherwise, if File Label is provided and different from existing label, make sure it exists
                 var oldFile = await _context.Files.FindAsync(facility.FileId);
-                if (facilityUpdates.FileLabel != oldFile.FileLabel)
+                if (oldFile is null || facilityUpdates.FileLabel != oldFile.FileLabel)
                 {
                     var file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
-                    if (file == null)
+                    if (file == null && facilityUpdates.FacilityTypeName != "RN")
                         throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
                     facility.File = file;
+                    facility.FileId = file?.Id;
                 }
             }
 
@@ -295,16 +302,17 @@ namespace FMS.Infrastructure.Repositories
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
             facility.Longitude = facilityUpdates.Longitude;
+            // New for all Facilities
+            facility.HasERecord = facilityUpdates.HasERecord;
+            facility.Comments = facilityUpdates.Comments;
             // added for release notifications
             facility.HSInumber = facilityUpdates.HSInumber;
             facility.DeterminationLetterDate = facilityUpdates.DeterminationLetterDate;
-            facility.Comments = facilityUpdates.Comments;
             facility.PreRQSMcleanup = facilityUpdates.PreRQSMcleanup;
             facility.ImageChecked = facilityUpdates.ImageChecked;
             facility.DeferredOnSiteScoring = facilityUpdates.DeferredOnSiteScoring;
             facility.AdditionalDataRequested = facilityUpdates.AdditionalDataRequested;
             facility.VRPReferral = facilityUpdates.VRPReferral;
-            facility.HasERecord = facilityUpdates.HasERecord;
             facility.RNDateReceived = facilityUpdates.RNDateReceived;
             facility.HistoricalUnit = facilityUpdates.HistoricalUnit;
             facility.HistoricalComplianceOfficer = facilityUpdates.HistoricalComplianceOfficer;

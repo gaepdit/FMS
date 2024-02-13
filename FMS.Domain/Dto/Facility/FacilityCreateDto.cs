@@ -26,6 +26,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Type/Environmental Interest")]
         public Guid FacilityTypeId { get; set; }
+        public string FacilityTypeName { get; set; }
 
         [Required]
         [Display(Name = "Budget Code")]

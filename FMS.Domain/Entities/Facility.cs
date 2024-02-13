@@ -48,7 +48,7 @@ namespace FMS.Domain.Entities
         public string FacilityNumber { get; set; }
 
         // File label and Cabinet where this Facility is located
-        public Guid FileId { get; set; }
+        public Guid? FileId { get; set; }
         public File File { get; set; }
 
         // Type of Facility
