@@ -193,7 +193,7 @@ namespace FMS.Infrastructure.Repositories
             return returnList;
         }
 
-        public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
+        public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility, bool newFileId = true)
         {
             if (string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
             {
@@ -206,10 +206,10 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
             }
 
-            return CreateFacilityInternalAsync(newFacility);
+            return CreateFacilityInternalAsync(newFacility, newFileId);
         }
 
-        private async Task<Guid> CreateFacilityInternalAsync(FacilityCreateDto newFacility)
+        private async Task<Guid> CreateFacilityInternalAsync(FacilityCreateDto newFacility, bool newFileId)
         {
             if (await FacilityNumberExists(newFacility.FacilityNumber))
             {
@@ -218,7 +218,7 @@ namespace FMS.Infrastructure.Repositories
 
             File file;
 
-            if (string.IsNullOrWhiteSpace(newFacility.FileLabel) && newFacility.FacilityTypeName != "RN")
+            if (string.IsNullOrWhiteSpace(newFacility.FileLabel) && newFileId)
             {
                 // If File Label is empty, generate new File
                 // Release Notificatiopns are allowed to have no File Label
@@ -228,7 +228,7 @@ namespace FMS.Infrastructure.Repositories
             {
                 // Otherwise, if File Label is provided, make sure it exists
                 file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel );
-                if (file == null && newFacility.FacilityTypeName != "RN") throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
+                if (file == null && newFileId) throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
             var newFac = new Facility(newFacility)

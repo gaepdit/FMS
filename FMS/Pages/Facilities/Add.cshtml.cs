@@ -149,10 +149,15 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.FileLabel = ConfirmedFacilityFileLabel;
+            bool newFileId = true;
+            if (Facility.FileLabel == "none")
+            {
+                newFileId = false;
+            }
             Facility.TrimAll();
 
             // If File Label is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "none" &&
                 !await _repository.FileLabelExists(Facility.FileLabel))
             {
                 ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
@@ -170,7 +175,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            var newFacilityId = await _repository.CreateFacilityAsync(Facility);
+            var newFacilityId = await _repository.CreateFacilityAsync(Facility, newFileId);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully created.");
             return RedirectToPage("./Details", new {id = newFacilityId});

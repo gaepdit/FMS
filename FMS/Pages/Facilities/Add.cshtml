@@ -149,7 +149,7 @@
                 <textarea asp-for="Facility.Comments" class="form-control"></textarea>
             </div>
         </div>
-        <div id="RNBlock" class="d-none")">
+        <div id="RNBlock" class="@(Model.Facility.FacilityTypeName == "RN" ? "" : "d-none")" )">
             <hr />
             <h4>Release Notification Properties</h4>
             <div class="mb-3 row">
@@ -195,7 +195,7 @@
             <div class="mb-3 row">
                 <div class="col-md-6">
                     <label asp-for="Facility.RNDateReceived">Date Received <span class="text-danger">*</span></label>
-                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" placeholder=""/>
+                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" placeholder="" />
                     <span asp-validation-for="Facility.RNDateReceived" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
@@ -266,6 +266,17 @@
                                 }
                             </td>
                         </tr>
+                        @if (Model.Facility.FacilityTypeName == "RN")
+                        {
+                            <tr>
+                                <td colspan="6">
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, "none")
+                                        No File Label
+                                    </label>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
                 <p>Are you sure you want to create this facility?</p>
