@@ -17,6 +17,7 @@ namespace FMS.Pages.Facilities
     public class AddModel : PageModel
     {
         private readonly IFacilityRepository _repository;
+        private readonly IFacilityTypeRepository _repositoryType;
         private readonly ISelectListHelper _listHelper;
 
         [BindProperty]
@@ -38,11 +39,15 @@ namespace FMS.Pages.Facilities
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
 
+
+        // Add FacilityType Repo here, then use FacilityTypeName to compare for "RN" value
         public AddModel(
             IFacilityRepository repository,
+            IFacilityTypeRepository repositoryType,
             ISelectListHelper listHelper)
         {
             _repository = repository;
+            _repositoryType = repositoryType;
             _listHelper = listHelper;
         }
 
@@ -55,6 +60,8 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
@@ -62,6 +69,12 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.TrimAll();
+
+            // Make sure Release Notifications have a "Date Received"
+            if (Facility.FacilityTypeName == "RN" && Facility.RNDateReceived is null)
+            {
+                ModelState.AddModelError("Facility.RNDateReceived", "Date Received must be entered.");
+            }
 
             // Make sure GeoCoordinates are withing the State of Georgia or both Zero
             GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(Facility.Latitude, Facility.Longitude);
@@ -136,10 +149,15 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.FileLabel = ConfirmedFacilityFileLabel;
+            bool newFileId = true;
+            if (Facility.FileLabel == "none")
+            {
+                newFileId = false;
+            }
             Facility.TrimAll();
 
             // If File Label is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "none" &&
                 !await _repository.FileLabelExists(Facility.FileLabel))
             {
                 ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
@@ -157,7 +175,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            var newFacilityId = await _repository.CreateFacilityAsync(Facility);
+            var newFacilityId = await _repository.CreateFacilityAsync(Facility, newFileId);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully created.");
             return RedirectToPage("./Details", new {id = newFacilityId});

@@ -13,8 +13,8 @@ namespace FMS.Domain.Dto
         public FacilityDetailDto(Facility facility)
         {
             Id = facility.Id;
-            FileLabel = facility.File.FileLabel;
-            FileId = facility.File.Id;
+            FileLabel = facility.File?.FileLabel;
+            FileId = facility.File?.Id;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
@@ -83,7 +83,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "File Label")]
         public string FileLabel { get; }
 
-        public Guid FileId { get; }
+        public Guid? FileId { get; }
 
         [Display(Name = "Location Description")]
         public string Location { get; }

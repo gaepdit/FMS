@@ -16,6 +16,10 @@ namespace FMS.Pages.Facilities
     [Authorize(Roles = UserRoles.FileEditor)]
     public class EditModel : PageModel
     {
+        private readonly IFacilityRepository _repository;
+        private readonly IFacilityTypeRepository _repositoryType;
+        private readonly ISelectListHelper _listHelper;
+
         [BindProperty]
         public FacilityEditDto Facility { get; set; }
 
@@ -31,14 +35,13 @@ namespace FMS.Pages.Facilities
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
 
-        private readonly IFacilityRepository _repository;
-        private readonly ISelectListHelper _listHelper;
-
         public EditModel(
             IFacilityRepository repository,
+            IFacilityTypeRepository repositoryType,
             ISelectListHelper listHelper)
         {
             _repository = repository;
+            _repositoryType = repositoryType;
             _listHelper = listHelper;
         }
 
@@ -68,8 +71,11 @@ namespace FMS.Pages.Facilities
             return Page();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         public async Task<IActionResult> OnPostAsync()
         {
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
@@ -85,6 +91,12 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.TrimAll();
+
+            // Make sure Release Notifications have a "Date Received"
+            if (Facility.FacilityTypeName == "RN" && Facility.RNDateReceived is null)
+            {
+                ModelState.AddModelError("Facility.RNDateReceived", "Date Received must be entered.");
+            }
 
             // Make sure GeoCoordinates are withing the State of Georgia or both Zero
             GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(Facility.Latitude, Facility.Longitude);
