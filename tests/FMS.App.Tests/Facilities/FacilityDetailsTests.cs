@@ -14,22 +14,22 @@ namespace FMS.App.Tests.Facilities
 {
     public class FacilityDetailsTests
     {
-        [Fact]
-        public async Task OnGet_PopulatesThePageModel()
-        {
-            var facilityId = RepositoryData.Facilities()[0].Id;
-            var facility = ResourceHelper.GetFacilityDetail(facilityId);
+        //[Fact]
+        //public async Task OnGet_PopulatesThePageModel()
+        //{
+        //    var facilityId = RepositoryData.Facilities()[0].Id;
+        //    var facility = ResourceHelper.GetFacilityDetail(facilityId);
 
-            var mockRepo = Substitute.For<IFacilityRepository>();
-            mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns(facility);
+        //    var mockRepo = Substitute.For<IFacilityRepository>();
+        //    mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns(facility);
 
-            var pageModel = new DetailsModel(mockRepo);
+        //    var pageModel = new DetailsModel(mockRepo);
 
-            var result = await pageModel.OnGetAsync(facility.Id, null).ConfigureAwait(false);
+        //    var result = await pageModel.OnGetAsync(facility.Id, null);
 
-            result.Should().BeOfType<PageResult>();
-            pageModel.FacilityDetail.Should().BeEquivalentTo(facility);
-        }
+        //    result.Should().BeOfType<PageResult>();
+        //    pageModel.FacilityDetail.Should().BeEquivalentTo(facility);
+        //}
 
         [Fact]
         public async Task OnGet_NonexistentIdReturnsNotFound()

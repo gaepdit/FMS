@@ -19,10 +19,11 @@ namespace TestHelpers
             new FacilityStatus {Id = Guid.NewGuid(), Status = "Inactive"}
         };
 
-        public static readonly List<FacilityType> FacilityTypes = new()
+        public static List<FacilityType> FacilityTypes = new()
         {
             new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "GEN", Description = "GEN1"},
-            new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "NPL", Description = "NPL1"}
+            new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "NPL", Description = "NPL1"},
+            new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "RN", Description = "RN1"}
         };
 
         public static readonly List<OrganizationalUnit> OrganizationalUnits = new()

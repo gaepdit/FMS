@@ -76,6 +76,11 @@ namespace FMS.Pages.Facilities
 
                 HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
 
+                if (FacilityDetail.FacilityType.Name == "RN")
+                {
+                    NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                }
+
                 FacilityId = FacilityDetail.Id;
 
                 return Page();

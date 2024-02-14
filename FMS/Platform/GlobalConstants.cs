@@ -14,5 +14,7 @@
 
         // Link to Notifications folder
         public const string NotificationFolder = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/RNs/Shared%20Documents/";
+
+        public const string RNFacilityNamePattern = @"\A(RN\d+?)\b";
     }
 }
