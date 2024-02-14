@@ -28,7 +28,9 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
-        public string WorkingFolderLink { get; set; } = string.Empty;
+        public string HSIFolderLink { get; set; } = string.Empty;
+
+        public string NotificationFolderLink { get; set; } = string.Empty;
 
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
@@ -49,8 +51,13 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
-            WorkingFolderLink = UrlHelper.GetWorkingFolderLink(FacilityDetail.HSInumber);
+            HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
 
+            if (FacilityDetail.FacilityType.Name == "RN")
+            {
+                NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+            }
+            
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
             return Page();
@@ -67,7 +74,7 @@ namespace FMS.Pages.Facilities
                     return NotFound();
                 }
 
-                WorkingFolderLink = UrlHelper.GetWorkingFolderLink(FacilityDetail.HSInumber);
+                HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
 
                 FacilityId = FacilityDetail.Id;
 

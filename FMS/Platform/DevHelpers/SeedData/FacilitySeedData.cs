@@ -302,7 +302,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 {
                     Id = Guid.NewGuid(),
                     Active = true,
-                    FacilityNumber = "RN10235",
+                    FacilityNumber = "RN7075",
                     FileId = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"),
                     FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
                     OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"),
@@ -335,7 +335,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 {
                     Id = Guid.NewGuid(),
                     Active = true,
-                    FacilityNumber = "RN102412",
+                    FacilityNumber = "RN4979",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"),
                     FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
                     OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"),
@@ -351,7 +351,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.506122m,
                     CountyId = 243,
-                    HSInumber = "10251",
+                    HSInumber = "",
                     DeterminationLetterDate = null,
                     Comments = "Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page.",
                     PreRQSMcleanup = true,

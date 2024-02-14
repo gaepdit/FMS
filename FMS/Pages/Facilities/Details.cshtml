@@ -209,12 +209,16 @@
 
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
-        @if (Model.FacilityDetail.HSInumber != null)
+        @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
         {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.WorkingFolderLink>HSI Folder</a>
+            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
+        }
+        @if (!string.IsNullOrEmpty(Model.NotificationFolderLink))
+        {
+            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.NotificationFolderLink>Release Notification</a>
         }
     </div>
-     
+
     <h2 id="retention-records">Retention Records</h2>
     @if (Model.FacilityDetail.RetentionRecords.Count > 0)
     {
