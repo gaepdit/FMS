@@ -91,10 +91,10 @@ namespace FMS.Domain.Entities
 
         // site Coordinates
         [Column(TypeName = "decimal(8, 6)")]
-        public decimal Latitude { get; set; }
+        public decimal? Latitude { get; set; }
 
         [Column(TypeName = "decimal(9, 6)")]
-        public decimal Longitude { get; set; }
+        public decimal? Longitude { get; set; }
 
         public int CountyId { get; set; }
 
