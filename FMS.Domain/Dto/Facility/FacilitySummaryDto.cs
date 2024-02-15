@@ -11,14 +11,7 @@ namespace FMS.Domain.Dto
         public FacilitySummaryDto(Facility facility)
         {
             Id = facility.Id;
-            if (facility.File == null)
-            {
-                FileLabel = string.Empty;
-            }
-            else 
-            {
-                FileLabel = facility.File.FileLabel;
-            };
+            FileLabel = facility.File == null ? string.Empty : facility.File.FileLabel; 
             FacilityNumber = facility.FacilityNumber;
             FacilityType = facility.FacilityType;
             Name = facility.Name;

@@ -90,13 +90,13 @@ namespace FMS.Domain.Dto
         [Display(Name = "Image Checked")]
         public bool ImageChecked { get; set; }
 
-        [Display(Name = "Deferred OnSite Scoring")]
+        [Display(Name = "Brownfield Deferral")]
         public bool DeferredOnSiteScoring { get; set; }
 
-        [Display(Name = "Additional Data Requested")]
+        [Display(Name = "Add'l Data Requested")]
         public bool AdditionalDataRequested { get; set; }
 
-        [Display(Name = "VRP Referral")]
+        [Display(Name = "VRP Deferral")]
         public bool VRPReferral { get; set; }
 
         [Display(Name = "Date Received")]
