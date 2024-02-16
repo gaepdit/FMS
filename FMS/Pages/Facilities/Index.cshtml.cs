@@ -29,6 +29,7 @@ namespace FMS.Pages.Facilities
         public IPaginatedResult FacilityList { get; private set; }
 
         // Shows results section after searching
+        [BindProperty]
         public bool ShowResults { get; private set; }
 
         // Shows Checkbox for Pending RNs
