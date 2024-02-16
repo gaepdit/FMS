@@ -66,6 +66,12 @@
                     @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
                 </dd>
                 <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.HasERecord)
+                </dd>
+                <dt class="col-sm-5">
                     @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
                 </dt>
                 <dd class="col-sm-7">
@@ -122,12 +128,7 @@
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
                 </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.HasERecord)
-                </dd>
+                
                 <dt class="col-sm-5">
                     @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
                 </dt>
@@ -143,10 +144,10 @@
                 <H2>Release Notification Information</H2>
                 <dl class="row">
                     <dt class="col-sm-5">
-                        @Html.DisplayNameFor(model => model.FacilityDetail.HSInumber)
+                        @Html.DisplayNameFor(model => model.FacilityDetail.RNDateReceived)
                     </dt>
                     <dd class="col-sm-7">
-                        @Html.DisplayFor(model => model.FacilityDetail.HSInumber, "StringOrNone")
+                        @Html.DisplayFor(model => model.FacilityDetail.RNDateReceived)
                     </dd>
                     <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => model.FacilityDetail.DeterminationLetterDate)
@@ -155,22 +156,16 @@
                         @Html.DisplayFor(model => model.FacilityDetail.DeterminationLetterDate)
                     </dd>
                     <dt class="col-sm-5">
-                        @Html.DisplayNameFor(model => model.FacilityDetail.PreRQSMcleanup)
-                    </dt>
-                    <dd class="col-sm-7">
-                        @Html.DisplayFor(model => model.FacilityDetail.PreRQSMcleanup)
-                    </dd>
-                    <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => model.FacilityDetail.ImageChecked)
                     </dt>
                     <dd class="col-sm-7">
                         @Html.DisplayFor(model => model.FacilityDetail.ImageChecked)
                     </dd>
                     <dt class="col-sm-5">
-                        @Html.DisplayNameFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+                        @Html.DisplayNameFor(model => model.FacilityDetail.HSInumber)
                     </dt>
                     <dd class="col-sm-7">
-                        @Html.DisplayFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+                        @Html.DisplayFor(model => model.FacilityDetail.HSInumber, "StringOrNone")
                     </dd>
                     <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => model.FacilityDetail.AdditionalDataRequested)
@@ -179,16 +174,22 @@
                         @Html.DisplayFor(model => model.FacilityDetail.AdditionalDataRequested)
                     </dd>
                     <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.PreRQSMcleanup)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.PreRQSMcleanup)
+                    </dd>
+                    <dt class="col-sm-5">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+                    </dt>
+                    <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+                    </dd>
+                    <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => model.FacilityDetail.VRPReferral)
                     </dt>
                     <dd class="col-sm-7">
                         @Html.DisplayFor(model => model.FacilityDetail.VRPReferral)
-                    </dd>
-                    <dt class="col-sm-5">
-                        @Html.DisplayNameFor(model => model.FacilityDetail.RNDateReceived)
-                    </dt>
-                    <dd class="col-sm-7">
-                        @Html.DisplayFor(model => model.FacilityDetail.RNDateReceived)
                     </dd>
                     <dt class="col-sm-5">
                         @Html.DisplayNameFor(model => model.FacilityDetail.HistoricalUnit)
@@ -206,16 +207,15 @@
             </div>
         }
     </div>
-
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
-        @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
-        }
         @if (!string.IsNullOrEmpty(Model.NotificationFolderLink))
         {
             <a class="btn btn-sm btn-primary" target="_blank" href=@Model.NotificationFolderLink>Release Notification(s)</a>
+        }
+        @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
+        {
+            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
         }
     </div>
 
