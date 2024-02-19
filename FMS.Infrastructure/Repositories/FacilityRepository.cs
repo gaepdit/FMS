@@ -48,12 +48,12 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-            if(!facilityDetail.FileLabel.IsNullOrEmpty())
+            if (!facilityDetail.FileLabel.IsNullOrEmpty())
             {
                 facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
                 .GetCabinetsForFile(facilityDetail.FileLabel);
             }
-            
+
             return facilityDetail;
         }
 
@@ -133,7 +133,7 @@ namespace FMS.Infrastructure.Repositories
             {
                 bool test = item.FacilityType.Name != "RN" || !item.FileLabel.IsNullOrEmpty();
 
-                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel, test);               
+                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel, test);
             }
 
             var totalCount = await queried.CountAsync();
@@ -158,10 +158,13 @@ namespace FMS.Infrastructure.Repositories
 
             var items = await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
 
-            var cabinets = await _context.GetCabinetListAsync(false);
-            foreach (var item in items)
+            if (!spec.ShowPendingOnly)
             {
-                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+                var cabinets = await _context.GetCabinetListAsync(false);
+                foreach (var item in items)
+                {
+                    item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+                }
             }
 
             return items;
@@ -172,10 +175,10 @@ namespace FMS.Infrastructure.Repositories
             var conn = _context.Database.GetDbConnection();
 
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
+                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
                 commandType: CommandType.StoredProcedure)).ToList();
         }
-        
+
         public async Task<IEnumerable<RetentionRecordDetailDto>> GetRetentionRecordsListAsync(FacilitySpec spec)
         {
             var queried = QueryFacilities(spec);
@@ -184,13 +187,13 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.RetentionRecords);
 
             var ordered = OrderFacilityQuery(included, spec.SortBy);
-            
+
             // create a List<RetentionRecord>
             var retentionRecordsList = await ordered.SelectMany(e => e.RetentionRecords).ToListAsync();
-            
+
             // convert the List<RetentionRecord> to IEnumerable<RetentionRecordDetailDto>
             var returnList = from retentionRecord in retentionRecordsList
-                select new RetentionRecordDetailDto(retentionRecord);
+                             select new RetentionRecordDetailDto(retentionRecord);
 
             return returnList;
         }
@@ -229,7 +232,7 @@ namespace FMS.Infrastructure.Repositories
             else
             {
                 // Otherwise, if File Label is provided, make sure it exists
-                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel );
+                file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel);
                 if (file == null && newFileId) throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
