@@ -29,8 +29,8 @@ namespace FMS.Domain.Dto
             City = facility.City;
             State = facility.State;
             PostalCode = facility.PostalCode;
-            Latitude = (decimal)facility.Latitude;
-            Longitude = (decimal)facility.Longitude;
+            Latitude = facility.Latitude;
+            Longitude = facility.Longitude;
             HasERecord = facility.HasERecord;
             Comments = facility.Comments;
             // *** these properties only apply to Release Notifications ***
