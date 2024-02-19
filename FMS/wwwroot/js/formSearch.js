@@ -16,8 +16,10 @@ $(document).ready(function formSearch() {
     $("#Spec_FacilityTypeId").on("change", function () {
         if ($("#Spec_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)") {
             $("#RNBlock").removeClass("d-none");
+            $("#RNPending").removeClass("d-none");
         } else {
             $("#RNBlock").addClass("d-none");
+            $("#RNPending").addClass("d-none");
             $("#Spec_ShowPendingOnly").prop("checked",false)
         }
     });

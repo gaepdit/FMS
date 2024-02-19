@@ -162,11 +162,15 @@
                                 <input type="hidden" asp-for="Spec.SortBy" />
                                 <button id="ExportButton" asp-page-handler="ExportButton"
                                         class="btn btn-sm btn-outline-primary mb-1">
-                                    Export to Excel
+                                    Excel Export
+                                </button>
+                                <button id="PendingButton" asp-page-handler="PendingButton"
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.ShowPendingOnly ? "" : "d-none")">
+                                    Pending Report
                                 </button>
                                 <button id="DownloadRetentionRecords" asp-page-handler="DownloadRetentionRecords"
                                         class="btn btn-sm btn-outline-primary mb-1">
-                                    Download Retention Records
+                                    Retention Records Form
                                 </button>
                             </form>
                         </div>

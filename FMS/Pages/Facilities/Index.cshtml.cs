@@ -3,6 +3,7 @@ using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
+using FMS.Helpers;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -84,7 +85,16 @@ namespace FMS.Pages.Facilities
             var facilityDetailList = from p in facilityReportList select new FacilityDetailDtoScalar(p);
             return File(facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
         }
-        
+
+        public async Task<IActionResult> OnPostPendingButtonAsync()
+        {
+            var fileName = $"FMS_PendingRN_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            // "FacilityPendingList" Detailed Facility List to go to a report
+            IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
+            var facilityDetailList = from p in facilityReportList select new FacilityPendingDtoScalar(p);
+            return File(facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
+        }
+
         public async Task<IActionResult> OnPostDownloadRetentionRecordsAsync()
         {
             var currentUser = await _userService.GetCurrentUserAsync();
