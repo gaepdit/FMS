@@ -29,6 +29,8 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
+        public string RNHSIFolderLink { get; set; } = string.Empty;
+
         public string HSIFolderLink { get; set; } = string.Empty;
 
         public string NotificationFolderLink { get; set; } = string.Empty;
@@ -52,11 +54,15 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
-            HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
-
+            if(FacilityDetail.FacilityType.Name == "HSI")
+            {
+                HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
+            }
+            
             if (FacilityDetail.FacilityType.Name == "RN")
             {
                 NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
             
             FacilityId = FacilityDetail.Id;
@@ -75,11 +81,15 @@ namespace FMS.Pages.Facilities
                     return NotFound();
                 }
 
-                HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
+                if (FacilityDetail.FacilityType.Name == "HSI")
+                {
+                    HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
+                }
 
                 if (FacilityDetail.FacilityType.Name == "RN")
                 {
                     NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                    RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
                 }
 
                 FacilityId = FacilityDetail.Id;
