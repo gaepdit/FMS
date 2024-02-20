@@ -11,26 +11,22 @@ namespace FMS.Helpers
             FacilityNumber = facility.FacilityNumber.Substring(2);
             Name = facility.Name;
             OrganizationalUnit = facility.OrganizationalUnit?.Name;
-            HistoricalUnit = facility.HistoricalUnit;
             ComplianceOfficer = facility.ComplianceOfficer?.Name;
             RNDateReceived = facility.RNDateReceived;
             Comments = facility.Comments;
         }
 
-        [XLColumn(Header = "Facility Number")]
+        [XLColumn(Header = "Notification ID")]
         public string FacilityNumber { get; }
 
         [XLColumn(Header = "Facility Name")]
         public string Name { get; }
 
-        [XLColumn(Header = "Organizational Unit")]
+        [XLColumn(Header = "Org Unit")]
         public string OrganizationalUnit { get; }
 
         [XLColumn(Header = "Compliance Officer")]
         public string ComplianceOfficer { get; }
-
-        [XLColumn(Header = "Historical Unit")]
-        public string HistoricalUnit { get; set; }
 
         [XLColumn(Header = "Date Received")]
         public DateOnly? RNDateReceived { get; set; }

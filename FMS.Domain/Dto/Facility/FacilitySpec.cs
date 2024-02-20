@@ -18,7 +18,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Include deleted records")]
         public bool ShowDeleted { get; set; }
 
-        [Display(Name = "Show Only Pending Notifications")]
+        [Display(Name = "Show Pending Only CheckBox")]
         public bool ShowPendingOnly { get; set; }
 
         [Display(Name = "County")]
