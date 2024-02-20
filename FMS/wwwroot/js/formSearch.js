@@ -26,7 +26,7 @@ $(document).ready(function formSearch() {
     });
     $("#cbPending").click(function () {
         if ($(this).is(':checked')) {
-            $("#PendingButton").removeClass("d-none");
+            /*$("#PendingButton").removeClass("d-none");*/
             $("#DownloadRetentionRecords").addClass("d-none");
         } else {
             $("#PendingButton").addClass("d-none");

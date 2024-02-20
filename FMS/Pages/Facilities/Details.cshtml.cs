@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FMS.Platform.Extensions;
 using FMS.Helpers;
 using System.Net;
+using NUglify.Helpers;
 
 namespace FMS.Pages.Facilities
 {
@@ -63,15 +64,14 @@ namespace FMS.Pages.Facilities
             
             if (FacilityDetail.FacilityType.Name == "RN")
             {
-                if (FacilityDetail.DeterminationLetterDate.HasValue) 
+                if (!FacilityDetail.DeterminationLetterDate.HasValue)
                 {
                     NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }
-                else
+                else if (FacilityDetail.HSInumber.IsNullOrWhiteSpace())
                 {
                     PendingNotificationFolderLink = UrlHelper.GetPendingNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }
-
                 RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
             
@@ -98,7 +98,10 @@ namespace FMS.Pages.Facilities
 
                 if (FacilityDetail.FacilityType.Name == "RN")
                 {
-                    NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                    if (!FacilityDetail.HSInumber.IsNullOrWhiteSpace())
+                    {
+                        NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                    }
                     RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
                 }
 
