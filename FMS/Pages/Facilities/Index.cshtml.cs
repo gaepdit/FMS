@@ -34,7 +34,8 @@ namespace FMS.Pages.Facilities
         public bool ShowResults { get; private set; }
 
         // Shows Checkbox for Pending RNs
-        public bool ShowPendingOnly { get; private set; }
+        [BindProperty]
+        public bool ShowPendingOnlyCheckBox { get; private set; }
 
         // Select Lists
         public SelectList Counties => new(Data.Counties, "Id", "Name");
@@ -70,7 +71,7 @@ namespace FMS.Pages.Facilities
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
             
-            ShowPendingOnly = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
+            ShowPendingOnlyCheckBox = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
 
             ShowResults = true;
             await PopulateSelectsAsync();

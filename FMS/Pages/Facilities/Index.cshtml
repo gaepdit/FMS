@@ -110,9 +110,9 @@
                 </div>
             }
             <div class="col-md">
-                <div id="RNBlock" class="@(Model.ShowPendingOnly ? "" : "d-none")">
+                <div id="RNBlock" class="@(Model.ShowPendingOnlyCheckBox ? "" : "d-none")">
                     <div class="form-check">
-                        <input asp-for="Spec.ShowPendingOnly" />
+                        <input asp-for="Spec.ShowPendingOnly" id="cbPending"/>
                         <label asp-for="Spec.ShowPendingOnly" class="form-check-label"></label>
                     </div>
                 </div>
@@ -165,11 +165,11 @@
                                     Excel Export
                                 </button>
                                 <button id="PendingButton" asp-page-handler="PendingButton"
-                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.ShowPendingOnly ? "" : "d-none")">
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.Spec.ShowPendingOnly ? "" : "d-none")">
                                     Pending Report
                                 </button>
                                 <button id="DownloadRetentionRecords" asp-page-handler="DownloadRetentionRecords"
-                                        class="btn btn-sm btn-outline-primary mb-1">
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.ShowPendingOnlyCheckBox ? "d-none" : "")">
                                     Retention Records Form
                                 </button>
                             </form>
