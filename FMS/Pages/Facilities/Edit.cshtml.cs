@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -25,6 +26,13 @@ namespace FMS.Pages.Facilities
 
         [BindProperty]
         public Guid Id { get; set; }
+
+        [BindProperty]
+        public string ConfirmedFacilityFileLabel { get; set; }
+
+        public bool ConfirmFacility { get; private set; }
+
+        public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
         // Select Lists
         public static SelectList Counties => new(Data.Counties, "Id", "Name");
@@ -133,6 +141,23 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            var mapSearchSpec = new FacilityMapSpec
+            {
+                Latitude = Facility.Latitude,
+                Longitude = Facility.Longitude,
+                Radius = 0.5m,
+            };
+
+            NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
+
+            if (NearbyFacilities != null && NearbyFacilities.Count > 0)
+            {
+                ConfirmedFacilityFileLabel = Facility.FileLabel ?? string.Empty;
+                await PopulateSelectsAsync();
+                ConfirmFacility = true;
+                return Page();
+            }
+
             try
             {
                 await _repository.UpdateFacilityAsync(Id, Facility);
@@ -149,6 +174,43 @@ namespace FMS.Pages.Facilities
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
             return RedirectToPage("./Details", new {id = Id});
+        }
+
+        public async Task<IActionResult> OnPostConfirmAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            Facility.FileLabel = ConfirmedFacilityFileLabel;
+            bool newFileId = true;
+            if (Facility.FileLabel == "none")
+            {
+                newFileId = false;
+            }
+            Facility.TrimAll();
+
+            // If File Label is provided, make sure it exists
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "none" &&
+                !await _repository.FileLabelExists(Facility.FileLabel))
+            {
+                ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+
+            await _repository.UpdateFacilityAsync(Id, Facility, newFileId);
+
+            TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
+            return RedirectToPage("./Details", new { id = Id });
         }
 
         private async Task PopulateSelectsAsync()

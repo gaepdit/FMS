@@ -24,7 +24,7 @@ namespace FMS.Helpers
         {
             return notificationId.IsNullOrEmpty()
                 ? null
-                : GlobalConstants.PendingNotificationFolder;
+                : string.Concat(GlobalConstants.PendingNotificationFolder, notificationId.Substring(2));
         }
 
 
