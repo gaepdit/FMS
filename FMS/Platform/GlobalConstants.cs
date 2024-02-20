@@ -15,7 +15,7 @@
         // Link to Notifications folder
         public const string NotificationFolder = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/RNs/Shared%20Documents/";
 
-        // Link to Notifications folder
+        // Link to Pending Notifications folder
         public const string PendingNotificationFolder = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/RNs/Pending%20RNs/";
 
         public const string RNFacilityNamePattern = @"\A(RN\d+?)\b";

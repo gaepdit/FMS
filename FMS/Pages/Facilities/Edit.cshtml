@@ -18,7 +18,7 @@
 </h1>
 
 <div class="p-3 rounded-3 bg-light-subtle">
-    <form method="post">
+    <form method="post" asp-fragment="ConfirmFacility">
         <input type="hidden" asp-for="Facility.Active" />
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="mb-3 row">
@@ -202,7 +202,114 @@
         </div>
         <hr />
         <p class="text-danger">* denotes a required field</p>
-        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
-        <a asp-page="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary col-sm-3 col-md-2">Cancel</a>
+        @if (Model.ConfirmFacility)
+        {
+            <div id="ConfirmFacility" class="container bg-dark py-3 text-light rounded">
+                <h2>Confirm Facility Update</h2>
+                <p>The following facilities were found near this location (within a half mile). Please confirm that none of these is a duplicate:</p>
+                <table class="table table-sm table-hover bg-white" aria-label="List of nearby facilities">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">File Label<br /><em class="">Select to use</em></th>
+                            <th scope="col">Facility</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col" class="text-center">Type</th>
+                            <th scope="col">Distance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.NearbyFacilities)
+                        {
+                            <tr>
+                                <td class="text-nowrap">
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, item.FileLabel)
+                                        @Html.DisplayFor(m => item.FileLabel)
+                                    </label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                    @Html.DisplayFor(m => item.Active, "BoolDeleted")
+                                </td>
+                                <td>@Html.DisplayFor(m => item.Name)</td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Address)<br />
+                                    @Html.DisplayFor(m => item.City),
+                                    @Html.DisplayFor(m => item.State)
+                                    @Html.DisplayFor(m => item.PostalCode)
+                                </td>
+                                <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
+                                <td>@Html.DisplayFor(m => item.Distance, "Distance")</td>
+                            </tr>
+                        }
+                        <tr class="table-primary">
+                            <td colspan="6">
+                                @if (string.IsNullOrEmpty(Model.ConfirmedFacilityFileLabel))
+                                {
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, string.Empty)
+                                        Create new File Label
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, Model.ConfirmedFacilityFileLabel)
+                                        @Html.DisplayFor(m => Model.ConfirmedFacilityFileLabel) <em>(entered)</em>
+                                    </label>
+                                }
+                            </td>
+                        </tr>
+                        @if (Model.Facility.FacilityTypeName == "RN")
+                        {
+                            <tr>
+                                <td colspan="6">
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, "none")
+                                        No File Label
+                                    </label>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <p>Are you sure you want to update this facility?</p>
+                <button asp-page-handler="Confirm" type="submit" class="btn btn-warning col-sm-5 col-md-4 mb-3 mb-sm-0">
+                    Update the facility
+                </button>
+                <a asp-page="./Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary text-body bg-light-subtle col-sm-4 col-md-3">Cancel</a>
+                <input asp-for="Facility.Address" type="hidden" />
+                <input asp-for="Facility.City" type="hidden" />
+                <input asp-for="Facility.Latitude" type="hidden" />
+                <input asp-for="Facility.Location" type="hidden" />
+                <input asp-for="Facility.Longitude" type="hidden" />
+                <input asp-for="Facility.Name" type="hidden" />
+                <input asp-for="Facility.State" type="hidden" />
+                <input asp-for="Facility.CountyId" type="hidden" />
+                <input asp-for="Facility.FacilityNumber" type="hidden" />
+                <input asp-for="Facility.FileLabel" type="hidden" />
+                <input asp-for="Facility.PostalCode" type="hidden" />
+                <input asp-for="Facility.BudgetCodeId" type="hidden" />
+                <input asp-for="Facility.ComplianceOfficerId" type="hidden" />
+                <input asp-for="Facility.FacilityStatusId" type="hidden" />
+                <input asp-for="Facility.FacilityTypeId" type="hidden" />
+                <input asp-for="Facility.OrganizationalUnitId" type="hidden" />
+                <input asp-for="Facility.HasERecord" type="hidden" />
+                <input asp-for="Facility.PreRQSMcleanup" type="hidden" />
+                <input asp-for="Facility.ImageChecked" type="hidden" />
+                <input asp-for="Facility.DeferredOnSiteScoring" type="hidden" />
+                <input asp-for="Facility.AdditionalDataRequested" type="hidden" />
+                <input asp-for="Facility.VRPReferral" type="hidden" />
+                <input asp-for="Facility.HSInumber" type="hidden" />
+                <input asp-for="Facility.DeterminationLetterDate" type="hidden" />
+                <input asp-for="Facility.Comments" type="hidden" />
+                <input asp-for="Facility.RNDateReceived" type="hidden" />
+            </div>
+        }
+        else
+        {
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update Facility</button>
+        }
     </form>
 </div>
