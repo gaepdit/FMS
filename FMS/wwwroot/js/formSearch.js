@@ -1,4 +1,5 @@
 ﻿// Don't submit empty form fields
+// Show and Hide report buttons
 $(document).ready(function formSearch() {
     $('#SearchButton').click(function DisableEmptyInputs() {
         $('input').each(function () {
@@ -16,11 +17,9 @@ $(document).ready(function formSearch() {
     $("#Spec_FacilityTypeId").on("change", function () {
         if ($("#Spec_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)") {
             $("#RNBlock").removeClass("d-none");
-            /*$("#PendingButton").removeClass("d-none");*/
             $("#DownloadRetentionRecords").addClass("d-none");
         } else {
             $("#RNBlock").addClass("d-none");
-            /*$("#PendingButton").addClass("d-none");*/
             $("#DownloadRetentionRecords").removeClass("d-none");
             $("#Spec_ShowPendingOnly").prop("checked",false)
         }
