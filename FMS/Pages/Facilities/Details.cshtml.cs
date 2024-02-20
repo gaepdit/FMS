@@ -35,6 +35,8 @@ namespace FMS.Pages.Facilities
 
         public string NotificationFolderLink { get; set; } = string.Empty;
 
+        public string PendingNotificationFolderLink { get; set; } = string.Empty;
+
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
             if (id == null)
@@ -61,7 +63,15 @@ namespace FMS.Pages.Facilities
             
             if (FacilityDetail.FacilityType.Name == "RN")
             {
-                NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                if (FacilityDetail.DeterminationLetterDate.HasValue) 
+                {
+                    NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                }
+                else
+                {
+                    PendingNotificationFolderLink = UrlHelper.GetPendingNotificationFolderLink(FacilityDetail.FacilityNumber);
+                }
+
                 RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
             

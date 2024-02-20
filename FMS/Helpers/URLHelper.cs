@@ -20,6 +20,13 @@ namespace FMS.Helpers
                 : string.Concat(GlobalConstants.NotificationFolder, notificationId.Substring(2));
         }
 
+        public static string GetPendingNotificationFolderLink(string notificationId)
+        {
+            return notificationId.IsNullOrEmpty()
+                ? null
+                : GlobalConstants.PendingNotificationFolder;
+        }
+
 
         /// Checks the Sharepoint Site exists or not.
         ///
