@@ -149,6 +149,7 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.FileLabel = ConfirmedFacilityFileLabel;
+
             bool newFileId = true;
             if (Facility.FileLabel == "none")
             {

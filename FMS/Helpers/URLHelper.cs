@@ -8,7 +8,7 @@ namespace FMS.Helpers
     {
         public static string GetHSIFolderLink(string hsiNumber)
         {
-            return hsiNumber.IsNullOrEmpty() 
+            return hsiNumber.IsNullOrEmpty()
                 ? null 
                 : string.Concat(GlobalConstants.HSIFolder, hsiNumber);
         }
