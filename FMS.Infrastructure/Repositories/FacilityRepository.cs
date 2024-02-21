@@ -158,7 +158,7 @@ namespace FMS.Infrastructure.Repositories
 
             var items = await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
 
-            if (!spec.ShowPendingOnly)
+            if (!spec.FileLabel.IsNullOrEmpty())
             {
                 var cabinets = await _context.GetCabinetListAsync(false);
                 foreach (var item in items)
