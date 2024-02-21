@@ -114,7 +114,8 @@ namespace FMS.Pages.Facilities
                     Latitude = spec.Latitude,
                     Longitude = spec.Longitude,
                     ShowDeleted = spec.ShowDeleted,
-                    Radius = spec.Radius
+                    Radius = spec.Radius,
+                    FacilityTypeId = spec.FacilityTypeId
                 };
 
             }

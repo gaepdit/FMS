@@ -8,6 +8,7 @@ using FMS.Platform.Extensions;
 using FMS.Helpers;
 using System.Net;
 using NUglify.Helpers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Pages.Facilities
 {
@@ -68,7 +69,7 @@ namespace FMS.Pages.Facilities
                 {
                     NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }
-                else if (FacilityDetail.HSInumber.IsNullOrWhiteSpace())
+                else if (string.IsNullOrEmpty(FacilityDetail.HSInumber))
                 {
                     PendingNotificationFolderLink = UrlHelper.GetPendingNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }

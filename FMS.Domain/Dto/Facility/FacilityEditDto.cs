@@ -118,6 +118,7 @@ namespace FMS.Domain.Dto
 
         // The following properties only apply to Release Notifications
         [Display(Name = "HSI Number")]
+        //[DisplayFormat(DataFormatString = "{00000}", ApplyFormatInEditMode = true)]
         public string HSInumber { get; set; }
 
         [Display(Name = "Determination Letter Date")]
