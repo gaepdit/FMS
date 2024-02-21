@@ -561,3 +561,5 @@ appsettings.*.json
 
 # Code coverage report from ReportGenerator
 coveragereport/
+
+FMS/Properties/PublishProfiles/
