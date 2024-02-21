@@ -76,7 +76,6 @@ namespace FMS.Domain.Dto
         public decimal? Longitude { get; set; }
 
         [Display(Name = "HSI Number")]
-        //[DisplayFormat(DataFormatString = "{00000}", ApplyFormatInEditMode = true)]
         public string HSInumber { get; set; }
 
         [Display(Name = "Determination Letter Date")]
