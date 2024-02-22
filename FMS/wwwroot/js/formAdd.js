@@ -10,6 +10,37 @@ $(document).ready(function formAdd() {
             $("#RNBlock").removeClass("d-none");
         } else {
             $("#RNBlock").addClass("d-none");
-        }
+        };
+        if ($("#Facility_FacilityNumber").text().trim() === "") {
+            switch ($("#Facility_FacilityTypeId option:selected").text().trim()) {
+                case "RN (Release Notification)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'RNdddd');
+                    break;
+                case "GEN (RCRA generator)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'ddddd');
+                    break;
+                case "NPL (NPL)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'GAxdddddddd');
+                    break;
+                case "DOD (DOD RCRA non-generator)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'GAdddddddddd');
+                    break;
+                case "TSDCA (TSD/CA RCRA non-generator)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'GAddddddddd');
+                    break;
+                case "FUDS (FUDS)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'FUDddddddddd');
+                    break;
+                case "VRP (VRP)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'VRPdddddddddd');
+                    break;
+                case "HSI (HSI)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'ddddd');
+                    break;
+                case "BROWN (Brownfield)":
+                    $("#Facility_FacilityNumber").attr('placeholder', 'BRFddddddd');
+                    break;
+            };
+        };
     });
 });
