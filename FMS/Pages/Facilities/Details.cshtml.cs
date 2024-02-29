@@ -65,7 +65,7 @@ namespace FMS.Pages.Facilities
             
             if (FacilityDetail.FacilityType.Name == "RN")
             {
-                if (FacilityDetail.DeterminationLetterDate.HasValue)
+                if (FacilityDetail.DeterminationLetterDate.HasValue && string.IsNullOrEmpty(FacilityDetail.HSInumber))
                 {
                     NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }

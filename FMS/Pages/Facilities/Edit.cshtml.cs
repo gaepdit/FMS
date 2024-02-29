@@ -6,11 +6,13 @@ using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
+using FMS.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace FMS.Pages.Facilities
 {
@@ -82,43 +84,33 @@ namespace FMS.Pages.Facilities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         public async Task<IActionResult> OnPostAsync()
         {
-            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
-
+            // jQuery Validation of Edit Form
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
                 return Page();
             }
 
+            Facility.TrimAll();
+            
             // Reload facility and see if it has been deleted by another user
-            var facilityDetail = await _repository.GetFacilityAsync(Id);
+            FacilityDetailDto facilityDetail = await _repository.GetFacilityAsync(Id);
             if (facilityDetail is not null && !facilityDetail.Active)
             {
-                TempData?.SetDisplayMessage(Context.Danger, "Facility deleted by another user.");
+                TempData?.SetDisplayMessage(Context.Danger, "Facility has been deleted by another user.");
                 return RedirectToPage("./Details", new { Id });
             }
 
-            Facility.TrimAll();
-
-            // Make sure Release Notifications have a "Date Received"
-            if (Facility.FacilityTypeName == "RN" && Facility.RNDateReceived is null)
+            // Validate User input based on Business Logic
+            // Populate FacilityTypeName to use for User Input validity
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+            ModelErrorCollection errors = FormValidationHelper.ValidateFacilityEditForm(Facility);
+            if (errors.Count > 0)
             {
-                ModelState.AddModelError("Facility.RNDateReceived", "Date Received must be entered.");
-            }
-
-            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
-            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(Facility.Latitude, Facility.Longitude);
-            string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
-
-            if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid) 
-            { 
-                if (EnumVal == GeoCoordHelper.CoordinateValidation.LongNotInGeorgia)
+                foreach (ModelError error in errors)
                 {
-                    ModelState.AddModelError("Facility.Longitude", ValidationString);
-                }
-                else
-                {
-                    ModelState.AddModelError("Facility.Latitude", ValidationString);
+                    string[] errMsg = error.ErrorMessage.Split("^");
+                    ModelState.AddModelError(errMsg[0].ToString(), errMsg[1].ToString());
                 }
             }
 
@@ -166,10 +158,13 @@ namespace FMS.Pages.Facilities
             {
                 if (!await _repository.FacilityExistsAsync(Id))
                 {
-                    return NotFound();
+                    // Facility not found in DB
+                    TempData?.SetDisplayMessage(Context.Danger, "Unable to update Facility. Does not exist in Database or connection issues.");
+                    return RedirectToPage("./Index");
                 }
-
-                throw;
+                // Facility found in DB, but unable to update
+                TempData?.SetDisplayMessage(Context.Danger, "Unable to update Facility. Database connection or data issue. Check connection and try again.");
+                return RedirectToPage("./Details", new { Id });
             }
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
@@ -185,12 +180,28 @@ namespace FMS.Pages.Facilities
             }
 
             Facility.FileLabel = ConfirmedFacilityFileLabel;
+
             bool newFileId = true;
             if (Facility.FileLabel == "none")
             {
                 newFileId = false;
             }
+
             Facility.TrimAll();
+
+            // Validate User input based on Business Logic
+            // Populate FacilityTypeName to use for User Input validity
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+
+            ModelErrorCollection errors = FormValidationHelper.ValidateFacilityEditForm(Facility);
+            if (errors.Count > 0)
+            {
+                foreach (ModelError error in errors)
+                {
+                    string[] errMsg = error.ErrorMessage.Split("^");
+                    ModelState.AddModelError(errMsg[0].ToString(), errMsg[1].ToString());
+                }
+            }
 
             // If File Label is provided, make sure it exists
             if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "none" &&
