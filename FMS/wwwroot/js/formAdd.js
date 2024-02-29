@@ -43,4 +43,12 @@ $(document).ready(function formAdd() {
             };
         };
     });
+    $("#Facility_CountyId").on("change", function () {
+        if ($("#Facility_FileLabel").text().trim() === "") {
+            var selectElement = document.querySelector("#Facility_CountyId");
+            var countyNumber = selectElement.value;
+            var placeHolderFileLabel = countyNumber + '-####';
+            $("#Facility_FileLabel").attr('placeholder', placeHolderFileLabel);
+        };
+    });
 });

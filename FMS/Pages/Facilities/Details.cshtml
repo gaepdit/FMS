@@ -67,6 +67,12 @@
                     @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
                 </dd>
                 <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.IsRetained)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.IsRetained)
+                </dd>
+                <dt class="col-sm-5">
                     @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
                 </dt>
                 <dd class="col-sm-7">
@@ -224,7 +230,7 @@
         }
         @if (!string.IsNullOrEmpty(Model.RNHSIFolderLink))
         {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>RN HSI Folder</a>
+            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>HSI Folder</a>
         }
     </div>
 

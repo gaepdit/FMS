@@ -29,6 +29,8 @@ namespace FMS.Pages.Facilities
         // List of facilities resulting from the search
         public IPaginatedResult FacilityList { get; private set; }
 
+        public DisplayMessage Message { get; private set; }
+
         // Shows results section after searching
         [BindProperty]
         public bool ShowResults { get; private set; }

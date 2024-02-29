@@ -1,13 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -70,25 +71,16 @@ namespace FMS.Pages.Facilities
 
             Facility.TrimAll();
 
-            // Make sure Release Notifications have a "Date Received"
-            if (Facility.FacilityTypeName == "RN" && Facility.RNDateReceived is null)
+            // Validate User input based on Business Logic
+            // Populate FacilityTypeName to use for User Input validity
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+            ModelErrorCollection errors = FormValidationHelper.ValidateFacilityAddForm(Facility);
+            if (errors.Count > 0)
             {
-                ModelState.AddModelError("Facility.RNDateReceived", "Date Received must be entered.");
-            }
-
-            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
-            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(Facility.Latitude, Facility.Longitude);
-            string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
-
-            if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)
-            {
-                if (EnumVal == GeoCoordHelper.CoordinateValidation.LongNotInGeorgia)
+                foreach (ModelError error in errors)
                 {
-                    ModelState.AddModelError("Facility.Longitude", ValidationString);
-                }
-                else
-                {
-                    ModelState.AddModelError("Facility.Latitude", ValidationString);
+                    string[] errMsg = error.ErrorMessage.Split("^");
+                    ModelState.AddModelError(errMsg[0].ToString(), errMsg[1].ToString());
                 }
             }
 
@@ -156,6 +148,19 @@ namespace FMS.Pages.Facilities
                 newFileId = false;
             }
             Facility.TrimAll();
+
+            // Validate User input based on Business Logic
+            // Populate FacilityTypeName to use for User Input validity
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+            ModelErrorCollection errors = FormValidationHelper.ValidateFacilityAddForm(Facility);
+            if (errors.Count > 0)
+            {
+                foreach (ModelError error in errors)
+                {
+                    string[] errMsg = error.ErrorMessage.Split("^");
+                    ModelState.AddModelError(errMsg[0].ToString(), errMsg[1].ToString());
+                }
+            }
 
             // If File Label is provided, make sure it exists
             if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "none" &&
