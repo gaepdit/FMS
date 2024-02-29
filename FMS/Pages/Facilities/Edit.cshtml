@@ -143,6 +143,10 @@
                     <input asp-for="Facility.HasERecord" />
                     <label asp-for="Facility.HasERecord" class="form-check-label"></label>
                 </div>
+                <div class="form-check">
+                    <input asp-for="Facility.IsRetained" />
+                    <label asp-for="Facility.IsRetained" class="form-check-label"></label>
+                </div>
             </div>
             <div class="col">
                 <label asp-for="Facility.Comments"></label>
@@ -171,6 +175,7 @@
                 <div class="col-md-3">
                     <label asp-for="Facility.HSInumber"></label>
                     <input asp-for="Facility.HSInumber" class="form-control" />
+                    <span asp-validation-for="Facility.HSInumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="mb-3 row">

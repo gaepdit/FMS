@@ -111,6 +111,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
+        [Display(Name = "Is Retained Onsite")]
+        public bool IsRetained { get; set; }
+
         public void TrimAll()
         {
             FacilityNumber = FacilityNumber?.Trim();
