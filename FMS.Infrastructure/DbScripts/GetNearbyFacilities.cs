@@ -49,7 +49,7 @@ BEGIN
             ON a.FacilityStatusId = b.Id
             INNER JOIN [dbo].[FacilityTypes] as c
             ON a.FacilityTypeId = c.Id
-            INNER JOIN [dbo].[Files] as d
+            LEFT JOIN [dbo].[Files] as d
             ON a.FileId = d.Id
         where (a.Active = 1 AND ( @FacilityTypeId IS NULL OR a.FacilityTypeId = @FacilityTypeId ))
            or @Active = 0

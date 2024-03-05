@@ -186,10 +186,18 @@ $(document).ready(function mapSearch() {
                     zip = ""
                 }
                 const hyplink = "./Details/" + data.id;
-                const hyplink2 = "../Files/Details/" + data.fileLabel;
+                var hyplink2;
+                var fileLabel;
+                if (data.fileLabel === null) {
+                    hyplink2 = hyplink;
+                    fileLabel = "No File Label. Facility Details";
+                } else {
+                    hyplink2 = "../Files/Details/" + data.fileLabel;
+                    fileLabel = data.fileLabel;
+                }
                 // This defines the contents of the InfoWindow that pops up when a marker is clicked on.
                 google.maps.event.addListener(marker, "spider_click", function () {
-                    infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + data.fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
+                    infowindow.setContent('<div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink + "" + '>' + data.name + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.address + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>' + data.city + ', GA ' + zip + '</b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #00F;"><b><a target="_blank" href= ' + '' + hyplink2 + "" + '> FILE ID: ' + fileLabel + '</a></b></div><div style="font-family: arial, helvetica, sans-serif; font-size: 10px; font-weight: bold; color: #808080;"><b>STATUS: ' + data.facilityStatus + '</b></div>');
                     infowindow.open(map, marker);
                 });
                 // This adds listener to say, if the marker is "Spiderfiable" then Use the image with the "+" plus sign.
