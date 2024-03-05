@@ -336,7 +336,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = Guid.NewGuid(),
                     Active = true,
                     FacilityNumber = "RN4979",
-                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"),
+                    FileId = null,
                     FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
                     OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"),
                     BudgetCodeId = new Guid("5B4D0049-3AA3-4FC7-A8FE-59A771D0F7F8"),
