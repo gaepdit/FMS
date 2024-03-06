@@ -7,7 +7,6 @@ namespace FMS
 {
     public static class GeoCoordHelper
     {
-        private const decimal ZeroLatLong = 0.0m;
         private const decimal UpperLat = 35.0m;
         private const decimal LowerLat = 30.36m;
         private const decimal EasternLong = -80.84m;
@@ -34,9 +33,9 @@ namespace FMS
             return value.ToString();
         }
 
-        public static bool ValidLat(decimal? lat) => lat is ZeroLatLong or null || (lat <= UpperLat && lat >= LowerLat);
+        public static bool ValidLat(decimal? lat) => lat <= UpperLat && lat >= LowerLat;
 
-        public static bool ValidLong(decimal? lng) => lng is ZeroLatLong or null || (lng <= EasternLong && lng >= WesternLong);
+        public static bool ValidLong(decimal? lng) => lng <= EasternLong && lng >= WesternLong;
 
         public static CoordinateValidation ValidateCoordinates(decimal? lat, decimal? lng)
         {
