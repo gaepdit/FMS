@@ -65,9 +65,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Determination Letter Date")]
         public DateOnly DeterminationLetterDate { get; set; }
 
-        [Display(Name = "Comments")]
-        public string Comments { get; set; }
-
         [Display(Name = "Pre-RQSM Cleanup")]
         public bool PreRQSMcleanup { get; set; }
 
@@ -94,6 +91,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
+
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
 
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>

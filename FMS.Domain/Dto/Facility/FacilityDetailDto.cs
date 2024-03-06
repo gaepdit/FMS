@@ -32,7 +32,6 @@ namespace FMS.Domain.Dto
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
             HasERecord = facility.HasERecord;
-            Comments = facility.Comments;
             // *** these properties only apply to Release Notifications ***
             HSInumber = facility.HSInumber;
             DeterminationLetterDate = facility.DeterminationLetterDate;
@@ -44,7 +43,9 @@ namespace FMS.Domain.Dto
             RNDateReceived = facility.RNDateReceived;
             HistoricalUnit = facility.HistoricalUnit;
             HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
+            // ********************************************************
             IsRetained = facility.IsRetained;
+            Comments = facility.Comments;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
                     .Select(e => new RetentionRecordDetailDto(e)).ToList()
@@ -115,9 +116,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Determination Letter Date", Prompt = "None Entered")]
         public DateOnly? DeterminationLetterDate { get; set; }
 
-        [Display(Name = "Comments")]
-        public string Comments { get; set; }
-
         [Display(Name = "Pre-RQSM Cleanup")]
         public bool PreRQSMcleanup { get; set; }
 
@@ -147,6 +145,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
+
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
 
         [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }
