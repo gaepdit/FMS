@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Attributes;
 using FMS.Domain.Dto;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Helpers
 {
@@ -13,6 +14,11 @@ namespace FMS.Helpers
             OrganizationalUnit = facility.OrganizationalUnit?.Name;
             ComplianceOfficer = facility.ComplianceOfficer?.Name;
             RNDateReceived = facility.RNDateReceived;
+            PreRQSMcleanup = facility.PreRQSMcleanup;
+            ImageChecked = facility.ImageChecked;
+            DeferredOnSiteScoring = facility.DeferredOnSiteScoring;
+            AdditionalDataRequested = facility.AdditionalDataRequested;
+            VRPReferral = facility.VRPReferral;
             Comments = facility.Comments;
         }
 
@@ -30,6 +36,21 @@ namespace FMS.Helpers
 
         [XLColumn(Header = "Date Received")]
         public DateOnly? RNDateReceived { get; set; }
+
+        [Display(Name = "Pre-RQSM Cleanup")]
+        public bool PreRQSMcleanup { get; set; }
+
+        [Display(Name = "Image Checked")]
+        public bool ImageChecked { get; set; }
+
+        [Display(Name = "Brownfield Deferral")]
+        public bool DeferredOnSiteScoring { get; set; }
+
+        [Display(Name = "Additional Data Requested")]
+        public bool AdditionalDataRequested { get; set; }
+
+        [Display(Name = "VRP Deferral")]
+        public bool VRPReferral { get; set; }
 
         [XLColumn(Header = "Comments")]
         public string Comments { get; set; }

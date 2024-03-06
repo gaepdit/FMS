@@ -115,9 +115,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Determination Letter Date", Prompt = "None Entered")]
         public DateOnly? DeterminationLetterDate { get; set; }
 
-        [Display(Name = "Comments")]
-        public string Comments { get; set; }
-
         [Display(Name = "Pre-RQSM Cleanup")]
         public bool PreRQSMcleanup { get; set; }
 
@@ -147,6 +144,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
+
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
 
         [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }
