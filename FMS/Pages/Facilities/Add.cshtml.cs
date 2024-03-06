@@ -124,7 +124,7 @@ namespace FMS.Pages.Facilities
 
             if (NearbyFacilities != null && NearbyFacilities.Count > 0)
             {
-                ConfirmedFacilityFileLabel = Facility.FileLabel ?? string.Empty;
+                ConfirmedFacilityFileLabel = "Choose";
                 await PopulateSelectsAsync();
                 ConfirmFacility = true;
                 return Page();
@@ -144,13 +144,28 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            if (ConfirmedFacilityFileLabel == "Choose")
+            {
+                var mapSearchSpec = new FacilityMapSpec
+                {
+                    Latitude = Facility.Latitude,
+                    Longitude = Facility.Longitude,
+                    Radius = 0.5m,
+                };
+
+                NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
+
+                if (NearbyFacilities != null && NearbyFacilities.Count > 0)
+                {
+                    ConfirmedFacilityFileLabel = "Choose";
+                    await PopulateSelectsAsync();
+                    ConfirmFacility = true;
+                    return Page();
+                }
+            }
+
             Facility.FileLabel = ConfirmedFacilityFileLabel;
 
-            bool newFileId = true;
-            if (Facility.FileLabel == "none")
-            {
-                newFileId = false;
-            }
             Facility.TrimAll();
 
             // Validate User input based on Business Logic
@@ -167,7 +182,7 @@ namespace FMS.Pages.Facilities
             }
 
             // If File Label is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "none" &&
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "Choose" &&
                 !await _repository.FileLabelExists(Facility.FileLabel))
             {
                 ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
@@ -185,7 +200,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            var newFacilityId = await _repository.CreateFacilityAsync(Facility, newFileId);
+            var newFacilityId = await _repository.CreateFacilityAsync(Facility);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully created.");
             return RedirectToPage("./Details", new {id = newFacilityId});

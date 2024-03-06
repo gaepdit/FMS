@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FMS.Domain.Data;
@@ -148,7 +148,7 @@ namespace FMS.Pages.Facilities
 
             if (NearbyFacilities != null && NearbyFacilities.Count > 0)
             {
-                ConfirmedFacilityFileLabel = Facility.FileLabel ?? string.Empty;
+                ConfirmedFacilityFileLabel = "Choose";  
                 await PopulateSelectsAsync();
                 ConfirmFacility = true;
                 return Page();
@@ -183,13 +183,27 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            Facility.FileLabel = ConfirmedFacilityFileLabel;
-
-            bool newFileId = true;
-            if (Facility.FileLabel == "none")
+            if (ConfirmedFacilityFileLabel == "Choose")
             {
-                newFileId = false;
+                var mapSearchSpec = new FacilityMapSpec
+                {
+                    Latitude = Facility.Latitude,
+                    Longitude = Facility.Longitude,
+                    Radius = 0.5m,
+                };
+
+                NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
+
+                if (NearbyFacilities != null && NearbyFacilities.Count > 0)
+                {
+                    ConfirmedFacilityFileLabel = "Choose";
+                    await PopulateSelectsAsync();
+                    ConfirmFacility = true;
+                    return Page();
+                }
             }
+
+            Facility.FileLabel = ConfirmedFacilityFileLabel;
 
             Facility.TrimAll();
 
@@ -208,7 +222,7 @@ namespace FMS.Pages.Facilities
             }
 
             // If File Label is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "none" &&
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "Choose" &&
                 !await _repository.FileLabelExists(Facility.FileLabel))
             {
                 ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
@@ -222,7 +236,7 @@ namespace FMS.Pages.Facilities
 
             Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
 
-            await _repository.UpdateFacilityAsync(Id, Facility, newFileId);
+            await _repository.UpdateFacilityAsync(Id, Facility);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
             return RedirectToPage("./Details", new { id = Id });

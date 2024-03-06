@@ -198,7 +198,7 @@ namespace FMS.Infrastructure.Repositories
             return returnList;
         }
 
-        public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility, bool newFileId = true)
+        public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
             if (newFacility.FacilityTypeName != "RN" && string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
             {
@@ -211,10 +211,10 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
             }
 
-            return CreateFacilityInternalAsync(newFacility, newFileId);
+            return CreateFacilityInternalAsync(newFacility);
         }
 
-        private async Task<Guid> CreateFacilityInternalAsync(FacilityCreateDto newFacility, bool newFileId)
+        private async Task<Guid> CreateFacilityInternalAsync(FacilityCreateDto newFacility)
         {
             if (await FacilityNumberExists(newFacility.FacilityNumber))
             {
@@ -228,17 +228,16 @@ namespace FMS.Infrastructure.Repositories
 
             File file;
 
-            if (string.IsNullOrWhiteSpace(newFacility.FileLabel) && newFileId)
+            if (string.IsNullOrWhiteSpace(newFacility.FileLabel))
             {
                 // If File Label is empty, generate new File
-                // Release Notificatiopns are allowed to have no File Label
                 file = await CreateFileInternal(newFacility.CountyId);
             }
             else
             {
                 // Otherwise, if File Label is provided, make sure it exists
                 file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == newFacility.FileLabel);
-                if (file == null && newFileId) throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
+                if (file == null) throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
             var newFac = new Facility(newFacility)
@@ -265,7 +264,7 @@ namespace FMS.Infrastructure.Repositories
             return NewFacilityNumber;
         }
 
-        public Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates, bool newFileId = true)
+        public Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
             if (string.IsNullOrWhiteSpace(facilityUpdates.FacilityNumber))
             {
@@ -278,10 +277,10 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
             }
 
-            return UpdateFacilityInternalAsync(id, facilityUpdates, newFileId);
+            return UpdateFacilityInternalAsync(id, facilityUpdates);
         }
 
-        private async Task UpdateFacilityInternalAsync(Guid id, FacilityEditDto facilityUpdates, bool newFileId)
+        private async Task UpdateFacilityInternalAsync(Guid id, FacilityEditDto facilityUpdates)
         {
             var facility = await _context.Facilities.FindAsync(id);
 
@@ -290,10 +289,9 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Facility ID not found.", nameof(id));
             }
 
-            if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel) && newFileId)
+            if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel))
             {
                 // Generate new File if File Label is empty
-                // Release Notificatiopns are allowed to have no File Label
                 facility.File = await CreateFileInternal(facilityUpdates.CountyId);
             }
             else
@@ -303,7 +301,7 @@ namespace FMS.Infrastructure.Repositories
                 if (oldFile is null || facilityUpdates.FileLabel != oldFile.FileLabel)
                 {
                     var file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
-                    if (file == null && newFileId)
+                    if (file == null)
                         throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
                     facility.File = file;
                     facility.FileId = file?.Id;

@@ -25,7 +25,7 @@
         <div class="mb-3 row">
             <div class="col-md-4">
                 <label asp-for="Facility.FileLabel">File Label <span class="text-danger">*</span></label>
-                <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" readonly="@Model.IsNotSiteMaintenanceUser" disable="@Model.ConfirmFacility" />
+                <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" readonly="@Model.IsNotSiteMaintenanceUser" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
                 <small id="FileIdHelpBlock" class="form-text text-muted">Leave blank to create new or add to existing File</small>
             </div>
@@ -187,7 +187,7 @@
                 <div class="col-md-3">
                     <div class="form-check">
                         <input asp-for="Facility.PreRQSMcleanup" disabled="@Model.ConfirmFacility" />
-                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label" ></label>
+                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label"></label>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -212,7 +212,7 @@
         </div>
         <hr />
         <p class="text-danger">* denotes a required field</p>
-        @if(Model.IsNotSiteMaintenanceUser)
+        @if (Model.IsNotSiteMaintenanceUser)
         {
             <p class="text-danger">Only Users with Site Maintenance role are able to edit existing File Labels and Facility Numbers.</p>
         }
@@ -235,31 +235,34 @@
                     <tbody>
                         @foreach (var item in Model.NearbyFacilities)
                         {
-                            <tr>
-                                <td class="text-nowrap">
-                                    <label>
-                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, item.FileLabel)
-                                        @Html.DisplayFor(m => item.FileLabel)
-                                    </label>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                    @Html.DisplayFor(m => item.Active, "BoolDeleted")
-                                </td>
-                                <td>@Html.DisplayFor(m => item.Name)</td>
-                                <td>
-                                    @Html.DisplayFor(m => item.Address)<br />
-                                    @Html.DisplayFor(m => item.City),
-                                    @Html.DisplayFor(m => item.State)
-                                    @Html.DisplayFor(m => item.PostalCode)
-                                </td>
-                                <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
-                                <td>@Html.DisplayFor(m => item.Distance, "Distance")</td>
-                            </tr>
+                            @if (!string.IsNullOrEmpty(item.FileLabel))
+                            {
+                                <tr>
+                                    <td class="text-nowrap">
+                                        <label>
+                                            @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, item.FileLabel)
+                                            @Html.DisplayFor(m => item.FileLabel)
+                                        </label>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                        @Html.DisplayFor(m => item.Active, "BoolDeleted")
+                                    </td>
+                                    <td>@Html.DisplayFor(m => item.Name)</td>
+                                    <td>
+                                        @Html.DisplayFor(m => item.Address)<br />
+                                        @Html.DisplayFor(m => item.City),
+                                        @Html.DisplayFor(m => item.State)
+                                        @Html.DisplayFor(m => item.PostalCode)
+                                    </td>
+                                    <td class="text-center">@Html.DisplayFor(m => item.FacilityType, "FacilityTypeIcon")</td>
+                                    <td>@Html.DisplayFor(m => item.Distance, "Distance")</td>
+                                </tr>
+                            }
                         }
                         <tr>
                             <td colspan="6">
-                                @if (string.IsNullOrEmpty(Model.ConfirmedFacilityFileLabel))
+                                @if (string.IsNullOrEmpty(Model.Facility.FileLabel))
                                 {
                                     <label>
                                         @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, string.Empty)
@@ -269,10 +272,18 @@
                                 else
                                 {
                                     <label>
-                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, Model.ConfirmedFacilityFileLabel)
-                                        @Html.DisplayFor(m => Model.ConfirmedFacilityFileLabel) <em>(entered)</em>
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, Model.Facility.FileLabel ?? string.Empty)
+                                        @Html.DisplayFor(m => Model.Facility.FileLabel) <em>(entered)</em>
                                     </label>
                                 }
+                            </td>
+                        </tr>
+                        <tr class="table-primary">
+                            <td colspan="6">
+                                <label>
+                                    @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, "Choose")
+                                    Please choose from options above
+                                </label>
                             </td>
                         </tr>
                     </tbody>
@@ -308,6 +319,7 @@
                 <input asp-for="Facility.DeterminationLetterDate" type="hidden" />
                 <input asp-for="Facility.Comments" type="hidden" />
                 <input asp-for="Facility.RNDateReceived" type="hidden" />
+                <input asp-for="Facility.IsRetained" type="hidden" />
             </div>
         }
         else
