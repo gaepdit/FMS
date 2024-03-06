@@ -163,9 +163,7 @@
                                 @Html.DisplayFor(m => item.Active, "BoolDeleted")
                             </td>
                             <td class="text-nowrap">
-                                <a asp-page="../Files/Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                    @Html.DisplayFor(m => item.FileLabel)
-                                </a>
+                                @Html.DisplayFor(m => item.FileLabel, "StringOrNone")
                             </td>
                             <td>
                                 @Html.DisplayFor(m => item.Name)

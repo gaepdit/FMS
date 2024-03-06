@@ -7,6 +7,7 @@ namespace FMS
 {
     public static class GeoCoordHelper
     {
+        private const decimal ZeroLatLong = 0.0m;
         private const decimal UpperLat = 35.0m;
         private const decimal LowerLat = 30.36m;
         private const decimal EasternLong = -80.84m;
@@ -14,11 +15,13 @@ namespace FMS
 
         public enum CoordinateValidation
         {
+            [Description("Latitude and Longitude must both be zero (0) or both valid coordinates.")]
+            BothNotZero = 1,
             [Description("Latitude entered is outside State of Georgia. Must be between 35.0 and 30.36 North Latitude or zero if unknown.")]
-            LatNotInGeorgia = 1,
+            LatNotInGeorgia = 2,
             [Description("Longitude entered is outside State of Georgia. Must be between -80.84 and -85.61 West Longitude or zero if unknown.")]
-            LongNotInGeorgia = 2,
-            Valid = 3
+            LongNotInGeorgia = 3,
+            Valid = 4
         }
 
         public static string GetDescription(Enum value)
@@ -44,6 +47,29 @@ namespace FMS
                 return CoordinateValidation.LatNotInGeorgia;
             }
             if (!ValidLong(lng))
+            {
+                return CoordinateValidation.LongNotInGeorgia;
+            }
+            return CoordinateValidation.Valid;
+        }
+
+        public static bool ValidLatMap(decimal? lat) => lat is ZeroLatLong or null || (lat <= UpperLat && lat >= LowerLat);
+
+        public static bool ValidLongMap(decimal? lng) => lng is ZeroLatLong or null || (lng <= EasternLong && lng >= WesternLong);
+
+        public static bool BothZeroOrBothNonzero(decimal? lat, decimal? lng) => (lat == null && lng == null) || (lat == 0 && lng == 0) || (lat != 0 && lng != 0);
+
+        public static CoordinateValidation ValidateCoordinatesMap(decimal? lat, decimal? lng)
+        {
+            if (!BothZeroOrBothNonzero(lat, lng))
+            {
+                return CoordinateValidation.BothNotZero;
+            }
+            if (!ValidLatMap(lat))
+            {
+                return CoordinateValidation.LatNotInGeorgia;
+            }
+            if (!ValidLongMap(lng))
             {
                 return CoordinateValidation.LongNotInGeorgia;
             }

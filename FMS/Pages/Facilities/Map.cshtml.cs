@@ -59,7 +59,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {
             // Make sure GeoCoordinates are withing the State of Georgia or both Zero
-            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(spec.Latitude, spec.Longitude);
+            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinatesMap(spec.Latitude, spec.Longitude);
             string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
 
             if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)

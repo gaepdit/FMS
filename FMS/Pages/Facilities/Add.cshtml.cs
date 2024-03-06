@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Pages.Facilities
 {
@@ -124,7 +125,7 @@ namespace FMS.Pages.Facilities
 
             if (NearbyFacilities != null && NearbyFacilities.Count > 0)
             {
-                ConfirmedFacilityFileLabel = "Choose";
+                ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
                 await PopulateSelectsAsync();
                 ConfirmFacility = true;
                 return Page();
@@ -157,7 +158,7 @@ namespace FMS.Pages.Facilities
 
                 if (NearbyFacilities != null && NearbyFacilities.Count > 0)
                 {
-                    ConfirmedFacilityFileLabel = "Choose";
+                    ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
                     await PopulateSelectsAsync();
                     ConfirmFacility = true;
                     return Page();

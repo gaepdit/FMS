@@ -265,20 +265,23 @@
                                 else
                                 {
                                     <label>
-                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, Model.Facility.FileLabel ?? string.Empty)
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, Model.ConfirmedFacilityFileLabel)
                                         @Html.DisplayFor(m => Model.Facility.FileLabel) <em>(entered)</em>
                                     </label>
                                 }
                             </td>
                         </tr>
-                        <tr class="table-primary">
-                            <td colspan="6">
-                                <label>
-                                    @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, "Choose")
-                                    Please choose from options above
-                                </label>
-                            </td>
-                        </tr>
+                        @if (string.IsNullOrEmpty(Model.Facility.FileLabel))
+                        {
+                            <tr>
+                                <td colspan="6">
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, "Choose")
+                                        Please choose from options above
+                                    </label>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
                 <p>Are you sure you want to create this facility?</p>
