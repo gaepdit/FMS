@@ -252,7 +252,7 @@ namespace FMS.Infrastructure.Repositories
             return newFac.Id;
         }
 
-        public async Task<string> CreateRNFacilityNumberInternalAsync()
+        private async Task<string> CreateRNFacilityNumberInternalAsync()
         {
             var prefix = "RN";
             var nextInSequence = 1;
