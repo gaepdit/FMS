@@ -37,19 +37,19 @@ namespace FMS.Helpers
         [XLColumn(Header = "Date Received")]
         public DateOnly? RNDateReceived { get; set; }
 
-        [Display(Name = "Pre-RQSM Cleanup")]
+        [XLColumn(Header = "Pre-RQSM Cleanup")]
         public bool PreRQSMcleanup { get; set; }
 
-        [Display(Name = "Image Checked")]
+        [XLColumn(Header = "Image Checked")]
         public bool ImageChecked { get; set; }
 
-        [Display(Name = "Brownfield Deferral")]
+        [XLColumn(Header = "Brownfield Deferral")]
         public bool DeferredOnSiteScoring { get; set; }
 
-        [Display(Name = "Additional Data Requested")]
+        [XLColumn(Header = "Additional Data Requested")]
         public bool AdditionalDataRequested { get; set; }
 
-        [Display(Name = "VRP Deferral")]
+        [XLColumn(Header = "VRP Deferral")]
         public bool VRPReferral { get; set; }
 
         [XLColumn(Header = "Comments")]
