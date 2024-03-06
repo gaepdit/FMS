@@ -1,5 +1,6 @@
 ﻿@page "{id:Guid?}"
 @using FMS.Pages.Facilities
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Facilities.EditModel
 
 @section Scripts
@@ -23,19 +24,23 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="mb-3 row">
             <div class="col-md-4">
-                <label asp-for="Facility.FileLabel"></label>
-                <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" />
+                <label asp-for="Facility.FileLabel">File Label <span class="text-danger">*</span></label>
+                <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" readonly="@Model.IsNotSiteMaintenanceUser" disable="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
-                <small id="FileIdHelpBlock" class="d-none form-text px-1 rounded bg-info text-white">A blank File Label will create a new File.</small>
+                <small id="FileIdHelpBlock" class="form-text text-muted">Leave blank to create new or add to existing File</small>
             </div>
             <div class="col-md-4">
                 <label asp-for="Facility.FacilityNumber">Facility Number <span class="text-danger">*</span></label>
-                <input asp-for="Facility.FacilityNumber" class="form-control" />
+                <input asp-for="Facility.FacilityNumber" class="form-control" readonly="@Model.IsNotSiteMaintenanceUser" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
+                @if (Model.IsNotSiteMaintenanceUser)
+                {
+                    <small id="FacilityNumberHelpBlock" class="form-text text-muted">Only Users with Site Maintenance role are able to edit existing Facility Numbers.</small>
+                }
             </div>
             <div class="col-md-4">
                 <label asp-for="Facility.CountyId">County <span class="text-danger">*</span></label>
-                <select asp-for="Facility.CountyId" asp-items="EditModel.Counties" class="form-select">
+                <select asp-for="Facility.CountyId" asp-items="EditModel.Counties" class="form-select" disabled="@Model.ConfirmFacility">
                 </select>
                 <span asp-validation-for="Facility.CountyId" class="text-danger"></span>
             </div>
@@ -43,21 +48,21 @@
         <div class="mb-3 row">
             <div class="col-md-4">
                 <label asp-for="Facility.FacilityTypeId">Type/Environmental Interest <span class="text-danger">*</span></label>
-                <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="form-select">
+                <select asp-for="Facility.FacilityTypeId" asp-items="Model.FacilityTypes" class="form-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityTypeId" class="text-danger"></span>
             </div>
             <div class="col-md-4">
                 <label asp-for="Facility.OrganizationalUnitId">Organizational Unit <span class="text-danger">*</span></label>
-                <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-select">
+                <select asp-for="Facility.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.OrganizationalUnitId" class="text-danger"></span>
             </div>
             <div class="col-md-4">
                 <label asp-for="Facility.ComplianceOfficerId">Compliance Officer</label>
-                <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                <select asp-for="Facility.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select" disabled="@Model.ConfirmFacility">
                     <option value="">[not assigned]</option>
                 </select>
                 <span asp-validation-for="Facility.ComplianceOfficerId" class="text-danger"></span>
@@ -66,14 +71,14 @@
         <div class="mb-3 row">
             <div class="col-md">
                 <label asp-for="Facility.BudgetCodeId">Budget Code <span class="text-danger">*</span></label>
-                <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="form-select">
+                <select asp-for="Facility.BudgetCodeId" asp-items="Model.BudgetCodes" class="form-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.BudgetCodeId" class="text-danger"></span>
             </div>
             <div class="col-md">
                 <label asp-for="Facility.FacilityStatusId">Facility Status <span class="text-danger">*</span></label>
-                <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="form-select">
+                <select asp-for="Facility.FacilityStatusId" asp-items="Model.FacilityStatuses" class="form-select" disabled="@Model.ConfirmFacility">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="Facility.FacilityStatusId" class="text-danger"></span>
@@ -82,51 +87,51 @@
         <div class="mb-3 row">
             <div class="col">
                 <label asp-for="Facility.Name">Facility Name <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Name" class="form-control" />
+                <input asp-for="Facility.Name" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Name" class="text-danger"></span>
             </div>
         </div>
         <div class="mb-3 row">
             <div class="col">
                 <label asp-for="Facility.Location"></label>
-                <input asp-for="Facility.Location" class="form-control" />
+                <input asp-for="Facility.Location" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Location" class="text-danger"></span>
             </div>
         </div>
         <div class="mb-3 row">
             <div class="col">
                 <label asp-for="Facility.Address">Street Address <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Address" class="form-control" />
+                <input asp-for="Facility.Address" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Address" class="text-danger"></span>
             </div>
         </div>
         <div class="mb-3 row">
             <div class="col-md-6">
                 <label asp-for="Facility.City">City <span class="text-danger">*</span></label>
-                <input asp-for="Facility.City" class="form-control" />
+                <input asp-for="Facility.City" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.City" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="Facility.State">State <span class="text-danger">*</span></label>
-                <select asp-for="Facility.State" asp-items="EditModel.States" class="form-select">
+                <select asp-for="Facility.State" asp-items="EditModel.States" class="form-select" disabled="@Model.ConfirmFacility">
                 </select>
                 <span asp-validation-for="Facility.State" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="Facility.PostalCode">ZIP Code <span class="text-danger">*</span></label>
-                <input asp-for="Facility.PostalCode" class="form-control" />
+                <input asp-for="Facility.PostalCode" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.PostalCode" class="text-danger"></span>
             </div>
         </div>
         <div class="mb-3 row">
             <div class="col">
                 <label asp-for="Facility.Latitude">Latitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Latitude" class="form-control" />
+                <input asp-for="Facility.Latitude" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="Facility.Longitude">Longitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Longitude" class="form-control" />
+                <input asp-for="Facility.Longitude" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
             </div>
             <div class="col-md-3">
@@ -140,17 +145,17 @@
         <div class="mb-3 row">
             <div class="col-md-3">
                 <div class="form-check">
-                    <input asp-for="Facility.HasERecord" />
+                    <input asp-for="Facility.HasERecord" disabled="@Model.ConfirmFacility" />
                     <label asp-for="Facility.HasERecord" class="form-check-label"></label>
                 </div>
                 <div class="form-check">
-                    <input asp-for="Facility.IsRetained" />
+                    <input asp-for="Facility.IsRetained" disabled="@Model.ConfirmFacility" />
                     <label asp-for="Facility.IsRetained" class="form-check-label"></label>
                 </div>
             </div>
             <div class="col">
                 <label asp-for="Facility.Comments"></label>
-                <textarea asp-for="Facility.Comments" class="form-control"></textarea>
+                <textarea asp-for="Facility.Comments" class="form-control" disabled="@Model.ConfirmFacility"></textarea>
             </div>
         </div>
         <div id="RNBlock" class="@(Model.Facility.FacilityTypeName == "RN" ? "" : "d-none")">
@@ -159,47 +164,47 @@
             <div class="mb-3 row">
                 <div class="col-md-3">
                     <label asp-for="Facility.RNDateReceived">Date Received <span class="text-danger">*</span></label>
-                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" placeholder="" />
+                    <input asp-for="Facility.RNDateReceived" class="form-control datepicker" type="date" placeholder="" disabled="@Model.ConfirmFacility" />
                     <span asp-validation-for="Facility.RNDateReceived" class="text-danger"></span>
                 </div>
                 <div class="col-md-3">
                     <label asp-for="Facility.DeterminationLetterDate"></label>
-                    <input asp-for="Facility.DeterminationLetterDate" class="form-control datepicker" type="date" />
+                    <input asp-for="Facility.DeterminationLetterDate" class="form-control datepicker" type="date" disabled="@Model.ConfirmFacility" />
                 </div>
                 <div class="col-md-3 position-relative">
                     <div class="form-check position-absolute top-50">
-                        <input asp-for="Facility.ImageChecked" />
+                        <input asp-for="Facility.ImageChecked" disabled="@Model.ConfirmFacility" />
                         <label asp-for="Facility.ImageChecked" class="form-check-label"></label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label asp-for="Facility.HSInumber"></label>
-                    <input asp-for="Facility.HSInumber" class="form-control" />
+                    <input asp-for="Facility.HSInumber" class="form-control" disabled="@Model.ConfirmFacility" />
                     <span asp-validation-for="Facility.HSInumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="mb-3 row">
                 <div class="col-md-3">
                     <div class="form-check">
-                        <input asp-for="Facility.PreRQSMcleanup" />
-                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label"></label>
+                        <input asp-for="Facility.PreRQSMcleanup" disabled="@Model.ConfirmFacility" />
+                        <label asp-for="Facility.PreRQSMcleanup" class="form-check-label" ></label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-check">
-                        <input asp-for="Facility.DeferredOnSiteScoring" />
+                        <input asp-for="Facility.DeferredOnSiteScoring" disabled="@Model.ConfirmFacility" />
                         <label asp-for="Facility.DeferredOnSiteScoring" class="form-check-label"></label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-check">
-                        <input asp-for="Facility.VRPReferral" />
+                        <input asp-for="Facility.VRPReferral" disabled="@Model.ConfirmFacility" />
                         <label asp-for="Facility.VRPReferral" class="form-check-label"></label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-check">
-                        <input asp-for="Facility.AdditionalDataRequested" />
+                        <input asp-for="Facility.AdditionalDataRequested" disabled="@Model.ConfirmFacility" />
                         <label asp-for="Facility.AdditionalDataRequested" class="form-check-label"></label>
                     </div>
                 </div>
@@ -207,6 +212,10 @@
         </div>
         <hr />
         <p class="text-danger">* denotes a required field</p>
+        @if(Model.IsNotSiteMaintenanceUser)
+        {
+            <p class="text-danger">Only Users with Site Maintenance role are able to edit existing File Labels and Facility Numbers.</p>
+        }
         @if (Model.ConfirmFacility)
         {
             <div id="ConfirmFacility" class="container bg-dark py-3 text-light rounded">
@@ -248,7 +257,7 @@
                                 <td>@Html.DisplayFor(m => item.Distance, "Distance")</td>
                             </tr>
                         }
-                        <tr class="table-primary">
+                        <tr>
                             <td colspan="6">
                                 @if (string.IsNullOrEmpty(Model.ConfirmedFacilityFileLabel))
                                 {
@@ -266,17 +275,6 @@
                                 }
                             </td>
                         </tr>
-                        @if (Model.Facility.FacilityTypeName == "RN")
-                        {
-                            <tr>
-                                <td colspan="6">
-                                    <label>
-                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, "none")
-                                        No File Label
-                                    </label>
-                                </td>
-                            </tr>
-                        }
                     </tbody>
                 </table>
                 <p>Are you sure you want to update this facility?</p>

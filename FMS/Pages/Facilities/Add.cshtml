@@ -1,5 +1,6 @@
 @page
 @using FMS.Pages.Facilities
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Facilities.AddModel
 
 @section Scripts
@@ -19,7 +20,7 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="mb-3 row">
             <div class="col-md-4">
-                <label asp-for="Facility.FileLabel"></label>
+                <label asp-for="Facility.FileLabel">File Label <span class="text-danger">*</span></label>
                 <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
                 <small id="FileIdHelpBlock" class="form-text text-muted">Enter an existing File or leave blank to create a new File.</small>
@@ -28,6 +29,7 @@
                 <label asp-for="Facility.FacilityNumber">Facility Number <span class="text-danger">*</span></label>
                 <input asp-for="Facility.FacilityNumber" class="form-control" disabled="@Model.ConfirmFacility" />
                 <span asp-validation-for="Facility.FacilityNumber" class="text-danger"></span>
+                <small id="FacilityNumberHelpBlock" class="form-text text-muted d-none">Facility Number for Release Notification will be Auto-generated.</small>
             </div>
             <div class="col-md-4">
                 <label asp-for="Facility.CountyId">County <span class="text-danger">*</span></label>
@@ -248,7 +250,7 @@
                                 <td>@Html.DisplayFor(m => item.Distance, "Distance")</td>
                             </tr>
                         }
-                        <tr class="table-primary">
+                        <tr>
                             <td colspan="6">
                                 @if (string.IsNullOrEmpty(Model.ConfirmedFacilityFileLabel))
                                 {
@@ -266,17 +268,6 @@
                                 }
                             </td>
                         </tr>
-                        @if (Model.Facility.FacilityTypeName == "RN")
-                        {
-                            <tr>
-                                <td colspan="6">
-                                    <label>
-                                        @Html.RadioButtonFor(m => m.ConfirmedFacilityFileLabel, "none")
-                                        No File Label
-                                    </label>
-                                </td>
-                            </tr>
-                        }
                     </tbody>
                 </table>
                 <p>Are you sure you want to create this facility?</p>

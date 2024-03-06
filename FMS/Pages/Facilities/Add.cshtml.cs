@@ -29,6 +29,9 @@ namespace FMS.Pages.Facilities
 
         public bool ConfirmFacility { get; private set; }
 
+        [BindProperty]
+        public bool IsNotSiteMaintenanceUser { get; set; }
+
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
         // Select Lists
@@ -54,6 +57,7 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetAsync()
         {
+            IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
             await PopulateSelectsAsync();
             Facility = new FacilityCreateDto { State = "Georgia" };
             return Page();

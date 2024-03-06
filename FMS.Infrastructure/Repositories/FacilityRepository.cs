@@ -200,7 +200,7 @@ namespace FMS.Infrastructure.Repositories
 
         public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility, bool newFileId = true)
         {
-            if (string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
+            if (newFacility.FacilityTypeName != "RN" && string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
             {
                 throw new ArgumentException("Facility Number is required.");
             }
@@ -219,6 +219,11 @@ namespace FMS.Infrastructure.Repositories
             if (await FacilityNumberExists(newFacility.FacilityNumber))
             {
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
+            }
+
+            if(newFacility.FacilityNumber.IsNullOrEmpty() && newFacility.FacilityTypeName == "RN")
+            {
+                newFacility.FacilityNumber = await CreateRNFacilityNumberInternalAsync();
             }
 
             File file;
@@ -245,6 +250,19 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return newFac.Id;
+        }
+
+        private async Task<string> CreateRNFacilityNumberInternalAsync()
+        {
+            var prefix = "RN";
+            var nextInSequence = 1;
+            var NextNumber = await _context.Facilities.AsNoTracking()
+                .Where(e => e.FacilityNumber.StartsWith(prefix))
+                .Select(e => int.Parse(e.FacilityNumber.Substring(2, 4)))
+                .ToListAsync();
+            nextInSequence = NextNumber.Count == 0 ? 1 : NextNumber.Max() + 1;
+            var NewFacilityNumber = string.Concat(prefix, nextInSequence);
+            return NewFacilityNumber;
         }
 
         public Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates, bool newFileId = true)
