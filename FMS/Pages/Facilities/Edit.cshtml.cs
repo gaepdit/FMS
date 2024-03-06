@@ -34,6 +34,9 @@ namespace FMS.Pages.Facilities
 
         public bool ConfirmFacility { get; private set; }
 
+        [BindProperty]
+        public bool IsNotSiteMaintenanceUser { get; set; }
+
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
         // Select Lists
@@ -74,6 +77,7 @@ namespace FMS.Pages.Facilities
                 return RedirectToPage("./Details", new {id});
             }
 
+            IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
             Id = id.Value;
             Facility = new FacilityEditDto(facilityDetail);
 

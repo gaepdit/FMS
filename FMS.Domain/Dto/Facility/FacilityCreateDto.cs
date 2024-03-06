@@ -7,7 +7,6 @@ namespace FMS.Domain.Dto
 {
     public class FacilityCreateDto
     {
-        [Required]
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 

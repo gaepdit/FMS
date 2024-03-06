@@ -8,8 +8,13 @@ $(document).ready(function formAdd() {
     $("#Facility_FacilityTypeId").on("change", function () {
         if ($("#Facility_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)") {
             $("#RNBlock").removeClass("d-none");
+            $("#FacilityNumberHelpBlock").removeClass("d-none");
+            $("#Facility_FacilityNumber").prop('value', '')
+            $("#Facility_FacilityNumber").attr('readonly', true)
         } else {
             $("#RNBlock").addClass("d-none");
+            $("#FacilityNumberHelpBlock").addClass("d-none");
+            $("#Facility_FacilityNumber").attr('readonly', false)
         };
         if ($("#Facility_FacilityNumber").text().trim() === "") {
             switch ($("#Facility_FacilityTypeId option:selected").text().trim()) {
