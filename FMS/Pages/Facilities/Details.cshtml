@@ -31,7 +31,7 @@
     }
 </h1>
 <hr />
-<partial name="_AlertPartial" for="Message" id="alert"/>
+<partial name="_AlertPartial" for="Message" id="alert" />
 
 <div class="container-fluid">
     <div class="parent-container d-lg-inline-flex">
@@ -214,25 +214,29 @@
             </div>
         }
     </div>
-    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
-        @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
-        }
-        @if (!string.IsNullOrEmpty(Model.NotificationFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.NotificationFolderLink>Release Notification(s)</a>
-        }
-        @if (!string.IsNullOrEmpty(Model.PendingNotificationFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.PendingNotificationFolderLink>Pending Release Notification</a>
-        }
-        @if (!string.IsNullOrEmpty(Model.RNHSIFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>HSI Folder</a>
-        }
-    </div>
+    @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
+    {
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
+
+            @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.NotificationFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.NotificationFolderLink>Release Notification(s)</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.PendingNotificationFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.PendingNotificationFolderLink>Pending Release Notification</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.RNHSIFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>HSI Folder</a>
+            }
+        </div>
+    }
 
     @if (Model.FacilityDetail.FacilityType.Name != "RN")
     {
