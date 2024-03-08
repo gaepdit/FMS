@@ -158,13 +158,15 @@ namespace FMS.Infrastructure.Repositories
 
             var items = await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
 
-            if (!spec.FileLabel.IsNullOrEmpty())
+            var cabinets = await _context.GetCabinetListAsync(false);
+
+            foreach (var item in items)
             {
-                var cabinets = await _context.GetCabinetListAsync(false);
-                foreach (var item in items)
+                if (!item.FileLabel.IsNullOrEmpty())
                 {
                     item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
                 }
+
             }
 
             return items;
@@ -221,7 +223,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
             }
 
-            if(newFacility.FacilityNumber.IsNullOrEmpty() && newFacility.FacilityTypeName == "RN")
+            if (newFacility.FacilityNumber.IsNullOrEmpty() && newFacility.FacilityTypeName == "RN")
             {
                 newFacility.FacilityNumber = await CreateRNFacilityNumberInternalAsync();
             }
