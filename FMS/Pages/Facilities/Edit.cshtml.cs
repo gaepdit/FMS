@@ -96,6 +96,8 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
+
             Facility.TrimAll();
             
             // Reload facility and see if it has been deleted by another user
@@ -138,21 +140,24 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            var mapSearchSpec = new FacilityMapSpec
+            if (!IsNotSiteMaintenanceUser)
             {
-                Latitude = Facility.Latitude,
-                Longitude = Facility.Longitude,
-                Radius = 0.5m,
-            };
+                var mapSearchSpec = new FacilityMapSpec
+                {
+                    Latitude = Facility.Latitude,
+                    Longitude = Facility.Longitude,
+                    Radius = 0.5m,
+                };
 
-            NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
+                NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
 
-            if (NearbyFacilities != null && NearbyFacilities.Count > 0)
-            {
-                ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;  
-                await PopulateSelectsAsync();
-                ConfirmFacility = true;
-                return Page();
+                if (NearbyFacilities != null && NearbyFacilities.Count > 0)
+                {
+                    ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
+                    await PopulateSelectsAsync();
+                    ConfirmFacility = true;
+                    return Page();
+                }
             }
 
             try
@@ -183,8 +188,9 @@ namespace FMS.Pages.Facilities
                 await PopulateSelectsAsync();
                 return Page();
             }
+            IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
 
-            if (ConfirmedFacilityFileLabel == "Choose")
+            if (ConfirmedFacilityFileLabel == "Choose" || !IsNotSiteMaintenanceUser)
             {
                 var mapSearchSpec = new FacilityMapSpec
                 {
@@ -235,7 +241,7 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+            //Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
 
             await _repository.UpdateFacilityAsync(Id, Facility);
 
