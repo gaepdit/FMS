@@ -1,14 +1,20 @@
 ﻿@page
 @using FMS.Pages.Maintenance
 @model FMS.Pages.Maintenance.ComplianceOfficer.IndexModel
+
+@section Scripts {
+    <script src="~/js/formIndex.js"></script>
+}
+
 @{
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.ComplianceOfficer}";
 }
+
 <a asp-page="../Index">← Site Maintenance</a>
 <h1>
     @MaintenanceOptions.ComplianceOfficer
 </h1>
-<partial name="_AlertPartial" for="DisplayMessage" />
+<partial name="_AlertPartial" for="DisplayMessage" id="alert"/>
 
 <p>New users are added to the Compliance Officers list the first time they sign into FMS.</p>
 <form method="post">

@@ -1,14 +1,20 @@
 ﻿@page
 @using FMS.Pages.Maintenance
 @model FMS.Pages.Maintenance.FacilityStatus.IndexModel
+
+@section Scripts {
+    <script src="~/js/formIndex.js"></script>
+}
+
 @{
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.FacilityStatus}";
 }
+
 <a asp-page="../Index">← Site Maintenance</a>
 <h1>
     @MaintenanceOptions.FacilityStatus <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
 </h1>
-<partial name="_AlertPartial" for="DisplayMessage" />
+<partial name="_AlertPartial" for="DisplayMessage" id="alert"/>
 
 <form method="post">
     <table class="table" aria-label="List of facility statuses">

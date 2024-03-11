@@ -202,13 +202,13 @@
                         @Html.DisplayNameFor(model => model.FacilityDetail.HistoricalUnit)
                     </dt>
                     <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalUnit)
+                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalUnit, "StringOrNotAssigned")
                     </dd>
                     <dt class="col-sm-6">
                         @Html.DisplayNameFor(model => model.FacilityDetail.HistoricalComplianceOfficer)
                     </dt>
                     <dd class="col-sm-6">
-                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalComplianceOfficer)
+                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalComplianceOfficer, "StringOrNotAssigned")
                     </dd>
                 </dl>
             </div>

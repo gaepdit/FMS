@@ -1,9 +1,15 @@
 ﻿@page "{id}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Cabinets.DetailsModel
+
+@section Scripts {
+    <script src="~/js/formDetails.js"></script>
+}
+
 @{
     ViewData["Title"] = $"Cabinet {Model.CabinetSummary.Name}";
 }
+
 <h1>
     @ViewData["Title"]
     @if (!Model.CabinetSummary.Active)
@@ -16,7 +22,7 @@
     }
 </h1>
 <hr />
-<partial name="_AlertPartial" for="Message" />
+<partial name="_AlertPartial" for="Message" id="alert"/>
 
 <div class="container bg-light-subtle rounded-3">
     <p>

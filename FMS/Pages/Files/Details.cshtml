@@ -1,9 +1,15 @@
 @page "{id}"
 @using FMS.Platform.Extensions
 @model FMS.Pages.Files.DetailsModel
+
+@section Scripts {
+    <script src="~/js/formDetails.js"></script>
+}
+
 @{
     ViewData["Title"] = $"File {Model.FileDetail.FileLabel}";
 }
+
 <h1>
     @ViewData["Title"]
     @if (!Model.FileDetail.Active)
