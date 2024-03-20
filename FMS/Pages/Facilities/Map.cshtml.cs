@@ -135,7 +135,7 @@ namespace FMS.Pages.Facilities
             var fileName = $"FMS_Map_export{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.xlsx";
             IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(ExportSpec);
             var facilityMapDetail = from p in facilityMapSummaries select new FacilityMapSummaryDtoScalar(p);
-            return File(facilityMapDetail.ExportExcelAsByteArray(), "application/vnd.ms.excel", fileName);
+            return File(facilityMapDetail.ExportExcelAsByteArray(ExportHelper.ReportType.Map), "application/vnd.ms.excel", fileName);
         }
 
         private async Task PopulateSelectsAsync()

@@ -104,7 +104,7 @@
             </div>
         </div>
         <div class="mb-3 row">
-            @if (User.IsInRole(UserRoles.FileEditor))
+            @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.SiteMaintenance))
             {
                 <div class="col-md-3">
                     <div class="form-check">
@@ -169,7 +169,7 @@
                                     Excel Export
                                 </button>
                                 <button id="PendingButton" asp-page-handler="PendingButton"
-                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.Spec.ShowPendingOnly ? "" : "d-none")">
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.ShowPendingOnlyCheckBox ? "" : "d-none")">
                                     Pending Report
                                 </button>
                                 <button id="DownloadRetentionRecords" asp-page-handler="DownloadRetentionRecords"

@@ -96,6 +96,8 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
+
             Facility.TrimAll();
             
             // Reload facility and see if it has been deleted by another user
@@ -132,27 +134,36 @@ namespace FMS.Pages.Facilities
                 }
             }
 
+            //for RN and HSI facilities, check for duplicate Facility Numbers
+            if ((Facility.FacilityTypeName == "RN" ||  Facility.FacilityTypeName == "HSI") && (await _repository.DuplicateFacilityNumberExists(Facility.FacilityNumber, Id, (Guid)Facility.FacilityTypeId)))
+            {
+                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists for a different Facility");
+            }
+
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
                 return Page();
             }
 
-            var mapSearchSpec = new FacilityMapSpec
+            if (!IsNotSiteMaintenanceUser || Facility.FileLabel.IsNullOrEmpty())
             {
-                Latitude = Facility.Latitude,
-                Longitude = Facility.Longitude,
-                Radius = 0.5m,
-            };
+                var mapSearchSpec = new FacilityMapSpec
+                {
+                    Latitude = Facility.Latitude,
+                    Longitude = Facility.Longitude,
+                    Radius = 0.5m,
+                };
 
-            NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
+                NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
 
-            if (NearbyFacilities != null && NearbyFacilities.Count > 0)
-            {
-                ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;  
-                await PopulateSelectsAsync();
-                ConfirmFacility = true;
-                return Page();
+                if (NearbyFacilities != null && NearbyFacilities.Count > 0)
+                {
+                    ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
+                    await PopulateSelectsAsync();
+                    ConfirmFacility = true;
+                    return Page();
+                }
             }
 
             try
@@ -235,8 +246,6 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
-
             await _repository.UpdateFacilityAsync(Id, Facility);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
@@ -246,7 +255,7 @@ namespace FMS.Pages.Facilities
         private async Task PopulateSelectsAsync()
         {
             BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(true);
             FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
             FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();

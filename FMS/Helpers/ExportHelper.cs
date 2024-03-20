@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
+using ExcelNumberFormat;
 using FMS.Domain.Dto;
 using FMS.Domain.Services;
 using Spire.Pdf;
@@ -13,20 +15,37 @@ namespace FMS
 {
     public static class ExportHelper
     {
+        public enum ReportType
+        {
+            Normal,
+            Pending,
+            Map
+        }
+
         /// <summary>
         /// Takes in a list of generic T, input it into the XLWorkbook, convert it to a byte array.
         /// </summary>
         /// <param name="list">A list of FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar</param>
         /// <typeparam name="T">FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar</typeparam>
         /// <returns>A byte array to use in File()</returns>
-        public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list)
+        public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list, ReportType reportType)
         {
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
             var ws = wb.AddWorksheet("Search_Results");
             // insert the enumerable data
             ws.Cell(1, 1).InsertTable(list);
-            ws.Columns().AdjustToContents(1, 100);
+            ws.Columns().AdjustToContents(1, 10000);
+            if (reportType == ReportType.Pending)
+            {
+                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+            if (reportType == ReportType.Normal)
+            {
+                ws.Column(16).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(17).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+
             wb.SaveAs(ms);
             return ms.ToArray();
         }

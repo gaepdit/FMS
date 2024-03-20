@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Repositories
 {
@@ -22,6 +23,7 @@ namespace FMS.Domain.Repositories
         Task DeleteFacilityAsync(Guid id);
         Task UndeleteFacilityAsync(Guid id);
         Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null);
+        Task<bool> DuplicateFacilityNumberExists(string newFacilityNumber, Guid oldFacilityId, Guid facilityTypeId);
         Task<bool> FileLabelExists(string fileLabel);
         Task<int> GetNextSequenceForCountyAsync(int countyId);
 

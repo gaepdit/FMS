@@ -395,6 +395,11 @@ namespace FMS.Infrastructure.Repositories
                 e.FacilityNumber == facilityNumber
                 && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
+        public Task<bool> DuplicateFacilityNumberExists(string newFacilityNumber, Guid oldFacilityId, Guid facilityTypeId) => _context.Facilities.AnyAsync(
+            e => e.FacilityNumber == newFacilityNumber 
+            && e.Id != oldFacilityId 
+            && e.FacilityTypeId == facilityTypeId);
+
         public Task<bool> FileLabelExists(string fileLabel) =>
             _context.Files.AnyAsync(e => e.FileLabel == fileLabel);
 
