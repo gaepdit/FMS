@@ -86,7 +86,7 @@ namespace FMS.Pages.Facilities
             // "FacilityReportList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
             var facilityDetailList = from p in facilityReportList select new FacilityDetailDtoScalar(p);
-            return File(facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
+            return File(facilityDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Normal), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostPendingButtonAsync()
@@ -95,7 +95,7 @@ namespace FMS.Pages.Facilities
             // "FacilityPendingList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
             var facilityDetailList = from p in facilityReportList select new FacilityPendingDtoScalar(p);
-            return File(facilityDetailList.ExportExcelAsByteArray(), "application/vnd.ms-excel", fileName);
+            return File(facilityDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Pending), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostDownloadRetentionRecordsAsync()

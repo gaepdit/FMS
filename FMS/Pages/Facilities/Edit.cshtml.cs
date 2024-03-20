@@ -134,13 +134,19 @@ namespace FMS.Pages.Facilities
                 }
             }
 
+            //for RN and HSI facilities, check for duplicate Facility Numbers
+            if ((Facility.FacilityTypeName == "RN" ||  Facility.FacilityTypeName == "HSI") && (await _repository.DuplicateFacilityNumberExists(Facility.FacilityNumber, Id, (Guid)Facility.FacilityTypeId)))
+            {
+                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists for a different Facility");
+            }
+
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
                 return Page();
             }
 
-            if (!IsNotSiteMaintenanceUser)
+            if (!IsNotSiteMaintenanceUser || Facility.FileLabel.IsNullOrEmpty())
             {
                 var mapSearchSpec = new FacilityMapSpec
                 {
@@ -188,9 +194,8 @@ namespace FMS.Pages.Facilities
                 await PopulateSelectsAsync();
                 return Page();
             }
-            IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
 
-            if (ConfirmedFacilityFileLabel == "Choose" || !IsNotSiteMaintenanceUser)
+            if (ConfirmedFacilityFileLabel == "Choose")
             {
                 var mapSearchSpec = new FacilityMapSpec
                 {
@@ -241,8 +246,6 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
-            //Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
-
             await _repository.UpdateFacilityAsync(Id, Facility);
 
             TempData?.SetDisplayMessage(Context.Success, "Facility successfully updated.");
@@ -252,7 +255,7 @@ namespace FMS.Pages.Facilities
         private async Task PopulateSelectsAsync()
         {
             BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(true);
             FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
             FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();

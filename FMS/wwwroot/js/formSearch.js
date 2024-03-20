@@ -21,7 +21,8 @@ $(document).ready(function formSearch() {
         } else {
             $("#RNBlock").addClass("d-none");
             $("#DownloadRetentionRecords").removeClass("d-none");
-            $("#Spec_ShowPendingOnly").prop("checked",false)
+            $("#Spec_ShowPendingOnly").prop("checked", false)
+            $("#PendingButton").addClass("d-none");
         }
     });
     $("#cbPending").click(function () {

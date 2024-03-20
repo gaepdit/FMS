@@ -25,7 +25,7 @@
         <div class="mb-3 row">
             <div class="col-md-4">
                 <label asp-for="Facility.FileLabel">File Label <span class="text-danger">*</span></label>
-                <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" readonly="@Model.IsNotSiteMaintenanceUser" disabled="@Model.ConfirmFacility" />
+                <input asp-for="Facility.FileLabel" class="form-control" aria-describedby="FileIdHelpBlock" readonly="true" />
                 <span asp-validation-for="Facility.FileLabel" class="text-danger"></span>
                 <small id="FileIdHelpBlock" class="form-text text-muted">Leave blank to create new or add to existing File</small>
             </div>
