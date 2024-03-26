@@ -79,7 +79,9 @@ namespace FMS.Pages.Facilities
             // Validate User input based on Business Logic
             // Populate FacilityTypeName to use for User Input validity
             Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+
             ModelErrorCollection errors = FormValidationHelper.ValidateFacilityAddForm(Facility);
+
             if (errors.Count > 0)
             {
                 foreach (ModelError error in errors)
