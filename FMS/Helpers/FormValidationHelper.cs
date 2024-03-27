@@ -11,8 +11,8 @@ namespace FMS.Helpers
         private static readonly ModelErrorCollection errCol = [];
         private static readonly DateOnly minDate = new(1990, 1, 1);
         private static readonly DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
-        private static string rnPattern = @"^\bRN\d{4}$";
-        private static string hsiPattern = @"^\d{5}$";
+        private static readonly string rnPattern = @"^\bRN\d{4}$";
+        private static readonly string hsiPattern = @"^\d{5}$";
         private static readonly Regex rnRegex = new(rnPattern);
         private static readonly Regex hsiRegex = new(hsiPattern);
 
@@ -30,6 +30,7 @@ namespace FMS.Helpers
 
         public static ModelErrorCollection ValidateFacilityAddEditForms(FacilityValidationDtoScalar facility)
         {
+            errCol.Clear();
             // Make sure GeoCoordinates are withing the State of Georgia or both Zero
             GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(facility.Latitude, facility.Longitude);
             string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
