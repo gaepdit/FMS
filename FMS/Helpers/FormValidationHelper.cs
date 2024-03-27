@@ -31,8 +31,10 @@ namespace FMS.Helpers
         public static ModelErrorCollection ValidateFacilityAddEditForms(FacilityValidationDtoScalar facility)
         {
             errCol.Clear();
-            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
+
+            // Make sure GeoCoordinates are withing the State of Georgia
             GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(facility.Latitude, facility.Longitude);
+
             string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
 
             if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)
