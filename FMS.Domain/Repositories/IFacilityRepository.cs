@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
-using FMS.Domain.Entities;
 
 namespace FMS.Domain.Repositories
 {

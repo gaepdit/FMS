@@ -1,3 +1,3 @@
 ﻿$(document).ready(function formDetails() {
-    setTimeout(function () { $('.alert').alert('close') }, 5000)
+    setTimeout(function () { $('.alert').alert('close') }, 4000)
 });

@@ -8,18 +8,34 @@ namespace FMS.Helpers
 {
     public static class FormValidationHelper
     {
-        public static ModelErrorCollection ValidateFacilityEditForm(FacilityEditDto facility)
-        {
-            ModelErrorCollection errCol = [];
-            DateOnly minDate = new DateOnly(1990, 1, 1);
-            DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
-            string rnPattern = @"^\bRN\d{4}$";
-            string hsiPattern = @"^\d{5}$";
-            Regex rnRegex = new(rnPattern);
-            Regex hsiRegex = new(hsiPattern);
+        private static readonly ModelErrorCollection errCol = [];
+        private static readonly DateOnly minDate = new(1990, 1, 1);
+        private static readonly DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
+        private static readonly string rnPattern = @"^\bRN\d{4}$";
+        private static readonly string hsiPattern = @"^\d{5}$";
+        private static readonly Regex rnRegex = new(rnPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
+        private static readonly Regex hsiRegex = new(hsiPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
-            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
+        public static ModelErrorCollection ValidateFacilityEditForm(FacilityEditDto facilityEditDto)
+        {
+            FacilityValidationDtoScalar facilityValidation = new(facilityEditDto);
+            return ValidateFacilityAddEditForms(facilityValidation);
+        }
+
+        public static ModelErrorCollection ValidateFacilityAddForm(FacilityCreateDto facilityCreateDto)
+        {
+            FacilityValidationDtoScalar facilityValidation = new(facilityCreateDto);    
+            return ValidateFacilityAddEditForms(facilityValidation);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
+        public static ModelErrorCollection ValidateFacilityAddEditForms(FacilityValidationDtoScalar facility)
+        {
+            errCol.Clear();
+
+            // Make sure GeoCoordinates are withing the State of Georgia
             GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(facility.Latitude, facility.Longitude);
+
             string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
 
             if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)
@@ -61,68 +77,12 @@ namespace FMS.Helpers
                     errCol.Add(new ModelError(string.Concat("Facility.HSInumber", "^", "HSI Number must be 5 digits Only.")));
                 }
             }
-            else
+            else if(facility.FacilityTypeName == "HSI")
             {
-                if (facility.FacilityNumber.IsNullOrEmpty())
+                // Check Facility Number 
+                if (!facility.FacilityNumber.IsNullOrEmpty() && !hsiRegex.IsMatch(facility.FacilityNumber))
                 {
-                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must not be blank")));
-                }
-            }
-
-            return errCol;
-        }
-
-        public static ModelErrorCollection ValidateFacilityAddForm(FacilityCreateDto facility)
-        {
-            ModelErrorCollection errCol = [];
-            DateOnly minDate = new DateOnly(1990, 1, 1);
-            DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
-            string rnPattern = @"^\bRN\d{4}$";
-            string hsiPattern = @"^\d{5}$";
-            Regex rnRegex = new(rnPattern);
-            Regex hsiRegex = new(hsiPattern);
-
-            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
-            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(facility.Latitude, facility.Longitude);
-            string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
-
-            if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)
-            {
-                if (EnumVal == GeoCoordHelper.CoordinateValidation.LongNotInGeorgia)
-                {
-                    errCol.Add(new ModelError(string.Concat("Facility.Longitude", "^", ValidationString)));
-                }
-                else
-                {
-                    errCol.Add(new ModelError(string.Concat("Facility.Latitude", "^", ValidationString)));
-                }
-            }
-
-            // Check all things related to Release Notifications
-            if (facility.FacilityTypeName == "RN")
-            {
-                // Check Date Received
-                if (facility.RNDateReceived is null)
-                {
-                    errCol.Add(new ModelError(string.Concat("Facility.RNDateReceived", "^", "Date Received must be entered.")));
-                }
-                else if (facility.RNDateReceived > maxDate)
-                {
-                    errCol.Add(new ModelError(string.Concat("Facility.RNDateReceived", "^", "Date must not be beyond today.")));
-                }
-                else if (facility.RNDateReceived < minDate)
-                {
-                    errCol.Add(new ModelError(string.Concat("Facility.RNDateReceived", "^", "Date must not be before 1/1/1990.")));
-                }
-                // Check Facility Number
-                if (facility.FacilityNumber != null && !rnRegex.IsMatch(facility.FacilityNumber))
-                {
-                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddd'")));
-                }
-                // Check HSI Number 
-                if (!facility.HSInumber.IsNullOrEmpty() && !hsiRegex.IsMatch(facility.HSInumber))
-                {
-                    errCol.Add(new ModelError(string.Concat("Facility.HSInumber", "^", "HSI Number must be 5 digits Only.")));
+                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "HSI Number must be 5 digits Only.")));
                 }
             }
             else
