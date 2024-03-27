@@ -13,8 +13,8 @@ namespace FMS.Helpers
         private static readonly DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
         private static readonly string rnPattern = @"^\bRN\d{4}$";
         private static readonly string hsiPattern = @"^\d{5}$";
-        private static readonly Regex rnRegex = new(rnPattern);
-        private static readonly Regex hsiRegex = new(hsiPattern);
+        private static readonly Regex rnRegex = new(rnPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
+        private static readonly Regex hsiRegex = new(hsiPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
         public static ModelErrorCollection ValidateFacilityEditForm(FacilityEditDto facilityEditDto)
         {
@@ -28,6 +28,7 @@ namespace FMS.Helpers
             return ValidateFacilityAddEditForms(facilityValidation);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         public static ModelErrorCollection ValidateFacilityAddEditForms(FacilityValidationDtoScalar facility)
         {
             errCol.Clear();
