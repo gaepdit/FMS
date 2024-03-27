@@ -1,6 +1,5 @@
 ﻿using FMS.Platform.Extensions;
 using Microsoft.IdentityModel.Tokens;
-using System.Net;
 
 namespace FMS.Helpers
 {

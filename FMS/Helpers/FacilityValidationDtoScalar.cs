@@ -1,12 +1,5 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
-using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using FMS.Domain.Dto;
 using System;
-using System.Net;
-using System.Numerics;
 
 namespace FMS.Helpers
 {
