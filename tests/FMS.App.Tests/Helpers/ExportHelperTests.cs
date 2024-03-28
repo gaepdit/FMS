@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Xunit;
+using FMS.Helpers;
 
 namespace FMS.App.Tests.Helpers
 {
@@ -46,7 +47,7 @@ namespace FMS.App.Tests.Helpers
         [Fact]
         public void Export_Unicode()
         {
-            Action act = () => MyItems.ExportExcelAsByteArray();
+            Action act = () => MyItems.ExportExcelAsByteArray(ExportHelper.ReportType.Normal);
             // verify that no exceptions were thrown
             act.Should().NotThrow();
             
@@ -62,7 +63,7 @@ namespace FMS.App.Tests.Helpers
         [Fact]
         public void Export_Multiline()
         {
-            Action act = () => MyMultilineItems.ExportExcelAsByteArray();
+            Action act = () => MyMultilineItems.ExportExcelAsByteArray(ExportHelper.ReportType.Normal);
             // verify that no exceptions were thrown
             act.Should().NotThrow();
         }

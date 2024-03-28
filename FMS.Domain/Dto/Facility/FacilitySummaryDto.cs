@@ -11,7 +11,7 @@ namespace FMS.Domain.Dto
         public FacilitySummaryDto(Facility facility)
         {
             Id = facility.Id;
-            FileLabel = facility.File.FileLabel;
+            FileLabel = facility.File == null ? string.Empty : facility.File.FileLabel; 
             FacilityNumber = facility.FacilityNumber;
             FacilityType = facility.FacilityType;
             Name = facility.Name;
@@ -21,6 +21,7 @@ namespace FMS.Domain.Dto
             State = facility.State;
             PostalCode = facility.PostalCode;
             IsRetained = facility.IsRetained;
+            HasERecord = facility.HasERecord;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
                     .Select(e => new RetentionRecordSummaryDto(e)).ToList()
@@ -35,7 +36,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; }
 
-        [Display(Name = "Type/Environmental Interest")]
+        [Display(Name = "Type/Env. Interest")]
         public FacilityType FacilityType { get; }
 
         [Display(Name = "Facility Name")]
@@ -58,6 +59,10 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
+
+        // Defines if electronic records are availble on Sharepoint
+        [Display(Name = "Has E-Records")]
+        public bool HasERecord { get; }
 
         [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }

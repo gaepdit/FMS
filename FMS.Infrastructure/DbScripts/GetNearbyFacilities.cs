@@ -15,7 +15,8 @@ ALTER PROCEDURE [dbo].[getNearbyFacilities]
     @Active    bit = 1,
     @Latitude  decimal(8, 6) = NULL,
     @Longitude decimal(9, 6) = NULL,
-    @Radius    decimal(3, 2) = NULL
+    @Radius    decimal(3, 2) = NULL,
+    @FacilityTypeId UNIQUEIDENTIFIER = null 
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -48,9 +49,9 @@ BEGIN
             ON a.FacilityStatusId = b.Id
             INNER JOIN [dbo].[FacilityTypes] as c
             ON a.FacilityTypeId = c.Id
-            INNER JOIN [dbo].[Files] as d
+            LEFT JOIN [dbo].[Files] as d
             ON a.FileId = d.Id
-        where a.Active = 1
+        where (a.Active = 1 AND ( @FacilityTypeId IS NULL OR a.FacilityTypeId = @FacilityTypeId ))
            or @Active = 0
     ) AS T
     WHERE T.distance <= @Radius

@@ -7,10 +7,14 @@
 }
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/js/formSearch.js"></script>
+    <script src="~/js/formIndex.js"></script>
 }
 
 <h1>@ViewData["Title"]</h1>
+
+<partial name="_AlertPartial" for="Message" id="alert" />
 
 <div class="p-3 rounded-3 bg-light-subtle">
     <form method="get" asp-fragment="SearchResults">
@@ -99,19 +103,30 @@
                 <input asp-for="Spec.PostalCode" class="form-control" />
             </div>
         </div>
-        @if (User.IsInRole(UserRoles.FileEditor))
-        {
-            <div class="mb-3 row">
-                <div class="form-check">
-                    <input asp-for="Spec.ShowDeleted" />
-                    <label asp-for="Spec.ShowDeleted" class="form-check-label"></label>
+        <div class="mb-3 row">
+            @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.SiteMaintenance))
+            {
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input asp-for="Spec.ShowDeleted" />
+                        <label asp-for="Spec.ShowDeleted" class="form-check-label"></label>
+                    </div>
+                </div>
+            }
+            <div class="col-md">
+                <div id="RNBlock" class="@(Model.ShowPendingOnlyCheckBox ? "" : "d-none")">
+                    <div class="form-check">
+                        <input asp-for="Spec.ShowPendingOnly" id="cbPending"/>
+                        <label asp-for="Spec.ShowPendingOnly" class="form-check-label"></label>
+                    </div>
                 </div>
             </div>
-        }
+        </div>
+
         <div class="mt-3 mb-1">
             <input type="hidden" name="handler" value="search" />
             <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 me-2">Search</button>
-            <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
+            <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Search</a>
         </div>
     </form>
 </div>
@@ -147,21 +162,26 @@
                                 <input type="hidden" asp-for="Spec.State" />
                                 <input type="hidden" asp-for="Spec.PostalCode" />
                                 <input type="hidden" asp-for="Spec.ShowDeleted" />
+                                <input type="hidden" asp-for="Spec.ShowPendingOnly" />
                                 <input type="hidden" asp-for="Spec.SortBy" />
                                 <button id="ExportButton" asp-page-handler="ExportButton"
                                         class="btn btn-sm btn-outline-primary mb-1">
-                                    Export to Excel
+                                    Excel Export
+                                </button>
+                                <button id="PendingButton" asp-page-handler="PendingButton"
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.Spec.ShowPendingOnly && Model.ShowPendingOnlyCheckBox ? "" : "d-none")">
+                                    Pending Report
                                 </button>
                                 <button id="DownloadRetentionRecords" asp-page-handler="DownloadRetentionRecords"
-                                        class="btn btn-sm btn-outline-primary mb-1">
-                                    Download Retention Records
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.ShowPendingOnlyCheckBox ? "d-none" : "")">
+                                    Retention Records Form
                                 </button>
                             </form>
                         </div>
                         <div class="col-md mb-1">
                             <partial name="_PaginationNav" model="(Model.FacilityList, Model.Spec.AsRouteValues)" />
                         </div>
-                        <div class="col-md text-md-end small mb-1">
+                        <div class="col-md text-md-end text-sm-right small mb-1">
                             <partial name="_PaginatedResultsCount" model="Model.FacilityList" />
                         </div>
                     </div>
@@ -173,7 +193,7 @@
                                asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FacilityNumber ? FacilitySort.FacilityNumberDesc : FacilitySort.FacilityNumber)">
                                 Facility
                                 @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                        new {up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc})
+                                         new { up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc })
                             </a>
                         </th>
                         <th scope="col" class="text-nowrap">
@@ -181,7 +201,7 @@
                                asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
                                 File Label
                                 @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                        new {up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc})
+                                         new { up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc })
                             </a>
                         </th>
                         <th scope="col" class="text-nowrap">
@@ -189,7 +209,7 @@
                                asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Name ? FacilitySort.NameDesc : FacilitySort.Name)">
                                 Name
                                 @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                        new {up = FacilitySort.Name, down = FacilitySort.NameDesc})
+                                         new { up = FacilitySort.Name, down = FacilitySort.NameDesc })
                             </a>
                         </th>
                         <th scope="col" class="text-nowrap">
@@ -197,10 +217,11 @@
                                asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Address ? FacilitySort.AddressDesc : FacilitySort.Address)">
                                 Address
                                 @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                        new {up = FacilitySort.Address, down = FacilitySort.AddressDesc})
+                                         new { up = FacilitySort.Address, down = FacilitySort.AddressDesc })
                             </a>
                         </th>
                         <th scope="col" class="text-center">Type</th>
+                        <th scope="col">Online</th>
                         <th scope="col">Records</th>
                     </tr>
                 </thead>
@@ -225,9 +246,10 @@
                                 @Html.DisplayFor(m => item.PostalCode)
                             </td>
                             <td class="text-center">@Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")</td>
+                            <td>@Html.DisplayFor(m => item.HasERecord)</td>
                             <td>
                                 <em class="font-weight-medium">Cabinets:</em><br />
-                                @Html.DisplayFor(m => item.Cabinets, "Cabinets", new {item.IsRetained})
+                                @Html.DisplayFor(m => item.Cabinets, "Cabinets", new { item.IsRetained })
                                 @if (item.RetentionRecords.Count > 0)
                                 {
                                     <div>

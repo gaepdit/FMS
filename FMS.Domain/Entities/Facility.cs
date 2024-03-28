@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
@@ -28,13 +29,26 @@ namespace FMS.Domain.Entities
             PostalCode = newFacility.PostalCode;
             Latitude = newFacility.Latitude ?? 0;
             Longitude = newFacility.Longitude ?? 0;
+            HasERecord = newFacility.HasERecord;
+            Comments = newFacility.Comments;
+            // The following properties only apply to Release Notifications
+            HSInumber = newFacility.HSInumber;
+            DeterminationLetterDate = newFacility.DeterminationLetterDate;
+            PreRQSMcleanup = newFacility.PreRQSMcleanup;
+            ImageChecked = newFacility.ImageChecked;
+            DeferredOnSiteScoring = newFacility.DeferredOnSiteScoring;
+            AdditionalDataRequested = newFacility.AdditionalDataRequested;
+            VRPReferral = newFacility.VRPReferral;
+            RNDateReceived = newFacility.RNDateReceived;
+            HistoricalUnit = newFacility.HistoricalUnit;
+            HistoricalComplianceOfficer = newFacility.HistoricalComplianceOfficer;
         }
 
         // Existing ID for Facility May be used by Programs - System Generated, but not a Guid
         public string FacilityNumber { get; set; }
 
         // File label and Cabinet where this Facility is located
-        public Guid FileId { get; set; }
+        public Guid? FileId { get; set; }
         public File File { get; set; }
 
         // Type of Facility
@@ -87,6 +101,33 @@ namespace FMS.Domain.Entities
         public County County { get; set; }
 
         public bool IsRetained { get; set; } = true;
+
+        public bool HasERecord { get; set; } = false;
+
+        [StringLength(1000)]
+        public string Comments { get; set; }
+
+        // The following properties only apply to Release Notifications
+        [StringLength(5)]
+        public string HSInumber { get; set; }
+
+        public DateOnly? DeterminationLetterDate { get; set; }
+
+        public bool PreRQSMcleanup { get; set; } = false;
+
+        public bool ImageChecked { get; set; } = false;
+
+        public bool DeferredOnSiteScoring { get; set; } = false;
+
+        public bool AdditionalDataRequested { get; set; } = false;
+
+        public bool VRPReferral { get; set; } = false;
+
+        public DateOnly? RNDateReceived { get; set; }
+
+        public string HistoricalUnit { get; set; }
+
+        public string HistoricalComplianceOfficer { get; set; }
 
         // List of retention records for this Facility
         public ICollection<RetentionRecord> RetentionRecords { get; set; }

@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Threading.Tasks;
 using FMS.Platform.Extensions;
+using FMS.Helpers;
+using System.Net;
+using NUglify.Helpers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Pages.Facilities
 {
@@ -27,6 +31,14 @@ namespace FMS.Pages.Facilities
         [TempData]
         public Guid HighlightRecord { get; set; }
 
+        public string RNHSIFolderLink { get; set; } = string.Empty;
+
+        public string HSIFolderLink { get; set; } = string.Empty;
+
+        public string NotificationFolderLink { get; set; } = string.Empty;
+
+        public string PendingNotificationFolderLink { get; set; } = string.Empty;
+
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
             if (id == null)
@@ -46,6 +58,24 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
+            if(FacilityDetail.FacilityType.Name == "HSI")
+            {
+                HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
+            }
+            
+            if (FacilityDetail.FacilityType.Name == "RN")
+            {
+                if (FacilityDetail.DeterminationLetterDate.HasValue && string.IsNullOrEmpty(FacilityDetail.HSInumber))
+                {
+                    NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                }
+                else if (string.IsNullOrEmpty(FacilityDetail.HSInumber))
+                {
+                    PendingNotificationFolderLink = UrlHelper.GetPendingNotificationFolderLink(FacilityDetail.FacilityNumber);
+                }
+                RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
+            }
+            
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
             return Page();
@@ -62,20 +92,31 @@ namespace FMS.Pages.Facilities
                     return NotFound();
                 }
 
+                if (FacilityDetail.FacilityType.Name == "HSI")
+                {
+                    HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
+                }
+
+                if (FacilityDetail.FacilityType.Name == "RN")
+                {
+                    if (!FacilityDetail.HSInumber.IsNullOrWhiteSpace())
+                    {
+                        NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                    }
+                    RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
+                }
+
+                FacilityId = FacilityDetail.Id;
+
                 return Page();
             }
 
             RecordCreate.TrimAll();
 
             HighlightRecord = await _repository.CreateRetentionRecordAsync(FacilityId, RecordCreate);
-            FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
-
-            if (FacilityDetail == null)
-            {
-                return NotFound();
-            }
 
             return RedirectToPage();
         }
+       
     }
 }

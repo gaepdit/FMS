@@ -1,9 +1,11 @@
 @page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
+@using FMS.Platform.Extensions
 @model FMS.Pages.Facilities.DetailsModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/formDetails.js"></script>
 }
 
 @{
@@ -29,186 +31,313 @@
     }
 </h1>
 <hr />
-<partial name="_AlertPartial" for="Message" />
+<partial name="_AlertPartial" for="Message" id="alert" />
 
-<div class="container">
-    <dl class="row">
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Name)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
-        </dt>
-        <dd class="col-sm-9">
-            <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
-                @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
-            </a>
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new {Model.FacilityDetail.IsRetained})
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
-            @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNotAssigned")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Location)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">Address</dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
-            @Html.DisplayFor(model => model.FacilityDetail.City),
-            @Html.DisplayFor(model => model.FacilityDetail.State)
-            @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.County)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.FacilityDetail.Latitude),
-            @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-        </dd>
-    </dl>
-
-    <h2 id="retention-records">Retention Records</h2>
-    @if (Model.FacilityDetail.RetentionRecords.Count > 0)
-    {
-        <table class="table table-sm" aria-label="Retention Records of other Facilities">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Years</th>
-                    <th scope="col">Box Number</th>
-                    <th scope="col">Consignment Number</th>
-                    <th scope="col">Shelf Number</th>
-                    <th scope="col">Retention Schedule Number</th>
-                    <th scope="col" class="text-center">Retained</th>
-                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                    {
-                        <th scope="col" class="text-center">Actions</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var r in Model.FacilityDetail.RetentionRecords)
+<div class="container-fluid">
+    <div class="parent-container d-lg-inline-flex">
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <dl class="row">
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Name)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
+                </dt>
+                @if (Model.FacilityDetail.FileId is not null)
                 {
-                    <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
-                        <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
-                        <td>@r.BoxNumber</td>
-                        <td>@r.ConsignmentNumber</td>
-                        <td>@r.ShelfNumber</td>
-                        <td>@r.RetentionSchedule</td>
-                        <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
+                    <dd class="col-sm-7">
+                        <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
+                            @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
+                        </a>
+                    </dd>
+                }
+                else
+                {
+                    <dd class="col-sm-7">
+                        <span class="text-info">No File Label</span>
+                    </dd>
+                }
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.IsRetained)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.IsRetained, "BoolYesNo")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.HasERecord, "BoolYesNo")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNotAssigned")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Location)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">Address</dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
+                    @Html.DisplayFor(model => model.FacilityDetail.City),
+                    @Html.DisplayFor(model => model.FacilityDetail.State)
+                    @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.County)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Latitude),
+                    @Html.DisplayFor(model => model.FacilityDetail.Longitude)
+                </dd>
+
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
+                </dd>
+            </dl>
+        </div>
+
+        @if (Model.FacilityDetail.FacilityType.Name == "RN")
+        {
+            <div class="container bg-light-subtle p-3 m-1 rounded-3">
+                <H2>Release Notification Information</H2>
+                <dl class="row">
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.RNDateReceived)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.RNDateReceived)
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.DeterminationLetterDate)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.DeterminationLetterDate)
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.ImageChecked)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.ImageChecked, "BoolYesNo")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.HSInumber)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.HSInumber, "StringOrNone")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.AdditionalDataRequested)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.AdditionalDataRequested, "BoolYesNo")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.PreRQSMcleanup)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.PreRQSMcleanup, "BoolYesNo")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.DeferredOnSiteScoring)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.DeferredOnSiteScoring, "BoolYesNo")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.VRPReferral)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.VRPReferral, "BoolYesNo")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.HistoricalUnit)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalUnit, "StringOrNotAssigned")
+                    </dd>
+                    <dt class="col-sm-6">
+                        @Html.DisplayNameFor(model => model.FacilityDetail.HistoricalComplianceOfficer)
+                    </dt>
+                    <dd class="col-sm-6">
+                        @Html.DisplayFor(model => model.FacilityDetail.HistoricalComplianceOfficer, "StringOrNotAssigned")
+                    </dd>
+                </dl>
+            </div>
+        }
+    </div>
+    @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
+    {
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
+
+            @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.NotificationFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.NotificationFolderLink>Release Notification(s)</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.PendingNotificationFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.PendingNotificationFolderLink>Pending Release Notification</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.RNHSIFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>HSI Folder</a>
+            }
+        </div>
+    }
+
+    @if (Model.FacilityDetail.FacilityType.Name != "RN")
+    {
+        <h2 id="retention-records">Retention Records</h2>
+        @if (Model.FacilityDetail.RetentionRecords.Count > 0)
+        {
+            <table class="table table-sm" aria-label="Retention Records of other Facilities">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Years</th>
+                        <th scope="col">Box Number</th>
+                        <th scope="col">Consignment Number</th>
+                        <th scope="col">Shelf Number</th>
+                        <th scope="col">Retention Schedule Number</th>
+                        <th scope="col" class="text-center">Retained</th>
                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                         {
-                            <td>
-                                <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                            </td>
+                            <th scope="col" class="text-center">Actions</th>
                         }
                     </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <span class="text-muted">none</span>
-    }
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.FacilityDetail.RetentionRecords)
+                    {
+                        <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
+                            <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
+                            <td>@r.BoxNumber</td>
+                            <td>@r.ConsignmentNumber</td>
+                            <td>@r.ShelfNumber</td>
+                            <td>@r.RetentionSchedule</td>
+                            <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
+                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                            {
+                                <td>
+                                    <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <span class="text-muted">none</span>
+        }
 
-    @if (Model.FacilityDetail.Active &&
-    (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor)))
-    {
-        <div class="container bg-light-subtle pt-3 mt-5 rounded-3">
-            <h3 class="h5">Add a Retention Record</h3>
-            <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        @if (Model.FacilityDetail.Active &&
+       (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.SiteMaintenance)))
+        {
+            <div class="container bg-light-subtle pt-3 mt-5 rounded-3">
+                <h3 class="h5">Add a Retention Record</h3>
+                <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-                <div class="mb-3 row">
-                    <div class="col-sm-4">
-                        <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
-                        <input asp-for="RecordCreate.StartYear" class="form-control" />
-                        <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
+                    <div class="mb-3 row">
+                        <div class="col-sm-4">
+                            <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
+                            <input asp-for="RecordCreate.StartYear" class="form-control" />
+                            <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
+                            <input asp-for="RecordCreate.EndYear" class="form-control" />
+                            <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
+                            <input asp-for="RecordCreate.BoxNumber" class="form-control" />
+                            <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
+                        </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
-                        <input asp-for="RecordCreate.EndYear" class="form-control" />
-                        <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
+                    <div class="mb-3 row">
+                        <div class="col-sm-4">
+                            <label asp-for="RecordCreate.ConsignmentNumber"></label>
+                            <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
+                            <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label asp-for="RecordCreate.ShelfNumber"></label>
+                            <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
+                            <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label asp-for="RecordCreate.RetentionSchedule"></label>
+                            <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
+                            <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>
+                        </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
-                        <input asp-for="RecordCreate.BoxNumber" class="form-control" />
-                        <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <div class="col-sm-4">
-                        <label asp-for="RecordCreate.ConsignmentNumber"></label>
-                        <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
-                        <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <label asp-for="RecordCreate.ShelfNumber"></label>
-                        <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
-                        <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <label asp-for="RecordCreate.RetentionSchedule"></label>
-                        <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
-                        <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <input asp-for="FacilityId" />
-                <hr />
-                <p class="text-danger">* denotes a required field</p>
-                <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
-            </form>
-        </div>
+                    <input asp-for="FacilityId" />
+                    <hr />
+                    <p class="text-danger">* denotes a required field</p>
+                    <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
+                </form>
+            </div>
+        }
     }
 </div>

@@ -12,6 +12,7 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -45,16 +46,21 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-            facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
+            if (!facilityDetail.FileLabel.IsNullOrEmpty())
+            {
+                facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
                 .GetCabinetsForFile(facilityDetail.FileLabel);
+            }
 
             return facilityDetail;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         private IQueryable<Facility> QueryFacilities(FacilitySpec spec) => _context.Facilities.AsNoTracking()
             .Where(e => string.IsNullOrEmpty(spec.Name) || e.Name.Contains(spec.Name))
             .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
             .Where(e => spec.ShowDeleted || e.Active)
+            .Where(e => !spec.ShowPendingOnly || !e.DeterminationLetterDate.HasValue)
             .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
             .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
@@ -123,7 +129,9 @@ namespace FMS.Infrastructure.Repositories
             var cabinets = await _context.GetCabinetListAsync(false);
             foreach (var item in items)
             {
-                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+                bool test = item.FacilityType.Name != "RN" || !item.FileLabel.IsNullOrEmpty();
+
+                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel, test);
             }
 
             var totalCount = await queried.CountAsync();
@@ -149,9 +157,14 @@ namespace FMS.Infrastructure.Repositories
             var items = await ordered.Select(e => new FacilityDetailDto(e)).ToListAsync();
 
             var cabinets = await _context.GetCabinetListAsync(false);
+
             foreach (var item in items)
             {
-                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+                if (!item.FileLabel.IsNullOrEmpty())
+                {
+                    item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+                }
+
             }
 
             return items;
@@ -160,11 +173,12 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
             var conn = _context.Database.GetDbConnection();
+
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new {Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius},
+                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
                 commandType: CommandType.StoredProcedure)).ToList();
         }
-        
+
         public async Task<IEnumerable<RetentionRecordDetailDto>> GetRetentionRecordsListAsync(FacilitySpec spec)
         {
             var queried = QueryFacilities(spec);
@@ -173,26 +187,26 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.RetentionRecords);
 
             var ordered = OrderFacilityQuery(included, spec.SortBy);
-            
+
             // create a List<RetentionRecord>
             var retentionRecordsList = await ordered.SelectMany(e => e.RetentionRecords).ToListAsync();
-            
+
             // convert the List<RetentionRecord> to IEnumerable<RetentionRecordDetailDto>
             var returnList = from retentionRecord in retentionRecordsList
-                select new RetentionRecordDetailDto(retentionRecord);
+                             select new RetentionRecordDetailDto(retentionRecord);
 
             return returnList;
         }
 
         public Task<Guid> CreateFacilityAsync(FacilityCreateDto newFacility)
         {
-            if (string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
+            if (newFacility.FacilityTypeName != "RN" && string.IsNullOrWhiteSpace(newFacility.FacilityNumber))
             {
                 throw new ArgumentException("Facility Number is required.");
             }
 
             if (string.IsNullOrWhiteSpace(newFacility.FileLabel) &&
-                Data.Counties.All(e => e.Id != newFacility.CountyId))
+                Data.Counties.TrueForAll(e => e.Id != newFacility.CountyId))
             {
                 throw new ArgumentException($"County ID {newFacility.CountyId} does not exist.");
             }
@@ -205,6 +219,11 @@ namespace FMS.Infrastructure.Repositories
             if (await FacilityNumberExists(newFacility.FacilityNumber))
             {
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
+            }
+
+            if (newFacility.FacilityNumber.IsNullOrEmpty() && newFacility.FacilityTypeName == "RN")
+            {
+                newFacility.FacilityNumber = await CreateRNFacilityNumberInternalAsync();
             }
 
             File file;
@@ -232,6 +251,19 @@ namespace FMS.Infrastructure.Repositories
             return newFac.Id;
         }
 
+        private async Task<string> CreateRNFacilityNumberInternalAsync()
+        {
+            var prefix = "RN";
+            var nextInSequence = 1;
+            var NextNumber = await _context.Facilities.AsNoTracking()
+                .Where(e => e.FacilityNumber.StartsWith(prefix))
+                .Select(e => int.Parse(e.FacilityNumber.Substring(2, 4)))
+                .ToListAsync();
+            nextInSequence = NextNumber.Count == 0 ? 1 : NextNumber.Max() + 1;
+            var NewFacilityNumber = string.Concat(prefix, nextInSequence);
+            return NewFacilityNumber;
+        }
+
         public Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates)
         {
             if (string.IsNullOrWhiteSpace(facilityUpdates.FacilityNumber))
@@ -240,7 +272,7 @@ namespace FMS.Infrastructure.Repositories
             }
 
             if (string.IsNullOrWhiteSpace(facilityUpdates.FileLabel) &&
-                Data.Counties.All(e => e.Id != facilityUpdates.CountyId))
+                Data.Counties.TrueForAll(e => e.Id != facilityUpdates.CountyId))
             {
                 throw new ArgumentException($"County ID {facilityUpdates.CountyId} does not exist.");
             }
@@ -266,12 +298,13 @@ namespace FMS.Infrastructure.Repositories
             {
                 // Otherwise, if File Label is provided and different from existing label, make sure it exists
                 var oldFile = await _context.Files.FindAsync(facility.FileId);
-                if (facilityUpdates.FileLabel != oldFile.FileLabel)
+                if (oldFile is null || facilityUpdates.FileLabel != oldFile.FileLabel)
                 {
                     var file = await _context.Files.SingleOrDefaultAsync(e => e.FileLabel == facilityUpdates.FileLabel);
                     if (file == null)
                         throw new ArgumentException($"File Label {facilityUpdates.FileLabel} does not exist.");
                     facility.File = file;
+                    facility.FileId = file?.Id;
                 }
             }
 
@@ -290,6 +323,21 @@ namespace FMS.Infrastructure.Repositories
             facility.PostalCode = facilityUpdates.PostalCode;
             facility.Latitude = facilityUpdates.Latitude;
             facility.Longitude = facilityUpdates.Longitude;
+            // New for all Facilities
+            facility.HasERecord = facilityUpdates.HasERecord;
+            facility.Comments = facilityUpdates.Comments;
+            // added for release notifications
+            facility.HSInumber = facilityUpdates.HSInumber;
+            facility.DeterminationLetterDate = facilityUpdates.DeterminationLetterDate;
+            facility.PreRQSMcleanup = facilityUpdates.PreRQSMcleanup;
+            facility.ImageChecked = facilityUpdates.ImageChecked;
+            facility.DeferredOnSiteScoring = facilityUpdates.DeferredOnSiteScoring;
+            facility.AdditionalDataRequested = facilityUpdates.AdditionalDataRequested;
+            facility.VRPReferral = facilityUpdates.VRPReferral;
+            facility.RNDateReceived = facilityUpdates.RNDateReceived;
+            facility.HistoricalUnit = facilityUpdates.HistoricalUnit;
+            facility.HistoricalComplianceOfficer = facilityUpdates.HistoricalComplianceOfficer;
+            // ******************
             facility.IsRetained = facilityUpdates.IsRetained;
 
             await _context.SaveChangesAsync();
@@ -344,6 +392,11 @@ namespace FMS.Infrastructure.Repositories
             _context.Facilities.AnyAsync(e =>
                 e.FacilityNumber == facilityNumber
                 && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public Task<bool> DuplicateFacilityNumberExists(string newFacilityNumber, Guid oldFacilityId, Guid facilityTypeId) => _context.Facilities.AnyAsync(
+            e => e.FacilityNumber == newFacilityNumber 
+            && e.Id != oldFacilityId 
+            && e.FacilityTypeId == facilityTypeId);
 
         public Task<bool> FileLabelExists(string fileLabel) =>
             _context.Files.AnyAsync(e => e.FileLabel == fileLabel);

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FMS.Domain.Dto
 {
     public class FacilityCreateDto
     {
-        [Required]
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
@@ -24,6 +25,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Type/Environmental Interest")]
         public Guid FacilityTypeId { get; set; }
+        public string FacilityTypeName { get; set; }
 
         [Required]
         [Display(Name = "Budget Code")]
@@ -75,8 +77,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "HSI Number")]
         public string HSInumber { get; set; }
 
-        [Display(Name = "Non-HSI Letter Date")]
-        public DateOnly NonHSILetterDate { get; set; }
+        [Display(Name = "Determination Letter Date")]
+        public DateOnly? DeterminationLetterDate { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -87,14 +89,29 @@ namespace FMS.Domain.Dto
         [Display(Name = "Image Checked")]
         public bool ImageChecked { get; set; }
 
-        [Display(Name = "Deferred OnSite Scoring")]
+        [Display(Name = "Brownfield Deferral")]
         public bool DeferredOnSiteScoring { get; set; }
 
-        [Display(Name = "Additional Data Requested")]
+        [Display(Name = "Add'l Data Requested")]
         public bool AdditionalDataRequested { get; set; }
 
-        [Display(Name = "VRP Referral")]
+        [Display(Name = "VRP Deferral")]
         public bool VRPReferral { get; set; }
+
+        [Display(Name = "Date Received")]
+        public DateOnly? RNDateReceived { get; set; }
+
+        [Display(Name = "Historical Unit")]
+        public string HistoricalUnit { get; set; }
+
+        [Display(Name = "Historical C.O.")]
+        public string HistoricalComplianceOfficer { get; set; }
+
+        [Display(Name = "Has Electronic Records")]
+        public bool HasERecord { get; set; }
+
+        [Display(Name = "Is Retained Onsite")]
+        public bool IsRetained { get; set; }
 
         public void TrimAll()
         {
@@ -106,6 +123,7 @@ namespace FMS.Domain.Dto
             City = City?.Trim();
             PostalCode = PostalCode?.Trim();
             HSInumber = HSInumber?.Trim();
+            HistoricalUnit = HistoricalUnit?.Trim();
         }
     }
 }

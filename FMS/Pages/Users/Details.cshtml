@@ -1,13 +1,18 @@
 @page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Users.DetailsModel
+
+@section Scripts {
+    <script src="~/js/formDetails.js"></script>
+}
+
 @{
     ViewData["Title"] = "User Profile: " + Model.DisplayName;
 }
 
 <h1>FMS User Profile</h1>
 <hr />
-<partial name="_AlertPartial" for="Message" />
+<partial name="_AlertPartial" for="Message" id="alert" />
 
 <h2>
     @Model.DisplayName

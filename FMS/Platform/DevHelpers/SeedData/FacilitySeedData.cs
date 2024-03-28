@@ -23,7 +23,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
                     Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",
                     ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), //01069946 
-                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"), 
+                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
                     Location = "Description of Location",
                     Address = "102 THREE BRANCHES DR.",
                     City = "WOODSTOCK",
@@ -302,7 +302,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 {
                     Id = Guid.NewGuid(),
                     Active = true,
-                    FacilityNumber = "RN10235",
+                    FacilityNumber = "RN7075",
                     FileId = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"),
                     FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
                     OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"),
@@ -318,21 +318,32 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.505922m,
                     CountyId = 243,
+                    HSInumber = "10234",
+                    DeterminationLetterDate = new(2018, 2, 13),
+                    Comments = "Just some comments about this facility",
+                    PreRQSMcleanup = false,
+                    ImageChecked = true,
+                    DeferredOnSiteScoring = true,
+                    AdditionalDataRequested = false,
+                    VRPReferral = false,
+                    RNDateReceived = null,
+                    HistoricalUnit = "Old RRP Unit",
+                    HistoricalComplianceOfficer = "Someone Retired",
                     IsRetained = true
                 },
                 new()
                 {
                     Id = Guid.NewGuid(),
                     Active = true,
-                    FacilityNumber = "RN102412",
-                    FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"),
+                    FacilityNumber = "RN4979",
+                    FileId = null,
                     FacilityTypeId = new Guid("B7224976-5D67-40F8-8112-273AE3B91419"),
                     OrganizationalUnitId = new Guid("3FF12EE9-7295-45F9-A12D-766BCFB6AADC"),
                     BudgetCodeId = new Guid("5B4D0049-3AA3-4FC7-A8FE-59A771D0F7F8"),
                     Name = "Facility Test-4 Release Notification",
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
-                    Location = "Some Random Strip Mall",
+                    Location = "Some Random Strip Mall <TaxID>102-395763-tk^other data",
                     Address = "10919 HWY 92",
                     City = "Woodstock",
                     State = "Georgia",
@@ -340,7 +351,18 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Latitude = 34.086774m,
                     Longitude = -84.506122m,
                     CountyId = 243,
-                    IsRetained = true
+                    HSInumber = "",
+                    DeterminationLetterDate = null,
+                    Comments = "Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page. Strip that looks like every other strip mall. Extra long comment to see how it fits on the page.",
+                    PreRQSMcleanup = true,
+                    ImageChecked = false,
+                    DeferredOnSiteScoring = true,
+                    AdditionalDataRequested = true,
+                    VRPReferral = false,
+                    RNDateReceived = new(2018, 2, 13),
+                    HistoricalUnit = "Old RRP Unit",
+                    HistoricalComplianceOfficer = "Another Retired",
+                    IsRetained = true,
                 }
             };
         }

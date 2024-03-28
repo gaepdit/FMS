@@ -4,6 +4,7 @@ using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FmsDbContext))]
-    partial class FmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240205165242_RemoveTaxIDField")]
+    partial class RemoveTaxIDField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1014,7 +1017,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("FacilityTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("FileId")
+                    b.Property<Guid>("FileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("HSInumber")
@@ -1595,7 +1598,9 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasOne("FMS.Domain.Entities.File", "File")
                         .WithMany("Facilities")
-                        .HasForeignKey("FileId");
+                        .HasForeignKey("FileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FMS.Domain.Entities.OrganizationalUnit", "OrganizationalUnit")
                         .WithMany()

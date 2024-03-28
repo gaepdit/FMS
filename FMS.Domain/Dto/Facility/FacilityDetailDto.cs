@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FMS.Domain.Entities;
 using FMS.Domain.Extensions;
@@ -12,8 +13,8 @@ namespace FMS.Domain.Dto
         public FacilityDetailDto(Facility facility)
         {
             Id = facility.Id;
-            FileLabel = facility.File.FileLabel;
-            FileId = facility.File.Id;
+            FileLabel = facility.File?.FileLabel;
+            FileId = facility.File?.Id;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             Active = facility.Active;
@@ -30,7 +31,21 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
+            HasERecord = facility.HasERecord;
+            // *** these properties only apply to Release Notifications ***
+            HSInumber = facility.HSInumber;
+            DeterminationLetterDate = facility.DeterminationLetterDate;
+            PreRQSMcleanup = facility.PreRQSMcleanup;
+            ImageChecked = facility.ImageChecked;
+            DeferredOnSiteScoring = facility.DeferredOnSiteScoring;
+            AdditionalDataRequested = facility.AdditionalDataRequested;
+            VRPReferral = facility.VRPReferral;
+            RNDateReceived = facility.RNDateReceived;
+            HistoricalUnit = facility.HistoricalUnit;
+            HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
+            // ********************************************************
             IsRetained = facility.IsRetained;
+            Comments = facility.Comments;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
                     .Select(e => new RetentionRecordDetailDto(e)).ToList()
@@ -54,7 +69,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Facility Status")]
         public FacilityStatus FacilityStatus { get; }
 
-        [Display(Name = "Type/Environmental Interest")]
+        [Display(Name = "Type/Env. Interest")]
         public FacilityType FacilityType { get; }
 
         [Display(Name = "Budget Code")]
@@ -69,7 +84,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "File Label")]
         public string FileLabel { get; }
 
-        public Guid FileId { get; }
+        public Guid? FileId { get; }
 
         [Display(Name = "Location Description")]
         public string Location { get; }
@@ -94,8 +109,45 @@ namespace FMS.Domain.Dto
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; }
 
+        // The following properties only apply to Release Notifications
+        [Display(Name = "HSI Number")]
+        public string HSInumber { get; set; }
+
+        [Display(Name = "Determination Letter Date", Prompt = "None Entered")]
+        public DateOnly? DeterminationLetterDate { get; set; }
+
+        [Display(Name = "Pre-RQSM Cleanup")]
+        public bool PreRQSMcleanup { get; set; }
+
+        [Display(Name = "Image Checked")]
+        public bool ImageChecked { get; set; }
+
+        [Display(Name = "Brownfield Deferral")]
+        public bool DeferredOnSiteScoring { get; set; }
+
+        [Display(Name = "Additional Data Requested")]
+        public bool AdditionalDataRequested { get; set; }
+
+        [Display(Name = "VRP Deferral")]
+        public bool VRPReferral { get; set; }
+
+        [Display(Name = "Date Received")]
+        public DateOnly? RNDateReceived { get; set; }
+
+        [Display(Name = "Historical Unit")]
+        public string HistoricalUnit { get; set; }
+
+        [Display(Name = "Historical C.O.")]
+        public string HistoricalComplianceOfficer { get; set; }
+
+        [Display(Name = "Has Electronic Records")]
+        public bool HasERecord { get; set; }
+
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
+
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
 
         [Display(Name = "Cabinets")]
         public List<string> Cabinets { get; set; }

@@ -4,11 +4,14 @@ using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Pages.Facilities
 {
@@ -16,6 +19,7 @@ namespace FMS.Pages.Facilities
     public class AddModel : PageModel
     {
         private readonly IFacilityRepository _repository;
+        private readonly IFacilityTypeRepository _repositoryType;
         private readonly ISelectListHelper _listHelper;
 
         [BindProperty]
@@ -25,6 +29,10 @@ namespace FMS.Pages.Facilities
         public string ConfirmedFacilityFileLabel { get; set; }
 
         public bool ConfirmFacility { get; private set; }
+
+        [BindProperty]
+        public bool IsNotSiteMaintenanceUser { get; set; }
+
         public IReadOnlyList<FacilityMapSummaryDto> NearbyFacilities { get; private set; }
 
         // Select Lists
@@ -36,24 +44,30 @@ namespace FMS.Pages.Facilities
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
 
+
+        // Add FacilityType Repo here, then use FacilityTypeName to compare for "RN" value
         public AddModel(
             IFacilityRepository repository,
+            IFacilityTypeRepository repositoryType,
             ISelectListHelper listHelper)
         {
             _repository = repository;
+            _repositoryType = repositoryType;
             _listHelper = listHelper;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
+            IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
             await PopulateSelectsAsync();
-            Facility = new FacilityCreateDto {State = "Georgia"};
-
+            Facility = new FacilityCreateDto { State = "Georgia" };
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
@@ -62,19 +76,18 @@ namespace FMS.Pages.Facilities
 
             Facility.TrimAll();
 
-            // Make sure GeoCoordinates are withing the State of Georgia or both Zero
-            GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinates(Facility.Latitude, Facility.Longitude);
-            string ValidationString = GeoCoordHelper.GetDescription(EnumVal);
+            // Validate User input based on Business Logic
+            // Populate FacilityTypeName to use for User Input validity
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
 
-            if (EnumVal != GeoCoordHelper.CoordinateValidation.Valid)
+            ModelErrorCollection errors = FormValidationHelper.ValidateFacilityAddForm(Facility);
+
+            if (errors.Count > 0)
             {
-                if (EnumVal == GeoCoordHelper.CoordinateValidation.LongNotInGeorgia)
+                foreach (ModelError error in errors)
                 {
-                    ModelState.AddModelError("Facility.Longitude", ValidationString);
-                }
-                else
-                {
-                    ModelState.AddModelError("Facility.Latitude", ValidationString);
+                    string[] errMsg = error.ErrorMessage.Split("^");
+                    ModelState.AddModelError(errMsg[0].ToString(), errMsg[1].ToString());
                 }
             }
 
@@ -114,7 +127,7 @@ namespace FMS.Pages.Facilities
 
             if (NearbyFacilities != null && NearbyFacilities.Count > 0)
             {
-                ConfirmedFacilityFileLabel = Facility.FileLabel ?? string.Empty;
+                ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
                 await PopulateSelectsAsync();
                 ConfirmFacility = true;
                 return Page();
@@ -134,11 +147,45 @@ namespace FMS.Pages.Facilities
                 return Page();
             }
 
+            if (ConfirmedFacilityFileLabel == "Choose")
+            {
+                var mapSearchSpec = new FacilityMapSpec
+                {
+                    Latitude = Facility.Latitude,
+                    Longitude = Facility.Longitude,
+                    Radius = 0.5m,
+                };
+
+                NearbyFacilities = await _repository.GetFacilityListAsync(mapSearchSpec);
+
+                if (NearbyFacilities != null && NearbyFacilities.Count > 0)
+                {
+                    ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
+                    await PopulateSelectsAsync();
+                    ConfirmFacility = true;
+                    return Page();
+                }
+            }
+
             Facility.FileLabel = ConfirmedFacilityFileLabel;
+
             Facility.TrimAll();
 
+            // Validate User input based on Business Logic
+            // Populate FacilityTypeName to use for User Input validity
+            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+            ModelErrorCollection errors = FormValidationHelper.ValidateFacilityAddForm(Facility);
+            if (errors.Count > 0)
+            {
+                foreach (ModelError error in errors)
+                {
+                    string[] errMsg = error.ErrorMessage.Split("^");
+                    ModelState.AddModelError(errMsg[0].ToString(), errMsg[1].ToString());
+                }
+            }
+
             // If File Label is provided, make sure it exists
-            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) &&
+            if (!string.IsNullOrWhiteSpace(Facility.FileLabel) && Facility.FileLabel != "Choose" &&
                 !await _repository.FileLabelExists(Facility.FileLabel))
             {
                 ModelState.AddModelError("Facility.FileLabel", "File Label entered does not exist.");
