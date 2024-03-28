@@ -169,7 +169,7 @@
                                     Excel Export
                                 </button>
                                 <button id="PendingButton" asp-page-handler="PendingButton"
-                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.Spec.ShowPendingOnly ? "" : "d-none")">
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.Spec.ShowPendingOnly && Model.ShowPendingOnlyCheckBox ? "" : "d-none")">
                                     Pending Report
                                 </button>
                                 <button id="DownloadRetentionRecords" asp-page-handler="DownloadRetentionRecords"
