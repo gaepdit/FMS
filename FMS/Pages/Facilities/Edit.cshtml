@@ -161,8 +161,8 @@
         <div id="RNBlock" class="@(Model.Facility.FacilityTypeName == "RN" ? "" : "d-none")">
             <hr />
             <h4>Release Notification Properties</h4>
-            <input type="hidden" asp-for="Facility.HistoricalComplianceOfficer" />
-            <input type="hidden" asp-for="Facility.HistoricalUnit" />
+            @* <input type="hidden" asp-for="Facility.HistoricalComplianceOfficer" />
+            <input type="hidden" asp-for="Facility.HistoricalUnit" /> *@
             <div class="mb-3 row">
                 <div class="col-md-3">
                     <label asp-for="Facility.RNDateReceived">Date Received <span class="text-danger">*</span></label>
@@ -325,8 +325,8 @@
                 <input asp-for="Facility.Comments" type="hidden" />
                 <input asp-for="Facility.RNDateReceived" type="hidden" />
                 <input asp-for="Facility.IsRetained" type="hidden" />
-                <input asp-for="Facility.HistoricalComplianceOfficer" type="hidden" />
-                <input asp-for="Facility.HistoricalUnit" type="hidden" />
+               @*  <input asp-for="Facility.HistoricalComplianceOfficer" type="hidden" />
+                <input asp-for="Facility.HistoricalUnit" type="hidden" /> *@
             </div>
         }
         else
