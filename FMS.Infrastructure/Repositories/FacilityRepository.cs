@@ -335,8 +335,8 @@ namespace FMS.Infrastructure.Repositories
             facility.AdditionalDataRequested = facilityUpdates.AdditionalDataRequested;
             facility.VRPReferral = facilityUpdates.VRPReferral;
             facility.RNDateReceived = facilityUpdates.RNDateReceived;
-            facility.HistoricalUnit = facilityUpdates.HistoricalUnit;
-            facility.HistoricalComplianceOfficer = facilityUpdates.HistoricalComplianceOfficer;
+            //facility.HistoricalUnit = facilityUpdates.HistoricalUnit;
+            //facility.HistoricalComplianceOfficer = facilityUpdates.HistoricalComplianceOfficer;
             // ******************
             facility.IsRetained = facilityUpdates.IsRetained;
 
