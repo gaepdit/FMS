@@ -69,7 +69,9 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
-            // Get the list of facilities matching the "Spec" criteria
+            // Get the list of facilities matching the "Spec" criteria.
+            // Sort by Received Date for Pending Release Notifications
+            spec.SortBy = spec.ShowPendingOnly ? FacilitySort.RNDateReceivedDesc : FacilitySort.Name;
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
             
@@ -93,6 +95,7 @@ namespace FMS.Pages.Facilities
         {
             var fileName = $"FMS_PendingRN_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "FacilityPendingList" Detailed Facility List to go to a report
+            // sorted by Received Date
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
             var facilityDetailList = from p in facilityReportList select new FacilityPendingDtoScalar(p);
             return File(facilityDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Pending), "application/vnd.ms-excel", fileName);
