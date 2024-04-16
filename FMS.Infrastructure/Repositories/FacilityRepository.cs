@@ -95,6 +95,10 @@ namespace FMS.Infrastructure.Repositories
                     .ThenBy(e => e.Name),
                 FacilitySort.FileLabelDesc => included.OrderByDescending(e => e.File.FileLabel)
                     .ThenByDescending(e => e.Name),
+                FacilitySort.RNDateReceived => included.OrderBy(e => e.RNDateReceived)
+                    .ThenBy(e => e.FacilityNumber),
+                FacilitySort.RNDateReceivedDesc => included.OrderByDescending(e => e.RNDateReceived)
+                    .ThenByDescending(e => e.FacilityNumber),
                 // FacilitySort.Name
                 _ => included.OrderBy(e => e.Name)
                     .ThenBy(e => e.FacilityNumber)

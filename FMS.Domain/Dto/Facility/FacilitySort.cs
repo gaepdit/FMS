@@ -10,5 +10,7 @@
         FileLabelDesc,
         Name,
         NameDesc,
+        RNDateReceived,
+        RNDateReceivedDesc,
     }
 }
