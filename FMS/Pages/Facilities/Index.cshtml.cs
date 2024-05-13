@@ -71,7 +71,7 @@ namespace FMS.Pages.Facilities
         {
             // Get the list of facilities matching the "Spec" criteria.
             // Sort by Received Date for Pending Release Notifications
-            spec.SortBy = spec.ShowPendingOnly ? FacilitySort.RNDateReceivedDesc : FacilitySort.Name;
+            spec.SortBy = spec.ShowPendingOnly ? FacilitySort.RNDateReceived : FacilitySort.Name;
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
             
