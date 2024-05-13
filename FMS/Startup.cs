@@ -15,16 +15,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
+using Mindscape.Raygun4Net;
 using Mindscape.Raygun4Net.AspNetCore;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace FMS
 {
-    public class Startup
+    public class Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
-        public Startup(IConfiguration configuration) => Configuration = configuration;
-        private IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; } = configuration;
+        private IWebHostEnvironment WebHostEnvironment { get; } = webHostEnvironment;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -55,10 +57,22 @@ namespace FMS
             services.AddHsts(opts => { opts.MaxAge = TimeSpan.FromDays(365 * 2); });
 
             // Configure Raygun
-            services.AddRaygun(Configuration, new RaygunMiddlewareSettings
+            services.AddSingleton(provider =>
             {
-                ClientProvider = new RaygunClientProvider()
+                var client = new RaygunClient(provider.GetService<RaygunSettings>()!,
+                    provider.GetService<IRaygunUserProvider>()!);
+                client.SendingMessage += (_, eventArgs) =>
+                    eventArgs.Message.Details.Tags.Add(WebHostEnvironment.EnvironmentName);
+                return client;
             });
+            services.AddRaygun(opts =>
+            {
+                opts.ApiKey = Configuration["RaygunSettings:ApiKey"];
+                opts.ApplicationVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3);
+                opts.ExcludeErrorsFromLocal = true;
+                opts.IgnoreFormFieldNames = ["*Password"];
+            });
+            services.AddRaygunUserProvider();
 
             // Configure authorization policies 
             services.AddAuthorization(opts =>

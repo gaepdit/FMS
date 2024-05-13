@@ -36,8 +36,6 @@ namespace FMS.Domain.Dto
             AdditionalDataRequested = facility.AdditionalDataRequested;
             VRPReferral = facility.VRPReferral;
             RNDateReceived = facility.RNDateReceived;
-            HistoricalUnit = facility.HistoricalUnit;
-            HistoricalComplianceOfficer = facility.HistoricalComplianceOfficer;
             HasERecord = facility.HasERecord;
             IsRetained = facility.IsRetained;
         }
@@ -144,12 +142,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Date Received")]
         public DateOnly? RNDateReceived { get; set; }
 
-        [Display(Name = "Historical Unit")]
-        public string HistoricalUnit { get; set; }
-
-        [Display(Name = "Historical Compliance Officer")]
-        public string HistoricalComplianceOfficer { get; set; }
-
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
@@ -163,7 +155,6 @@ namespace FMS.Domain.Dto
             City = City?.Trim();
             PostalCode = PostalCode?.Trim();
             HSInumber = HSInumber?.Trim();
-            HistoricalUnit = HistoricalUnit?.Trim();
         }
     }
 }

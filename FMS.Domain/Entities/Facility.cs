@@ -29,6 +29,7 @@ namespace FMS.Domain.Entities
             PostalCode = newFacility.PostalCode;
             Latitude = newFacility.Latitude ?? 0;
             Longitude = newFacility.Longitude ?? 0;
+            IsRetained = newFacility.IsRetained;
             HasERecord = newFacility.HasERecord;
             Comments = newFacility.Comments;
             // The following properties only apply to Release Notifications
