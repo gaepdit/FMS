@@ -133,9 +133,10 @@ namespace FMS.Infrastructure.Repositories
             var cabinets = await _context.GetCabinetListAsync(false);
             foreach (var item in items)
             {
-                bool test = item.FacilityType.Name != "RN" || !item.FileLabel.IsNullOrEmpty();
-
-                item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel, test);
+                if (!item.FileLabel.IsNullOrEmpty())
+                {
+                    item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+                }
             }
 
             var totalCount = await queried.CountAsync();
