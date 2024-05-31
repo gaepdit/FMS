@@ -113,6 +113,12 @@ namespace FMS.Pages.Account
                 return RedirectToLoginPageWithError("Error loading detailed work account information.");
             }
 
+            if (!preferredUserName.IsValidEmailDomain())
+            {
+                _logger.LogWarning("User {UserName} with invalid email domain attempted signin", preferredUserName);
+                return RedirectToPage("./Unavailable");
+            }
+
             // Determine if a user account already exists.
             var user = await _userManager.FindByNameAsync(preferredUserName);
 
