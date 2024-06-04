@@ -39,6 +39,11 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public bool ShowPendingOnlyCheckBox { get; private set; }
 
+        // First time through search will sort by name,
+        // but for pending RNs will sort by ReceivedDate
+        //[BindProperty]
+       
+
         // Select Lists
         public SelectList Counties => new(Data.Counties, "Id", "Name");
         public SelectList States => new(Data.States);
@@ -62,22 +67,28 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Spec = new FacilitySpec();
+            Spec = new FacilitySpec() { FirstPass = true };
             await PopulateSelectsAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
-            // Get the list of facilities matching the "Spec" criteria.
+            
             // Sort by Received Date for Pending Release Notifications
-            spec.SortBy = spec.ShowPendingOnly ? FacilitySort.RNDateReceived : FacilitySort.Name;
+            if (spec.ShowPendingOnly && spec.FirstPass) 
+            {
+                spec.SortBy = FacilitySort.RNDateReceived;
+                spec.FirstPass = false;
+            };
+
+            // Get the list of facilities matching the "Spec" criteria.
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
             
             ShowPendingOnlyCheckBox = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
 
-            ShowResults = true;
+            ShowResults = true;  
             await PopulateSelectsAsync();
             return Page();
         }

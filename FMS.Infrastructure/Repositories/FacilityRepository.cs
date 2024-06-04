@@ -169,7 +169,6 @@ namespace FMS.Infrastructure.Repositories
                 {
                     item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
                 }
-
             }
 
             return items;

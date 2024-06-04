@@ -9,6 +9,8 @@ namespace FMS.Domain.Dto
     {
         public FacilitySort SortBy { get; set; } = FacilitySort.Name;
 
+        public bool FirstPass { get; set; } = true;
+
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
@@ -115,6 +117,7 @@ namespace FMS.Domain.Dto
                 {nameof(PostalCode), PostalCode},
                 {nameof(State), State},
                 {nameof(ShowPendingOnly), ShowPendingOnly.ToString()},
+                {nameof(FirstPass), FirstPass.ToString()},
             };
     }
 }
