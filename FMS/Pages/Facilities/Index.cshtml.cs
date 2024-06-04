@@ -39,11 +39,6 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public bool ShowPendingOnlyCheckBox { get; private set; }
 
-        // First time through search will sort by name,
-        // but for pending RNs will sort by ReceivedDate
-        //[BindProperty]
-       
-
         // Select Lists
         public SelectList Counties => new(Data.Counties, "Id", "Name");
         public SelectList States => new(Data.States);
@@ -67,6 +62,8 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetAsync()
         {
+            // First time through search will sort by name,
+            // but for pending RNs will sort by ReceivedDate
             Spec = new FacilitySpec() { FirstPass = true };
             await PopulateSelectsAsync();
             return Page();
