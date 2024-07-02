@@ -29,6 +29,8 @@ namespace FMS.Domain.Entities.Users
         /// In ASP.NET Core, the OpenID Connect middleware converts some of the claim types when it populates the
         /// Claims collection for the user principal:
         /// oid -> http://schemas.microsoft.com/identity/claims/objectidentifier
+        ///
+        /// <para>ID token claims reference: https://learn.microsoft.com/en-us/entra/identity-platform/id-token-claims-reference#use-claims-to-reliably-identify-a-user</para>
         /// </summary>
         [PersonalData]
         public string ObjectId { get; set; }
