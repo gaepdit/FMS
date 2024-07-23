@@ -1,4 +1,4 @@
-namespace FMS.Domain.Entities.Users
+namespace FMS.Helpers
 {
     public static class UserDomainValidation
     {
