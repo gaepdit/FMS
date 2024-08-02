@@ -29,8 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{58D1F541-E
 		docs\User-accounts.md = docs\User-accounts.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaywrightTests", "..\..\FMS\tests\Playwright.Tests\PlaywrightTests.csproj", "{0263A5EF-0931-462C-A8E7-963FACCB4F10}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +63,6 @@ Global
 		{3F455AB9-E598-4AE5-A326-DA840B532E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F455AB9-E598-4AE5-A326-DA840B532E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F455AB9-E598-4AE5-A326-DA840B532E33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0263A5EF-0931-462C-A8E7-963FACCB4F10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0263A5EF-0931-462C-A8E7-963FACCB4F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0263A5EF-0931-462C-A8E7-963FACCB4F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0263A5EF-0931-462C-A8E7-963FACCB4F10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,7 +72,6 @@ Global
 		{EAF76D32-9E34-4B5B-A16B-79DCA21A701E} = {B456828C-98AB-467C-86AC-882FD61691E5}
 		{700C1091-2F42-43FA-9342-EA56C520C6A4} = {B456828C-98AB-467C-86AC-882FD61691E5}
 		{3F455AB9-E598-4AE5-A326-DA840B532E33} = {B456828C-98AB-467C-86AC-882FD61691E5}
-		{0263A5EF-0931-462C-A8E7-963FACCB4F10} = {B456828C-98AB-467C-86AC-882FD61691E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1E772DD6-32FE-4515-9813-3EDB398508F9}
