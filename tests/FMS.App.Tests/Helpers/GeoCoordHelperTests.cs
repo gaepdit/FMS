@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using FMS;
 
 namespace FMS.App.Tests.Helpers

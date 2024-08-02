@@ -98,8 +98,6 @@ namespace FMS.Pages.Facilities
 
             IsNotSiteMaintenanceUser = !User.IsInRole(UserRoles.SiteMaintenance);
 
-            Facility.TrimAll();
-            
             // Reload facility and see if it has been deleted by another user
             FacilityDetailDto facilityDetail = await _repository.GetFacilityAsync(Id);
             if (facilityDetail is not null && !facilityDetail.Active)
@@ -107,6 +105,8 @@ namespace FMS.Pages.Facilities
                 TempData?.SetDisplayMessage(Context.Danger, "Facility has been deleted by another user.");
                 return RedirectToPage("./Details", new { Id });
             }
+
+            Facility.TrimAll();
 
             // Validate User input based on Business Logic
             // Populate FacilityTypeName to use for User Input validity
