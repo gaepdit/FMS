@@ -17,7 +17,7 @@ jobs:
 
       - name: Send to the Raygun Deployments API
         id: send_deployment
-        uses: fjogeleit/http-request-action@v1.16.1
+        uses: fjogeleit/http-request-action@v1.16.2
         with:
           url: https://app.raygun.com/deployments?authToken=${{ secrets.RAYGUN_AUTHTOKEN }}
           method: POST
