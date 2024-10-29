@@ -6,14 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Cabinets
 {
     public class CabinetDetailsTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var id = RepositoryData.Cabinets[0].Id;
@@ -30,7 +29,7 @@ namespace FMS.App.Tests.Cabinets
             pageModel.CabinetSummary.Should().BeEquivalentTo(item);
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepo = Substitute.For<ICabinetRepository>();
@@ -39,10 +38,10 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnGetAsync("zzz").ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.CabinetSummary.ShouldBeNull();
+            pageModel.CabinetSummary.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockRepo = Substitute.For<ICabinetRepository>();
@@ -51,7 +50,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnGetAsync(string.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.CabinetSummary.ShouldBeNull();
+            pageModel.CabinetSummary.Should().BeNull();
         }
     }
 }
