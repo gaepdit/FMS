@@ -8,14 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Cabinets
 {
     public class CabinetEditTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -32,7 +31,7 @@ namespace FMS.App.Tests.Cabinets
             pageModel.CabinetEdit.Should().BeEquivalentTo(new CabinetEditDto(expected));
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_NonexistentId_ReturnsNotFound()
         {
             var mockRepo = Substitute.For<ICabinetRepository>();
@@ -44,11 +43,11 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
-            pageModel.OriginalCabinetName.ShouldBeNull();
+            pageModel.OriginalCabinetName.Should().BeNull();
             pageModel.CabinetEdit.Should().Be(default);
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = Substitute.For<ICabinetRepository>();
@@ -58,11 +57,11 @@ namespace FMS.App.Tests.Cabinets
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
-            pageModel.OriginalCabinetName.ShouldBeNull();
+            pageModel.OriginalCabinetName.Should().BeNull();
             pageModel.CabinetEdit.Should().Be(default);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
             var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
@@ -79,13 +78,13 @@ namespace FMS.App.Tests.Cabinets
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
-            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
             result.Should().BeOfType<RedirectToPageResult>();
             ((RedirectToPageResult) result).PageName.Should().Be("./Details");
             ((RedirectToPageResult) result).RouteValues["id"].Should().Be(cabinet.Name);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
             var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
@@ -99,11 +98,11 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_NameExists_ReturnsPageWithInvalidModelState()
         {
             var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
@@ -121,13 +120,13 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
             pageModel.ModelState["CabinetEdit.Name"].Errors[0].ErrorMessage.Should()
                 .Be("There is already a Cabinet with that name.");
             pageModel.OriginalCabinetName.Should().Be(cabinet.Name);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_InvalidFileLabel_ReturnsPageWithInvalidModelState()
         {
             const string newFileLabel = "abc";
@@ -149,7 +148,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
             pageModel.ModelState["CabinetEdit.FirstFileLabel"].Errors[0].ErrorMessage.Should()
                 .Be("The File Label is invalid");
         }

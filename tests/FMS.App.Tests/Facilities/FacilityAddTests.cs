@@ -8,15 +8,13 @@ using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
-using Spire.Pdf.General.Paper.Uof;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Facilities
 {
     public class FacilityAddTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
@@ -30,10 +28,9 @@ namespace FMS.App.Tests.Facilities
             pageModel.Facility.Should().BeEquivalentTo(new FacilityCreateDto {State = "Georgia"});
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_ValidModel_NoNearbyFacilities_ReturnsDetailsPage()
         {
-            // ReSharper disable once CollectionNeverUpdated.Local
             var nearbyFacilities = new List<FacilityMapSummaryDto>();
             var newId = Guid.NewGuid();
             var mockRepo = Substitute.For<IFacilityRepository>();
@@ -44,25 +41,25 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
             {
-                Facility = new FacilityCreateDto {State = "Georgia", Latitude = 0, Longitude = 0},
+                Facility = new FacilityCreateDto { State = "Georgia", Latitude = 0, Longitude = 0 },
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
-            pageModel.ConfirmFacility.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ConfirmFacility.Should().BeFalse();
             pageModel.NearbyFacilities.Should().BeEquivalentTo(nearbyFacilities);
-            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newId);
+            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(newId);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_ValidModel_NearbyFacilities_ReturnsConfirmationPage()
         {
-            var nearbyFacilities = new List<FacilityMapSummaryDto>()
+            var nearbyFacilities = new List<FacilityMapSummaryDto>
             {
-                new FacilityMapSummaryDto()
+                new FacilityMapSummaryDto
                 {
                     Id = Guid.Empty,
                     FacilityNumber = "test",
@@ -76,34 +73,18 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
             {
-                Facility = new FacilityCreateDto {State = "Georgia", Latitude = 0, Longitude = 0},
+                Facility = new FacilityCreateDto { State = "Georgia", Latitude = 0, Longitude = 0 },
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
-            pageModel.ConfirmFacility.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ConfirmFacility.Should().BeTrue();
             pageModel.NearbyFacilities.Should().BeEquivalentTo(nearbyFacilities);
         }
 
-        //[Fact]
-        //public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
-        //{
-        //    var mockRepo = Substitute.For<IFacilityRepository>();
-        //    var mockType = Substitute.For<IFacilityTypeRepository>();
-        //    var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-        //    var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper);
-        //    pageModel.ModelState.AddModelError("Error", "Sample error description");
-
-        //    var result = await pageModel.OnPostAsync();
-
-        //    result.Should().BeOfType<PageResult>();
-        //    pageModel.ConfirmFacility.ShouldBeFalse();
-        //    pageModel.ModelState.IsValid.ShouldBeFalse();
-        //}
-
-        [Fact]
+        [Test]
         public async Task OnPostConfirm_ValidModel_ReturnsDetailsPage()
         {
             var newId = Guid.NewGuid();
@@ -121,13 +102,13 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnPostConfirmAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
-            pageModel.ConfirmFacility.ShouldBeFalse();
-            ((RedirectToPageResult) result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newId);
+            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ConfirmFacility.Should().BeFalse();
+            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(newId);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPostConfirm_InvalidModel_ReturnsPageWithInvalidModelState()
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
@@ -139,8 +120,8 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnPostConfirmAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ConfirmFacility.ShouldBeFalse();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ConfirmFacility.Should().BeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
         }
     }
 }
