@@ -9,14 +9,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Users
 {
     public class UserEditTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var user = new UserView(UserTestData.ApplicationUsers[0]);
@@ -30,20 +29,20 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.UserId.ShouldEqual(Guid.Empty);
-            pageModel.DisplayName.ShouldEqual(user.DisplayName);
-            pageModel.Email.ShouldEqual(user.Email);
-            pageModel.HasFileCreatorRole.ShouldBeFalse();
-            pageModel.HasFileEditorRole.ShouldBeFalse();
-            pageModel.HasSiteMaintenanceRole.ShouldBeFalse();
-            pageModel.HasUserAdminRole.ShouldBeFalse();
+            pageModel.UserId.Should().Be(Guid.Empty);
+            pageModel.DisplayName.Should().Be(user.DisplayName);
+            pageModel.Email.Should().Be(user.Email);
+            pageModel.HasFileCreatorRole.Should().BeFalse();
+            pageModel.HasFileEditorRole.Should().BeFalse();
+            pageModel.HasSiteMaintenanceRole.Should().BeFalse();
+            pageModel.HasUserAdminRole.Should().BeFalse();
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_WithRoles_PopulatesThePageModel()
         {
             var user = new UserView(UserTestData.ApplicationUsers[0]);
-            var roles = new List<string>()
+            var roles = new List<string>
             {
                 UserRoles.FileCreator,
                 UserRoles.FileEditor,
@@ -60,16 +59,16 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.UserId.ShouldEqual(Guid.Empty);
-            pageModel.DisplayName.ShouldEqual(user.DisplayName);
-            pageModel.Email.ShouldEqual(user.Email);
-            pageModel.HasFileCreatorRole.ShouldBeTrue();
-            pageModel.HasFileEditorRole.ShouldBeTrue();
-            pageModel.HasSiteMaintenanceRole.ShouldBeTrue();
-            pageModel.HasUserAdminRole.ShouldBeTrue();
+            pageModel.UserId.Should().Be(Guid.Empty);
+            pageModel.DisplayName.Should().Be(user.DisplayName);
+            pageModel.Email.Should().Be(user.Email);
+            pageModel.HasFileCreatorRole.Should().BeTrue();
+            pageModel.HasFileEditorRole.Should().BeTrue();
+            pageModel.HasSiteMaintenanceRole.Should().BeTrue();
+            pageModel.HasUserAdminRole.Should().BeTrue();
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = Substitute.For<IUserService>();
@@ -81,7 +80,7 @@ namespace FMS.App.Tests.Users
             pageModel.UserId.Should().Be(Guid.Empty);
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_NonexistentId_ReturnsNotFound()
         {
             var mockRepo = Substitute.For<IUserService>();
@@ -94,7 +93,7 @@ namespace FMS.App.Tests.Users
             pageModel.UserId.Should().Be(Guid.Empty);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
             var mockRepo = Substitute.For<IUserService>();
@@ -107,13 +106,13 @@ namespace FMS.App.Tests.Users
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
-            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
             result.Should().BeOfType<RedirectToPageResult>();
             ((RedirectToPageResult)result).PageName.Should().Be("./Details");
             ((RedirectToPageResult)result).RouteValues["id"].Should().Be(Guid.Empty);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
             var mockRepo = Substitute.For<IUserService>();
@@ -123,16 +122,16 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_UpdateRolesFails_ReturnsPageWithInvalidModelState()
         {
             var user = new UserView(UserTestData.ApplicationUsers[0]);
             var identityResult = IdentityResult.Failed(
-                new IdentityError() { Code = "CODE", Description = "DESCRIPTION" });
+                new IdentityError { Code = "CODE", Description = "DESCRIPTION" });
 
             var mockRepo = Substitute.For<IUserService>();
             mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(identityResult);
@@ -144,7 +143,7 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
             pageModel.ModelState[string.Empty].Errors[0].ErrorMessage.Should().Be("CODE: DESCRIPTION");
         }
     }

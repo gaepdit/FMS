@@ -6,14 +6,13 @@ using FMS.Pages.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Users
 {
     public class UserDetailsTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var user = new UserView(UserTestData.ApplicationUsers[0]);
@@ -31,7 +30,7 @@ namespace FMS.App.Tests.Users
             pageModel.DisplayName.Should().Be(user.DisplayName);
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockUserService = Substitute.For<IUserService>();
@@ -40,11 +39,11 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Email.ShouldBeNull();
-            pageModel.DisplayName.ShouldBeNull();
+            pageModel.Email.Should().BeNull();
+            pageModel.DisplayName.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockUserService = Substitute.For<IUserService>();
@@ -53,8 +52,8 @@ namespace FMS.App.Tests.Users
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.Email.ShouldBeNull();
-            pageModel.DisplayName.ShouldBeNull();
+            pageModel.Email.Should().BeNull();
+            pageModel.DisplayName.Should().BeNull();
         }
     }
 }

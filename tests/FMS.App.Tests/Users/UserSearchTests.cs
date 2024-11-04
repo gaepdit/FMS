@@ -5,16 +5,14 @@ using FMS.Domain.Services;
 using FMS.Pages.Users;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Users
 {
     public class UserSearchTests
     {
-        [Theory]
-        [InlineData(null, null, null)]
-        [InlineData("a", "b", "c")]
+        [TestCase(null, null, null)]
+        [TestCase("a", "b", "c")]
         public async Task OnSearch_IfValidModel_ReturnPage(string name, string email, string role)
         {
             var searchResults = UserTestData.ApplicationUsers
@@ -29,11 +27,11 @@ namespace FMS.App.Tests.Users
                 .ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
             pageModel.SearchResults.Should().BeEquivalentTo(searchResults);
         }
 
-        [Fact]
+        [Test]
         public async Task OnSearch_IfInvalidModel_ReturnPageWithInvalidModelState()
         {
             var mockUserService = Substitute.For<IUserService>();
@@ -44,7 +42,7 @@ namespace FMS.App.Tests.Users
                 .ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
         }
     }
 }
