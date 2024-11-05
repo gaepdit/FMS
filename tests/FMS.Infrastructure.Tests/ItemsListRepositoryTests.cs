@@ -4,35 +4,35 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Repositories;
 using TestHelpers;
-using Xunit;
+using NUnit.Framework;
 using static TestHelpers.RepositoryHelper;
 
 namespace FMS.Infrastructure.Tests
 {
     public class ItemsListRepositoryTests
     {
-        [Fact]
+        [Test]
         public async Task GetItemList_ReturnsAllActive()
         {
             using var repository = CreateRepositoryHelper().GetItemsListRepository();
             var result = await repository.GetBudgetCodesItemListAsync();
             var expected = RepositoryData.BudgetCodes
                 .Where(e => e.Active)
-                .Select(e => new ListItem() {Id = e.Id, Name = e.Name});
+                .Select(e => new ListItem { Id = e.Id, Name = e.Name });
             result.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetItemList_WithInactive_ReturnsAll()
         {
             using var repository = CreateRepositoryHelper().GetItemsListRepository();
             var result = await repository.GetBudgetCodesItemListAsync(true);
             var expected = RepositoryData.BudgetCodes
-                .Select(e => new ListItem() {Id = e.Id, Name = e.Name});
+                .Select(e => new ListItem { Id = e.Id, Name = e.Name });
             result.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetItemName_ReturnsName()
         {
             using var repository = CreateRepositoryHelper().GetItemsListRepository();
@@ -41,7 +41,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(bc.Name);
         }
 
-        [Fact]
+        [Test]
         public async Task GetItemName_NullId_ReturnsNull()
         {
             using var repository = CreateRepositoryHelper().GetItemsListRepository();
@@ -49,7 +49,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task GetItemName_InvalidId_ReturnsNull()
         {
             using var repository = CreateRepositoryHelper().GetItemsListRepository();
@@ -57,7 +57,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task GetItemName_EmptyList_ReturnsNull()
         {
             using var repository = CreateRepositoryHelper().GetItemsListRepository();
