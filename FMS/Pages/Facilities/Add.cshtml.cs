@@ -127,7 +127,7 @@ namespace FMS.Pages.Facilities
 
             if (NearbyFacilities != null && NearbyFacilities.Count > 0)
             {
-                ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
+                ConfirmedFacilityFileLabel = string.IsNullOrEmpty(Facility.FileLabel) ? "Choose" : Facility.FileLabel;
                 await PopulateSelectsAsync();
                 ConfirmFacility = true;
                 return Page();
@@ -160,7 +160,7 @@ namespace FMS.Pages.Facilities
 
                 if (NearbyFacilities != null && NearbyFacilities.Count > 0)
                 {
-                    ConfirmedFacilityFileLabel = Facility.FileLabel.IsNullOrEmpty() ? "Choose" : Facility.FileLabel;
+                    ConfirmedFacilityFileLabel = string.IsNullOrEmpty(Facility.FileLabel) ? "Choose" : Facility.FileLabel;
                     await PopulateSelectsAsync();
                     ConfirmFacility = true;
                     return Page();
