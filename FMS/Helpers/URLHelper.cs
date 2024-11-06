@@ -7,21 +7,21 @@ namespace FMS.Helpers
     {
         public static string GetHSIFolderLink(string hsiNumber)
         {
-            return hsiNumber.IsNullOrEmpty()
+            return string.IsNullOrEmpty(hsiNumber)
                 ? null 
                 : string.Concat(GlobalConstants.HSIFolder, hsiNumber);
         }
 
         public static string GetNotificationFolderLink(string notificationId)
         {
-            return notificationId.IsNullOrEmpty()
+            return string.IsNullOrEmpty(notificationId)
                 ? null
                 : string.Concat(GlobalConstants.NotificationFolder, notificationId.Substring(2));
         }
 
         public static string GetPendingNotificationFolderLink(string notificationId)
         {
-            return notificationId.IsNullOrEmpty()
+            return string.IsNullOrEmpty(notificationId)
                 ? null
                 : string.Concat(GlobalConstants.PendingNotificationFolder, notificationId.Substring(2));
         }
