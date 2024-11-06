@@ -72,7 +72,7 @@ namespace FMS.Helpers
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddd'")));
                 }
                 // Check HSI Number 
-                if (!facility.HSInumber.IsNullOrEmpty() && !hsiRegex.IsMatch(facility.HSInumber))
+                if (!string.IsNullOrEmpty(facility.HSInumber) && !hsiRegex.IsMatch(facility.HSInumber))
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.HSInumber", "^", "HSI Number must be 5 digits Only.")));
                 }
@@ -80,14 +80,14 @@ namespace FMS.Helpers
             else if(facility.FacilityTypeName == "HSI")
             {
                 // Check Facility Number 
-                if (!facility.FacilityNumber.IsNullOrEmpty() && !hsiRegex.IsMatch(facility.FacilityNumber))
+                if (!string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "HSI Number must be 5 digits Only.")));
                 }
             }
             else
             {
-                if (facility.FacilityNumber.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(facility.FacilityNumber))
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must not be blank")));
                 }
