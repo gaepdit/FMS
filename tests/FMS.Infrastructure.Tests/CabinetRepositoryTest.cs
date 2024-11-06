@@ -3,8 +3,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 using static TestHelpers.RepositoryHelper;
 
 namespace FMS.Infrastructure.Tests
@@ -13,33 +12,33 @@ namespace FMS.Infrastructure.Tests
     {
         // CabinetExistsAsync
 
-        [Fact]
+        [Test]
         public async Task CabinetExists_Exists_ReturnsTrue()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
             var result = await repository.CabinetExistsAsync(RepositoryData.Cabinets[0].Id);
-            result.ShouldBeTrue();
+            result.Should().BeTrue();
         }
 
-        [Fact]
+        [Test]
         public async Task CabinetExists_NotExists_ReturnsFalse()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
             var result = await repository.CabinetExistsAsync(Guid.Empty);
-            result.ShouldBeFalse();
+            result.Should().BeFalse();
         }
 
         // CabinetNameExistsAsync
 
-        [Fact]
+        [Test]
         public async Task CabinetNameExists_NotExists_ReturnsFalse()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
             var result = await repository.CabinetNameExistsAsync("New");
-            result.ShouldBeFalse();
+            result.Should().BeFalse();
         }
 
-        [Fact]
+        [Test]
         public async Task CabinetNameExists_Exists_ReturnsTrue()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
@@ -47,10 +46,10 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.CabinetNameExistsAsync(cabinet.Name);
 
-            result.ShouldBeTrue();
+            result.Should().BeTrue();
         }
 
-        [Fact]
+        [Test]
         public async Task CabinetNameExists_ExistsButIgnored_ReturnsFalse()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
@@ -58,18 +57,18 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.CabinetNameExistsAsync(cabinet.Name, cabinet.Id);
 
-            result.ShouldBeFalse();
+            result.Should().BeFalse();
         }
 
-        [Fact]
+        [Test]
         public async Task CabinetNameExists_NotExistsNotIgnored_ReturnsFalse()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
             var result = await repository.CabinetNameExistsAsync("New", Guid.Empty);
-            result.ShouldBeFalse();
+            result.Should().BeFalse();
         }
 
-        [Fact]
+        [Test]
         public async Task CabinetNameExists_ExistsNotIgnored_ReturnsTrue()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
@@ -77,12 +76,12 @@ namespace FMS.Infrastructure.Tests
 
             var result = await repository.CabinetNameExistsAsync(cabinet.Name, Guid.Empty);
 
-            result.ShouldBeTrue();
+            result.Should().BeTrue();
         }
 
         // GetCabinetListAsync
 
-        [Fact]
+        [Test]
         public async Task GetCabinetList_ReturnsAll()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
@@ -93,7 +92,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetCabinetList_WithoutInactive_ReturnsAllActive()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
@@ -106,7 +105,7 @@ namespace FMS.Infrastructure.Tests
 
         // GetCabinetSummaryAsync (by Guid)
 
-        [Fact]
+        [Test]
         public async Task GetCabinetSummary_ReturnsCorrectCabinet()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
@@ -118,17 +117,17 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetCabinetSummary_Nonexistent_ReturnsNull()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
             var result = await repository.GetCabinetSummaryAsync(Guid.Empty);
-            result.ShouldBeNull();
+            result.Should().BeNull();
         }
 
         // GetCabinetSummaryAsync (by cabinet number)
 
-        [Fact]
+        [Test]
         public async Task GetCabinetByNumber_ReturnsCorrectCabinet()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
@@ -140,17 +139,17 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task GetCabinetByNumber_Nonexistent_ReturnsNull()
         {
             using var repository = CreateRepositoryHelper().GetCabinetRepository();
             var result = await repository.GetCabinetSummaryAsync("zzz");
-            result.ShouldBeNull();
+            result.Should().BeNull();
         }
 
         // CreateCabinetAsync
 
-        [Fact]
+        [Test]
         public async Task CreateCabinet_Succeeds()
         {
             var newCabinet = new CabinetEditDto
@@ -167,12 +166,12 @@ namespace FMS.Infrastructure.Tests
 
             var cabinet = await repository.GetCabinetSummaryAsync(newCabinet.Name);
 
-            cabinet.Active.ShouldBeTrue();
+            cabinet.Active.Should().BeTrue();
             cabinet.Name.Should().Be(newCabinet.Name);
             cabinet.FirstFileLabel.Should().Be(newCabinet.FirstFileLabel);
         }
 
-        [Fact]
+        [Test]
         public async Task CreateCabinet_WithNullName_ThrowsException()
         {
             var newCabinet = new CabinetEditDto
@@ -191,7 +190,7 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage("Value cannot be null. (Parameter 'Name')");
         }
 
-        [Fact]
+        [Test]
         public async Task CreateCabinet_WithNullLabel_ThrowsException()
         {
             var newCabinet = new CabinetEditDto
@@ -210,7 +209,7 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage("Value cannot be null. (Parameter 'FirstFileLabel')");
         }
 
-        [Fact]
+        [Test]
         public async Task CreateCabinet_WithExistingName_ThrowsException()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -231,7 +230,7 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"Cabinet Name {cabinet.Name} already exists.");
         }
 
-        [Fact]
+        [Test]
         public async Task CreateCabinet_WithInvalidLabel_ThrowsException()
         {
             var newCabinet = new CabinetEditDto
@@ -252,7 +251,7 @@ namespace FMS.Infrastructure.Tests
 
         // UpdateCabinetAsync
 
-        [Fact]
+        [Test]
         public async Task UpdateCabinet_Label_Succeeds()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -275,7 +274,7 @@ namespace FMS.Infrastructure.Tests
             updatedCabinet.Active.Should().Be(cabinet.Active);
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateCabinet_Name_Succeeds()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -298,7 +297,7 @@ namespace FMS.Infrastructure.Tests
             updatedCabinet.Active.Should().Be(cabinet.Active);
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateCabinet_WithNoChanges_Succeeds()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -321,7 +320,7 @@ namespace FMS.Infrastructure.Tests
             updatedCabinet.Active.Should().Be(cabinet.Active);
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateCabinet_WithNullName_ThrowsException()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -341,7 +340,7 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage("Value cannot be null. (Parameter 'Name')");
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateCabinet_WithNullFileLabel_ThrowsException()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -361,7 +360,7 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage("Value cannot be null. (Parameter 'FirstFileLabel')");
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateCabinet_WithExistingName_ThrowsException()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -382,7 +381,7 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage($"Cabinet Name {existingName} already exists.");
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateCabinet_WithInvalidFileLabel_ThrowsException()
         {
             var cabinet = RepositoryData.Cabinets[0];
@@ -402,7 +401,7 @@ namespace FMS.Infrastructure.Tests
                 .WithMessage("The File Label is invalid.");
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateNonexistentCabinet_ThrowsException()
         {
             var cabinetEdit = new CabinetEditDto()

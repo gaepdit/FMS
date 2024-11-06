@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -31,7 +30,7 @@ namespace FMS.App.Tests.Facilities
         //    pageModel.FacilityDetail.Should().BeEquivalentTo(facility);
         //}
 
-        [Fact]
+        [Test]
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
@@ -40,10 +39,10 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnGetAsync(Guid.Empty, null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FacilityDetail.ShouldBeNull();
+            pageModel.FacilityDetail.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
@@ -52,7 +51,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnGetAsync(null, null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FacilityDetail.ShouldBeNull();
+            pageModel.FacilityDetail.Should().BeNull();
         }
     }
 }

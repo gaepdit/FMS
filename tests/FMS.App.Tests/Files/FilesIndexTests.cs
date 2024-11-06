@@ -10,14 +10,13 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Files
 {
     public class FilesIndexTests
     {
-        [Fact]
+        [Test]
         public async Task OnSearch_DefaultSpec_ReturnsActiveFiles()
         {
             var items = RepositoryData.Files
@@ -34,12 +33,12 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetSearchAsync(spec).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
-            pageModel.ShowResults.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ShowResults.Should().BeTrue();
             pageModel.FileList.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task OnSearch_NoMatch_ReturnsEmptyList()
         {
             var mockRepository = Substitute.For<IFileRepository>();
@@ -51,12 +50,12 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetSearchAsync(spec).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
-            pageModel.ShowResults.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
+            pageModel.ShowResults.Should().BeTrue();
             pageModel.FileList.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task OnSearch_IfInvalidModel_ReturnPageWithInvalidModelState()
         {
             var mockRepository = Substitute.For<IFileRepository>();
@@ -66,7 +65,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetSearchAsync(default).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
         }
     }
 }

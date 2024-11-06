@@ -8,14 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Facilities
 {
     public class FacilityDeleteTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var facilityId = RepositoryData.Facilities()[0].Id;
@@ -32,7 +31,7 @@ namespace FMS.App.Tests.Facilities
             pageModel.FacilityDetail.Should().BeEquivalentTo(facility);
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_NonexistentId_ReturnsNotFound()
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
@@ -44,10 +43,10 @@ namespace FMS.App.Tests.Facilities
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
-            pageModel.FacilityDetail.ShouldBeNull();
+            pageModel.FacilityDetail.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
@@ -57,10 +56,10 @@ namespace FMS.App.Tests.Facilities
 
             result.Should().BeOfType<NotFoundResult>();
             pageModel.Id.Should().Be(Guid.Empty);
-            pageModel.FacilityDetail.ShouldBeNull();
+            pageModel.FacilityDetail.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_IfValidModel_ReturnsDetailsPage()
         {
             var id = Guid.NewGuid();
@@ -74,7 +73,7 @@ namespace FMS.App.Tests.Facilities
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
             ((RedirectToPageResult) result).PageName.Should().Be("./Details");
             ((RedirectToPageResult) result).RouteValues["id"].Should().Be(id);
         }
