@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -48,6 +48,6 @@ namespace FMS.Domain.Entities
         public const string FileLabelPattern = @"^\d{3}-\d{4}$";
 
         public static bool IsValidFileLabelFormat(string fileLabel) =>
-            Regex.IsMatch(fileLabel, FileLabelPattern);
+            Regex.IsMatch(fileLabel, FileLabelPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
     }
 }

@@ -281,7 +281,7 @@ namespace FMS.Pages.Account
             var atIndex = email.IndexOf('@');
             if (atIndex <= 1) return email;
 
-            var maskedEmail = Regex.Replace(email[..atIndex], ".(?=.{2})", "*");
+            var maskedEmail = Regex.Replace(email[..atIndex], ".(?=.{2})", "*", RegexOptions.None, TimeSpan.FromMilliseconds(100));
             return string.Concat(maskedEmail, email.AsSpan(atIndex));
         }
     }
