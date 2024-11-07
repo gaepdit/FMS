@@ -17,7 +17,7 @@ namespace FMS.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -1317,6 +1317,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<DateTimeOffset?>("MostRecentLogin")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -1326,7 +1329,8 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("ObjectId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -1336,6 +1340,9 @@ namespace FMS.Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("ProfileUpdatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
