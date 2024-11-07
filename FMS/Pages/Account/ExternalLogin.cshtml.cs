@@ -21,33 +21,16 @@ using System.Threading.Tasks;
 namespace FMS.Pages.Account
 {
     [AllowAnonymous]
-    public class ExternalLoginModel : PageModel
+    public class ExternalLoginModel(
+        SignInManager<ApplicationUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        IConfiguration configuration,
+        IWebHostEnvironment environment,
+        IComplianceOfficerRepository repository,
+        ILogger<ExternalLoginModel> logger) : PageModel
     {
         public ApplicationUser DisplayFailedUser { get; set; }
         public string ReturnUrl { get; private set; } = "/";
-
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _environment;
-        private readonly IComplianceOfficerRepository _repository;
-        private readonly ILogger<ExternalLoginModel> _logger;
-
-        public ExternalLoginModel(
-            SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager,
-            IConfiguration configuration,
-            IWebHostEnvironment environment,
-            IComplianceOfficerRepository repository,
-            ILogger<ExternalLoginModel> logger)
-        {
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _configuration = configuration;
-            _environment = environment;
-            _repository = repository;
-            _logger = logger;
-        }
 
         // Don't call the page directly
         public IActionResult OnGetAsync() => RedirectToPage("./Login");
@@ -58,7 +41,7 @@ namespace FMS.Pages.Account
             ReturnUrl = returnUrl ?? "/";
 
             // If a local user is enabled, create user information and sign in locally.
-            if (_environment.IsLocalEnv())
+            if (environment.IsLocalEnv())
             {
                 return await SignInAsLocalUser();
             }
@@ -66,27 +49,27 @@ namespace FMS.Pages.Account
             // Request a redirect to the external login provider.
             const string provider = OpenIdConnectDefaults.AuthenticationScheme;
             var redirectUrl = Url.Page("./ExternalLogin", pageHandler: "Callback", values: new { returnUrl });
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
 
         private async Task<IActionResult> SignInAsLocalUser()
         {
-            _logger.LogInformation("Local user signin attempted");
+            logger.LogInformation("Local user signin attempted");
 
             var user = new ApplicationUser();
-            _configuration.Bind("LocalUser", user);
+            configuration.Bind("LocalUser", user);
 
-            var userExists = await _userManager.FindByEmailAsync(user.Email);
+            var userExists = await userManager.FindByEmailAsync(user.Email);
             if (userExists == null)
             {
-                await _userManager.CreateAsync(user);
-                foreach (var role in UserRoles.AllRoles) await _userManager.AddToRoleAsync(user, role);
+                await userManager.CreateAsync(user);
+                foreach (var role in UserRoles.AllRoles) await userManager.AddToRoleAsync(user, role);
                 // Add user to Compliance Officers list.
                 await CreateComplianceOfficeAsync(user);
             }
 
-            await _signInManager.SignInAsync(userExists ?? user, false);
+            await signInManager.SignInAsync(userExists ?? user, false);
             return LocalRedirect(ReturnUrl);
         }
 
@@ -102,7 +85,7 @@ namespace FMS.Pages.Account
             }
 
             // Get information about the user from the external provider.
-            var externalLoginInfo = await _signInManager.GetExternalLoginInfoAsync();
+            var externalLoginInfo = await signInManager.GetExternalLoginInfoAsync();
             if (externalLoginInfo?.Principal is null)
             {
                 return RedirectToLoginPageWithError("Error loading work account information.");
@@ -116,12 +99,12 @@ namespace FMS.Pages.Account
 
             if (!preferredUserName.IsValidEmailDomain())
             {
-                _logger.LogWarning("User {UserName} with invalid email domain attempted signin", preferredUserName);
+                logger.LogWarning("User {UserName} with invalid email domain attempted signin", preferredUserName);
                 return RedirectToPage("./Unavailable");
             }
 
             // Determine if a user account already exists.
-            var user = await _userManager.FindByNameAsync(preferredUserName);
+            var user = await userManager.FindByNameAsync(preferredUserName);
 
             // If the user does not have an account yet, then create one and sign in.
             if (user is null)
@@ -130,7 +113,7 @@ namespace FMS.Pages.Account
             }
 
             // Sign in the user locally with the external provider key.
-            var signInResult = await _signInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider,
+            var signInResult = await signInManager.ExternalLoginSignInAsync(externalLoginInfo.LoginProvider,
                 externalLoginInfo.ProviderKey, true, true);
 
             if (signInResult.Succeeded)
@@ -151,7 +134,7 @@ namespace FMS.Pages.Account
         // Redirect to Login page with error message.
         private IActionResult RedirectToLoginPageWithError(string message)
         {
-            _logger.LogWarning("External login error: {Message}", message);
+            logger.LogWarning("External login error: {Message}", message);
             TempData.SetDisplayMessage(Context.Danger, message);
             return RedirectToPage("./Login", new { ReturnUrl });
         }
@@ -169,28 +152,28 @@ namespace FMS.Pages.Account
             };
 
             // Create the user in the backing store.
-            var createUserResult = await _userManager.CreateAsync(user);
+            var createUserResult = await userManager.CreateAsync(user);
             if (!createUserResult.Succeeded)
             {
-                _logger.LogWarning("Failed to create new user {UserName}", user.UserName);
+                logger.LogWarning("Failed to create new user {UserName}", user.UserName);
                 return FailedLogin(createUserResult, user);
             }
 
-            _logger.LogInformation("Created new user {UserName}", user.UserName);
+            logger.LogInformation("Created new user {UserName}", user.UserName);
 
             // Add user to Compliance Officers list.
             await CreateComplianceOfficeAsync(user);
 
             // Optionally add user to selected Roles.
-            var seedAdminUsers = _configuration.GetSection("SeedAdminUsers")
+            var seedAdminUsers = configuration.GetSection("SeedAdminUsers")
                 .Get<string[]>().AsEnumerable();
             if (seedAdminUsers != null &&
                 seedAdminUsers.Contains(user.Email, StringComparer.InvariantCultureIgnoreCase))
             {
-                _logger.LogInformation("Seeding roles for new user {UserName}", user.UserName);
-                await _userManager.AddToRoleAsync(user, UserRoles.UserMaintenance);
-                await _userManager.AddToRoleAsync(user, UserRoles.SiteMaintenance);
-                await _userManager.AddToRoleAsync(user, UserRoles.FileEditor);
+                logger.LogInformation("Seeding roles for new user {UserName}", user.UserName);
+                await userManager.AddToRoleAsync(user, UserRoles.UserMaintenance);
+                await userManager.AddToRoleAsync(user, UserRoles.SiteMaintenance);
+                await userManager.AddToRoleAsync(user, UserRoles.FileEditor);
             }
 
             // Add the external provider info to the user and sign in.
@@ -205,36 +188,36 @@ namespace FMS.Pages.Account
                 FamilyName = user.FamilyName,
                 GivenName = user.GivenName,
             };
-            var coId = await _repository.TryCreateComplianceOfficerAsync(complianceOfficer);
-            _logger.LogInformation("Created new compliance officer {Id}", coId);
+            var coId = await repository.TryCreateComplianceOfficerAsync(complianceOfficer);
+            logger.LogInformation("Created new compliance officer {Id}", coId);
         }
 
         // Update local store with from external provider. 
         private async Task<IActionResult> RefreshUserInfoAndSignInAsync(ApplicationUser user, ExternalLoginInfo info)
         {
-            _logger.LogInformation("Existing user {UserName} logged in with {LoginProvider} provider",
+            logger.LogInformation("Existing user {UserName} logged in with {LoginProvider} provider",
                 user.UserName, info.LoginProvider);
             user.Email = info.Principal.FindFirstValue(ClaimTypes.Email);
             user.GivenName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
             user.FamilyName = info.Principal.FindFirstValue(ClaimTypes.Surname);
-            await _userManager.UpdateAsync(user);
-            await _signInManager.RefreshSignInAsync(user);
+            await userManager.UpdateAsync(user);
+            await signInManager.RefreshSignInAsync(user);
             return LocalRedirect(ReturnUrl);
         }
 
         // Add external login provider to user account and sign in user.
         private async Task<IActionResult> AddLoginProviderAndSignInAsync(ApplicationUser user, ExternalLoginInfo info)
         {
-            var addLoginResult = await _userManager.AddLoginAsync(user, info);
+            var addLoginResult = await userManager.AddLoginAsync(user, info);
 
             if (!addLoginResult.Succeeded)
             {
-                _logger.LogWarning("Failed to add login provider {LoginProvider} for user {UserName}",
+                logger.LogWarning("Failed to add login provider {LoginProvider} for user {UserName}",
                     info.LoginProvider, user.UserName);
                 return FailedLogin(addLoginResult, user);
             }
 
-            _logger.LogInformation("Login provider {LoginProvider} added for user {UserName}",
+            logger.LogInformation("Login provider {LoginProvider} added for user {UserName}",
                 info.LoginProvider, user.UserName);
 
             // Include the access token in the properties.
@@ -242,7 +225,7 @@ namespace FMS.Pages.Account
             props.StoreTokens(info.AuthenticationTokens);
             props.IsPersistent = true;
 
-            await _signInManager.SignInAsync(user, props, info.LoginProvider);
+            await signInManager.SignInAsync(user, props, info.LoginProvider);
             return LocalRedirect(ReturnUrl);
         }
 
