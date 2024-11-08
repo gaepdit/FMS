@@ -19,6 +19,7 @@
     <PackageReference Include="FreeSpire.PDF" />
     <PackageReference Include="JetBrains.Annotations" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
       <PrivateAssets>all</PrivateAssets>
