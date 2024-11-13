@@ -1,21 +1,23 @@
 using FMS.Helpers;
+using FluentAssertions;
 using NUnit.Framework;
 
-namespace FMS.App.Tests.Helpers;
-
-public class UserDomainValidationTests
+namespace FMS.App.Tests.Helpers
 {
-    [Test]
-    public void ShouldValidateEmail()
+    public class UserDomainValidationTests
     {
-        const string validEmail = "example@dnr.ga.gov";
-        Assert.True(validEmail.IsValidEmailDomain());
-    }
+        [Test]
+        public void ShouldValidateEmail()
+        {
+            const string validEmail = "example@dnr.ga.gov";
+            validEmail.IsValidEmailDomain().Should().BeTrue();
+        }
 
-    [Test]
-    public void ShouldInvalidateEmail()
-    {
-        const string invalidEmail = "example@gmail.com";
-        Assert.False(invalidEmail.IsValidEmailDomain());
+        [Test]
+        public void ShouldInvalidateEmail()
+        {
+            const string invalidEmail = "example@gmail.com";
+            invalidEmail.IsValidEmailDomain().Should().BeFalse();
+        }
     }
 }
