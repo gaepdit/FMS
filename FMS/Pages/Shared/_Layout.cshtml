@@ -24,6 +24,13 @@
             <img src="~/images/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
             <a href="/" aria-label="Home" class="nav-link d-inline-block">File Management System</a>
         </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h2>Notice</h2>
+            <p>There will be a scheduled major system maintenance outage for all EPD applications from 11AM Saturday 12/7/24 until 6 AM Monday 12/9/24.</p>
+            <p>Please refer to the <a href="https://status.gaepd.org/">EPD-IT status page</a> for updates.</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
         @if (User.Identity?.IsAuthenticated ?? false)
         {
             <partial name="_MenuPartial" />
