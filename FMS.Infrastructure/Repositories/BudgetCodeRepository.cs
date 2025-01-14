@@ -77,6 +77,10 @@ namespace FMS.Infrastructure.Repositories
 
         public Task UpdateBudgetCodeAsync(Guid id, BudgetCodeEditDto budgetCodeUpdates)
         {
+            if (budgetCodeUpdates == null)
+            {
+                throw new ArgumentNullException(nameof(budgetCodeUpdates), "BudgetCodeUpdates cannot be null.");
+            }
             Prevent.NullOrEmpty(budgetCodeUpdates.Code, nameof(budgetCodeUpdates.Code));
             Prevent.NullOrEmpty(budgetCodeUpdates.Name, nameof(budgetCodeUpdates.Name));
 
