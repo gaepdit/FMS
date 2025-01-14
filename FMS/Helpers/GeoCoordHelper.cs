@@ -17,9 +17,9 @@ namespace FMS
         {
             [Description("Latitude and Longitude must both be zero (0) or both valid coordinates.")]
             BothNotZero = 1,
-            [Description("Latitude entered is outside State of Georgia. Must be between 35.0 and 30.36 North Latitude or zero if unknown.")]
+            [Description("Latitude entered is outside State of Georgia. Must be between 35.0 and 30.36 North Latitude.")]
             LatNotInGeorgia = 2,
-            [Description("Longitude entered is outside State of Georgia. Must be between -80.84 and -85.61 West Longitude or zero if unknown.")]
+            [Description("Longitude entered is outside State of Georgia. Must be between -80.84 and -85.61 West Longitude.")]
             LongNotInGeorgia = 3,
             Valid = 4
         }
