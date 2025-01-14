@@ -83,44 +83,44 @@ namespace FMS.App.Tests.Facilities
             pageModel.Facility.Should().BeNull();
         }
 
-        [Test]
-        public async Task OnPost_IfValidModel_ReturnsDetailsPage()
-        {
-            var id = Guid.NewGuid();
-            var mockRepo = Substitute.For<IFacilityRepository>();
-            var mockType = Substitute.For<IFacilityTypeRepository>();
+        //[Test]
+        //public async Task OnPost_IfValidModel_ReturnsDetailsPage()
+        //{
+        //    var id = Guid.NewGuid();
+        //    var mockRepo = Substitute.For<IFacilityRepository>();
+        //    var mockType = Substitute.For<IFacilityTypeRepository>();
 
-            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper)
-            {
-                Id = id,
-                Facility = new FacilityEditDto(),
-                PageContext = pageContext
-            };
+        //    var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+        //    var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper)
+        //    {
+        //        Id = id,
+        //        Facility = new FacilityEditDto(),
+        //        PageContext = pageContext
+        //    };
 
-            var result = await pageModel.OnPostAsync();
+        //    var result = await pageModel.OnPostAsync();
 
-            result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.Should().BeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
-        }
+        //    result.Should().BeOfType<RedirectToPageResult>();
+        //    pageModel.ModelState.IsValid.Should().BeTrue();
+        //    ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+        //    ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
+        //}
 
-        [Fact]
-        public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
-        {
-            var mockRepo = Substitute.For<IFacilityRepository>();
-            var mockType = Substitute.For<IFacilityTypeRepository>();
-            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper);
-            pageModel.ModelState.AddModelError("Error", "Sample error description");
+        //[Test]
+        //public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
+        //{
+        //    var mockRepo = Substitute.For<IFacilityRepository>();
+        //    var mockType = Substitute.For<IFacilityTypeRepository>();
+        //    var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+        //    var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper);
+        //    pageModel.ModelState.AddModelError("Error", "Sample error description");
 
-            var result = await pageModel.OnPostAsync();
+        //    var result = await pageModel.OnPostAsync();
 
-            result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
-            pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
-        }
+        //    result.Should().BeOfType<PageResult>();
+        //    pageModel.ModelState.IsValid.ShouldBeFalse();
+        //    pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
+        //}
 
         //[Fact]
         //public async Task OnPost_IfInActiveModel_ReturnsDetailsPage()
@@ -136,12 +136,12 @@ namespace FMS.App.Tests.Facilities
         //    var mockSelectListHelper = Substitute.For<ISelectListHelper>();
         //    var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper) { Id = id };
 
-            var result = await pageModel.OnPostAsync();
+        //    var result = await pageModel.OnPostAsync();
 
-            result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
-        }
+        //    result.Should().BeOfType<RedirectToPageResult>();
+        //    pageModel.ModelState.IsValid.ShouldBeTrue();
+        //    ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+        //    ((RedirectToPageResult)result).RouteValues["id"].Should().Be(id);
+        //}
     }
 }

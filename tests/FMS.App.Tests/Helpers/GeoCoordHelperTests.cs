@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 ﻿using FMS.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
-=======
-using NUnit.Framework;
 using FMS;
->>>>>>> origin/274-build-unit-testing-for-repositories-in-the-infrastructure-project
 
 namespace FMS.App.Tests.Helpers
 {
