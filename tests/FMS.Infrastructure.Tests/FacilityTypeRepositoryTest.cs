@@ -53,6 +53,7 @@ namespace FMS.Infrastructure.Tests
             {
                 _context.Database.EnsureDeleted();
                 _context.Dispose();
+                _repository.Dispose();
                 _disposed = true;
             }
         }
