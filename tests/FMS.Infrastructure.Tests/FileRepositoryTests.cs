@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 using static TestHelpers.RepositoryHelper;
 
 namespace FMS.Infrastructure.Tests
@@ -14,25 +13,25 @@ namespace FMS.Infrastructure.Tests
     {
         // FileExistsAsync
 
-        [Fact]
+        [Test]
         public async Task FileExists_Exists_ReturnsTrue()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
             var result = await repository.FileExistsAsync(RepositoryData.Files[0].Id);
-            result.ShouldBeTrue();
+            result.Should().BeTrue();
         }
 
-        [Fact]
+        [Test]
         public async Task FileExists_NotExists_ReturnsFalse()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
             var result = await repository.FileExistsAsync(Guid.Empty);
-            result.ShouldBeFalse();
+            result.Should().BeFalse();
         }
 
         // GetFileAsync
 
-        [Fact]
+        [Test]
         public async Task GetFileById_ReturnsCorrectFile()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
@@ -44,15 +43,15 @@ namespace FMS.Infrastructure.Tests
             result.FileLabel.Should().Be(file.FileLabel);
         }
 
-        [Fact]
+        [Test]
         public async Task GetFileById_Nonexistent_ReturnsNull()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(Guid.Empty);
-            result.ShouldBeNull();
+            result.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task GetFileByName_ReturnsCorrectFile()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
@@ -61,43 +60,43 @@ namespace FMS.Infrastructure.Tests
             result.Id.Should().Be(file.Id);
         }
 
-        [Fact]
+        [Test]
         public async Task GetFileByName_Nonexistent_ReturnsNull()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
             var result = await repository.GetFileAsync(string.Empty);
-            result.ShouldBeNull();
+            result.Should().BeNull();
         }
 
         // FileHasActiveFacilities
 
-        [Fact]
+        [Test]
         public async Task FileHasActiveFacilities_HasActive_ReturnsTrue()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
             var result = await repository.FileHasActiveFacilities(RepositoryData.Files[0].Id);
-            result.ShouldBeTrue();
+            result.Should().BeTrue();
         }
 
-        [Fact]
+        [Test]
         public async Task FileHasActiveFacilities_HasNoActive_ReturnsFalse()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
             var result = await repository.FileHasActiveFacilities(RepositoryData.Files[1].Id);
-            result.ShouldBeFalse();
+            result.Should().BeFalse();
         }
 
-        [Fact]
+        [Test]
         public async Task FileHasActiveFacilities_NonExistentId_ReturnsFalse()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
             var result = await repository.FileHasActiveFacilities(Guid.Empty);
-            result.ShouldBeFalse();
+            result.Should().BeFalse();
         }
 
         // CountAsync
 
-        [Fact]
+        [Test]
         public async Task FileCount_DefaultSpec_ReturnsCountOfActiveFiles()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
@@ -109,11 +108,11 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(expected);
         }
 
-        [Fact]
+        [Test]
         public async Task FileCount_WithInactive_ReturnsCountOfAll()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() {ShowInactive = true};
+            var spec = new FileSpec { ShowInactive = true };
 
             var result = await repository.CountAsync(spec);
 
@@ -121,13 +120,12 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(expected);
         }
 
-        [Theory]
-        [InlineData(99)]
-        [InlineData(102)]
+        [TestCase(99)]
+        [TestCase(102)]
         public async Task FileCount_ByCounty_ReturnsCorrectCount(int countyId)
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() {CountyId = countyId};
+            var spec = new FileSpec { CountyId = countyId };
             var countyString = countyId.ToString().PadLeft(3, '0');
 
             var result = await repository.CountAsync(spec);
@@ -136,14 +134,13 @@ namespace FMS.Infrastructure.Tests
             result.Should().Be(expected);
         }
 
-        [Theory]
-        [InlineData("00")]
-        [InlineData("0001")]
-        [InlineData("2-0")]
+        [TestCase("00")]
+        [TestCase("0001")]
+        [TestCase("2-0")]
         public async Task FileCount_ByFileLabel_ReturnsCorrectCount(string fileLabel)
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() {FileLabel = fileLabel};
+            var spec = new FileSpec { FileLabel = fileLabel };
 
             var result = await repository.CountAsync(spec);
 
@@ -153,7 +150,7 @@ namespace FMS.Infrastructure.Tests
 
         // GetFileListAsync
 
-        [Fact]
+        [Test]
         public async Task FileSearch_Default_ReturnsActiveFiles()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
@@ -163,15 +160,15 @@ namespace FMS.Infrastructure.Tests
 
             result.TotalCount.Should().Be(expectedCount);
             result.Items.Count.Should().Be(expectedCount);
-            result.PageNumber.ShouldEqual(1);
-            result.TotalPages.ShouldEqual(1);
+            result.PageNumber.Should().Be(1);
+            result.TotalPages.Should().Be(1);
         }
 
-        [Fact]
+        [Test]
         public async Task FileSearch_WithInactive_ReturnsAllFiles()
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() {ShowInactive = true};
+            var spec = new FileSpec { ShowInactive = true };
 
             var result = await repository.GetFileListAsync(spec, 1, 999);
             var expectedCount = RepositoryData.Files.Count;
@@ -180,13 +177,12 @@ namespace FMS.Infrastructure.Tests
             result.Items.Count.Should().Be(expectedCount);
         }
 
-        [Theory]
-        [InlineData(99)]
-        [InlineData(102)]
+        [TestCase(99)]
+        [TestCase(102)]
         public async Task FileSearch_ByCounty_ReturnsCorrectList(int countyId)
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() {CountyId = countyId};
+            var spec = new FileSpec { CountyId = countyId };
             var countyString = countyId.ToString().PadLeft(3, '0');
 
             var result = await repository.GetFileListAsync(spec, 1, 999);
@@ -196,14 +192,13 @@ namespace FMS.Infrastructure.Tests
             result.Items.Count.Should().Be(expectedCount);
         }
 
-        [Theory]
-        [InlineData("00")]
-        [InlineData("0001")]
-        [InlineData("2-0")]
+        [TestCase("00")]
+        [TestCase("0001")]
+        [TestCase("2-0")]
         public async Task FileSearch_ByFileNumber_ReturnsCorrectList(string fileLabelSpec)
         {
             using var repository = CreateRepositoryHelper().GetFileRepository();
-            var spec = new FileSpec() {FileLabel = fileLabelSpec};
+            var spec = new FileSpec { FileLabel = fileLabelSpec };
 
             var result = await repository.GetFileListAsync(spec, 1, 999);
             var expectedCount = RepositoryData.Files.Count(e => e.FileLabel.Contains(fileLabelSpec) && e.Active);
@@ -214,7 +209,7 @@ namespace FMS.Infrastructure.Tests
 
         // UpdateFileAsync
 
-        [Fact]
+        [Test]
         public async Task UpdateFile_Succeeds()
         {
             var file = RepositoryData.Files[0];
@@ -230,7 +225,7 @@ namespace FMS.Infrastructure.Tests
             updatedFile.FileLabel.Should().Be(file.FileLabel);
         }
 
-        [Fact]
+        [Test]
         public async Task UpdateNonexistentFile_ThrowsException()
         {
             Func<Task> action = async () =>

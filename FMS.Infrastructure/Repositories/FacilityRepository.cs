@@ -46,7 +46,7 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-            if (!facilityDetail.FileLabel.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
             {
                 facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
                 .GetCabinetsForFile(facilityDetail.FileLabel);
@@ -133,7 +133,7 @@ namespace FMS.Infrastructure.Repositories
             var cabinets = await _context.GetCabinetListAsync(false);
             foreach (var item in items)
             {
-                if (!item.FileLabel.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(item.FileLabel))
                 {
                     item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
                 }
@@ -165,7 +165,7 @@ namespace FMS.Infrastructure.Repositories
 
             foreach (var item in items)
             {
-                if (!item.FileLabel.IsNullOrEmpty())
+                if (!string.IsNullOrEmpty(item.FileLabel))
                 {
                     item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
                 }
@@ -225,7 +225,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
             }
 
-            if (newFacility.FacilityNumber.IsNullOrEmpty() && newFacility.FacilityTypeName == "RN")
+            if (string.IsNullOrEmpty(newFacility.FacilityNumber) && newFacility.FacilityTypeName == "RN")
             {
                 newFacility.FacilityNumber = await CreateRNFacilityNumberInternalAsync();
             }

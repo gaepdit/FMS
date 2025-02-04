@@ -5,13 +5,13 @@ using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
-using Xunit;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Cabinets
 {
     public class CabinetIndexTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var cabinets = ResourceHelper.GetCabinetSummaries(true);

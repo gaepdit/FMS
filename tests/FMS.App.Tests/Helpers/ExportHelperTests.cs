@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using FluentAssertions;
 using JetBrains.Annotations;
-using Xunit;
+using NUnit.Framework;
 using FMS.Helpers;
 
 namespace FMS.App.Tests.Helpers
@@ -44,7 +44,7 @@ namespace FMS.App.Tests.Helpers
             new MyClass(0, 0, 0, 0, null),
         };
 
-        [Fact]
+        [Test]
         public void Export_Unicode()
         {
             Action act = () => MyItems.ExportExcelAsByteArray(ExportHelper.ReportType.Normal);
@@ -60,7 +60,7 @@ namespace FMS.App.Tests.Helpers
             new MyClass(3, 0, 0, 0, "abc"),
         };
 
-        [Fact]
+        [Test]
         public void Export_Multiline()
         {
             Action act = () => MyMultilineItems.ExportExcelAsByteArray(ExportHelper.ReportType.Normal);

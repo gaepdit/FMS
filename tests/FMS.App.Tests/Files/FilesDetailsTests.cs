@@ -7,14 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Files
 {
     public class FilesDetailsTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var file = RepositoryData.Files[0];
@@ -29,7 +28,7 @@ namespace FMS.App.Tests.Files
             pageModel.FileDetail.Should().BeEquivalentTo(new FileDetailDto(file));
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_NonexistentIdReturnsNotFound()
         {
             var mockRepository = Substitute.For<IFileRepository>();
@@ -40,10 +39,10 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetAsync("Test").ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FileDetail.ShouldBeNull();
+            pageModel.FileDetail.Should().BeNull();
         }
 
-        [Fact]
+        [Test]
         public async Task OnGet_MissingIdReturnsNotFound()
         {
             var mockRepository = Substitute.For<IFileRepository>();
@@ -52,7 +51,7 @@ namespace FMS.App.Tests.Files
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
-            pageModel.FileDetail.ShouldBeNull();
+            pageModel.FileDetail.Should().BeNull();
         }
     }
 }

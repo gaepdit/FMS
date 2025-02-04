@@ -6,13 +6,13 @@ using FMS.Domain.Services;
 using FMS.Pages.Account;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
-using Xunit;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Account
 {
     public class AccountIndexTests
     {
-        [Fact]
+        [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
             var userView = new UserView(new ApplicationUser

@@ -1,63 +1,57 @@
-﻿using Xunit;
-using FMS;
+﻿using FMS.Helpers;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Helpers
 {
     public class GeoCoordHelperTests
     {
-        // Null values are filtered out by the form validation
-
-        [Theory]
-        [InlineData(0)]
-        [InlineData(32)]
+        [TestCase(0)]
+        [TestCase(32)]
         public void ValidLat_ReturnsTrue_GiveValidLatitude(decimal lat)
         {
-            Assert.True(GeoCoordHelper.ValidLat(lat));
+            GeoCoordHelper.ValidLat(lat).Should().BeTrue();
         }
 
-        [Theory]
-        [InlineData(40)]
-        [InlineData(20)]
+        [TestCase(40)]
+        [TestCase(20)]
         public void ValidLat_ReturnsFalse_GiveInvalidLatitude(decimal lat)
         {
-            Assert.False(GeoCoordHelper.ValidLat(lat));
+            GeoCoordHelper.ValidLat(lat).Should().BeFalse();
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(-82)]
+        [TestCase(0)]
+        [TestCase(-82)]
         public void ValidLon_ReturnsTrue_GiveValidLongitude(decimal lng)
         {
-            Assert.True(GeoCoordHelper.ValidLong(lng));
+            GeoCoordHelper.ValidLong(lng).Should().BeTrue();
         }
 
-        [Theory]
-        [InlineData(-70)]
-        [InlineData(-90)]
-        [InlineData(82)]
+        [TestCase(-70)]
+        [TestCase(-90)]
+        [TestCase(82)]
         public void ValidLong_ReturnsFalse_GiveInvalidLongitude(decimal lng)
         {
-            Assert.False(GeoCoordHelper.ValidLong(lng));
+            GeoCoordHelper.ValidLong(lng).Should().BeFalse();
         }
 
-        [Fact]
+        [Test]
         public void BothZeroOrBothNonzero_ReturnsTrue_GivenTwoZeros()
         {
-            Assert.True(GeoCoordHelper.BothZeroOrBothNonzero(0, 0));
+            GeoCoordHelper.BothZeroOrBothNonzero(0, 0).Should().BeTrue();
         }
 
-        [Fact]
+        [Test]
         public void BothZeroOrBothNonzero_ReturnsTrue_GivenTwoNonZeros()
         {
-            Assert.True(GeoCoordHelper.BothZeroOrBothNonzero(1, 1));
+            GeoCoordHelper.BothZeroOrBothNonzero(1, 1).Should().BeTrue();
         }
 
-        [Theory]
-        [InlineData(0, 1)]
-        [InlineData(1, 0)]
+        [TestCase(0, 1)]
+        [TestCase(1, 0)]
         public void BothZeroOrBothNonzero_ReturnsFalse_GivenOneZero(decimal lat, decimal lng)
         {
-            Assert.False(GeoCoordHelper.BothZeroOrBothNonzero(lat, lng));
+            GeoCoordHelper.BothZeroOrBothNonzero(lat, lng).Should().BeFalse();
         }
     }
 }

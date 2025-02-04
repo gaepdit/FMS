@@ -7,14 +7,13 @@ using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
-using Xunit;
-using Xunit.Extensions.AssertExtensions;
+using NUnit.Framework;
 
 namespace FMS.App.Tests.Cabinets
 {
     public class CabinetAddTests
     {
-        [Fact]
+        [Test]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
             var mockRepo = Substitute.For<ICabinetRepository>();
@@ -26,17 +25,17 @@ namespace FMS.App.Tests.Cabinets
                 FirstFileLabel = "999-9999",
             };
 
-            var pageModel = new AddModel(mockRepo) {NewCabinet = newCabinet};
+            var pageModel = new AddModel(mockRepo) { NewCabinet = newCabinet };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<RedirectToPageResult>();
-            pageModel.ModelState.IsValid.ShouldBeTrue();
+            pageModel.ModelState.IsValid.Should().BeTrue();
             ((RedirectToPageResult) result).PageName.Should().Be("./Details");
             ((RedirectToPageResult) result).RouteValues["id"].Should().Be(newCabinet.Name);
         }
 
-        [Fact]
+        [Test]
         public async Task OnPost_IfInvalidModel_ReturnsPageWithInvalidModelState()
         {
             var mockRepo = Substitute.For<ICabinetRepository>();
@@ -46,7 +45,7 @@ namespace FMS.App.Tests.Cabinets
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.ShouldBeFalse();
+            pageModel.ModelState.IsValid.Should().BeFalse();
         }
     }
 }
