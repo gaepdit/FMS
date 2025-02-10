@@ -113,7 +113,8 @@ namespace FMS.Pages.Account
             // Determine if a user account already exists with the Object ID.
             // If not, then determine if a user account already exists with the given username.
             var user = await userManager.Users
-                .SingleOrDefaultAsync(u => u.ObjectId == externalLoginInfo.Principal.GetObjectId()) ??
+                           .SingleOrDefaultAsync(user => user.ObjectId.Equals(externalLoginInfo.Principal.GetObjectId(),
+                               StringComparison.InvariantCultureIgnoreCase)) ??
                        await userManager.FindByNameAsync(userEmail);
 
             // If the user does not have an account yet, then create one and sign in.
