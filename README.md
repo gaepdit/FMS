@@ -22,7 +22,7 @@ Most development should be done using the Local profile. The Dev Server profile 
 
 Instructions for adding a new Entity Framework database migration:
 
-1. Open a command prompt to the root folder of the solution.
+1. Open a command prompt to the `FMS.Infrastructure` project folder.
 
 2. Run the following command with an appropriate migration name:
 

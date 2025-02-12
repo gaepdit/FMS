@@ -17,7 +17,7 @@ namespace FMS.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -1369,6 +1369,10 @@ namespace FMS.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("ObjectId")
+                        .IsUnique()
+                        .HasFilter("[ObjectId] IS NOT NULL");
 
                     b.ToTable("AppUsers", (string)null);
                 });

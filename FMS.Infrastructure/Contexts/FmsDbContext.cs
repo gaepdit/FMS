@@ -50,7 +50,8 @@ namespace FMS.Infrastructure.Contexts
             builder.Entity<FacilityType>().HasIndex(e => e.Name).IsUnique();
 
             // Identity Tables
-            builder.Entity<ApplicationUser>().ToTable("AppUsers");
+            builder.Entity<ApplicationUser>().ToTable("AppUsers")
+                .HasIndex(user => user.ObjectId).IsUnique();
             builder.Entity<IdentityRole<Guid>>().ToTable("AppRoles");
             builder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
             builder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
