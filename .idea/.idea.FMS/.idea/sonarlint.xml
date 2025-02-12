@@ -3,6 +3,6 @@
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
     <option name="projectKey" value="gaepdit_FMS" />
-    <option name="serverId" value="SonarCloud" />
+    <option name="serverId" value="gaepdit" />
   </component>
 </project>

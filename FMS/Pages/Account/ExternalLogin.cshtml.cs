@@ -103,17 +103,18 @@ namespace FMS.Pages.Account
 
             if (!userEmail.IsValidEmailDomain())
             {
-                logger.LogWarning("User {Email} with invalid email domain attempted signin", MaskEmail(userEmail));
+                logger.LogWarning("User with invalid email domain attempted signin");
                 return RedirectToPage("./Unavailable");
             }
 
-            logger.LogInformation("User {Email} in tenant {TenantID} successfully authenticated", MaskEmail(userEmail), userTenant);
+            logger.LogInformation("User with object ID {ObjectId} in tenant {TenantID} successfully authenticated",
+                externalLoginInfo.Principal.GetObjectId(), userTenant);
 
             // Determine if a user account already exists with the Object ID.
             // If not, then determine if a user account already exists with the given username.
             var user = await userManager.Users
                 .SingleOrDefaultAsync(u => u.ObjectId == externalLoginInfo.Principal.GetObjectId()) ??
-                  await userManager.FindByNameAsync(userEmail);
+                       await userManager.FindByNameAsync(userEmail);
 
             // If the user does not have an account yet, then create one and sign in.
             if (user is null)
@@ -166,11 +167,11 @@ namespace FMS.Pages.Account
             var createUserResult = await userManager.CreateAsync(user);
             if (!createUserResult.Succeeded)
             {
-                logger.LogWarning("Failed to create new user {Email}", MaskEmail(user.Email));
+                logger.LogWarning("Failed to create new user with object ID {ObjectId}", user.ObjectId);
                 return await FailedLogin(createUserResult, user);
             }
 
-            logger.LogInformation("Created new user {Email} with object ID {ObjectId}", MaskEmail(user.Email), user.ObjectId);
+            logger.LogInformation("Created new user with object ID {ObjectId}", user.ObjectId);
 
             // Add user to Compliance Officers list.
             await CreateComplianceOfficeAsync(user);
@@ -180,7 +181,7 @@ namespace FMS.Pages.Account
                 .Get<string[]>().AsEnumerable();
             if (seedAdminUsers.Contains(user.Email, StringComparer.InvariantCultureIgnoreCase))
             {
-                logger.LogInformation("Seeding roles for new user {Email}", MaskEmail(user.Email));
+                logger.LogInformation("Seeding roles for new user with object ID {ObjectId}", user.ObjectId);
                 await userManager.AddToRoleAsync(user, UserRoles.UserMaintenance);
                 await userManager.AddToRoleAsync(user, UserRoles.SiteMaintenance);
                 await userManager.AddToRoleAsync(user, UserRoles.FileEditor);
@@ -205,27 +206,30 @@ namespace FMS.Pages.Account
         // Update local store with from external provider. 
         private async Task<IActionResult> RefreshUserInfoAndSignInAsync(ApplicationUser user, ExternalLoginInfo info)
         {
-            logger.LogInformation("Existing user {Email} logged in with {LoginProvider} provider", MaskEmail(user.Email), info.LoginProvider);
+            logger.LogInformation("Existing user with object ID {ObjectId} logged in with {LoginProvider} provider",
+                user.ObjectId, info.LoginProvider);
 
-            var externalValues = new ApplicationUser
+            var previousValues = new ApplicationUser
             {
-                UserName = info.Principal.GetDisplayName(),
-                Email = info.Principal.FindFirstValue(ClaimTypes.Email),
-                GivenName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
-                FamilyName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                UserName = user.UserName,
+                Email = user.Email,
+                GivenName = user.GivenName,
+                FamilyName = user.FamilyName,
             };
 
-            if (user.UserName != externalValues.UserName || user.Email != externalValues.Email ||
-                user.GivenName != externalValues.GivenName || user.FamilyName != externalValues.FamilyName)
+            user.UserName = info.Principal.GetDisplayName();
+            user.Email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            user.GivenName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
+            user.FamilyName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+            user.MostRecentLogin = DateTimeOffset.Now;
+
+            if (user.UserName != previousValues.UserName || user.Email != previousValues.Email ||
+                user.GivenName != previousValues.GivenName || user.FamilyName != previousValues.FamilyName)
             {
-                user.UserName = externalValues.UserName;
-                user.Email = externalValues.Email;
-                user.GivenName = externalValues.GivenName;
-                user.FamilyName = externalValues.FamilyName;
                 user.ProfileUpdatedAt = DateTimeOffset.Now;
-                await userManager.UpdateAsync(user);
             }
 
+            await userManager.UpdateAsync(user);
             await signInManager.RefreshSignInAsync(user);
             return LocalRedirectOrHome();
         }
@@ -237,11 +241,13 @@ namespace FMS.Pages.Account
 
             if (!addLoginResult.Succeeded)
             {
-                logger.LogWarning("Failed to add login provider {LoginProvider} for user {Email}", info.LoginProvider, MaskEmail(user.Email));
+                logger.LogWarning("Failed to add login provider {LoginProvider} for user with object ID {ObjectId}",
+                    info.LoginProvider, user.ObjectId);
                 return await FailedLogin(addLoginResult, user);
             }
 
-            logger.LogInformation("Login provider {LoginProvider} added for user {Email} with object ID {ObjectId}", info.LoginProvider, MaskEmail(user.Email), user.ObjectId);
+            logger.LogInformation("Login provider {LoginProvider} added for user with object ID {ObjectId}",
+                info.LoginProvider, user.ObjectId);
 
             // Include the access token in the properties.
             var props = new AuthenticationProperties();
@@ -268,21 +274,8 @@ namespace FMS.Pages.Account
 
             return Page();
         }
+
         private IActionResult LocalRedirectOrHome() =>
             ReturnUrl is null ? RedirectToPage("/Index") : LocalRedirect(ReturnUrl);
-
-        public static string MaskEmail(string email)
-        {
-            if (string.IsNullOrEmpty(email))
-            {
-                return string.Empty;
-            }
-
-            var atIndex = email.IndexOf('@');
-            if (atIndex <= 1) return email;
-
-            var maskedEmail = Regex.Replace(email[..atIndex], ".(?=.{2})", "*", RegexOptions.None, TimeSpan.FromMilliseconds(100));
-            return string.Concat(maskedEmail, email.AsSpan(atIndex));
-        }
     }
 }
