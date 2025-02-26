@@ -1,14 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Routing;
 using NSubstitute;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -20,12 +24,18 @@ namespace FMS.App.Tests.Facilities
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper);
+
+            // Mock user & page context
+            var httpContext = new DefaultHttpContext { User = new ClaimsPrincipal(new GenericIdentity("Name")) };
+            var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor());
+            var pageContext = new PageContext(actionContext);
+
+            var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper) { PageContext = pageContext };
 
             var result = await pageModel.OnGetAsync();
 
             result.Should().BeOfType<PageResult>();
-            pageModel.Facility.Should().BeEquivalentTo(new FacilityCreateDto {State = "Georgia"});
+            pageModel.Facility.Should().BeEquivalentTo(new FacilityCreateDto { State = "Georgia" });
         }
 
         [Test]
@@ -41,7 +51,8 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
             {
-                Facility = new FacilityCreateDto { State = "Georgia", Latitude = 0, Longitude = 0 },
+                Facility = new FacilityCreateDto
+                    { State = "Georgia", Latitude = 31, Longitude = -81, FacilityNumber = "a" },
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -73,7 +84,8 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
             {
-                Facility = new FacilityCreateDto { State = "Georgia", Latitude = 0, Longitude = 0 },
+                Facility = new FacilityCreateDto
+                    { State = "Georgia", Latitude = 31, Longitude = -81, FacilityNumber = "a" },
             };
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -96,7 +108,8 @@ namespace FMS.App.Tests.Facilities
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
             var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
             {
-                Facility = new FacilityCreateDto {State = "Georgia"}
+                Facility = new FacilityCreateDto
+                    { State = "Georgia", Latitude = 31, Longitude = -81, FacilityNumber = "a" },
             };
 
             var result = await pageModel.OnPostConfirmAsync().ConfigureAwait(false);
