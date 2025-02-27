@@ -35,6 +35,11 @@ class Facility {
     FacilityNumber
     Name
     County
+    EnvironmentalInterest
+    FacilityStatus
+    BudgetCode
+    ComplianceOfficer
+    OrganizationalUnit
     LocationDescription
     Address
     City
@@ -42,11 +47,19 @@ class Facility {
     PostalCode
     Latitude
     Longitude
-    EnvironmentalInterest
-    FacilityStatus
-    BudgetCode
-    ComplianceOfficer
-    OrganizationalUnit
+    IsRetained
+    HasERecord
+    Comments
+    HSInumber
+    DeterminationLetterDate
+    PreRQSMcleanup
+    ImageChecked
+    DeferredOnSiteScoring
+    AdditionalDataRequested
+    VRPReferral
+    RNDateReceived
+    HistoricalUnit
+    HistoricalComplianceOfficer
     List~RetentionRecords~
 
     List<Cabinets> (implied)
