@@ -1,10 +1,12 @@
 name: SonarCloud Scan
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
     types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   sonarcloud-scan:

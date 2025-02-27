@@ -6,6 +6,9 @@ on:
   push:
     tags: [prod/*]
 
+permissions:
+  contents: read
+
 jobs:
   raygun-deployment:
     name: Send deployment info to Raygun
