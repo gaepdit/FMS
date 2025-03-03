@@ -1,14 +1,18 @@
-using System;
-using System.Threading.Tasks;
 using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Routing;
 using NSubstitute;
-using TestHelpers;
 using NUnit.Framework;
+using System;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
+using TestHelpers;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -25,7 +29,13 @@ namespace FMS.App.Tests.Facilities
             mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns(facility);
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper);
+
+            // Mock user & page context
+            var httpContext = new DefaultHttpContext { User = new ClaimsPrincipal(new GenericIdentity("Name")) };
+            var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor());
+            var pageContext = new PageContext(actionContext);
+
+            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper) { PageContext = pageContext };
 
             var result = await pageModel.OnGetAsync(facility.Id);
 
@@ -74,10 +84,17 @@ namespace FMS.App.Tests.Facilities
             var mockType = Substitute.For<IFacilityTypeRepository>();
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+
+            // Mock user & page context
+            var httpContext = new DefaultHttpContext { User = new ClaimsPrincipal(new GenericIdentity("Name")) };
+            var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor());
+            var pageContext = new PageContext(actionContext);
+
             var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper)
             {
                 Id = id,
-                Facility = new FacilityEditDto()
+                Facility = new FacilityEditDto { Latitude = 31, Longitude = -81, FacilityNumber = "a" },
+                PageContext = pageContext,
             };
 
             var result = await pageModel.OnPostAsync();

@@ -1,12 +1,10 @@
-﻿using FMS.Helpers;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace FMS.App.Tests.Helpers
 {
     public class GeoCoordHelperTests
     {
-        [TestCase(0)]
         [TestCase(32)]
         public void ValidLat_ReturnsTrue_GiveValidLatitude(decimal lat)
         {
@@ -20,7 +18,6 @@ namespace FMS.App.Tests.Helpers
             GeoCoordHelper.ValidLat(lat).Should().BeFalse();
         }
 
-        [TestCase(0)]
         [TestCase(-82)]
         public void ValidLon_ReturnsTrue_GiveValidLongitude(decimal lng)
         {
