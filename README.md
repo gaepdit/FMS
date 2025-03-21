@@ -6,6 +6,21 @@ File Management System for GAEPD Hazardous Waste
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gaepdit_FMS&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gaepdit_FMS)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=gaepdit_FMS&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=gaepdit_FMS)
 
+
+## Background and Phases
+
+### Phase I
+
+The File Management System (FMS) was created to replace a legacy system to house the physical location of Files, Folders and File Cabinets used for Hazardous Waste Program documents. The original Database data was migrated into a new MS SQL Server database with a .NET Core C# backend and a C# Razorpage Web-Based Front-End. It is a Facility-Based system that has entensive search functionality in text or map form, and is greatly customizable.
+
+### Phase II
+
+This phase was done to upgrade the existing platform and database to also hold Release Notification information. This required modification of the UI and addition of more facility information and migration of the Legacy MS Access database housing Release Notification data. 
+
+### Phase III (In Progress)
+
+This phase is a major upgrade in functionality, adding Hazardous Waste information for Facilities and Project Tracking. This modification will migrate the existing HSRP MS Access Database into FMS. HSI Facilities will then be able to be tracked and all data will be able to be displayed, as well as reports run. 
+
 ## Development
 
 There are two launch profiles:
