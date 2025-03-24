@@ -116,6 +116,13 @@ namespace FMS.Pages.Facilities
             // "FacilityReportList" Detailed Retention Record List to export
             IEnumerable<RetentionRecordDetailDto> retentionRecordDetailList =
                 await _repository.GetRetentionRecordsListAsync(Spec);
+            if (retentionRecordDetailList.Count() > 180)
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "You have requested " + retentionRecordDetailList.Count() + " Retention Records, which is over the 180 allowed! Please narrow search results to send to PDF creator.");
+                Message = TempData?.GetDisplayMessage();
+                await PopulateSelectsAsync();
+                return Page();
+            }
             return File(ExportHelper.ExportPdfAsByteArray(retentionRecordDetailList, currentUser),
                 "application/pdf", fileName);
         }
