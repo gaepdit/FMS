@@ -62,7 +62,7 @@ namespace FMS
         /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportPdfAsByteArray(
             IEnumerable<RetentionRecordDetailDto> list, UserView currentUser, int maxCol=18,
-            string blankFilePath="./Helpers/BlankRequestForm.pdf", int freeTierLimit=10)
+            string blankFilePath="./Helpers/BlankRequestForm.pdf")
         {
             PdfDocument mainDoc = new();
             // break the list into chunks of 18 elements
@@ -74,9 +74,6 @@ namespace FMS
             {
                 PdfDocument currDocument = GeneratePdfPage(smallerList, currentUser, maxCol, blankFilePath);
                 pdfDocuments.Add(currDocument);
-                // limit for the free tier
-                if (pdfDocuments.Count >= freeTierLimit)
-                    break;
             }
             // add all of the pages to the main document
             foreach (var pdfDocument in pdfDocuments)
