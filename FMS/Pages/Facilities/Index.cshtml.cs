@@ -8,6 +8,7 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,11 +112,19 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostDownloadRetentionRecordsAsync()
         {
+            const int recordLimit = 162;
             var currentUser = await _userService.GetCurrentUserAsync();
             var fileName = $"FMS_Retention_Records_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.pdf";
             // "FacilityReportList" Detailed Retention Record List to export
             IEnumerable<RetentionRecordDetailDto> retentionRecordDetailList =
                 await _repository.GetRetentionRecordsListAsync(Spec);
+            if (retentionRecordDetailList.Count() > recordLimit)
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "You have requested " + retentionRecordDetailList.Count() + " Retention Records, which is over the 162 allowed! Please narrow search results to send to PDF creator.");
+                Message = TempData?.GetDisplayMessage();
+                await PopulateSelectsAsync();
+                return Page();
+            }
             return File(ExportHelper.ExportPdfAsByteArray(retentionRecordDetailList, currentUser),
                 "application/pdf", fileName);
         }
