@@ -78,6 +78,37 @@
 >- `/Maintenance/OrganizationalUnit/Add` (Add New Organizational Unit)
 >- `/Maintenance/OrganizationalUnit/Edit/{id}` (Edit Organizational Unit by id)
 
+>#### Status Pages
+
+>- `/Maintenance/Status` (List of Statuses. Includes remove from and restore to List)
+>- `/Maintenance/Status/Add` (Add New Status)
+>- `/Maintenance/Status/Edit/{id}` (Edit Status by id)
+
+>#### Substances Pages
+
+>- `/Maintenance/Substances` (List of Substances. Includes remove from and restore to List)
+>- `/Maintenance/Substances/Add` (Add New Substance)
+>- `/Maintenance/Substances/Edit/{id}` (Edit Substances by id)
+
+>#### Chemicals Pages
+
+>- `/Maintenance/Chemicals` (List of Chemicals. Includes remove from and restore to List)
+>- `/Maintenance/Chemicals/Add` (Add New Chemicals)
+>- `/Maintenance/Chemicals/Edit/{id}` (Edit Chemicals by id)
+
+>#### MajorCode Pages
+
+>- `/Maintenance/MajorCode` (List of MajorCodes. Includes remove from and restore to List)
+>- `/Maintenance/MajorCode/Add` (Add New MajorCode)
+>- `/Maintenance/MajorCode/Edit/{id}` (Edit MajorCode by id)
+>- `/Maintenance/MajorCode/PermittedCodes/{id}` (Add and remove Permitted MinorCodes Associated with the MajorCode)
+
+>#### MinorCode Pages
+
+>- `/Maintenance/MinorCode` (List of MinorCodes. Includes remove from and restore to List)
+>- `/Maintenance/MinorCode/Add` (Add New MinorCode)
+>- `/Maintenance/MinorCode/Edit/{id}` (Edit MinorCode by id)
+
 ## Report Pages (Under Construction)
 
 - `/Reports/` (View Report Preview. Allow Export to MS Excel) 
