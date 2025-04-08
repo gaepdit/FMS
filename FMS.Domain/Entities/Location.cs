@@ -11,5 +11,12 @@ namespace FMS.Domain.Entities
     public class Location : BaseActiveModel
     {
         public Location() { }
+
+        public Location(LocationEditDto location)
+        {
+            Score = location.Score;
+        }
+
+        public string Score { get; set; } = string.Empty;
     }
 }

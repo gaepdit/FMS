@@ -1,18 +1,16 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FMS.Domain.Dto;
-using FMS.Domain.Entities.Base;
 
-namespace FMS.Domain.Entities
+namespace FMS.Domain.Dto
 {
-    public class Parcel : BaseActiveModel
+    public class ParcelEditDto
     {
-        public Parcel() { }
-
-        public Parcel(ParcelEditDto parcel)
+        public ParcelEditDto() { }
+        public ParcelEditDto(Parcel parcel)
         {
             LocationId = parcel.LocationId;
             ParcelId = parcel.ParcelId;
@@ -22,7 +20,7 @@ namespace FMS.Domain.Entities
             Latitude = parcel.Latitude;
             Longitude = parcel.Longitude;
         }
-        public Guid LocationId { get; set; } = Guid.Empty;  
+        public Guid LocationId { get; set; } = Guid.Empty;
         public string ParcelId { get; set; } = string.Empty;
         public string ParcelDescription { get; set; } = string.Empty;
         public string ParcelType { get; set; } = string.Empty;
@@ -30,4 +28,5 @@ namespace FMS.Domain.Entities
         public double Latitude { get; set; } = 0.0;
         public double Longitude { get; set; } = 0.0;
     }
+
 }
