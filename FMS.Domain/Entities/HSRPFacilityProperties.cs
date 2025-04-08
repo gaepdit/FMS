@@ -15,22 +15,22 @@ namespace FMS.Domain.Entities
         public HsrpFacilityProperties(Guid facilityId, HsrpFacilityPropertiesCreateDto Hfpcd) 
         {
             FacilityId = facilityId;
-            DateListed = (DateTime)(Hfpcd?.DateListed);
+            DateListed = (DateOnly)(Hfpcd?.DateListed);
             AdditionalOrgUnit = Hfpcd?.AdditionalOrgUnit;
             Geologist = Hfpcd?.Geologist;
-            VRPDate = (DateTime)(Hfpcd?.VRPDate);
-            BrownfieldDate = (DateTime)(Hfpcd?.BrownfieldDate);
+            VRPDate = (DateOnly)(Hfpcd?.VRPDate);
+            BrownfieldDate = (DateOnly)(Hfpcd?.BrownfieldDate);
         }
         public Guid FacilityId { get; set; } = Guid.Empty;
         
-        public DateTime DateListed {  get; set; }
+        public DateOnly DateListed {  get; set; }
 
         public string AdditionalOrgUnit { get; set; }
 
         public string Geologist { get; set; }
 
-        public DateTime VRPDate { get; set; }
+        public DateOnly VRPDate { get; set; }
 
-        public DateTime BrownfieldDate { get; set; }
+        public DateOnly BrownfieldDate { get; set; }
     }
 }
