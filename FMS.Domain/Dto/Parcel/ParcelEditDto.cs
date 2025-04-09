@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,25 @@ namespace FMS.Domain.Dto
             Latitude = parcel.Latitude;
             Longitude = parcel.Longitude;
         }
-        public Guid LocationId { get; set; } = Guid.Empty;
-        public string ParcelId { get; set; } = string.Empty;
-        public string ParcelDescription { get; set; } = string.Empty;
-        public string ParcelType { get; set; } = string.Empty;
-        public double Acres { get; set; } = 0.0;
-        public double Latitude { get; set; } = 0.0;
-        public double Longitude { get; set; } = 0.0;
+        public Guid LocationId { get; set; }
+
+        [Display(Name = "Parcel ID")]
+        public string ParcelId { get; set; }
+
+        [Display(Name = "Deescription")]
+        public string ParcelDescription { get; set; }
+
+        [Display(Name = "Type")]
+        public string ParcelType { get; set; }
+
+        [Display(Name = "Acreage")]
+        public double Acres { get; set; }
+
+        [Display(Name = "Latitude")]
+        public double Latitude { get; set; }
+
+        [Display(Name = "Longitude")]
+        public double Longitude { get; set; }
     }
 
 }

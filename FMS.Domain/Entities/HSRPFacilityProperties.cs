@@ -21,7 +21,7 @@ namespace FMS.Domain.Entities
             VRPDate = (DateOnly)(Hfpcd?.VRPDate);
             BrownfieldDate = (DateOnly)(Hfpcd?.BrownfieldDate);
         }
-        public Guid FacilityId { get; set; } = Guid.Empty;
+        public Guid FacilityId { get; set; }
         
         public DateOnly DateListed {  get; set; }
 
