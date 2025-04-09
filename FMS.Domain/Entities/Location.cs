@@ -14,9 +14,11 @@ namespace FMS.Domain.Entities
 
         public Location(LocationEditDto location)
         {
+            FacilityId = location.FacilityId;
             Score = location.Score;
         }
 
-        public string Score { get; set; } = string.Empty;
+        public Guid FacilityId { get; set; }
+        public string Score { get; set; }
     }
 }

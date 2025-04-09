@@ -1,5 +1,8 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +13,14 @@ namespace FMS.Domain.Dto
     {
         public LocationEditDto() { }
 
-        public LocationEditDto(string score)
+        public LocationEditDto(Location location)
         {
-            Score = score;
+            FacilityId = location.FacilityId;
+            Score = location.Score;
         }
-        public string Score { get; set; } = string.Empty;
+        public Guid FacilityId { get; set; }
+
+        [Display(Name = "Score")]
+        public string Score { get; set; }
     }
 }

@@ -22,12 +22,12 @@ namespace FMS.Domain.Entities
             Latitude = parcel.Latitude;
             Longitude = parcel.Longitude;
         }
-        public Guid LocationId { get; set; } = Guid.Empty;  
-        public string ParcelId { get; set; } = string.Empty;
-        public string ParcelDescription { get; set; } = string.Empty;
-        public string ParcelType { get; set; } = string.Empty;
-        public double Acres { get; set; } = 0.0;
-        public double Latitude { get; set; } = 0.0;
-        public double Longitude { get; set; } = 0.0;
+        public Guid LocationId { get; set; }
+        public string ParcelId { get; set; }
+        public string ParcelDescription { get; set; } 
+        public string ParcelType { get; set; } 
+        public double Acres { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 }
