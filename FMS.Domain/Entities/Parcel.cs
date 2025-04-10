@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
@@ -12,9 +8,9 @@ namespace FMS.Domain.Entities
     {
         public Parcel() { }
 
-        public Parcel(ParcelEditDto parcel)
+        public Parcel(Guid id, ParcelCreateDto parcel)
         {
-            LocationId = parcel.LocationId;
+            LocationId = id;
             ParcelId = parcel.ParcelId;
             ParcelDescription = parcel.ParcelDescription;
             ParcelType = parcel.ParcelType;

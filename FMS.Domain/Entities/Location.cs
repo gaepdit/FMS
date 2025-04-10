@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
@@ -12,9 +8,9 @@ namespace FMS.Domain.Entities
     {
         public Location() { }
 
-        public Location(LocationEditDto location)
+        public Location(Guid id, LocationCreateDto location)
         {
-            FacilityId = location.FacilityId;
+            FacilityId = id;
             Score = location.Score;
         }
 

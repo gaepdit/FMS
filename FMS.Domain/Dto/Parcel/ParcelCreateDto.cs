@@ -1,28 +1,16 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
-    public class ParcelEditDto
+    public class ParcelCreateDto
     {
-        public ParcelEditDto() { }
-        public ParcelEditDto(Parcel parcel)
-        {
-            LocationId = parcel.LocationId;
-            ParcelId = parcel.ParcelId;
-            ParcelDescription = parcel.ParcelDescription;
-            ParcelType = parcel.ParcelType;
-            Acres = parcel.Acres;
-            Latitude = parcel.Latitude;
-            Longitude = parcel.Longitude;
-        }
         public Guid LocationId { get; set; }
 
         [Display(Name = "Parcel ID")]
         public string ParcelId { get; set; }
 
-        [Display(Name = "Deescription")]
+        [Display(Name = "Description")]
         public string ParcelDescription { get; set; }
 
         [Display(Name = "Type")]
@@ -32,10 +20,17 @@ namespace FMS.Domain.Dto
         public double Acres { get; set; }
 
         [Display(Name = "Latitude")]
+        [DisplayFormat(DataFormatString = "{0:F6}", ApplyFormatInEditMode = true)]
         public double Latitude { get; set; }
 
         [Display(Name = "Longitude")]
+        [DisplayFormat(DataFormatString = "{0:F6}", ApplyFormatInEditMode = true)]
         public double Longitude { get; set; }
-    }
 
+        public void TrimAll()
+        {
+            ParcelId = ParcelId?.Trim();
+            ParcelDescription = ParcelDescription?.Trim();
+        }
+    }
 }
