@@ -4,7 +4,7 @@ namespace FMS.Domain.Data
 {
     public static partial class Data
     {
-        public static List<string> States =>
+        public static List<string> States => new List<string>
         {
             "Alabama",
             "Alaska",
