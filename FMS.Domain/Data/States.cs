@@ -57,6 +57,6 @@ namespace FMS.Domain.Data
             "West Virginia",
             "Wisconsin",
             "Wyoming"
-        ];
+        };
     }
 }
