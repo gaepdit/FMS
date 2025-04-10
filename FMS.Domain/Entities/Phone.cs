@@ -6,9 +6,9 @@ namespace FMS.Domain.Entities
     public class Phone
     {
         public Phone() { }
-        public Phone(Guid id, PhoneCreateDto phoneCreateDto)
+        public Phone(Guid contactId, PhoneCreateDto phoneCreateDto)
         {
-            ContactId = id;
+            ContactId = contactId;
             CountryCode = phoneCreateDto.CountryCode;
             AreaCode = phoneCreateDto.AreaCode;
             Prefix = phoneCreateDto.Prefix;
