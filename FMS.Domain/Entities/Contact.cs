@@ -12,8 +12,9 @@ namespace FMS.Domain.Entities
     public class Contact : BaseActiveModel
     {
         public Contact() { }
-        public Contact(ContactEditDto contact)
+        public Contact(Guid id, ContactCreateDto contact)
         {
+            FacilityId = id;
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
             Title = contact.Title;
@@ -26,6 +27,7 @@ namespace FMS.Domain.Entities
             Email = contact.Email;
             Status = contact.Status;
         }
+        public Guid FacilityId { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
         public string Title { get; set; }

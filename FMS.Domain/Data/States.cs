@@ -4,8 +4,8 @@ namespace FMS.Domain.Data
 {
     public static partial class Data
     {
-        public static List<string> States => new List<string>
-        {
+        public static List<string> States =>
+        [
             "Alabama",
             "Alaska",
             "Arizona",
@@ -57,6 +57,6 @@ namespace FMS.Domain.Data
             "West Virginia",
             "Wisconsin",
             "Wyoming"
-        };
+        ];
     }
 }

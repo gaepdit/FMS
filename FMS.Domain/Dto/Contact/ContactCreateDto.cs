@@ -1,5 +1,4 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,23 +7,10 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
-    public class ContactEditDto
+    public class ContactCreateDto
     {
-        public ContactEditDto() { }
-        public ContactEditDto(Contact contact)
-        {
-            GivenName = contact.GivenName;
-            FamilyName = contact.FamilyName;
-            Title = contact.Title;
-            Type = contact.Type;
-            Company = contact.Company;
-            Address = contact.Address;
-            City = contact.City;
-            State = contact.State;
-            PostalCode = contact.PostalCode;
-            Email = contact.Email;
-            Status = contact.Status;
-        }
+        public Guid FacilityId { get; set; }
+
         [Display(Name = "First Name")]
         public string GivenName { get; set; }
 
