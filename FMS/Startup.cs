@@ -34,7 +34,7 @@ namespace FMS
             // Configure database
             services.AddDbContext<FmsDbContext>(opts =>
                 opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                    x => x.MigrationsAssembly("FMS.Infrastructure")));
+                    x => x.EnableRetryOnFailure().MigrationsAssembly("FMS.Infrastructure")));
 
             // Configure Identity
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
