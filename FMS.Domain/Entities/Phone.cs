@@ -7,15 +7,14 @@ namespace FMS.Domain.Entities
     public class Phone : BaseActiveModel
     {
         public Phone() { }
-        public Phone(Guid contactId, PhoneCreateDto phoneCreateDto)
+        public Phone(Guid contactId, PhoneCreateDto phone)
         {
-            Id = Guid.NewGuid();
             ContactId = contactId;
-            CountryCode = phoneCreateDto.CountryCode;
-            AreaCode = phoneCreateDto.AreaCode;
-            Prefix = phoneCreateDto.Prefix;
-            Number = phoneCreateDto.Number;
-            Type = phoneCreateDto.Type;
+            CountryCode = phone.CountryCode;
+            AreaCode = phone.AreaCode;
+            Prefix = phone.Prefix;
+            Number = phone.Number;
+            Type = phone.Type;
         }
         public Guid ContactId { get; set; }
 

@@ -9,12 +9,12 @@ namespace FMS.Domain.Dto
 
         public HsrpFacilityPropertiesEditDto(Guid facilityId, HsrpFacilityPropertiesDetailDto Hfpcd)
         {
-            FacilityId = Hfpcd.FacilityId;
-            DateListed = (DateOnly)(Hfpcd?.DateListed);
-            AdditionalOrgUnit = Hfpcd?.AdditionalOrgUnit;
-            Geologist = Hfpcd?.Geologist;
-            VRPDate = (DateOnly)(Hfpcd?.VRPDate);
-            BrownfieldDate = (DateOnly)(Hfpcd?.BrownfieldDate);
+            FacilityId = facilityId;
+            DateListed = (DateOnly)(Hfpcd.DateListed);
+            AdditionalOrgUnit = Hfpcd.AdditionalOrgUnit;
+            Geologist = Hfpcd.Geologist;
+            VRPDate = (DateOnly)(Hfpcd.VRPDate);
+            BrownfieldDate = (DateOnly)(Hfpcd.BrownfieldDate);
         }
 
         [Required]

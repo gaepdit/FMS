@@ -12,8 +12,8 @@ namespace FMS.Domain.Entities
             FacilityId = id;
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
-            Title = contact.Title;
-            Type = contact.Type;
+            ContactTitleId = contact.ContactTitleId;
+            ContactTypeId = contact.ContactTypeId;
             Company = contact.Company;
             Address = contact.Address;
             City = contact.City;
@@ -25,8 +25,8 @@ namespace FMS.Domain.Entities
         public Guid FacilityId { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
-        public string Title { get; set; }
-        public string Type { get; set; }
+        public Guid ContactTitleId { get; set; }
+        public Guid ContactTypeId { get; set; }
         public string Company { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
