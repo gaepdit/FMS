@@ -11,7 +11,7 @@ namespace FMS.Domain.Entities
         public Parcel(Guid id, ParcelCreateDto parcel)
         {
             LocationId = id;
-            ParcelId = parcel.ParcelId;
+            ParcelNumber = parcel.ParcelNumber;
             ParcelDescription = parcel.ParcelDescription;
             ParcelType = parcel.ParcelType;
             Acres = parcel.Acres;
@@ -19,7 +19,7 @@ namespace FMS.Domain.Entities
             Longitude = parcel.Longitude;
         }
         public Guid LocationId { get; set; }
-        public string ParcelId { get; set; }
+        public string ParcelNumber { get; set; }
         public string ParcelDescription { get; set; } 
         public string ParcelType { get; set; } 
         public double Acres { get; set; }

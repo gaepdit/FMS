@@ -1,13 +1,15 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System;
 
 namespace FMS.Domain.Entities
 {
-    public class Phone
+    public class Phone : BaseActiveModel
     {
         public Phone() { }
         public Phone(Guid contactId, PhoneCreateDto phoneCreateDto)
         {
+            Id = Guid.NewGuid();
             ContactId = contactId;
             CountryCode = phoneCreateDto.CountryCode;
             AreaCode = phoneCreateDto.AreaCode;
