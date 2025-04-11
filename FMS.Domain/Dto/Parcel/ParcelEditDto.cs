@@ -10,7 +10,7 @@ namespace FMS.Domain.Dto
         public ParcelEditDto(Parcel parcel)
         {
             LocationId = parcel.LocationId;
-            ParcelId = parcel.ParcelId;
+            ParcelNumber = parcel.ParcelNumber;
             ParcelDescription = parcel.ParcelDescription;
             ParcelType = parcel.ParcelType;
             Acres = parcel.Acres;
@@ -19,8 +19,8 @@ namespace FMS.Domain.Dto
         }
         public Guid LocationId { get; set; }
 
-        [Display(Name = "Parcel ID")]
-        public string ParcelId { get; set; }
+        [Display(Name = "Parcel Number")]
+        public string ParcelNumber { get; set; }
 
         [Display(Name = "Deescription")]
         public string ParcelDescription { get; set; }

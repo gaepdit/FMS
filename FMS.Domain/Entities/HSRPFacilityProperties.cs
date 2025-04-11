@@ -8,14 +8,14 @@ namespace FMS.Domain.Entities
     {
         public HsrpFacilityProperties() { }
 
-        public HsrpFacilityProperties(Guid facilityId, HsrpFacilityPropertiesCreateDto Hfpcd) 
+        public HsrpFacilityProperties(Guid facilityId, HsrpFacilityPropertiesCreateDto hfpcd) 
         {
             FacilityId = facilityId;
-            DateListed = (DateOnly)(Hfpcd?.DateListed);
-            AdditionalOrgUnit = Hfpcd?.AdditionalOrgUnit;
-            Geologist = Hfpcd?.Geologist;
-            VRPDate = (DateOnly)(Hfpcd?.VRPDate);
-            BrownfieldDate = (DateOnly)(Hfpcd?.BrownfieldDate);
+            DateListed = (DateOnly)(hfpcd?.DateListed);
+            AdditionalOrgUnit = hfpcd?.AdditionalOrgUnit;
+            Geologist = hfpcd?.Geologist;
+            VRPDate = (DateOnly)(hfpcd?.VRPDate);
+            BrownfieldDate = (DateOnly)(hfpcd?.BrownfieldDate);
         }
         public Guid FacilityId { get; set; }
         

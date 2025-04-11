@@ -7,8 +7,8 @@ namespace FMS.Domain.Dto
     {
         public Guid LocationId { get; set; }
 
-        [Display(Name = "Parcel ID")]
-        public string ParcelId { get; set; }
+        [Display(Name = "Parcel Number")]
+        public string ParcelNumber { get; set; }
 
         [Display(Name = "Description")]
         public string ParcelDescription { get; set; }
@@ -29,7 +29,7 @@ namespace FMS.Domain.Dto
 
         public void TrimAll()
         {
-            ParcelId = ParcelId?.Trim();
+            ParcelNumber = ParcelNumber?.Trim();
             ParcelDescription = ParcelDescription?.Trim();
         }
     }
