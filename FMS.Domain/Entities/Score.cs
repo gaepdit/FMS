@@ -7,13 +7,13 @@ namespace FMS.Domain.Entities
     public class Score : BaseActiveModel
     {
         public Score() { }
-        public Score(ScoreCreateDto scd)
+        public Score(ScoreCreateDto score)
         {
-            FacilityId = scd.FacilityId;
-            Rank = scd.Rank;
-            ScoredDate = scd.ScoredDate;
-            ScoredBy = scd.ScoredBy;
-            Comments = scd.Comments;
+            FacilityId = score.FacilityId;
+            Rank = score.Rank;
+            ScoredDate = score.ScoredDate;
+            ScoredBy = score.ScoredBy;
+            Comments = score.Comments;
         }
         public Guid FacilityId { get; set; }
         public int Rank { get; set; }

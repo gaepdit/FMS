@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -18,10 +14,10 @@ namespace FMS.Domain.Dto
         public string FamilyName { get; set; }
 
         [Display(Name = "Title")]
-        public string Title { get; set; }
+        public Guid ContactTitleId { get; set; }
 
         [Display(Name = "Contact Type")]
-        public string Type { get; set; }
+        public Guid ContactTypeId { get; set; }
 
         [Display(Name = "Company")]
         public string Company { get; set; }

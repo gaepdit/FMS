@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -10,8 +11,8 @@ namespace FMS.Domain.Dto
         {
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
-            Title = contact.Title;
-            Type = contact.Type;
+            ContactTitleId = contact.ContactTitleId;
+            ContactTypeId = contact.ContactTypeId;
             Company = contact.Company;
             Address = contact.Address;
             City = contact.City;
@@ -27,10 +28,10 @@ namespace FMS.Domain.Dto
         public string FamilyName { get; set; }
 
         [Display(Name = "Title")]
-        public string Title { get; set; }
+        public Guid ContactTitleId { get; set; }
 
         [Display(Name = "Contact Type")]
-        public string Type { get; set; }
+        public Guid ContactTypeId { get; set; }
 
         [Display(Name = "Company")]
         public string Company { get; set; }
