@@ -3,7 +3,7 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class Chemical : BaseActiveNamedModel
+    public class Chemical : BaseActiveModel
     {
         public Chemical() { }
         public Chemical(ChemicalCreateDto chemical)

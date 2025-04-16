@@ -3,14 +3,12 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class ActionTaken : BaseActiveNamedModel
+    public class ActionTaken : BaseActiveModel
     {
-        public ActionTaken()
-        {
-        }
+        public ActionTaken() { }
         public ActionTaken(ActionTakenCreateDto actionTaken)
         {
-            Name = actionTaken.name;
+            Name = actionTaken.Name;
         }
         public string Name { get; set; }
         public void TrimAll()

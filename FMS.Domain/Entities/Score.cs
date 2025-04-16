@@ -7,6 +7,7 @@ namespace FMS.Domain.Entities
     public class Score : BaseActiveModel
     {
         public Score() { }
+
         public Score(ScoreCreateDto score)
         {
             FacilityId = score.FacilityId;

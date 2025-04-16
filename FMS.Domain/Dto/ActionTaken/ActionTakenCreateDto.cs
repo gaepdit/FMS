@@ -5,8 +5,8 @@ namespace FMS.Domain.Dto
 {
     public class ActionTakenCreateDto
     {
-        [Display(Name = "Document Type")]
-        [Required(ErrorMessage = "Document Type Name is required.")]
-        public string name { get; set; }
+        [Display(Name = "Actgion Taken")]
+        [Required(ErrorMessage = "Action Taken Name is required.")]
+        public string Name { get; set; }
     }
 }

@@ -3,8 +3,10 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class DocumentType : BaseActiveNamedModel
+    public class DocumentType : BaseActiveModel
     {
+        public DocumentType() { }
+
         public DocumentType(DocumentTypeCreateDto documentType)
         {
             Name = documentType.Name;
