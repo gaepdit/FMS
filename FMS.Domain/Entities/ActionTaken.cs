@@ -3,15 +3,16 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class DocumentType : BaseActiveNamedModel
+    public class ActionTaken : BaseActiveNamedModel
     {
-        public DocumentType(DocumentTypeCreateDto documentType)
+        public ActionTaken()
         {
-            Name = documentType.Name;
         }
-
+        public ActionTaken(ActionTakenCreateDto actionTaken)
+        {
+            Name = actionTaken.name;
+        }
         public string Name { get; set; }
-
         public void TrimAll()
         {
             Name = Name?.Trim();
