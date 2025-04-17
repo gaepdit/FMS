@@ -5,7 +5,7 @@ namespace FMS.Domain.Dto
     public class OnSiteScoreCreateDto
     {
         public Guid ScoreId { get; set; }
-        public string OnSiteScore { get; set; }
+        public string ScoreValue { get; set; }
         public string A { get; set; }
         public string B { get; set; }
         public string C { get; set; }

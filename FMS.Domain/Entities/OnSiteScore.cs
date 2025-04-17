@@ -15,7 +15,7 @@ namespace FMS.Domain.Entities
         public OnSiteScore(OnSiteScoreCreateDto onSiteScore)
         {
             ScoreId = onSiteScore.ScoreId;
-            OSScore = onSiteScore.OnSiteScore;
+            ScoreValue = onSiteScore.ScoreValue;
             A = onSiteScore.A;
             B = onSiteScore.B;
             C = onSiteScore.C;
@@ -30,7 +30,7 @@ namespace FMS.Domain.Entities
         }
         public Guid ScoreId { get; set; }
 
-        public string OSScore { get; set; }
+        public string ScoreValue { get; set; }
 
         public string A { get; set; }
 
