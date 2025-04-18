@@ -11,15 +11,19 @@ namespace FMS.Domain.Entities
         public Score(ScoreCreateDto score)
         {
             FacilityId = score.FacilityId;
-            Rank = score.Rank;
             ScoredDate = score.ScoredDate;
             ScoredBy = score.ScoredBy;
             Comments = score.Comments;
+            UseComments = score.UseComments;
         }
         public Guid FacilityId { get; set; }
-        public int Rank { get; set; }
+
         public DateOnly ScoredDate { get; set; }
+
         public string ScoredBy { get; set; }
-        public string Comments { get; set; }      
+
+        public string Comments { get; set; }   
+        
+        public bool UseComments { get; set; } = false;
     }
 }

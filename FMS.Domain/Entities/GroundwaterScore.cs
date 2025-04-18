@@ -1,16 +1,13 @@
-﻿using FMS.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
     public class GroundwaterScore : BaseActiveModel
     {
         public GroundwaterScore() { }
+
         public GroundwaterScore(GroundwaterScoreCreateDto groundwaterScore)
         {
             ScoreId = groundwaterScore.ScoreId;
@@ -29,18 +26,31 @@ namespace FMS.Domain.Entities
             E2 = groundwaterScore.E2;
         }
         public Guid ScoreId { get; set; }
+
         public string GWScore { get; set; }
-        public string A { get; set; }
-        public string B1 { get; set; }
-        public string B2 { get; set; }
-        public string C { get; set; }
+
+        public int A { get; set; }
+
+        public int B1 { get; set; }
+
+        public int B2 { get; set; }
+
+        public int C { get; set; }
+
         public string Description { get; set; }
+
         public string ChemName { get; set; }
+
         public string Other { get; set; }
-        public string D2 { get; set; }
-        public string D3 { get; set; }
+
+        public int D2 { get; set; }
+
+        public int D3 { get; set; }
+
         public string CASNO { get; set; }
-        public string E1 { get; set; }
-        public string E2 { get; set; }
+
+        public int E1 { get; set; }
+
+        public int E2 { get; set; }
     }
 }
