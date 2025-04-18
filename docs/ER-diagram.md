@@ -12,17 +12,20 @@ classDiagram
     Facility --> EnvironmentalInterest
     Facility --> ComplianceOfficer
     Facility --> OrganizationalUnit
-    Facility ..> Contact : implied
-    Facility ..> Score : implied
-    Facility ..> HSRPFacilityProperties : implied
-    Facility ..> Status : implied
-    Facility ..> HSRAEvent : implied
-    Facility ..> Substances : implied
+    Facility ..> Substances
+    Facility ..> Contact
+    Facility ..> Score
+    Facility ..> HSRPFacilityProperties
+    Facility ..> Status
+    Facility ..> HSRAEvent
     Facility --> Location
     Score --> Groundwater
     Score --> Onsite
     Location --> Parcel
+    Contact --> ContactType
+    Contact --> ContactTitle
     Contact --> Phone
+    Phone --> PhoneType
     Status --> FundingSource
     Groundwater --> Chemicals
     Onsite --> Chemicals
@@ -104,7 +107,6 @@ class RetentionRecord {
 
 class Location {
     Class
-    List~Parcel~
 }
 
 class Parcel {
@@ -144,7 +146,6 @@ class Score {
     Rank
     Comments
     UseComments
-
 }
 
 class Groundwater {
@@ -169,7 +170,7 @@ class Onsite {
     B 
     C 
     1DChemName
-    1DOther
+    1DOther 
     2D
     3D
     Description
@@ -275,5 +276,19 @@ class PermittedCode {
     DDateHelp
     EDateHelp
 }
+
+class ContactType {
+    Type
+}
+
+class ContactTitle {
+    Title
+}
+
+class PhoneType {
+    Type
+}
+
+
 
 ```
