@@ -18,5 +18,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
+
+        [Display(Name = "Use alternate language from comments field")]
+        public bool UseComments { get; set; } = false;
     }
 }

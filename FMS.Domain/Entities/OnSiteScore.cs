@@ -28,11 +28,11 @@ namespace FMS.Domain.Entities
 
         public string ScoreValue { get; set; }
 
-        public string A { get; set; }
+        public int A { get; set; }
 
-        public string B { get; set; }
+        public int B { get; set; }
 
-        public string C { get; set; }
+        public int C { get; set; }
 
         public string Description { get; set; }
 
@@ -40,14 +40,14 @@ namespace FMS.Domain.Entities
 
         public string Other1D { get; set; }
 
-        public string D2 { get; set; }
+        public int D2 { get; set; }
 
-        public string D3 { get; set; }
+        public int D3 { get; set; }
 
         public string CASNO { get; set; }
 
-        public string E1 { get; set; }
+        public int E1 { get; set; }
 
-        public string E2 { get; set; }
+        public int E2 { get; set; }
     }
 }
