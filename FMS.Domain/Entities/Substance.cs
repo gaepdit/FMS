@@ -8,10 +8,10 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class Substances : BaseActiveModel, INamedModel
+    public class Substance : BaseActiveModel, INamedModel
     {
-        public Substances() { }
-        public Substances(SubstancesCreateDto newSubstance)
+        public Substance() { }
+        public Substance(SubstanceCreateDto newSubstance)
         {
             FacilityId = newSubstance.FacilityId;
             ChemicalId = newSubstance.ChemicalId;

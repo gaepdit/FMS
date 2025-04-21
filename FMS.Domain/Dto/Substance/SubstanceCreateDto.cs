@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
-    public class SubstancesCreateDto
+    public class SubstanceCreateDto
     {
         [Required]
         public Guid FacilityId { get; set; }
