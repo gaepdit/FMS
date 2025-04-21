@@ -31,7 +31,6 @@ namespace FMS.Domain.Entities
             Lien = newStatus.Lien;
             FinancialAssurance = newStatus.FinancialAssurance;
         }
-        // Name of the status
         [Required]
         public Guid FacilityId { get; set; }
 
