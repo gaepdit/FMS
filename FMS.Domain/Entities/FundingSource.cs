@@ -3,7 +3,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Entities
 {
-    public class FundingSource : BaseActiveModel
+    public class FundingSource : BaseActiveModel, INamedModel
     {
         public FundingSource() { }
 
