@@ -1,5 +1,6 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
+using System.Xml.Linq;
 
 namespace FMS.Domain.Entities
 {
@@ -14,9 +15,17 @@ namespace FMS.Domain.Entities
             MCLs = chemical.MCLs;
         }
         public string CasNo { get; set; }
+
         public string ChemicalName { get; set; }
+
         public string ToxValue { get; set; }
+
         public string MCLs { get; set; }
+
+        public string Name => CasNo;
+
+        public string DisplayName => $"{CasNo} ({ChemicalName})";
+
         public void TrimAll()
         {
             CasNo = CasNo?.Trim();
