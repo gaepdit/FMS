@@ -3,13 +3,13 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class DocumentType : BaseActiveModel
+    public class EventType : BaseActiveModel
     {
-        public DocumentType() { }
+        public EventType() { }
 
-        public DocumentType(DocumentTypeCreateDto documentType)
+        public EventType(EventTypeCreateDto eventType)
         {
-            Name = documentType.Name;
+            Name = eventType.Name;
         }
 
         public string Name { get; set; }

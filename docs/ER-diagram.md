@@ -10,15 +10,15 @@ classDiagram
     Facility --> BudgetCode
     Facility --> FacilityStatus
     Facility --> EnvironmentalInterest
-    Facility --> ComplianceOfficer
     Facility --> OrganizationalUnit
-    Facility ..> Substances
-    Facility ..> Contact
-    Facility ..> Score
     Facility ..> HSRPFacilityProperties
+    Facility ..> Substances
+    Facility ..> Score
     Facility ..> Status
-    Facility ..> HSRAEvent
+    Facility --> ComplianceOfficer
+    Facility ..> Event
     Facility --> Location
+    Facility ..> Contact
     Score --> Groundwater
     Score --> Onsite
     Location --> Parcel
@@ -27,12 +27,14 @@ classDiagram
     Contact --> Phone
     Phone --> PhoneType
     Status --> FundingSource
+    Substances --> Chemicals
     Groundwater --> Chemicals
     Onsite --> Chemicals
-    MinorCode --> PermittedCode
-    MajorCode --> PermittedCode
-    HSRAEvent --> MajorCode
-    HSRAEvent --> MinorCode
+    Event --> ComplianceOfficer
+    Event --> EventType
+    Event --> ActionTaken
+    EventType --> AllowedActionTaken
+    ActionTaken --> AllowedActionTaken
 
 %% Classes
 
@@ -209,7 +211,8 @@ class Status {
     FinancialAssurance
 }
 
-class HSRAEvent {
+class Event {
+    ParentId
     EventType
     ActionTaken
     StartDate
@@ -258,25 +261,6 @@ class FundingSource {
     FundingSource
 }
 
-class MajorCode {
-    MajorCodeId
-    MajorCodeText
-    MajorCodeProgram
-}
-
-class MinorCode {
-    MinorCodeId
-    MinorCodeText
-}
-
-class PermittedCode {
-    MajorCodeId
-    MinorCodeId
-    SDateHelp
-    DDateHelp
-    EDateHelp
-}
-
 class ContactType {
     Type
 }
@@ -289,6 +273,17 @@ class PhoneType {
     Type
 }
 
+class EventType {
+    Type
+}
 
+class ActionTaken {
+    Action
+}
+
+class AllowedActionTaken {
+    EventTypeId
+    ActionTakenId
+}
 
 ```
