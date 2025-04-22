@@ -4,8 +4,8 @@ namespace FMS.Domain.Dto
 {
     public class EventTypeCreateDto
     {
-        [Display(Name = "Document Type")]
-        [Required(ErrorMessage = "Document Type Name is required.")]
+        [Display(Name = "Event Type")]
+        [Required(ErrorMessage = "Event Type Name is required.")]
         public string Name { get; set; }
 
         public void TrimAll()
