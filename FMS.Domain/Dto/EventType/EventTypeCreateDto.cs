@@ -2,10 +2,15 @@
 
 namespace FMS.Domain.Dto
 {
-    public class DocumentTypeCreateDto
+    public class EventTypeCreateDto
     {
         [Display(Name = "Document Type")]
         [Required(ErrorMessage = "Document Type Name is required.")]
         public string Name { get; set; }
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }

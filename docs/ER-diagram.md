@@ -33,6 +33,10 @@ classDiagram
     MajorCode --> PermittedCode
     HSRAEvent --> MajorCode
     HSRAEvent --> MinorCode
+    HSRAEvent --> EventType
+    HSRAEvent --> ActionTaken
+    EventType --> AllowedActionTaken
+    ActionTaken --> AllowedActionTaken
 
 %% Classes
 
@@ -210,6 +214,7 @@ class Status {
 }
 
 class HSRAEvent {
+    ParentId
     EventType
     ActionTaken
     StartDate
@@ -289,6 +294,17 @@ class PhoneType {
     Type
 }
 
+class EventType {
+    Type
+}
 
+Class ActionTaken {
+    Action
+}
+
+class AllowedActionTaken {
+    EventTypeId
+    ActionTakenId
+}
 
 ```
