@@ -8,13 +8,12 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
 {
     public static partial class SeedData
     {
-        private static IEnumerable<ActionTaken> GetActionTakens()
+        private static IEnumerable<HsrpFacilityProperties> GetHsrpFacilityProperties()
         {
-            return new List<ActionTaken>()
+            return new List<HsrpFacilityProperties>()
             {
-                
+
             };
         }
     }
 }
- 
