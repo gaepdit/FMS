@@ -1,9 +1,10 @@
 ﻿using System;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class AllowedActionTaken
+    public class AllowedActionTaken : BaseActiveModel
     {
         public AllowedActionTaken() { }
         public AllowedActionTaken(AllowedActionTakenCreateDto allowedActionTaken)

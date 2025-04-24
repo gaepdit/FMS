@@ -1,6 +1,19 @@
-﻿namespace FMS.Platform.DevHelpers.SeedData
+﻿using System;
+using System.Collections.Generic;
+using FMS.Domain.Entities;
+
+// ReSharper disable StringLiteralTypo
+
+namespace FMS.Platform.Extensions.DevHelpers.SeedData
 {
-    public class ScoreSeedData
+    public static partial class SeedData
     {
+        private static IEnumerable<Score> GetScores()
+        {
+            return new List<Score>()
+            {
+
+            };
+        }
     }
 }

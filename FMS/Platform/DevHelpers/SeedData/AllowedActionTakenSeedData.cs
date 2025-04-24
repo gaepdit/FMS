@@ -12,7 +12,90 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<AllowedActionTaken>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid("")
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid("")
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""), 
+                    EventTypeId = new Guid(""),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""), 
+                    EventTypeId = new Guid(""),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""), 
+                    EventTypeId = new Guid(""),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid("")
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid("")
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ActionTakenId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                }
             };
         }
     }

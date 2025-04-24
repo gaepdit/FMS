@@ -12,7 +12,42 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<ContactTitle>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                }
             };
         }
     }

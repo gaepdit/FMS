@@ -12,7 +12,42 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<Location>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Score = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Score = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Score = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Score = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Score = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Score = "",
+                }
             };
         }
     }

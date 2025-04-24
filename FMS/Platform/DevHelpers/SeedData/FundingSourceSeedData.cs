@@ -12,7 +12,42 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<FundingSource>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                }
             };
         }
     }
