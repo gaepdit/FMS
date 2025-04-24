@@ -53,7 +53,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     UseComments = true
                 },
                 new()
-                {
+{
                     Id = new Guid("F8F07B9C-DAC4-4D54-B97F-BA1CE5133D54"),
                     Active = true,
                     FacilityId = new Guid(""),
@@ -63,7 +63,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     UseComments = true
                 },
                 new()
-                {
+    {
                     Id = new Guid("5119BF82-D9C6-4014-B951-2F1B850BAA99"),
                     Active = true,
                     FacilityId = new Guid(""),

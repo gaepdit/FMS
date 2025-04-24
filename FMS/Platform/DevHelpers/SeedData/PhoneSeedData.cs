@@ -57,7 +57,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Type = ""
                 },
                 new()
-                {
+{
                     Id = new Guid("15EB55FC-9BBF-4453-A53C-612D096C0D49"),
                     Active = true,
                     ContactId = new Guid(""),
@@ -68,7 +68,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Type = ""
                 },
                 new()
-                {
+    {
                     Id = new Guid("ABB8CE7E-3AFD-412E-9A7E-6BF73B60AFD5"),
                     Active = true,
                     ContactId = new Guid(""),

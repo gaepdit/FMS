@@ -133,7 +133,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Longitude = 0
                 },
                 new()
-                {
+{
                     Id = new Guid("07865EAF-187F-4FB5-BDAC-E86213DB0621"),
                     Active = true,
                     LocationId = new Guid(""),
@@ -145,7 +145,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Longitude = 0
                 },
                 new()
-                {
+    {
                     Id = new Guid("4EB2A1E3-C8BD-4BB4-9631-79BE81B5CCBA"),
                     Active = true,
                     LocationId = new Guid(""),
