@@ -17,9 +17,9 @@ namespace FMS.Domain.Entities
             SoilStatus = newStatus.SoilStatus;
             SoilDate = newStatus.SoilDate;
             SoilProjected = newStatus.SoilProjected;
-            GWStatus = newStatus.GWStatus;
-            GWDate = newStatus.GWDate;
-            GWHWTF = newStatus.GWHWTF;
+            GroundwaterStatus = newStatus.GWStatus;
+            GroundwaterDate = newStatus.GWDate;
+            GroundwaterHWTF = newStatus.GWHWTF;
             OverallStatus = newStatus.OverallStatus;
             OverallDate = newStatus.OverallDate;
             ISWQS = newStatus.ISWQS;
@@ -45,11 +45,11 @@ namespace FMS.Domain.Entities
 
         public string SoilProjected { get; set; }
 
-        public string GWStatus { get; set; }
+        public string GroundwaterStatus { get; set; }
 
-        public DateOnly? GWDate { get; set; }
+        public DateOnly? GroundwaterDate { get; set; }
 
-        public string GWHWTF { get; set; }
+        public string GroundwaterHWTF { get; set; }
 
         public string OverallStatus { get; set; }
 
