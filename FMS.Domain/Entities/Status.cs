@@ -58,7 +58,7 @@ namespace FMS.Domain.Entities
         public Guid OverallStatusId { get; set; }
         public OverallStatus OverallStatus { get; set; }
 
-        public DateOnly? OverallDate { get; set; }  //Make Dropdown
+        public DateOnly? OverallDate { get; set; }
 
         public string ISWQS { get; set; }
 
