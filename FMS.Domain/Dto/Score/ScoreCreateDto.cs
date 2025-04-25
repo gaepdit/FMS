@@ -14,7 +14,8 @@ namespace FMS.Domain.Dto
         public DateOnly ScoredDate { get; set; }
 
         [Display(Name = "Scored By")]
-        public string ScoredBy { get; set; }
+        public Guid ScoredById { get; set; }
+        public string ScoredBy { get; set; } 
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }

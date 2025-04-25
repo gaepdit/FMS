@@ -12,7 +12,66 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<Substance>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                }
             };
         }
     }

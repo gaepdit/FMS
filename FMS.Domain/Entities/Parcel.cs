@@ -13,17 +13,24 @@ namespace FMS.Domain.Entities
             LocationId = id;
             ParcelNumber = parcel.ParcelNumber;
             ParcelDescription = parcel.ParcelDescription;
-            ParcelType = parcel.ParcelType;
+            ParcelTypeId = parcel.ParcelTypeId;
             Acres = parcel.Acres;
             Latitude = parcel.Latitude;
             Longitude = parcel.Longitude;
         }
         public Guid LocationId { get; set; }
+
         public string ParcelNumber { get; set; }
+
         public string ParcelDescription { get; set; } 
-        public string ParcelType { get; set; } 
+
+        public Guid ParcelTypeId { get; set; }
+        public ParcelType ParcelType { get; set; }
+
         public double Acres { get; set; }
+
         public double Latitude { get; set; }
+
         public double Longitude { get; set; }
     }
 }

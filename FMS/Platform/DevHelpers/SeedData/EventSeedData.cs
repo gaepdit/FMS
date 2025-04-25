@@ -12,7 +12,96 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<Event>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ParentId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                    ActionTakenId = new Guid(""),
+                    StartDate = new(2018, 2, 13),
+                    DueDate = new(2018, 2, 13),
+                    CompletionDate = new(2018, 2, 13),
+                    ComplianceOfficerId = new Guid(""),
+                    EventAmount = 0,
+                    EntityNameOrNumber = "",
+                    Comment = ""
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ParentId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                    ActionTakenId = new Guid(""),
+                    StartDate = new(2018, 2, 13),
+                    DueDate = new(2018, 2, 13),
+                    CompletionDate = new(2018, 2, 13),
+                    ComplianceOfficerId = new Guid(""),
+                    EventAmount = 0,
+                    EntityNameOrNumber = "",
+                    Comment = ""
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ParentId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                    ActionTakenId = new Guid(""),
+                    StartDate = new(2018, 2, 13),
+                    DueDate = new(2018, 2, 13),
+                    CompletionDate = new(2018, 2, 13),
+                    ComplianceOfficerId = new Guid(""),
+                    EventAmount = 0,
+                    EntityNameOrNumber = "",
+                    Comment = ""
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ParentId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                    ActionTakenId = new Guid(""),
+                    StartDate = new(2018, 2, 13),
+                    DueDate = new(2018, 2, 13),
+                    CompletionDate = new(2018, 2, 13),
+                    ComplianceOfficerId = new Guid(""),
+                    EventAmount = 0,
+                    EntityNameOrNumber = "",
+                    Comment = ""
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ParentId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                    ActionTakenId = new Guid(""),
+                    StartDate = new(2018, 2, 13),
+                    DueDate = new(2018, 2, 13),
+                    CompletionDate = new(2018, 2, 13),
+                    ComplianceOfficerId = new Guid(""),
+                    EventAmount = 0,
+                    EntityNameOrNumber = "",
+                    Comment = ""
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    ParentId = new Guid(""),
+                    EventTypeId = new Guid(""),
+                    ActionTakenId = new Guid(""),
+                    StartDate = new(2018, 2, 13),
+                    DueDate = new(2018, 2, 13),
+                    CompletionDate = new(2018, 2, 13),
+                    ComplianceOfficerId = new Guid(""),
+                    EventAmount = 0,
+                    EntityNameOrNumber = "",
+                    Comment = ""
+                }
             };
         }
     }

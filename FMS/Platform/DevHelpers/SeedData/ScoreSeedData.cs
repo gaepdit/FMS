@@ -12,7 +12,66 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<Score>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ScoredDate = new(2018, 2, 13),
+                    ScoredById = new Guid(""),
+                    Comments = "",
+                    UseComments = true
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ScoredDate = new(2018, 2, 13),
+                    ScoredById = new Guid(""),
+                    Comments = "",
+                    UseComments = true
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ScoredDate = new(2018, 2, 13),
+                    ScoredById = new Guid(""),
+                    Comments = "",
+                    UseComments = true
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ScoredDate = new(2018, 2, 13),
+                    ScoredById = new Guid(""),
+                    Comments = "",
+                    UseComments = true
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ScoredDate = new(2018, 2, 13),
+                    ScoredById = new Guid(""),
+                    Comments = "",
+                    UseComments = true
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ScoredDate = new(2018, 2, 13),
+                    ScoredById = new Guid(""),
+                    Comments = "",
+                    UseComments = true
+                }
             };
         }
     }

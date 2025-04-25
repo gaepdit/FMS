@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Entities.Base;
 using FMS.Domain.Dto;
@@ -59,7 +59,7 @@ namespace FMS.Domain.Entities
         public Guid OverallStatusId { get; set; }
         public OverallStatus OverallStatus { get; set; }
 
-        public DateOnly? OverallDate { get; set; }
+        public DateOnly? OverallDate { get; set; }  //Make Dropdown
 
         public string ISWQS { get; set; }
 

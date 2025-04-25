@@ -22,11 +22,12 @@ namespace FMS.Domain.Dto
         [Display(Name = "Parcel Number")]
         public string ParcelNumber { get; set; }
 
-        [Display(Name = "Deescription")]
+        [Display(Name = "Description")]
         public string ParcelDescription { get; set; }
 
         [Display(Name = "Type")]
-        public string ParcelType { get; set; }
+        public Guid ParcelTypeId { get; set; }
+        public ParcelType ParcelType { get; set; }
 
         [Display(Name = "Acreage")]
         public double Acres { get; set; }

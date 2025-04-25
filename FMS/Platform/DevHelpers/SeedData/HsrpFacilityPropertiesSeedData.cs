@@ -12,7 +12,72 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<HsrpFacilityProperties>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    DateListed = new(2018, 2, 13),
+                    AdditionalOrgUnit = "",
+                    Geologist = "",
+                    VRPDate = new(2018, 2, 13),
+                    BrownfieldDate = new(2018, 2, 13),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    DateListed = new(2018, 2, 13),
+                    AdditionalOrgUnit = "",
+                    Geologist = "",
+                    VRPDate = new(2018, 2, 13),
+                    BrownfieldDate = new(2018, 2, 13),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    DateListed = new(2018, 2, 13),
+                    AdditionalOrgUnit = "",
+                    Geologist = "",
+                    VRPDate = new(2018, 2, 13),
+                    BrownfieldDate = new(2018, 2, 13)
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    DateListed = new(2018, 2, 13),
+                    AdditionalOrgUnit = "",
+                    Geologist = "",
+                    VRPDate = new(2018, 2, 13),
+                    BrownfieldDate = new(2018, 2, 13),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    DateListed = new(2018, 2, 13),
+                    AdditionalOrgUnit = "",
+                    Geologist = "",
+                    VRPDate = new(2018, 2, 13),
+                    BrownfieldDate = new(2018, 2, 13),
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    DateListed = new(2018, 2, 13),
+                    AdditionalOrgUnit = "",
+                    Geologist = "",
+                    VRPDate = new(2018, 2, 13),
+                    BrownfieldDate = new(2018, 2, 13),
+                }
             };
         }
     }

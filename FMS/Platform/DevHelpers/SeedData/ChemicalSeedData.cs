@@ -12,7 +12,60 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<Chemical>()
             {
-
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    CasNo = "",
+                    ChemicalName = "",
+                    ToxValue = "",
+                    MCLs = ""
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    CasNo = "",
+                    ChemicalName = "",
+                    ToxValue = "",
+                    MCLs = ""
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    CasNo = "", 
+                    ChemicalName = "", 
+                    ToxValue = "", 
+                    MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    CasNo = "", 
+                    ChemicalName = "", 
+                    ToxValue = "", 
+                    MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    CasNo = "", 
+                    ChemicalName = "", 
+                    ToxValue = "", 
+                    MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    CasNo = "", 
+                    ChemicalName = "", 
+                    ToxValue = "", 
+                    MCLs = "",
+                }
             };
         }
     }
