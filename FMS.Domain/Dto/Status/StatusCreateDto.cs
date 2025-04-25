@@ -37,7 +37,8 @@ namespace FMS.Domain.Dto
 
         public string ISWQS { get; set; }
 
-        public string PrimaryFundingSource { get; set; }
+        public Guid PrimaryFundingSourceId { get; set; }
+        public FundingSource PrimaryFundingSource { get; set; }
 
         public bool LandFill { get; set; }
 
