@@ -8,56 +8,63 @@ namespace FMS.Domain.Entities
     public class Status : BaseActiveModel
     {
         public Status() { }
-        public Status(StatusCreateDto newStatus)
+
+        public Status(StatusCreateDto status)
         {
-            FacilityId = newStatus.FacilityId;
-            SourceStatus = newStatus.SourceStatus;
-            SourceDate = newStatus.SourceDate;
-            SourceProjected = newStatus.SourceProjected;
-            SoilStatus = newStatus.SoilStatus;
-            SoilDate = newStatus.SoilDate;
-            SoilProjected = newStatus.SoilProjected;
-            GroundwaterStatus = newStatus.GWStatus;
-            GroundwaterDate = newStatus.GWDate;
-            GroundwaterHWTF = newStatus.GWHWTF;
-            OverallStatus = newStatus.OverallStatus;
-            OverallDate = newStatus.OverallDate;
-            ISWQS = newStatus.ISWQS;
-            PrimaryFundingSource = newStatus.PrimaryFundingSource;
-            LandFill = newStatus.LandFill;
-            SolidWastePermitNumber = newStatus.SolidWastePermitNumber;
-            HSPMScore = newStatus.HSPMScore;
-            Comments = newStatus.Comments;
-            Lien = newStatus.Lien;
-            FinancialAssurance = newStatus.FinancialAssurance;
+            FacilityId = status.FacilityId;
+            SourceStatusId = status.SourceStatusId;
+            SourceDate = status.SourceDate;
+            SourceProjected = status.SourceProjected;
+            SoilStatusId = status.SoilStatusId;
+            SoilDate = status.SoilDate;
+            SoilProjected = status.SoilProjected;
+            GroundwaterStatusId = status.GroundwaterStatusId;
+            GroundwaterDate = status.GroundwaterDate;
+            GroundwaterHWTF = status.GroundwaterHWTF;
+            OverallStatusId = status.OverallStatusId;
+            OverallDate = status.OverallDate;
+            ISWQS = status.ISWQS;
+            PrimaryFundingSourceId = status.PrimaryFundingSourceId;
+            LandFill = status.LandFill;
+            SolidWastePermitNumber = status.SolidWastePermitNumber;
+            HSPMScore = status.HSPMScore;
+            Comments = status.Comments;
+            Lien = status.Lien;
+            FinancialAssurance = status.FinancialAssurance;
         }
+
         public Guid FacilityId { get; set; }
 
-        public string SourceStatus { get; set; }
+        public Guid SourceStatusId { get; set; }
+        public SourceStatus SourceStatus { get; set; }
 
         public DateOnly? SourceDate { get; set; }
 
         public string SourceProjected { get; set; }
 
-        public string SoilStatus { get; set; }
+        public Guid SoilStatusId { get; set; }
+        public SoilStatus SoilStatus { get; set; }
 
         public DateOnly? SoilDate { get; set; }
 
         public string SoilProjected { get; set; }
 
-        public string GroundwaterStatus { get; set; }
+        public Guid GroundwaterStatusId { get; set; }
+        public GroundwaterStatus GroundwaterStatus { get; set; }
 
         public DateOnly? GroundwaterDate { get; set; }
 
         public string GroundwaterHWTF { get; set; }
 
-        public string OverallStatus { get; set; }
+        public Guid OverallStatusId { get; set; }
+        public OverallStatus OverallStatus { get; set; }
 
         public DateOnly? OverallDate { get; set; }
 
         public string ISWQS { get; set; }
 
-        public string PrimaryFundingSource { get; set; }
+        public Guid PrimaryFundingSourceId { get; set; }
+        public FundingSource PrimaryFundingSource { get; set; }
 
         public bool LandFill { get; set; }
 

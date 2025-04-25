@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -8,31 +9,36 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
-        public string SourceStatus { get; set; }
+        public Guid SourceStatusId { get; set; }
+        public SourceStatus SourceStatus { get; set; }
 
         public DateOnly? SourceDate { get; set; }
 
         public string SourceProjected { get; set; }
 
-        public string SoilStatus { get; set; }
+        public Guid SoilStatusId { get; set; }
+        public SoilStatus SoilStatus { get; set; }
 
         public DateOnly? SoilDate { get; set; }
 
         public string SoilProjected { get; set; }
 
-        public string GWStatus { get; set; }
+        public Guid GroundwaterStatusId { get; set; }
+        public GroundwaterStatus GroundwaterStatus { get; set; }
 
-        public DateOnly? GWDate { get; set; }
+        public DateOnly? GroundwaterDate { get; set; }
 
-        public string GWHWTF { get; set; }
+        public string GroundwaterHWTF { get; set; }
 
-        public string OverallStatus { get; set; }
+        public Guid OverallStatusId { get; set; }
+        public OverallStatus OverallStatus { get; set; }
 
         public DateOnly? OverallDate { get; set; }
 
         public string ISWQS { get; set; }
 
-        public string PrimaryFundingSource { get; set; }
+        public Guid PrimaryFundingSourceId { get; set; }
+        public FundingSource PrimaryFundingSource { get; set; }
 
         public bool LandFill { get; set; }
 
