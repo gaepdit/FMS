@@ -24,7 +24,7 @@ namespace FMS.Domain.Entities
             OverallStatusId = status.OverallStatusId;
             OverallDate = status.OverallDate;
             ISWQS = status.ISWQS;
-            PrimaryFundingSourceId = status.PrimaryFundingSourceId;
+            FundingSourceId = status.FundingSourceId;
             LandFill = status.LandFill;
             SolidWastePermitNumber = status.SolidWastePermitNumber;
             HSPMScore = status.HSPMScore;
@@ -63,8 +63,8 @@ namespace FMS.Domain.Entities
 
         public string ISWQS { get; set; }
 
-        public Guid PrimaryFundingSourceId { get; set; }
-        public FundingSource PrimaryFundingSource { get; set; }
+        public Guid FundingSourceId { get; set; }
+        public FundingSource FundingSource { get; set; }
 
         public bool LandFill { get; set; }
 
