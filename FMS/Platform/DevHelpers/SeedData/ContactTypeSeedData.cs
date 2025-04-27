@@ -8,7 +8,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
 {
     public static partial class SeedData
     {
-        private static IEnumerable<ContactType> GetContactTypess()
+        private static IEnumerable<ContactType> GetContactTypes()
         {
             return new List<ContactType>()
             {
