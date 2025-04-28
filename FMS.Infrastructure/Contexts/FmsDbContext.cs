@@ -48,6 +48,36 @@ namespace FMS.Infrastructure.Contexts
             builder.Entity<File>().HasIndex(e => e.FileLabel).IsUnique();
             builder.Entity<Cabinet>().HasIndex(e => e.Name).IsUnique();
             builder.Entity<FacilityType>().HasIndex(e => e.Name).IsUnique();
+            builder.Entity<Facility>().HasIndex(e => e.FileId).
+                IncludeProperties(e => new {e.Active, e.FacilityNumber, e.FacilityTypeId, e.OrganizationalUnitId, e.BudgetCodeId, e.Name, e.ComplianceOfficerId, e.FacilityStatusId, e.Location, e.Address, e.City, e.State, e.PostalCode });
+
+            ////                CREATE INDEX missing_index_856_855 ON [FMS].[dbo].[Facilities] ([FileId]) INCLUDE ([Active], [FacilityNumber], [FacilityTypeId], [OrganizationalUnitId], [BudgetCodeId], [Name], [ComplianceOfficerId], [FacilityStatusId], [Location], [Address], [City], [State], [PostalCode], [Latitude], [Longitude], [CountyId], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser], [IsRetained], [AdditionalDataRequested], [Comments], [DeferredOnSiteScoring], [DeterminationLetterDate], [HSInumber], [HasERecord], [HistoricalComplianceOfficer], [HistoricalUnit], [ImageChecked], [PreRQSMcleanup], [RNDateReceived], [VRPReferral])
+            ////CREATE INDEX missing_index_856_855 ON [FMS].[dbo].[Facilities] ([FileId]) INCLUDE ([Active], [FacilityNumber], [FacilityTypeId], [OrganizationalUnitId], [BudgetCodeId], [Name], [ComplianceOfficerId], [FacilityStatusId], [Location], [Address], [City], [State], [PostalCode], [Latitude], [Longitude], [CountyId], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser], [IsRetained], [AdditionalDataRequested], [Comments], [DeferredOnSiteScoring], [DeterminationLetterDate], [HSInumber], [HasERecord], [HistoricalComplianceOfficer], [HistoricalUnit], [ImageChecked], [PreRQSMcleanup], [RNDateReceived], [VRPReferral])
+            ////CREATE INDEX missing_index_465_464 ON [FMS].[dbo].[RetentionRecords] ([FacilityId]) INCLUDE ([Active], [StartYear], [EndYear], [ConsignmentNumber], [BoxNumber], [ShelfNumber], [RetentionSchedule], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser])
+            ////CREATE INDEX missing_index_467_466 ON [FMS].[dbo].[RetentionRecords] ([FacilityId])
+            ////CREATE INDEX missing_index_465_464 ON [FMS].[dbo].[RetentionRecords] ([FacilityId]) INCLUDE ([Active], [StartYear], [EndYear], [ConsignmentNumber], [BoxNumber], [ShelfNumber], [RetentionSchedule], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser])
+            ////CREATE INDEX missing_index_467_466 ON [FMS].[dbo].[RetentionRecords] ([FacilityId])
+            ////CREATE INDEX missing_index_607_606 ON [FMS].[dbo].[Facilities] ([Active], [FileId])
+            ////CREATE INDEX missing_index_607_606 ON [FMS].[dbo].[Facilities] ([Active], [FileId])
+            ////CREATE INDEX missing_index_609_608 ON [FMS].[dbo].[Facilities] ([Active]) INCLUDE ([FileId])
+            ////CREATE INDEX missing_index_609_608 ON [FMS].[dbo].[Facilities] ([Active]) INCLUDE ([FileId])
+            ////CREATE INDEX missing_index_997_996 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address])
+            ////CREATE INDEX missing_index_997_996 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address])
+            ////CREATE INDEX missing_index_1159_1158 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address], [City])
+            ////CREATE INDEX missing_index_1159_1158 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address], [City])CREATE INDEX missing_index_856_855 ON [FMS].[dbo].[Facilities] ([FileId]) INCLUDE ([Active], [FacilityNumber], [FacilityTypeId], [OrganizationalUnitId], [BudgetCodeId], [Name], [ComplianceOfficerId], [FacilityStatusId], [Location], [Address], [City], [State], [PostalCode], [Latitude], [Longitude], [CountyId], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser], [IsRetained], [AdditionalDataRequested], [Comments], [DeferredOnSiteScoring], [DeterminationLetterDate], [HSInumber], [HasERecord], [HistoricalComplianceOfficer], [HistoricalUnit], [ImageChecked], [PreRQSMcleanup], [RNDateReceived], [VRPReferral])
+            ////CREATE INDEX missing_index_856_855 ON [FMS].[dbo].[Facilities] ([FileId]) INCLUDE ([Active], [FacilityNumber], [FacilityTypeId], [OrganizationalUnitId], [BudgetCodeId], [Name], [ComplianceOfficerId], [FacilityStatusId], [Location], [Address], [City], [State], [PostalCode], [Latitude], [Longitude], [CountyId], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser], [IsRetained], [AdditionalDataRequested], [Comments], [DeferredOnSiteScoring], [DeterminationLetterDate], [HSInumber], [HasERecord], [HistoricalComplianceOfficer], [HistoricalUnit], [ImageChecked], [PreRQSMcleanup], [RNDateReceived], [VRPReferral])
+            ////CREATE INDEX missing_index_465_464 ON [FMS].[dbo].[RetentionRecords] ([FacilityId]) INCLUDE ([Active], [StartYear], [EndYear], [ConsignmentNumber], [BoxNumber], [ShelfNumber], [RetentionSchedule], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser])
+            ////CREATE INDEX missing_index_467_466 ON [FMS].[dbo].[RetentionRecords] ([FacilityId])
+            ////CREATE INDEX missing_index_465_464 ON [FMS].[dbo].[RetentionRecords] ([FacilityId]) INCLUDE ([Active], [StartYear], [EndYear], [ConsignmentNumber], [BoxNumber], [ShelfNumber], [RetentionSchedule], [InsertDateTime], [InsertUser], [UpdateDateTime], [UpdateUser])
+            ////CREATE INDEX missing_index_467_466 ON [FMS].[dbo].[RetentionRecords] ([FacilityId])
+            ////CREATE INDEX missing_index_607_606 ON [FMS].[dbo].[Facilities] ([Active], [FileId])
+            ////CREATE INDEX missing_index_607_606 ON [FMS].[dbo].[Facilities] ([Active], [FileId])
+            ////CREATE INDEX missing_index_609_608 ON [FMS].[dbo].[Facilities] ([Active]) INCLUDE ([FileId])
+            ////CREATE INDEX missing_index_609_608 ON [FMS].[dbo].[Facilities] ([Active]) INCLUDE ([FileId])
+            ////CREATE INDEX missing_index_997_996 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address])
+            ////CREATE INDEX missing_index_997_996 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address])
+            ////CREATE INDEX missing_index_1159_1158 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address], [City])
+            ////CREATE INDEX missing_index_1159_1158 ON [FMS].[dbo].[Facilities] ([Active], [FacilityTypeId],[Address], [City])
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers")
