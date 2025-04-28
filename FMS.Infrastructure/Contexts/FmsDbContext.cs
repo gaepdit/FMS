@@ -49,16 +49,6 @@ namespace FMS.Infrastructure.Contexts
             builder.Entity<File>().HasIndex(e => e.FileLabel).IsUnique();
             builder.Entity<Cabinet>().HasIndex(e => e.Name).IsUnique();
             builder.Entity<FacilityType>().HasIndex(e => e.Name).IsUnique();
-            builder.Entity<Facility>().HasIndex(e => e.FileId).
-                IncludeProperties(e => new {e.Active, e.FacilityNumber, e.FacilityTypeId, e.OrganizationalUnitId, e.BudgetCodeId, e.Name, e.ComplianceOfficerId, e.FacilityStatusId, e.Location, e.Address, e.City, e.State, e.PostalCode, e.Latitude, e.Longitude, e.CountyId, e.IsRetained, e.AdditionalDataRequested, e.Comments, e.DeferredOnSiteScoring, e.DeterminationLetterDate, e.HSInumber, e.HasERecord, e.HistoricalComplianceOfficer, e.HistoricalUnit, e.ImageChecked, e.PreRQSMcleanup, e.RNDateReceived, e.VRPReferral });
-            builder.Entity<Facility>().HasIndex(e => new { e.Active, e.FileId });
-            builder.Entity<Facility>().HasIndex(e => e.Active).IncludeProperties(e => new { e.FileId });
-            builder.Entity<Facility>().HasIndex(e => new { e.Active, e.FacilityTypeId, e.Address });
-            builder.Entity<Facility>().HasIndex(e => new { e.Active, e.FacilityTypeId, e.Address, e.City });
-            builder.Entity<RetentionRecord>().HasIndex(e => e.FacilityId);
-            builder.Entity<RetentionRecord>().HasIndex(e => e.FacilityId).
-                IncludeProperties(e => new { e.Active, e.StartYear, e.EndYear, e.ConsignmentNumber, e.BoxNumber, e.ShelfNumber, e.RetentionSchedule });
-         
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers")
