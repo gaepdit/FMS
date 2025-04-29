@@ -17,7 +17,7 @@ namespace FMS.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.1")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -1082,6 +1082,10 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Active");
+
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("Active"), new[] { "FileId" });
+
                     b.HasIndex("BudgetCodeId");
 
                     b.HasIndex("ComplianceOfficerId");
@@ -1094,7 +1098,15 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasIndex("FileId");
 
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("FileId"), new[] { "Active", "FacilityNumber", "FacilityTypeId", "OrganizationalUnitId", "BudgetCodeId", "Name", "ComplianceOfficerId", "FacilityStatusId", "Location", "Address", "City", "State", "PostalCode", "Latitude", "Longitude", "CountyId", "IsRetained", "AdditionalDataRequested", "Comments", "DeferredOnSiteScoring", "DeterminationLetterDate", "HSInumber", "HasERecord", "HistoricalComplianceOfficer", "HistoricalUnit", "ImageChecked", "PreRQSMcleanup", "RNDateReceived", "VRPReferral" });
+
                     b.HasIndex("OrganizationalUnitId");
+
+                    b.HasIndex("Active", "FileId");
+
+                    b.HasIndex("Active", "FacilityTypeId", "Address");
+
+                    b.HasIndex("Active", "FacilityTypeId", "Address", "City");
 
                     b.ToTable("Facilities");
                 });
@@ -1273,6 +1285,8 @@ namespace FMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FacilityId");
+
+                    SqlServerIndexBuilderExtensions.IncludeProperties(b.HasIndex("FacilityId"), new[] { "Active", "StartYear", "EndYear", "ConsignmentNumber", "BoxNumber", "ShelfNumber", "RetentionSchedule" });
 
                     b.ToTable("RetentionRecords");
                 });
