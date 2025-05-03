@@ -30,7 +30,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     ToxValue = "",
                     MCLs = ""
                 },
-                new()
+                new() 
                 {
                     Id = new Guid("e197d2d5-193b-409f-88bb-f0191f3f508d"),
                     Active = true,
