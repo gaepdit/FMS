@@ -16,37 +16,37 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 {
                     Id = new Guid(""),
                     Active = true,
-                    Name = "",
+                    Name = "Primary Contact",
                 },
                 new()
                 {
                     Id = new Guid(""),
                     Active = true,
-                    Name = "",
+                    Name = "Owner",
                 },
                 new()
                 {
                     Id = new Guid(""),
                     Active = true,
-                    Name = "",
+                    Name = "Office Manager",
                 },
                 new()
                 {
                     Id = new Guid(""),
                     Active = true,
-                    Name = "",
+                    Name = "Supervisor",
                 },
                 new()
                 {
                     Id = new Guid(""),
                     Active = true,
-                    Name = "",
+                    Name = "Owner's Representative",
                 },
                 new()
                 {
                     Id = new Guid(""),
                     Active = true,
-                    Name = "",
+                    Name = "Attorney",
                 }
             };
         }

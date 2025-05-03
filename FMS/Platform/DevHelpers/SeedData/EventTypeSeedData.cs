@@ -16,6 +16,78 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 {
                     Id = new Guid(""),
                     Active = true,
+                    Name = "(Legacy) Annual Cert / FA",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "Abandoned/Inactive Site Review",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "Administrative Order",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "Annual Certification",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "Compliance Status Report",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
+                    Name = "",
+                },
+                new()
+                {
+                    Id = new Guid(""),
+                    Active = true,
                     Name = "",
                 },
                 new()
