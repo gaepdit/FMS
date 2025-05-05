@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Entities;
+using FMS.Domain.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 

@@ -113,7 +113,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     FinancialAssurance = false
                 },
                 new()
-{
+                {
                     Id = new Guid("9BD1C8AE-2E95-49A3-99E3-B2D74FEF8984"),
                     Active = true,
                     FacilityId = new Guid(""),
@@ -138,7 +138,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     FinancialAssurance = false
                 },
                 new()
-    {
+                {
                     Id = new Guid("233CEB52-278A-46EB-A066-AF69D25BE64A"),
                     Active = true,
                     FacilityId = new Guid(""),
