@@ -14,6 +14,7 @@ namespace FMS.Domain.Dto
         }
 
         public Guid Id { get; }
+
         public bool Active { get; }
 
         [Display(Name = "Action Taken")]
