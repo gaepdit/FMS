@@ -44,6 +44,7 @@ namespace FMS.Domain.Entities
 
         public int D3 { get; set; }
 
+        public Guid ChemicalId { get; set; }
         public string CASNO { get; set; }
 
         public int E1 { get; set; }

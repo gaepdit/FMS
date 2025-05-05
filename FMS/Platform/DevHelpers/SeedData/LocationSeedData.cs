@@ -14,39 +14,45 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
             {
                 new()
                 {
-                    Id = new Guid(""),
+                    Id = new Guid("533EBBD5-4144-41D5-9338-C3C5317C3E5E"),
                     Active = true,
-                    Score = "",
+                    FacilityId = new Guid(""),
+                    Score = "I",
                 },
                 new()
                 {
-                    Id = new Guid(""),
+                    Id = new Guid("A2ACAA03-EEAA-4409-B16B-1759FB4314E3"),
                     Active = true,
-                    Score = "",
+                    FacilityId = new Guid(""),
+                    Score = "II",
                 },
                 new()
                 {
-                    Id = new Guid(""),
+                    Id = new Guid("41CD50F4-353D-450A-AB4E-8BE3EAF27CA8"),
                     Active = true,
-                    Score = "",
+                    FacilityId = new Guid(""),
+                    Score = "III",
                 },
                 new()
                 {
-                    Id = new Guid(""),
+                    Id = new Guid("77D2B98D-0C55-46EA-9583-B62BD934762C"),
                     Active = true,
-                    Score = "",
+                    FacilityId = new Guid(""),
+                    Score = "IV",
                 },
                 new()
                 {
-                    Id = new Guid(""),
+                    Id = new Guid("A99FF86A-2F97-48DB-830B-9C92F88DE681"),
                     Active = true,
-                    Score = "",
+                    FacilityId = new Guid(""),
+                    Score = "V",
                 },
                 new()
                 {
-                    Id = new Guid(""),
+                    Id = new Guid("98B3C9ED-F747-48AE-8B92-497A35927E90"),
                     Active = true,
-                    Score = "",
+                    FacilityId = new Guid(""),
+                    Score = "ER",
                 }
             };
         }
