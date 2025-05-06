@@ -13,7 +13,7 @@ namespace FMS.Domain.Dto
             Id = location.Id;
             Active = location.Active;
             FacilityId = location.FacilityId;
-            Score = location.Score;
+            Class = location.Class;
         }
 
         public Guid Id { get; set; }
@@ -22,7 +22,7 @@ namespace FMS.Domain.Dto
 
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Score")]
-        public string Score { get; set; }
+        [Display(Name = "Class")]
+        public string Class { get; set; }
     }
 }

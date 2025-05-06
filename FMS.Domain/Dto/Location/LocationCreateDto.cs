@@ -8,12 +8,12 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Score")]
-        public string Score { get; set; }
+        [Display(Name = "Class")]
+        public string Class { get; set; }
 
         public void TrimAll()
         {
-            Score = Score?.Trim();
+            Class = Class?.Trim();
         }
     }
 }

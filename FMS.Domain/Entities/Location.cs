@@ -10,12 +10,11 @@ namespace FMS.Domain.Entities
 
         public Location(Guid id, LocationCreateDto location)
         {
-            FacilityId = id;
-            Score = location.Score;
+            Class = location.Class;
         }
 
         public Guid FacilityId { get; set; }
 
-        public string Score { get; set; }
+        public string Class { get; set; }
     }
 }
