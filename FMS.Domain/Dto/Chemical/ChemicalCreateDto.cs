@@ -12,6 +12,9 @@ namespace FMS.Domain.Dto
         [Required(ErrorMessage = "Chemical Name is required.")]
         public string ChemicalName { get; set; }
 
+        [Display(Name = "Common Name")]
+        public string CommonName { get; set; }
+
         public string ToxValue { get; set; }
 
         public string MCLs { get; set; }
