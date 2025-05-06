@@ -1,14 +1,14 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
-    public class LocationEditDto
+    public class LocationSummaryDto
     {
-        public LocationEditDto() { }
+        public LocationSummaryDto() { }
 
-        public LocationEditDto(Location location)
+        public LocationSummaryDto(Location location)
         {
             Id = location.Id;
             Active = location.Active;

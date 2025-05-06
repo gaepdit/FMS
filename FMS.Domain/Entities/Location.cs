@@ -15,6 +15,7 @@ namespace FMS.Domain.Entities
         }
 
         public Guid FacilityId { get; set; }
+
         public string Score { get; set; }
     }
 }
