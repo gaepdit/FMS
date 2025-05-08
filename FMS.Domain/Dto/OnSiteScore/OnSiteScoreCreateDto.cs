@@ -35,6 +35,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        public Guid ChemicalId { get; set; }
+
         [Display(Name = "CAS Number")]
         public string CASNO { get; set; }
 

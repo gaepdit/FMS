@@ -9,6 +9,8 @@ namespace FMS.Domain.Dto
         public ContactEditDto() { }
         public ContactEditDto(Contact contact)
         {
+            Id = contact.Id;
+            Active = contact.Active;
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
             ContactTitleId = contact.ContactTitleId;
@@ -21,6 +23,11 @@ namespace FMS.Domain.Dto
             Email = contact.Email;
             Status = contact.Status;
         }
+
+        public Guid Id { get; set; }
+
+        public bool Active { get; set; }
+
         [Display(Name = "First Name")]
         public string GivenName { get; set; }
 

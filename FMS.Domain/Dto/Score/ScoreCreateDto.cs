@@ -7,14 +7,12 @@ namespace FMS.Domain.Dto
     {
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Rank")]
-        public int Rank { get; set; }
-
         [Display(Name = "Scored Date")]
         public DateOnly ScoredDate { get; set; }
 
         [Display(Name = "Scored By")]
-        public string ScoredBy { get; set; }
+        public Guid ScoredById { get; set; }
+        public string ScoredBy { get; set; } 
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }

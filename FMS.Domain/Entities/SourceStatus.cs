@@ -1,5 +1,6 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
+using System;
 
 namespace FMS.Domain.Entities
 {

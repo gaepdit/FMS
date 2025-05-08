@@ -12,7 +12,7 @@ namespace FMS.Domain.Entities
         {
             FacilityId = score.FacilityId;
             ScoredDate = score.ScoredDate;
-            ScoredBy = score.ScoredBy;
+            ScoredById = score.ScoredById;
             Comments = score.Comments;
             UseComments = score.UseComments;
         }
@@ -20,7 +20,8 @@ namespace FMS.Domain.Entities
 
         public DateOnly ScoredDate { get; set; }
 
-        public string ScoredBy { get; set; }
+        public Guid ScoredById { get; set; }
+        public string ScoredBy { get; set; } 
 
         public string Comments { get; set; }   
         

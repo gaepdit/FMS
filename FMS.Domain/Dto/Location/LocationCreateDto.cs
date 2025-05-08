@@ -6,15 +6,14 @@ namespace FMS.Domain.Dto
     public class LocationCreateDto
     {
         [Required]
-        [Display(Name = "Facility Number")]
-        public string FacilityNumber { get; set; }
+        public Guid FacilityId { get; set; }
 
-        [Display(Name = "Score")]
-        public string Score { get; set; }
+        [Display(Name = "Class")]
+        public string Class { get; set; }
 
         public void TrimAll()
         {
-            Score = Score?.Trim();
+            Class = Class?.Trim();
         }
     }
 }

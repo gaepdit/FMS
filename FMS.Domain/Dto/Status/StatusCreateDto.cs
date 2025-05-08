@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Entities;
+using FMS.Domain.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -37,8 +37,8 @@ namespace FMS.Domain.Dto
 
         public string ISWQS { get; set; }
 
-        public Guid PrimaryFundingSourceId { get; set; }
-        public FundingSource PrimaryFundingSource { get; set; }
+        public Guid FundingSourceId { get; set; }
+        public FundingSource FundingSource { get; set; }
 
         public bool LandFill { get; set; }
 

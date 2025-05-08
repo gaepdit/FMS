@@ -10,12 +10,19 @@ namespace FMS.Domain.Dto
 
         public LocationEditDto(Location location)
         {
+            Id = location.Id;
+            Active = location.Active;
             FacilityId = location.FacilityId;
-            Score = location.Score;
+            Class = location.Class;
         }
+
+        public Guid Id { get; set; }
+
+        public bool Active { get; set; }
+
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Score")]
-        public string Score { get; set; }
+        [Display(Name = "Class")]
+        public string Class { get; set; }
     }
 }
