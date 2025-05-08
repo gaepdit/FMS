@@ -4,7 +4,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IOnsiteScoreRepository
+    public interface IOnsiteScoreRepository : IDisposable
     {
         Task<bool> OnsiteScoreExistsAsync(Guid id);
         Task<OnsiteScoreEditDto> GetOnsiteScoreByIdAsync(Guid id);

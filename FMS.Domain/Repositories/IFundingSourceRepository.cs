@@ -5,7 +5,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IFundingSourceRepository
+    public interface IFundingSourceRepository : IDisposable
     {
         Task<bool> FundingSourceExistsAsync(Guid id);
 

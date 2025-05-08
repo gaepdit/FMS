@@ -1,15 +1,16 @@
-using System;
-using FMS.Domain.Entities.Base;
-using FMS.Domain.Dto;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using FMS.Domain.Entities;
 
-namespace FMS.Domain.Entities
+namespace FMS.Domain.Dto
 {
-    public class Status : BaseActiveModel
+    public class StatusEditDto
     {
-        public Status() { }
+        public StatusEditDto() { }
 
-        public Status(StatusCreateDto status)
+        public StatusEditDto(Status status)
         {
+            Id = status.Id;
             FacilityId = status.FacilityId;
             SourceStatusId = status.SourceStatusId;
             SourceDate = status.SourceDate;
@@ -32,6 +33,9 @@ namespace FMS.Domain.Entities
             FinancialAssurance = status.FinancialAssurance;
         }
 
+        public Guid Id { get; set; }
+
+        [Required]
         public Guid FacilityId { get; set; }
 
         public Guid SourceStatusId { get; set; }

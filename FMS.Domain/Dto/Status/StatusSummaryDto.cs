@@ -1,15 +1,13 @@
-using System;
-using FMS.Domain.Entities.Base;
-using FMS.Domain.Dto;
+﻿using System;
+using FMS.Domain.Entities;
 
-namespace FMS.Domain.Entities
+namespace FMS.Domain.Dto
 {
-    public class Status : BaseActiveModel
+    public class StatusSummaryDto
     {
-        public Status() { }
-
-        public Status(StatusCreateDto status)
+        public StatusSummaryDto(Status status)
         {
+            Id = status.Id;
             FacilityId = status.FacilityId;
             SourceStatusId = status.SourceStatusId;
             SourceDate = status.SourceDate;
@@ -32,38 +30,35 @@ namespace FMS.Domain.Entities
             FinancialAssurance = status.FinancialAssurance;
         }
 
+        public Guid Id { get; set; }
+
         public Guid FacilityId { get; set; }
 
         public Guid SourceStatusId { get; set; }
-        public SourceStatus SourceStatus { get; set; }
 
         public DateOnly? SourceDate { get; set; }
 
         public string SourceProjected { get; set; }
 
         public Guid SoilStatusId { get; set; }
-        public SoilStatus SoilStatus { get; set; }
 
         public DateOnly? SoilDate { get; set; }
 
         public string SoilProjected { get; set; }
 
         public Guid GroundwaterStatusId { get; set; }
-        public GroundwaterStatus GroundwaterStatus { get; set; }
 
         public DateOnly? GroundwaterDate { get; set; }
 
         public string GroundwaterHWTF { get; set; }
 
         public Guid OverallStatusId { get; set; }
-        public OverallStatus OverallStatus { get; set; }
 
         public DateOnly? OverallDate { get; set; }
 
         public string ISWQS { get; set; }
 
         public Guid FundingSourceId { get; set; }
-        public FundingSource FundingSource { get; set; }
 
         public bool LandFill { get; set; }
 

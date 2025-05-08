@@ -5,7 +5,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IOverallStatusRepository
+    public interface IOverallStatusRepository : IDisposable
     {
         Task<bool> OverallStatusExistsAsync(Guid id);
 

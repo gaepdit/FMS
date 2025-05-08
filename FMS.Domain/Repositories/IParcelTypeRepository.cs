@@ -5,7 +5,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IParcelTypeRepository
+    public interface IParcelTypeRepository : IDisposable
     {
         Task<bool> ParcelTypeExistsAsync(Guid id);
 

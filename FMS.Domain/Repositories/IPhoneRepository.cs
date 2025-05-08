@@ -5,7 +5,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IPhoneRepository
+    public interface IPhoneRepository : IDisposable
     {
         Task<bool> PhoneExistsAsync(Guid id);
 
