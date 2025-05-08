@@ -71,6 +71,56 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Groundwater = false,
                     Soil = false,
                     UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid("CE9C2633-A7CD-4DE6-B1CE-30DC6369557C"),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid("F93B6825-D1EB-469A-A716-7C9B3E2A423E"),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid("71DD8B22-6596-44F5-9BB9-B108A46469F4"),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid("FFEDC0D1-085C-4422-BFCF-83E8FA4A20E4"),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
+                },
+                new()
+                {
+                    Id = new Guid("A45057D5-DC61-4CC9-9E3C-C6F4505D9EAB"),
+                    Active = true,
+                    FacilityId = new Guid(""),
+                    ChemicalId = new Guid(""),
+                    Groundwater = false,
+                    Soil = false,
+                    UseForScoring = false
                 }
             };
         }

@@ -65,6 +65,51 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     ChemicalName = "", 
                     ToxValue = "", 
                     MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid("5ECEF580-F3CB-4C60-8D3E-AA19AE49A03F"),
+                    Active = true,
+                    CasNo = "",
+                    ChemicalName = "",
+                    ToxValue = "",
+                    MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid("1BD5A2B6-5D1A-4477-B621-E7DC4E6CB504"),
+                    Active = true,
+                    CasNo = "",
+                    ChemicalName = "",
+                    ToxValue = "",
+                    MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid("816D044A-8B2C-4C71-AB75-C1137971E6D6"),
+                    Active = true,
+                    CasNo = "",
+                    ChemicalName = "",
+                    ToxValue = "",
+                    MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid("31A34C9F-5600-4D18-85E5-5242B4D8BB26"),
+                    Active = true,
+                    CasNo = "",
+                    ChemicalName = "",
+                    ToxValue = "",
+                    MCLs = "",
+                },
+                new()
+                {
+                    Id = new Guid("AF3F6523-91C9-41E2-B08A-6BEAD2599FAA"),
+                    Active = true,
+                    CasNo = "",
+                    ChemicalName = "",
+                    ToxValue = "",
+                    MCLs = "",
                 }
             };
         }

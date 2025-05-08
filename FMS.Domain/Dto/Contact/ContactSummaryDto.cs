@@ -1,16 +1,17 @@
-﻿using FMS.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
-    public class ContactEditDto
+    public class ContactSummaryDto
     {
-        public ContactEditDto() { }
-        public ContactEditDto(Contact contact)
+        public ContactSummaryDto() { }
+
+        public ContactSummaryDto(Contact contact)
         {
             Id = contact.Id;
             Active = contact.Active;
+            FacilityId = contact.FacilityId;
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
             ContactTitleId = contact.ContactTitleId;
@@ -23,42 +24,32 @@ namespace FMS.Domain.Dto
             Email = contact.Email;
             Status = contact.Status;
         }
-
         public Guid Id { get; set; }
 
         public bool Active { get; set; }
 
-        [Display(Name = "First Name")]
+        public Guid FacilityId { get; set; }
+
         public string GivenName { get; set; }
 
-        [Display(Name = "Last Name")]
         public string FamilyName { get; set; }
 
-        [Display(Name = "Title")]
         public Guid ContactTitleId { get; set; }
 
-        [Display(Name = "Contact Type")]
         public Guid ContactTypeId { get; set; }
 
-        [Display(Name = "Company")]
         public string Company { get; set; }
 
-        [Display(Name = "Address")]
         public string Address { get; set; }
 
-        [Display(Name = "City")]
         public string City { get; set; }
 
-        [Display(Name = "State")]
         public string State { get; set; }
 
-        [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
 
-        [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Status")]
         public string Status { get; set; }
     }
 }
