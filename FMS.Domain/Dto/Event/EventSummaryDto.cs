@@ -5,8 +5,6 @@ namespace FMS.Domain.Dto
 {
     public class EventSummaryDto
     {
-        public EventSummaryDto() { }
-
         public EventSummaryDto(Event eventEntity)
         {
             Id = eventEntity.Id;

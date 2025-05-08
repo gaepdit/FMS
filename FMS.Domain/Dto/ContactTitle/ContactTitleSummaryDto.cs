@@ -6,8 +6,6 @@ namespace FMS.Domain.Dto
 {
     public class ContactTitleSummaryDto
     {
-        public ContactTitleSummaryDto() { }
-
         public ContactTitleSummaryDto(ContactTitle contactTitle)
         {
             Id = contactTitle.Id;

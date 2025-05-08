@@ -5,6 +5,8 @@ namespace FMS.Domain.Dto
 {
     public class PhoneCreateDto
     {
+        public bool Active { get; set; } = true;
+
         public Guid ContactId { get; set; }
 
         [Display(Name = "Country Code")]

@@ -6,8 +6,6 @@ namespace FMS.Domain.Dto
 {
     public class FundingSourceSummaryDto
     {
-        public FundingSourceSummaryDto() { }
-
         public FundingSourceSummaryDto(FundingSource fundingSource)
         {
             Id = fundingSource.Id;

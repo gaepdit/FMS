@@ -11,7 +11,7 @@ namespace FMS.Domain.Repositories
 
         Task<FundingSourceEditDto> GetFundingSourceByIdAsync(Guid id);
 
-        Task<IReadOnlyList<FundingSourceSummaryDto>> GetFundingSourceListsAsync();
+        Task<IReadOnlyList<FundingSourceSummaryDto>> GetFundingSourceListAsync();
 
         Task<Guid> CreateFundingSourceAsync(FundingSourceCreateDto fundingSource);
 

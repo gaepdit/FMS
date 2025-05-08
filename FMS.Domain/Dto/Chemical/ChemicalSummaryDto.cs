@@ -6,7 +6,6 @@ namespace FMS.Domain.Dto
 {
     public class ChemicalSummaryDto
     {
-        public ChemicalSummaryDto() { }
         public ChemicalSummaryDto(Chemical chemical)
         {
             Id = chemical.Id;

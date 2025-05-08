@@ -11,11 +11,11 @@ namespace FMS.Domain.Dto
         {
             Id = hsrpFacilityProperties.Id;
             FacilityId = hsrpFacilityProperties.FacilityId;
-            DateListed = (DateOnly)(hsrpFacilityProperties.DateListed);
+            DateListed = hsrpFacilityProperties.DateListed;
             AdditionalOrgUnit = hsrpFacilityProperties.AdditionalOrgUnit;
             Geologist = hsrpFacilityProperties.Geologist;
-            VRPDate = (DateOnly)(hsrpFacilityProperties.VRPDate);
-            BrownfieldDate = (DateOnly)(hsrpFacilityProperties.BrownfieldDate);
+            VRPDate = hsrpFacilityProperties.VRPDate;
+            BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
         }
         [Required]
         public Guid Id { get; set; }

@@ -6,6 +6,9 @@ namespace FMS.Domain.Dto
 {
     public class ParcelCreateDto
     {
+        public bool Active { get; set; }
+
+        [Required]
         public Guid LocationId { get; set; }
 
         [Display(Name = "Parcel Number")]
