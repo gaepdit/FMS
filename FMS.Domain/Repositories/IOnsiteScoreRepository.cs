@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Repositories
 {
