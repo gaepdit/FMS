@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
@@ -121,7 +122,7 @@ namespace FMS.Infrastructure.Repositories
         }
 
         public void Dispose()
-        {
+    {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
