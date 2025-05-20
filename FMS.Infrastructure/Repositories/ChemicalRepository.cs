@@ -1,0 +1,125 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FMS.Domain.Dto;
+using FMS.Domain.Entities;
+using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
+using FMS.Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace FMS.Infrastructure.Repositories
+{
+    public class ChemicalRepository : IChemicalRepository
+    {
+        private readonly FmsDbContext _context;
+
+        public ChemicalRepository(FmsDbContext context) => _context = context;
+
+        public Task<bool> ChemicalExistsAsync(Guid id) =>
+            _context.Chemicals.AnyAsync(e => e.Id == id);
+
+        public Task<bool> ChemicalCasNoExistsAsync(string casNo, Guid? ignoreId = null) =>
+            _context.Chemicals.AnyAsync(e =>
+                e.CasNo == casNo && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public async Task<ChemicalEditDto> GetChemicalByIdAsync(Guid id)
+        {
+            var chemical = await _context.Chemicals.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            return chemical == null ? null : new ChemicalEditDto(chemical);
+        }
+
+        public async Task<Chemical> GetChemicalByNameAsync(string name)
+        {
+            var chemical = await _context.Chemicals.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Name == name);
+
+            return chemical;
+        }
+
+        public async Task<IReadOnlyList<ChemicalSummaryDto>> GetChemicaListAsync() =>
+            await _context.Chemicals.AsNoTracking()
+                .OrderBy(e => e.CasNo)
+                .Select(e => new ChemicalSummaryDto(e))
+                .ToListAsync();
+
+        public Task<Guid> CreateChemicalAsync(ChemicalCreateDto chemical)
+        {
+            Prevent.Null(chemical, nameof(chemical));
+            Prevent.NullOrEmpty(chemical.ChemicalName, nameof(chemical.ChemicalName));
+
+            return CreateChemicalInternalAsync(chemical);
+        }
+
+        private async Task<Guid> CreateChemicalInternalAsync(ChemicalCreateDto chemical)
+        {
+            if (await ChemicalCasNoExistsAsync(chemical.CasNo))
+            {
+                throw new ArgumentException($"Chemical with CasNo: '{chemical.CasNo}' already exists.");
+            }
+
+            var newChemical = new Chemical
+            {
+                Id = Guid.NewGuid(),
+                ChemicalName = chemical.ChemicalName,
+                CasNo = chemical.CasNo,
+                Active = true
+            };
+            await _context.Chemicals.AddAsync(newChemical);
+            await _context.SaveChangesAsync();
+            return newChemical.Id;
+        }
+
+        public Task UpdateChemicalAsync(Guid Id, ChemicalEditDto chemicalUpdates)
+        {
+            Prevent.Null(chemicalUpdates, nameof(chemicalUpdates));
+            Prevent.NullOrEmpty(chemicalUpdates.ChemicalName, nameof(chemicalUpdates.ChemicalName));
+           
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateChemicalStatusAsync(Guid id, bool active)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region IDisposable Support
+
+        private bool _disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposedValue) return;
+
+            if (disposing)
+            {
+                // dispose managed state (managed objects)
+                _context.Dispose();
+            }
+
+            // free unmanaged resources (unmanaged objects) and override finalizer
+            // set large fields to null
+            _disposedValue = true;
+        }
+
+        // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        ~ChemicalRepository()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+    }
+}

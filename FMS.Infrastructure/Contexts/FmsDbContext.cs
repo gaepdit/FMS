@@ -33,6 +33,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<Cabinet> Cabinets { get; set; }
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
+        public DbSet<Chemical> Chemicals { get; set; }
 
         // The "Counties" table is only used to add County data to the database for database-side use.
         // Counties are stored in memory and never accessed from the database, but other entities
@@ -57,6 +58,7 @@ namespace FMS.Infrastructure.Contexts
             builder.Entity<RetentionRecord>().HasIndex(e => e.FacilityId);
             builder.Entity<RetentionRecord>().HasIndex(e => e.FacilityId).
                 IncludeProperties(e => new { e.Active, e.StartYear, e.EndYear, e.ConsignmentNumber, e.BoxNumber, e.ShelfNumber, e.RetentionSchedule });
+         
 
             // Identity Tables
             builder.Entity<ApplicationUser>().ToTable("AppUsers")
