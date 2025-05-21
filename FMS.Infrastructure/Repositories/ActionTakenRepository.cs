@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FMS.Domain.Repositories;
+using FMS.Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.Repositories
 {
