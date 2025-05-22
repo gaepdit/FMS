@@ -76,10 +76,10 @@ namespace FMS.Infrastructure.Repositories
             return newChemical.Id;
         }
 
-        public Task UpdateChemicalAsync(Guid Id, ChemicalEditDto chemicalUpdates)
+        public Task UpdateChemicalAsync(Guid id, ChemicalEditDto chemicalUpdates)
         {
             Prevent.Null(chemicalUpdates, nameof(chemicalUpdates));
-            return UpdateChemicalInternalAsync(Id, chemicalUpdates);
+            return UpdateChemicalInternalAsync(id, chemicalUpdates);
         }
 
         private async Task UpdateChemicalInternalAsync(Guid id, ChemicalEditDto chemicalUpdates)

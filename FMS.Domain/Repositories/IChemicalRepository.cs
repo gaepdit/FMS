@@ -20,7 +20,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreateChemicalAsync(ChemicalCreateDto chemical);
 
-        Task UpdateChemicalAsync(Guid Id, ChemicalEditDto chemicalUpdates);
+        Task UpdateChemicalAsync(Guid id, ChemicalEditDto chemicalUpdates);
 
         Task UpdateChemicalStatusAsync(Guid id, bool active);
     }
