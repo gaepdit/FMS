@@ -52,6 +52,7 @@ namespace FMS.Infrastructure.Repositories
         {
             Prevent.Null(chemical, nameof(chemical));
             Prevent.NullOrEmpty(chemical.ChemicalName, nameof(chemical.ChemicalName));
+            Prevent.NullOrEmpty(chemical.CasNo, nameof(chemical.CasNo));
 
             return CreateChemicalInternalAsync(chemical);
         }
