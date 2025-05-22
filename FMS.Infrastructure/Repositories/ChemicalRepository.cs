@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
@@ -77,14 +76,34 @@ namespace FMS.Infrastructure.Repositories
         public Task UpdateChemicalAsync(Guid Id, ChemicalEditDto chemicalUpdates)
         {
             Prevent.Null(chemicalUpdates, nameof(chemicalUpdates));
-            Prevent.NullOrEmpty(chemicalUpdates.ChemicalName, nameof(chemicalUpdates.ChemicalName));
-           
-            throw new NotImplementedException();
+            return UpdateChemicalInternalAsync(Id, chemicalUpdates);
         }
 
-        public Task UpdateChemicalStatusAsync(Guid id, bool active)
+        private async Task UpdateChemicalInternalAsync(Guid id, ChemicalEditDto chemicalUpdates)
         {
-            throw new NotImplementedException();
+            var chemical = await _context.Chemicals.FindAsync(id) ?? throw new ArgumentException("Chemical ID not found.", nameof(id));
+
+            if (await ChemicalCasNoExistsAsync(chemicalUpdates.CasNo, id))
+            {
+                throw new ArgumentException($"Chemical CasNo '{chemicalUpdates.CasNo}' already exists.");
+            }
+
+            chemical.CasNo = chemicalUpdates.CasNo;
+            chemical.ChemicalName = chemicalUpdates.ChemicalName;
+            chemical.CommonName = chemicalUpdates.CommonName;
+            chemical.ToxValue = chemicalUpdates.ToxValue;
+            chemical.MCLs = chemicalUpdates.MCLs;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateChemicalStatusAsync(Guid id, bool active)
+        {
+            var chemical = await _context.Chemicals.FindAsync(id) ?? throw new ArgumentException("Chemical ID not found");
+
+            chemical.Active = active;
+
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Support
