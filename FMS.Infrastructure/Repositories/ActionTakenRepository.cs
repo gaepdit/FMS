@@ -47,7 +47,7 @@ namespace FMS.Infrastructure.Repositories
         }
         private async Task<Guid> CreateActionTakenInternalAsync(ActionTakenCreateDto actionTaken)
         {
-            if (await ActionTakenNameExistAsync(actionTaken.Name))
+            if (await ActionTakenNameExistsAsync(actionTaken.Name))
             {
                 throw new ArgumentException($"Action Taken {actionTaken.Name} already exist.");
             }
@@ -73,7 +73,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Action Taken ID not found.", nameof(id));
             }
 
-            if (await ActionTakenNameExistAsync(actionTakenUpdates.Name, id))
+            if (await ActionTakenNameExistsAsync(actionTakenUpdates.Name, id))
             {
                 throw new ArgumentException(
                     $"Action Taken Name '{actionTakenUpdates.Name}' already exist.");
