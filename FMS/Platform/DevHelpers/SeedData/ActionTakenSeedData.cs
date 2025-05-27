@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using FMS.Domain.Entities;
 
@@ -12,6 +12,54 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
         {
             return new List<ActionTaken>()
             {
+                new()
+                {
+                    Id = new Guid("a7a3f7b3-8cd3-421c-a041-1f6a29cba42c"),
+                    Active = true,
+                    Name = "Amendment",
+                },
+                new()
+                {
+                    Id = new Guid("45830c35-6d19-4d12-b22a-3a02dd126f0f"),
+                    Active = true,
+                    Name = "Appeal",
+                },
+                new()
+                {
+                    Id = new Guid("d3562fc2-d606-4bc2-ba7e-5d096eb33cf7"),
+                    Active = true,
+                    Name = "Call In Letter",
+                },
+                new()
+                {
+                    Id = new Guid("90522ff8-de86-44fd-9a8b-386a54dfd7da"),
+                    Active = true,
+                    Name = "Cancel/Terminate",
+                },
+                new()
+                {
+                    Id = new Guid("c53c8451-bec9-45e1-8db1-0b4f04cd4395"),
+                    Active = true,
+                    Name = "Concur Engineering and Institutional  Type 5 RRS",
+                },
+                new()
+                {
+                    Id = new Guid("661846da-db76-48f0-abfa-4c4a42db474e"),
+                    Active = true,
+                    Name = "Concur Non-Residential Type 3 and 4 RRS",
+                },
+                new()
+                {
+                    Id = new Guid("526ddb34-2f7d-4369-8ed4-ced51bc23fb2"),
+                    Active = true,
+                    Name = "Concur Residential Type 1 and 2 RRS",
+                },
+                new()
+                {
+                    Id = new Guid("6aae6fa2-17ca-4edd-9c59-87c6af3885c3"),
+                    Active = true,
+                    Name = "Draft Received",
+                },
                 new()
                 {
                     Id = new Guid("a7a3f7b3-8cd3-421c-a041-1f6a29cba42c"),
