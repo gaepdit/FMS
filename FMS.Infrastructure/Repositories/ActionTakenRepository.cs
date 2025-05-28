@@ -7,17 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Domain.Repositories;
-using FMS.Domain.Utils;
-using FMS.Infrastructure.Contexts;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
@@ -26,8 +15,10 @@ namespace FMS.Infrastructure.Repositories
     {
         public readonly FmsDbContext _context;
         public ActionTakenRepository(FmsDbContext context) => _context = context;
+
         public Task<bool> ActionTakenExistsAsync(Guid id) =>
             _context.ActionTaken.AnyAsync(e => e.Id == id);
+
         public Task<bool> ActionTakenNameExistsAsync(string name, Guid? ignoreId = null) =>
             _context.ActionTaken.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
@@ -43,11 +34,10 @@ namespace FMS.Infrastructure.Repositories
             return new ActionTakenEditDto(actionTaken);
         }
 
-        public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync() =>
-            await _context.ActionTaken.AsNoTracking()
-            .OrderBy(e => e.Name)
-            .Select(e => new ActionTakenSummaryDto(e));
-            .ToListAsync();
+        public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync() => await _context.ActionTaken.AsNoTracking()
+           .OrderBy(e => e.Name)
+           .Select(e => new ActionTakenSummaryDto(e))
+           .ToListAsync();
 
         public Task<Guid> CreateActionTakenAsync(ActionTakenCreateDto actionTaken)
         {
@@ -56,6 +46,7 @@ namespace FMS.Infrastructure.Repositories
 
             return CreateActionTakenInternalAsync(actionTaken);
         }
+
         private async Task<Guid> CreateActionTakenInternalAsync(ActionTakenCreateDto actionTaken)
         {
             if (await ActionTakenNameExistsAsync(actionTaken.Name))
@@ -69,38 +60,34 @@ namespace FMS.Infrastructure.Repositories
 
             return newAT.Id;
         }
+
         public Task UpdateActionTakenAsync(Guid id, ActionTakenEditDto actionTaken)
         {
             Prevent.NullOrEmpty(actionTaken.Name, nameof(actionTaken.Name));
             return UpdateActionTakenInternalAsync(id, actionTaken);
         }
-        private async Task<Guid> UpdateActionTakenInternalAsync(Guid id,
-            ActionTakenEditDto actionTakenUpdates)
-        {
-            var actionTaken = await _context.ActionTaken.FindAsync(id);
 
-            if (actionTaken == null)
-            {
-                throw new ArgumentException("Action Taken ID not found.", nameof(id));
-            }
+        private async Task<Guid> UpdateActionTakenInternalAsync(Guid id, ActionTakenEditDto actionTakenUpdates)
+        {
+            var actionTaken = await _context.ActionTaken.FindAsync(id) ?? throw new ArgumentException("Action Taken ID not found.", nameof(id));
 
             if (await ActionTakenNameExistsAsync(actionTakenUpdates.Name, id))
             {
-                throw new ArgumentException(
-                    $"Action Taken Name '{actionTakenUpdates.Name}' already exist.");
+                throw new ArgumentException($"Action Taken Name '{actionTakenUpdates.Name}' already exist.");
             }
+
             actionTaken.Name = actionTakenUpdates.Name;
 
             await _context.SaveChangesAsync();
+
+            // Ensure all code paths return a value
+            return actionTaken.Id;
         }
 
         public async Task UpdateActionTakenStatusAsync(Guid id, bool active)
         {
-            var actionTaken = await _context.ActionTaken.FindAsync(id);
-            if (actionTaken == null)
-            {
-                throw new ArgumentException("Action Taken ID not found");
-            }
+            var actionTaken = await _context.ActionTaken.FindAsync(id)
+                ?? throw new ArgumentException("Action Taken ID not found");
             actionTaken.Active = active;
             await _context.SaveChangesAsync();
         }
@@ -132,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
         }
 
         public void Dispose()
-    {
+        {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);

@@ -12,7 +12,7 @@ namespace FMS.Domain.Repositories
         Task<ActionTakenEditDto> GetActionTakenAsync(Guid id);
         Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync();
         Task<Guid> CreateActionTakenAsync(ActionTakenCreateDto actionTaken);
-        Task UpdateActionTakenAsync(Guid id, ActionTakenEditDto actionTakenUpdates);
+        Task UpdateActionTakenAsync(Guid id, ActionTakenEditDto actionTaken);
         Task UpdateActionTakenStatusAsync(Guid id, bool active);
     }
 }
