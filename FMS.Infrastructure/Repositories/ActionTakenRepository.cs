@@ -96,7 +96,7 @@ namespace FMS.Infrastructure.Repositories
 
         private bool _disposedValue;
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (_disposedValue) return;
 
