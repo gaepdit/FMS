@@ -27,7 +27,7 @@ namespace FMS.Infrastructure.Repositories
             }
             return new ContactTypeEditDto(contactType);
         }
-        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => await _context.ContactType.AsNoTracking()
+        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListsAsync() => await _context.ContactType.AsNoTracking()
            .OrderBy(e => e.Name)
            .Select(e => new ContactTypeSummaryDto(e))
            .ToListAsync();
@@ -69,5 +69,41 @@ namespace FMS.Infrastructure.Repositories
             contactType.Active = active;
             await _context.SaveChangesAsync();
         }
+
+        #region IDisposable Support
+
+        private bool _disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposedValue) return;
+
+            if (disposing)
+            {
+                // dispose managed state (managed objects)
+                _context.Dispose();
+            }
+
+            // free unmanaged resources (unmanaged objects) and override finalizer
+            // set large fields to null
+            _disposedValue = true;
+        }
+
+        // override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        ~ContactTypeRepository()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
     }
 }
