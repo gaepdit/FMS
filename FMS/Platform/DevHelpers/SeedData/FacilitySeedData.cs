@@ -278,7 +278,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 },
                 new()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = new Guid("9B251E15-BC63-40DC-B8D8-0E0668C768D0"),
                     Active = true,
                     FacilityNumber = "FMS-183",
                     FileId = new Guid("EF5FB128-D3BF-4CFF-9931-9F114D25D8A1"), // 180-0001
@@ -300,7 +300,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 },
                 new()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = new Guid("BCC3CB69-A906-4397-8006-0188BDF1F143"),
                     Active = true,
                     FacilityNumber = "RN7075",
                     FileId = new Guid("5a7ca0e7-e767-4583-98fe-6def04eebb68"),
@@ -333,7 +333,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 },
                 new()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = new Guid("D827B694-7CB3-4953-8422-19D0A3587C8F"),
                     Active = true,
                     FacilityNumber = "RN4979",
                     FileId = null,
