@@ -6,7 +6,6 @@ namespace FMS.Domain.Entities
     public class ContactType : BaseActiveModel
     {
         public ContactType() { }
-
         public ContactType(ContactTypeCreateDto contactType)
         {
             Name = contactType.Name;

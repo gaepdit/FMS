@@ -35,6 +35,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<Chemical> Chemicals { get; set; }
         public DbSet<ActionTaken> ActionTaken { get; set; }
+        public DbSet<ContactType> ContactType { get; set; }
 
 
         // The "Counties" table is only used to add County data to the database for database-side use.
