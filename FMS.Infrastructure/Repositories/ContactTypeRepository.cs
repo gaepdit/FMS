@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
-    internal class ContactTypeRepository : IContactTypeRepository
+    public class ContactTypeRepository : IContactTypeRepository
     {
         public readonly FmsDbContext _context;
         public ContactTypeRepository(FmsDbContext context) => _context = context;
@@ -27,7 +27,7 @@ namespace FMS.Infrastructure.Repositories
             }
             return new ContactTypeEditDto(contactType);
         }
-        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => await _context.ContactTypes.AsNoTracking()
+        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => await _context.ContactType.AsNoTracking()
            .OrderBy(e => e.Name)
            .Select(e => new ContactTypeSummaryDto(e))
            .ToListAsync();
