@@ -27,7 +27,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     State = "GA",
                     PostalCode = "30188",
                     Email = "jschmoe@pollent.com",
-                    Status = ""
+                    Status = "Secondary"
                 },
                 new()
                 {
@@ -44,7 +44,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     State = "GA",
                     PostalCode = "30188",
                     Email = "Bill.Bailey@pollent.com",
-                    Status = ""
+                    Status = "Primary"
                 },
                 new()
                 {
@@ -61,7 +61,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     State = "GA", 
                     PostalCode = "30188", 
                     Email = "TimTut@MyCo.com", 
-                    Status = ""
+                    Status = "Secondary"
                 },
                 new()
                 {
@@ -78,7 +78,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     State = "GA", 
                     PostalCode = "30188", 
                     Email = "JenJun@MyCo.com", 
-                    Status = ""
+                    Status = "Primary"
                 },
                 new()
                 {
@@ -95,7 +95,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     State = "GA", 
                     PostalCode = "30188", 
                     Email = "G.McGregor@AnotherCo.com", 
-                    Status = ""
+                    Status = "Primary"
                 },
                 new()
                 {
@@ -112,7 +112,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     State = "GA", 
                     PostalCode = "30188", 
                     Email = "DrMasorati@AnotherCo.com", 
-                    Status = "",
+                    Status = "Secondary",
                 }
             };
         }

@@ -11,6 +11,7 @@ namespace FMS.Domain.Dto
         {
             Id = eventEntity.Id;
             Active = eventEntity.Active;
+            FacilityId = eventEntity.FacilityId;
             ParentId = eventEntity.ParentId;
             EventTypeId = eventEntity.EventTypeId;
             ActionTakenId = eventEntity.ActionTakenId;
@@ -26,6 +27,8 @@ namespace FMS.Domain.Dto
         public Guid Id { get; set; }
 
         public bool Active { get; set; } = true;
+
+        public Guid FacilityId { get; set; }
 
         public Guid? ParentId { get; set; }
 
