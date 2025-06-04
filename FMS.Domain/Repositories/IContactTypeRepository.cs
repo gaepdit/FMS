@@ -11,7 +11,7 @@ namespace FMS.Domain.Repositories
         Task<ContactTypeEditDto> GetContactTypeByIdAsync(Guid id);
         Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync();
         Task<Guid> CreateContactTypeAsync(ContactTypeCreateDto contactType);
-        Task UpdateContactTypeAsync(Guid Id, ContactTypeEditDto contactTypeUpdates);
+        Task UpdateContactTypeAsync(Guid id, ContactTypeEditDto contactType);
         Task UpdateContactTypeStatusAsync(Guid id, bool active);
     }
 }
