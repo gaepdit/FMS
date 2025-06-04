@@ -13,6 +13,7 @@ namespace FMS.Domain.Dto
             Id = overallStatus.Id;
             Active = overallStatus.Active;
             Name = overallStatus.Name;
+            Description = overallStatus.Description;
         }
 
         public Guid Id { get; set; }
@@ -21,5 +22,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Overall Status")]
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

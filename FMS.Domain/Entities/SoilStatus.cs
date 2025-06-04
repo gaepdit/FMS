@@ -11,14 +11,18 @@ namespace FMS.Domain.Entities
         public SoilStatus(SoilStatusCreateDto soilStatus)
         {
             Name = soilStatus.Name;
+            Description = soilStatus.Description;
         }
 
         [Display(Name = "Soil Status")]
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public void TrimAll()
         {
             Name = Name?.Trim();
+            Description = Description?.Trim();
         }
     }
 }

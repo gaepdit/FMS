@@ -26,7 +26,7 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
-        public Facility FacilityId { get; set; }
+        public Guid FacilityId { get; set; }
 
         public Guid? ParentId { get; set; }
 

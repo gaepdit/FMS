@@ -11,6 +11,7 @@ namespace FMS.Domain.Dto
         {
             Id = soilStatus.Id;
             Name = soilStatus.Name;
+            Description = soilStatus.Description;
             Active = soilStatus.Active;
         }
         public Guid Id { get; set; }
@@ -19,5 +20,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Soil Status")]
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

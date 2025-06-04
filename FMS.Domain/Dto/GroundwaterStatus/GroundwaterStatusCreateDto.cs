@@ -7,5 +7,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Groundwater Status")]
         [Required(ErrorMessage = "Groundwater Status Name is required.")]
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }
