@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -10,21 +11,17 @@ namespace FMS.Domain.Entities
         public Phone(Guid contactId, PhoneCreateDto phone)
         {
             ContactId = contactId;
-            CountryCode = phone.CountryCode;
-            AreaCode = phone.AreaCode;
-            Prefix = phone.Prefix;
             Number = phone.Number;
             Type = phone.Type;
         }
         public Guid ContactId { get; set; }
 
-        public int CountryCode { get; set; }
-
-        public int AreaCode { get; set; }
-
-        public int Prefix { get; set; }
-
-        public int Number { get; set; }
+        [Display(Name = "Number")]
+        [Required(ErrorMessage = "Phone number is required")]
+        [StringLength(15, ErrorMessage = "Phone number cannot exceed 15 characters")]
+        [RegularExpression(@"^\+?[0-9\s\-()]+$", ErrorMessage = "Invalid phone number format. Only digits, spaces, dashes, parentheses, and an optional leading '+' are allowed.")]
+        [DataType(DataType.PhoneNumber)]
+        public string Number { get; set; }
 
         public string Type { get; set; }
     }
