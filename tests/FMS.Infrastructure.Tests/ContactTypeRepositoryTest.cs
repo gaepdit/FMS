@@ -73,6 +73,15 @@ namespace FMS.Infrastructure.Tests
         }
 
         //GetContactTypeByIdAsync
+        [Test]
+        public async Task GetContactTypeByIdAsync_WhenIdExist()
+        {
+            var existingContactType = new ContactType { Id = Guid.NewGuid(), Name = "ExistingCT" };
+            _context.ContactType.Add(existingContactType);
+            _context.SaveChanges();
+
+            var existingContactType2 = await _repository.GetContactTypeByIdAsync(Id);
+        }
 
         //GetContactTypeListAsync
         [Test]
@@ -122,7 +131,44 @@ namespace FMS.Infrastructure.Tests
             updatedContactType.Name.Should().Be("UpdatedName");
         }
         [Test]
-        public void UpdateContactTypeAsync_T
+        public void UpdateContactTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var updateDto = new ContactTypeEditDto { Name = "NonExistent" };
+
+            Func<Task> action = async () => await _repository.UpdateContactTypeAsync(Guid.NewGuid(), updateDto);
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Type ID not found.");
+        }
+        [Test]
+        public void UpdateContactTypeAsync_ThrowsArgumentException_WhenNameAlreadyExists()
+        {
+            var contact1 = new ContactType { Id = Guid.NewGuid(), Name = "Name1"};
+            var contact2 = new ContactType { Id = Guid.NewGuid(), Name = "Name2"};
+            _context.ContactType.AddRange(contact1, contact2);
+            _context.SaveChanges();
+
+            var updateDto = new ContactTypeEditDto { Name = "Name2"};
+
+            Func<Task> action = async () => await _repository.UpdateContactTypeAsync(contact1.Id, updateDto);
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Facility Type 'Name2' already exists.");
+        }
         //UpdateContactTypeStatusAsync
+        public async Task UpdateContactTypeStatusAsync_UpdatesStatusCorrectly()
+        {
+            var contactType = new ContactType { Id = Guid.NewGuid(), Name = "StatusTest", Active = true };
+            _context.ContactType.Add(contactType);
+            await _context.SaveChangesAsync();
+
+            await _repository.UpdateContactTypeStatusAsync(contactType.Id, false);
+
+            var updatedContactType = await _context.ContactType.FindAsync(contactType.Id);
+            updatedContactType.Active.Should().BeFalse();
+        }
+
+        [Test]
+        public void UpdateContactTypeStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            Func<Task> action = async () => await _repository.UpdateContactTypeStatusAsync(Guid.NewGuid(), false);
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Type ID not found");
+        }
     }
 }
