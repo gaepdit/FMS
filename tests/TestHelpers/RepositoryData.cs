@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FMS.Domain.Entities;
+using JetBrains.Annotations;
 
 namespace TestHelpers
 {
@@ -44,7 +45,7 @@ namespace TestHelpers
             new File {Id = Guid.NewGuid(), FileLabel = "103-0002", Active = false}
         };
 
-        
+
 
         public static readonly List<RetentionRecord> RetentionRecords = new()
         {
@@ -413,7 +414,7 @@ namespace TestHelpers
                 Active = true,
                 ContactId = Contacts[0].Id,
                 Number = "217-555-1234",
-                Type = "Mobile"
+                PhoneTypeId = 1,
             },
             new Phone
             {
@@ -421,7 +422,7 @@ namespace TestHelpers
                 Active = true,
                 ContactId = Contacts[1].Id,
                 Number = "(217)555-5678",
-                Type = "Work"
+                PhoneTypeId = 2,
             },
             new Phone
             {
@@ -429,7 +430,7 @@ namespace TestHelpers
                 Active = true,
                 ContactId = Contacts[2].Id,
                 Number = "2175558765",
-                Type = "Home"
+                PhoneTypeId = 3
             },
             new Phone
             {
@@ -437,7 +438,7 @@ namespace TestHelpers
                 Active = false,
                 ContactId = Contacts[0].Id,
                 Number = "217-555-4321",
-                Type = "Work"
+                PhoneTypeId = 1
             }
         };
 
@@ -530,7 +531,7 @@ namespace TestHelpers
                 DateListed = new DateOnly(2018, 2, 13),
                 AdditionalOrgUnit = "Org Unit C",
                 Geologist = "Geologist C",
-                VRPDate = new DateOnly(2018, 2, 13),    
+                VRPDate = new DateOnly(2018, 2, 13),
                 BrownfieldDate = new DateOnly(2018, 2, 13)
             },
             new HsrpFacilityProperties
@@ -697,84 +698,585 @@ namespace TestHelpers
             }
         };
 
-        public static List<Parcel> Parcels()
+        public static readonly List<OverallStatus> OverallStatuses = new()
         {
-            return new()
+            new OverallStatus
             {
-                new Parcel
-                {
-                    Id = Guid.NewGuid(),
-                    Active = true,
-                    LocationId = Locations[0].Id,
-                    ParcelNumber = "1587",
-                    ParcelDescription = "Back 40",
-                    ParcelTypeId = ParcelTypes[0].Id,
-                    Acres = 2,
-                    Latitude = 0,
-                    Longitude = 0
-                },
-                new Parcel
-                {
-                    Id = Guid.NewGuid(),
-                    Active = true,
-                    LocationId = Locations[1].Id,
-                    ParcelNumber = "157jhg",
-                    ParcelDescription = "Some chunk of land",   
-                    ParcelTypeId = ParcelTypes[1].Id,
-                    Acres = 0.5,
-                    Latitude = 0,
-                    Longitude = 0
-                },
-                new Parcel
-                {
-                    Id = Guid.NewGuid(),
-                    Active = false,
-                    LocationId = Locations[2].Id,
-                    ParcelNumber = "HYGT6473",
-                    ParcelDescription = "Some parcel",
-                    ParcelTypeId = ParcelTypes[2].Id,
-                    Acres = 0.73,
-                    Latitude = 0,
-                    Longitude = 0
-                },
-                new Parcel
-                {
-                    Id = Guid.NewGuid(),
-                    Active = true,
-                    LocationId = Locations[3].Id,
-                    ParcelNumber = "HGTTE-869D",
-                    ParcelDescription = "A hill out back",
-                    ParcelTypeId = ParcelTypes[0].Id,
-                    Acres = 10.3,
-                    Latitude = 0,
-                    Longitude = 0
-                },
-                new Parcel
-                {
-                    Id = Guid.NewGuid(),
-                    Active = true,
-                    LocationId = Locations[4].Id,
-                    ParcelNumber = "HGTTE-869D",
-                    ParcelDescription = "A hill out back",
-                    ParcelTypeId = ParcelTypes[1].Id,
-                    Acres = 10.3,
-                    Latitude = 0,
-                    Longitude = 0
-                },
-                new Parcel
-                {
-                    Id = Guid.NewGuid(),
-                    Active = true,
-                    LocationId = Locations[5].Id,
-                    ParcelNumber = "HGTTE-869D",
-                    ParcelDescription = "A hill out back",
-                    ParcelTypeId = ParcelTypes[2].Id,
-                    Acres = 10.3,
-                    Latitude = 0,
-                    Longitude = 0
-                }
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Status Comment 1",
+                Description = "Initial overall status for testing purposes."
+            },
+            new OverallStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Status Comment 2",
+                Description = "Secondary overall status for testing purposes."
+            },
+            new OverallStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Status Comment 3",
+                Description = "Tertiary overall status for testing purposes."
+            },
+            new OverallStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Status Comment 4",
+                Description = "Quaternary overall status for testing purposes."
+            },
+            new OverallStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Status Comment 5",
+                Description = "Quinary overall status for testing purposes."
+            },
+            new OverallStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Status Comment 6",
+                Description = "Senary overall status for testing purposes."
+            },
+            new OverallStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Status Comment 7",
+                Description = "Septenary overall status for testing purposes."
+            }
+        };
 
-            };
-        }
+        public static readonly List<Parcel> Parcels = new()
+        {
+            new Parcel
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                LocationId = Locations[0].Id,
+                ParcelTypeId = ParcelTypes[0].Id,
+                ParcelNumber = "Parcel 1",
+                ParcelDescription = "Test parcel 1",
+                Acres = 10.5,
+                Latitude = 40.0,
+                Longitude = -89.0
+            },
+            new Parcel
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                LocationId = Locations[1].Id,
+                ParcelTypeId = ParcelTypes[1].Id,
+                ParcelNumber = "Parcel 2",
+                ParcelDescription = "Test parcel 2",
+                Acres = 20.0,
+                Latitude = 41.0,
+                Longitude = -88.0
+            },
+            new Parcel
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                LocationId = Locations[2].Id,
+                ParcelTypeId = ParcelTypes[2].Id,
+                ParcelNumber = "Parcel 3",
+                ParcelDescription = "Test parcel 3",
+                Acres = 15.75,
+                Latitude = 42.0,
+                Longitude = -87.0
+            },
+            new Parcel
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                LocationId = Locations[3].Id,
+                ParcelTypeId = ParcelTypes[0].Id,
+                ParcelNumber = "Parcel 4",
+                ParcelDescription = "Test parcel 4",
+                Acres = 5.25,
+                Latitude = 43.0,
+                Longitude = -86.0
+            },
+            new Parcel
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                LocationId = Locations[4].Id,
+                ParcelTypeId = ParcelTypes[1].Id,
+                ParcelNumber = "Parcel 5",
+                ParcelDescription = "Test parcel 5",
+                Acres = 30.0,
+                Latitude = 44.0,
+                Longitude = -85.0
+            },
+            new Parcel
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                LocationId = Locations[5].Id,
+                ParcelTypeId = ParcelTypes[2].Id,
+                ParcelNumber = "Parcel 6",
+                ParcelDescription = "Test parcel 6",
+                Acres = 12.5,
+                Latitude = 45.0,
+                Longitude = -84.0
+            },
+            new Parcel
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                LocationId = Locations[0].Id,
+                ParcelTypeId = ParcelTypes[0].Id,
+                ParcelNumber = "Parcel 7",
+                ParcelDescription = "Test parcel 7",
+                Acres = 8.0,
+                Latitude = 46.0,
+                Longitude = -83.0
+            }
+        };
+
+        public static readonly List<Score> Scores = new()
+        {
+            new Score
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[0].Id,
+                ScoredDate = new DateOnly(2018, 2, 13),
+                ScoredById = ComplianceOfficers[0].Id,
+                Comments = "Overriding comment",
+                UseComments = true
+            },
+            new Score
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[1].Id,
+                ScoredDate = new DateOnly(2018, 2, 13),
+                ScoredById = ComplianceOfficers[1].Id,
+                Comments = "New comment to use",
+                UseComments = true
+            },
+            new Score
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[2].Id,
+                ScoredDate = new DateOnly(2018, 2, 13),
+                ScoredById = ComplianceOfficers[1].Id,
+                Comments = "",
+                UseComments = false
+            },
+            new Score
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[3].Id,
+                ScoredDate = new DateOnly(2018, 2, 13),
+                ScoredById = ComplianceOfficers[2].Id,
+                Comments = "",
+                UseComments = false
+            },
+            new Score
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[4].Id,
+                ScoredDate = new DateOnly(2018, 2, 13),
+                ScoredById = ComplianceOfficers[0].Id,
+                Comments = "",
+                UseComments = false
+            },
+            new Score
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[5].Id,
+                ScoredDate = new DateOnly(2018, 2, 13),
+                ScoredById = ComplianceOfficers[1].Id,
+                Comments = "",
+                UseComments = false
+            }
+        };
+
+        public static readonly List<OnSiteScore> OnSiteScores = new()
+        {
+            new OnSiteScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[0].Id,
+                ScoreValue = "85",
+                A = 10,
+                B = 15,
+                C = 20,
+                Description = "On-site score for facility 1",
+                ChemName1D = "Chemical A",
+                Other1D = "Other A",
+                D2 = 5,
+                D3 = 10,
+                ChemicalId = Chemicals[0].Id,
+                CASNO = "500374",
+                E1 = 2,
+                E2 = 3
+            },
+            new OnSiteScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[1].Id,
+                ScoreValue = "90",
+                A = 12,
+                B = 13,
+                C = 18,
+                Description = "On-site score for facility 2",
+                ChemName1D = "Chemical B",
+                Other1D = "Other B",
+                D2 = 6,
+                D3 = 11,
+                ChemicalId = Chemicals[1].Id,
+                CASNO = "7440382",
+                E1 = 4,
+                E2 = 5
+            },
+            new OnSiteScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[2].Id,
+                ScoreValue = "75",
+                A = 8,
+                B = 10,
+                C = 12,
+                Description = "On-site score for facility 3",
+                ChemName1D = "Chemical C",
+                Other1D = "Other C",
+                D2 = 4,
+                D3 = 9,
+                ChemicalId = Chemicals[2].Id,
+                CASNO = "7440360",
+                E1 = 1,
+                E2 = 2
+            },
+            new OnSiteScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[3].Id,
+                ScoreValue = "80",
+                A = 9,
+                B = 14,
+                C = 16,
+                Description = "On-site score for facility 4",
+                ChemName1D = "Chemical D",
+                Other1D = "Other D",
+                D2 = 7,
+                D3 = 8,
+                ChemicalId = Chemicals[3].Id,
+                CASNO = "83329",
+                E1 = 3,
+                E2 = 4
+            },
+            new OnSiteScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[4].Id,
+                ScoreValue = "95",
+                A = 14,
+                B = 17,
+                C = 19,
+                Description = "On-site score for facility 5",
+                ChemName1D = "Chemical E",
+                Other1D = "Other E",
+                D2 = 8,
+                D3 = 12,
+                ChemicalId = Chemicals[4].Id,
+                CASNO = "71432",
+                E1 = 6,
+                E2 = 7
+            }
+        };
+
+        public static readonly List<GroundwaterStatus> GroundwaterStatuses = new()
+        {
+            new GroundwaterStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Groundwater Status 1",
+                Description = "Initial groundwater status for testing purposes."
+            },
+            new GroundwaterStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Groundwater Status 2",
+                Description = "Secondary groundwater status for testing purposes."
+            },
+            new GroundwaterStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Groundwater Status 3",
+                Description = "Tertiary groundwater status for testing purposes."
+            },
+            new GroundwaterStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = false,
+                Name = "Groundwater Status 4",
+                Description = "Quaternary groundwater status for testing purposes."
+            },
+            new GroundwaterStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Groundwater Status 5",
+                Description = "Quinary groundwater status for testing purposes."
+            }
+        };
+
+        public static readonly List<GroundwaterScore> GroundwaterScores = new()
+        {
+            new GroundwaterScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[0].Id,
+                GWScore = "85",
+                A = 10,
+                B1 = 15,
+                B2 = 20,
+                C = 25,
+                Description = "Groundwater score for facility 1",
+                ChemName = "Chemical A",
+                Other = "Other A",
+                D2 = 5,
+                D3 = 10,
+                ChemicalId = Chemicals[0].Id,
+                CASNO = "500374",
+                E1 = 2,
+                E2 = 3
+            },
+            new GroundwaterScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[1].Id,
+                GWScore = "90",
+                A = 12,
+                B1 = 13,
+                B2 = 18,
+                C = 22,
+                Description = "Groundwater score for facility 2",
+                ChemName = "Chemical B",
+                Other = "Other B",
+                D2 = 6,
+                D3 = 11,
+                ChemicalId = Chemicals[1].Id,
+                CASNO = "7440382",
+                E1 = 4,
+                E2 = 5
+            },
+            new GroundwaterScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[2].Id,
+                GWScore = "75",
+                A = 8,
+                B1 = 10,
+                B2 = 12,
+                C = 15,
+                Description = "Groundwater score for facility 3",
+                ChemName = "Chemical C",
+                Other = "Other C",
+                D2 = 4,
+                D3 = 9,
+                ChemicalId = Chemicals[2].Id,
+                CASNO = "7440360",
+                E1 = 1,
+                E2 = 2
+            },
+            new GroundwaterScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[3].Id,
+                GWScore = "80",
+                A = 9,
+                B1 = 14,
+                B2 = 16,
+                C = 20,
+                Description = "Groundwater score for facility 4",
+                ChemName = "Chemical D",
+                Other = "Other D",
+                D2 = 7,
+                D3 = 8,
+                ChemicalId = Chemicals[3].Id,
+                CASNO = "83329",
+                E1 = 3,
+                E2 = 4
+            },
+            new GroundwaterScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[4].Id,
+                GWScore = "95",
+                A = 14,
+                B1 = 17,
+                B2 = 19,
+                C = 23,
+                Description = "Groundwater score for facility 5",
+                ChemName = "Chemical E",
+                Other = "Other E",
+                D2 = 8,
+                D3 = 12,
+                ChemicalId = Chemicals[4].Id,
+                CASNO = "71432",
+                E1 = 6,
+                E2 = 7
+            },
+            new GroundwaterScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = Scores[5].Id,
+                GWScore = "88",
+                A = 11,
+                B1 = 16,
+                B2 = 21,
+                C = 24,
+                Description = "Groundwater score for facility 6",
+                ChemName = "Chemical F",
+                Other = "Other F",
+                D2 = 9,
+                D3 = 13,
+                ChemicalId = Chemicals[5].Id,
+                CASNO = "1234567",
+                E1 = 5,
+                E2 = 8
+            }
+        };
+
+        public static readonly List<SoilStatus> SoilStatuses = new()
+        {
+            new SoilStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Soil Status 1",
+                Description = "Initial soil status for testing purposes."
+            },
+            new SoilStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Soil Status 2",
+                Description = "Secondary soil status for testing purposes."
+            },
+            new SoilStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Soil Status 3",
+                Description = "Tertiary soil status for testing purposes."
+            }
+        };
+
+        public static readonly List<SourceStatus> SourceStatuses = new()
+        {
+            new SourceStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Source Status 1",
+                Description = "Initial source status for testing purposes."
+            },
+            new SourceStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Source Status 2",
+                Description = "Secondary source status for testing purposes."
+            },
+            new SourceStatus
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                Name = "Source Status 3",
+                Description = "Tertiary source status for testing purposes."
+            }
+        };
+
+        public static readonly List<Substance> Substances = new()
+        {
+            new Substance
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[0].Id,
+                ChemicalId = Chemicals[0].Id,
+                Groundwater = true,
+                Soil = false,
+                UseForScoring = true
+            },
+            new Substance
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[1].Id,
+                ChemicalId = Chemicals[1].Id,
+                Groundwater = false,
+                Soil = true,
+                UseForScoring = true
+            },
+            new Substance
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[2].Id,
+                ChemicalId = Chemicals[2].Id,
+                Groundwater = true,
+                Soil = true,
+                UseForScoring = false
+            },
+            new Substance
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[3].Id,
+                ChemicalId = Chemicals[3].Id,
+                Groundwater = true,
+                Soil = true,
+                UseForScoring = true
+            },
+            new Substance
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[4].Id,
+                ChemicalId = Chemicals[4].Id,
+                Groundwater = true,
+                Soil = false,
+                UseForScoring = true
+            },
+            new Substance
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Facilities()[5].Id,
+                ChemicalId = Chemicals[5].Id,
+                Groundwater = false,
+                Soil = true,
+                UseForScoring = true
+            },
+        };
     }
 }

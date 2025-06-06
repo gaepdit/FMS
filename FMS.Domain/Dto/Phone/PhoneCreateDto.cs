@@ -13,6 +13,6 @@ namespace FMS.Domain.Dto
         public string Number { get; set; }
 
         [Display(Name = "Phone Type")]
-        public string Type { get; set; }
+        public int PhoneTypeId { get; set; }
     }
 }

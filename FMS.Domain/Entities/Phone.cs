@@ -12,7 +12,7 @@ namespace FMS.Domain.Entities
         {
             ContactId = contactId;
             Number = phone.Number;
-            Type = phone.Type;
+            PhoneTypeId = phone.PhoneTypeId;
         }
         public Guid ContactId { get; set; }
 
@@ -23,6 +23,7 @@ namespace FMS.Domain.Entities
         [DataType(DataType.PhoneNumber)]
         public string Number { get; set; }
 
-        public string Type { get; set; }
+        public int PhoneTypeId { get; set; }
+        public PhoneType Type { get; set; }
     }
 }

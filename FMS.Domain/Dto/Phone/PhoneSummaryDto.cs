@@ -19,6 +19,6 @@ namespace FMS.Domain.Dto
 
         public string Number { get; set; }
 
-        public string Type { get; set; }
+        public PhoneType Type { get; set; }
     }
 }

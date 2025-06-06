@@ -36,6 +36,25 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<Chemical> Chemicals { get; set; }
         public DbSet<ActionTaken> ActionTaken { get; set; }
         public DbSet<ContactType> ContactType { get; set; }
+        public DbSet<EventType> EventType { get; set; }
+        public DbSet<AllowedActionTaken> AllowedActionTaken { get; set; }
+        public DbSet<FundingSource> FundingSource { get; set; }
+        public DbSet<ParcelType> ParcelType { get; set; }
+        public DbSet<ContactTitle> ContactTitle { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+        public DbSet<Phone> Phone { get; set; }
+        public DbSet<HsrpFacilityProperties> HsrpFacilityProperties { get; set; }
+        public DbSet<Event> Event { get; set; }
+        public DbSet<Location> Location { get; set; }
+        public DbSet<OverallStatus> OverallStatus { get; set; }
+        public DbSet<Parcel> Parcel { get; set; }
+        public DbSet<Score> Score { get; set; }
+        public DbSet<OnSiteScore> OnSiteScore { get; set; }
+        public DbSet<SoilStatus> SoilStatus { get; set; }
+        public DbSet<SourceStatus> SourceStatus { get; set; }
+        public DbSet<GroundwaterStatus> GroundwaterStatus { get; set; }
+        public DbSet<GroundwaterScore> GroundwaterScore { get; set; }
+        public DbSet<Substance> Substance { get; set; }
 
 
         // The "Counties" table is only used to add County data to the database for database-side use.
@@ -43,6 +62,7 @@ namespace FMS.Infrastructure.Contexts
         // store County Id as a foreign key.
         // ReSharper disable once UnusedMember.Global
         public DbSet<County> Counties { get; set; }
+        public DbSet<PhoneType> PhoneType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
