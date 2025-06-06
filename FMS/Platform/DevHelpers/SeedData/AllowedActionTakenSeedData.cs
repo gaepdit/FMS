@@ -8,7 +8,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
 {
     public static partial class SeedData
     {
-        private static IEnumerable<AllowedActionTaken> GetAllowedActionTakens()
+        private static IEnumerable<AllowedActionTaken> GetAllowedActionsTaken()
         {
             return new List<AllowedActionTaken>()
             {

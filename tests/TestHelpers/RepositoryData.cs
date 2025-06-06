@@ -52,21 +52,21 @@ namespace TestHelpers
             new RetentionRecord
             {
                 Id = new Guid("66400D35-0B56-46C8-B5E4-A569664DD589"),
-                FacilityId = Facilities()[0].Id,
+                FacilityId = Facilities[0].Id,
                 StartYear = 2003, EndYear = 2009,
                 BoxNumber = "BOX1"
             },
             new RetentionRecord
             {
                 Id = new Guid("0F829C6B-4800-4B08-B779-48FC85A01338"),
-                FacilityId = Facilities()[0].Id,
+                FacilityId = Facilities[0].Id,
                 StartYear = 2010, EndYear = 2016,
                 BoxNumber = "BOX2"
             },
             new RetentionRecord
             {
                 Id = new Guid("3B4E47D6-FEE4-4AA0-ACF4-5CCA4AF13537"),
-                FacilityId = Facilities()[1].Id,
+                FacilityId = Facilities[1].Id,
                 StartYear = 2001, EndYear = 2002,
                 BoxNumber = "BOX3"
             }
@@ -357,7 +357,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[0].Id,
+                FacilityId = Facilities[0].Id,
                 GivenName = "John",
                 FamilyName = "Doe",
                 ContactTitleId = ContactTitles[0].Id,
@@ -374,7 +374,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[1].Id,
+                FacilityId = Facilities[1].Id,
                 GivenName = "Jane",
                 FamilyName = "Smith",
                 ContactTitleId = ContactTitles[1].Id,
@@ -391,7 +391,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[2].Id,
+                FacilityId = Facilities[2].Id,
                 GivenName = "Alice",
                 FamilyName = "Johnson",
                 ContactTitleId = ContactTitles[2].Id,
@@ -442,10 +442,8 @@ namespace TestHelpers
             }
         };
 
-        public static List<Facility> Facilities()
+        public static List<Facility> Facilities => new()
         {
-            return new()
-            {
                 new Facility
                 {
                     Id = new Guid("4C730563-8D90-4C34-B0C9-059A3E066267"),
@@ -495,9 +493,9 @@ namespace TestHelpers
                     FileId = Files[4].Id,
                     CountyId = 103,
                     Location = "",
-                },
-            };
-        }
+                }
+
+        };
 
         public static readonly List<HsrpFacilityProperties> hsrpFacilityProperties = new()
         {
@@ -505,7 +503,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[0].Id,
+                FacilityId = Facilities[0].Id,
                 DateListed = new DateOnly(2018, 2, 13),
                 AdditionalOrgUnit = "Org Unit A",
                 Geologist = "Geologist A",
@@ -516,7 +514,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[1].Id,
+                FacilityId = Facilities[1].Id,
                 DateListed = new DateOnly(2018, 2, 13),
                 AdditionalOrgUnit = "Org Unit B",
                 Geologist = "Geologist B",
@@ -527,7 +525,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[2].Id,
+                FacilityId = Facilities[2].Id,
                 DateListed = new DateOnly(2018, 2, 13),
                 AdditionalOrgUnit = "Org Unit C",
                 Geologist = "Geologist C",
@@ -538,7 +536,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[3].Id,
+                FacilityId = Facilities[3].Id,
                 DateListed = new DateOnly(2018, 2, 13),
                 AdditionalOrgUnit = "Org Unit D",
                 Geologist = "Geologist D",
@@ -549,7 +547,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[4].Id,
+                FacilityId = Facilities[4].Id,
                 DateListed = new DateOnly(2018, 2, 13),
                 AdditionalOrgUnit = "Org Unit E",
                 Geologist = "Geologist E",
@@ -563,8 +561,8 @@ namespace TestHelpers
             new Event
             {
                 Id = Guid.NewGuid(),
-                FacilityId = Facilities()[0].Id,
-                ParentId = Facilities()[0].Id, // Self-referencing for simplicity
+                FacilityId = Facilities[0].Id,
+                ParentId = Facilities[0].Id, // Self-referencing for simplicity
                 EventTypeId = EventTypes[0].Id,
                 ActionTakenId = ActionsTaken[0].Id,
                 StartDate = new DateOnly(2023, 1, 1),
@@ -578,8 +576,8 @@ namespace TestHelpers
             new Event
             {
                 Id = Guid.NewGuid(),
-                FacilityId = Facilities()[1].Id,
-                ParentId = Facilities()[1].Id, // Self-referencing for simplicity
+                FacilityId = Facilities[1].Id,
+                ParentId = Facilities[1].Id, // Self-referencing for simplicity
                 EventTypeId = EventTypes[1].Id,
                 ActionTakenId = ActionsTaken[1].Id,
                 StartDate = new DateOnly(2023, 2, 1),
@@ -593,8 +591,8 @@ namespace TestHelpers
             new Event
             {
                 Id = Guid.NewGuid(),
-                FacilityId = Facilities()[2].Id,
-                ParentId = Facilities()[2].Id, // Self-referencing for simplicity
+                FacilityId = Facilities[2].Id,
+                ParentId = Facilities[2].Id, // Self-referencing for simplicity
                 EventTypeId = EventTypes[0].Id,
                 ActionTakenId = ActionsTaken[0].Id,
                 StartDate = new DateOnly(2023, 3, 1),
@@ -608,8 +606,8 @@ namespace TestHelpers
             new Event
             {
                 Id = Guid.NewGuid(),
-                FacilityId = Facilities()[3].Id,
-                ParentId = Facilities()[3].Id, // Self-referencing for simplicity
+                FacilityId = Facilities[3].Id,
+                ParentId = Facilities[3].Id, // Self-referencing for simplicity
                 EventTypeId = EventTypes[1].Id,
                 ActionTakenId = ActionsTaken[1].Id,
                 StartDate = new DateOnly(2023, 4, 1),
@@ -623,8 +621,8 @@ namespace TestHelpers
             new Event
             {
                 Id = Guid.NewGuid(),
-                FacilityId = Facilities()[4].Id,
-                ParentId = Facilities()[4].Id, // Self-referencing for simplicity
+                FacilityId = Facilities[4].Id,
+                ParentId = Facilities[4].Id, // Self-referencing for simplicity
                 EventTypeId = EventTypes[0].Id,
                 ActionTakenId = ActionsTaken[0].Id,
                 StartDate = new DateOnly(2023, 5, 1),
@@ -638,8 +636,8 @@ namespace TestHelpers
             new Event
             {
                 Id = Guid.NewGuid(),
-                FacilityId = Facilities()[5].Id,
-                ParentId = Facilities()[5].Id, // Self-referencing for simplicity
+                FacilityId = Facilities[5].Id,
+                ParentId = Facilities[5].Id, // Self-referencing for simplicity
                 EventTypeId = EventTypes[1].Id,
                 ActionTakenId = ActionsTaken[1].Id,
                 StartDate = new DateOnly(2023, 6, 1),
@@ -658,42 +656,42 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[0].Id,
+                FacilityId = Facilities[0].Id,
                 Class = "I"
             },
             new Location
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[1].Id,
+                FacilityId = Facilities[1].Id,
                 Class = "II"
             },
             new Location
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[2].Id,
+                FacilityId = Facilities[2].Id,
                 Class = "III"
             },
             new Location
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[3].Id,
+                FacilityId = Facilities[3].Id,
                 Class = "IV"
             },
             new Location
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[4].Id,
+                FacilityId = Facilities[4].Id,
                 Class = "V"
             },
             new Location
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[5].Id,
+                FacilityId = Facilities[5].Id,
                 Class = "ER"
             }
         };
@@ -751,7 +749,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Parcel> Parcels = new()
+        public static List<Parcel> Parcels => new()
         {
             new Parcel
             {
@@ -839,13 +837,13 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Score> Scores = new()
+        public static List<Score> Scores => new()
         {
             new Score
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[0].Id,
+                FacilityId = Facilities[0].Id,
                 ScoredDate = new DateOnly(2018, 2, 13),
                 ScoredById = ComplianceOfficers[0].Id,
                 Comments = "Overriding comment",
@@ -855,7 +853,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[1].Id,
+                FacilityId = Facilities[1].Id,
                 ScoredDate = new DateOnly(2018, 2, 13),
                 ScoredById = ComplianceOfficers[1].Id,
                 Comments = "New comment to use",
@@ -865,7 +863,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[2].Id,
+                FacilityId = Facilities[2].Id,
                 ScoredDate = new DateOnly(2018, 2, 13),
                 ScoredById = ComplianceOfficers[1].Id,
                 Comments = "",
@@ -875,7 +873,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[3].Id,
+                FacilityId = Facilities[3].Id,
                 ScoredDate = new DateOnly(2018, 2, 13),
                 ScoredById = ComplianceOfficers[2].Id,
                 Comments = "",
@@ -885,7 +883,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[4].Id,
+                FacilityId = Facilities[4].Id,
                 ScoredDate = new DateOnly(2018, 2, 13),
                 ScoredById = ComplianceOfficers[0].Id,
                 Comments = "",
@@ -895,7 +893,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[5].Id,
+                FacilityId = Facilities[5].Id,
                 ScoredDate = new DateOnly(2018, 2, 13),
                 ScoredById = ComplianceOfficers[1].Id,
                 Comments = "",
@@ -1221,7 +1219,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[0].Id,
+                FacilityId = Facilities[0].Id,
                 ChemicalId = Chemicals[0].Id,
                 Groundwater = true,
                 Soil = false,
@@ -1231,7 +1229,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[1].Id,
+                FacilityId = Facilities[1].Id,
                 ChemicalId = Chemicals[1].Id,
                 Groundwater = false,
                 Soil = true,
@@ -1241,7 +1239,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[2].Id,
+                FacilityId = Facilities[2].Id,
                 ChemicalId = Chemicals[2].Id,
                 Groundwater = true,
                 Soil = true,
@@ -1251,7 +1249,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[3].Id,
+                FacilityId = Facilities[3].Id,
                 ChemicalId = Chemicals[3].Id,
                 Groundwater = true,
                 Soil = true,
@@ -1261,7 +1259,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[4].Id,
+                FacilityId = Facilities[4].Id,
                 ChemicalId = Chemicals[4].Id,
                 Groundwater = true,
                 Soil = false,
@@ -1271,7 +1269,7 @@ namespace TestHelpers
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                FacilityId = Facilities()[5].Id,
+                FacilityId = Facilities[5].Id,
                 ChemicalId = Chemicals[5].Id,
                 Groundwater = false,
                 Soil = true,

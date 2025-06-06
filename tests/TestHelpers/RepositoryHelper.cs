@@ -26,7 +26,11 @@ namespace TestHelpers
 
         private void SeedAllData()
         {
-            if (!_context.Cabinets.Any()) _context.Cabinets.AddRange(RepositoryData.Cabinets);
+            if (!_context.Cabinets.Any())
+            {
+                System.Collections.Generic.List<FMS.Domain.Entities.Cabinet> cabinets = RepositoryData.Cabinets;
+                _context.Cabinets.AddRange(cabinets);
+            }
 
             if (!_context.BudgetCodes.Any()) _context.BudgetCodes.AddRange(RepositoryData.BudgetCodes);
 
@@ -72,7 +76,7 @@ namespace TestHelpers
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
 
-            if (!_context.Facilities.Any()) _context.Facilities.AddRange(RepositoryData.Facilities());
+            if (!_context.Facilities.Any()) _context.Facilities.AddRange(RepositoryData.Facilities);
 
             _context.SaveChanges();
             _context.ChangeTracker.Clear();

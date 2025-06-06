@@ -32,7 +32,7 @@ namespace TestHelpers
 
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
-            var facility = Facilities().Find(e => e.Id == id);
+            var facility = Facilities.Find(e => e.Id == id);
             if (facility == null) throw new ArgumentException("Invalid Facility ID");
 
             facility.File = GetFile(facility.FileId);

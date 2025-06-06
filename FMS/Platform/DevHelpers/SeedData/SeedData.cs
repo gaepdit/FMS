@@ -23,6 +23,8 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 await context.Cabinets.AddRangeAsync(GetCabinets(), token);
             if (!await context.Files.AnyAsync(token))
                 await context.Files.AddRangeAsync(GetFiles(), token);
+            if (!await context.Chemicals.AnyAsync(token))
+                await context.Chemicals.AddRangeAsync(GetChemicals(), token);
             if (!await context.Facilities.AnyAsync(token))
                 await context.Facilities.AddRangeAsync(GetFacilities(), token);
             if (!await context.RetentionRecords.AnyAsync(token))
