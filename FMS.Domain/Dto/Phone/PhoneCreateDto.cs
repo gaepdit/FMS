@@ -9,19 +9,10 @@ namespace FMS.Domain.Dto
 
         public Guid ContactId { get; set; }
 
-        [Display(Name = "Country Code")]
-        public int CountryCode { get; set; }
-
-        [Display(Name = "Area Code")]
-        public int AreaCode { get; set; }
-
-        [Display(Name = "Prefix")]
-        public int Prefix { get; set; }
-
         [Display(Name = "Number")]
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         [Display(Name = "Phone Type")]
-        public string Type { get; set; }
+        public string PhoneType { get; set; }
     }
 }

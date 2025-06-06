@@ -7,5 +7,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Overall Status")]
         [Required(ErrorMessage = "Overall Status Name is required.")]
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

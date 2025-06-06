@@ -12,11 +12,8 @@ namespace FMS.Domain.Dto
             Id = phone.Id;
             Active = phone.Active;
             ContactId = contactId;
-            CountryCode = phone.CountryCode;
-            AreaCode = phone.AreaCode;
-            Prefix = phone.Prefix;
             Number = phone.Number;
-            Type = phone.Type;
+            PhoneType = phone.PhoneType;
         }
         public Guid Id { get; set; }
 
@@ -24,14 +21,8 @@ namespace FMS.Domain.Dto
 
         public Guid ContactId { get; set; }
 
-        public int CountryCode { get; set; }
+        public string Number { get; set; }
 
-        public int AreaCode { get; set; }
-
-        public int Prefix { get; set; }
-
-        public int Number { get; set; }
-
-        public string Type { get; set; }
+        public string PhoneType { get; set; }
     }
 }

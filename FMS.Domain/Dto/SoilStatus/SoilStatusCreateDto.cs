@@ -7,5 +7,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Soil Status")]
         [Required(ErrorMessage = "Soil Status Name is required.")]
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

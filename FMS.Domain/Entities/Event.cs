@@ -10,6 +10,7 @@ namespace FMS.Domain.Entities
 
         public Event(EventCreateDto eventDto)
         {
+            FacilityId = eventDto.FacilityId;
             ParentId = eventDto.ParentId;
             EventTypeId = eventDto.EventTypeId;
             ActionTakenId = eventDto.ActionTakenId;
@@ -21,6 +22,8 @@ namespace FMS.Domain.Entities
             EntityNameOrNumber = eventDto.EntityNameOrNumber;
             Comment = eventDto.Comment;
         }
+
+        public Guid FacilityId { get; set; }
 
         public Guid? ParentId { get; set; }
 

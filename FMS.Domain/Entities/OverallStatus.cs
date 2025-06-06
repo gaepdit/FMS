@@ -11,13 +11,17 @@ namespace FMS.Domain.Entities
         public OverallStatus(OverallStatusCreateDto overallStatus)
         {
             Name = overallStatus.Name;
+            Description = overallStatus.Description;
         }
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public void TrimAll()
         {
             Name = Name?.Trim();
+            Description = Description?.Trim();
         }
     }
 }

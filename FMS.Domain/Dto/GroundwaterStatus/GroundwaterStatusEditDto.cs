@@ -12,6 +12,7 @@ namespace FMS.Domain.Dto
             Id = groundwaterStatus.Id;
             Active = groundwaterStatus.Active;
             Name = groundwaterStatus.Name;
+            Description = groundwaterStatus.Description;
         }
 
         public Guid Id { get; set; }
@@ -19,5 +20,7 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

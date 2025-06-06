@@ -5,6 +5,9 @@ namespace FMS.Domain.Dto
 {
     public class EventCreateDto
     {
+        [Required]
+        public Guid FacilityId { get; set; }
+
         public Guid? ParentId { get; set; }
 
         [Required]
