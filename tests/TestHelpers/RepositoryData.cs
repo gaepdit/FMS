@@ -7,14 +7,14 @@ namespace TestHelpers
 {
     public static class RepositoryData
     {
-        public static readonly List<BudgetCode> BudgetCodes = new()
+        public static List<BudgetCode> BudgetCodes => new()
         {
             new BudgetCode {Id = Guid.NewGuid(), Name = "BC001"},
             new BudgetCode {Id = Guid.NewGuid(), Name = "BC002"},
             new BudgetCode {Id = Guid.NewGuid(), Name = "BC003", Active = false},
         };
 
-        public static readonly List<FacilityStatus> FacilityStatuses = new()
+        public static List<FacilityStatus> FacilityStatuses => new()
         {
             new FacilityStatus {Id = Guid.NewGuid(), Status = "Active"},
             new FacilityStatus {Id = Guid.NewGuid(), Status = "Inactive"},
@@ -22,20 +22,20 @@ namespace TestHelpers
             new FacilityStatus {Id = Guid.NewGuid(), Status = "Pending"}
         };
 
-        public static List<FacilityType> FacilityTypes = new()
+        public static List<FacilityType> FacilityTypes => new()
         {
             new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "GEN", Description = "GEN1"},
             new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "NPL", Description = "NPL1"},
             new FacilityType {Id = Guid.NewGuid(), Active = true, Name = "RN", Description = "RN1"}
         };
 
-        public static readonly List<OrganizationalUnit> OrganizationalUnits = new()
+        public static List<OrganizationalUnit> OrganizationalUnits => new()
         {
             new OrganizationalUnit {Id = Guid.NewGuid(), Name = "Org One"},
             new OrganizationalUnit {Id = Guid.NewGuid(), Name = "Org Two"}
         };
 
-        public static readonly List<File> Files = new()
+        public static List<File> Files => new()
         {
             new File {Id = Guid.NewGuid(), FileLabel = "099-0001"},
             new File {Id = Guid.NewGuid(), FileLabel = "111-0001"},
@@ -47,7 +47,7 @@ namespace TestHelpers
 
 
 
-        public static readonly List<RetentionRecord> RetentionRecords = new()
+        public static List<RetentionRecord> RetentionRecords => new()
         {
             new RetentionRecord
             {
@@ -72,7 +72,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Cabinet> Cabinets = new()
+        public static List<Cabinet> Cabinets => new()
         {
             new Cabinet {Id = Guid.NewGuid(), Name = "C001", FirstFileLabel = "000-0000"},
             new Cabinet {Id = Guid.NewGuid(), Name = "C002", FirstFileLabel = "103-0001"},
@@ -83,7 +83,7 @@ namespace TestHelpers
             new Cabinet {Id = Guid.NewGuid(), Name = "C007", FirstFileLabel = "150-0001"},
         };
 
-        public static readonly List<ActionTaken> ActionsTaken = new()
+        public static List<ActionTaken> ActionsTaken => new()
         {
             new ActionTaken
             {
@@ -99,7 +99,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<ComplianceOfficer> ComplianceOfficers = new()
+        public static List<ComplianceOfficer> ComplianceOfficers => new()
         {
             new ComplianceOfficer
             {
@@ -117,7 +117,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<EventType> EventTypes = new()
+        public static List<EventType> EventTypes => new()
         {
             new EventType
             {
@@ -141,7 +141,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<AllowedActionTaken> AllowedActionsTaken = new()
+        public static List<AllowedActionTaken> AllowedActionsTaken => new()
         {
             new AllowedActionTaken
             {
@@ -170,7 +170,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<FundingSource> FundingSources = new()
+        public static List<FundingSource> FundingSources => new()
         {
             new FundingSource
             {
@@ -210,7 +210,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Chemical> Chemicals = new()
+        public static List<Chemical> Chemicals => new()
         {
             new Chemical
             {
@@ -277,7 +277,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<County> Counties = new()
+        public static List<County> Counties => new()
         {
             new County {Id = 131, Name = "County A"},
             new County {Id = 102, Name = "County B"},
@@ -285,7 +285,7 @@ namespace TestHelpers
             new County {Id = 99, Name = "County D"}
         };
 
-        public static readonly List<ParcelType> ParcelTypes = new()
+        public static List<ParcelType> ParcelTypes => new()
         {
             new ParcelType
             {
@@ -307,7 +307,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<ContactTitle> ContactTitles = new()
+        public static List<ContactTitle> ContactTitles => new()
             {
             new ContactTitle
             {
@@ -329,7 +329,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<ContactType> ContactTypes = new()
+        public static List<ContactType> ContactTypes => new()
         {
             new ContactType
             {
@@ -351,7 +351,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Contact> Contacts = new()
+        public static List<Contact> Contacts => new()
         {
             new Contact
             {
@@ -406,7 +406,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Phone> Phones = new()
+        public static List<Phone> Phones => new()
         {
             new Phone
             {
@@ -497,7 +497,7 @@ namespace TestHelpers
 
         };
 
-        public static readonly List<HsrpFacilityProperties> hsrpFacilityProperties = new()
+        public static List<HsrpFacilityProperties> hsrpFacilityProperties => new()
         {
             new HsrpFacilityProperties
             {
@@ -556,7 +556,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Event> Events = new()
+        public static List<Event> Events => new()
         {
             new Event
             {
@@ -650,7 +650,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Location> Locations = new()
+        public static List<Location> Locations => new()
         {
             new Location
             {
@@ -696,7 +696,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<OverallStatus> OverallStatuses = new()
+        public static List<OverallStatus> OverallStatuses => new()
         {
             new OverallStatus
             {
@@ -901,7 +901,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<OnSiteScore> OnSiteScores = new()
+        public static List<OnSiteScore> OnSiteScores => new()
         {
             new OnSiteScore
             {
@@ -1000,7 +1000,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<GroundwaterStatus> GroundwaterStatuses = new()
+        public static List<GroundwaterStatus> GroundwaterStatuses => new()
         {
             new GroundwaterStatus
             {
@@ -1039,7 +1039,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<GroundwaterScore> GroundwaterScores = new()
+        public static List<GroundwaterScore> GroundwaterScores => new()
         {
             new GroundwaterScore
             {
@@ -1163,7 +1163,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<SoilStatus> SoilStatuses = new()
+        public static List<SoilStatus> SoilStatuses => new()
         {
             new SoilStatus
             {
@@ -1188,7 +1188,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<SourceStatus> SourceStatuses = new()
+        public static List<SourceStatus> SourceStatuses => new()
         {
             new SourceStatus
             {
@@ -1213,7 +1213,7 @@ namespace TestHelpers
             }
         };
 
-        public static readonly List<Substance> Substances = new()
+        public static List<Substance> Substances => new()
         {
             new Substance
             {
