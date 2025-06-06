@@ -13,7 +13,7 @@ namespace FMS.Domain.Dto
             Active = phone.Active;
             ContactId = contactId;
             Number = phone.Number;
-            PhoneTypeId = phone.PhoneTypeId;
+            PhoneType = phone.PhoneType;
         }
         public Guid Id { get; set; }
 
@@ -23,6 +23,6 @@ namespace FMS.Domain.Dto
 
         public string Number { get; set; }
 
-        public int PhoneTypeId { get; set; }
+        public string PhoneType { get; set; }
     }
 }

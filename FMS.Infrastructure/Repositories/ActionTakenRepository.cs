@@ -17,15 +17,15 @@ namespace FMS.Infrastructure.Repositories
         public ActionTakenRepository(FmsDbContext context) => _context = context;
 
         public Task<bool> ActionTakenExistsAsync(Guid id) =>
-            _context.ActionTaken.AnyAsync(e => e.Id == id);
+            _context.ActionsTaken.AnyAsync(e => e.Id == id);
 
         public Task<bool> ActionTakenNameExistsAsync(string name, Guid? ignoreId = null) =>
-            _context.ActionTaken.AnyAsync(e =>
+            _context.ActionsTaken.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<ActionTakenEditDto> GetActionTakenAsync(Guid id)
         {
-            var actionTaken = await _context.ActionTaken.AsNoTracking().
+            var actionTaken = await _context.ActionsTaken.AsNoTracking().
                 SingleOrDefaultAsync(e => e.Id == id);
             if (actionTaken == null)
             {
@@ -34,7 +34,7 @@ namespace FMS.Infrastructure.Repositories
             return new ActionTakenEditDto(actionTaken);
         }
 
-        public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync() => await _context.ActionTaken.AsNoTracking()
+        public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync() => await _context.ActionsTaken.AsNoTracking()
            .OrderBy(e => e.Name)
            .Select(e => new ActionTakenSummaryDto(e))
            .ToListAsync();
@@ -55,7 +55,7 @@ namespace FMS.Infrastructure.Repositories
             }
 
             var newAT = new ActionTaken(actionTaken);
-            await _context.ActionTaken.AddAsync(newAT);
+            await _context.ActionsTaken.AddAsync(newAT);
             await _context.SaveChangesAsync();
 
             return newAT.Id;
@@ -69,7 +69,7 @@ namespace FMS.Infrastructure.Repositories
 
         private async Task<Guid> UpdateActionTakenInternalAsync(Guid id, ActionTakenEditDto actionTakenUpdates)
         {
-            var actionTaken = await _context.ActionTaken.FindAsync(id) ?? throw new ArgumentException("Action Taken ID not found.", nameof(id));
+            var actionTaken = await _context.ActionsTaken.FindAsync(id) ?? throw new ArgumentException("Action Taken ID not found.", nameof(id));
 
             if (await ActionTakenNameExistsAsync(actionTakenUpdates.Name, id))
             {
@@ -86,7 +86,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task UpdateActionTakenStatusAsync(Guid id, bool active)
         {
-            var actionTaken = await _context.ActionTaken.FindAsync(id)
+            var actionTaken = await _context.ActionsTaken.FindAsync(id)
                 ?? throw new ArgumentException("Action Taken ID not found");
             actionTaken.Active = active;
             await _context.SaveChangesAsync();

@@ -414,7 +414,7 @@ namespace TestHelpers
                 Active = true,
                 ContactId = Contacts[0].Id,
                 Number = "217-555-1234",
-                PhoneTypeId = 1,
+                PhoneType = "Office",
             },
             new Phone
             {
@@ -422,7 +422,7 @@ namespace TestHelpers
                 Active = true,
                 ContactId = Contacts[1].Id,
                 Number = "(217)555-5678",
-                PhoneTypeId = 2,
+                PhoneType = "Cell",
             },
             new Phone
             {
@@ -430,7 +430,7 @@ namespace TestHelpers
                 Active = true,
                 ContactId = Contacts[2].Id,
                 Number = "2175558765",
-                PhoneTypeId = 3
+                PhoneType = "Fax"
             },
             new Phone
             {
@@ -438,7 +438,7 @@ namespace TestHelpers
                 Active = false,
                 ContactId = Contacts[0].Id,
                 Number = "217-555-4321",
-                PhoneTypeId = 1
+                PhoneType = "Office"
             }
         };
 

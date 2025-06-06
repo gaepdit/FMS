@@ -18,7 +18,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     ContactId = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Number = "5182348901",
-                    PhoneTypeId = 1
+                    PhoneType = "Office"
                 },
                 new()
                 {
@@ -26,7 +26,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     ContactId = new Guid("2BD765CD-B463-431B-8C88-3D384891E680"),
                     Number = "6784958901",
-                    PhoneTypeId = 1
+                    PhoneType = "Office"
                 },
                 new()
                 {
@@ -34,7 +34,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     ContactId = new Guid("9EF29782-37B0-4EB5-B9AA-BF01CB98B246"),
                     Number = "8902347631",
-                    PhoneTypeId = 1
+                    PhoneType = "Office"
                 },
                 new()
                 {
@@ -42,7 +42,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     ContactId = new Guid("487517CE-C798-4502-953F-FB0B02AAF9DA"),
                     Number = "8786453901",
-                    PhoneTypeId = 2
+                    PhoneType = "Cell"
                 },
                 new()
                 {
@@ -50,7 +50,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     ContactId = new Guid("54D58AD1-DE16-4210-9146-6EDDBE326F1B"),
                     Number = "8908738401",
-                    PhoneTypeId = 3
+                    PhoneType = "Home"
                 },
                 new()
                 {
@@ -58,7 +58,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     ContactId = new Guid("54D58AD1-DE16-4210-9146-6EDDBE326F1B"),
                     Number = "8654321901",
-                    PhoneTypeId = 2
+                    PhoneType = "Cell"
                 }
             };
         }

@@ -34,27 +34,27 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<Chemical> Chemicals { get; set; }
-        public DbSet<ActionTaken> ActionTaken { get; set; }
-        public DbSet<ContactType> ContactType { get; set; }
-        public DbSet<EventType> EventType { get; set; }
-        public DbSet<AllowedActionTaken> AllowedActionTaken { get; set; }
-        public DbSet<FundingSource> FundingSource { get; set; }
-        public DbSet<ParcelType> ParcelType { get; set; }
-        public DbSet<ContactTitle> ContactTitle { get; set; }
-        public DbSet<Contact> Contact { get; set; }
-        public DbSet<Phone> Phone { get; set; }
+        public DbSet<ActionTaken> ActionsTaken { get; set; }
+        public DbSet<ContactType> ContactTypes { get; set; }
+        public DbSet<EventType> EventTypes { get; set; }
+        public DbSet<AllowedActionTaken> AllowedActionsTaken { get; set; }
+        public DbSet<FundingSource> FundingSources { get; set; }
+        public DbSet<ParcelType> ParcelTypes { get; set; }
+        public DbSet<ContactTitle> ContactTitles { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Phone> Phones { get; set; }
         public DbSet<HsrpFacilityProperties> HsrpFacilityProperties { get; set; }
-        public DbSet<Event> Event { get; set; }
-        public DbSet<Location> Location { get; set; }
-        public DbSet<OverallStatus> OverallStatus { get; set; }
-        public DbSet<Parcel> Parcel { get; set; }
-        public DbSet<Score> Score { get; set; }
-        public DbSet<OnSiteScore> OnSiteScore { get; set; }
-        public DbSet<SoilStatus> SoilStatus { get; set; }
-        public DbSet<SourceStatus> SourceStatus { get; set; }
-        public DbSet<GroundwaterStatus> GroundwaterStatus { get; set; }
-        public DbSet<GroundwaterScore> GroundwaterScore { get; set; }
-        public DbSet<Substance> Substance { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<OverallStatus> OverallStatuses { get; set; }
+        public DbSet<Parcel> Parcels { get; set; }
+        public DbSet<Score> Scores { get; set; }
+        public DbSet<OnSiteScore> OnSiteScores { get; set; }
+        public DbSet<SoilStatus> SoilStatuses { get; set; }
+        public DbSet<SourceStatus> SourceStatuses { get; set; }
+        public DbSet<GroundwaterStatus> GroundwaterStatuses { get; set; }
+        public DbSet<GroundwaterScore> GroundwaterScores { get; set; }
+        public DbSet<Substance> Substances { get; set; }
 
 
         // The "Counties" table is only used to add County data to the database for database-side use.
@@ -62,7 +62,6 @@ namespace FMS.Infrastructure.Contexts
         // store County Id as a foreign key.
         // ReSharper disable once UnusedMember.Global
         public DbSet<County> Counties { get; set; }
-        public DbSet<PhoneType> PhoneType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
