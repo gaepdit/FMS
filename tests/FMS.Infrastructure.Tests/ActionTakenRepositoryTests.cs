@@ -32,7 +32,7 @@ namespace FMS.Infrastructure.Tests
             _repository = new ActionTakenRepository(_context);
 
             // Seed test data if needed
-            _context.ActionTaken.Add(new ActionTaken
+            _context.ActionsTaken.Add(new ActionTaken
             {
                 Id = Guid.NewGuid(),
                 Name = "Test Action Taken",
