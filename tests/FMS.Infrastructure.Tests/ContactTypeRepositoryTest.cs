@@ -76,11 +76,8 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetContactTypeByIdAsync_WhenIdExist()
         {
-            var existingContactType = new ContactType { Id = Guid.NewGuid(), Name = "ExistingCT" };
-            _context.ContactType.Add(existingContactType);
-            _context.SaveChanges();
-
-            var existingContactType2 = await _repository.GetContactTypeByIdAsync(Id);
+            var result = await _repository.GetContactTypeByIdAsync(Guid.NewGuid());
+            result.Should().BeTrue();
         }
 
         //GetContactTypeListAsync
