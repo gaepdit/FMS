@@ -73,13 +73,13 @@ namespace TestHelpers
 
             if (!_context.Phones.Any()) _context.Phones.AddRange(RepositoryData.Phones);
 
-            _context.SaveChanges();
-            _context.ChangeTracker.Clear();
+            //_context.SaveChanges();
+            //_context.ChangeTracker.Clear();
 
             if (!_context.Facilities.Any()) _context.Facilities.AddRange(RepositoryData.Facilities);
 
-            _context.SaveChanges();
-            _context.ChangeTracker.Clear();
+            //_context.SaveChanges();
+            //_context.ChangeTracker.Clear();
 
             if (!_context.HsrpFacilityProperties.Any()) _context.HsrpFacilityProperties.AddRange(RepositoryData.hsrpFacilityProperties);
 

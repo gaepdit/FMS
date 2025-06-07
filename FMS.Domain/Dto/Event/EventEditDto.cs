@@ -32,9 +32,9 @@ namespace FMS.Domain.Dto
 
         public Guid? ParentId { get; set; }
 
-        public Guid EventTypeId { get; set; }
+        public Guid? EventTypeId { get; set; }
 
-        public Guid ActionTakenId { get; set; }
+        public Guid? ActionTakenId { get; set; }
 
         public DateOnly StartDate { get; set; }
 
@@ -42,7 +42,7 @@ namespace FMS.Domain.Dto
 
         public DateOnly CompletionDate { get; set; }
 
-        public Guid ComplianceOfficerId { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
 
         public decimal EventAmount { get; set; }
 

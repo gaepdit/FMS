@@ -17,7 +17,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = new Guid("1105FB87-229E-417C-B0F5-3F1E70F1C66D"),
                     Active = true,
                     FacilityId = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"), 
-                    ParentId = new Guid("1105FB87-229E-417C-B0F5-3F1E70F1C66D"),   //Self
+                    ParentId = Guid.Empty,   //Self
                     EventTypeId = new Guid("F1A8BCAD-B09E-42BB-ABFD-74E230567A65"),   // HWTF Master Project
                     ActionTakenId = new Guid("0d7ee6cd-f975-40cf-94ff-406fe71075ff"),
                     StartDate = new(2018, 2, 13),
@@ -33,7 +33,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = new Guid("E50B57D5-1929-4167-8ABD-22B82D7E8294"),
                     Active = true,
                     FacilityId = new Guid("BF25C413-0EE1-4280-84BD-0B2631F4EEC7"),
-                    ParentId = new Guid("E50B57D5-1929-4167-8ABD-22B82D7E8294"),   //Self
+                    ParentId = Guid.Empty,   //Self
                     EventTypeId = new Guid("F1A8BCAD-B09E-42BB-ABFD-74E230567A65"),   //HWTF Master Project
                     ActionTakenId = new Guid("634f379a-90b1-4762-9268-c0c278040723"),
                     StartDate = new(2018, 2, 13),
@@ -97,7 +97,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = new Guid("55AA3F67-1E02-4331-9850-4BD1964058D2"),
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
-                    ParentId = new Guid("55AA3F67-1E02-4331-9850-4BD1964058D2"),   //Self
+                    ParentId = Guid.Empty,   //Self
                     EventTypeId = new Guid("867CAD56-D354-493A-A3CB-985101A5ACB7"),   //Financial Assurance
                     ActionTakenId = new Guid("51e5d358-f991-4574-a21b-79ccfa31ac9d"),
                     StartDate = new(2018, 2, 13),
@@ -129,7 +129,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = new Guid("1826FBAA-6ABD-4E36-B85A-FD0B5D1243EB"),
                     Active = true,
                     FacilityId = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
-                    ParentId = new Guid("1105FB87-229E-417C-B0F5-3F1E70F1C66D"),
+                    ParentId = Guid.Empty,
                     EventTypeId = new Guid("766262E9-38BD-4819-B9FB-546FA193EDEF"),
                     ActionTakenId = new Guid("a7a3f7b3-8cd3-421c-a041-1f6a29cba42c"),
                     StartDate = new(2018, 2, 13),
@@ -146,7 +146,7 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Active = true,
                     FacilityId = new Guid("BF25C413-0EE1-4280-84BD-0B2631F4EEC7"),
                     ParentId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
-                    EventTypeId = new Guid("Progress Report / Misc. Report"),
+                    EventTypeId = new Guid("6898B627-5E0C-48D1-9520-6A8428D9D7F3"),
                     ActionTakenId = new Guid("51e5d358-f991-4574-a21b-79ccfa31ac9d"),
                     StartDate = new(2018, 2, 13),
                     DueDate = new(2018, 2, 13),
@@ -161,8 +161,8 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                     Id = new Guid("79B3C0FD-A06A-4766-A973-F60A86D8AE2C"),
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
-                    ParentId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
-                    EventTypeId = new Guid("Progress Report / Misc. Report"),
+                    ParentId = Guid.Empty,
+                    EventTypeId = new Guid("C1A6B598-9502-4310-8D43-7030EF3A44FA"),
                     ActionTakenId = new Guid("0d7ee6cd-f975-40cf-94ff-406fe71075ff"),
                     StartDate = new(2018, 2, 13),
                     DueDate = new(2018, 2, 13),

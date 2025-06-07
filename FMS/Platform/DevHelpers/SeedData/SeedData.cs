@@ -31,16 +31,12 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 await context.ContactTypes.AddRangeAsync(GetContactTypes(), token);
             if (!await context.ActionsTaken.AnyAsync(token))
                 await context.ActionsTaken.AddRangeAsync(GetActionsTaken(), token);
-            if (!await context.ContactTypes.AnyAsync(token))
-                await context.ContactTypes.AddRangeAsync(GetContactTypes(), token);
             if (!await context.EventTypes.AnyAsync(token))
                 await context.EventTypes.AddRangeAsync(GetEventTypes(), token);
             if (!await context.FundingSources.AnyAsync(token))
                 await context.FundingSources.AddRangeAsync(GetFundingSources(), token);
             if (!await context.ParcelTypes.AnyAsync(token))
                 await context.ParcelTypes.AddRangeAsync(GetParcelTypes(), token);
-            if (!await context.ContactTitles.AnyAsync(token))
-                await context.ContactTitles.AddRangeAsync(GetContactTitles(), token);
             if (!await context.OverallStatuses.AnyAsync(token))
                 await context.OverallStatuses.AddRangeAsync(GetOverallStatuses(), token);
             if (!await context.SoilStatuses.AnyAsync(token))
@@ -73,9 +69,10 @@ namespace FMS.Platform.Extensions.DevHelpers.SeedData
                 await context.GroundwaterScores.AddRangeAsync(GetGroundwaterScores(), token);
             if (!await context.Substances.AnyAsync(token))
                 await context.Substances.AddRangeAsync(GetSubstances(), token);
+            if (!await context.Statuses.AnyAsync(token))
+                await context.Statuses.AddRangeAsync(GetStatuses(), token);
             if (!await context.Events.AnyAsync(token))
                 await context.Events.AddRangeAsync(GetEvents(), token);
-
 
             await context.SaveChangesAsync(token);
         }

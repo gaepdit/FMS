@@ -27,11 +27,11 @@ namespace FMS.Domain.Entities
 
         public Guid? ParentId { get; set; }
 
-        public Guid EventTypeId { get; set; }
-        public Guid EventType { get; set; }
+        public Guid? EventTypeId { get; set; }
+        public EventType EventType { get; set; }
 
-        public Guid ActionTakenId { get; set; }
-        public Guid ActionTaken { get; set; }
+        public Guid? ActionTakenId { get; set; }
+        public ActionTaken ActionTaken { get; set; }
 
         public DateOnly StartDate { get; set; }
 
@@ -39,8 +39,8 @@ namespace FMS.Domain.Entities
 
         public DateOnly CompletionDate { get; set; }
 
-        public Guid ComplianceOfficerId { get; set; }
-        public string ComplianceOfficer { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
+        public ComplianceOfficer ComplianceOfficer { get; set; }
 
         public decimal EventAmount { get; set; }
 
