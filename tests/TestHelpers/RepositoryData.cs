@@ -45,7 +45,59 @@ namespace TestHelpers
             new File {Id = Guid.NewGuid(), FileLabel = "103-0002", Active = false}
         };
 
-
+        public static List<Facility> Facilities => new()
+        {
+            new Facility
+            {
+                Id = new Guid("4C730563-8D90-4C34-B0C9-059A3E066267"),
+                FacilityNumber = "ABC",
+                FileId = Files[0].Id,
+                CountyId = 131,
+                Location = "somewhere",
+            },
+            new Facility
+            {
+                Id = new Guid("26DCA0FD-F586-4D0D-AF2D-865E2B7922A2"),
+                FacilityNumber = "ABC123",
+                FileId = Files[0].Id,
+                CountyId = 131,
+                Location = "elsewhere",
+            },
+            new Facility
+            {
+                Id = new Guid("885F8638-2FF6-4E7A-ADE9-13FEAA34ABD2"),
+                FacilityNumber = "DEF",
+                FileId = Files[1].Id,
+                CountyId = 131,
+                Location = "",
+                Active = false,
+                IsRetained = false,
+            },
+            new Facility
+            {
+                Id = new Guid("633ACE4C-39B8-48EA-A5BC-6AF5DA56244F"),
+                FacilityNumber = "GHI",
+                FileId = Files[0].Id,
+                CountyId = 99,
+                Location = "nowhere",
+            },
+            new Facility
+            {
+                Id = new Guid("61A70D58-F3EF-4716-93EC-698A8FABAE19"),
+                FacilityNumber = "JKL",
+                FileId = Files[3].Id,
+                CountyId = 102,
+                Location = "here",
+            },
+            new Facility
+            {
+                Id = new Guid("08E54076-392C-46B8-883E-B302E215B053"),
+                FacilityNumber = "MNO",
+                FileId = Files[4].Id,
+                CountyId = 103,
+                Location = "",
+            }
+        };
 
         public static List<RetentionRecord> RetentionRecords => new()
         {
@@ -442,60 +494,7 @@ namespace TestHelpers
             }
         };
 
-        public static List<Facility> Facilities => new()
-        {
-                new Facility
-                {
-                    Id = new Guid("4C730563-8D90-4C34-B0C9-059A3E066267"),
-                    FacilityNumber = "ABC",
-                    FileId = Files[0].Id,
-                    CountyId = 131,
-                    Location = "somewhere",
-                },
-                new Facility
-                {
-                    Id = new Guid("26DCA0FD-F586-4D0D-AF2D-865E2B7922A2"),
-                    FacilityNumber = "ABC123",
-                    FileId = Files[0].Id,
-                    CountyId = 131,
-                    Location = "elsewhere",
-                },
-                new Facility
-                {
-                    Id = new Guid("885F8638-2FF6-4E7A-ADE9-13FEAA34ABD2"),
-                    FacilityNumber = "DEF",
-                    FileId = Files[1].Id,
-                    CountyId = 131,
-                    Location = "",
-                    Active = false,
-                    IsRetained = false,
-                },
-                new Facility
-                {
-                    Id = new Guid("633ACE4C-39B8-48EA-A5BC-6AF5DA56244F"),
-                    FacilityNumber = "GHI",
-                    FileId = Files[0].Id,
-                    CountyId = 99,
-                    Location = "nowhere",
-                },
-                new Facility
-                {
-                    Id = new Guid("61A70D58-F3EF-4716-93EC-698A8FABAE19"),
-                    FacilityNumber = "JKL",
-                    FileId = Files[3].Id,
-                    CountyId = 102,
-                    Location = "here",
-                },
-                new Facility
-                {
-                    Id = new Guid("08E54076-392C-46B8-883E-B302E215B053"),
-                    FacilityNumber = "MNO",
-                    FileId = Files[4].Id,
-                    CountyId = 103,
-                    Location = "",
-                }
 
-        };
 
         public static List<HsrpFacilityProperties> hsrpFacilityProperties => new()
         {
