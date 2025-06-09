@@ -27,7 +27,7 @@ namespace FMS.Infrastructure.Repositories
             }
             return new ContactTypeEditDto(contactType);
         }
-        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => await _context.ContactType.AsNoTracking()
+        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => await _context.ContactTypes.AsNoTracking()
            .OrderBy(e => e.Name)
            .Select(e => new ContactTypeSummaryDto(e))
            .ToListAsync();
