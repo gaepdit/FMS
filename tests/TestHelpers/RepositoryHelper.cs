@@ -81,29 +81,29 @@ namespace TestHelpers
             //_context.SaveChanges();
             //_context.ChangeTracker.Clear();
 
-            if (!_context.HsrpFacilityProperties.Any()) _context.HsrpFacilityProperties.AddRange(RepositoryData.hsrpFacilityProperties);
+            //if (!_context.HsrpFacilityProperties.Any()) _context.HsrpFacilityProperties.AddRange(RepositoryData.hsrpFacilityProperties);
 
-            if (!_context.Events.Any()) _context.Events.AddRange(RepositoryData.Events);
+            //if (!_context.Events.Any()) _context.Events.AddRange(RepositoryData.Events);
 
-            if (!_context.Locations.Any()) _context.Locations.AddRange(RepositoryData.Locations);
+            //if (!_context.Locations.Any()) _context.Locations.AddRange(RepositoryData.Locations);
 
-            if (!_context.OverallStatuses.Any()) _context.OverallStatuses.AddRange(RepositoryData.OverallStatuses);
+            //if (!_context.OverallStatuses.Any()) _context.OverallStatuses.AddRange(RepositoryData.OverallStatuses);
 
-            if (!_context.Parcels.Any()) _context.Parcels.AddRange(RepositoryData.Parcels);
+            //if (!_context.Parcels.Any()) _context.Parcels.AddRange(RepositoryData.Parcels);
 
-            if (!_context.Scores.Any()) _context.Scores.AddRange(RepositoryData.Scores);
+            //if (!_context.Scores.Any()) _context.Scores.AddRange(RepositoryData.Scores);
 
-            if (!_context.OnSiteScores.Any()) _context.OnSiteScores.AddRange(RepositoryData.OnSiteScores);
+            //if (!_context.OnSiteScores.Any()) _context.OnSiteScores.AddRange(RepositoryData.OnSiteScores);
 
-            if (!_context.SoilStatuses.Any()) _context.SoilStatuses.AddRange(RepositoryData.SoilStatuses);
+            //if (!_context.SoilStatuses.Any()) _context.SoilStatuses.AddRange(RepositoryData.SoilStatuses);
 
-            if (!_context.SourceStatuses.Any()) _context.SourceStatuses.AddRange(RepositoryData.SourceStatuses);
+            //if (!_context.SourceStatuses.Any()) _context.SourceStatuses.AddRange(RepositoryData.SourceStatuses);
 
-            if (!_context.GroundwaterStatuses.Any()) _context.GroundwaterStatuses.AddRange(RepositoryData.GroundwaterStatuses);
+            //if (!_context.GroundwaterStatuses.Any()) _context.GroundwaterStatuses.AddRange(RepositoryData.GroundwaterStatuses);
 
-            if (!_context.GroundwaterScores.Any()) _context.GroundwaterScores.AddRange(RepositoryData.GroundwaterScores);
+            //if (!_context.GroundwaterScores.Any()) _context.GroundwaterScores.AddRange(RepositoryData.GroundwaterScores);
 
-            if (!_context.Substances.Any()) _context.Substances.AddRange(RepositoryData.Substances);
+            //if (!_context.Substances.Any()) _context.Substances.AddRange(RepositoryData.Substances);
 
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
