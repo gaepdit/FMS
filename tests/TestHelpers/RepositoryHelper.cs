@@ -78,8 +78,8 @@ namespace TestHelpers
 
             if (!_context.Facilities.Any()) _context.Facilities.AddRange(RepositoryData.Facilities());
 
-            //_context.SaveChanges();
-            //_context.ChangeTracker.Clear();
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
 
             //if (!_context.HsrpFacilityProperties.Any()) _context.HsrpFacilityProperties.AddRange(RepositoryData.hsrpFacilityProperties);
 
@@ -105,8 +105,8 @@ namespace TestHelpers
 
             //if (!_context.Substances.Any()) _context.Substances.AddRange(RepositoryData.Substances);
 
-            _context.SaveChanges();
-            _context.ChangeTracker.Clear();
+            //_context.SaveChanges();
+            //_context.ChangeTracker.Clear();
 
             _context.RetentionRecords.AddRange(RepositoryData.RetentionRecords);
             _context.SaveChanges();
