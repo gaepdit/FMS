@@ -76,8 +76,21 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetContactTypeByIdAsync_WhenIdExist()
         {
-            var result = await _repository.GetContactTypeByIdAsync(Guid.NewGuid());
-            result.Should().BeTrue();
+            var existingCT = await _context.ContactType.FirstAsync();
+            var result = await _repository.GetContactTypeByIdAsync(existingCT.Id);
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ContactTypeEditDto>();
+            result.Id.Should().Be(existingCT.Id);
+            result.Name.Should().Be(existingCT.Name);
+        }
+        [Test]
+        public async Task GetContactTypeByIdAsync_WhenIdDoesNotExist_ReturnsNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var result = await _repository.GetContactTypeByIdAsync(nonExistingId);
+
+            result.Should().BeNull();
         }
 
         //GetContactTypeListAsync
