@@ -43,40 +43,40 @@ namespace TestHelpers
 
             if (!_context.Files.Any()) _context.Files.AddRange(RepositoryData.Files);
 
-            if (!_context.ComplianceOfficers.Any()) _context.ComplianceOfficers.AddRange(RepositoryData.ComplianceOfficers);
+            //if (!_context.ComplianceOfficers.Any()) _context.ComplianceOfficers.AddRange(RepositoryData.ComplianceOfficers);
 
-            if (!_context.Counties.Any()) _context.Counties.AddRange(RepositoryData.Counties);
+            //if (!_context.Counties.Any()) _context.Counties.AddRange(RepositoryData.Counties);
 
-            if (!_context.Chemicals.Any()) _context.Chemicals.AddRange(RepositoryData.Chemicals);
+            //if (!_context.Chemicals.Any()) _context.Chemicals.AddRange(RepositoryData.Chemicals);
 
-            if (!_context.ActionsTaken.Any()) _context.ActionsTaken.AddRange(RepositoryData.ActionsTaken);
+            //if (!_context.ActionsTaken.Any()) _context.ActionsTaken.AddRange(RepositoryData.ActionsTaken);
 
-            if (!_context.ContactTypes.Any()) _context.ContactTypes.AddRange(RepositoryData.ContactTypes);
-
-            _context.SaveChanges();
-            _context.ChangeTracker.Clear();
-
-            if (!_context.EventTypes.Any()) _context.EventTypes.AddRange(RepositoryData.EventTypes);
-
-            if (!_context.AllowedActionsTaken.Any())
-                _context.AllowedActionsTaken.AddRange(RepositoryData.AllowedActionsTaken);
-
-            if (!_context.FundingSources.Any())
-                _context.FundingSources.AddRange(RepositoryData.FundingSources);
-
-            if (!_context.ParcelTypes.Any())
-                _context.ParcelTypes.AddRange(RepositoryData.ParcelTypes);
-
-            if (!_context.ContactTitles.Any()) _context.ContactTitles.AddRange(RepositoryData.ContactTitles);
-
-            if (!_context.Contacts.Any()) _context.Contacts.AddRange(RepositoryData.Contacts);
-
-            if (!_context.Phones.Any()) _context.Phones.AddRange(RepositoryData.Phones);
+            //if (!_context.ContactTypes.Any()) _context.ContactTypes.AddRange(RepositoryData.ContactTypes);
 
             //_context.SaveChanges();
             //_context.ChangeTracker.Clear();
 
-            if (!_context.Facilities.Any()) _context.Facilities.AddRange(RepositoryData.Facilities);
+            //if (!_context.EventTypes.Any()) _context.EventTypes.AddRange(RepositoryData.EventTypes);
+
+            //if (!_context.AllowedActionsTaken.Any())
+            //    _context.AllowedActionsTaken.AddRange(RepositoryData.AllowedActionsTaken);
+
+            //if (!_context.FundingSources.Any())
+            //    _context.FundingSources.AddRange(RepositoryData.FundingSources);
+
+            //if (!_context.ParcelTypes.Any())
+            //    _context.ParcelTypes.AddRange(RepositoryData.ParcelTypes);
+
+            //if (!_context.ContactTitles.Any()) _context.ContactTitles.AddRange(RepositoryData.ContactTitles);
+
+            //if (!_context.Contacts.Any()) _context.Contacts.AddRange(RepositoryData.Contacts);
+
+            //if (!_context.Phones.Any()) _context.Phones.AddRange(RepositoryData.Phones);
+
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+
+            if (!_context.Facilities.Any()) _context.Facilities.AddRange(RepositoryData.Facilities());
 
             //_context.SaveChanges();
             //_context.ChangeTracker.Clear();

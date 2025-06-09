@@ -21,7 +21,7 @@ namespace FMS.App.Tests.Facilities
         [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var facilityId = RepositoryData.Facilities[0].Id;
+            var facilityId = RepositoryData.Facilities()[0].Id;
             var facility = ResourceHelper.GetFacilityDetail(facilityId);
 
             var mockRepo = Substitute.For<IFacilityRepository>();
