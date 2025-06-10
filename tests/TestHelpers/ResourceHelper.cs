@@ -4,7 +4,7 @@ using System.Linq;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
-using static TestHelpers.RepositoryData;
+using FMS.TestData.SeedData;
 
 namespace TestHelpers
 {
@@ -12,7 +12,7 @@ namespace TestHelpers
     {
         public static List<CabinetSummaryDto> GetCabinetSummaries(bool includeInactive)
         {
-            var cabinets = Cabinets
+            var cabinets = SeedData.GetCabinets()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.FirstFileLabel)
                 .ThenBy(e => e.Name)
@@ -32,7 +32,7 @@ namespace TestHelpers
 
         public static FacilityDetailDto GetFacilityDetail(Guid id)
         {
-            var facility = Facilities().Find(e => e.Id == id);
+            var facility = SeedData.GetFacilities().Find(e => e.Id == id);
             if (facility == null) throw new ArgumentException("Invalid Facility ID");
 
             facility.File = GetFile(facility.FileId);
@@ -51,14 +51,14 @@ namespace TestHelpers
 
         // Item retrieval
         public static County GetCounty(int id) => Data.Counties.Find(e => e.Id == id);
-        private static File GetFile(Guid? id) => Files.Find(e => e.Id == id);
-        private static FacilityStatus GetFacilityStatus(Guid? id) => FacilityStatuses.Find(e => e.Id == id);
-        private static FacilityType GetFacilityType(Guid? id) => FacilityTypes.Find(e => e.Id == id);
-        private static BudgetCode GetBudgetCode(Guid? id) => BudgetCodes.Find(e => e.Id == id);
-        private static OrganizationalUnit GetOrganizationalUnit(Guid? id) => OrganizationalUnits.Find(e => e.Id == id);
+        private static File GetFile(Guid? id) => SeedData.GetFiles().Find(e => e.Id == id);
+        private static FacilityStatus GetFacilityStatus(Guid? id) => SeedData.GetFacilityStatuses().Find(e => e.Id == id);
+        private static FacilityType GetFacilityType(Guid? id) => SeedData.GetFacilityTypes().Find(e => e.Id == id);
+        private static BudgetCode GetBudgetCode(Guid? id) => SeedData.GetBudgetCodes().Find(e => e.Id == id);
+        private static OrganizationalUnit GetOrganizationalUnit(Guid? id) => SeedData.GetOrganizationalUnits().Find(e => e.Id == id);
 
         private static IEnumerable<RetentionRecordDetailDto> GetRetentionRecordsForFacility(Guid id) =>
-            RetentionRecords.Where(e => e.FacilityId == id)
+            SeedData.GetRetentionRecords().Where(e => e.FacilityId == id)
                 .Select(e => new RetentionRecordDetailDto(e)).ToList();
     }
 }

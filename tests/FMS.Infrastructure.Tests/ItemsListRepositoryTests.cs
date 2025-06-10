@@ -14,7 +14,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetItemList_ReturnsAllActive()
         {
-            using var repository = CreateRepositoryHelper().GetItemsListRepository();
+            using var repository = CreateRepositoryHelperAsync().GetItemsListRepository();
             var result = await repository.GetBudgetCodesItemListAsync();
             var expected = RepositoryData.BudgetCodes
                 .Where(e => e.Active)
@@ -25,7 +25,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetItemList_WithInactive_ReturnsAll()
         {
-            using var repository = CreateRepositoryHelper().GetItemsListRepository();
+            using var repository = CreateRepositoryHelperAsync().GetItemsListRepository();
             var result = await repository.GetBudgetCodesItemListAsync(true);
             var expected = RepositoryData.BudgetCodes
                 .Select(e => new ListItem { Id = e.Id, Name = e.Name });
@@ -35,7 +35,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetItemName_ReturnsName()
         {
-            using var repository = CreateRepositoryHelper().GetItemsListRepository();
+            using var repository = CreateRepositoryHelperAsync().GetItemsListRepository();
             var bc = RepositoryData.BudgetCodes[0];
             var result = await repository.GetBudgetCodeNameAsync(bc.Id);
             result.Should().Be(bc.Name);
@@ -44,7 +44,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetItemName_NullId_ReturnsNull()
         {
-            using var repository = CreateRepositoryHelper().GetItemsListRepository();
+            using var repository = CreateRepositoryHelperAsync().GetItemsListRepository();
             var result = await repository.GetBudgetCodeNameAsync(null);
             result.Should().BeNull();
         }
@@ -52,7 +52,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetItemName_InvalidId_ReturnsNull()
         {
-            using var repository = CreateRepositoryHelper().GetItemsListRepository();
+            using var repository = CreateRepositoryHelperAsync().GetItemsListRepository();
             var result = await repository.GetBudgetCodeNameAsync(Guid.NewGuid());
             result.Should().BeNull();
         }
@@ -60,7 +60,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetItemName_EmptyList_ReturnsNull()
         {
-            using var repository = CreateRepositoryHelper().GetItemsListRepository();
+            using var repository = CreateRepositoryHelperAsync().GetItemsListRepository();
             var result = await repository.GetComplianceOfficerNameAsync(Guid.Empty);
             result.Should().BeNull();
         }

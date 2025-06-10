@@ -16,7 +16,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileExists_Exists_ReturnsTrue()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var result = await repository.FileExistsAsync(RepositoryData.Files[0].Id);
             result.Should().BeTrue();
         }
@@ -24,7 +24,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileExists_NotExists_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var result = await repository.FileExistsAsync(Guid.Empty);
             result.Should().BeFalse();
         }
@@ -34,7 +34,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetFileById_ReturnsCorrectFile()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var file = RepositoryData.Files[0];
 
             var result = await repository.GetFileAsync(file.Id);
@@ -46,7 +46,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetFileById_Nonexistent_ReturnsNull()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var result = await repository.GetFileAsync(Guid.Empty);
             result.Should().BeNull();
         }
@@ -54,7 +54,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetFileByName_ReturnsCorrectFile()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var file = RepositoryData.Files[0];
             var result = await repository.GetFileAsync(file.FileLabel);
             result.Id.Should().Be(file.Id);
@@ -63,7 +63,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetFileByName_Nonexistent_ReturnsNull()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var result = await repository.GetFileAsync(string.Empty);
             result.Should().BeNull();
         }
@@ -73,7 +73,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileHasActiveFacilities_HasActive_ReturnsTrue()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var result = await repository.FileHasActiveFacilities(RepositoryData.Files[0].Id);
             result.Should().BeTrue();
         }
@@ -81,7 +81,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileHasActiveFacilities_HasNoActive_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var result = await repository.FileHasActiveFacilities(RepositoryData.Files[1].Id);
             result.Should().BeFalse();
         }
@@ -89,7 +89,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileHasActiveFacilities_NonExistentId_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var result = await repository.FileHasActiveFacilities(Guid.Empty);
             result.Should().BeFalse();
         }
@@ -99,7 +99,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileCount_DefaultSpec_ReturnsCountOfActiveFiles()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var spec = new FileSpec();
 
             var result = await repository.CountAsync(spec);
@@ -111,7 +111,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileCount_WithInactive_ReturnsCountOfAll()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var spec = new FileSpec { ShowInactive = true };
 
             var result = await repository.CountAsync(spec);
@@ -124,7 +124,7 @@ namespace FMS.Infrastructure.Tests
         [TestCase(102)]
         public async Task FileCount_ByCounty_ReturnsCorrectCount(int countyId)
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var spec = new FileSpec { CountyId = countyId };
             var countyString = countyId.ToString().PadLeft(3, '0');
 
@@ -139,7 +139,7 @@ namespace FMS.Infrastructure.Tests
         [TestCase("2-0")]
         public async Task FileCount_ByFileLabel_ReturnsCorrectCount(string fileLabel)
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var spec = new FileSpec { FileLabel = fileLabel };
 
             var result = await repository.CountAsync(spec);
@@ -153,7 +153,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileSearch_Default_ReturnsActiveFiles()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
 
             var result = await repository.GetFileListAsync(new FileSpec(), 1, 999);
             var expectedCount = RepositoryData.Files.Count(e => e.Active);
@@ -167,7 +167,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileSearch_WithInactive_ReturnsAllFiles()
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var spec = new FileSpec { ShowInactive = true };
 
             var result = await repository.GetFileListAsync(spec, 1, 999);
@@ -181,7 +181,7 @@ namespace FMS.Infrastructure.Tests
         [TestCase(102)]
         public async Task FileSearch_ByCounty_ReturnsCorrectList(int countyId)
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var spec = new FileSpec { CountyId = countyId };
             var countyString = countyId.ToString().PadLeft(3, '0');
 
@@ -197,7 +197,7 @@ namespace FMS.Infrastructure.Tests
         [TestCase("2-0")]
         public async Task FileSearch_ByFileNumber_ReturnsCorrectList(string fileLabelSpec)
         {
-            using var repository = CreateRepositoryHelper().GetFileRepository();
+            using var repository = CreateRepositoryHelperAsync().GetFileRepository();
             var spec = new FileSpec { FileLabel = fileLabelSpec };
 
             var result = await repository.GetFileListAsync(spec, 1, 999);
@@ -214,7 +214,7 @@ namespace FMS.Infrastructure.Tests
         {
             var file = RepositoryData.Files[0];
 
-            using var repositoryHelper = CreateRepositoryHelper();
+            using var repositoryHelper = CreateRepositoryHelperAsync();
             using var repository = repositoryHelper.GetFileRepository();
             await repository.UpdateFileAsync(file.Id, !file.Active);
             repositoryHelper.ClearChangeTracker();
@@ -230,7 +230,7 @@ namespace FMS.Infrastructure.Tests
         {
             Func<Task> action = async () =>
             {
-                using var repository = CreateRepositoryHelper().GetFileRepository();
+                using var repository = CreateRepositoryHelperAsync().GetFileRepository();
                 await repository.UpdateFileAsync(Guid.Empty, default);
             };
 
