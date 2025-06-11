@@ -25,7 +25,7 @@ namespace FMS.Domain.Dto
 
         public DateOnly ScoredDate { get; set; }
 
-        public Guid ScoredById { get; set; }
+        public Guid? ScoredById { get; set; }
         public string ScoredBy { get; set; }
 
         public string Comments { get; set; }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
 using NUnit.Framework;
+using FMS.TestData.SeedData;
 
 namespace FMS.App.Tests.Cabinets
 {
@@ -17,7 +18,7 @@ namespace FMS.App.Tests.Cabinets
         [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var cabinet = RepositoryData.Cabinets[0];
+            var cabinet = SeedData.GetCabinets()[0];
             var expected = new CabinetSummaryDto(cabinet);
             var mockRepo = Substitute.For<ICabinetRepository>();
             mockRepo.GetCabinetSummaryAsync(cabinet.Id).Returns(expected);
@@ -64,7 +65,7 @@ namespace FMS.App.Tests.Cabinets
         [Test]
         public async Task OnPost_ValidModel_ReturnsDetailsPage()
         {
-            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(SeedData.GetCabinets()[0]);
 
             var mockRepo = Substitute.For<ICabinetRepository>();
 
@@ -87,7 +88,7 @@ namespace FMS.App.Tests.Cabinets
         [Test]
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
-            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(SeedData.GetCabinets()[0]);
 
             var mockRepo = Substitute.For<ICabinetRepository>();
             mockRepo.GetCabinetSummaryAsync(Arg.Any<Guid>()).Returns(cabinet);
@@ -105,7 +106,7 @@ namespace FMS.App.Tests.Cabinets
         [Test]
         public async Task OnPost_NameExists_ReturnsPageWithInvalidModelState()
         {
-            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(SeedData.GetCabinets()[0]);
 
             var mockRepo = Substitute.For<ICabinetRepository>();
             mockRepo.CabinetNameExistsAsync(Arg.Any<string>(), Arg.Any<Guid>()).Returns(true);
@@ -130,7 +131,7 @@ namespace FMS.App.Tests.Cabinets
         public async Task OnPost_InvalidFileLabel_ReturnsPageWithInvalidModelState()
         {
             const string newFileLabel = "abc";
-            var cabinet = new CabinetSummaryDto(RepositoryData.Cabinets[0]);
+            var cabinet = new CabinetSummaryDto(SeedData.GetCabinets()[0]);
 
             var mockRepo = Substitute.For<ICabinetRepository>();
             mockRepo.CabinetNameExistsAsync(Arg.Any<string>(), Arg.Any<Guid>()).Returns(false);

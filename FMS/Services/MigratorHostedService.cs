@@ -5,7 +5,7 @@ using FMS.Domain.Entities.Users;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.DbScripts;
 using FMS.Platform.Extensions.DevHelpers;
-using FMS.Platform.Extensions.DevHelpers.SeedData;
+using FMS.TestData.SeedData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
 using NUnit.Framework;
+using FMS.TestData.SeedData;
 
 namespace FMS.App.Tests.Cabinets
 {
@@ -15,7 +16,7 @@ namespace FMS.App.Tests.Cabinets
         [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var id = RepositoryData.Cabinets[0].Id;
+            var id = SeedData.GetCabinets()[0].Id;
             var item = ResourceHelper.GetCabinetSummary(id);
 
             var mockRepo = Substitute.For<ICabinetRepository>();
