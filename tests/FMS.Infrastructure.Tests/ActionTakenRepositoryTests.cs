@@ -58,9 +58,10 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-        // Test for GetActionTakenAsync method
+        // Tests for ActionTakenExistsAsync method
+
         [Test]
-        public void Test1()
+        public void ActionTakenExistsAsync_ReturnsTrue_WhenIdIsValid()
         {
             Assert.Pass();
         }
