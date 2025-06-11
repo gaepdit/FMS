@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
 using NUnit.Framework;
+using FMS.TestData.SeedData;
 
 namespace FMS.App.Tests.Facilities
 {
@@ -17,7 +18,7 @@ namespace FMS.App.Tests.Facilities
         [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var facilityId = RepositoryData.Facilities()[0].Id;
+            var facilityId = SeedData.GetFacilities()[0].Id;
             var facility = ResourceHelper.GetFacilityDetail(facilityId);
 
             var mockRepo = Substitute.For<IFacilityRepository>();

@@ -8,6 +8,7 @@ using TestHelpers;
 using NUnit.Framework;
 using static TestHelpers.RepositoryHelper;
 using static FMS.TestData.SeedData.SeedData;
+using FMS.TestData.SeedData;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -18,15 +19,15 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilityExists_Exists_ReturnsTrue()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
-            var result = await repository.FacilityExistsAsync(RepositoryData.Facilities()[0].Id);
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
+            var result = await repository.FacilityExistsAsync(SeedData.GetFacilities()[0].Id);
             result.Should().BeTrue();
         }
 
         [Test]
         public async Task FacilityExists_NotExists_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var result = await repository.FacilityExistsAsync(Guid.Empty);
             result.Should().BeFalse();
         }
@@ -36,8 +37,8 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetFacility_ReturnsCorrectFacility()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
-            var facility = RepositoryData.Facilities()[0];
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
+            var facility = SeedData.GetFacilities()[0];
 
             var result = await repository.GetFacilityAsync(facility.Id);
 
@@ -48,7 +49,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetNonexistentFacility_ReturnsNull()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var result = await repository.GetFacilityAsync(Guid.Empty);
             result.Should().BeNull();
         }
@@ -58,11 +59,11 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilityCount_DefaultSpec_ReturnsCountOfActiveFacilities()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec();
 
             var result = await repository.CountAsync(spec);
-            var expected = RepositoryData.Facilities().Count(e => e.Active);
+            var expected = SeedData.GetFacilities().Count(e => e.Active);
 
             result.Should().Be(expected);
         }
@@ -70,11 +71,11 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilityCount_WithDeleted_ReturnsCountOfAll()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { ShowDeleted = true };
 
             var result = await repository.CountAsync(spec);
-            var expected = RepositoryData.Facilities().Count;
+            var expected = SeedData.GetFacilities().Count;
 
             result.Should().Be(expected);
         }
@@ -85,9 +86,9 @@ namespace FMS.Infrastructure.Tests
             const int countyId = 131;
             var spec = new FacilitySpec { CountyId = countyId };
 
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var result = await repository.CountAsync(spec);
-            var expected = RepositoryData.Facilities()
+            var expected = SeedData.GetFacilities()
                 .Count(e => e.CountyId == countyId && e.Active);
 
             result.Should().Be(expected);
@@ -96,8 +97,8 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilityCount_ByMissingCounty_ReturnsZero()
         {
-            const int countyId = 243;
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            const int countyId = 343;
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { CountyId = countyId };
 
             var result = await repository.CountAsync(spec);
@@ -109,11 +110,11 @@ namespace FMS.Infrastructure.Tests
         [TestCase("GHI")]
         public async Task FacilityCount_ByFacilityNumber_ReturnsCorrectCount(string facilityNumberSpec)
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { FacilityNumber = facilityNumberSpec };
 
             var result = await repository.CountAsync(spec);
-            var expected = RepositoryData.Facilities()
+            var expected = SeedData.GetFacilities()
                 .Count(e => e.FacilityNumber.ToLower().Contains(facilityNumberSpec.ToLower()) && e.Active);
 
             result.Should().Be(expected);
@@ -124,7 +125,7 @@ namespace FMS.Infrastructure.Tests
         {
             const string facilityNumber = "DEF";
             var spec = new FacilitySpec { FacilityNumber = facilityNumber };
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
 
             var result = await repository.CountAsync(spec);
 
@@ -135,7 +136,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityCount_ByMissingFacilityNumber_ReturnsZero()
         {
             const string facilityNumber = "zzz";
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { FacilityNumber = facilityNumber };
 
             var result = await repository.CountAsync(spec);
@@ -148,10 +149,10 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilitySearch_DefaultSpec_ReturnsActiveFacilities()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
 
             var result = await repository.GetFacilityPaginatedListAsync(new FacilitySpec(), 1, 999);
-            var expectedCount = RepositoryData.Facilities().Count(e => e.Active);
+            var expectedCount = SeedData.GetFacilities().Count(e => e.Active);
 
             result.TotalCount.Should().Be(expectedCount);
             result.Items.Count.Should().Be(expectedCount);
@@ -162,11 +163,11 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilitySearch_WithDeleted_ReturnsAllFacilities()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { ShowDeleted = true };
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
-            var expectedCount = RepositoryData.Facilities().Count;
+            var expectedCount = SeedData.GetFacilities().Count;
 
             result.TotalCount.Should().Be(expectedCount);
             result.Items.Count.Should().Be(expectedCount);
@@ -177,12 +178,12 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilitySearch_ByCounty_ReturnsCorrectList()
         {
-            const int countySpec = 131;
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            const int countySpec = 261;
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { CountyId = countySpec, ShowDeleted = true };
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
-            var expectedCount = RepositoryData.Facilities().Count(e => e.CountyId == countySpec);
+            var expectedCount = SeedData.GetFacilities().Count(e => e.CountyId == countySpec);
 
             result.TotalCount.Should().Be(expectedCount);
             result.Items.Count.Should().Be(expectedCount);
@@ -190,17 +191,17 @@ namespace FMS.Infrastructure.Tests
             result.TotalPages.Should().Be(1);
         }
 
-        [TestCase("where")]
-        [TestCase("somewhere")]
-        [TestCase("here")]
+        [TestCase("Highway 92 Woodstock")]
+        [TestCase("Kroger Plaza, Woodstock")]
+        [TestCase("Shopping center parking lot")]
         [TestCase("")]
         public async Task FacilitySearch_ByLocation_ReturnsCorrectList(string locationSpec)
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { Location = locationSpec, ShowDeleted = true };
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
-            var expectedCount = RepositoryData.Facilities().Count(e => e.Location.Contains(locationSpec));
+            var expectedCount = SeedData.GetFacilities().Count(e => e.Location.Contains(locationSpec));
 
             result.TotalCount.Should().Be(expectedCount);
             result.Items.Count.Should().Be(expectedCount);
@@ -211,12 +212,12 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilitySearch_ByMissingCounty_ReturnsNone()
         {
-            const int countySpec = 243;
+            const int countySpec = 131;
             var spec = new FacilitySpec { CountyId = countySpec, ShowDeleted = true };
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
-            var expectedCount = RepositoryData.Facilities().Count(e => e.CountyId == countySpec);
+            var expectedCount = SeedData.GetFacilities().Count(e => e.CountyId == countySpec);
 
             result.TotalCount.Should().Be(expectedCount);
             result.Items.Count.Should().Be(expectedCount);
@@ -224,15 +225,15 @@ namespace FMS.Infrastructure.Tests
             result.TotalPages.Should().Be(0);
         }
 
-        [TestCase("ABC")]
-        [TestCase("GHI")]
+        [TestCase("ADD1")]
+        [TestCase("UTF8")]
         public async Task FacilitySearch_ByFacilityNumber_ReturnsCorrectList(string facilityNumberSpec)
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { FacilityNumber = facilityNumberSpec, ShowDeleted = true };
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
-            var expectedCount = RepositoryData.Facilities()
+            var expectedCount = SeedData.GetFacilities()
                 .Count(e => e.FacilityNumber.ToLower().Contains(facilityNumberSpec.ToLower()) && e.Active);
 
             result.TotalCount.Should().Be(expectedCount);
@@ -245,7 +246,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_ByInactiveFacilityNumber_ReturnsEmpty()
         {
             const string facilityNumberSpec = "DEF";
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { FacilityNumber = facilityNumberSpec };
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
@@ -260,7 +261,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilitySearch_ByMissingFacilityNumber_ReturnsEmpty()
         {
             const string facilityNumberSpec = "zzz";
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var spec = new FacilitySpec { FacilityNumber = facilityNumberSpec };
 
             var result = await repository.GetFacilityPaginatedListAsync(spec, 1, 999);
@@ -276,10 +277,10 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetFacilityDetailListAsync_DefaultSpec_ReturnsActiveFacilities()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
 
             var result = await repository.GetFacilityDetailListAsync(new FacilitySpec());
-            var expectedCount = RepositoryData.Facilities().Count(e => e.Active);
+            var expectedCount = SeedData.GetFacilities().Count(e => e.Active);
 
             result.Count.Should().Be(expectedCount);
         }
@@ -289,7 +290,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilityNumberExists_Unique_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var result = await repository.FacilityNumberExists("Unique");
             result.Should().BeFalse();
         }
@@ -297,17 +298,19 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FacilityNumberExists_Duplicate_ReturnsTrue()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
-            var result = await repository.FacilityNumberExists("ABC");
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
+
+            var result = await repository.FacilityNumberExists("UTF8");
+
             result.Should().BeTrue();
         }
 
         [Test]
         public async Task FacilityNumberExists_DuplicateIsIgnored_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
-            var ignoreId = RepositoryData.Facilities()[0].Id;
-            var facName = RepositoryData.Facilities()[0].Name;
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
+            var ignoreId = SeedData.GetFacilities()[0].Id;
+            var facName = SeedData.GetFacilities()[0].Name;
             var result = await repository.FacilityNumberExists(facName, ignoreId);
             result.Should().BeFalse();
         }
@@ -317,7 +320,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileLabelExists_Unique_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var result = await repository.FileLabelExists("999-9999");
             result.Should().BeFalse();
         }
@@ -325,8 +328,8 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task FileLabelExists_Duplicate_ReturnsTrue()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
-            var fileLabel = RepositoryData.Files[0].FileLabel;
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
+            var fileLabel = SeedData.GetFiles()[0].FileLabel;
             var result = await repository.FileLabelExists(fileLabel);
             result.Should().BeTrue();
         }
@@ -336,15 +339,15 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task RetentionRecord_Exists_ReturnsTrue()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
-            var result = await repository.RetentionRecordExistsAsync(RepositoryData.RetentionRecords[0].Id);
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
+            var result = await repository.RetentionRecordExistsAsync(SeedData.GetRetentionRecords()[0].Id);
             result.Should().BeTrue();
         }
 
         [Test]
         public async Task RetentionRecord_NotExists_ReturnsFalse()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var result = await repository.RetentionRecordExistsAsync(Guid.Empty);
             result.Should().BeFalse();
         }
@@ -354,8 +357,8 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetRetentionRecord_ReturnsCorrectItem()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
-            var expected = new RetentionRecordDetailDto(RepositoryData.RetentionRecords[0]);
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
+            var expected = new RetentionRecordDetailDto(SeedData.GetRetentionRecords()[0]);
 
             var result = await repository.GetRetentionRecordAsync(expected.Id);
 
@@ -365,7 +368,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetRetentionRecord_Nonexistent_ReturnsNull()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var result = await repository.GetRetentionRecordAsync(Guid.Empty);
             result.Should().BeNull();
         }
@@ -375,14 +378,14 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task CreateRecord_Succeeds()
         {
-            using var repository = CreateRepositoryHelperAsync().GetFacilityRepository();
+            using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var record = new RetentionRecord()
             {
                 Active = true,
                 BoxNumber = "NewBox",
                 ConsignmentNumber = "CN",
                 EndYear = 2020,
-                FacilityId = RepositoryData.Facilities()[0].Id,
+                FacilityId = SeedData.GetFacilities()[0].Id,
                 RetentionSchedule = "RS",
                 ShelfNumber = "SN",
                 StartYear = 2000,

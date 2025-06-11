@@ -288,7 +288,7 @@ namespace FMS.TestData.SeedData
                     Name = "Facility for testing Stored Procedure math error",
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"), //00943668
                     FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
-                    Location = "N/A",
+                    Location = "",
                     Address = "N/A",
                     City = "N/A",
                     State = "Georgia",

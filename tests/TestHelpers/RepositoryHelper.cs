@@ -19,7 +19,6 @@ namespace TestHelpers
         {
             _context = new FmsDbContext(_options, default);
             _context.Database.EnsureCreated();
-
         }
 
         public static async Task<RepositoryHelper> CreateRepositoryHelperAsync()
