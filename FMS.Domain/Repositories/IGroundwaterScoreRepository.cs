@@ -4,7 +4,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IGroundwaterScore : IDisposable
+    public interface IGroundwaterScoreRepository : IDisposable
     {
         Task<bool> GroundwaterScoreExistsAsync(Guid id);
 
