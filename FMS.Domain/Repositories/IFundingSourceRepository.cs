@@ -15,7 +15,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreateFundingSourceAsync(FundingSourceCreateDto fundingSource);
 
-        Task UpdateFundingSourceAsync(Guid Id, FundingSourceEditDto fundingSourceUpdates);
+        Task UpdateFundingSourceAsync(Guid id, FundingSourceEditDto fundingSourceUpdates);
 
         Task UpdateFundingSourceStatusAsync(Guid id, bool active);
     }
