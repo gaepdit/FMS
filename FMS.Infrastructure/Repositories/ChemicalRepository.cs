@@ -67,9 +67,12 @@ namespace FMS.Infrastructure.Repositories
             var newChemical = new Chemical
             {
                 Id = Guid.NewGuid(),
+                Active = true,
                 ChemicalName = chemical.ChemicalName,
                 CasNo = chemical.CasNo,
-                Active = true
+                ToxValue = chemical.ToxValue,
+                CommonName = chemical.CommonName,
+                MCLs = chemical.MCLs
             };
             await _context.Chemicals.AddAsync(newChemical);
             await _context.SaveChangesAsync();

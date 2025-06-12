@@ -34,8 +34,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "Common Name")]
         public string CommonName { get; set; }
 
+        [Display(Name = "Toxicity Value")]
         public string ToxValue { get; set; }
 
+        [Display(Name = "MCL Value")]
         public string MCLs { get; set; }
     }
 }
