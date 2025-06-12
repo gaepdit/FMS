@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
-    internal class ContactTypeRepository : IContactTypeRepository
+    public class ContactTypeRepository : IContactTypeRepository
     {
         public readonly FmsDbContext _context;
         public ContactTypeRepository(FmsDbContext context) => _context = context;
@@ -49,9 +49,9 @@ namespace FMS.Infrastructure.Repositories
         public Task UpdateContactTypeAsync(Guid id, ContactTypeEditDto contactType)
         {
             Prevent.NullOrEmpty(contactType.Name, nameof(contactType.Name));
-            return UpdateContactTYpeInternalAsync(id, contactType);
+            return UpdateContactTypeInternalAsync(id, contactType);
         }
-        private async Task<Guid> UpdateContactTYpeInternalAsync(Guid id, ContactTypeEditDto contactTypeUpdates)
+        private async Task<Guid> UpdateContactTypeInternalAsync(Guid id, ContactTypeEditDto contactTypeUpdates)
         {
             var contactType = await _context.ContactTypes.FindAsync(id) ?? throw new ArgumentException("Contact Type ID not found.", nameof(id));
 
