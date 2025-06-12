@@ -11,7 +11,7 @@ namespace FMS.Domain.Repositories
 
         Task<EventTypeEditDto> GetEventTypeByIdAsync(Guid id);
 
-        Task<IReadOnlyList<EventTypeSummaryDto>> GetEventTypeListsAsync();
+        Task<IReadOnlyList<EventTypeSummaryDto>> GetEventTypeListAsync();
 
         Task<Guid> CreateEventTypeAsync(EventTypeCreateDto eventType);
 
