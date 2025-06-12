@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,34 +22,63 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> EventTypeExistsAsync(Guid id) =>
             _context.EventTypes.AnyAsync(e => e.Id == id);
 
-        public Task<EventTypeEditDto> GetEventTypeByIdAsync(Guid id)
+        public async Task<EventTypeEditDto> GetEventTypeByIdAsync(Guid id)
         {
-            // Implementation logic here
-            return Task.FromResult<EventTypeEditDto>(null);
+            EventType eventType = await _context.EventTypes.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+            if (eventType == null)
+            {
+                return null;
+            }
+            return new EventTypeEditDto(eventType);
         }
 
-        public Task<IReadOnlyList<EventTypeSummaryDto>> GetEventTypeListsAsync()
+        public async Task<IReadOnlyList<EventTypeSummaryDto>> GetEventTypeListAsync() => await _context.EventTypes.AsNoTracking()
+           .OrderBy(e => e.Name)
+           .Select(e => new EventTypeSummaryDto(e))
+           .ToListAsync();
+
+        public async Task<Guid> CreateEventTypeAsync(EventTypeCreateDto eventType)
         {
-            // Implementation logic here
-            return Task.FromResult<IReadOnlyList<EventTypeSummaryDto>>(new List<EventTypeSummaryDto>());
+            Prevent.Null(eventType, nameof(eventType));
+            Prevent.NullOrEmpty(eventType.Name, nameof(eventType.Name));
+
+            return await CreateEventTypeInternalAsync(eventType);
         }
 
-        public Task<Guid> CreateEventTypeAsync(EventTypeCreateDto eventType)
+        private async Task<Guid> CreateEventTypeInternalAsync(EventTypeCreateDto eventType)
         {
-            // Implementation logic here
-            return Task.FromResult(Guid.NewGuid());
+            var newEventType = new EventType(eventType);
+            await _context.EventTypes.AddAsync(newEventType);
+            await _context.SaveChangesAsync();
+
+            return newEventType.Id;
         }
 
-        public Task UpdateEventTypeAsync(Guid id, EventTypeEditDto eventTypeUpdates)
+        public async Task UpdateEventTypeAsync(Guid id, EventTypeEditDto eventTypeUpdates)
         {
-            // Implementation logic here
-            return Task.CompletedTask;
+            Prevent.NullOrEmpty(eventTypeUpdates.Name, nameof(eventTypeUpdates.Name));
+            await UpdateEventTypeInternalAsync(id, eventTypeUpdates);
         }
 
-        public Task UpdateEventTypeStatusAsync(Guid id, bool active)
+        private async Task<Guid> UpdateEventTypeInternalAsync(Guid id, EventTypeEditDto eventTypeUpdates)
         {
-            // Implementation logic here
-            return Task.CompletedTask;
+            var eventType = await _context.EventTypes.FindAsync(id) ?? throw new ArgumentException("Event Type ID not found.", nameof(id));
+
+            eventType.Name = eventTypeUpdates.Name;
+
+            await _context.SaveChangesAsync();
+
+            // Ensure all code paths return a value
+            return eventType.Id;
+        }
+
+        public async Task UpdateEventTypeStatusAsync(Guid id, bool active)
+        {
+            var eventType = await _context.EventTypes.FindAsync(id)
+                ?? throw new ArgumentException("Event Type ID not found");
+            eventType.Active = active;
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Implementation

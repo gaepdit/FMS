@@ -15,8 +15,10 @@ namespace FMS.Infrastructure.Repositories
     {
         public readonly FmsDbContext _context;
         public ContactTypeRepository(FmsDbContext context) => _context = context;
+
         public Task<bool> ContactTypeExistsAsync(Guid id) =>
             _context.ContactTypes.AnyAsync(e => e.Id == id);
+
         public async Task<ContactTypeEditDto> GetContactTypeByIdAsync(Guid id)
         {
             var contactType = await _context.ContactTypes.AsNoTracking().
@@ -27,30 +29,35 @@ namespace FMS.Infrastructure.Repositories
             }
             return new ContactTypeEditDto(contactType);
         }
+
         public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => await _context.ContactTypes.AsNoTracking()
            .OrderBy(e => e.Name)
            .Select(e => new ContactTypeSummaryDto(e))
            .ToListAsync();
-        public Task<Guid> CreateContactTypeAsync(ContactTypeCreateDto contactType)
+
+        public async Task<Guid> CreateContactTypeAsync(ContactTypeCreateDto contactType)
         {
             Prevent.Null(contactType, nameof(contactType));
             Prevent.NullOrEmpty(contactType.Name, nameof(contactType.Name));
 
-            return CreateContactTypeInternalAsync(contactType);
+            return await CreateContactTypeInternalAsync(contactType);
         }
+
         private async Task<Guid> CreateContactTypeInternalAsync(ContactTypeCreateDto contactType)
         {
-            var newCT = new ContactType(contactType);
-            await _context.ContactTypes.AddAsync(newCT);
+            var newContactType = new ContactType(contactType);
+            await _context.ContactTypes.AddAsync(newContactType);
             await _context.SaveChangesAsync();
 
-            return newCT.Id;
+            return newContactType.Id;
         }
+
         public Task UpdateContactTypeAsync(Guid id, ContactTypeEditDto contactType)
         {
             Prevent.NullOrEmpty(contactType.Name, nameof(contactType.Name));
             return UpdateContactTypeInternalAsync(id, contactType);
         }
+
         private async Task<Guid> UpdateContactTypeInternalAsync(Guid id, ContactTypeEditDto contactTypeUpdates)
         {
             var contactType = await _context.ContactTypes.FindAsync(id) ?? throw new ArgumentException("Contact Type ID not found.", nameof(id));
@@ -62,6 +69,7 @@ namespace FMS.Infrastructure.Repositories
             // Ensure all code paths return a value
             return contactType.Id;
         }
+
         public async Task UpdateContactTypeStatusAsync(Guid id, bool active)
         {
             var contactType = await _context.ContactTypes.FindAsync(id)
