@@ -15,7 +15,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreateEventTypeAsync(EventTypeCreateDto eventType);
 
-        Task UpdateEventTypeAsync(Guid Id, EventTypeEditDto eventTypeUpdates);
+        Task UpdateEventTypeAsync(Guid id, EventTypeEditDto eventTypeUpdates);
 
         Task UpdateEventTypeStatusAsync(Guid id, bool active);
     }
