@@ -16,7 +16,7 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public ContactTitleRepository(FmsDbContext context) => _context = context;
 
-        public Task<bool> ContactTitleExistAsync(Guid id) =>
+        public Task<bool> ContactTitleExistsAsync(Guid id) =>
             _context.ContactTitles.AnyAsync(e => e.Id == id);
 
         public async Task<ContactTitleEditDto> GetContactTitleByIdAsync(Guid id)
@@ -33,7 +33,7 @@ namespace FMS.Infrastructure.Repositories
             .OrderBy(e => e.Id)
             .Select(e => new ContactTitleSummaryDto(e))
             .ToListAsync();
-        public Task<Guid> CreateContactTilteAsync(ContactTitleCreateDto contactType)
+        public Task<Guid> CreateContactTitleAsync(ContactTitleCreateDto contactType)
         {
             Prevent.Null(contactType, nameof(contactType));
             Prevent.NullOrEmpty(contactType.Name, nameof(contactType.Name));

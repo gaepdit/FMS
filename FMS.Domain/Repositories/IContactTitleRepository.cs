@@ -11,7 +11,7 @@ namespace FMS.Domain.Repositories
 
         Task<ContactTitleEditDto> GetContactTitleByIdAsync(Guid id);
 
-        Task<IReadOnlyList<ContactTitleSummaryDto>> GetContactTitleListsAsync();
+        Task<IReadOnlyList<ContactTitleSummaryDto>> GetContactTitleListAsync();
 
         Task<Guid> CreateContactTitleAsync(ContactTitleCreateDto contactTitle);
 
