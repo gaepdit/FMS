@@ -48,5 +48,38 @@ namespace FMS.Infrastructure.Repositories
 
             return newCT.Id;
         }
+        public Task UpdateContactTitleAsync(Guid id, ContactTitleEditDto contactTitleUpdates)
+        {
+            Prevent.Null(contactTitleUpdates, nameof(contactTitleUpdates));
+            Prevent.NullOrEmpty(contactTitleUpdates.Name, nameof(contactTitleUpdates.Name));
+
+            return UpdateContactTitleInternalAsync(id, contactTitleUpdates);
+        }
+
+        private async Task UpdateContactTitleInternalAsync(Guid id, ContactTitleEditDto contactTitleUpdates)
+        {
+            var contactTitle = await _context.ContactTitles.FindAsync(id);
+
+            if (contactTitle == null)
+            {
+                throw new ArgumentException("Contact Title ID not found", nameof(id));
+            }
+            contactTitle.Name = contactTitleUpdates.Name;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateContactTitleStatusAsync(Guid id, bool active)
+        {
+            var contactTitleStatus = await _context.ContactTitles.FindAsync(id);
+
+            if (contactTitleStatus == null)
+            {
+                throw new ArgumentException("Contact Title ID not found");
+            }
+            contactTitleStatus.Active = active;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
