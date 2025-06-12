@@ -31,7 +31,7 @@ namespace FMS.Infrastructure.Tests
             _context = new FmsDbContext(options, httpContextAccessor);
             _repository = new ContactTypeRepository(_context);
 
-            _context.ContactType.Add(new ContactType
+            _context.ContactTypes.Add(new ContactType
             {
                 Id = Guid.NewGuid(),
                 Name = "Contact Type",
@@ -60,7 +60,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task ContactTypeExistAsync_ReturnTrue_ContactTypeExist()
         {
-            var existingCT = await _context.ContactType.Select(ft => ft.Id).FirstAsync();
+            var existingCT = await _context.ContactTypes.Select(ft => ft.Id).FirstAsync();
             var results = await _repository.ContactTypeExistsAsync(existingCT);
             results.Should().BeTrue();      
         }
@@ -76,7 +76,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetContactTypeByIdAsync_WhenIdExist()
         {
-            var existingCT = await _context.ContactType.FirstAsync();
+            var existingCT = await _context.ContactTypes.FirstAsync();
             var result = await _repository.GetContactTypeByIdAsync(existingCT.Id);
 
             result.Should().NotBeNull();
@@ -108,7 +108,7 @@ namespace FMS.Infrastructure.Tests
             var dto = new ContactTypeCreateDto { Name = "UniqueName" };
 
             var newId = await _repository.CreateContactTypeAsync(dto);
-            var createdContactType = await _context.ContactType.FindAsync(newId);
+            var createdContactType = await _context.ContactTypes.FindAsync(newId);
 
             createdContactType.Should().NotBeNull();
             createdContactType.Name.Should().Be("UniqueName");
@@ -117,7 +117,7 @@ namespace FMS.Infrastructure.Tests
         public void CreateContactTypeAsync_ThrowsArgumentException_WhereNameAlreadyExist()
         {
             var existingContactType = new ContactType { Id = Guid.NewGuid(), Name = "DuplicateName" };
-            _context.ContactType.Add(existingContactType);
+            _context.ContactTypes.Add(existingContactType);
             _context.SaveChanges();
 
             var dto = new ContactTypeCreateDto { Name = "DuplicateName" };
@@ -131,13 +131,13 @@ namespace FMS.Infrastructure.Tests
         public async Task UpdateContactTypeAsync_UpdatesExistingContactType_WhenDataIsValid()
         {
             var existingContactType = new ContactType { Id = Guid.NewGuid(), Name = "OriginalName" };
-            _context.ContactType.Add(existingContactType);
+            _context.ContactTypes.Add(existingContactType);
             await _context.SaveChangesAsync();
 
             var updateDto = new ContactTypeEditDto { Name = "UpdatedName" };
             await _repository.UpdateContactTypeAsync(existingContactType.Id, updateDto);
 
-            var updatedContactType = await _context.ContactType.FindAsync(existingContactType.Id);
+            var updatedContactType = await _context.ContactTypes.FindAsync(existingContactType.Id);
             updatedContactType.Name.Should().Be("UpdatedName");
         }
         [Test]
@@ -153,7 +153,7 @@ namespace FMS.Infrastructure.Tests
         {
             var contact1 = new ContactType { Id = Guid.NewGuid(), Name = "Name1"};
             var contact2 = new ContactType { Id = Guid.NewGuid(), Name = "Name2"};
-            _context.ContactType.AddRange(contact1, contact2);
+            _context.ContactTypes.AddRange(contact1, contact2);
             _context.SaveChanges();
 
             var updateDto = new ContactTypeEditDto { Name = "Name2"};
@@ -165,12 +165,12 @@ namespace FMS.Infrastructure.Tests
         public async Task UpdateContactTypeStatusAsync_UpdatesStatusCorrectly()
         {
             var contactType = new ContactType { Id = Guid.NewGuid(), Name = "StatusTest", Active = true };
-            _context.ContactType.Add(contactType);
+            _context.ContactTypes.Add(contactType);
             await _context.SaveChangesAsync();
 
             await _repository.UpdateContactTypeStatusAsync(contactType.Id, false);
 
-            var updatedContactType = await _context.ContactType.FindAsync(contactType.Id);
+            var updatedContactType = await _context.ContactTypes.FindAsync(contactType.Id);
             updatedContactType.Active.Should().BeFalse();
         }
 
