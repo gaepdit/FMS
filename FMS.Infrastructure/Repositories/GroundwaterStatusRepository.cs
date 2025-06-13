@@ -92,6 +92,7 @@ namespace FMS.Infrastructure.Repositories
             var groundwaterStatus = await _context.GroundwaterStatuses.FindAsync(id) ?? throw new ArgumentException("Groundwater Status ID not found.", nameof(id));
 
             groundwaterStatus.Name = groundwaterStatusUpdates.Name;
+            groundwaterStatus.Description = groundwaterStatusUpdates.Description;
 
             await _context.SaveChangesAsync();
 
