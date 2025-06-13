@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
-    public class SoilStatus : BaseActiveModel
+    public class SoilStatus : BaseActiveModel, INamedModel
     {
         public SoilStatus() { }
 

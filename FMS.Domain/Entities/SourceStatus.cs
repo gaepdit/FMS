@@ -4,7 +4,7 @@ using System;
 
 namespace FMS.Domain.Entities
 {
-    public class SourceStatus : BaseActiveModel
+    public class SourceStatus : BaseActiveModel, INamedModel
     {
         public SourceStatus() { }
 

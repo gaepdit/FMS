@@ -3,7 +3,7 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class EventType : BaseActiveModel
+    public class EventType : BaseActiveModel, INamedModel
     {
         public EventType() { }
 
