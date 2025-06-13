@@ -1,5 +1,7 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,7 +21,9 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> GroundwaterStatusExistsAsync(Guid id) =>
             _context.GroundwaterStatuses.AnyAsync(e => e.Id == id);
 
-        public Task<bool> GroundwaterStatusNameExistsAsync(string name, Guid? ignoreId = null) => _context.BudgetCodes.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+        public Task<bool> GroundwaterStatusNameExistsAsync(string name, Guid? ignoreId = null) => _context.GroundwaterStatuses.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public Task<bool> GroundwaterStatusDescriptionExistsAsync(string description, Guid? ignoreId = null) => _context.GroundwaterStatuses.AnyAsync(e => e.Description == description && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<GroundwaterStatusEditDto> GetGroundwaterStatusAsync(Guid id)
         {
@@ -49,24 +53,60 @@ namespace FMS.Infrastructure.Repositories
 
         public Task<Guid> CreateGroundwaterStatusAsync(GroundwaterStatusCreateDto groundwaterStatus)
         {
-            throw new NotImplementedException();
+            Prevent.Null(groundwaterStatus, nameof(groundwaterStatus));
+            Prevent.NullOrEmpty(groundwaterStatus.Name, nameof(groundwaterStatus.Name));
+            Prevent.NullOrEmpty(groundwaterStatus.Description, nameof(groundwaterStatus.Description));
+
+            return CreateGroundwaterStatusInternalAsync(groundwaterStatus);
         }
 
-        
-
-        public Task<bool> GroundwaterStatusDescriptionExistsAsync(string description, Guid? ignoreId = null)
+        private async Task<Guid> CreateGroundwaterStatusInternalAsync(GroundwaterStatusCreateDto groundwaterStatus)
         {
-            throw new NotImplementedException();
+            if (await GroundwaterStatusNameExistsAsync(groundwaterStatus.Name))
+            {
+                throw new ArgumentException($"Groundwater Status Name {groundwaterStatus.Name} already exists.");
+            }
+
+            if (await GroundwaterStatusDescriptionExistsAsync(groundwaterStatus.Description))
+            {
+                throw new ArgumentException($"Groundwater Status Description {groundwaterStatus.Description} already exists.");
+            }
+
+            var newGroundwaterStatus = new GroundwaterStatus(groundwaterStatus);
+
+            await _context.GroundwaterStatuses.AddAsync(newGroundwaterStatus);
+            await _context.SaveChangesAsync();
+
+            return newGroundwaterStatus.Id;
         }
 
-        public Task UpdateGroundwaterStatusAsync(Guid id, GroundwaterStatusEditDto groundwaterStatusUpdates)
+        public async Task UpdateGroundwaterStatusAsync(Guid id, GroundwaterStatusEditDto groundwaterStatusUpdates)
         {
-            throw new NotImplementedException();
+            Prevent.NullOrEmpty(groundwaterStatusUpdates.Name, nameof(groundwaterStatusUpdates.Name));
+
+            await UpdateGroundwaterStatusInternalAsync(id, groundwaterStatusUpdates);
         }
 
-        public Task UpdateGroundwaterStatusStatusAsync(Guid id, bool active)
+        private async Task<Guid> UpdateGroundwaterStatusInternalAsync(Guid id, GroundwaterStatusEditDto groundwaterStatusUpdates)
         {
-            throw new NotImplementedException();
+            var groundwaterStatus = await _context.GroundwaterStatuses.FindAsync(id) ?? throw new ArgumentException("Groundwater Status ID not found.", nameof(id));
+
+            groundwaterStatus.Name = groundwaterStatusUpdates.Name;
+
+            await _context.SaveChangesAsync();
+
+            // Ensure all code paths return a value
+            return groundwaterStatus.Id;
+        }
+
+        public async Task UpdateGroundwaterStatusStatusAsync(Guid id, bool active)
+        {
+            var groundwaterStatus = await _context.GroundwaterStatuses.FindAsync(id)
+                ?? throw new ArgumentException("Groundwater Status ID not found");
+
+            groundwaterStatus.Active = active;
+
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Implementation

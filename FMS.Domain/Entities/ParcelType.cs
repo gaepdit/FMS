@@ -8,7 +8,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Entities
 {
-    public class ParcelType : BaseActiveModel
+    public class ParcelType : BaseActiveModel, INamedModel
     {
         public ParcelType() { }
         public ParcelType(ParcelTypeCreateDto ParcelType)

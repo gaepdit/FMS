@@ -3,7 +3,7 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class ContactTitle : BaseActiveModel
+    public class ContactTitle : BaseActiveModel, INamedModel
     {
         public ContactTitle() { }
 

@@ -4,7 +4,7 @@ using FMS.Domain.Dto;
 
 namespace FMS.Domain.Entities
 {
-    public class OverallStatus : BaseActiveModel
+    public class OverallStatus : BaseActiveModel, INamedModel
     {
         public OverallStatus() { }
 

@@ -3,7 +3,7 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class ActionTaken : BaseActiveModel
+    public class ActionTaken : BaseActiveModel, INamedModel
     {
         public ActionTaken() { }
         public ActionTaken(ActionTakenCreateDto actionTaken)
