@@ -23,16 +23,20 @@ namespace FMS.Infrastructure.Repositories
         {
             var contactTitle = await _context.ContactTitles.AsNoTracking().
                 SingleOrDefaultAsync(e => e.Id == id);
+
             if (contactTitle == null)
             {
                 return null;
             }
+
             return new ContactTitleEditDto(contactTitle);
         }
+
         public async Task<IReadOnlyList<ContactTitleSummaryDto>> GetContactTitleListAsync() => await _context.ContactTitles.AsNoTracking()
             .OrderBy(e => e.Id)
             .Select(e => new ContactTitleSummaryDto(e))
             .ToListAsync();
+
         public Task<Guid> CreateContactTitleAsync(ContactTitleCreateDto contactType)
         {
             Prevent.Null(contactType, nameof(contactType));
@@ -40,14 +44,17 @@ namespace FMS.Infrastructure.Repositories
 
             return CreateContactTitleInternalAsync(contactType);
         }
+
         private async Task<Guid> CreateContactTitleInternalAsync(ContactTitleCreateDto contactTitle)
         {
-            var newCT = new ContactTitle(contactTitle);
-            await _context.ContactTitles.AddAsync(newCT);
+            var newContactTitle = new ContactTitle(contactTitle);
+
+            await _context.ContactTitles.AddAsync(newContactTitle);
             await _context.SaveChangesAsync();
 
-            return newCT.Id;
+            return newContactTitle.Id;
         }
+
         public Task UpdateContactTitleAsync(Guid id, ContactTitleEditDto contactTitleUpdates)
         {
             Prevent.Null(contactTitleUpdates, nameof(contactTitleUpdates));
@@ -58,12 +65,8 @@ namespace FMS.Infrastructure.Repositories
 
         private async Task UpdateContactTitleInternalAsync(Guid id, ContactTitleEditDto contactTitleUpdates)
         {
-            var contactTitle = await _context.ContactTitles.FindAsync(id);
+            var contactTitle = await _context.ContactTitles.FindAsync(id) ?? throw new ArgumentException("Contact Title ID not found", nameof(id));
 
-            if (contactTitle == null)
-            {
-                throw new ArgumentException("Contact Title ID not found", nameof(id));
-            }
             contactTitle.Name = contactTitleUpdates.Name;
 
             await _context.SaveChangesAsync();
@@ -71,12 +74,8 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task UpdateContactTitleStatusAsync(Guid id, bool active)
         {
-            var contactTitleStatus = await _context.ContactTitles.FindAsync(id);
+            var contactTitleStatus = await _context.ContactTitles.FindAsync(id) ?? throw new ArgumentException("Contact Title ID not found");
 
-            if (contactTitleStatus == null)
-            {
-                throw new ArgumentException("Contact Title ID not found");
-            }
             contactTitleStatus.Active = active;
 
             await _context.SaveChangesAsync();
