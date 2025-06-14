@@ -37,12 +37,12 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new ContactTitleSummaryDto(e))
             .ToListAsync();
 
-        public Task<Guid> CreateContactTitleAsync(ContactTitleCreateDto contactType)
+        public Task<Guid> CreateContactTitleAsync(ContactTitleCreateDto contactTitle)
         {
-            Prevent.Null(contactType, nameof(contactType));
-            Prevent.NullOrEmpty(contactType.Name, nameof(contactType.Name));
+            Prevent.Null(contactTitle, nameof(contactTitle));
+            Prevent.NullOrEmpty(contactTitle.Name, nameof(contactTitle.Name));
 
-            return CreateContactTitleInternalAsync(contactType);
+            return CreateContactTitleInternalAsync(contactTitle);
         }
 
         private async Task<Guid> CreateContactTitleInternalAsync(ContactTitleCreateDto contactTitle)
