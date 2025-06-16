@@ -65,7 +65,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Overall Ststus '{overallStatus.Name}' already exists.");
             }
 
-            if (await OverallStatusNameExistsAsync(overallStatus.Description))
+            if (await OverallStatusDescriptionExistsAsync(overallStatus.Description))
             {
                 throw new ArgumentException($"Overall Status description '{overallStatus.Description}' already exists.");
             }
