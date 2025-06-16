@@ -14,34 +14,115 @@ namespace FMS.Infrastructure.Repositories
     
     public class OverallStatusRepository : IOverallStatusRepository
     {
-        public Task<bool> OverallStatusExistsAsync(Guid id)
+        private readonly FmsDbContext _context;
+        public OverallStatusRepository(FmsDbContext context) => _context = context;
+
+        public Task<bool> OverallStatusExistsAsync(Guid id) =>
+            _context.OverallStatuses.AnyAsync(e => e.Id == id);
+
+        public Task<bool> OverallStatusNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.OverallStatuses.AnyAsync(e =>
+                e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public Task<bool> OverallStatusDescriptionExistsAsync(string description, Guid? ignoreId = null) =>
+            _context.OverallStatuses.AnyAsync(e =>
+                e.Description == description && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public async Task<OverallStatusEditDto> GetOverallStatusAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var overallStatus = await _context.OverallStatuses.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            return overallStatus == null ? null : new OverallStatusEditDto(overallStatus);
         }
 
-        public Task<OverallStatusEditDto> GetOverallStatusByIdAsync(Guid id)
+        public async Task<string> GetOverallStatusNameAsync(Guid? id)
         {
-            throw new NotImplementedException();
+            var overallStatus = await _context.OverallStatuses.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            return overallStatus?.Name;
         }
+
+        public async Task<IReadOnlyList<OverallStatusSummaryDto>> GetOverallStatusListAsync() =>
+            await _context.OverallStatuses.AsNoTracking()
+                .OrderBy(e => e.Name)
+                .Select(e => new OverallStatusSummaryDto(e))
+                .ToListAsync();
 
         public Task<Guid> CreateOverallStatusAsync(OverallStatusCreateDto overallStatus)
         {
-            throw new NotImplementedException();
+            Prevent.Null(overallStatus, nameof(overallStatus));
+            Prevent.NullOrEmpty(overallStatus.Name, nameof(overallStatus.Name));
+
+            return CreateOverallStatusInternalAsync(overallStatus);
         }
 
-        public Task<IReadOnlyList<OverallStatusSummaryDto>> GetOverallStatusListsAsync()
+        public async Task<Guid> CreateOverallStatusInternalAsync(OverallStatusCreateDto overallStatus)
         {
-            throw new NotImplementedException();
+            if (await OverallStatusNameExistsAsync(overallStatus.Name))
+            {
+                throw new ArgumentException($"Overall Ststus '{overallStatus.Name}' already exists.");
+            }
+
+            if (await OverallStatusNameExistsAsync(overallStatus.Description))
+            {
+                throw new ArgumentException($"Overall Status description '{overallStatus.Description}' already exists.");
+            }
+
+            var newOverallStatus = new OverallStatus(overallStatus);
+            newOverallStatus.TrimAll();
+
+            await _context.OverallStatuses.AddAsync(newOverallStatus);
+            await _context.SaveChangesAsync();
+
+            return newOverallStatus.Id;
         }
 
-        public Task UpdateOverallStatusAsync(Guid Id, OverallStatusEditDto overallStatusUpdates)
+        public Task UpdateOverallStatusAsync(Guid id, OverallStatusEditDto overallStatusUpdates)
         {
-            throw new NotImplementedException();
+            Prevent.NullOrWhiteSpace(overallStatusUpdates.Name, nameof(overallStatusUpdates.Name));
+            return UpdateOverallStatusInternalAsync(id, overallStatusUpdates);
         }
 
-        public Task UpdateOverallStatusStatusAsync(Guid id, bool active)
+        private async Task UpdateOverallStatusInternalAsync(Guid id, OverallStatusEditDto overallStatusUpdates)
         {
-            throw new NotImplementedException();
+            var overallStatus = await _context.OverallStatuses.FindAsync(id);
+
+            if (overallStatus == null)
+            {
+                throw new ArgumentException("Overall Status ID not found.", nameof(id));
+            }
+
+            if (await OverallStatusNameExistsAsync(overallStatusUpdates.Name, id))
+            {
+                throw new ArgumentException($"Overall Status Name: '{overallStatusUpdates.Name}' already exists.");
+            }
+
+            if (await OverallStatusDescriptionExistsAsync(overallStatusUpdates.Description, id))
+            {
+                throw new ArgumentException(
+                    $"Overall Status description: '{overallStatusUpdates.Description}' already exists.");
+            }
+
+            overallStatus.Name = overallStatusUpdates.Name;
+            overallStatus.Description = overallStatusUpdates.Description;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateOverallStatusStatusAsync(Guid id, bool active)
+        {
+            var overallStatus = await _context.OverallStatuses.FindAsync(id);
+
+            if (overallStatus == null)
+            {
+                throw new ArgumentException("Overall Status ID not found");
+            }
+
+            overallStatus.Active = active;
+
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Implementation

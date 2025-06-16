@@ -9,13 +9,19 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> OverallStatusExistsAsync(Guid id);
 
-        Task<OverallStatusEditDto> GetOverallStatusByIdAsync(Guid id);
+        Task<bool> OverallStatusNameExistsAsync(string name, Guid? ignoreId = null);
 
-        Task<IReadOnlyList<OverallStatusSummaryDto>> GetOverallStatusListsAsync();
+        Task<bool> OverallStatusDescriptionExistsAsync(string description, Guid? ignoreId = null);
+
+        Task<OverallStatusEditDto> GetOverallStatusAsync(Guid id);
+
+        Task<string> GetOverallStatusNameAsync(Guid? id);
+
+        Task<IReadOnlyList<OverallStatusSummaryDto>> GetOverallStatusListAsync();
 
         Task<Guid> CreateOverallStatusAsync(OverallStatusCreateDto overallStatus);
 
-        Task UpdateOverallStatusAsync(Guid Id, OverallStatusEditDto overallStatusUpdates);
+        Task UpdateOverallStatusAsync(Guid id, OverallStatusEditDto overallStatusUpdates);
 
         Task UpdateOverallStatusStatusAsync(Guid id, bool active);
     }
