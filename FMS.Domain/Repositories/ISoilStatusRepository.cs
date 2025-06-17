@@ -9,18 +9,20 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> SoilStatusExistsAsync(Guid id);
 
-        Task<bool> SoilStatusHasActiveFacilities(Guid id);
+        Task<bool> SoilStatusNameExistsAsync(string name, Guid? ignoreId = null);
 
-        Task<List<SoilStatusSummaryDto>> GetSoilStatusListAsync();
+        Task<bool> SoilStatusDescriptionExistsAsync(string description, Guid? ignoreId = null);
 
         Task<SoilStatusEditDto> GetSoilStatusAsync(Guid id);
 
-        Task<SoilStatusEditDto> GetSoilStatusAsync(string name);
+        Task<SoilStatusEditDto> GetSoilStatusByNameAsync(string name);
 
-        Task<bool> CreateSoilStatusAsync(SoilStatusCreateDto soilStatusCreateDto);
+        Task<List<SoilStatusSummaryDto>> GetSoilStatusListAsync();
 
-        Task UpdateSoilStatusAsync(Guid id, SoilStatusEditDto soilStatusEditDto);
+        Task<bool> CreateSoilStatusAsync(SoilStatusCreateDto soilStatus);
 
-        Task UpdateSoilStatusAsync(Guid id, bool active);
+        Task UpdateSoilStatusAsync(Guid id, SoilStatusEditDto soilStatusUpdates);
+
+        Task UpdateSoilStatusStatusAsync(Guid id, bool active);
     }
 }
