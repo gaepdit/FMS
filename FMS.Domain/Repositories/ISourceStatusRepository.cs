@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Repositories
 {
@@ -15,11 +11,15 @@ namespace FMS.Domain.Repositories
 
         Task<bool> SourceStatusNameExistsAsync(string name, Guid? ignoreId = null);
 
+        Task<bool> SourceStatusDescriptionExistsAsync(string description, Guid? ignoreId = null);
+
         Task<SourceStatusEditDto> GetSourceStatusAsync(Guid id);
+
+        Task<SourceStatusEditDto> GetSourceStatusByNameAsync(string name);
 
         Task<IReadOnlyList<SourceStatusSummaryDto>> GetSourceStatusListAsync();
 
-        Task<Guid> CreateSourceStatusAsync(SourceStatusCreateDto sourceStatus);
+        Task<bool> CreateSourceStatusAsync(SourceStatusCreateDto sourceStatus);
 
         Task UpdateSourceStatusAsync(Guid id, SourceStatusEditDto sourceStatusUpdates);
 
