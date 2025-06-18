@@ -14,11 +14,11 @@ namespace FMS.Infrastructure.Repositories
     /// Provides an class for retrieving lists of entities as key, value pairs
     /// </summary>
     public class ItemsListRepository : IItemsListRepository
-
     {
         private readonly FmsDbContext _context;
         public ItemsListRepository(FmsDbContext context) => _context = context;
 
+        #region "Get All List Items Lists"
         /// <summary>
         /// Generic method for retrieving a list of the given Entity as key/value pairs of the <see cref="ListItem"/> type.
         /// </summary>
@@ -66,6 +66,38 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetCabinetsItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<Cabinet>(includeInactive);
 
+        // Phase III updates
+        public async Task<IEnumerable<ListItem>> GetActionsTakenListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<ActionTaken>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetContactTitlesListAsync(bool includeInactive = false) => 
+            await GetItemListAsync<ContactTitle>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<ContactType>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<EventType>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<FundingSource>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetGroundwaterStatusesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<GroundwaterStatus>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetOverallStatusesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<OverallStatus>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetParcelTypesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<ParcelType>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetSoilStatusesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<SoilStatus>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetSourceStatusesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<SourceStatus>(includeInactive);
+
+        #endregion
 
         #region "Get single ListItem names"
 
@@ -136,6 +168,116 @@ namespace FMS.Infrastructure.Repositories
             return null;
         }
 
+        // Phase III updates
+        public async Task<string> GetActionTakenNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.ActionsTaken.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetContactTitleNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.ContactTitles.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetContactTypeNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.ContactTypes.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetEventTypeNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.EventTypes.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetFundingSourceNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.FundingSources.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetGroundwaterStatusNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.GroundwaterStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetOverallStatusNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.OverallStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetParcelTypeNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.ParcelTypes.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetSoilStatusNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.SoilStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetSourceStatusNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.SourceStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
         #endregion
 
         #region IDisposable Support
