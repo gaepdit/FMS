@@ -7,5 +7,6 @@
         public const string FacilityStatus = "Facility Status";
         public const string FacilityType = "Type/Environmental Interest";
         public const string OrganizationalUnit = "Organizational Unit";
+        public const string ActionTaken = "Action Taken";
     }
 }
