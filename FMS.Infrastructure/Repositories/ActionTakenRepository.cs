@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
-    internal class ActionTakenRepository : IActionTakenRepository
+    public class ActionTakenRepository : IActionTakenRepository
     {
         public readonly FmsDbContext _context;
         public ActionTakenRepository(FmsDbContext context) => _context = context;

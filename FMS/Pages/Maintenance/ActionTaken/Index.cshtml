@@ -17,7 +17,7 @@
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
 <form method="post">
-    <table class="table" aria-label="List of budget codes">
+    <table class="table" aria-label="List of Actions Taken codes">
         <thead class="thead-light">
             <tr>
                 <th scope="col">Name</th>
@@ -29,10 +29,8 @@
             {
                 <tr class="@(!item.Active ? "table-warning" : "")">
                     <td class="text-nowrap">
-                        @Html.DisplayFor(m => item.Active, "BoolRemoved")
-                    </td>
-                    <td>
                         @Html.DisplayFor(m => item.Name, "StringOrNone")
+                        @Html.DisplayFor(m => item.Active, "BoolRemoved")
                     </td>
                     <td class="text-nowrap">
                         <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>

@@ -13,6 +13,7 @@ namespace FMS
         Task<SelectList> FacilityTypesSelectListAsync(bool includeInactive = false);
         Task<SelectList> OrganizationalUnitsSelectListAsync(bool includeInactive = false);
         Task<SelectList> CabinetsSelectListAsync(bool includeInactive = false);
+        Task<SelectList> ActionTakenSelectListAsync(bool includeInactive = false);
     }
 
     public class SelectListHelper : ISelectListHelper
@@ -33,6 +34,8 @@ namespace FMS
             (await _listRepository.GetOrganizationalUnitsItemListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> CabinetsSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetCabinetsItemListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> ActionTakenSelectListAsync(bool includeInactive = false) =>
+            (await _listRepository.GetActionsTakenListAsync(includeInactive)).ToSelectList();
     }
 
     /// <summary>
