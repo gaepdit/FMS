@@ -8,5 +8,14 @@
         public const string FacilityType = "Type/Environmental Interest";
         public const string OrganizationalUnit = "Organizational Unit";
         public const string ActionTaken = "Action Taken";
+        public const string ContactTitle = "Contact Title";
+        public const string ContactType = "Contact Type";
+        public const string EventType = "Event Type";
+        public const string FundingSource = "Funding Source";
+        public const string GroundwaterStatus = "Groundwater Status";
+        public const string OverallStatus = "Overall Status";
+        public const string ParcelType = "Parcel Type";
+        public const string SoilStatus = "Soil Status";
+        public const string SourceStatus = "Source Status";
     }
 }
