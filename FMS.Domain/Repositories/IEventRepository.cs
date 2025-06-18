@@ -10,7 +10,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> EventExistsAsync(Guid id);
 
-        Task<Event> GetEventByIdAsync(Guid id);
+        Task<EventSummaryDto> GetEventByIdAsync(Guid id);
 
         Task<IEnumerable<Event>> GetEventsByFacilityIdAsync(Guid facilityId);
 
