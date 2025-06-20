@@ -17,8 +17,8 @@ namespace FMS.Infrastructure.Repositories
         public HsrpFacilityPropertiesRepository(FmsDbContext context) => _context = context;
 
 
-        public Task<bool> HsrpFacilityPropertiesExistsAsync(Guid id) =>
-            _context.HsrpFacilityProperties.AnyAsync(e => e.Id == id);
+        public Task<bool> HsrpFacilityPropertiesExistsAsync(Guid facilityId) =>
+            _context.HsrpFacilityProperties.AnyAsync(e => e.FacilityId == facilityId);
 
         public async Task<HsrpFacilityPropertiesDetailDto> GetHsrpFacilityPropertiesByFacilityIdAsync(Guid facilityId)
         {
@@ -34,46 +34,42 @@ namespace FMS.Infrastructure.Repositories
         public Task<Guid> CreateHsrpFacilityPropertiesAsync(HsrpFacilityPropertiesCreateDto hsrpFacilityProperties)
         {
             Prevent.Null(hsrpFacilityProperties, nameof(hsrpFacilityProperties));
-            Prevent.NullOrEmpty(hsrpFacilityProperties.AdditionalOrgUnit, nameof(hsrpFacilityProperties.AdditionalOrgUnit));
-            Prevent.NullOrEmpty(hsrpFacilityProperties.Geologist, nameof(hsrpFacilityProperties.Geologist));
-            return CreateHsrpFacilityPropertiesInternalAsync(hsrpFacilityProperties);
-        }
+            Prevent.NullOrEmpty(hsrpFacilityProperties.FacilityId, nameof(hsrpFacilityProperties.FacilityId));
 
-        public async Task UpdateHsrpFacilityPropertiesAsync(Guid id, HsrpFacilityPropertiesEditDto hsrpFacilityPropertiesUpdates)
-        {
-            Prevent.Null(hsrpFacilityPropertiesUpdates, nameof(hsrpFacilityPropertiesUpdates));
-            Prevent.NullOrEmpty(hsrpFacilityPropertiesUpdates.AdditionalOrgUnit, nameof(hsrpFacilityPropertiesUpdates.AdditionalOrgUnit));
-            Prevent.NullOrEmpty(hsrpFacilityPropertiesUpdates.Geologist, nameof(hsrpFacilityPropertiesUpdates.Geologist));
-            var hsrpFacilityProperties = await _context.HsrpFacilityProperties
-                .SingleOrDefaultAsync(e => e.Id == id);
-            if (hsrpFacilityProperties == null)
-            {
-                throw new KeyNotFoundException($"HSRP Facility Properties with ID {id} not found.");
-            }
-            hsrpFacilityProperties.AdditionalOrgUnit = hsrpFacilityPropertiesUpdates.AdditionalOrgUnit;
-            hsrpFacilityProperties.Geologist = hsrpFacilityPropertiesUpdates.Geologist;
-            hsrpFacilityProperties.VRPDate = hsrpFacilityPropertiesUpdates.VRPDate;
-            hsrpFacilityProperties.BrownfieldDate = hsrpFacilityPropertiesUpdates.BrownfieldDate;
-            _context.HsrpFacilityProperties.Update(hsrpFacilityProperties);
-            await _context.SaveChangesAsync();
+            return CreateHsrpFacilityPropertiesInternalAsync(hsrpFacilityProperties);
         }
 
         private async Task<Guid> CreateHsrpFacilityPropertiesInternalAsync(HsrpFacilityPropertiesCreateDto hsrpFacilityProperties)
         {
             var newHsrpFacilityProperties = new HsrpFacilityProperties(Guid.NewGuid(), hsrpFacilityProperties);
+
             _context.HsrpFacilityProperties.Add(newHsrpFacilityProperties);
+
             await _context.SaveChangesAsync();
             return newHsrpFacilityProperties.Id;
         }
 
-        public async Task<bool> HsrpFacilityPropertiesNameExistsAsync(string name, Guid? ignoreId = null)
+        public async Task UpdateHsrpFacilityPropertiesAsync(Guid facilityId, HsrpFacilityPropertiesEditDto hsrpFacilityPropertiesUpdates)
         {
-            return await _context.HsrpFacilityProperties.AnyAsync(e => e.AdditionalOrgUnit == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
-        }
+            Prevent.Null(hsrpFacilityPropertiesUpdates, nameof(hsrpFacilityPropertiesUpdates));
+            Prevent.NullOrEmpty(hsrpFacilityPropertiesUpdates.FacilityId, nameof(hsrpFacilityPropertiesUpdates.FacilityId));
 
-        public async Task<bool> HsrpFacilityPropertiesDescriptionExistsAsync(string description, Guid? ignoreId = null)
-        {
-            return await _context.HsrpFacilityProperties.AnyAsync(e => e.Geologist == description && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+            var hsrpFacilityProperties = await _context.HsrpFacilityProperties
+                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+
+            if (hsrpFacilityProperties == null)
+            {
+                throw new KeyNotFoundException($"HSRP Facility Properties with FAcility ID {facilityId} not found.");
+            }
+
+            hsrpFacilityProperties.DateListed = hsrpFacilityPropertiesUpdates.DateListed;
+            hsrpFacilityProperties.AdditionalOrgUnit = hsrpFacilityPropertiesUpdates.AdditionalOrgUnit;
+            hsrpFacilityProperties.Geologist = hsrpFacilityPropertiesUpdates.Geologist;
+            hsrpFacilityProperties.VRPDate = hsrpFacilityPropertiesUpdates.VRPDate;
+            hsrpFacilityProperties.BrownfieldDate = hsrpFacilityPropertiesUpdates.BrownfieldDate;
+            
+            _context.HsrpFacilityProperties.Update(hsrpFacilityProperties);
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Implementation
