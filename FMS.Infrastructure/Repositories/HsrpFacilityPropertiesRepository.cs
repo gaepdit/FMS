@@ -59,7 +59,7 @@ namespace FMS.Infrastructure.Repositories
 
             if (hsrpFacilityProperties == null)
             {
-                throw new KeyNotFoundException($"HSRP Facility Properties with FAcility ID {facilityId} not found.");
+                throw new KeyNotFoundException($"HSRP Facility Properties with Facility ID {facilityId} not found.");
             }
 
             hsrpFacilityProperties.DateListed = hsrpFacilityPropertiesUpdates.DateListed;
