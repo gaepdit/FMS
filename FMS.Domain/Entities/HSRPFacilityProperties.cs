@@ -8,9 +8,10 @@ namespace FMS.Domain.Entities
     {
         public HsrpFacilityProperties() { }
 
-        public HsrpFacilityProperties(Guid facilityId, HsrpFacilityPropertiesCreateDto hsrpFacilityProperties) 
+        public HsrpFacilityProperties(Guid id, HsrpFacilityPropertiesCreateDto hsrpFacilityProperties) 
         {
-            FacilityId = facilityId;
+            Id = id;
+            FacilityId = hsrpFacilityProperties.FacilityId;
             DateListed = hsrpFacilityProperties.DateListed;
             AdditionalOrgUnit = hsrpFacilityProperties.AdditionalOrgUnit;
             Geologist = hsrpFacilityProperties.Geologist;
