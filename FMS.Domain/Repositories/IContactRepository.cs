@@ -22,6 +22,6 @@ namespace FMS.Domain.Repositories
 
         Task UpdateContactAsync(ContactEditDto contact);
 
-        Task DeleteContactAsync(Guid id);
+        Task UpdateContactActiveAsync(Guid id, bool active);
     }
 }

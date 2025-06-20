@@ -35,13 +35,13 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<Chemical> Chemicals { get; set; }
         public DbSet<ActionTaken> ActionsTaken { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
+        public DbSet<ContactTitle> ContactTitles { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<AllowedActionTaken> AllowedActionsTaken { get; set; }
         public DbSet<FundingSource> FundingSources { get; set; }
         public DbSet<ParcelType> ParcelTypes { get; set; }
-        public DbSet<ContactTitle> ContactTitles { get; set; }
-        public DbSet<Contact> Contacts { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<HsrpFacilityProperties> HsrpFacilityProperties { get; set; }
         public DbSet<Event> Events { get; set; }
