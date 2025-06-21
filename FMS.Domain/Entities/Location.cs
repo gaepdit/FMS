@@ -10,6 +10,7 @@ namespace FMS.Domain.Entities
 
         public Location(Guid id, LocationCreateDto location)
         {
+            Id = id;
             FacilityId = location.FacilityId;
             Class = location.Class;
         }
