@@ -11,11 +11,11 @@ namespace FMS.Domain.Repositories
 
         Task<LocationEditDto> GetLocationByIdAsync(Guid id);
 
-        Task<IReadOnlyList<LocationSummaryDto>> GetLocationListsAsync();
+        Task<LocationEditDto> GetLocationByFacilityIdAsync(Guid facilityId);
 
         Task<Guid> CreateLocationAsync(LocationCreateDto location);
 
-        Task UpdateLocationAsync(Guid Id, LocationEditDto locationUpdates);
+        Task UpdateLocationAsync(Guid id, LocationEditDto locationUpdates);
 
         Task UpdateLocationStatusAsync(Guid id, bool active);
     }
