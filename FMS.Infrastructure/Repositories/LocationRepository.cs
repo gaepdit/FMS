@@ -82,11 +82,6 @@ namespace FMS.Infrastructure.Repositories
         {
             var location = await _context.Locations.FindAsync(id) ?? throw new ArgumentException("Location ID not found.", nameof(id));
 
-            if (await LocationExistsAsync(id))
-            {
-                throw new ArgumentException($"Location ID already Exists '{locationUpdates.Id}' already exist.");
-            }
-
             location.FacilityId = locationUpdates.FacilityId;
             location.Class = locationUpdates.Class;
 
