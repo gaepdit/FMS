@@ -7,6 +7,8 @@ namespace FMS.Domain.Dto
     {
         public bool Active { get; set; } = true;
 
+        public Guid Id { get; set; }
+
         public Guid ContactId { get; set; }
 
         [Display(Name = "Number")]

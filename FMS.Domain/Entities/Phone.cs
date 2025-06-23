@@ -8,9 +8,10 @@ namespace FMS.Domain.Entities
     public class Phone : BaseActiveModel
     {
         public Phone() { }
-        public Phone(Guid contactId, PhoneCreateDto phone)
+        public Phone(PhoneCreateDto phone)
         {
-            ContactId = contactId;
+            Id = phone.Id;
+            ContactId = phone.ContactId;
             Number = phone.Number;
             PhoneType = phone.PhoneType;
         }

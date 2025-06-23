@@ -9,6 +9,7 @@ namespace FMS.Domain.Dto
         {
             Id = phone.Id;
             Active = phone.Active;
+            ContactId = phone.ContactId;
             Number = phone.Number;
             PhoneType = phone.PhoneType;
         }
@@ -16,6 +17,8 @@ namespace FMS.Domain.Dto
         public Guid Id { get; set; }
 
         public bool Active { get; set; }
+
+        public Guid ContactId { get; set; }
 
         public string Number { get; set; }
 

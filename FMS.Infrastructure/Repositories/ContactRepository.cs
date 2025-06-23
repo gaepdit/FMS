@@ -122,6 +122,7 @@ namespace FMS.Infrastructure.Repositories
 
             contact.Active = active; 
 
+            _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();
         }
 

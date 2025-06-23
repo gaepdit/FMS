@@ -7,11 +7,11 @@ namespace FMS.Domain.Dto
     {
         public PhoneEditDto() { }
 
-        public PhoneEditDto(Guid contactId, Phone phone)
+        public PhoneEditDto(Phone phone)
         {
             Id = phone.Id;
             Active = phone.Active;
-            ContactId = contactId;
+            ContactId = phone.ContactId;
             Number = phone.Number;
             PhoneType = phone.PhoneType;
         }
