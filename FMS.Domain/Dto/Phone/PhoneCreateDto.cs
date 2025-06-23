@@ -9,7 +9,7 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; set; }
 
-        public Guid contactId { get; set; }
+        public Guid ContactId { get; set; }
 
         [Display(Name = "Number")]
         public string Number { get; set; }

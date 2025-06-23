@@ -11,7 +11,7 @@ namespace FMS.Domain.Entities
         public Phone(PhoneCreateDto phone)
         {
             Id = phone.Id;
-            ContactId = phone.contactId;
+            ContactId = phone.ContactId;
             Number = phone.Number;
             PhoneType = phone.PhoneType;
         }

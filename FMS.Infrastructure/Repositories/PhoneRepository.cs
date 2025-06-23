@@ -42,9 +42,10 @@ namespace FMS.Infrastructure.Repositories
         {
             Prevent.NullOrEmpty(contactId, nameof(contactId));
 
-            return (IReadOnlyList<PhoneSummaryDto>)await _context.Phones.AsNoTracking()
-                .Where(e => e.ContactId == contactId)
-                .ToListAsync();
+            return await _context.Phones.AsNoTracking()
+               .Where(e => e.ContactId == contactId)
+               .Select(e => new PhoneSummaryDto(e))
+               .ToListAsync();
         }
 
         public Task<Guid> CreatePhoneAsync(PhoneCreateDto phone)
