@@ -10,7 +10,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> EventExistsAsync(Guid id);
 
-        Task<EventSummaryDto> GetEventByIdAsync(Guid id);
+        Task<EventEditDto> GetEventByIdAsync(Guid id);
 
         Task<IEnumerable<Event>> GetEventsByFacilityIdAsync(Guid facilityId);
 
@@ -22,6 +22,6 @@ namespace FMS.Domain.Repositories
 
         Task UpdateEventAsync(EventEditDto eventDto);
 
-        Task DeleteEventAsync(Guid id);
+        Task UpdateEventStatusAsync(Guid id, bool active);
     }
 }
