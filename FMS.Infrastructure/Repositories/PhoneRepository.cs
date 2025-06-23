@@ -16,39 +16,109 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public PhoneRepository(FmsDbContext context) => _context = context;
 
-        public Task<bool> PhoneExistsAsync(Guid id)
+        public Task<bool> PhoneExistsAsync(Guid id) =>
+            _context.Phones.AnyAsync(e => e.Id == id);
+
+        public Task<bool> PhoneNumberExistsAsync(string phoneNumber) => 
+            _context.Phones.AnyAsync(e => e.Number == phoneNumber);
+
+        public async Task<PhoneEditDto> GetPhoneByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var phone = await _context.Phones.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            return phone == null ? null : new PhoneEditDto(phone);
         }
 
-        public Task<PhoneEditDto> GetPhoneByIdAsync(Guid id)
+        public async Task<PhoneEditDto> GetPhoneByIdAndContactIdAsync(Guid id, Guid contactId)
         {
-            throw new NotImplementedException();
+            var phone = await _context.Phones.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.ContactId == contactId && e.Id == id);
+
+            return phone == null ? null : new PhoneEditDto(phone);
         }
 
-        public Task<IReadOnlyList<PhoneSummaryDto>> GetReadOnlyPhoneByContactIdAsync(Guid contactId)
+        public async Task<IReadOnlyList<PhoneSummaryDto>> GetPhoneListByContactIdAsync(Guid contactId)
         {
-            throw new NotImplementedException();
-        }
+            Prevent.NullOrEmpty(contactId, nameof(contactId));
 
-        public Task<IList<PhoneEditDto>> GetPhoneByContactIdAsync(Guid contactId)
-        {
-            throw new NotImplementedException();
+            return (IReadOnlyList<PhoneSummaryDto>)await _context.Phones.AsNoTracking()
+                .Where(e => e.ContactId == contactId)
+                .ToListAsync();
         }
 
         public Task<Guid> CreatePhoneAsync(PhoneCreateDto phone)
         {
-            throw new NotImplementedException();
+            Prevent.Null(phone, nameof(phone));
+            Prevent.NullOrWhiteSpace(phone.Number, nameof(phone.Number));
+
+            return CreatePhoneInternalAsync(phone);
         }
 
-        public Task UpdatePhoneAsync(Guid id, PhoneEditDto phoneUpdates)
+        public async Task<Guid> CreatePhoneInternalAsync(PhoneCreateDto phone)
         {
-            throw new NotImplementedException();
+            if (await PhoneExistsAsync(phone.Id))
+            {
+                throw new ArgumentException($"Phone: {phone.Id} Already Exists.");
+            }
+            if (await PhoneNumberExistsAsync(phone.Number))
+            {
+                throw new ArgumentException($"Phone Number: {phone.Number} Already Exists.");
+            }
+
+            var newPhone = new Phone(phone);
+
+            await _context.Phones.AddAsync(newPhone);
+            await _context.SaveChangesAsync();
+            return newPhone.Id;
         }
 
-        public Task UpdatePhoneStatusAsync(Guid id, bool active)
+        public Task UpdatePhoneAsync(PhoneEditDto phoneUpdates)
         {
-            throw new NotImplementedException();
+            Prevent.Null(phoneUpdates, nameof(phoneUpdates));
+            Prevent.NullOrWhiteSpace(phoneUpdates.Number, nameof(phoneUpdates.Number));
+
+            return UpdatePhoneInternalAsync(phoneUpdates);
+        }
+
+        public async Task UpdatePhoneInternalAsync(PhoneEditDto phoneUpdates)
+        {
+            if (!await PhoneExistsAsync(phoneUpdates.Id))
+            {
+                throw new ArgumentException($"Phone Id {phoneUpdates.Id} does not exist.");
+            }
+
+            if (await PhoneNumberExistsAsync(phoneUpdates.Number))
+            {
+                throw new ArgumentException($"Phone Number: '{phoneUpdates.Number}' Already Exists.");
+            }
+            var existingPhone = await _context.Phones.FindAsync(phoneUpdates.Id);
+
+            existingPhone.Number = phoneUpdates.Number;
+            existingPhone.PhoneType = phoneUpdates.PhoneType;
+            existingPhone.ContactId = phoneUpdates.ContactId;
+            existingPhone.Active = phoneUpdates.Active;
+
+            _context.Phones.Update(existingPhone);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdatePhoneStatusAsync(Guid id, bool active)
+        {
+            Prevent.NullOrEmpty(id, nameof(id));
+
+            var phone = await _context.Phones
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (phone == null)
+            {
+                throw new InvalidOperationException($"Phone with ID {id} does not exist.");
+            }
+
+            phone.Active = active;
+
+            _context.Phones.Update(phone);
+            await _context.SaveChangesAsync();
         }
 
         #region IDisposable Support

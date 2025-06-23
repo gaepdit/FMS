@@ -56,23 +56,23 @@ namespace FMS.Infrastructure.Repositories
             return newParcelType.Id;
         }
 
-        public async Task UpdateParcelTypeAsync(Guid Id, ParcelTypeEditDto parcelUpdates)
+        public async Task UpdateParcelTypeAsync(Guid Id, ParcelTypeEditDto parcelTypeUpdates)
         {
-            Prevent.Null(parcelUpdates, nameof(parcelUpdates));
-            Prevent.NullOrEmpty(parcelUpdates.Name, nameof(parcelUpdates.Name));
+            Prevent.Null(parcelTypeUpdates, nameof(parcelTypeUpdates));
+            Prevent.NullOrEmpty(parcelTypeUpdates.Name, nameof(parcelTypeUpdates.Name));
 
             if (!await ParcelTypeExistsAsync(Id))
             {
                 throw new ArgumentException($"Parcel Type with Id {Id} does not exist.");
             }
 
-            if (await ParcelTypeNameExistsAsync(parcelUpdates.Name, Id))
+            if (await ParcelTypeNameExistsAsync(parcelTypeUpdates.Name, Id))
             {
-                throw new ArgumentException($"Parcel Type Name: {parcelUpdates.Name} Already Exists.");
+                throw new ArgumentException($"Parcel Type Name: {parcelTypeUpdates.Name} Already Exists.");
             }
             var existingParcelType = await _context.ParcelTypes.FindAsync(Id);
 
-            existingParcelType.Name = parcelUpdates.Name;
+            existingParcelType.Name = parcelTypeUpdates.Name;
 
             await _context.SaveChangesAsync();
         }

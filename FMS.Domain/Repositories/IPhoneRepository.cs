@@ -9,15 +9,17 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> PhoneExistsAsync(Guid id);
 
+        Task<bool> PhoneNumberExistsAsync(string phoneNumber);
+
         Task<PhoneEditDto> GetPhoneByIdAsync(Guid id);
 
-        Task<IReadOnlyList<PhoneSummaryDto>> GetReadOnlyPhoneByContactIdAsync(Guid contactId);
+        Task<PhoneEditDto> GetPhoneByIdAndContactIdAsync(Guid id, Guid contactId);
 
-        Task<IList<PhoneEditDto>> GetPhoneByContactIdAsync(Guid contactId);
+        Task<IReadOnlyList<PhoneSummaryDto>> GetPhoneListByContactIdAsync(Guid contactId);
 
         Task<Guid> CreatePhoneAsync(PhoneCreateDto phone);
 
-        Task UpdatePhoneAsync(Guid id, PhoneEditDto phoneUpdates);
+        Task UpdatePhoneAsync(PhoneEditDto phoneUpdates);
 
         Task UpdatePhoneStatusAsync(Guid id, bool active);
     }
