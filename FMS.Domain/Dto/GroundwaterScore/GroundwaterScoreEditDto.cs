@@ -36,13 +36,13 @@ namespace FMS.Domain.Dto
 
         public string GWScore { get; set; }
 
-        public decimal A { get; set; }
+        public int A { get; set; }
 
-        public decimal B1 { get; set; }
+        public int B1 { get; set; }
 
-        public decimal B2 { get; set; }
+        public int B2 { get; set; }
 
-        public decimal C { get; set; }
+        public int C { get; set; }
 
         public string Description { get; set; }
 
@@ -50,16 +50,16 @@ namespace FMS.Domain.Dto
 
         public string Other { get; set; }
 
-        public decimal D2 { get; set; }
+        public int D2 { get; set; }
 
-        public decimal D3 { get; set; }
+        public int D3 { get; set; }
 
         public Guid ChemicalId { get; set; }
 
         public string CASNO { get; set; }
 
-        public decimal E1 { get; set; }
+        public int E1 { get; set; }
 
-        public decimal E2 { get; set; }
+        public int E2 { get; set; }
     }
 }
