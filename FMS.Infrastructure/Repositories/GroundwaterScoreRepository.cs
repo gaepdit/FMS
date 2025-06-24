@@ -106,7 +106,7 @@ namespace FMS.Infrastructure.Repositories
 
             if (groundwaterScore == null)
             {
-                throw new InvalidOperationException($"Grounwater Score with ID {id} does not exist.");
+                throw new InvalidOperationException($"Groundwater Score with ID {id} does not exist.");
             }
             groundwaterScore.Active = active;
 
