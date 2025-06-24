@@ -10,18 +10,16 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> EventExistsAsync(Guid id);
 
-        Task<Event> GetEventByIdAsync(Guid id);
+        Task<EventEditDto> GetEventByIdAsync(Guid id);
 
-        Task<IEnumerable<Event>> GetEventsByFacilityIdAsync(Guid facilityId);
+        Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId);
 
-        Task<IEnumerable<Event>> GetEventsByFacilityIdAndStatusAsync(Guid facilityId, string status);
+        Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId);
 
-        Task<IEnumerable<Event>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId);
-
-        Task AddEventAsync(EventCreateDto eventDto);
+        Task<Guid> CreateEventAsync(EventCreateDto eventDto);
 
         Task UpdateEventAsync(EventEditDto eventDto);
 
-        Task DeleteEventAsync(Guid id);
+        Task UpdateEventStatusAsync(Guid id, bool active);
     }
 }
