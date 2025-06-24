@@ -27,34 +27,99 @@ namespace FMS.Infrastructure.Repositories
             return Event == null ? null : new EventEditDto(Event);
         }
 
-        public Task<IEnumerable<Event>> GetEventsByFacilityIdAsync(Guid facilityId)
+        public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)
         {
-            throw new NotImplementedException();
+            Prevent.NullOrEmpty(facilityId, nameof(facilityId));
+
+            return await _context.Events.AsNoTracking()
+               .Where(e => e.FacilityId == facilityId)
+               .Select(e => new EventSummaryDto(e))
+               .ToListAsync();
         }
 
-        public Task<IEnumerable<Event>> GetEventsByFacilityIdAndStatusAsync(Guid facilityId, string status)
+        public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId)
         {
-            throw new NotImplementedException();
+            Prevent.NullOrEmpty(facilityId, nameof(facilityId));
+
+            return await _context.Events.AsNoTracking()
+               .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
+               .Select(e => new EventSummaryDto(e))
+               .ToListAsync();
         }
 
-        public Task<IEnumerable<Event>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId)
+        public Task<Guid> CreateEventAsync(EventCreateDto eventDto)
         {
-            throw new NotImplementedException();
+            Prevent.Null(eventDto, nameof(eventDto));
+            Prevent.NullOrEmpty(eventDto.EventTypeId, nameof(eventDto.EventTypeId));
+            Prevent.NullOrEmpty(eventDto.FacilityId, nameof(eventDto.FacilityId));
+
+            return AddEventInternalAsync(eventDto);
         }
 
-        public Task AddEventAsync(EventCreateDto eventDto)
+        private async Task<Guid> AddEventInternalAsync(EventCreateDto eventDto)
         {
-            throw new NotImplementedException();
+            var newEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = eventDto.FacilityId,
+                ParentId = eventDto.ParentId,
+                EventTypeId = eventDto.EventTypeId,
+                ActionTakenId = eventDto.ActionTakenId,
+                StartDate = eventDto.StartDate,
+                DueDate = eventDto.DueDate,
+                CompletionDate = eventDto.CompletionDate,
+                ComplianceOfficerId = eventDto.ComplianceOfficerId,
+                EventAmount = eventDto.EventAmount,
+                EntityNameOrNumber = eventDto.EntityNameOrNumber,
+                Comment = eventDto.Comment
+            };
+
+            _context.Events.Add(newEvent);
+            await _context.SaveChangesAsync();
+            return newEvent.Id;
         }
 
         public Task UpdateEventAsync(EventEditDto eventDto)
         {
-            throw new NotImplementedException();
+            Prevent.Null(eventDto, nameof(eventDto));
+            Prevent.NullOrEmpty(eventDto.Id, nameof(eventDto.Id));
+
+            return UpdateEventInternalAsync(eventDto);
+        }
+
+        private async Task UpdateEventInternalAsync(EventEditDto eventDto)
+        {
+            
+            var existingEvent = await _context.Events.FindAsync(eventDto.Id);
+            if (existingEvent == null) throw new InvalidOperationException("Event not found");
+
+            existingEvent.FacilityId = eventDto.FacilityId;
+            existingEvent.ParentId = eventDto.ParentId;
+            existingEvent.EventTypeId = eventDto.EventTypeId;
+            existingEvent.ActionTakenId = eventDto.ActionTakenId;
+            existingEvent.StartDate = eventDto.StartDate;
+            existingEvent.DueDate = eventDto.DueDate;
+            existingEvent.CompletionDate = eventDto.CompletionDate;
+            existingEvent.ComplianceOfficerId = eventDto.ComplianceOfficerId;
+            existingEvent.EventAmount = eventDto.EventAmount;
+            existingEvent.EntityNameOrNumber = eventDto.EntityNameOrNumber;
+            existingEvent.Comment = eventDto.Comment;
+
+            _context.Events.Update(existingEvent);
+            await _context.SaveChangesAsync();
         }
 
         public Task UpdateEventStatusAsync(Guid id, bool active)
         {
-            throw new NotImplementedException();
+            var eventToUpdate = _context.Events.Find(id);
+            if (eventToUpdate == null)
+            {
+                throw new InvalidOperationException($"Event with ID {id} does not exist.");
+            }
+            eventToUpdate.Active = active;
+
+            _context.Events.Update(eventToUpdate);
+            return _context.SaveChangesAsync();
         }
 
 
