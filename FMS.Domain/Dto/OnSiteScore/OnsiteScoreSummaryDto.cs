@@ -8,23 +8,23 @@ namespace FMS.Domain.Dto
     {
         public OnsiteScoreSummaryDto() { }
 
-        public OnsiteScoreSummaryDto(OnSiteScore onSiteScore)
+        public OnsiteScoreSummaryDto(OnsiteScore onsiteScore)
         {
-            Id = onSiteScore.Id;
-            Active = onSiteScore.Active;
-            ScoreId = onSiteScore.ScoreId;
-            ScoreValue = onSiteScore.ScoreValue;
-            A = onSiteScore.A;
-            B = onSiteScore.B;
-            C = onSiteScore.C;
-            Description = onSiteScore.Description;
-            ChemName1D = onSiteScore.ChemName1D;
-            Other1D = onSiteScore.Other1D;
-            D2 = onSiteScore.D2;
-            D3 = onSiteScore.D3;
-            CASNO = onSiteScore.CASNO;
-            E1 = onSiteScore.E1;
-            E2 = onSiteScore.E2;
+            Id = onsiteScore.Id;
+            Active = onsiteScore.Active;
+            ScoreId = onsiteScore.ScoreId;
+            OnsiteScoreValue = onsiteScore.OnsiteScoreValue;
+            A = onsiteScore.A;
+            B = onsiteScore.B;
+            C = onsiteScore.C;
+            Description = onsiteScore.Description;
+            ChemName1D = onsiteScore.ChemName1D;
+            Other1D = onsiteScore.Other1D;
+            D2 = onsiteScore.D2;
+            D3 = onsiteScore.D3;
+            CASNO = onsiteScore.CASNO;
+            E1 = onsiteScore.E1;
+            E2 = onsiteScore.E2;
         }
 
         public Guid Id { get; set; }
@@ -34,7 +34,7 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid ScoreId { get; set; }
 
-        public string ScoreValue { get; set; }
+        public string OnsiteScoreValue { get; set; }
 
         public int A { get; set; }
 

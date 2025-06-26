@@ -8,12 +8,12 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> OnsiteScoreExistsAsync(Guid id);
 
-        Task<OnsiteScoreEditDto> GetOnsiteScoreByScoreIdAsync(Guid id);
+        Task<OnsiteScoreEditDto> GetOnsiteScoreByScoreIdAsync(Guid scoreId);
 
-        Task<bool> CreateOnsiteScoreAsync(OnSiteScoreCreateDto onSiteScore);
+        Task<Guid> CreateOnsiteScoreAsync(OnsiteScoreCreateDto onsiteScore);
 
-        Task<bool> UpdateOnsiteScoreAsync(OnsiteScoreEditDto onSiteScore);
+        Task<bool> UpdateOnsiteScoreAsync(OnsiteScoreEditDto onsiteScore);
 
-        Task<bool> DeleteOnsiteScoreAsync(Guid id);
+        Task UpdateOnsiteScoreStatusAsync(Guid id, bool active);
     }
 }

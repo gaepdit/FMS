@@ -61,8 +61,8 @@ namespace FMS.TestData.SeedData
                 await context.Parcels.AddRangeAsync(GetParcels(), token);
             if (!await context.Scores.AnyAsync(token))
                 await context.Scores.AddRangeAsync(GetScores(), token);
-            if (!await context.OnSiteScores.AnyAsync(token))
-                await context.OnSiteScores.AddRangeAsync(GetOnSiteScores(), token);
+            if (!await context.OnsiteScores.AnyAsync(token))
+                await context.OnsiteScores.AddRangeAsync(GetOnSiteScores(), token);
             if (!await context.GroundwaterStatuses.AnyAsync(token))
                 await context.GroundwaterStatuses.AddRangeAsync(GetGroundwaterStatuses(), token);
             if (!await context.GroundwaterScores.AnyAsync(token))

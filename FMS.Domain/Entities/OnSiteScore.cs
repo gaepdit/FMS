@@ -4,29 +4,29 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class OnSiteScore : BaseActiveModel
+    public class OnsiteScore : BaseActiveModel
     {
-        public OnSiteScore() { }
+        public OnsiteScore() { }
 
-        public OnSiteScore(OnSiteScoreCreateDto onSiteScore)
+        public OnsiteScore(OnsiteScoreCreateDto onsiteScore)
         {
-            ScoreId = onSiteScore.ScoreId;
-            ScoreValue = onSiteScore.ScoreValue;
-            A = onSiteScore.A;
-            B = onSiteScore.B;
-            C = onSiteScore.C;
-            Description = onSiteScore.Description;
-            ChemName1D = onSiteScore.ChemName1D;
-            Other1D = onSiteScore.Other1D;
-            D2 = onSiteScore.D2;
-            D3 = onSiteScore.D3;
-            CASNO = onSiteScore.CASNO;
-            E1 = onSiteScore.E1;
-            E2 = onSiteScore.E2;
+            ScoreId = onsiteScore.ScoreId;
+            OnsiteScoreValue = onsiteScore.OnsiteScoreValue;
+            A = onsiteScore.A;
+            B = onsiteScore.B;
+            C = onsiteScore.C;
+            Description = onsiteScore.Description;
+            ChemName1D = onsiteScore.ChemName1D;
+            Other1D = onsiteScore.Other1D;
+            D2 = onsiteScore.D2;
+            D3 = onsiteScore.D3;
+            CASNO = onsiteScore.CASNO;
+            E1 = onsiteScore.E1;
+            E2 = onsiteScore.E2;
         }
         public Guid ScoreId { get; set; }
 
-        public string ScoreValue { get; set; }
+        public string OnsiteScoreValue { get; set; }
 
         public int A { get; set; }
 
