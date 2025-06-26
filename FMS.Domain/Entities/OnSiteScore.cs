@@ -8,7 +8,7 @@ namespace FMS.Domain.Entities
     {
         public OnsiteScore() { }
 
-        public OnsiteScore(OnSiteScoreCreateDto onsiteScore)
+        public OnsiteScore(OnsiteScoreCreateDto onsiteScore)
         {
             ScoreId = onsiteScore.ScoreId;
             OnsiteScoreValue = onsiteScore.OnsiteScoreValue;

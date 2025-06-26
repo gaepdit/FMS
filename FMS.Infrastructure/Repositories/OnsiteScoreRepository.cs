@@ -25,7 +25,7 @@ namespace FMS.Infrastructure.Repositories
             return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }
 
-        public Task<Guid> CreateOnsiteScoreAsync(OnSiteScoreCreateDto onsiteScore)
+        public Task<Guid> CreateOnsiteScoreAsync(OnsiteScoreCreateDto onsiteScore)
         {
             Prevent.Null(onsiteScore, nameof(onsiteScore));
             Prevent.NullOrEmpty(onsiteScore.ScoreId, nameof(onsiteScore.ScoreId));
@@ -33,7 +33,7 @@ namespace FMS.Infrastructure.Repositories
             return CreateOnsiteScoreInternalAsync(onsiteScore);
         }
 
-        public async Task<Guid> CreateOnsiteScoreInternalAsync(OnSiteScoreCreateDto onsiteScore)
+        public async Task<Guid> CreateOnsiteScoreInternalAsync(OnsiteScoreCreateDto onsiteScore)
         {
             var newOnsiteScore = new OnsiteScore
             {

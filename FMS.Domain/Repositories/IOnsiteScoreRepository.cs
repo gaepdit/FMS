@@ -10,7 +10,7 @@ namespace FMS.Domain.Repositories
 
         Task<OnsiteScoreEditDto> GetOnsiteScoreByScoreIdAsync(Guid scoreId);
 
-        Task<Guid> CreateOnsiteScoreAsync(OnSiteScoreCreateDto onsiteScore);
+        Task<Guid> CreateOnsiteScoreAsync(OnsiteScoreCreateDto onsiteScore);
 
         Task<bool> UpdateOnsiteScoreAsync(OnsiteScoreEditDto onsiteScore);
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
-    public class OnSiteScoreCreateDto
+    public class OnsiteScoreCreateDto
     {
         [Required]
         public Guid ScoreId { get; set; }
