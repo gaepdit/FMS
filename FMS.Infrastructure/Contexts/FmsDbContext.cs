@@ -49,7 +49,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<OverallStatus> OverallStatuses { get; set; }
         public DbSet<Parcel> Parcels { get; set; }
         public DbSet<Score> Scores { get; set; }
-        public DbSet<OnSiteScore> OnSiteScores { get; set; }
+        public DbSet<OnsiteScore> OnsiteScores { get; set; }
         public DbSet<SoilStatus> SoilStatuses { get; set; }
         public DbSet<SourceStatus> SourceStatuses { get; set; }
         public DbSet<GroundwaterStatus> GroundwaterStatuses { get; set; }

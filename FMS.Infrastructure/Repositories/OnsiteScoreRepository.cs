@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
@@ -17,29 +15,100 @@ namespace FMS.Infrastructure.Repositories
         public OnsiteScoreRepository(FmsDbContext context) => _context = context;
 
 
-        public Task<bool> OnsiteScoreExistsAsync(Guid id)
+        public Task<bool> OnsiteScoreExistsAsync(Guid id) =>
+            _context.OnsiteScores.AnyAsync(e => e.Id == id);
+
+        public async Task<OnsiteScoreEditDto> GetOnsiteScoreByScoreIdAsync(Guid scoreId)
         {
-            throw new NotImplementedException();
+            var onsiteScore = await _context.OnsiteScores.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.ScoreId == scoreId);
+            return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }
 
-        public Task<OnsiteScoreEditDto> GetOnsiteScoreByScoreIdAsync(Guid id)
+        public Task<Guid> CreateOnsiteScoreAsync(OnSiteScoreCreateDto onsiteScore)
         {
-            throw new NotImplementedException();
+            Prevent.Null(onsiteScore, nameof(onsiteScore));
+            Prevent.NullOrEmpty(onsiteScore.ScoreId, nameof(onsiteScore.ScoreId));
+
+            return CreateOnsiteScoreInternalAsync(onsiteScore);
         }
 
-        public Task<bool> CreateOnsiteScoreAsync(OnSiteScoreCreateDto onSiteScore)
+        public async Task<Guid> CreateOnsiteScoreInternalAsync(OnSiteScoreCreateDto onsiteScore)
         {
-            throw new NotImplementedException();
+            var newOnsiteScore = new OnsiteScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                ScoreId = onsiteScore.ScoreId,
+                OnsiteScoreValue = onsiteScore.OnsiteScoreValue,
+                A = onsiteScore.A,
+                B = onsiteScore.B,
+                C = onsiteScore.C,
+                Description = onsiteScore.Description,
+                ChemName1D = onsiteScore.ChemName1D,
+                Other1D = onsiteScore.Other1D,
+                D2 = onsiteScore.D2,
+                D3 = onsiteScore.D3,
+                CASNO = onsiteScore.CASNO,
+                E1 = onsiteScore.E1,
+                E2 = onsiteScore.E2
+            };
+
+            _context.OnsiteScores.Add(newOnsiteScore);
+            await _context.SaveChangesAsync();
+            return newOnsiteScore.Id;
         }
 
-        public Task<bool> UpdateOnsiteScoreAsync(OnsiteScoreEditDto onSiteScore)
+        public Task<bool> UpdateOnsiteScoreAsync(OnsiteScoreEditDto onsiteScore)
         {
-            throw new NotImplementedException();
+            Prevent.Null(onsiteScore, nameof(onsiteScore));
+            Prevent.NullOrEmpty(onsiteScore.ScoreId, nameof(onsiteScore.ScoreId));
+
+            return UpdateOnsiteScoreInternalAsync(onsiteScore);
         }
 
-        public Task<bool> DeleteOnsiteScoreAsync(Guid id)
+        private async Task<bool> UpdateOnsiteScoreInternalAsync(OnsiteScoreEditDto onsiteScore)
         {
-            throw new NotImplementedException();
+           
+            var existingOnsiteScore = await _context.OnsiteScores
+                .SingleOrDefaultAsync(e => e.ScoreId == onsiteScore.ScoreId);
+
+            if (existingOnsiteScore == null)
+            {
+                throw new InvalidOperationException($"Onsite Score with ID {onsiteScore.Id} does not exist.");
+            }
+
+            existingOnsiteScore.OnsiteScoreValue = onsiteScore.OnsiteScoreValue;
+            existingOnsiteScore.A = onsiteScore.A;
+            existingOnsiteScore.B = onsiteScore.B;
+            existingOnsiteScore.C = onsiteScore.C;
+            existingOnsiteScore.Description = onsiteScore.Description;
+            existingOnsiteScore.ChemName1D = onsiteScore.ChemName1D;
+            existingOnsiteScore.Other1D = onsiteScore.Other1D;
+            existingOnsiteScore.D2 = onsiteScore.D2;
+            existingOnsiteScore.D3 = onsiteScore.D3;
+            existingOnsiteScore.CASNO = onsiteScore.CASNO;
+            existingOnsiteScore.E1 = onsiteScore.E1;
+            existingOnsiteScore.E2 = onsiteScore.E2;
+
+            _context.OnsiteScores.Update(existingOnsiteScore);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public Task UpdateOnsiteScoreStatusAsync(Guid id, bool active)
+        {
+            var onsiteScore = _context.OnsiteScores.Find(id);
+
+            if (onsiteScore == null)
+            {
+                throw new InvalidOperationException($"OnsiteScore Score with ID {id} does not exist.");
+            }
+
+            onsiteScore.Active = active;
+
+            _context.OnsiteScores.Update(onsiteScore);
+            return _context.SaveChangesAsync();
         }
 
 

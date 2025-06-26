@@ -9,7 +9,7 @@ namespace FMS.Domain.Dto
         public Guid ScoreId { get; set; }
 
         [Display(Name = "On-Site Score")]
-        public string ScoreValue { get; set; }
+        public string OnsiteScoreValue { get; set; }
 
         [Display(Name = "A")]
         public int A { get; set; }

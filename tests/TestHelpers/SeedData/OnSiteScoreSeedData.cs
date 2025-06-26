@@ -8,16 +8,16 @@ namespace FMS.TestData.SeedData
 {
     public static partial class SeedData
     {
-        public static List<OnSiteScore> GetOnSiteScores()
+        public static List<OnsiteScore> GetOnSiteScores()
         {
-            return new List<OnSiteScore>()
+            return new List<OnsiteScore>()
             {
                 new()
                 {
                     Id = new Guid("013E4ABB-F6A5-4B95-BA5A-438BEDD0BECA"),
                     Active = true,
                     ScoreId = new Guid("C0FCD976-5361-4253-B140-CA39BCEC35E7"),
-                    ScoreValue = "",
+                    OnsiteScoreValue = "",
                     A = 0,
                     B = 0,
                     C = 0,
@@ -36,7 +36,7 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("C0AB6B37-F700-4DAE-8801-D9DC8E03453E"),
                     Active = true,
                     ScoreId = new Guid("2268E4C6-CFDC-4786-B383-CB65829DE520"),
-                    ScoreValue = "",
+                    OnsiteScoreValue = "",
                     A = 0,
                     B = 0,
                     C = 0,
@@ -55,7 +55,7 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("426F1D39-F62F-4A1C-9878-A61759B6527B"),
                     Active = true,
                     ScoreId = new Guid("CE64BD64-4110-44CA-A2B0-A1AE7A389B61"),
-                    ScoreValue = "",
+                    OnsiteScoreValue = "",
                     A = 0,
                     B = 0,
                     C = 0,
@@ -74,7 +74,7 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("81B07CB5-01B7-4616-9A8B-EA7EC9E21632"),
                     Active = true,
                     ScoreId = new Guid("8F63491E-A3A6-4ABE-BF89-479CB2915059"),
-                    ScoreValue = "",
+                    OnsiteScoreValue = "",
                     A = 0,
                     B = 0,
                     C = 0,
@@ -93,7 +93,7 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("C5FDAF2D-974F-49B4-B759-F159EB0B4E8D"),
                     Active = true,
                     ScoreId = new Guid("F8F07B9C-DAC4-4D54-B97F-BA1CE5133D54"),
-                    ScoreValue = "",
+                    OnsiteScoreValue = "",
                     A = 0,
                     B = 0,
                     C = 0,
@@ -112,7 +112,7 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("0562D889-D928-49F3-9EB0-0C36635D3FEA"),
                     Active = true,
                     ScoreId = new Guid("5119BF82-D9C6-4014-B951-2F1B850BAA99"),
-                    ScoreValue = "",
+                    OnsiteScoreValue = "",
                     A = 0,
                     B = 0,
                     C = 0,
