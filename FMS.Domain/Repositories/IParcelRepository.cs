@@ -9,14 +9,14 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> ParcelExistsAsync(Guid id);
 
-        Task<OverallStatusEditDto> GetParcelByIdAsync(Guid id);
+        Task<ParcelEditDto> GetParcelByIdAsync(Guid id);
 
-        Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid facilityId);
+        Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid locationId);
 
         Task<Guid> CreateParcelAsync(ParcelCreateDto parcelCreate);
 
-        Task UpdateParcelAsync(Guid Id, ParcelEditDto parcelUpdates);
+        Task UpdateParcelAsync(Guid id, ParcelEditDto parcelUpdates);
 
-        Task UpdateParcelAsync(Guid id, bool active);
+        Task UpdateParcelStatusAsync(Guid id, bool active);
     }
 }
