@@ -20,15 +20,11 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> SubstanceExistsAsync(Guid id) =>
             _context.Substances.AnyAsync(e => e.Id == id);
 
-        public Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id) =>
-            _context.Substances.AnyAsync(e => e.Id == id)
-                .ContinueWith(task => task.Result
-                    ? _context.Substances.AsNoTracking()
-                        .Where(e => e.Id == id)
-                        .Select(e => new SubstanceEditDto(e))
-                        .SingleOrDefaultAsync()
-                    : Task.FromResult<SubstanceEditDto>(null))
-                .Unwrap();
+        public async Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id) =>
+            await _context.Substances.AsNoTracking()
+                .Where(e => e.Id == id)
+                .Select(e => new SubstanceEditDto(e))
+                .SingleOrDefaultAsync();
 
         public async Task<IReadOnlyList<SubstanceSummaryDto>> GetReadOnlySubstanceByFacilityIdAsync(Guid facilityId) =>
            await _context.Substances.AsNoTracking()
