@@ -5,7 +5,7 @@ namespace FMS.Domain.Dto
 {
     public class ParcelSummaryDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 
