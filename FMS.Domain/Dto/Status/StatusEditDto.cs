@@ -35,6 +35,8 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; set; }
 
+        public bool Active { get; set; }
+
         [Required]
         public Guid FacilityId { get; set; }
 

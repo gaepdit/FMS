@@ -8,11 +8,11 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> StatusExistsAsync(Guid id);
 
-        Task<SourceStatusEditDto> GetStatusAsync(Guid id);
+        Task<StatusEditDto> GetStatusAsync(Guid id);
 
         Task<Guid> CreateStatusAsync(StatusCreateDto status);
 
-        Task UpdateStatusAsync(Guid id, StatusEditDto statusUpdates);
+        Task<bool> UpdateStatusAsync(Guid id, StatusEditDto statusUpdates);
 
         Task UpdateStatusStatusAsync(Guid id, bool active);
     }
