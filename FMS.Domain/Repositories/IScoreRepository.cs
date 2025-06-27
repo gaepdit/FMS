@@ -18,6 +18,6 @@ namespace FMS.Domain.Repositories
 
         Task<Score> UpdateScoreAsync(ScoreEditDto score);
 
-        Task<bool> DeleteScoreAsync(Guid id);
+        Task<bool> UpdateScoreStatusAsync(Guid id);
     }
 }
