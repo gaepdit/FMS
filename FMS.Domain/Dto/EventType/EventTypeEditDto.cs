@@ -21,5 +21,10 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Event Type")]
         public string Name { get; set; }
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }
