@@ -35,16 +35,23 @@ namespace FMS.Infrastructure.Repositories
             return await _context.AllowedActionsTaken.AsNoTracking()
                 .OrderBy(e => e.EventType.Name)
                 .ThenBy(e => e.ActionTaken.Name)
-                .GroupBy(e => new { e.EventTypeId })
-                .Select(e => new AllowedActionTakenSummaryDto((AllowedActionTaken)e))
+                .Select(e => new AllowedActionTakenSummaryDto(e))
                 .ToListAsync();
         }
 
         public Task<Guid> CreateAllowedActionTakenAsync(AllowedActionTakenCreateDto allowedActionTaken)
         {
             Prevent.Null(allowedActionTaken, nameof(allowedActionTaken));
-            Prevent.NullOrEmpty(allowedActionTaken.EventTypeId, nameof(allowedActionTaken.EventTypeId));
-            Prevent.NullOrEmpty(allowedActionTaken.ActionTakenId, nameof(allowedActionTaken.ActionTakenId));
+
+            if (allowedActionTaken.EventTypeId == Guid.Empty)
+            {
+                throw new ArgumentException($"{nameof(allowedActionTaken.EventTypeId)} cannot be an empty GUID.");
+            }
+
+            if (allowedActionTaken.ActionTakenId == Guid.Empty)
+            {
+                throw new ArgumentException($"{nameof(allowedActionTaken.ActionTakenId)} cannot be an empty GUID.");
+            }
 
             return CreateAllowedActionTakenInternalAsync(allowedActionTaken);
         }
@@ -91,6 +98,9 @@ namespace FMS.Infrastructure.Repositories
             {
                 throw new ArgumentException($"Allowed Action Taken with Id {id} does not exist.");
             }
+
+            existingAllowedActionTaken.EventTypeId = allowedActionTakenUpdates.EventTypeId;
+            existingAllowedActionTaken.ActionTakenId = allowedActionTakenUpdates.ActionTakenId;
 
             _context.AllowedActionsTaken.Update(existingAllowedActionTaken);
             await _context.SaveChangesAsync();
