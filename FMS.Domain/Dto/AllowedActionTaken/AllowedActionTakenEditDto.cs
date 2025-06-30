@@ -8,7 +8,7 @@ namespace FMS.Domain.Dto
     {
         public AllowedActionTakenEditDto()
         {
-            // Required for EditActionTaken page
+            // Required for EditAllowedActionTaken page
         }
 
         public AllowedActionTakenEditDto(AllowedActionTaken allowedActionTaken)
