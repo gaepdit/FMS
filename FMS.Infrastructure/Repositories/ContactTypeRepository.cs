@@ -19,6 +19,10 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> ContactTypeExistsAsync(Guid id) =>
             _context.ContactTypes.AnyAsync(e => e.Id == id);
 
+        public Task<bool> ContactTypeNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.ContactTypes.AnyAsync(e =>
+            e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<ContactTypeEditDto> GetContactTypeByIdAsync(Guid id)
         {
             var contactType = await _context.ContactTypes.AsNoTracking().
@@ -46,6 +50,7 @@ namespace FMS.Infrastructure.Repositories
         private async Task<Guid> CreateContactTypeInternalAsync(ContactTypeCreateDto contactType)
         {
             var newContactType = new ContactType(contactType);
+
             await _context.ContactTypes.AddAsync(newContactType);
             await _context.SaveChangesAsync();
 
@@ -55,6 +60,7 @@ namespace FMS.Infrastructure.Repositories
         public Task UpdateContactTypeAsync(Guid id, ContactTypeEditDto contactType)
         {
             Prevent.NullOrEmpty(contactType.Name, nameof(contactType.Name));
+
             return UpdateContactTypeInternalAsync(id, contactType);
         }
 
