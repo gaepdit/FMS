@@ -9,6 +9,8 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> FundingSourceExistsAsync(Guid id);
 
+        Task<bool> FundingSourceNameExistsAsync(string name, Guid? ignoreId = null);
+
         Task<FundingSourceEditDto> GetFundingSourceByIdAsync(Guid id);
 
         Task<IReadOnlyList<FundingSourceSummaryDto>> GetFundingSourceListAsync();

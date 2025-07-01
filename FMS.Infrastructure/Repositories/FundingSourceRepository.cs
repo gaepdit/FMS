@@ -21,6 +21,10 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> FundingSourceExistsAsync(Guid id) =>
             _context.FundingSources.AnyAsync(e => e.Id == id);
 
+        public Task<bool> FundingSourceNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.FundingSources.AnyAsync(e => 
+            e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<FundingSourceEditDto> GetFundingSourceByIdAsync(Guid id)
         {
             FundingSource fundingSource = await _context.FundingSources.AsNoTracking()
