@@ -21,5 +21,11 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Funding Source")]
         public string Name { get; set; }
+
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }
