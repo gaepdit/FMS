@@ -19,6 +19,11 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> ContactTitleExistsAsync(Guid id) =>
             _context.ContactTitles.AnyAsync(e => e.Id == id);
 
+        public Task<bool> ContactTitleNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.ContactTitles.AnyAsync(e =>
+            e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+
         public async Task<ContactTitleEditDto> GetContactTitleByIdAsync(Guid id)
         {
             var contactTitle = await _context.ContactTitles.AsNoTracking().

@@ -9,6 +9,8 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> ContactTitleExistsAsync(Guid id);
 
+        Task<bool> ContactTitleNameExistsAsync(string name, Guid? ignoreId = null);
+
         Task<ContactTitleEditDto> GetContactTitleByIdAsync(Guid id);
 
         Task<IReadOnlyList<ContactTitleSummaryDto>> GetContactTitleListAsync();
