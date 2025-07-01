@@ -94,6 +94,7 @@ namespace FMS
             services.AddScoped<IActionTakenRepository, ActionTakenRepository>();
             services.AddScoped<IEventTypeRepository, EventTypeRepository>();
             services.AddScoped<IContactTypeRepository, ContactTypeRepository>();
+            services.AddScoped<IContactTitleRepository, ContactTitleRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
 
