@@ -51,7 +51,7 @@ namespace FMS.Pages.Maintenance.FundingSource
             FundingSource.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _repository.FundingSourceNameExistsAsync(FundingSource.Name))
+            if (await _repository.FundingSourceNameExistsAsync(FundingSource.Name, Id))
             {
                 ModelState.AddModelError("FundingSource.Name", "Name entered already exists.");
             }

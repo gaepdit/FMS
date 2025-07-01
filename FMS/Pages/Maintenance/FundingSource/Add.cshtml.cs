@@ -48,7 +48,7 @@ namespace FMS.Pages.Maintenance.FundingSource
                 $"{MaintenanceOptions.FundingSource} \"{FundingSource.Name}\" successfully created.");
 
             return RedirectToPage("./Index", "select",
-                new { MaintenanceSelection = MaintenanceOptions.ContactType });
+                new { MaintenanceSelection = MaintenanceOptions.FundingSource });
         }
     }
 }

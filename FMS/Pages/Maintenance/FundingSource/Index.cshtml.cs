@@ -61,8 +61,6 @@ namespace FMS.Pages.Maintenance.FundingSource
                 throw;
             }
 
-            FundingSources = await _repository.GetFundingSourceListAsync();
-
             TempData?.SetDisplayMessage(Context.Success,
                 fundingSource.Active
                     ? $"{MaintenanceOptions.FundingSource} \"{fundingSource.Name}\" successfully removed from list."
