@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS.Pages.Maintenance.ActionTaken
+namespace FMS.Pages.Maintenance.EventType
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class AddModel : PageModel
     {
-        private readonly IActionTakenRepository _repository;
-        public AddModel(IActionTakenRepository repository) => _repository = repository;
+        private readonly IEventTypeRepository _repository;
+        public AddModel(IEventTypeRepository repository) => _repository = repository;
 
         [BindProperty]
-        public ActionTakenCreateDto ActionTaken { get; set; }
+        public EventTypeCreateDto EventType { get; set; }
 
         public void OnGet()
         {
@@ -30,12 +30,11 @@ namespace FMS.Pages.Maintenance.ActionTaken
                 return Page();
             }
 
-            ActionTaken.TrimAll();
+            EventType.TrimAll();
 
-            // When adding a new Action Taken, make sure the number doesn't already exist before trying to save.
-            if (await _repository.ActionTakenNameExistsAsync(ActionTaken.Name))
+            if (await _repository.EventTypeNameExistsAsync(EventType.Name))
             {
-                ModelState.AddModelError("ActionTaken.Name", "Name entered already exists.");
+                ModelState.AddModelError("EventType.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -43,13 +42,13 @@ namespace FMS.Pages.Maintenance.ActionTaken
                 return Page();
             }
 
-            await _repository.CreateActionTakenAsync(ActionTaken);
+            await _repository.CreateEventTypeAsync(EventType);
 
             TempData?.SetDisplayMessage(Context.Success,
-                $"{MaintenanceOptions.ActionTaken} \"{ActionTaken.Name}\" successfully created.");
+                $"{MaintenanceOptions.EventType} \"{EventType.Name}\" successfully created.");
 
             return RedirectToPage("./Index", "select",
-                new { MaintenanceSelection = MaintenanceOptions.ActionTaken });
+                new { MaintenanceSelection = MaintenanceOptions.EventType });
         }
     }
 }

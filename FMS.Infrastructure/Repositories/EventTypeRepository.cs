@@ -21,6 +21,10 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> EventTypeExistsAsync(Guid id) =>
             _context.EventTypes.AnyAsync(e => e.Id == id);
 
+        public Task<bool> EventTypeNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.EventTypes.AnyAsync(e => 
+            e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<EventTypeEditDto> GetEventTypeByIdAsync(Guid id)
         {
             EventType eventType = await _context.EventTypes.AsNoTracking()
@@ -48,24 +52,33 @@ namespace FMS.Infrastructure.Repositories
         private async Task<Guid> CreateEventTypeInternalAsync(EventTypeCreateDto eventType)
         {
             var newEventType = new EventType(eventType);
+
             await _context.EventTypes.AddAsync(newEventType);
             await _context.SaveChangesAsync();
 
             return newEventType.Id;
         }
 
-        public async Task UpdateEventTypeAsync(Guid id, EventTypeEditDto eventTypeUpdates)
+        public Task UpdateEventTypeAsync(Guid id, EventTypeEditDto eventTypeUpdates)
         {
             Prevent.NullOrEmpty(eventTypeUpdates.Name, nameof(eventTypeUpdates.Name));
-            await UpdateEventTypeInternalAsync(id, eventTypeUpdates);
+
+            return UpdateEventTypeInternalAsync(id, eventTypeUpdates);
         }
 
         private async Task<Guid> UpdateEventTypeInternalAsync(Guid id, EventTypeEditDto eventTypeUpdates)
         {
             var eventType = await _context.EventTypes.FindAsync(id) ?? throw new ArgumentException("Event Type ID not found.", nameof(id));
 
+            // Check if the name already exists for another Event Type
+            if (await EventTypeNameExistsAsync(eventTypeUpdates.Name, id))
+            {
+                throw new ArgumentException($"Event Type Name : '{eventTypeUpdates.Name}' already exists.");
+            }
+
             eventType.Name = eventTypeUpdates.Name;
 
+            _context.EventTypes.Update(eventType);
             await _context.SaveChangesAsync();
 
             // Ensure all code paths return a value
@@ -76,7 +89,10 @@ namespace FMS.Infrastructure.Repositories
         {
             var eventType = await _context.EventTypes.FindAsync(id)
                 ?? throw new ArgumentException("Event Type ID not found");
+
             eventType.Active = active;
+
+            _context.EventTypes.Update(eventType);
             await _context.SaveChangesAsync();
         }
 
