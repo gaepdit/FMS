@@ -32,7 +32,7 @@ namespace FMS.Pages.Maintenance.ActionTaken
 
             ActionTaken.TrimAll();
 
-            // When adding a new Org, make sure the number doesn't already exist before trying to save.
+            // When adding a new Action Taken, make sure the number doesn't already exist before trying to save.
             if (await _repository.ActionTakenNameExistsAsync(ActionTaken.Name))
             {
                 ModelState.AddModelError("ActionTaken.Name", "Name entered already exists.");
