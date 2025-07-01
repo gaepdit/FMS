@@ -51,7 +51,7 @@ namespace FMS.Pages.Maintenance.ContactTitle
             ContactTitle.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _repository.ContactTitleNameExistsAsync(ContactTitle.Name))
+            if (await _repository.ContactTitleNameExistsAsync(ContactTitle.Name, Id))
             {
                 ModelState.AddModelError("ContactTitle.Name", "Name entered already exists.");
             }

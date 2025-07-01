@@ -34,7 +34,7 @@ namespace FMS.Pages.Maintenance.ContactTitle
 
             if (await _repository.ContactTitleNameExistsAsync(ContactTitle.Name))
             {
-                ModelState.AddModelError("ContactType.Name", "Name entered already exists.");
+                ModelState.AddModelError("ContactTitle.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
