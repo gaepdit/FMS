@@ -9,7 +9,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> EventTypeExistsAsync(Guid id);
 
-        Task<bool> EventTypeNameExistsAsync(string name);
+        Task<bool> EventTypeNameExistsAsync(string name, Guid id);
 
         Task<EventTypeEditDto> GetEventTypeByIdAsync(Guid id);
 

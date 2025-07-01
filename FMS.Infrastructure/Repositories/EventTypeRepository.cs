@@ -21,8 +21,8 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> EventTypeExistsAsync(Guid id) =>
             _context.EventTypes.AnyAsync(e => e.Id == id);
 
-        public Task<bool> EventTypeNameExistsAsync(string name) =>
-            _context.EventTypes.AnyAsync(e => e.Name == name);
+        public Task<bool> EventTypeNameExistsAsync(string name, Guid id) =>
+            _context.EventTypes.AnyAsync(e => e.Name == name && e.Id != id);
 
         public async Task<EventTypeEditDto> GetEventTypeByIdAsync(Guid id)
         {
