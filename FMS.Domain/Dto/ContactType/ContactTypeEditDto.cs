@@ -19,6 +19,7 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
+        [Required(ErrorMessage = "Contact Type is required.")]
         [Display(Name = "Contact Type")]
         public string Name { get; set; }
 

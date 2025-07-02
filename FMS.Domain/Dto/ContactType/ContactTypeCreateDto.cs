@@ -4,6 +4,7 @@ namespace FMS.Domain.Dto
 {
     public class ContactTypeCreateDto
     {
+        [Required(ErrorMessage = "Contact Type is required.")]
         [Display(Name = "Contact Type")]
         public string Name { get; set; }
 

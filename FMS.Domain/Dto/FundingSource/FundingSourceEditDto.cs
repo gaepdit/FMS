@@ -20,6 +20,7 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         [Display(Name = "Funding Source")]
+        [Required(ErrorMessage = "Funding Source is required.")]
         public string Name { get; set; }
 
 

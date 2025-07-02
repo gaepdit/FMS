@@ -4,6 +4,7 @@ namespace FMS.Domain.Dto
 {
     public class ContactTitleCreateDto
     {
+        [Required]
         [Display(Name = "Contact Title")]
         public string Name { get; set; }
 

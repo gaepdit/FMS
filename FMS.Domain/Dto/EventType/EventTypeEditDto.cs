@@ -20,6 +20,7 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         [Display(Name = "Event Type")]
+        [Required(ErrorMessage = "Event Type is required.")]
         public string Name { get; set; }
 
         public void TrimAll()

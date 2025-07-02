@@ -18,6 +18,7 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
+        [Required(ErrorMessage = "Contact Title is required.")]
         [Display(Name = "Title")]
         public string Name { get; set; }
 

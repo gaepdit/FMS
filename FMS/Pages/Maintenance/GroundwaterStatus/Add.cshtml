@@ -1,0 +1,36 @@
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.GroundwaterStatus.AddModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = $"Add {MaintenanceOptions.GroundwaterStatus}";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="GroundwaterStatus.Name">@MaintenanceOptions.GroundwaterStatus Name <span class="text-danger">*</span></label>
+                <input asp-for="GroundwaterStatus.Name" class="form-control" />
+                <span asp-validation-for="GroundwaterStatus.Name" class="text-danger"></span>
+            </div>
+            <div class="col-md">
+                <label asp-for="GroundwaterStatus.Description">@MaintenanceOptions.GroundwaterStatus Description <span class="text-danger">*</span></label>
+                <input asp-for="GroundwaterStatus.Description" class="form-control" />
+                <span asp-validation-for="GroundwaterStatus.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <p class="text-danger">* denotes a required field</p>
+        <button id="SubmitButton" type="submit" class="btn btn-primary col-md-5 mb-3 mb-md-0">Add New @MaintenanceOptions.GroundwaterStatus</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
+           asp-route-MaintenanceSelection="@MaintenanceOptions.GroundwaterStatus">
+            Cancel
+        </a>
+    </form>
+</div>
