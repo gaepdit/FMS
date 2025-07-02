@@ -20,8 +20,11 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         [Display(Name = "Overall Status")]
+        [Required(ErrorMessage = "Overall Status is required.")]
         public string Name { get; set; }
 
+        [Display(Name = "Description")]
+        [Required(ErrorMessage = "Description is required.")]
         public string Description { get; set; }
     }
 }

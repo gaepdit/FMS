@@ -20,9 +20,11 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
+        [Required(ErrorMessage = "Facility is required.")]
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Class")]
+        [Display(Name = "Class")]   
+        [Required(ErrorMessage = "Class is required.")]
         public string Class { get; set; }
     }
 }
