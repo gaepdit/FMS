@@ -32,11 +32,6 @@ namespace FMS.Pages.Maintenance.GroundwaterStatus
 
             GroundwaterStatus.TrimAll();
 
-            //if (GroundwaterStatus.Name.Length >20)
-            //{
-            //    ModelState.AddModelError("GroundwaterStatus.Name", "Name cannot exceed 20 characters.");
-            //}
-
             if (await _repository.GroundwaterStatusNameExistsAsync(GroundwaterStatus.Name))
             {
                 ModelState.AddModelError("GroundwaterStatus.Name", "Name entered already exists.");

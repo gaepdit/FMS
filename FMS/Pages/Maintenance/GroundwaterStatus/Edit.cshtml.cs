@@ -63,7 +63,7 @@ namespace FMS.Pages.Maintenance.GroundwaterStatus
 
             if (await _repository.GroundwaterStatusDescriptionExistsAsync(GroundwaterStatus.Description, Id))
             {
-                ModelState.AddModelError("GroundwaterStatus.Name", "Description entered already exists.");
+                ModelState.AddModelError("GroundwaterStatus.Description", "Description entered already exists.");
             }
 
             if (!ModelState.IsValid)
