@@ -24,6 +24,14 @@ namespace FMS.Infrastructure.Repositories
             _context.Chemicals.AnyAsync(e =>
                 e.CasNo == casNo && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
+        public Task<bool> ChemicalChemicalNameExistsAsync(string chemicalName, Guid? ignoreId = null) =>
+            _context.Chemicals.AnyAsync(e =>
+                e.ChemicalName == chemicalName && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public Task<bool> ChemicalCommonNameExistsAsync(string commonName, Guid? ignoreId = null) =>
+            _context.Chemicals.AnyAsync(e =>
+                e.CommonName == commonName && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<ChemicalEditDto> GetChemicalByIdAsync(Guid id)
         {
             var chemical = await _context.Chemicals.AsNoTracking()
