@@ -51,7 +51,7 @@ namespace FMS.Pages.Maintenance.ParcelType
             ParcelType.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _repository.ParcelTypeNameExistsAsync(ParcelType.Name))
+            if (await _repository.ParcelTypeNameExistsAsync(ParcelType.Name, Id))
             {
                 ModelState.AddModelError("ParcelType.Name", "Name entered already exists.");
             }
