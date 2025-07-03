@@ -9,16 +9,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance.OverallStatus
+namespace FMS.Pages.Maintenance.SoilStatus
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class EditModel : PageModel
     {
-        private readonly IOverallStatusRepository _repository;
-        public EditModel(IOverallStatusRepository repository) => _repository = repository;
+        private readonly ISoilStatusRepository _repository;
+        public EditModel(ISoilStatusRepository repository) => _repository = repository;
 
         [BindProperty]
-        public OverallStatusEditDto OverallStatus { get; set; }
+        public SoilStatusEditDto SoilStatus { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
@@ -31,9 +31,9 @@ namespace FMS.Pages.Maintenance.OverallStatus
             }
 
             Id = id.Value;
-            OverallStatus = await _repository.GetOverallStatusAsync(id.Value);
+            SoilStatus = await _repository.GetSoilStatusAsync(id.Value);
 
-            if (OverallStatus == null)
+            if (SoilStatus == null)
             {
                 return NotFound();
             }
@@ -48,17 +48,17 @@ namespace FMS.Pages.Maintenance.OverallStatus
                 return Page();
             }
 
-            OverallStatus.TrimAll();
+            SoilStatus.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _repository.OverallStatusNameExistsAsync(OverallStatus.Name, Id))
+            if (await _repository.SoilStatusNameExistsAsync(SoilStatus.Name, Id))
             {
-                ModelState.AddModelError("OverallStatus.Name", "Name entered already exists.");
+                ModelState.AddModelError("SoilStatus.Name", "Name entered already exists.");
             }
 
-            if (await _repository.OverallStatusDescriptionExistsAsync(OverallStatus.Description, Id))
+            if (await _repository.SoilStatusDescriptionExistsAsync(SoilStatus.Description, Id))
             {
-                ModelState.AddModelError("OverallStatus.Description", "Description entered already exists.");
+                ModelState.AddModelError("SoilStatus.Description", "Description entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -68,11 +68,11 @@ namespace FMS.Pages.Maintenance.OverallStatus
 
             try
             {
-                await _repository.UpdateOverallStatusAsync(Id, OverallStatus);
+                await _repository.UpdateSoilStatusAsync(Id, SoilStatus);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _repository.OverallStatusExistsAsync(Id))
+                if (!await _repository.SoilStatusExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -80,7 +80,7 @@ namespace FMS.Pages.Maintenance.OverallStatus
                 throw;
             }
 
-            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.OverallStatus} \"{OverallStatus.Name}\" successfully updated.");
+            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.SoilStatus} \"{SoilStatus.Name}\" successfully updated.");
             return RedirectToPage("./Index");
         }
     }
