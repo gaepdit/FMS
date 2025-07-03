@@ -37,6 +37,11 @@ namespace FMS.Pages.Maintenance.OverallStatus
                 ModelState.AddModelError("OverallStatus.Name", "Name entered already exists.");
             }
 
+            if (await _repository.OverallStatusDescriptionExistsAsync(OverallStatus.Description))
+            {
+                ModelState.AddModelError("OverallStatus.Description", "Description entered already exists.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -47,7 +52,7 @@ namespace FMS.Pages.Maintenance.OverallStatus
             TempData?.SetDisplayMessage(Context.Success,
                 $"{MaintenanceOptions.OverallStatus} \"{OverallStatus.Name}\" successfully created.");
 
-            return RedirectToPage("./Index", "select",
+            return RedirectToPage("./Index", 
                 new { MaintenanceSelection = MaintenanceOptions.OverallStatus });
         }
     }

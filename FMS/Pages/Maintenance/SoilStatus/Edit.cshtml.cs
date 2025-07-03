@@ -56,7 +56,7 @@ namespace FMS.Pages.Maintenance.SoilStatus
                 ModelState.AddModelError("SoilStatus.Name", "Name entered already exists.");
             }
 
-            if (await _repository.SoilStatusNameExistsAsync(SoilStatus.Description, Id))
+            if (await _repository.SoilStatusDescriptionExistsAsync(SoilStatus.Description, Id))
             {
                 ModelState.AddModelError("SoilStatus.Description", "Description entered already exists.");
             }

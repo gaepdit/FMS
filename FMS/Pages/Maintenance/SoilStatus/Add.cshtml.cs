@@ -37,6 +37,11 @@ namespace FMS.Pages.Maintenance.SoilStatus
                 ModelState.AddModelError("SoilStatus.Name", "Name entered already exists.");
             }
 
+            if (await _repository.SoilStatusDescriptionExistsAsync(SoilStatus.Description))
+            {
+                ModelState.AddModelError("SoilStatus.Description", "Description entered already exists.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -47,7 +52,7 @@ namespace FMS.Pages.Maintenance.SoilStatus
             TempData?.SetDisplayMessage(Context.Success,
                 $"{MaintenanceOptions.SoilStatus} \"{SoilStatus.Name}\" successfully created.");
 
-            return RedirectToPage("./Index", "select",
+            return RedirectToPage("./Index",
                 new { MaintenanceSelection = MaintenanceOptions.SoilStatus });
         }
     }

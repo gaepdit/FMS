@@ -20,7 +20,7 @@
                 <span asp-validation-for="SoilStatus.Name" class="text-danger"></span>
             </div>
             <div class="col-md">
-                <label asp-for="SoilStatus.Description">@MaintenanceOptions.OverallStatus Description <span class="text-danger">*</span></label>
+                <label asp-for="SoilStatus.Description">@MaintenanceOptions.SoilStatus Description <span class="text-danger">*</span></label>
                 <input asp-for="SoilStatus.Description" class="form-control" />
                 <span asp-validation-for="SoilStatus.Description" class="text-danger"></span>
             </div>
@@ -28,7 +28,7 @@
         <hr />
         <p class="text-danger">* denotes a required field</p>
         <button id="SubmitButton" type="submit" class="btn btn-primary col-md-5 mb-3 mb-md-0">Add New @MaintenanceOptions.SoilStatus</button>
-        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" asp-route-handler="select"
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2" 
            asp-route-MaintenanceSelection="@MaintenanceOptions.SoilStatus">
             Cancel
         </a>

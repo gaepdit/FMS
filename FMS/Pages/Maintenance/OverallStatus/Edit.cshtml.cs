@@ -56,7 +56,7 @@ namespace FMS.Pages.Maintenance.OverallStatus
                 ModelState.AddModelError("OverallStatus.Name", "Name entered already exists.");
             }
 
-            if (await _repository.OverallStatusNameExistsAsync(OverallStatus.Description, Id))
+            if (await _repository.OverallStatusDescriptionExistsAsync(OverallStatus.Description, Id))
             {
                 ModelState.AddModelError("OverallStatus.Description", "Description entered already exists.");
             }
