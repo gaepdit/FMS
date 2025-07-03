@@ -6,7 +6,7 @@ namespace FMS.Domain.Dto
 {
     public class SourceStatusEditDto
     {
-        public SourceStatusEditDto(Status e) { }
+        public SourceStatusEditDto() { }
 
         public SourceStatusEditDto(SourceStatus sourceStatus)
         {
@@ -27,5 +27,11 @@ namespace FMS.Domain.Dto
         public string Description { get; set; }
 
         public bool Active { get; set; }
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+            Description = Description?.Trim();
+        }
     }
 }

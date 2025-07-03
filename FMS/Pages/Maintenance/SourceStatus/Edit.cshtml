@@ -1,0 +1,42 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.SourceStatus.EditModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = $"Edit {MaintenanceOptions.SourceStatus}: {Model.SourceStatus.Name}";
+}
+<h1>
+    @ViewData["Title"]
+    @if (!Model.SourceStatus.Active)
+    {
+        <span class="text-muted">(Removed)</span>
+    }
+</h1>
+
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="SourceStatus.Active" />
+        <input type="hidden" asp-for="Id" />
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="SourceStatus.Name">@MaintenanceOptions.SourceStatus <span class="text-danger">*</span></label>
+                <input asp-for="SourceStatus.Name" class="form-control" aria-describedby="FileIdHelpBlock" />
+                <span asp-validation-for="SourceStatus.Name" class="text-danger"></span>
+            </div>
+            <div class="col-md">
+                <label asp-for="SourceStatus.Description">@MaintenanceOptions.SourceStatus Description <span class="text-danger">*</span></label>
+                <input asp-for="SourceStatus.Description" class="form-control" />
+                <span asp-validation-for="SourceStatus.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <p class="text-danger">* denotes a required field</p>
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
+    </form>
+</div>

@@ -98,6 +98,7 @@ namespace FMS
             services.AddScoped<IOverallStatusRepository, OverallStatusRepository>();
             services.AddScoped<IParcelTypeRepository, ParcelTypeRepository>();
             services.AddScoped<ISoilStatusRepository, SoilStatusRepository>();
+            services.AddScoped<ISourceStatusRepository, SourceStatusRepository>();
             services.AddScoped<IContactTypeRepository, ContactTypeRepository>();
             services.AddScoped<IContactTitleRepository, ContactTitleRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
@@ -111,7 +112,7 @@ namespace FMS
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsLocalEnv())
             {
