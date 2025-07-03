@@ -9,7 +9,9 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> ParcelTypeExistsAsync(Guid id);
 
-        Task<ParcelTypeEditDto> GetParcelTypeByIdAsync(Guid id);
+        Task<bool> ParcelTypeNameExistsAsync(string name, Guid? ignoreId = null);
+
+        Task<ParcelTypeEditDto> GetParcelTypeAsync(Guid id);
 
         Task<IReadOnlyList<ParcelTypeSummaryDto>> GetParcelTypeListAsync();
 

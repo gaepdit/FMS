@@ -8,6 +8,8 @@ namespace FMS.Domain.Dto
     {
         public ParcelTypeSummaryDto(ParcelType parcelType)
         {
+            Id = parcelType.Id;
+            Active = parcelType.Active;
             Name = parcelType.Name;
         }
 
