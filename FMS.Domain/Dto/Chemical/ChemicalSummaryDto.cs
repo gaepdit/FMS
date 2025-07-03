@@ -9,6 +9,7 @@ namespace FMS.Domain.Dto
         public ChemicalSummaryDto(Chemical chemical)
         {
             Id = chemical.Id;
+            Active = chemical.Active;
             CasNo = chemical.CasNo;
             ChemicalName = chemical.ChemicalName;
             CommonName = chemical.CommonName;
@@ -32,5 +33,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "MCL Value")]
         public string MCLs { get; set; }
+
+        public bool Active { get; set; }
     }
 }
