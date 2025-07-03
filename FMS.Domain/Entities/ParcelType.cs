@@ -1,9 +1,4 @@
 ﻿using FMS.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 
 namespace FMS.Domain.Entities
@@ -11,11 +6,17 @@ namespace FMS.Domain.Entities
     public class ParcelType : BaseActiveModel, INamedModel
     {
         public ParcelType() { }
-        public ParcelType(ParcelTypeCreateDto ParcelType)
+
+        public ParcelType(ParcelTypeCreateDto parcelType)
         {
-            Name = ParcelType.Name;
+            Name = parcelType.Name;
         }
 
         public string Name { get; set; } 
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }

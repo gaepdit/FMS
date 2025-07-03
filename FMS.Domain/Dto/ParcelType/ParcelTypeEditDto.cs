@@ -18,8 +18,13 @@ namespace FMS.Domain.Dto
         [Display(Name = "Parcel Type")]
         [Required(ErrorMessage = "Parcel Type Name is required.")]
         public string Name { get; set; }
-  
+
         [Display(Name = "Is Active")]
         public bool Active { get; set; }
+
+        public void TrimAll()
+        {
+            Name = Name?.Trim();
+        }
     }
 }

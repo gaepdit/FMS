@@ -12,25 +12,25 @@ namespace FMS.TestData.SeedData
         {
             return new List<ParcelType>()
             {
-                new()
+                new ParcelType()
                 {
                     Id = new Guid("A5F9B7BE-0664-44BF-9A51-72792AE53253"),
                     Active = true,
                     Name = "List",
                 },
-                new()
+                new ParcelType()
                 {
                     Id = new Guid("BF8D1BBF-921D-4091-B2D2-800AB933D7DC"),
                     Active = true,
                     Name = "SubList",
                 },
-                new()
+                new ParcelType()
                 {
                     Id = new Guid("C52EBAF5-F777-4F16-AE84-B0D36BB2A248"),
                     Active = true,
                     Name = "Impacted",
                 },
-                new()
+                new ParcelType()
                 {
                     Id = new Guid("990C501E-0E1B-4B8C-ABA3-5EC8B6F0321E"),
                     Active = true,
