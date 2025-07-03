@@ -37,7 +37,7 @@ namespace FMS.Pages.Maintenance.SourceStatus
                 ModelState.AddModelError("SourceStatus.Name", "Name entered already exists.");
             }
 
-            if (await _repository.SourceStatusNameExistsAsync(SourceStatus.Description))
+            if (await _repository.SourceStatusDescriptionExistsAsync(SourceStatus.Description))
             {
                 ModelState.AddModelError("SourceStatus.Description", "Description entered already exists.");
             }

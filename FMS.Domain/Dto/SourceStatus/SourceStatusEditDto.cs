@@ -6,7 +6,7 @@ namespace FMS.Domain.Dto
 {
     public class SourceStatusEditDto
     {
-        public SourceStatusEditDto(Status e) { }
+        public SourceStatusEditDto() { }
 
         public SourceStatusEditDto(SourceStatus sourceStatus)
         {
