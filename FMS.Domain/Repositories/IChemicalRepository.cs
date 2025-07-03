@@ -12,6 +12,10 @@ namespace FMS.Domain.Repositories
 
         Task<bool> ChemicalCasNoExistsAsync(string casNo, Guid? ignoreId = null);
 
+        Task<bool> ChemicalChemicalNameExistsAsync(string chemicalName, Guid? ignoreId = null);
+
+        Task<bool> ChemicalCommonNameExistsAsync(string commonName, Guid? ignoreId = null);
+
         Task<ChemicalEditDto> GetChemicalByIdAsync(Guid id);
 
         Task<Chemical> GetChemicalByNameAsync(string name);

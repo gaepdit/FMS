@@ -39,5 +39,14 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "MCL Value")]
         public string MCLs { get; set; }
+
+        public void TrimAll()
+        {
+            CasNo = CasNo?.Trim();
+            ChemicalName = ChemicalName?.Trim();
+            CommonName = CommonName?.Trim();
+            ToxValue = ToxValue?.Trim();
+            MCLs = MCLs?.Trim();
+        }
     }
 }
