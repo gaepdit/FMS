@@ -31,7 +31,9 @@
                         <li><a class="dropdown-item" asp-page="/Users/Index">FMS Users</a></li>
                         @if (User.IsInRole(UserRoles.SiteMaintenance))
                         {
-                            <li><a class="dropdown-item" asp-page="/Maintenance/Index">Site Maintenance</a></li>
+                            <li>
+                                <a class="dropdown-item" asp-page="/Maintenance/Index">Site Maintenance</a>
+                            </li>
                         }
                     </ul>
                 </li>

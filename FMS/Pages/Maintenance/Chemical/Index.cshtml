@@ -1,0 +1,64 @@
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.Chemical.IndexModel
+
+@section Scripts {
+    <script src="~/js/formIndex.js"></script>
+}
+
+@{
+    ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.Chemical}";
+}
+
+<a asp-page="../Index">← Site Maintenance</a>
+<h1>
+    @MaintenanceOptions.Chemical List <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
+</h1>
+<partial name="_AlertPartial" for="DisplayMessage" id="alert"/>
+
+<form method="post">
+    <table class="table" aria-label="List of Chemicals">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">CasNo</th>
+                <th scope="col">Chemical Name</th>
+                <th scope="col">Common Name</th>
+                <th scope="col">Tox Value</th>
+                <th scope="col">MCLs</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Chemicals)
+            {
+                <tr class="@(!item.Active ? "table-warning" : "")">
+                    <td class="text-nowrap">
+                        @Html.DisplayFor(m => item.CasNo, "StringOrNone")
+                        @Html.DisplayFor(m => item.Active, "BoolRemoved")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.ChemicalName, "StringOrNone")
+                    </td>
+                    <td>@Html.DisplayFor(m => item.CommonName, "StringOrNone")</td>
+                    <td>
+                        @Html.DisplayFor(m => item.ToxValue, "StringOrNone")<br />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.MCLs, "StringOrNone")<br />
+                    </td>
+                    <td class="text-nowrap">
+                        <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                        @if (item.Active)
+                        {
+                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
+                        }
+                        else
+                        {
+                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
