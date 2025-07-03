@@ -32,7 +32,7 @@ namespace FMS.Pages.Maintenance.Chemical
 
             Chemical.TrimAll();
 
-            // When adding a new Budget Code, make sure the code and number don't already exist before trying to save.
+            // When adding a new Chemical, make sure the CasNo, Chemical Name and Common Name don't already exist before trying to save.
             if (await _repository.ChemicalCasNoExistsAsync(Chemical.CasNo))
             {
                 ModelState.AddModelError("Chemical.CasNo", "CasNo entered already exists.");
