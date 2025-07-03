@@ -98,6 +98,7 @@ namespace FMS
             services.AddScoped<IOverallStatusRepository, OverallStatusRepository>();
             services.AddScoped<IParcelTypeRepository, ParcelTypeRepository>();
             services.AddScoped<ISoilStatusRepository, SoilStatusRepository>();
+            services.AddScoped<ISourceStatusRepository, SourceStatusRepository>();
             services.AddScoped<IContactTypeRepository, ContactTypeRepository>();
             services.AddScoped<IContactTitleRepository, ContactTitleRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
