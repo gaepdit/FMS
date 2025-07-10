@@ -62,7 +62,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityNumber = "BRF3471841",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //243-0085
-                    FacilityTypeId = new Guid("6F19934A-6AF2-438B-8858-03FA6AC4E78A"), // GEN
+                    FacilityTypeId = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"), // HSI
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "WOODSTOCK SHOPPING CENTER",
@@ -106,7 +106,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityNumber = "BRF691433",
                     FileId = new Guid("47B44DDE-D9D0-4799-AB32-20E829F9D53C"), //243-0069
-                    FacilityTypeId = new Guid("C8F61579-46F8-47FD-B7C4-FEB17F26384B"), //BROWN
+                    FacilityTypeId = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"), //HSI
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "WOODSTOCK CROSSING",
