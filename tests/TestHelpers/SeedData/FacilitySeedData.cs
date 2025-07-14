@@ -60,7 +60,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     Active = true,
-                    FacilityNumber = "BRF3471841",
+                    FacilityNumber = "10789",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //243-0085
                     FacilityTypeId = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"), // HSI
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
@@ -104,7 +104,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     Active = true,
-                    FacilityNumber = "BRF691433",
+                    FacilityNumber = "10987",
                     FileId = new Guid("47B44DDE-D9D0-4799-AB32-20E829F9D53C"), //243-0069
                     FacilityTypeId = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"), //HSI
                     OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
