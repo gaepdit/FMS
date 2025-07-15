@@ -735,11 +735,12 @@
                         <table class="table table-sm" aria-label="Parcels">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Substance Name</th>
                                     <th scope="col">CAS Number</th>
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Active</th>
+                                    <th scope="col">Substance Name</th>
+                                    <th scope="col">Common Name</th>
+                                    <th scope="col">Groundwater</th>
+                                    <th scope="col">Soil</th>
+                                    <th scope="col">Use for Scoring</th>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
@@ -748,28 +749,32 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Round Up</td>
                                     <td>1234567</td>
-                                    <td>Herbicide</td>
-                                    <td>Active</td>
-                                    <td>Yes</td>
+                                    <td>PlantusPoisonide</td>
+                                    <td>Round Up</td>
+                                    <td>true</td>
+                                    <td>true</td>
+                                    <td>true</td>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
                                         <td>
                                             <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
                                         </td>
                                     }
                                 </tr>
                                 <tr>
-                                    <td>Round Up</td>
-                                    <td>1234567</td>
-                                    <td>Herbicide</td>
-                                    <td>Inactive</td>
-                                    <td>No</td>
+                                    <td>874563</td>
+                                    <td>H2SO4</td>
+                                    <td>Sulfuric Acid</td>
+                                    <td>false</td>
+                                    <td>true</td>
+                                    <td>true</td>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
                                         <td>
                                             <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
                                         </td>
                                     }
                                 </tr>

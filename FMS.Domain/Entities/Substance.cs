@@ -20,9 +20,9 @@ namespace FMS.Domain.Entities
         public Guid ChemicalId { get; set; }
         public Chemical Chemical { get; set; }
 
-        public bool Groundwater { get; set; }
+        public bool Groundwater { get; set; } = false;
 
-        public bool Soil { get; set; }
+        public bool Soil { get; set; } = false;
 
         public bool UseForScoring { get; set; } = false;
 
