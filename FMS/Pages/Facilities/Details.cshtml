@@ -6,12 +6,6 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/formDetails.js"></script>
-    <script>
-        var firstTabEl = document.querySelector('#HSINavBar li:first-child a')
-        var firstTab = new bootstrap.Tab(firstTabEl)
-
-        firstTab.show()
-    </script>
 }
 
 @{
@@ -39,118 +33,118 @@
 <hr />
 <partial name="_AlertPartial" for="Message" id="alert" />
 
-<div class="container-fluid">
-    <div class="parent-container d-lg-inline-flex">
-        <div class="container bg-light-subtle p-3 m-1 rounded-3">
-            <dl class="row">
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.Name)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
+@* <div class="container-fluid"> *@
+<div class="container-fluid parent-container d-lg-inline-flex">
+    <div class="container bg-light-subtle p-3 m-1 rounded-3">
+        <dl class="row">
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.Name)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
+            </dt>
+            @if (Model.FacilityDetail.FileId is not null)
+            {
+                <dd class="col-sm-8">
+                    <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
+                        @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
+                    </a>
                 </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
-                </dt>
-                @if (Model.FacilityDetail.FileId is not null)
-                {
-                    <dd class="col-sm-7">
-                        <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
-                            @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
-                        </a>
-                    </dd>
-                }
-                else
-                {
-                    <dd class="col-sm-7">
-                        <span class="text-info">No File Label</span>
-                    </dd>
-                }
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
+            }
+            else
+            {
+                <dd class="col-sm-8">
+                    <span class="text-info">No File Label</span>
                 </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.IsRetained)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.IsRetained, "BoolYesNo")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.HasERecord, "BoolYesNo")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
-                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNotAssigned")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.Location)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
-                </dd>
-                <dt class="col-sm-5">Address</dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
-                    @Html.DisplayFor(model => model.FacilityDetail.City),
-                    @Html.DisplayFor(model => model.FacilityDetail.State)
-                    @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.County)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
-                </dd>
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.Latitude),
-                    @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-                </dd>
+            }
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.IsRetained)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.IsRetained, "BoolYesNo")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.HasERecord, "BoolYesNo")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
+                @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNotAssigned")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.Location)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
+            </dd>
+            <dt class="col-sm-4">Address</dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
+                @Html.DisplayFor(model => model.FacilityDetail.City),
+                @Html.DisplayFor(model => model.FacilityDetail.State)
+                @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.County)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
+            </dd>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.Latitude),
+                @Html.DisplayFor(model => model.FacilityDetail.Longitude)
+            </dd>
 
-                <dt class="col-sm-5">
-                    @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
-                </dt>
-                <dd class="col-sm-7">
-                    @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
-                </dd>
-            </dl>
-        </div>
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
+            </dd>
+        </dl>
     </div>
+    @* </div> *@
 
     @if (Model.FacilityDetail.FacilityType.Name == "RN")
     {
@@ -224,286 +218,625 @@
 
 @if (Model.FacilityDetail.FacilityType.Name == "HSI")
 {
-    @* <partial name="_HSIMenuPartial" /> *@
-    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <nav class="navbar navbar-expand-sm">
-            <ul class="nav nav-tabs" id="HSINavBar">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="true" href="#HSIProperties">HSI Properties</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Contacts" type="text/html" role="tab" aria-controls="Contacts" aria-selected="false" href="#Contacts">Contacts</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Score" type="text/html" role="tab" aria-controls="Score" aria-selected="false" href=#Score>Score</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Substances" type="text/html" role="tab" aria-controls="Substances" aria-selected="false" href="#Substances">Substances</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="false" href="#Events">Events</a>
-                </li>
-            </ul>
-        </nav>
-        <div class="tab-content">
-            <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
-                <H2>Additional HSI Information</H2>
-                <dl class="row">
-                    <dt class="col-sm-6">
-                        DateListed
-                    </dt>
-                    <dd class="col-sm-6">
-                        1/23/2020
-                    </dd>
-                    <dt class="col-sm-6">
-                        AdditionalOrgUnit
-                    </dt>
-                    <dd class="col-sm-6">
-                        Additional Unit 3
-                    </dd>
-                    <dt class="col-sm-6">
-                        Geologist
-                    </dt>
-                    <dd class="col-sm-6">
-                        Geoff Geologist
-                    </dd>
-                    <dt class="col-sm-6">
-                        VRPDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        12/23/2023
-                    </dd>
-                    <dt class="col-sm-6">
-                        BrownfieldDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        11/23/2023
-                    </dd>
-                </dl>
-            </div>
-            <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
-                <h2>Location</h2>
-                <dl class="column">
-                    <dt class="row-cols-sm-2">
-                        DateListed
-                    </dt>
-                    <dd class="row-cols-sm-2">
-                        1/23/2020
-                    </dd>
-                    <dt class="row-cols-sm-2">
-                        AdditionalOrgUnit
-                    </dt>
-                    <dd class="row-cols-sm-2">
-                        Additional Unit 3
-                    </dd>
-                    <dt class="row-cols-sm-2">
-                        Geologist
-                    </dt>
-                    <dd class="row-cols-sm-2">
-                        Geoff Geologist
-                    </dd>
-                </dl>
-                <dl class="column">
-                    <dt class="col-sm-1">
-                        VRPDate
-                    </dt>
-                    <dd class="col-sm-2">
-                        12/23/2023
-                    </dd>
-                    <dt class="col-sm-1">
-                        BrownfieldDate
-                    </dt>
-                    <dd class="col-sm-2">
-                        11/23/2023
-                    </dd>
-                </dl>
+    <div class="container-fluid">
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <nav class="navbar navbar-expand-sm">
+                <ul class="nav nav-tabs" id="HSINavBar">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="true" href="#HSIProperties">HSI Properties</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Contacts" type="text/html" role="tab" aria-controls="Contacts" aria-selected="false" href="#Contacts">Contacts</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Score" type="text/html" role="tab" aria-controls="Score" aria-selected="false" href=#Score>Score</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Substances" type="text/html" role="tab" aria-controls="Substances" aria-selected="false" href="#Substances">Substances</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="false" href="#Events">Events</a>
+                    </li>
+                </ul>
+            </nav>
 
-            </div>
-            <div class="tab-pane" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
-                <h2>Contacts</h2>
-                <dl class="row">
-                    <dt class="col-sm-6">
-                        DateListed
-                    </dt>
-                    <dd class="col-sm-6">
-                        1/23/2020
-                    </dd>
-                    <dt class="col-sm-6">
-                        AdditionalOrgUnit
-                    </dt>
-                    <dd class="col-sm-6">
-                        Additional Unit 3
-                    </dd>
-                    <dt class="col-sm-6">
-                        Geologist
-                    </dt>
-                    <dd class="col-sm-6">
-                        Geoff Geologist
-                    </dd>
-                    <dt class="col-sm-6">
-                        VRPDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        12/23/2023
-                    </dd>
-                    <dt class="col-sm-6">
-                        BrownfieldDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        11/23/2023
-                    </dd>
-                </dl>
+            <div class="tab-content">
+                <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
+                    <H3>Additional HSI Information</H3>
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            DateListed
+                        </dt>
+                        <dd class="col-sm-3">
+                            1/23/2020
+                        </dd>
+                        <dt class="col-sm-3">
+                            AdditionalOrgUnit
+                        </dt>
+                        <dd class="col-sm-3">
+                            Additional Unit 3
+                        </dd>
+                        <dt class="col-sm-3">
+                            Geologist
+                        </dt>
+                        <dd class="col-sm-3">
+                            Geoff Geologist
+                        </dd>
+                        <dt class="col-sm-3">
+                            VRPDate
+                        </dt>
+                        <dd class="col-sm-3">
+                            12/23/2023
+                        </dd>
+                        <dt class="col-sm-3">
+                            BrownfieldDate
+                        </dt>
+                        <dd class="col-sm-3">
+                            11/23/2023
+                        </dd>
+                    </dl>
+                </div>
 
-            </div>
-            <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
-                <h2>Score</h2>
-                <dl class="row">
-                    <dt class="col-sm-6">
-                        DateListed
-                    </dt>
-                    <dd class="col-sm-6">
-                        1/23/2020
-                    </dd>
-                    <dt class="col-sm-6">
-                        AdditionalOrgUnit
-                    </dt>
-                    <dd class="col-sm-6">
-                        Additional Unit 3
-                    </dd>
-                    <dt class="col-sm-6">
-                        Geologist
-                    </dt>
-                    <dd class="col-sm-6">
-                        Geoff Geologist
-                    </dd>
-                    <dt class="col-sm-6">
-                        VRPDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        12/23/2023
-                    </dd>
-                    <dt class="col-sm-6">
-                        BrownfieldDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        11/23/2023
-                    </dd>
-                </dl>
+                <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
+                    <h3>Location</h3>
+                    <form class="row">
+                        <H5 class="col-1 align-text-bottom">
+                            Class
+                        </H5>
+                        <select class="col-1 m-2 align-text-top">
+                            <option value="1">I</option>
+                            <option value="2">II</option>
+                            <option value="3">III</option>
+                            <option value="4">IV</option>
+                            <option value="5">V</option>
+                            <option value="6">ER</option>
+                        </select>
+                        <a class="btn btn-sm btn-outline-primary col-1 m-2">Save</a>
+                    </form>
+                    <br />
+                    <h4>
+                        Parcels
+                        <button class="btn btn-sm btn-outline-primary">Add Parcel</button>
+                    </h4>
+                    <div class="row justify-content-evenly">
+                        <table class="table table-sm" aria-label="Parcels">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Parcel Number</th>
+                                    <th scope="col">Parcel Description</th>
+                                    <th scope="col">Parcel Type</th>
+                                    <th scope="col">Acres</th>
+                                    <th scope="col">Latitude</th>
+                                    <th scope="col">Longitude</th>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <th scope="col" class="text-left">Actions</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1587</td>
+                                    <td>Back 40</td>
+                                    <td>List</td>
+                                    <td>2</td>
+                                    <td>33.8764</td>
+                                    <td>-84.3846</td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary ">Edit</a>
+                                            <a class="btn btn-sm btn-outline-warning ">Delete</a>
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>157jhg</td>
+                                    <td>Some chunk of land</td>
+                                    <td>SubList</td>
+                                    <td>.5</td>
+                                    <td>33.8654</td>
+                                    <td>-84.3798</td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                        </td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-            </div>
-            <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
-                <h2>Substances</h2>
-                <dl class="row">
-                    <dt class="col-sm-6">
-                        DateListed
-                    </dt>
-                    <dd class="col-sm-6">
-                        1/23/2020
-                    </dd>
-                    <dt class="col-sm-6">
-                        AdditionalOrgUnit
-                    </dt>
-                    <dd class="col-sm-6">
-                        Additional Unit 3
-                    </dd>
-                    <dt class="col-sm-6">
-                        Geologist
-                    </dt>
-                    <dd class="col-sm-6">
-                        Geoff Geologist
-                    </dd>
-                    <dt class="col-sm-6">
-                        VRPDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        12/23/2023
-                    </dd>
-                    <dt class="col-sm-6">
-                        BrownfieldDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        11/23/2023
-                    </dd>
-                </dl>
+                <div class="tab-pane" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
+                    <h4>Contacts</h4>
+                    <div class="row">
+                        <table class="table table-sm" aria-label="Parcels">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Contact Type</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Company</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Email</th>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <th scope="col" class="text-left">Actions</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Geologist</td>
+                                    <td>Secondary</td>
+                                    <td>Geoff Geo</td>
+                                    <td>Pollent Enterprises</td>
+                                    <td>
+                                        <address>
+                                            1234 Main St.<br />
+                                            Atlanta, GA 30303
+                                        </address>
+                                    <td>
+                                        <a href="mailto:jschmoe@pollent.com">jschmoe@pollent.com</a>
+                                    </td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-outline-primary">Edit</a>
+                                            <a class="btn btn-outline-warning">Delete</a>
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="container bg-light-subtle">
+                                            <table class="table table-sm" aria-label="Phone Numbers">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Phone Type</th>
+                                                        <th scope="col">Number</th>
+                                                        <th scope="col">Active</th>
+                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                        {
+                                                            <th scope="col" class="text-center">Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Office</td>
+                                                        <td>678-432-9876</td>
+                                                        <td>Yes</td>
+                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                        {
+                                                            <td class="justify-content-end">
+                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cell</td>
+                                                        <td>678-678-0987</td>
+                                                        <td>Yes</td>
+                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                        {
+                                                            <td class="justify-content-end">
+                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Owner</td>
+                                    <td>Primary</td>
+                                    <td>Jane Doe</td>
+                                    <td>Pollent Enterprises</td>
+                                    <td>
+                                        <address>
+                                            1234 Main St.<br />
+                                            Atlanta, GA 30303
+                                        </address>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:jdoe@pollent.com">jdoe@pollent.com</a>
+                                    </td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-outline-primary">Edit</a>
+                                            <a class="btn btn-outline-warning">Delete</a>
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="container bg-light-subtle rounded-3">
+                                            <table class="table table-sm" aria-label="Phone Numbers">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Phone Type</th>
+                                                        <th scope="col">Number</th>
+                                                        <th scope="col">Active</th>
+                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                        {
+                                                            <th scope="col" class="text-center">Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Office</td>
+                                                        <td>678-432-9876</td>
+                                                        <td>Yes</td>
+                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                        {
+                                                            <td>
+                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cell</td>
+                                                        <td>770-567-1234</td>
+                                                        <td>No</td>
+                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                        {
+                                                            <td>
+                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-            </div>
-            <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
-                <h2>Status</h2>
-                <dl class="row">
-                    <dt class="col-sm-6">
-                        DateListed
-                    </dt>
-                    <dd class="col-sm-6">
-                        1/23/2020
-                    </dd>
-                    <dt class="col-sm-6">
-                        AdditionalOrgUnit
-                    </dt>
-                    <dd class="col-sm-6">
-                        Additional Unit 3
-                    </dd>
-                    <dt class="col-sm-6">
-                        Geologist
-                    </dt>
-                    <dd class="col-sm-6">
-                        Geoff Geologist
-                    </dd>
-                    <dt class="col-sm-6">
-                        VRPDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        12/23/2023
-                    </dd>
-                    <dt class="col-sm-6">
-                        BrownfieldDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        11/23/2023
-                    </dd>
-                </dl>
+                <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
+                    <h4>
+                        Score
+                        <a class="btn btn-sm btn-outline-primary">Save</a>
+                    </h4>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="form-label" for="ScoredBy">
+                                    Scored By
+                                </label>
+                                <select class="form-select" id="ScoredBy">
+                                    <option value="1">Jason Metzger</option>
+                                    <option value="2">Geoff Geologist</option>
+                                    <option value="3">Jane Doe</option>
+                                    <option value="4">John Smith</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="ScoreDate">
+                                    Score Date
+                                </label>
+                                <input type="date" class="form-control datepicker" value="2023-12-23" id="ScoreDate" />
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <label class="form-check-label" for="UseScoreComments">
+                                        Use alternate language
+                                        <br />
+                                        from comments field
+                                    </label>
+                                    <input class="form-check-input" type="checkbox" value="true" id="UseScoreComments" checked />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md">
+                                <label class="form-label" for="ScoreComments">Comments</label>
+                                <textarea class="form-control" rows="3" id="ScoreComments">some comments to use for info</textarea>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="container-fluid parent-container d-lg-inline-flex">
+                                <div class="container bg-light-subtle p-3 m-1">
+                                    <h4>
+                                        Groundwater Score
+                                        <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                    </h4>
+                                    <dl class="row">
+                                        <dt class="col-sm-4">
+                                            Groundwater Score
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            34.62
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            A
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            2
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            B1
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            4
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            B2
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            1
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            C
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            0
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            Description
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            Contamination
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            Chemical Name
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            Methol Alcohol
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            Other
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            Main contaminent
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            D2
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            6
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            D3
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            5
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            CasNo
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            12543
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            E1
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            6
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            E2
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            0
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="container bg-light-subtle p-3 m-1">
+                                    <h4>
+                                        Onsite Score
+                                        <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                    </h4>
+                                    <dl class="row">
+                                        <dt class="col-sm-4">
+                                            Onsite Score
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            32.68
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            A
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            2
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            B
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            4
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            C
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            1
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            Description
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            topsoil contamination
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            1D Chemical Name
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            Round Up
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            1D Other
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            Nitric Acid
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            D2
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            3
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            D3
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            6
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            CasNo
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            6712543
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            E1
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            6
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            E2
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            0
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-            </div>
-            <div class="tab-pane" id="Events" role="tabpanel" aria-labelledby="Events-tab">
-                <h2>Events</h2>
-                <dl class="row">
-                    <dt class="col-sm-6">
-                        DateListed
-                    </dt>
-                    <dd class="col-sm-6">
-                        1/23/2020
-                    </dd>
-                    <dt class="col-sm-6">
-                        AdditionalOrgUnit
-                    </dt>
-                    <dd class="col-sm-6">
-                        Additional Unit 3
-                    </dd>
-                    <dt class="col-sm-6">
-                        Geologist
-                    </dt>
-                    <dd class="col-sm-6">
-                        Geoff Geologist
-                    </dd>
-                    <dt class="col-sm-6">
-                        VRPDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        12/23/2023
-                    </dd>
-                    <dt class="col-sm-6">
-                        BrownfieldDate
-                    </dt>
-                    <dd class="col-sm-6">
-                        11/23/2023
-                    </dd>
-                </dl>
+                <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
+                    <h4>Substances</h4>
+                    <dl class="row">
+                        <dt class="col-sm-6">
+                            DateListed
+                        </dt>
+                        <dd class="col-sm-6">
+                            1/23/2020
+                        </dd>
+                        <dt class="col-sm-6">
+                            AdditionalOrgUnit
+                        </dt>
+                        <dd class="col-sm-6">
+                            Additional Unit 3
+                        </dd>
+                        <dt class="col-sm-6">
+                            Geologist
+                        </dt>
+                        <dd class="col-sm-6">
+                            Geoff Geologist
+                        </dd>
+                        <dt class="col-sm-6">
+                            VRPDate
+                        </dt>
+                        <dd class="col-sm-6">
+                            12/23/2023
+                        </dd>
+                        <dt class="col-sm-6">
+                            BrownfieldDate
+                        </dt>
+                        <dd class="col-sm-6">
+                            11/23/2023
+                        </dd>
+                    </dl>
 
+                </div>
+                <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
+                    <h2>Status</h2>
+                    <dl class="row">
+                        <dt class="col-sm-6">
+                            DateListed
+                        </dt>
+                        <dd class="col-sm-6">
+                            1/23/2020
+                        </dd>
+                        <dt class="col-sm-6">
+                            AdditionalOrgUnit
+                        </dt>
+                        <dd class="col-sm-6">
+                            Additional Unit 3
+                        </dd>
+                        <dt class="col-sm-6">
+                            Geologist
+                        </dt>
+                        <dd class="col-sm-6">
+                            Geoff Geologist
+                        </dd>
+                        <dt class="col-sm-6">
+                            VRPDate
+                        </dt>
+                        <dd class="col-sm-6">
+                            12/23/2023
+                        </dd>
+                        <dt class="col-sm-6">
+                            BrownfieldDate
+                        </dt>
+                        <dd class="col-sm-6">
+                            11/23/2023
+                        </dd>
+                    </dl>
+
+                </div>
+                <div class="tab-pane" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                    <h2>Events</h2>
+                    <dl class="row">
+                        <dt class="col-sm-6">
+                            DateListed
+                        </dt>
+                        <dd class="col-sm-6">
+                            1/23/2020
+                        </dd>
+                        <dt class="col-sm-6">
+                            AdditionalOrgUnit
+                        </dt>
+                        <dd class="col-sm-6">
+                            Additional Unit 3
+                        </dd>
+                        <dt class="col-sm-6">
+                            Geologist
+                        </dt>
+                        <dd class="col-sm-6">
+                            Geoff Geologist
+                        </dd>
+                        <dt class="col-sm-6">
+                            VRPDate
+                        </dt>
+                        <dd class="col-sm-6">
+                            12/23/2023
+                        </dd>
+                        <dt class="col-sm-6">
+                            BrownfieldDate
+                        </dt>
+                        <dd class="col-sm-6">
+                            11/23/2023
+                        </dd>
+                    </dl>
+
+                </div>
             </div>
         </div>
     </div>
@@ -536,105 +869,124 @@
 @if (Model.FacilityDetail.FacilityType.Name != "RN")
 {
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
-
-        <h2 id="retention-records">Retention Records</h2>
-        @if (Model.FacilityDetail.RetentionRecords.Count > 0)
-        {
-            <table class="table table-sm" aria-label="Retention Records of other Facilities">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Years</th>
-                        <th scope="col">Box Number</th>
-                        <th scope="col">Consignment Number</th>
-                        <th scope="col">Shelf Number</th>
-                        <th scope="col">Retention Schedule Number</th>
-                        <th scope="col" class="text-center">Retained</th>
-                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+        <div class="accordion accordion-flush" id="retention-records">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="RetentionRecordList">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r-records" aria-expanded="true" aria-controls="r-records">
+                        Retention Records
+                    </button>
+                </h3>
+                <div id="r-records" class="accordion-collapse collapse" aria-labelledby="Retention Record List">
+                    <div class="accordion-body">
+                        @if (Model.FacilityDetail.RetentionRecords.Count > 0)
                         {
-                            <th scope="col" class="text-center">Actions</th>
+                            <table class="table table-sm" aria-label="Retention Records">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Years</th>
+                                        <th scope="col">Box Number</th>
+                                        <th scope="col">Consignment Number</th>
+                                        <th scope="col">Shelf Number</th>
+                                        <th scope="col">Retention Schedule Number</th>
+                                        <th scope="col" class="text-center">Retained</th>
+                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                        {
+                                            <th scope="col" class="text-center">Actions</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var r in Model.FacilityDetail.RetentionRecords)
+                                    {
+                                        <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
+                                            <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
+                                            <td>@r.BoxNumber</td>
+                                            <td>@r.ConsignmentNumber</td>
+                                            <td>@r.ShelfNumber</td>
+                                            <td>@r.RetentionSchedule</td>
+                                            <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
+                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                            {
+                                                <td>
+                                                    <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var r in Model.FacilityDetail.RetentionRecords)
-                    {
-                        <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
-                            <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
-                            <td>@r.BoxNumber</td>
-                            <td>@r.ConsignmentNumber</td>
-                            <td>@r.ShelfNumber</td>
-                            <td>@r.RetentionSchedule</td>
-                            <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
-                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                            {
-                                <td>
-                                    <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                </td>
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <span class="text-muted">none</span>
-        }
-
-        @if (Model.FacilityDetail.Active &&
-            (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.SiteMaintenance)))
-        {
-            <div class="container bg-light-subtle pt-3 mt-5 rounded-3">
-                <h3 class="h5">Add a Retention Record</h3>
-                <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
-                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-
-                    <div class="mb-3 row">
-                        <div class="col-sm-4">
-                            <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
-                            <input asp-for="RecordCreate.StartYear" class="form-control" />
-                            <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
-                            <input asp-for="RecordCreate.EndYear" class="form-control" />
-                            <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
-                            <input asp-for="RecordCreate.BoxNumber" class="form-control" />
-                            <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
-                        </div>
+                        else
+                        {
+                            <span class="text-muted">none</span>
+                        }
                     </div>
-
-                    <div class="mb-3 row">
-                        <div class="col-sm-4">
-                            <label asp-for="RecordCreate.ConsignmentNumber"></label>
-                            <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
-                            <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <label asp-for="RecordCreate.ShelfNumber"></label>
-                            <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
-                            <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <label asp-for="RecordCreate.RetentionSchedule"></label>
-                            <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
-                            <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <input asp-for="FacilityId" />
-                    <hr />
-                    <p class="text-danger">* denotes a required field</p>
-                    <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
-                </form>
+                </div>
             </div>
-        }
+
+            @if (Model.FacilityDetail.Active &&
+                    (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.SiteMaintenance)))
+            {
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="CreateRetentionRecord">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#create-r-records" aria-expanded="true" aria-controls="create-r-records">
+                            Add Retention Records
+                        </button>
+                    </h3>
+                    <div id="create-r-records" class="accordion-collapse collapse" aria-labelledby="CreateRetentionRecord">
+                        <div class="accordion-body">
+                            <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                                <div class="mb-3 row">
+                                    <div class="col-sm-4">
+                                        <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
+                                        <input asp-for="RecordCreate.StartYear" class="form-control" />
+                                        <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
+                                        <input asp-for="RecordCreate.EndYear" class="form-control" />
+                                        <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
+                                        <input asp-for="RecordCreate.BoxNumber" class="form-control" />
+                                        <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <div class="col-sm-4">
+                                        <label asp-for="RecordCreate.ConsignmentNumber"></label>
+                                        <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
+                                        <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label asp-for="RecordCreate.ShelfNumber"></label>
+                                        <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
+                                        <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label asp-for="RecordCreate.RetentionSchedule"></label>
+                                        <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
+                                        <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <input asp-for="FacilityId" />
+                                <hr />
+                                <p class="text-danger">* denotes a required field</p>
+                                <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 }
