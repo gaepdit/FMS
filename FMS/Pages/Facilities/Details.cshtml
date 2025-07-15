@@ -731,40 +731,53 @@
 
                 <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
                     <h4>Substances</h4>
-                    <dl class="row">
-                        <dt class="col-sm-6">
-                            DateListed
-                        </dt>
-                        <dd class="col-sm-6">
-                            1/23/2020
-                        </dd>
-                        <dt class="col-sm-6">
-                            AdditionalOrgUnit
-                        </dt>
-                        <dd class="col-sm-6">
-                            Additional Unit 3
-                        </dd>
-                        <dt class="col-sm-6">
-                            Geologist
-                        </dt>
-                        <dd class="col-sm-6">
-                            Geoff Geologist
-                        </dd>
-                        <dt class="col-sm-6">
-                            VRPDate
-                        </dt>
-                        <dd class="col-sm-6">
-                            12/23/2023
-                        </dd>
-                        <dt class="col-sm-6">
-                            BrownfieldDate
-                        </dt>
-                        <dd class="col-sm-6">
-                            11/23/2023
-                        </dd>
-                    </dl>
-
+                    <div class="row justify-content-evenly">
+                        <table class="table table-sm" aria-label="Parcels">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Substance Name</th>
+                                    <th scope="col">CAS Number</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Active</th>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <th scope="col" class="text-left">Actions</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Round Up</td>
+                                    <td>1234567</td>
+                                    <td>Herbicide</td>
+                                    <td>Active</td>
+                                    <td>Yes</td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Round Up</td>
+                                    <td>1234567</td>
+                                    <td>Herbicide</td>
+                                    <td>Inactive</td>
+                                    <td>No</td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                        </td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
                 <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
                     <h2>Status</h2>
                     <dl class="row">
