@@ -33,7 +33,6 @@
 <hr />
 <partial name="_AlertPartial" for="Message" id="alert" />
 
-@* <div class="container-fluid"> *@
 <div class="container-fluid parent-container d-lg-inline-flex">
     @if (Model.FacilityDetail.FacilityType.Name != "RN")
     {
@@ -400,22 +399,18 @@
                 <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
                     <h3>
                         Location
-                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-page="/Status/Add" class="btn btn-sm btn-primary">Add</a>
+                        <a asp-page="/Location/Edit" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="/Location/Add" class="btn btn-sm btn-primary">Add</a>
                     </h3>
-                    <div class="row">
-                        <dl>
-                            <dt class="col-2 m-2 align-text-bottom">
-                                Class
-                            </dt>
-                            <dd class="col-8 m-2">
-                                III
-                            </dd>
-                        </dl>
-                        <a class="btn btn-sm btn-primary col-1 m-2">Add</a>
-                        <a class="btn btn-sm btn-primary col-1 m-2">Edit</a>
-                    </div>
-                    <br />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            Class
+                        </dt>
+                        <dd class="col-sm-2">
+                            III
+                        </dd>
+                    </dl>
+                    <hr />
                     <h4>
                         Parcels
                         <button class="btn btn-sm btn-primary">Add Parcel</button>
@@ -660,215 +655,211 @@
                         <a asp-page="/Score/Edit" class="btn btn-sm btn-primary">Edit</a>
                         <a asp-page="/Score/Add" class="btn btn-sm btn-primary">Add</a>
                     </h3>
-                    <form>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="form-label" for="ScoredBy">
+                    <div class="row">
+                        <div class="container bg-light-subtle m-1">
+                            <dl class="row">
+                                <dt class="col-sm-2">
                                     Scored By
-                                </label>
-                                <select class="form-select" id="ScoredBy">
-                                    <option value="1">Jason Metzger</option>
-                                    <option value="2">Geoff Geologist</option>
-                                    <option value="3">Jane Doe</option>
-                                    <option value="4">John Smith</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="ScoreDate">
+                                </dt>
+                                <dd class="col-sm-2">
+                                    Geoff Geologist
+                                </dd>
+                                <dt class="col-sm-2">
                                     Score Date
-                                </label>
-                                <input type="date" class="form-control datepicker" value="2023-12-23" id="ScoreDate" />
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-check">
-                                    <label class="form-check-label" for="UseScoreComments">
-                                        Use alternate language
-                                        <br />
-                                        from comments field
-                                    </label>
-                                    <input class="form-check-input" type="checkbox" value="true" id="UseScoreComments" checked />
-                                </div>
-                            </div>
+                                </dt>
+                                <dd class="col-sm-2">
+                                    2023-12-23
+                                </dd>
+                                <dt class="col-sm-3">
+                                    Use alternate language from comments field
+                                </dt>
+                                <dd class="col-sm-1">
+                                    <input class="form-check" type="checkbox" value="true" id="UseScoreComments" checked disabled />
+                                </dd>
+                                <dt class="col-sm-2 pt-3">
+                                    Comments
+                                </dt>
+                                <dd class="col-sm-8 pt-3">
+                                    <div class="p-3 border bg-dark-subtle rounded-3">
+                                        some comments to use for info. This where to put alternate text for reports
+                                    </div>
+                                </dd>
+                            </dl>
                         </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md">
-                                <label class="form-label" for="ScoreComments">Comments</label>
-                                <textarea class="form-control" rows="3" id="ScoreComments">some comments to use for info</textarea>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="container-fluid parent-container d-lg-inline-flex">
-                                <div class="container bg-light-subtle p-3 m-1">
-                                    <h4>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="container-fluid parent-container d-lg-inline-flex">
+                            <div class="container bg-light-subtle p-3 m-1">
+                                <h4>
+                                    Groundwater Score
+                                    <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                </h4>
+                                <hr />
+                                <dl class="row">
+                                    <dt class="col-sm-4">
                                         Groundwater Score
-                                        <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                    </h4>
-                                    <dl class="row">
-                                        <dt class="col-sm-4">
-                                            Groundwater Score
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            34.62
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            A
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            2
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            B1
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            4
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            B2
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            1
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            C
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            0
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            Description
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            Contamination
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            Chemical Name
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            Methol Alcohol
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            Other
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            Main contaminent
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            D2
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            6
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            D3
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            5
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            CasNo
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            12543
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            E1
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            6
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            E2
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            0
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <div class="container bg-light-subtle p-3 m-1">
-                                    <h4>
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        34.62
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        A
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        2
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        B1
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        4
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        B2
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        1
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        C
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        0
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        Description
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        Contamination
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        Chemical Name
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        Methol Alcohol
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        Other
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        Main contaminent
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        D2
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        6
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        D3
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        5
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        CasNo
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        12543
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        E1
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        6
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        E2
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        0
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="container bg-light-subtle p-3 m-1">
+                                <h4>
+                                    Onsite Score
+                                    <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                </h4>
+                                <hr />
+                                <dl class="row">
+                                    <dt class="col-sm-4">
                                         Onsite Score
-                                        <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                    </h4>
-                                    <dl class="row">
-                                        <dt class="col-sm-4">
-                                            Onsite Score
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            32.68
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            A
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            2
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            B
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            4
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            C
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            1
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            Description
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            topsoil contamination
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            1D Chemical Name
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            Round Up
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            1D Other
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            Nitric Acid
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            D2
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            3
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            D3
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            6
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            CasNo
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            6712543
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            E1
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            6
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            E2
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            0
-                                        </dd>
-                                    </dl>
-                                </div>
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        32.68
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        A
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        2
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        B
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        4
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        C
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        1
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        Description
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        topsoil contamination
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        1D Chemical Name
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        Round Up
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        1D Other
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        Nitric Acid
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        D2
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        3
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        D3
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        6
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        CasNo
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        6712543
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        E1
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        6
+                                    </dd>
+                                    <dt class="col-sm-4">
+                                        E2
+                                    </dt>
+                                    <dd class="col-sm-8">
+                                        0
+                                    </dd>
+                                </dl>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
@@ -953,88 +944,88 @@
                         <dd class="col-sm-2">
                             50,000
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Soil Status
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             Soil Status 2
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Soil Date
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             12-23-2019
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Soil HWTF Projected
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             20,000
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Groundwater Status
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             Groundwater Status 3
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Groundwater Date
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             12-23-2022
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Groundwater HWTF Projected
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             40,000
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Overall Status
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             Overall Status 2
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Date
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             12-23-2023
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             ISWQS
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             <input class="form-check-input" type="checkbox" value="true" id="cbISWQS" checked />
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Primary Funding Source
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             Funding Source 3
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Landfill
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             <input class="form-check-input" type="checkbox" value="true" id="cbLF" checked readonly />
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             SW Permit Number
                         </dt>
-                        <dd class="col-sm-2">
+                        <dd class="col-sm-2 pt-3">
                             SW293845
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             GAPS Score
                         </dt>
-                        <dd class="col-sm-10">
+                        <dd class="col-sm-10 pt-3">
                             34
                         </dd>
-                        <dt class="col-sm-2">
+                        <dt class="col-sm-2 pt-3">
                             Comments
                         </dt>
-                        <dd class="col-sm-12">
+                        <dd class="col-sm-12 pt-3">
                             <textarea class="form-control" rows="3" id="GAPSComments">some comments to use for info</textarea>
                         </dd>
                     </dl>
