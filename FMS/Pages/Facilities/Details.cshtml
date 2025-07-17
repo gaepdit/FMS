@@ -35,119 +35,229 @@
 
 @* <div class="container-fluid"> *@
 <div class="container-fluid parent-container d-lg-inline-flex">
-    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <dl class="row">
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.Name)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
-            </dt>
-            @if (Model.FacilityDetail.FileId is not null)
-            {
-                <dd class="col-sm-8">
-                    <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
-                        @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
-                    </a>
-                </dd>
-            }
-            else
-            {
-                <dd class="col-sm-8">
-                    <span class="text-info">No File Label</span>
-                </dd>
-            }
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.IsRetained)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.IsRetained, "BoolYesNo")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.HasERecord, "BoolYesNo")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
-                @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNotAssigned")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.Location)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
-            </dd>
-            <dt class="col-sm-4">Address</dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
-                @Html.DisplayFor(model => model.FacilityDetail.City),
-                @Html.DisplayFor(model => model.FacilityDetail.State)
-                @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.County)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.Latitude),
-                @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-            </dd>
-
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
-            </dd>
-        </dl>
-    </div>
-    @* </div> *@
-
-    @if (Model.FacilityDetail.FacilityType.Name == "RN")
+    @if (Model.FacilityDetail.FacilityType.Name != "RN")
     {
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Name)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
+                </dt>
+                @if (Model.FacilityDetail.FileId is not null)
+                {
+                    <dd class="col-sm-3">
+                        <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
+                            @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
+                        </a>
+                    </dd>
+                }
+                else
+                {
+                    <dd class="col-sm-3">
+                        <span class="text-info">No File Label</span>
+                    </dd>
+                }
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.IsRetained)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.IsRetained, "BoolYesNo")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.HasERecord, "BoolYesNo")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNotAssigned")
+                </dd>
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
+                    @Html.DisplayFor(model => model.FacilityDetail.City),
+                    @Html.DisplayFor(model => model.FacilityDetail.State)
+                    @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Location)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.County)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.Latitude),
+                    @Html.DisplayFor(model => model.FacilityDetail.Longitude)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
+                </dt>
+                <dd class="col-sm-3">
+                    @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
+                </dd>
+            </dl>
+        </div>
+    }
+    else
+    {
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FileLabel)
+                </dt>
+                @if (Model.FacilityDetail.FileId is not null)
+                {
+                    <dd class="col-sm-8">
+                        <a asp-page="/Files/Details" asp-route-id="@Model.FacilityDetail.FileLabel" class="btn btn-outline-info btn-sm">
+                            @Html.DisplayFor(model => model.FacilityDetail.FileLabel)
+                        </a>
+                    </dd>
+                }
+                else
+                {
+                    <dd class="col-sm-8">
+                        <span class="text-info">No File Label</span>
+                    </dd>
+                }
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Cabinets)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.Cabinets, "Cabinets", new { Model.FacilityDetail.IsRetained })
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.IsRetained)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.IsRetained, "BoolYesNo")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.HasERecord)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.HasERecord, "BoolYesNo")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityStatus)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityStatus.Status, "StringOrNone")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.FacilityType)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Name, "FacilityTypeIcon")
+                    @Html.DisplayFor(model => model.FacilityDetail.FacilityType.Description, "StringOrNone")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.BudgetCode)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.BudgetCode.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.OrganizationalUnit)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.OrganizationalUnit.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.ComplianceOfficer)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.ComplianceOfficer.Name, "StringOrNotAssigned")
+                </dd>
+                <dt class="col-sm-4">Address</dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.Address)<br />
+                    @Html.DisplayFor(model => model.FacilityDetail.City),
+                    @Html.DisplayFor(model => model.FacilityDetail.State)
+                    @Html.DisplayFor(model => model.FacilityDetail.PostalCode)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Location)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.Location, "StringOrNone")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.County)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.County.Name, "StringOrNone")
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Latitude)/@Html.DisplayNameFor(model => model.FacilityDetail.Longitude)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.Latitude),
+                    @Html.DisplayFor(model => model.FacilityDetail.Longitude)
+                </dd>
+
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
+                </dd>
+            </dl>
+        </div>
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <H2>Release Notification Information</H2>
             <dl class="row">
@@ -248,7 +358,11 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
-                    <H3>Additional HSI Information</H3>
+                    <H3>
+                        Additional HSI Information
+                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="/Status/Add" class="btn btn-sm btn-primary">Add</a>
+                    </H3>
                     <dl class="row">
                         <dt class="col-sm-3">
                             DateListed
@@ -284,25 +398,27 @@
                 </div>
 
                 <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
-                    <h3>Location</h3>
-                    <form class="row">
-                        <H5 class="col-1 align-text-bottom">
-                            Class
-                        </H5>
-                        <select class="col-1 m-2 align-text-top">
-                            <option value="1">I</option>
-                            <option value="2">II</option>
-                            <option value="3">III</option>
-                            <option value="4">IV</option>
-                            <option value="5">V</option>
-                            <option value="6">ER</option>
-                        </select>
-                        <a class="btn btn-sm btn-outline-primary col-1 m-2">Save</a>
-                    </form>
+                    <h3>
+                        Location
+                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="/Status/Add" class="btn btn-sm btn-primary">Add</a>
+                    </h3>
+                    <div class="row">
+                        <dl>
+                            <dt class="col-2 m-2 align-text-bottom">
+                                Class
+                            </dt>
+                            <dd class="col-8 m-2">
+                                III
+                            </dd>
+                        </dl>
+                        <a class="btn btn-sm btn-primary col-1 m-2">Add</a>
+                        <a class="btn btn-sm btn-primary col-1 m-2">Edit</a>
+                    </div>
                     <br />
                     <h4>
                         Parcels
-                        <button class="btn btn-sm btn-outline-primary">Add Parcel</button>
+                        <button class="btn btn-sm btn-primary">Add Parcel</button>
                     </h4>
                     <div class="row justify-content-evenly">
                         <table class="table table-sm" aria-label="Parcels">
@@ -357,14 +473,17 @@
                 </div>
 
                 <div class="tab-pane" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
-                    <h4>Contacts</h4>
+                    <h3>
+                        Contacts
+                        <a asp-page="/Contacts/Add" class="btn btn-sm btn-primary">Add Contact</a>
+                    </h3>
                     <div class="row">
                         <table class="table table-sm" aria-label="Parcels">
                             <thead class="thead-light">
                                 <tr>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Contact Type</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Name</th>
                                     <th scope="col">Company</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Email</th>
@@ -376,9 +495,9 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>Geoff Geo</td>
                                     <td>Geologist</td>
                                     <td>Secondary</td>
-                                    <td>Geoff Geo</td>
                                     <td>Pollent Enterprises</td>
                                     <td>
                                         <address>
@@ -396,55 +515,66 @@
                                         </td>
                                     }
                                 </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <div class="container bg-light-subtle">
-                                            <table class="table table-sm" aria-label="Phone Numbers">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th scope="col">Phone Type</th>
-                                                        <th scope="col">Number</th>
-                                                        <th scope="col">Active</th>
-                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                        {
-                                                            <th scope="col" class="text-center">Actions</th>
-                                                        }
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Office</td>
-                                                        <td>678-432-9876</td>
-                                                        <td>Yes</td>
-                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                        {
-                                                            <td class="justify-content-end">
-                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                            </td>
-                                                        }
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Cell</td>
-                                                        <td>678-678-0987</td>
-                                                        <td>Yes</td>
-                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                        {
-                                                            <td class="justify-content-end">
-                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                            </td>
-                                                        }
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                <tr class="offset-md-2">
+                                    <td colspan="4">
+                                        <div class="accordion accordion-flush" id="PhoneNumbers1">
+                                            <div class="accordion-item">
+                                                <h3 class="accordion-header" id="PhoneList1">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList1" aria-expanded="true" aria-controls="PhoneNumberList1">
+                                                        Phone Numbers
+                                                    </button>
+                                                </h3>
+                                                <div id="PhoneNumberList1" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
+                                                    <div class="accordion-body">
+                                                        <table class="table table-sm" aria-label="Phone Numbers">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">Phone Type</th>
+                                                                    <th scope="col">Number</th>
+                                                                    <th scope="col">Active</th>
+                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                    {
+                                                                        <th scope="col" class="text-center">Actions</th>
+                                                                    }
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Office</td>
+                                                                    <td>678-432-9876</td>
+                                                                    <td>Yes</td>
+                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                    {
+                                                                        <td class="justify-content-end">
+                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Cell</td>
+                                                                    <td>678-678-0987</td>
+                                                                    <td>Yes</td>
+                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                    {
+                                                                        <td class="justify-content-end">
+                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>Jane Doe</td>
                                     <td>Owner</td>
                                     <td>Primary</td>
-                                    <td>Jane Doe</td>
                                     <td>Pollent Enterprises</td>
                                     <td>
                                         <address>
@@ -464,47 +594,58 @@
                                     }
                                 </tr>
                                 <tr>
-                                    <td colspan="3">
-                                        <div class="container bg-light-subtle rounded-3">
-                                            <table class="table table-sm" aria-label="Phone Numbers">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th scope="col">Phone Type</th>
-                                                        <th scope="col">Number</th>
-                                                        <th scope="col">Active</th>
-                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                        {
-                                                            <th scope="col" class="text-center">Actions</th>
-                                                        }
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Office</td>
-                                                        <td>678-432-9876</td>
-                                                        <td>Yes</td>
-                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                        {
-                                                            <td>
-                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                            </td>
-                                                        }
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Cell</td>
-                                                        <td>770-567-1234</td>
-                                                        <td>No</td>
-                                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                        {
-                                                            <td>
-                                                                <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                            </td>
-                                                        }
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                    <td colspan="4">
+                                        <div class="accordion accordion-flush" id="PhoneNumbers2">
+                                            <div class="accordion-item">
+                                                <h3 class="accordion-header" id="PhoneList2">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList2" aria-expanded="true" aria-controls="PhoneNumberList2">
+                                                        Phone Numbers
+                                                    </button>
+                                                </h3>
+                                                <div id="PhoneNumberList2" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
+                                                    <div class="accordion-body">
+                                                        <table class="table table-sm" aria-label="Phone Numbers">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">Phone Type</th>
+                                                                    <th scope="col">Number</th>
+                                                                    <th scope="col">Active</th>
+                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                    {
+                                                                        <th scope="col" class="text-center">Actions</th>
+                                                                    }
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Office</td>
+                                                                    <td>678-432-9876</td>
+                                                                    <td>Yes</td>
+                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                    {
+                                                                        <td>
+                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Cell</td>
+                                                                    <td>770-567-1234</td>
+                                                                    <td>No</td>
+                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                    {
+                                                                        <td>
+                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -514,10 +655,11 @@
                 </div>
 
                 <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
-                    <h4>
+                    <h3>
                         Score
-                        <a class="btn btn-sm btn-outline-primary">Save</a>
-                    </h4>
+                        <a asp-page="/Score/Edit" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="/Score/Add" class="btn btn-sm btn-primary">Add</a>
+                    </h3>
                     <form>
                         <div class="row">
                             <div class="col-md-4">
@@ -730,7 +872,10 @@
                 </div>
 
                 <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
-                    <h4>Substances</h4>
+                    <h3>
+                        Substances
+                        <a asp-page="/Substances/Edit" class="btn btn-sm btn-primary">Edit Substances</a>
+                    </h3>
                     <div class="row justify-content-evenly">
                         <table class="table table-sm" aria-label="Parcels">
                             <thead class="thead-light">
@@ -784,76 +929,208 @@
                 </div>
 
                 <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
-                    <h2>Status</h2>
+                    <h3>
+                        Status
+                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
+                        <a asp-page="/Status/Add" class="btn btn-sm btn-primary">Add</a>
+                    </h3>
                     <dl class="row">
-                        <dt class="col-sm-6">
-                            DateListed
+                        <dt class="col-sm-2">
+                            Source Status
                         </dt>
-                        <dd class="col-sm-6">
-                            1/23/2020
+                        <dd class="col-sm-2">
+                            Source Status 2
                         </dd>
-                        <dt class="col-sm-6">
-                            AdditionalOrgUnit
+                        <dt class="col-sm-2">
+                            Source Date
                         </dt>
-                        <dd class="col-sm-6">
-                            Additional Unit 3
+                        <dd class="col-sm-2">
+                            12-23-2017
                         </dd>
-                        <dt class="col-sm-6">
-                            Geologist
+                        <dt class="col-sm-2">
+                            Source HWTF Projected
                         </dt>
-                        <dd class="col-sm-6">
-                            Geoff Geologist
+                        <dd class="col-sm-2">
+                            50,000
                         </dd>
-                        <dt class="col-sm-6">
-                            VRPDate
+                        <dt class="col-sm-2">
+                            Soil Status
                         </dt>
-                        <dd class="col-sm-6">
-                            12/23/2023
+                        <dd class="col-sm-2">
+                            Soil Status 2
                         </dd>
-                        <dt class="col-sm-6">
-                            BrownfieldDate
+                        <dt class="col-sm-2">
+                            Soil Date
                         </dt>
-                        <dd class="col-sm-6">
-                            11/23/2023
+                        <dd class="col-sm-2">
+                            12-23-2019
+                        </dd>
+                        <dt class="col-sm-2">
+                            Soil HWTF Projected
+                        </dt>
+                        <dd class="col-sm-2">
+                            20,000
+                        </dd>
+                        <dt class="col-sm-2">
+                            Groundwater Status
+                        </dt>
+                        <dd class="col-sm-2">
+                            Groundwater Status 3
+                        </dd>
+                        <dt class="col-sm-2">
+                            Groundwater Date
+                        </dt>
+                        <dd class="col-sm-2">
+                            12-23-2022
+                        </dd>
+                        <dt class="col-sm-2">
+                            Groundwater HWTF Projected
+                        </dt>
+                        <dd class="col-sm-2">
+                            40,000
+                        </dd>
+                        <dt class="col-sm-2">
+                            Overall Status
+                        </dt>
+                        <dd class="col-sm-2">
+                            Overall Status 2
+                        </dd>
+                        <dt class="col-sm-2">
+                            Date
+                        </dt>
+                        <dd class="col-sm-2">
+                            12-23-2023
+                        </dd>
+                        <dt class="col-sm-2">
+                            ISWQS
+                        </dt>
+                        <dd class="col-sm-2">
+                            <input class="form-check-input" type="checkbox" value="true" id="cbISWQS" checked />
+                        </dd>
+                        <dt class="col-sm-2">
+                            Primary Funding Source
+                        </dt>
+                        <dd class="col-sm-2">
+                            Funding Source 3
+                        </dd>
+                        <dt class="col-sm-2">
+                            Landfill
+                        </dt>
+                        <dd class="col-sm-2">
+                            <input class="form-check-input" type="checkbox" value="true" id="cbLF" checked readonly />
+                        </dd>
+                        <dt class="col-sm-2">
+                            SW Permit Number
+                        </dt>
+                        <dd class="col-sm-2">
+                            SW293845
+                        </dd>
+                        <dt class="col-sm-2">
+                            GAPS Score
+                        </dt>
+                        <dd class="col-sm-10">
+                            34
+                        </dd>
+                        <dt class="col-sm-2">
+                            Comments
+                        </dt>
+                        <dd class="col-sm-12">
+                            <textarea class="form-control" rows="3" id="GAPSComments">some comments to use for info</textarea>
                         </dd>
                     </dl>
-
+                    <hr />
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <div class="form-check">
+                                <label class="form-check-label" for="cbLien">
+                                    Lien
+                                </label>
+                                <input class="form-check-input" type="checkbox" value="true" id="cbLien" checked readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-sm btn-primary">Lien Tracker</a>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <div class="form-check">
+                                <label class="form-check-label" for="cbFinancialAssurance">
+                                    Financial Assurance
+                                </label>
+                                <input class="form-check-input" type="checkbox" value="true" id="cbFinancialAssurance" checked readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-sm btn-primary">Financial Assurance Tracker</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane" id="Events" role="tabpanel" aria-labelledby="Events-tab">
-                    <h2>Events</h2>
-                    <dl class="row">
-                        <dt class="col-sm-6">
-                            DateListed
-                        </dt>
-                        <dd class="col-sm-6">
-                            1/23/2020
-                        </dd>
-                        <dt class="col-sm-6">
-                            AdditionalOrgUnit
-                        </dt>
-                        <dd class="col-sm-6">
-                            Additional Unit 3
-                        </dd>
-                        <dt class="col-sm-6">
-                            Geologist
-                        </dt>
-                        <dd class="col-sm-6">
-                            Geoff Geologist
-                        </dd>
-                        <dt class="col-sm-6">
-                            VRPDate
-                        </dt>
-                        <dd class="col-sm-6">
-                            12/23/2023
-                        </dd>
-                        <dt class="col-sm-6">
-                            BrownfieldDate
-                        </dt>
-                        <dd class="col-sm-6">
-                            11/23/2023
-                        </dd>
-                    </dl>
 
+                <div class="tab-pane" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                    <h3>
+                        Events
+                        <a asp-page="/Event/Add" class="btn btn-sm btn-primary">Add Event</a>
+                    </h3>
+                    <div class="row justify-content-evenly">
+                        <table class="table table-sm" aria-label="Parcels">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Event Type</th>
+                                    <th scope="col">Action Taken</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">Due Date</th>
+                                    <th scope="col">Completion Date</th>
+                                    <th scope="col">Done By</th>
+                                    <th scope="col">Event Amount</th>
+                                    <th scope="col">Entity Name or No.</th>
+                                    <th scope="col">Comment</th>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <th scope="col" class="text-left">Actions</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PAF</td>
+                                    <td>Approved</td>
+                                    <td>1/23/2017</td>
+                                    <td>10/2/2018</td>
+                                    <td></td>
+                                    <td>Joe Schmoe</td>
+                                    <td>123,000</td>
+                                    <td>856548</td>
+                                    <td>Beginning of PAF progress</td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                        </td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td>Removal Work Plan</td>
+                                    <td>Submitted</td>
+                                    <td>3/23/2017</td>
+                                    <td>4/2/2017</td>
+                                    <td>10/2/2017</td>
+                                    <td>Joe Schmoe</td>
+                                    <td>23,000</td>
+                                    <td>856548</td>
+                                    <td>Plan Approved</td>
+                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                        </td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -891,7 +1168,7 @@
             <div class="accordion-item">
                 <h3 class="accordion-header" id="RetentionRecordList">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r-records" aria-expanded="true" aria-controls="r-records">
-                        Retention Records
+                        View Retention Records
                     </button>
                 </h3>
                 <div id="r-records" class="accordion-collapse collapse" aria-labelledby="Retention Record List">
