@@ -114,5 +114,27 @@ namespace FMS.Infrastructure.Tests
 
             result.Should().BeNull();
         }
+
+        [Test]
+        public async Task GetPhoneByIdAndContactIdAsync_WhenBothIdExist()
+        {
+            var existingPhone = await _context.Phones.FirstAsync();
+            var result = await _repository.GetPhoneByIdAndContactIdAsync(existingPhone.Id, existingPhone.ContactId);
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<PhoneEditDto>();
+            result.Id.Should().Be(existingPhone.Id);
+            result.Number.Should().Be(existingPhone.Number);
+        }
+        [Test]
+        public async Task GetPhoneByIdAndContactIdAsync_WhenBothDoNotExist_ReturnsNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var nonExistingContactId = Guid.NewGuid();
+            var result = await _repository.GetPhoneByIdAndContactIdAsync(nonExistingId, nonExistingContactId);
+
+            result.Should().BeNull();
+        }
+
     }
 }
