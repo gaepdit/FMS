@@ -12,7 +12,6 @@ namespace FMS.Domain.Dto
             FacilityId = parcel.FacilityId;
             ParcelNumber = parcel.ParcelNumber;
             ParcelDescription = parcel.ParcelDescription;
-            ParcelTypeId = parcel.ParcelTypeId;
             ParcelType = parcel.ParcelType;
             Acres = parcel.Acres;
             Latitude = parcel.Latitude;
@@ -29,7 +28,6 @@ namespace FMS.Domain.Dto
 
         public string ParcelDescription { get; set; }
 
-        public Guid ParcelTypeId { get; set; }
         public ParcelType ParcelType { get; set; }
 
         public double Acres { get; set; }

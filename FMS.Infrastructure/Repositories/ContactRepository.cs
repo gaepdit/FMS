@@ -25,6 +25,8 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(id, nameof(id));
             return await _context.Contacts
                 .AsNoTracking()
+                .Include(e => e.ContactType)
+                .Include(e => e.ContactTitle)
                 .SingleOrDefaultAsync(e => e.Id == id);
         }
 
@@ -33,6 +35,8 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
             return await _context.Contacts
                 .AsNoTracking()
+                .Include(e => e.ContactType)
+                .Include(e => e.ContactTitle)
                 .Where(e => e.FacilityId == facilityId)
                 .ToListAsync();
         }
@@ -43,6 +47,8 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(status, nameof(status));
             return await _context.Contacts
                 .AsNoTracking()
+                .Include(e => e.ContactType)
+                .Include(e => e.ContactTitle)
                 .Where(e => e.FacilityId == facilityId && e.Status == status)
                 .ToListAsync();
         }
@@ -53,6 +59,8 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(contactTypeId, nameof(contactTypeId));
             return await _context.Contacts
                 .AsNoTracking()
+                .Include(e => e.ContactType)
+                .Include(e => e.ContactTitle)
                 .Where(e => e.FacilityId == facilityId && e.ContactTypeId == contactTypeId)
                 .ToListAsync();
         }

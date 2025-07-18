@@ -22,6 +22,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<ParcelEditDto> GetParcelByIdAsync(Guid id)
             {
             var parcel = await _context.Parcels.AsNoTracking()
+                .Include(e => e.ParcelType)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             return parcel == null ? null : new ParcelEditDto(parcel);
@@ -36,6 +37,7 @@ namespace FMS.Infrastructure.Repositories
 
             return await _context.Parcels.AsNoTracking()
                 .Where(e => e.FacilityId == facilityId)
+                .Include(e => e.ParcelType)
                 .Select(e => new ParcelSummaryDto(e))
                 .ToListAsync();
         }

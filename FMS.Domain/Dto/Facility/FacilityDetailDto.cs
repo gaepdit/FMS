@@ -183,6 +183,7 @@ namespace FMS.Domain.Dto
         // Phase III additions for HSI
         public HsrpFacilityProperties HsrpFacilityPropertyDetails { get; set; }
 
+        [Display(Name = "Class")]
         public Location LocationDetails { get; set; }
 
         public List<ParcelSummaryDto> Parcels { get; }

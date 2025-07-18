@@ -404,10 +404,10 @@
                     </h3>
                     <dl class="row">
                         <dt class="col-sm-2">
-                            Class
+                            @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails)
                         </dt>
                         <dd class="col-sm-2">
-                            III
+                            @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
                         </dd>
                     </dl>
                     <hr />
@@ -425,6 +425,7 @@
                                     <th scope="col">Acres</th>
                                     <th scope="col">Latitude</th>
                                     <th scope="col">Longitude</th>
+                                    <th scope="col" class="text-center">Active</th>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
@@ -432,36 +433,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1587</td>
-                                    <td>Back 40</td>
-                                    <td>List</td>
-                                    <td>2</td>
-                                    <td>33.8764</td>
-                                    <td>-84.3846</td>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <td>
-                                            <a class="btn btn-sm btn-outline-primary ">Edit</a>
-                                            <a class="btn btn-sm btn-outline-warning ">Delete</a>
-                                        </td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td>157jhg</td>
-                                    <td>Some chunk of land</td>
-                                    <td>SubList</td>
-                                    <td>.5</td>
-                                    <td>33.8654</td>
-                                    <td>-84.3798</td>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <td>
-                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                        </td>
-                                    }
-                                </tr>
+                                @foreach (var p in Model.FacilityDetail.Parcels)
+                                {
+                                    <tr class="@(p.Id == Model.HighlightRecord ? "table-warning" : "") @(!p.Active ? "text-muted" : "") ">
+                                        <td>@p.ParcelNumber</td>
+                                        <td>@p.ParcelDescription</td>
+                                        <td>@p.ParcelType?.Name</td>
+                                        <td>@p.Acres</td>
+                                        <td>@p.Latitude</td>
+                                        <td>@p.Longitude</td>
+                                        <td class="text-center">@Html.DisplayFor(m => p.Active)</td>
+                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                        {
+                                            <td>
+                                                <a asp-page="./Location/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                <a asp-page="./Location/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-warning">Delete</a>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -521,6 +511,7 @@
                                                 </h3>
                                                 <div id="PhoneNumberList1" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
                                                     <div class="accordion-body">
+                                                        <a class="btn btn-sm btn-primary">Add New Phone Number</a>
                                                         <table class="table table-sm" aria-label="Phone Numbers">
                                                             <thead class="thead-light">
                                                                 <tr>
@@ -599,6 +590,7 @@
                                                 </h3>
                                                 <div id="PhoneNumberList2" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
                                                     <div class="accordion-body">
+                                                        <a class="btn btn-sm btn-primary">Add New Phone Number</a>
                                                         <table class="table table-sm" aria-label="Phone Numbers">
                                                             <thead class="thead-light">
                                                                 <tr>

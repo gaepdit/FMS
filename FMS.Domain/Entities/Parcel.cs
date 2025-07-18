@@ -24,7 +24,7 @@ namespace FMS.Domain.Entities
 
         public string ParcelDescription { get; set; } 
 
-        public Guid ParcelTypeId { get; set; }
+        public Guid? ParcelTypeId { get; set; }
         public ParcelType ParcelType { get; set; }
 
         public double Acres { get; set; }

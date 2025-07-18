@@ -22,6 +22,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<EventEditDto> GetEventByIdAsync(Guid id)
         {
             var Event = await _context.Events.AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             return Event == null ? null : new EventEditDto(Event);
@@ -32,6 +35,9 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
             return await _context.Events.AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
                .Where(e => e.FacilityId == facilityId)
                .Select(e => new EventSummaryDto(e))
                .ToListAsync();
@@ -42,6 +48,9 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
             return await _context.Events.AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
                .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
                .Select(e => new EventSummaryDto(e))
                .ToListAsync();
