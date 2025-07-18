@@ -36,19 +36,7 @@ namespace FMS.Infrastructure.Repositories
 
             return await _context.Parcels.AsNoTracking()
                 .Where(e => e.LocationId == locationId)
-                .Select(e => new ParcelSummaryDto
-                {
-                    Id = e.Id,
-                    Active = e.Active,
-                    LocationId = e.LocationId,
-                    ParcelNumber = e.ParcelNumber,
-                    ParcelDescription = e.ParcelDescription,
-                    ParcelTypeId = e.ParcelTypeId,
-                    ParcelType = e.ParcelType,
-                    Acres = e.Acres,
-                    Latitude = e.Latitude,
-                    Longitude = e.Longitude
-                })
+                .Select(e => new ParcelSummaryDto(e))
                 .ToListAsync();
         }
 
