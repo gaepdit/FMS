@@ -17,7 +17,7 @@ namespace FMS.Infrastructure.Tests
     public class PhoneRepositoryTest
     {
         private FmsDbContext _context;
-        private PhoneRepositoryTest _repository;
+        private PhoneRepository _repository;
         private bool _disposed = false;
 
         [SetUp]
@@ -31,6 +31,14 @@ namespace FMS.Infrastructure.Tests
             _context = new FmsDbContext(options, httpContextAccessor);
             _repository = new PhoneRepository(_context);
 
+            _context.Phones.Add(new Phone
+            {
+                Id = Guid.NewGuid(),
+                ContactId = Guid.NewGuid(),
+                Number = "NUMBER",
+                PhoneType = "TYPE",
+                Active = true
+            });
             _context.SaveChanges();
         }
 
@@ -51,18 +59,41 @@ namespace FMS.Infrastructure.Tests
         }
         
         [Test]
-        public async Task PhoneNumberExistsAsync_ReturnCorrectPhoneNumber_WhenIdIsValid()
+        public async Task PhoneNumberExistsAsync_ReturnTrue_WhenNumberIsValid()
         {
             var PhoneNumber = new Phone
             {
                 Id = Guid.NewGuid(),
+                ContactId = Guid.NewGuid(),
                 Number = "VALID_NUMBER",
+                PhoneType = "VALID_TYPE",
                 Active = true
             };
             _context.Phones.Add(PhoneNumber);
             await _context.SaveChangesAsync();
 
-            var result = await _repository.PhoneNumberExistsAsync(PhoneNumber.Id);
+            var result = await _repository.PhoneNumberExistsAsync("VALID_NUMBER");
+
+            result.Should().BeTrue();
         }
+        [Test]
+        public async Task PhoneNumberExistsAsync_ReturnFalse_WhenNumberIsInvalid()
+        {
+            var PhoneNumber = new Phone
+            {
+                Id = Guid.NewGuid(),
+                ContactId = Guid.NewGuid(),
+                Number = "INVALID_NUMBER",
+                PhoneType = "VALID_TYPE",
+                Active = true
+            };
+            _context.Phones.Add(PhoneNumber);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.PhoneNumberExistsAsync("VALID_NUMBER");
+
+            result.Should().BeFalse();
+        }
+
     }
 }
