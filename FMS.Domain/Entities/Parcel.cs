@@ -10,7 +10,7 @@ namespace FMS.Domain.Entities
 
         public Parcel(Guid id, ParcelCreateDto parcel)
         {
-            LocationId = id;
+            FacilityId = id;
             ParcelNumber = parcel.ParcelNumber;
             ParcelDescription = parcel.ParcelDescription;
             ParcelTypeId = parcel.ParcelTypeId;
@@ -18,7 +18,7 @@ namespace FMS.Domain.Entities
             Latitude = parcel.Latitude;
             Longitude = parcel.Longitude;
         }
-        public Guid LocationId { get; set; }
+        public Guid FacilityId { get; set; }
 
         public string ParcelNumber { get; set; }
 

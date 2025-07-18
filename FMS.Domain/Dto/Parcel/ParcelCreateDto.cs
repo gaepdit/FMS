@@ -9,7 +9,7 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         [Required]
-        public Guid LocationId { get; set; }
+        public Guid FacilityId { get; set; }
 
         [Display(Name = "Parcel Number")]
         public string ParcelNumber { get; set; }

@@ -35,6 +35,16 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File)
                 .Include(e => e.RetentionRecords)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.LocationDetails)
+                .Include(e => e.Contacts)
+                .Include(e => e.ScoreDetails)
+                .Include(e => e.GroundwaterScoreDetails)
+                .Include(e => e.OnsiteScoreDetails)
+                .Include(e => e.Parcels)
+                .Include(e => e.Substances)
+                .Include(e => e.StatusDetails)
+                .Include(e => e.Events)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null) return null;

@@ -54,7 +54,8 @@ namespace FMS.Domain.Dto
             HsrpFacilityPropertyDetails = facility.HsrpFacilityProperties;
             LocationDetails = facility.LocationDetails;
             Parcels = facility.Parcels?
-                .Select(p => new ParcelSummaryDto(p)).ToList() ?? new List<ParcelSummaryDto>();
+                .Select(p => new ParcelSummaryDto(p)).ToList() ?? 
+                new List<ParcelSummaryDto>();
             Contacts = facility.Contacts ?
                 .Select(c => new ContactSummaryDto(c)).ToList() ?? new List<ContactSummaryDto>();
             Phones = facility.Phones ?

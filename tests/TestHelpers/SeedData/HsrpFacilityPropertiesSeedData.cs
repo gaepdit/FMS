@@ -39,11 +39,11 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("5D9F854B-0026-4D67-A05D-75CB1135C9B9"),
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
-                    DateListed = new(2018, 2, 13),
-                    AdditionalOrgUnit = "",
-                    Geologist = "",
-                    VRPDate = new(2018, 2, 13),
-                    BrownfieldDate = new(2018, 2, 13)
+                    DateListed = new(2016, 1, 13),
+                    AdditionalOrgUnit = "AnotherOrg Unit",
+                    Geologist = "Geoff Geo",
+                    VRPDate = new(2018, 12, 13),
+                    BrownfieldDate = new(2019, 2, 13)
                 },
                 new()
                 {

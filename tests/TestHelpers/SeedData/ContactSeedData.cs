@@ -16,7 +16,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Active = true,
-                    FacilityId = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
+                    FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     GivenName = "Joseph",
                     FamilyName = "Schmoe",
                     ContactTitleId = new Guid("19A1359B-B4A0-4721-83FD-24BEAF7CBAD1"),
@@ -33,7 +33,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("2BD765CD-B463-431B-8C88-3D384891E680"),
                     Active = true,
-                    FacilityId = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
+                    FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     GivenName = "Bill",
                     FamilyName = "Bailey",
                     ContactTitleId = new Guid("19A1359B-B4A0-4721-83FD-24BEAF7CBAD1"),

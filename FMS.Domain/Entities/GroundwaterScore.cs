@@ -10,7 +10,7 @@ namespace FMS.Domain.Entities
 
         public GroundwaterScore(GroundwaterScoreCreateDto groundwaterScore)
         {
-            ScoreId = groundwaterScore.ScoreId;
+            FacilityId = groundwaterScore.FacilityId;
             GWScore = groundwaterScore.GWScore;
             A = groundwaterScore.A;
             B1 = groundwaterScore.B1;
@@ -25,7 +25,7 @@ namespace FMS.Domain.Entities
             E1 = groundwaterScore.E1;
             E2 = groundwaterScore.E2;
         }
-        public Guid ScoreId { get; set; }
+        public Guid FacilityId { get; set; }
 
         public string GWScore { get; set; }
 

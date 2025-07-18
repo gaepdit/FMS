@@ -11,7 +11,7 @@ namespace FMS.Domain.Dto
         {
             Id = groundwaterScore.Id;
             Active = groundwaterScore.Active;
-            ScoreId = groundwaterScore.ScoreId;
+            FacilityId = groundwaterScore.FacilityId;
             GWScore = groundwaterScore.GWScore;
             A = groundwaterScore.A;
             B1 = groundwaterScore.B1;
@@ -32,7 +32,7 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
-        public Guid ScoreId { get; set; }
+        public Guid FacilityId { get; set; }
 
         public string GWScore { get; set; }
 

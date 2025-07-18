@@ -14,7 +14,7 @@ namespace FMS.TestData.SeedData
             {
                 new()
                 {
-                    Id = new Guid("DAA49782-BEB0-4FC0-A541-930ACDFAC9AA"),
+                    Id = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Active = true,
                     ContactId = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Number = "5182348901",
@@ -40,7 +40,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("63B6644C-6629-4012-BB95-9C78385FF518"),
                     Active = true,
-                    ContactId = new Guid("487517CE-C798-4502-953F-FB0B02AAF9DA"),
+                    ContactId = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Number = "8786453901",
                     PhoneType = "Cell"
                 },
@@ -48,7 +48,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("15EB55FC-9BBF-4453-A53C-612D096C0D49"),
                     Active = true,
-                    ContactId = new Guid("54D58AD1-DE16-4210-9146-6EDDBE326F1B"),
+                    ContactId = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Number = "8908738401",
                     PhoneType = "Home"
                 },
@@ -56,7 +56,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("ABB8CE7E-3AFD-412E-9A7E-6BF73B60AFD5"),
                     Active = true,
-                    ContactId = new Guid("54D58AD1-DE16-4210-9146-6EDDBE326F1B"),
+                    ContactId = new Guid("2BD765CD-B463-431B-8C88-3D384891E680"),
                     Number = "8654321901",
                     PhoneType = "Cell"
                 }

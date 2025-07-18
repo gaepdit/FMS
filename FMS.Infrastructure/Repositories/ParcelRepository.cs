@@ -27,15 +27,15 @@ namespace FMS.Infrastructure.Repositories
             return parcel == null ? null : new ParcelEditDto(parcel);
         }
 
-        public async Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid locationId)
+        public async Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid facilityId)
         {
-            Prevent.NullOrEmpty(locationId, nameof(locationId));
+            Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
-            if (locationId == Guid.Empty)
-                throw new ArgumentException("Location ID cannot be empty.", nameof(locationId));
+            if (facilityId == Guid.Empty)
+                throw new ArgumentException("Facility ID cannot be empty.", nameof(facilityId));
 
             return await _context.Parcels.AsNoTracking()
-                .Where(e => e.LocationId == locationId)
+                .Where(e => e.FacilityId == facilityId)
                 .Select(e => new ParcelSummaryDto(e))
                 .ToListAsync();
         }
@@ -54,7 +54,7 @@ namespace FMS.Infrastructure.Repositories
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                LocationId = parcelCreate.LocationId,
+                FacilityId = parcelCreate.FacilityId,
                 ParcelNumber = parcelCreate.ParcelNumber,
                 ParcelDescription = parcelCreate.ParcelDescription,
                 ParcelTypeId = parcelCreate.ParcelTypeId,
@@ -83,7 +83,7 @@ namespace FMS.Infrastructure.Repositories
             if (existingParcel == null) throw new InvalidOperationException($"Parcel with ID {id} not found.");
 
             existingParcel.Active = parcelUpdates.Active;
-            existingParcel.LocationId = parcelUpdates.LocationId;
+            existingParcel.FacilityId = parcelUpdates.FacilityId;
             existingParcel.ParcelNumber = parcelUpdates.ParcelNumber;
             existingParcel.ParcelDescription = parcelUpdates.ParcelDescription;
             existingParcel.ParcelTypeId = parcelUpdates.ParcelTypeId;

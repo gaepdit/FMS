@@ -12,7 +12,7 @@ namespace FMS.Domain.Dto
         {
             Id = onsiteScore.Id;
             Active = onsiteScore.Active;
-            ScoreId = onsiteScore.ScoreId;
+            FacilityId = onsiteScore.FacilityId;
             OnsiteScoreValue = onsiteScore.OnsiteScoreValue;
             A = onsiteScore.A;
             B = onsiteScore.B;
@@ -32,7 +32,7 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         [Required]
-        public Guid ScoreId { get; set; }
+        public Guid FacilityId { get; set; }
 
         public string OnsiteScoreValue { get; set; }
 
