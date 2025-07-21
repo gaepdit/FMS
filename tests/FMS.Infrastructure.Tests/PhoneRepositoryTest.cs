@@ -159,7 +159,27 @@ namespace FMS.Infrastructure.Tests
         }
 
         // CreatePhoneAsync
+        public async Task CreatePhoneAsync_CreateNewPhone_WhenDataIsValid()
+        {
+            var dto = new PhoneCreateDto { Number = "UNIQUE_NUMBER" };
 
+            var newId = await _repository.CreatePhoneAsync(dto);
+            var createdPhone = await _context.Phones.FindAsync(newId);
+
+            createdPhone.Should().NotBeNull();
+            createdPhone.Number.Should().Be(dto.Number);
+        }
+        public void CreatePhoneAsync_ThrowArgumentException_WhereNumberAlreadyExist()
+        {
+            var existingPhone = new Phone { Id = Guid.NewGuid(), Number = "DUPLICATE_NUMBER" };
+            _context.Phones.Add(existingPhone);
+            _context.SaveChanges();
+
+            var dto = new PhoneCreateDto { Number = "DUPLICATE_NUMBER" };
+
+            Func<Task> action = async () => await _repository.CreatePhoneAsync(dto);
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Phone Number 'DUPLICATE_NUMBER' already exist.");
+        }
 
         // UpdatePhoneAsync
 
