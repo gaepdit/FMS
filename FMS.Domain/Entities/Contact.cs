@@ -1,6 +1,8 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace FMS.Domain.Entities
 {
@@ -36,5 +38,6 @@ namespace FMS.Domain.Entities
         public string PostalCode { get; set; }
         public string Email { get; set; }
         public string Status { get; set; }
+        public ICollection<Phone> Phones { get; set; } = new List<Phone>();
     }
 }

@@ -1,5 +1,7 @@
-using System;
 using FMS.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FMS.Domain.Dto
 {
@@ -12,8 +14,8 @@ namespace FMS.Domain.Dto
             FacilityId = contact.FacilityId;
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
-            ContactTitleId = contact.ContactTitleId;
-            ContactTypeId = contact.ContactTypeId;
+            ContactTitle = contact.ContactTitle;
+            ContactType = contact.ContactType;
             Company = contact.Company;
             Address = contact.Address;
             City = contact.City;
@@ -21,6 +23,8 @@ namespace FMS.Domain.Dto
             PostalCode = contact.PostalCode;
             Email = contact.Email;
             Status = contact.Status;
+            Phones = contact.Phones ?
+                .Select(p => new PhoneSummaryDto(p)).ToList() ?? new List<PhoneSummaryDto>();
         }
         public Guid Id { get; set; }
 
@@ -32,9 +36,9 @@ namespace FMS.Domain.Dto
 
         public string FamilyName { get; set; }
 
-        public Guid ContactTitleId { get; set; }
+        public ContactTitle ContactTitle { get; set; }
 
-        public Guid ContactTypeId { get; set; }
+        public ContactType ContactType { get; set; }
 
         public string Company { get; set; }
 
@@ -49,5 +53,7 @@ namespace FMS.Domain.Dto
         public string Email { get; set; }
 
         public string Status { get; set; }
+
+        public List<PhoneSummaryDto> Phones { get; set; }
     }
 }

@@ -58,8 +58,6 @@ namespace FMS.Domain.Dto
                 new List<ParcelSummaryDto>();
             Contacts = facility.Contacts ?
                 .Select(c => new ContactSummaryDto(c)).ToList() ?? new List<ContactSummaryDto>();
-            Phones = facility.Phones ?
-                .Select(p => new PhoneSummaryDto(p)).ToList() ?? new List<PhoneSummaryDto>();
             ScoreDetails = facility.ScoreDetails;
             GroundwaterScoreDetails = facility.GroundwaterScoreDetails;
             OnsiteScoreDetails = facility.OnsiteScoreDetails;
@@ -189,8 +187,6 @@ namespace FMS.Domain.Dto
         public List<ParcelSummaryDto> Parcels { get; }
 
         public List<ContactSummaryDto> Contacts { get; }
-
-        public List<PhoneSummaryDto> Phones { get; }
 
         public Score ScoreDetails { get; set; }
 

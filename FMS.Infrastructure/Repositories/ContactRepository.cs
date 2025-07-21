@@ -27,6 +27,7 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.ContactType)
                 .Include(e => e.ContactTitle)
+                .Include(e => e.Phones)
                 .SingleOrDefaultAsync(e => e.Id == id);
         }
 
@@ -37,6 +38,7 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.ContactType)
                 .Include(e => e.ContactTitle)
+                .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId)
                 .ToListAsync();
         }
@@ -49,6 +51,7 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.ContactType)
                 .Include(e => e.ContactTitle)
+                .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId && e.Status == status)
                 .ToListAsync();
         }
@@ -61,6 +64,7 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.ContactType)
                 .Include(e => e.ContactTitle)
+                .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId && e.ContactTypeId == contactTypeId)
                 .ToListAsync();
         }

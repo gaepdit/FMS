@@ -20,6 +20,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4" />
     <PackageVersion Include="Microsoft.Extensions.Identity.Stores" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.Graph" Version="5.86.0" />
     <PackageVersion Include="Microsoft.Identity.Web" Version="3.8.3" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="Microsoft.Web.LibraryManager.Build" Version="3.0.71" />
