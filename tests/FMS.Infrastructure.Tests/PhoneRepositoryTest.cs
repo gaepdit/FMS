@@ -57,7 +57,8 @@ namespace FMS.Infrastructure.Tests
                 _disposed = true;
             }
         }
-        
+
+        // PhoneNumberExistsAsync
         [Test]
         public async Task PhoneNumberExistsAsync_ReturnTrue_WhenNumberIsValid()
         {
@@ -95,6 +96,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeFalse();
         }
 
+        // GetPhoneByIdAsync
         [Test]
         public async Task GetPhoneByIdAsync_WhenIdExist()
         {
@@ -115,6 +117,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeNull();
         }
 
+        // GetPhoneByIdAndContactIdAsync
         [Test]
         public async Task GetPhoneByIdAndContactIdAsync_WhenBothIdExist()
         {
@@ -135,6 +138,33 @@ namespace FMS.Infrastructure.Tests
 
             result.Should().BeNull();
         }
+
+        // GetPhoneListByContactIdAsync
+        [Test]
+        public async Task GetPhoneListByContactIdAsync_WhenContactIdExist()
+        {
+            var existingPhone = await _context.Phones.FirstAsync();
+            var results = await _repository.GetPhoneListByContactIdAsync(existingPhone.ContactId);
+
+            results.Should().NotBeNullOrEmpty();
+            results.Should().BeOfType<PhoneEditDto>();
+        }
+        [Test]
+        public async Task GetPhoneListByContactIdAsync_WhenContactIdDoesNotExist_ReturnNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var result = await _repository.GetPhoneListByContactIdAsync(nonExistingId);
+
+            result.Should().BeNull();
+        }
+
+        // CreatePhoneAsync
+
+
+        // UpdatePhoneAsync
+
+
+        // UpdatePhoneStatusAsync
 
     }
 }
