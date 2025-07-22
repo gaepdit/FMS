@@ -17,7 +17,7 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("013E4ABB-F6A5-4B95-BA5A-438BEDD0BECA"),
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
-                    OnsiteScoreValue = "",
+                    OnsiteScoreValue = "35.3",
                     A = 0,
                     B = 0,
                     C = 0,

@@ -729,29 +729,29 @@
                         <div class="container bg-light-subtle m-1">
                             <dl class="row">
                                 <dt class="col-sm-2">
-                                    Scored By
+                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredBy)
                                 </dt>
                                 <dd class="col-sm-2">
-                                    Geoff Geologist
+                                    @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredBy.Name, "StringOrNone")
                                 </dd>
                                 <dt class="col-sm-2">
-                                    Score Date
+                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredDate)
                                 </dt>
                                 <dd class="col-sm-2">
-                                    2023-12-23
+                                    @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredDate, "Date")
                                 </dd>
                                 <dt class="col-sm-3">
-                                    Use alternate language from comments field
+                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.UseComments)
                                 </dt>
                                 <dd class="col-sm-1">
-                                    <input class="form-check" type="checkbox" value="true" id="UseScoreComments" checked disabled />
+                                    @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.UseComments, "YesNo")
                                 </dd>
                                 <dt class="col-sm-2 pt-3">
-                                    Comments
+                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.Comments)
                                 </dt>
                                 <dd class="col-sm-8 pt-3">
                                     <div class="p-3 border bg-dark-subtle rounded-3">
-                                        some comments to use for info. This where to put alternate text for reports
+                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.Comments, "StringOrNone")
                                     </div>
                                 </dd>
                             </dl>

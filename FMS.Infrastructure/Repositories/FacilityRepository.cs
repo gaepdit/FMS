@@ -37,7 +37,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.RetentionRecords)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.LocationDetails)
-                .Include(e => e.ScoreDetails)
+                //.Include(e => e.ScoreDetails)
                 .Include(e => e.GroundwaterScoreDetails)
                 .Include(e => e.OnsiteScoreDetails)
                 .Include(e => e.Substances)
@@ -65,6 +65,13 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ContactTitle)
                 .Include(e => e.Phones)
                 .ToListAsync();
+
+            facility.ScoreDetails = await _context.Scores
+                .AsNoTracking()
+                .Where(e => e.FacilityId == id)
+                .Include(e => e.ScoredBy)
+                .OrderByDescending(e => e.ScoredDate)
+                .FirstOrDefaultAsync();
 
             var facilityDetail = new FacilityDetailDto(facility);
 
