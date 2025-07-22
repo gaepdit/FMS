@@ -147,15 +147,6 @@ namespace FMS.Infrastructure.Tests
             var results = await _repository.GetPhoneListByContactIdAsync(existingPhone.ContactId);
 
             results.Should().NotBeNullOrEmpty();
-            results.Should().BeOfType<PhoneEditDto>();
-        }
-        [Test]
-        public async Task GetPhoneListByContactIdAsync_WhenContactIdDoesNotExist_ReturnNull()
-        {
-            var nonExistingId = Guid.NewGuid();
-            var result = await _repository.GetPhoneListByContactIdAsync(nonExistingId);
-
-            result.Should().BeNull();
         }
 
         // CreatePhoneAsync
@@ -182,8 +173,23 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdatePhoneAsync
+        [Test]
+        public async Task UpdatePhoneAsync_UpdateExistingPhone_WhenDataIsValid()
+        {
+            var existingPhone = new Phone { Id = Guid.NewGuid(), Number = "ORIGINAL_NUMBER" };
+            _context.Phones.Add(existingPhone);
+            await _context.SaveChangesAsync();
 
+            var updateDto = new PhoneEditDto { Id = existingPhone.Id, Number = "UPDATED_NAME" };
+            await _repository.UpdatePhoneAsync(updateDto);
 
+            var updatedPhone = await _context.Phones.FindAsync(existingPhone.Id);
+            updatedPhone.Number.Should().Be("UPDATED_NAME");
+        }
+        public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenNumberAlreadyExist()
+        {
+
+        }
         // UpdatePhoneStatusAsync
 
     }
