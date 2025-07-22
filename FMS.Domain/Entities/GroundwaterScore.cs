@@ -21,10 +21,32 @@ namespace FMS.Domain.Entities
             Other = groundwaterScore.Other;
             D2 = groundwaterScore.D2;
             D3 = groundwaterScore.D3;
+            ChemicalId = groundwaterScore.ChemicalId;
             CASNO = groundwaterScore.CASNO;
             E1 = groundwaterScore.E1;
             E2 = groundwaterScore.E2;
         }
+
+        public GroundwaterScore(GroundwaterScore groundwaterScore)
+        {
+            Id = groundwaterScore.Id;
+            FacilityId = groundwaterScore.FacilityId;
+            GWScore = groundwaterScore.GWScore;
+            A = groundwaterScore.A;
+            B1 = groundwaterScore.B1;
+            B2 = groundwaterScore.B2;
+            C = groundwaterScore.C;
+            Description = groundwaterScore.Description;
+            ChemName = groundwaterScore.GetChemName();
+            Other = groundwaterScore.Other;
+            D2 = groundwaterScore.D2;
+            D3 = groundwaterScore.D3;
+            ChemicalId = groundwaterScore.ChemicalId;
+            CASNO = groundwaterScore.GetCasNo();
+            E1 = groundwaterScore.E1;
+            E2 = groundwaterScore.E2;
+        }
+
         public Guid FacilityId { get; set; }
 
         public string GWScore { get; set; }
@@ -48,10 +70,22 @@ namespace FMS.Domain.Entities
         public int D3 { get; set; }
 
         public Guid ChemicalId { get; set; }
+        public Chemical Chemical { get; set; }
+
         public string CASNO { get; set; }
 
         public int E1 { get; set; }
 
         public int E2 { get; set; }
+
+        public string GetCasNo()
+        {
+            return Chemical?.CasNo ?? CASNO;
+        }
+
+        public string GetChemName()
+        {
+            return Chemical?.ChemicalName ?? ChemName;
+        }
     }
 }
