@@ -42,6 +42,7 @@ namespace FMS.Domain.Entities
             D2 = groundwaterScore.D2;
             D3 = groundwaterScore.D3;
             ChemicalId = groundwaterScore.ChemicalId;
+            Chemical = groundwaterScore.Chemical;
             CASNO = groundwaterScore.GetCasNo();
             E1 = groundwaterScore.E1;
             E2 = groundwaterScore.E2;

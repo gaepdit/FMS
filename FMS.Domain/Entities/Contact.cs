@@ -39,5 +39,10 @@ namespace FMS.Domain.Entities
         public string Email { get; set; }
         public string Status { get; set; }
         public ICollection<Phone> Phones { get; set; } = new List<Phone>();
+
+        public string GetMailTo()
+        {
+            return string.Concat("mailto:", Email);
+        }
     }
 }

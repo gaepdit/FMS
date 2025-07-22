@@ -16,13 +16,13 @@ namespace FMS.Domain.Dto
             B2 = groundwaterScore.B2;
             C = groundwaterScore.C;
             Description = groundwaterScore.Description;
-            ChemName = groundwaterScore.GetChemName();
+            ChemName = groundwaterScore.ChemName;
             Other = groundwaterScore.Other;
             D2 = groundwaterScore.D2;
             D3 = groundwaterScore.D3;
             ChemicalId = groundwaterScore.ChemicalId;
-            Chemical = groundwaterScore.Chemical;
-            CASNO = groundwaterScore.GetCasNo();
+            //Chemical = groundwaterScore.Chemical;
+            CASNO = groundwaterScore.CASNO;
             E1 = groundwaterScore.E1;
             E2 = groundwaterScore.E2;
         }

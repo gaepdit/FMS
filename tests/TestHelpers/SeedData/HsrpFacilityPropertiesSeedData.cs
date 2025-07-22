@@ -22,6 +22,7 @@ namespace FMS.TestData.SeedData
                     Geologist = "",
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
+                    DateDeListed = null
                 },
                 new()
                 {
@@ -33,6 +34,7 @@ namespace FMS.TestData.SeedData
                     Geologist = "",
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
+                    DateDeListed = new(2023, 3, 12)
                 },
                 new()
                 {
@@ -43,7 +45,8 @@ namespace FMS.TestData.SeedData
                     AdditionalOrgUnit = "AnotherOrg Unit",
                     Geologist = "Geoff Geo",
                     VRPDate = new(2018, 12, 13),
-                    BrownfieldDate = new(2019, 2, 13)
+                    BrownfieldDate = new(2019, 2, 13),
+                    DateDeListed = null
                 },
                 new()
                 {
@@ -55,6 +58,7 @@ namespace FMS.TestData.SeedData
                     Geologist = "",
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
+                    DateDeListed = null
                 },
                 new()
                 {
@@ -66,6 +70,7 @@ namespace FMS.TestData.SeedData
                     Geologist = "",
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
+                    DateDeListed = new(2021, 5, 20)
                 },
                 new()
                 {
@@ -77,6 +82,7 @@ namespace FMS.TestData.SeedData
                     Geologist = "",
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
+                    DateDeListed = null
                 }
             };
         }

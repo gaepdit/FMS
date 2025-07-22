@@ -18,11 +18,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "1587",
-                    ParcelDescription = "Back 40",
+                    SubListParcelName = "Back 40",
                     ParcelTypeId = new Guid("A5F9B7BE-0664-44BF-9A51-72792AE53253"),
                     Acres = 2,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2020, 3, 14),
+                    DeListDate = null
                 },
                 new()
                 {
@@ -30,11 +30,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "157jhg",
-                    ParcelDescription = "Some chunk of land",
+                    SubListParcelName = "Some chunk of land",
                     ParcelTypeId = new Guid("A5F9B7BE-0664-44BF-9A51-72792AE53253"),
                     Acres = .5,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2020, 3, 14),
+                    DeListDate = new DateOnly(2024, 7, 12)
                 },
                 new()
                 {
@@ -42,11 +42,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParcelNumber = "HYGT6473",
-                    ParcelDescription = "Some parcel",
+                    SubListParcelName = "Some parcel",
                     ParcelTypeId = new Guid("A5F9B7BE-0664-44BF-9A51-72792AE53253"),
                     Acres = 0.73,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2020, 3, 14),
+                    DeListDate = null
                 },
                 new()
                 {
@@ -54,11 +54,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParcelNumber = "HGTTE-869D",
-                    ParcelDescription = "A hill out back",
+                    SubListParcelName = "A hill out back",
                     ParcelTypeId = new Guid("BF8D1BBF-921D-4091-B2D2-800AB933D7DC"),
                     Acres = 10.3,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2019, 4, 2),
+                    DeListDate = new DateOnly(2020, 3, 14)
                 },
                 new()
                 {
@@ -66,11 +66,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParcelNumber = "3856",
-                    ParcelDescription = "Front Yard",
+                    SubListParcelName = "Front Yard",
                     ParcelTypeId = new Guid("BF8D1BBF-921D-4091-B2D2-800AB933D7DC"),
                     Acres = 0.47,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2017, 7, 5),
+                    DeListDate = new DateOnly(2022, 3, 14)
                 },
                 new()
                 {
@@ -78,11 +78,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParcelNumber = "325445",
-                    ParcelDescription = "Parcel 23",
+                    SubListParcelName = "Parcel 23",
                     ParcelTypeId = new Guid("BF8D1BBF-921D-4091-B2D2-800AB933D7DC"),
                     Acres = 0.87,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2022, 4, 14),
+                    DeListDate = null
                 },
                 new()
                 {
@@ -90,11 +90,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "RTY76435",
-                    ParcelDescription = "Another chunk of land",
+                    SubListParcelName = "Another chunk of land",
                     ParcelTypeId = new Guid("C52EBAF5-F777-4F16-AE84-B0D36BB2A248"),
                     Acres = 0.023,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2020, 3, 14),
+                    DeListDate = new DateOnly(2024, 6, 23)
                 },
                 new()
                 {
@@ -102,11 +102,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "Parcel h465",
-                    ParcelDescription = "Vacant Lot",
+                    SubListParcelName = "Vacant Lot",
                     ParcelTypeId = new Guid("C52EBAF5-F777-4F16-AE84-B0D36BB2A248"),
                     Acres = 1.0,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2020, 3, 14),
+                    DeListDate = new DateOnly(2021, 7, 14)
                 },
                 new()
                 {
@@ -114,11 +114,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "VFR67456",
-                    ParcelDescription = "Description of a lot",
+                    SubListParcelName = "Description of a lot",
                     ParcelTypeId = new Guid("C52EBAF5-F777-4F16-AE84-B0D36BB2A248"),
                     Acres = .234,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2020, 3, 14),
+                    DeListDate = new DateOnly(2023, 3, 22)
                 },
                 new()
                 {
@@ -126,11 +126,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "95767",
-                    ParcelDescription = "kj&^&%$khdg",
+                    SubListParcelName = "kj&^&%$khdg",
                     ParcelTypeId = new Guid("990C501E-0E1B-4B8C-ABA3-5EC8B6F0321E"),
                     Acres = 45.0,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2019, 11, 14),
+                    DeListDate = null
                 },
                 new()
                 {
@@ -138,11 +138,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "srg-9",
-                    ParcelDescription = "Corn Field",
+                    SubListParcelName = "Corn Field",
                     ParcelTypeId = new Guid("990C501E-0E1B-4B8C-ABA3-5EC8B6F0321E"),
                     Acres = 2.0,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2020, 3, 14),
+                    DeListDate = new DateOnly(2023, 2, 21)
                 },
                 new()
                 {
@@ -150,11 +150,11 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "HYT",
-                    ParcelDescription = "Hog Paddock",
+                    SubListParcelName = "Hog Paddock",
                     ParcelTypeId = new Guid("990C501E-0E1B-4B8C-ABA3-5EC8B6F0321E"),
                     Acres = 0.76,
-                    Latitude = 0,
-                    Longitude = 0
+                    ListDate = new DateOnly(2018, 3, 14),
+                    DeListDate = null
                 }
             };
         }

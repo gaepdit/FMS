@@ -30,7 +30,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "Comments")]
         public string Comments { get; set; }   
 
-        [Display(Name = "Use alternate language from comments field")]
+        [Display(Name = "Use alt language for Site Summary Report")]
         public bool UseComments { get; set; } = false;
     }
 }

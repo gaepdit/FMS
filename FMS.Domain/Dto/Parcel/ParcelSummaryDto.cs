@@ -11,11 +11,11 @@ namespace FMS.Domain.Dto
             Active = parcel.Active;
             FacilityId = parcel.FacilityId;
             ParcelNumber = parcel.ParcelNumber;
-            ParcelDescription = parcel.ParcelDescription;
-            ParcelType = parcel.ParcelType;
             Acres = parcel.Acres;
-            Latitude = parcel.Latitude;
-            Longitude = parcel.Longitude;
+            ParcelType = parcel.ParcelType;
+            ListDate = parcel.ListDate;
+            DeListDate = parcel.DeListDate;
+            SubListParcelName = parcel.SubListParcelName;
         }
 
         public Guid Id { get; set; }
@@ -26,14 +26,14 @@ namespace FMS.Domain.Dto
 
         public string ParcelNumber { get; set; }
 
-        public string ParcelDescription { get; set; }
+        public double Acres { get; set; }
 
         public ParcelType ParcelType { get; set; }
 
-        public double Acres { get; set; }
+        public DateOnly? ListDate { get; set; }
 
-        public double Latitude { get; set; }
+        public DateOnly? DeListDate { get; set; }
 
-        public double Longitude { get; set; }
+        public string SubListParcelName { get; set; }
     }
 }

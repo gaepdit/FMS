@@ -23,5 +23,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Brownfield Date")]
         public DateOnly BrownfieldDate { get; set; }
+
+        [Display(Name = "Date De-listed")]
+        public DateOnly? DateDeListed { get; set; }
     }
 }

@@ -58,11 +58,11 @@ namespace FMS.Infrastructure.Repositories
                 Active = true,
                 FacilityId = parcelCreate.FacilityId,
                 ParcelNumber = parcelCreate.ParcelNumber,
-                ParcelDescription = parcelCreate.ParcelDescription,
-                ParcelTypeId = parcelCreate.ParcelTypeId,
                 Acres = parcelCreate.Acres,
-                Latitude = parcelCreate.Latitude,
-                Longitude = parcelCreate.Longitude
+                ParcelTypeId = parcelCreate.ParcelTypeId,
+                ListDate = parcelCreate.ListDate,
+                DeListDate = parcelCreate.DeListDate,
+                SubListParcelName = parcelCreate.SubListParcelName
             };
 
             _context.Parcels.Add(newParcel);
@@ -87,11 +87,11 @@ namespace FMS.Infrastructure.Repositories
             existingParcel.Active = parcelUpdates.Active;
             existingParcel.FacilityId = parcelUpdates.FacilityId;
             existingParcel.ParcelNumber = parcelUpdates.ParcelNumber;
-            existingParcel.ParcelDescription = parcelUpdates.ParcelDescription;
-            existingParcel.ParcelTypeId = parcelUpdates.ParcelTypeId;
             existingParcel.Acres = parcelUpdates.Acres;
-            existingParcel.Latitude = parcelUpdates.Latitude;
-            existingParcel.Longitude = parcelUpdates.Longitude;
+            existingParcel.ParcelTypeId = parcelUpdates.ParcelTypeId;
+            existingParcel.ListDate = parcelUpdates.ListDate;
+            existingParcel.DeListDate = parcelUpdates.DeListDate;
+            existingParcel.SubListParcelName = parcelUpdates.SubListParcelName;
 
             _context.Parcels.Update(existingParcel);
             await _context.SaveChangesAsync();

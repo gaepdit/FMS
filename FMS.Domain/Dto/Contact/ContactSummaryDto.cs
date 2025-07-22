@@ -55,5 +55,10 @@ namespace FMS.Domain.Dto
         public string Status { get; set; }
 
         public List<PhoneSummaryDto> Phones { get; set; }
+
+        public string GetMailTo()
+        {
+            return string.Concat("mailto:", Email);
+        }
     }
 }

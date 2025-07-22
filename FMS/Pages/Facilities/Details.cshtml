@@ -393,6 +393,12 @@
                         <dd class="col-sm-3">
                             @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate, "Date")
                         </dd>
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
+                        </dt>
+                        <dd class="col-sm-3">
+                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed, "DateOrNone")
+                        </dd>
                     </dl>
                 </div>
 
@@ -420,11 +426,11 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Parcel Number</th>
-                                    <th scope="col">Parcel Description</th>
-                                    <th scope="col">Parcel Type</th>
                                     <th scope="col">Acres</th>
-                                    <th scope="col">Latitude</th>
-                                    <th scope="col">Longitude</th>
+                                    <th scope="col">Parcel Type</th>
+                                    <th scope="col">List Date</th>
+                                    <th scope="col">De-List Date</th>
+                                    <th scope="col">Sub-List Parcel Name</th>
                                     <th scope="col" class="text-center">Active</th>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
@@ -437,11 +443,11 @@
                                 {
                                     <tr class="@(p.Id == Model.HighlightRecord ? "table-warning" : "") @(!p.Active ? "text-muted" : "") ">
                                         <td>@p.ParcelNumber</td>
-                                        <td>@p.ParcelDescription</td>
-                                        <td>@p.ParcelType?.Name</td>
                                         <td>@p.Acres</td>
-                                        <td>@p.Latitude</td>
-                                        <td>@p.Longitude</td>
+                                        <td>@p.ParcelType?.Name</td>
+                                        <td>@p.ListDate</td>
+                                        <td>@p.DeListDate</td>
+                                        <td>@p.SubListParcelName</td>
                                         <td class="text-center">@Html.DisplayFor(m => p.Active)</td>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
@@ -470,6 +476,7 @@
                                     <th scope="col">Contact Type</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Company</th>
+                                    <th scope="col">Title</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Email</th>
                                     <th scope="col" class="text-center">Active</th>
@@ -483,18 +490,16 @@
                                 @foreach (var c in Model.FacilityDetail.Contacts)
                                 {
                                     <tr class="@(c.Id == Model.HighlightRecord ? "table-warning" : "") @(!c.Active ? "text-muted" : "") ">
-                                        <td>
-                                            @c.ContactTitle.Name&nbsp;@c.GivenName&nbsp;
-                                            @c.FamilyName
-                                        </td>
+                                        <td>@c.GivenName&nbsp;@c.FamilyName</td>
                                         <td>@c.ContactType.Name</td>
                                         <td>@c.Status</td>
                                         <td>@c.Company</td>
+                                        <td>@c.ContactTitle.Name</td>
                                         <td>
                                             @c.Address<br />
                                             @c.City, @c.State&nbsp;@c.PostalCode
                                         </td>
-                                        <td>@c.Email</td>
+                                        <td><a href=@c.GetMailTo()>@c.Email</a></td>
                                         <td class="text-center">@Html.DisplayFor(m => c.Active)</td>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
@@ -535,7 +540,7 @@
                                                                         {
                                                                             <tr class="@(p.Id == Model.HighlightRecord ? "table-warning" : "") @(!p.Active ? "text-muted" : "") ">
                                                                                 <td>@p.PhoneType</td>
-                                                                                <td>@p.Number</td>
+                                                                                <td><a href=@p.GetTelTo()>@p.Number</a></td>
                                                                                 <td>@Html.DisplayFor(m => p.Active)</td>
                                                                                 @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                                                                 {
@@ -555,165 +560,7 @@
                                             </td>
                                         </tr>
                                     }
-
                                 }
-                                @* <tr>
-                                    <td>Geoff Geo</td>
-                                    <td>Geologist</td>
-                                    <td>Secondary</td>
-                                    <td>Pollent Enterprises</td>
-                                    <td>
-                                        <address>
-                                            1234 Main St.<br />
-                                            Atlanta, GA 30303
-                                        </address>
-                                    <td>
-                                        <a href="mailto:jschmoe@pollent.com">jschmoe@pollent.com</a>
-                                    </td>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <td>
-                                            <a class="btn btn-outline-primary">Edit</a>
-                                            <a class="btn btn-outline-warning">Delete</a>
-                                        </td>
-                                    }
-                                </tr>
-                                <tr class="offset-md-2">
-                                    <td colspan="4">
-                                        <div class="accordion accordion-flush" id="PhoneNumbers1">
-                                            <div class="accordion-item">
-                                                <h3 class="accordion-header" id="PhoneList1">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList1" aria-expanded="true" aria-controls="PhoneNumberList1">
-                                                        Phone Numbers
-                                                    </button>
-                                                </h3>
-                                                <div id="PhoneNumberList1" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
-                                                    <div class="accordion-body">
-                                                        <a class="btn btn-sm btn-primary">Add New Phone Number</a>
-                                                        <table class="table table-sm" aria-label="Phone Numbers">
-                                                            <thead class="thead-light">
-                                                                <tr>
-                                                                    <th scope="col">Phone Type</th>
-                                                                    <th scope="col">Number</th>
-                                                                    <th scope="col">Active</th>
-                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                                    {
-                                                                        <th scope="col" class="text-center">Actions</th>
-                                                                    }
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Office</td>
-                                                                    <td>678-432-9876</td>
-                                                                    <td>Yes</td>
-                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                                    {
-                                                                        <td class="justify-content-end">
-                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                                        </td>
-                                                                    }
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Cell</td>
-                                                                    <td>678-678-0987</td>
-                                                                    <td>Yes</td>
-                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                                    {
-                                                                        <td class="justify-content-end">
-                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                                        </td>
-                                                                    }
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Jane Doe</td>
-                                    <td>Owner</td>
-                                    <td>Primary</td>
-                                    <td>Pollent Enterprises</td>
-                                    <td>
-                                        <address>
-                                            1234 Main St.<br />
-                                            Atlanta, GA 30303
-                                        </address>
-                                    </td>
-                                    <td>
-                                        <a href="mailto:jdoe@pollent.com">jdoe@pollent.com</a>
-                                    </td>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <td>
-                                            <a class="btn btn-outline-primary">Edit</a>
-                                            <a class="btn btn-outline-warning">Delete</a>
-                                        </td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td colspan="4">
-                                        <div class="accordion accordion-flush" id="PhoneNumbers2">
-                                            <div class="accordion-item">
-                                                <h3 class="accordion-header" id="PhoneList2">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList2" aria-expanded="true" aria-controls="PhoneNumberList2">
-                                                        Phone Numbers
-                                                    </button>
-                                                </h3>
-                                                <div id="PhoneNumberList2" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
-                                                    <div class="accordion-body">
-                                                        <a class="btn btn-sm btn-primary">Add New Phone Number</a>
-                                                        <table class="table table-sm" aria-label="Phone Numbers">
-                                                            <thead class="thead-light">
-                                                                <tr>
-                                                                    <th scope="col">Phone Type</th>
-                                                                    <th scope="col">Number</th>
-                                                                    <th scope="col">Active</th>
-                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                                    {
-                                                                        <th scope="col" class="text-center">Actions</th>
-                                                                    }
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>Office</td>
-                                                                    <td>678-432-9876</td>
-                                                                    <td>Yes</td>
-                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                                    {
-                                                                        <td>
-                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                                        </td>
-                                                                    }
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Cell</td>
-                                                                    <td>770-567-1234</td>
-                                                                    <td>No</td>
-                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                                    {
-                                                                        <td>
-                                                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
-                                                                        </td>
-                                                                    }
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr> *@
                             </tbody>
                         </table>
                     </div>

@@ -42,5 +42,10 @@ namespace FMS.Domain.Entities
             }
             return phone;
         }
+
+        public string GetTelTo()
+        {
+            return string.Concat("tel:", Number.Replace(" ", "").Replace("-", ""));
+        }
     }
 }
