@@ -209,6 +209,25 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdatePhoneStatusAsync
+        [Test]
+        public async Task UpdatePhoneStatusAsync_UpdatesStatusCorrectly()
+        {
+            var existingPhone = new Phone { Id = Guid.NewGuid(), Number = "VALID_NUMBER", Active = true };
+            _context.Phones.Add(existingPhone);
+            await _context.SaveChangesAsync();
 
+            await _repository.UpdatePhoneStatusAsync(existingPhone.Id, false);
+
+            var updatedPhone = await _context.Phones.FindAsync(existingPhone.Id);
+            updatedPhone.Active.Should().BeFalse();
+        }
+        [Test]
+        public async Task UpdatePhoneStatusAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var updateDto = new PhoneEditDto { Id = Guid.NewGuid(), Number = "NON_EXISTENT", Active = true };
+
+            Func<Task> action = async () => await _repository.UpdatePhoneStatusAsync(updateDto.Id, false);
+            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage("Phone with ID " + updateDto.Id + " does not exist.");
+        }
     }
 }
