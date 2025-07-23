@@ -33,7 +33,8 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<AllowedActionTakenSummaryDto>> GetAllowedActionTakenListAsync()
         {
             return await _context.AllowedActionsTaken.AsNoTracking()
-                .OrderBy(e => e.EventType.Name)
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.EventType.Name)
                 .ThenBy(e => e.ActionTaken.Name)
                 .Select(e => new AllowedActionTakenSummaryDto(e))
                 .ToListAsync();

@@ -40,6 +40,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ComplianceOfficer)
                .Where(e => e.FacilityId == facilityId)
                .Select(e => new EventSummaryDto(e))
+               .OrderByDescending(e => e.Active)
                .ToListAsync();
         }
 
@@ -51,9 +52,10 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
-               .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
-               .Select(e => new EventSummaryDto(e))
-               .ToListAsync();
+                .OrderByDescending(e => e.Active)
+                .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
+                .Select(e => new EventSummaryDto(e))
+                .ToListAsync();
         }
 
         public Task<Guid> CreateEventAsync(EventCreateDto eventDto)

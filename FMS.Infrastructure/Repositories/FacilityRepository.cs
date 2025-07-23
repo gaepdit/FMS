@@ -64,7 +64,7 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.ContactType)
                     .Include(e => e.ContactTitle)
                     .Include(e => e.Phones)
-                    .OrderBy(e => e.Active)
+                    .OrderByDescending(e => e.Active)
                     .ThenBy(e => e.FamilyName)
                     .ThenBy(e => e.GivenName)
                     .ToListAsync();

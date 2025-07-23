@@ -30,13 +30,15 @@ namespace FMS.Infrastructure.Repositories
            await _context.Substances.AsNoTracking()
                 .Where(e => e.FacilityId == facilityId)
                 .Select(e => new SubstanceSummaryDto(e))
+                .OrderByDescending(e => e.UseForScoring)
                 .ToListAsync();
 
         public async Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId) =>
             await _context.Substances.AsNoTracking()
-                .Where(e => e.FacilityId == facilityId)
-                .Select(e => new SubstanceEditDto(e))
-                .ToListAsync();
+            .Where(e => e.FacilityId == facilityId)
+            .Select(e => new SubstanceEditDto(e))
+            .OrderByDescending(e => e.UseForScoring)
+            .ToListAsync();
 
         public async Task<Guid> CreateSubstanceAsync(SubstanceCreateDto substance)
         {

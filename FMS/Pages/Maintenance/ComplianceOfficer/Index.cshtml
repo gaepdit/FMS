@@ -14,39 +14,39 @@
 <h1>
     @MaintenanceOptions.ComplianceOfficer
 </h1>
-<partial name="_AlertPartial" for="DisplayMessage" id="alert"/>
+<partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
 <p>New users are added to the Compliance Officers list the first time they sign into FMS.</p>
 <form method="post">
     <table class="table" aria-label="List of compliance officers">
         <thead class="thead-light">
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
-        </tr>
+            <tr>
+                <th scope="col" class="col-md-4">Name</th>
+                <th scope="col" class="col-md-4">Email</th>
+                <th scope="col" class="col-md-4">Actions</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.ComplianceOfficers)
-        {
-            <tr class="@(!item.Active ? "table-secondary" : "")">
-                <td class="text-nowrap">
-                    @Html.DisplayFor(m => item.Name, "StringOrNone")
-                    @Html.DisplayFor(m => item.Active, "BoolRemoved")
-                </td>
-                <td>@Html.DisplayFor(m => item.Email)</td>
-                <td class="text-nowrap">
-                    @if (item.Active)
-                    {
-                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
-                    }
-                    else
-                    {
-                        <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
-                    }
-                </td>
-            </tr>
-        }
+            @foreach (var item in Model.ComplianceOfficers)
+            {
+                <tr class="@(!item.Active ? "table-secondary" : "")">
+                    <td class="text-nowrap">
+                        @Html.DisplayFor(m => item.Name, "StringOrNone")
+                        @Html.DisplayFor(m => item.Active, "BoolRemoved")
+                    </td>
+                    <td>@Html.DisplayFor(m => item.Email)</td>
+                    <td class="text-nowrap">
+                        @if (item.Active)
+                        {
+                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
+                        }
+                        else
+                        {
+                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
+                        }
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </form>

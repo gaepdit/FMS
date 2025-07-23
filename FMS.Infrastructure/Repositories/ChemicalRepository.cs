@@ -51,7 +51,8 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<ChemicalSummaryDto>> GetChemicalListAsync()
         {
             return await _context.Chemicals.AsNoTracking()
-                .OrderBy(e => e.ChemicalName)
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.ChemicalName)
                 .Select(e => new ChemicalSummaryDto(e))
                 .ToListAsync();
         }

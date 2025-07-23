@@ -38,9 +38,10 @@ namespace FMS.Infrastructure.Repositories
         }
 
         public async Task<IReadOnlyList<GroundwaterStatusSummaryDto>> GetGroundwaterStatusListAsync() => await _context.GroundwaterStatuses.AsNoTracking()
-           .OrderBy(e => e.Name)
-           .Select(e => new GroundwaterStatusSummaryDto(e))
-           .ToListAsync();
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new GroundwaterStatusSummaryDto(e))
+            .ToListAsync();
 
         public async Task<string> GetGroundwaterStatusNameAsync(Guid? id)
         {

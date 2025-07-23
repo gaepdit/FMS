@@ -40,6 +40,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ContactTitle)
                 .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId)
+                .OrderByDescending(e => e.Active)
                 .ToListAsync();
         }
 
@@ -53,6 +54,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ContactTitle)
                 .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId && e.ContactTypeId == contactTypeId)
+                .OrderByDescending(e => e.Active)
                 .ToListAsync();
         }
 

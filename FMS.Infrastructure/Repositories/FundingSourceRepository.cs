@@ -36,10 +36,12 @@ namespace FMS.Infrastructure.Repositories
             return new FundingSourceEditDto(fundingSource);
         }
 
-        public async Task<IReadOnlyList<FundingSourceSummaryDto>> GetFundingSourceListAsync() => await _context.FundingSources.AsNoTracking()
-           .OrderBy(e => e.Name)
-           .Select(e => new FundingSourceSummaryDto(e))
-           .ToListAsync();
+        public async Task<IReadOnlyList<FundingSourceSummaryDto>> GetFundingSourceListAsync() =>
+            await _context.FundingSources.AsNoTracking()
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new FundingSourceSummaryDto(e))
+            .ToListAsync();
 
         public async Task<Guid> CreateFundingSourceAsync(FundingSourceCreateDto fundingSource)
         {

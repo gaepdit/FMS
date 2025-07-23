@@ -36,8 +36,10 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException("Facility ID cannot be empty.", nameof(facilityId));
 
             return await _context.Parcels.AsNoTracking()
-                .Where(e => e.FacilityId == facilityId)
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.ListDate)
                 .Include(e => e.ParcelType)
+                .Where(e => e.FacilityId == facilityId)
                 .Select(e => new ParcelSummaryDto(e))
                 .ToListAsync();
         }
