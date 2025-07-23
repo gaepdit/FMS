@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
@@ -24,7 +25,7 @@ namespace FMS.Domain.Dto
             FundingSourceId = status.FundingSourceId;
             LandFill = status.LandFill;
             SolidWastePermitNumber = status.SolidWastePermitNumber;
-            HSPMScore = status.HSPMScore;
+            GAPSScore = status.GAPSScore;
             Comments = status.Comments;
             Lien = status.Lien;
             FinancialAssurance = status.FinancialAssurance;
@@ -36,40 +37,58 @@ namespace FMS.Domain.Dto
 
         public Guid SourceStatusId { get; set; }
 
+        [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
+        [Display(Name = "Source Projected")]
         public string SourceProjected { get; set; }
 
+        [Display(Name = "Soil Status")]
         public Guid SoilStatusId { get; set; }
 
+        [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
+        [Display(Name = "Soil Projected")]
         public string SoilProjected { get; set; }
 
+        [Display(Name = "Groundwater Status")]
         public Guid GroundwaterStatusId { get; set; }
 
+        [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
 
+        [Display(Name = "Groundwater HWTF")]
         public string GroundwaterHWTF { get; set; }
 
+        [Display(Name = "Overall Status")]
         public Guid OverallStatusId { get; set; }
 
+        [Display(Name = "Overall Date")]
         public DateOnly? OverallDate { get; set; }
 
+        [Display(Name = "ISWQS")]
         public string ISWQS { get; set; }
 
+        [Display(Name = "Funding Source")]
         public Guid FundingSourceId { get; set; }
 
+        [Display(Name = "Land Fill")]
         public bool LandFill { get; set; }
 
+        [Display(Name = "Solid Waste Permit Number")]
         public string SolidWastePermitNumber { get; set; }
 
-        public int HSPMScore { get; set; }
+        [Display(Name = "GAPS Score")]
+        public int GAPSScore { get; set; }
 
+        [Display(Name = "Comments")]
         public string Comments { get; set; }
 
+        [Display(Name = "Lien")]
         public bool Lien { get; set; }
 
+        [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
     }
 }

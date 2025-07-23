@@ -47,7 +47,7 @@ namespace FMS.TestData.SeedData
                 new()
                 {
                     Id = new Guid("15EB55FC-9BBF-4453-A53C-612D096C0D49"),
-                    Active = true,
+                    Active = false,
                     ContactId = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Number = "(890)873-8401",
                     PhoneType = "Home"

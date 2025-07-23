@@ -26,7 +26,7 @@ namespace FMS.Domain.Entities
             FundingSourceId = status.FundingSourceId;
             LandFill = status.LandFill;
             SolidWastePermitNumber = status.SolidWastePermitNumber;
-            HSPMScore = status.HSPMScore;
+            GAPSScore = status.GAPSScore;
             Comments = status.Comments;
             Lien = status.Lien;
             FinancialAssurance = status.FinancialAssurance;
@@ -69,7 +69,7 @@ namespace FMS.Domain.Entities
 
         public string SolidWastePermitNumber { get; set; }
 
-        public int HSPMScore { get; set; }
+        public int GAPSScore { get; set; }
 
         public string Comments { get; set; }
 

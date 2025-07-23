@@ -43,19 +43,6 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Contact>> GetContactsByFacilityIdAndStatusAsync(Guid facilityId, string status)
-        {
-            Prevent.NullOrEmpty(facilityId, nameof(facilityId));
-            Prevent.NullOrEmpty(status, nameof(status));
-            return await _context.Contacts
-                .AsNoTracking()
-                .Include(e => e.ContactType)
-                .Include(e => e.ContactTitle)
-                .Include(e => e.Phones)
-                .Where(e => e.FacilityId == facilityId && e.Status == status)
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<Contact>> GetContactsByFacilityIdAndTypeAsync(Guid facilityId, Guid contactTypeId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
@@ -113,8 +100,6 @@ namespace FMS.Infrastructure.Repositories
             existingContact.PostalCode = contact.PostalCode;
             existingContact.Email = contact.Email;
             existingContact.Active = contact.Active;
-            existingContact.Status = contact.Status;
-
 
             _context.Contacts.Update(existingContact);
             await _context.SaveChangesAsync();

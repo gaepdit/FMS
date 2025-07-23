@@ -264,13 +264,13 @@
                     @Html.DisplayNameFor(model => model.FacilityDetail.RNDateReceived)
                 </dt>
                 <dd class="col-sm-6">
-                    @Html.DisplayFor(model => model.FacilityDetail.RNDateReceived)
+                    @Html.DisplayFor(model => model.FacilityDetail.RNDateReceived, "DateOrNone")
                 </dd>
                 <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.FacilityDetail.DeterminationLetterDate)
                 </dt>
                 <dd class="col-sm-6">
-                    @Html.DisplayFor(model => model.FacilityDetail.DeterminationLetterDate)
+                    @Html.DisplayFor(model => model.FacilityDetail.DeterminationLetterDate, "DateOrNone")
                 </dd>
                 <dt class="col-sm-6">
                     @Html.DisplayNameFor(model => model.FacilityDetail.ImageChecked)
@@ -360,14 +360,14 @@
                     <H3>
                         Additional HSI Information
                         <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-page="/Status/Add" class="btn btn-sm btn-primary">Add</a>
                     </H3>
+                    <hr />
                     <dl class="row">
                         <dt class="col-sm-3">
                             @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateListed)
                         </dt>
                         <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateListed, "Date")
+                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateListed, "DateOrNone")
                         </dd>
                         <dt class="col-sm-3">
                             @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.AdditionalOrgUnit)
@@ -385,13 +385,13 @@
                             @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate)
                         </dt>
                         <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate, "Date")
+                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate, "DateOrNone")
                         </dd>
                         <dt class="col-sm-3">
                             @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate)
                         </dt>
                         <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate, "Date")
+                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate, "DateOrNone")
                         </dd>
                         <dt class="col-sm-3">
                             @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
@@ -405,17 +405,20 @@
                 <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
                     <h3>
                         Location
-                        <a asp-page="/Location/Edit" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-page="/Location/Add" class="btn btn-sm btn-primary">Add</a>
+                        <a asp-page="/Location/Edit" class="btn btn-sm btn-primary">Edit Location</a>
                     </h3>
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails)
-                        </dt>
-                        <dd class="col-sm-2">
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-1">
+                            @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.Class)
+                        </div>
+                        <div class="col-sm-2">
                             @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
-                        </dd>
-                    </dl>
+                        </div>
+                        <div class="col">
+                            <a href="~/images/h10789.bmp" target="_blank"><img src="~/images/h10789.bmp" class="rounded-0 border border-2" alt="Map Image Here" width="200" height="180"></a>
+                        </div>
+                    </div>
                     <hr />
                     <h4>
                         Parcels
@@ -441,7 +444,7 @@
                             <tbody>
                                 @foreach (var p in Model.FacilityDetail.Parcels)
                                 {
-                                    <tr class="@(p.Id == Model.HighlightRecord ? "table-warning" : "") @(!p.Active ? "text-muted" : "") ">
+                                    <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
                                         <td>@p.ParcelNumber</td>
                                         <td>@p.Acres</td>
                                         <td>@p.ParcelType?.Name</td>
@@ -453,7 +456,7 @@
                                         {
                                             <td>
                                                 <a asp-page="./Location/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="./Location/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-warning">Delete</a>
+                                                <a asp-page="./Location/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                             </td>
                                         }
                                     </tr>
@@ -468,13 +471,13 @@
                         Contacts
                         <a asp-page="/Contacts/Add" class="btn btn-sm btn-primary">Add Contact</a>
                     </h3>
+                    <hr />
                     <div class="row">
                         <table class="table table-sm" aria-label="Parcels">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Contact Type</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Company</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Address</th>
@@ -489,10 +492,9 @@
                             <tbody>
                                 @foreach (var c in Model.FacilityDetail.Contacts)
                                 {
-                                    <tr class="@(c.Id == Model.HighlightRecord ? "table-warning" : "") @(!c.Active ? "text-muted" : "") ">
+                                    <tr class="@(!c.Active ? "text-muted table-warning" : "")">
                                         <td>@c.GivenName&nbsp;@c.FamilyName</td>
                                         <td>@c.ContactType.Name</td>
-                                        <td>@c.Status</td>
                                         <td>@c.Company</td>
                                         <td>@c.ContactTitle.Name</td>
                                         <td>
@@ -505,11 +507,11 @@
                                         {
                                             <td>
                                                 <a asp-page="./Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="./Contact/Delete" asp-route-id="@c.Id" class="btn btn-sm btn-outline-warning">Delete</a>
+                                                <a asp-page="./Contact/Delete" asp-route-id="@c.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                             </td>
                                         }
                                     </tr>
-                                    @if (c.Phones.Count > 0)
+                                    @if (c.Phones.Count > 0 && c.Active)
                                     {
                                         <tr class="offset-md-2">
                                             <td colspan="4">
@@ -538,7 +540,7 @@
                                                                     <tbody>
                                                                         @foreach (var p in c.Phones)
                                                                         {
-                                                                            <tr class="@(p.Id == Model.HighlightRecord ? "table-warning" : "") @(!p.Active ? "text-muted" : "") ">
+                                                                            <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
                                                                                 <td>@p.PhoneType</td>
                                                                                 <td><a href=@p.GetTelTo()>@p.Number</a></td>
                                                                                 <td>@Html.DisplayFor(m => p.Active)</td>
@@ -546,7 +548,7 @@
                                                                                 {
                                                                                     <td class="justify-content-end">
                                                                                         <a asp-page="./Contact/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                                        <a asp-page="./Contact/Phone/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-warning">Delete</a>
+                                                                                        <a asp-page="./Contact/Phone/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                                                                     </td>
                                                                                 }
                                                                             </tr>
@@ -569,9 +571,9 @@
                 <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
                     <h3>
                         Score
-                        <a asp-page="/Score/Edit" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-page="/Score/Add" class="btn btn-sm btn-primary">Add</a>
+                        <a asp-page="/Score/Edit" class="btn btn-sm btn-primary">Edit Score</a>
                     </h3>
+                    <hr />
                     <div class="row">
                         <div class="container bg-light-subtle m-1">
                             <dl class="row">
@@ -633,7 +635,7 @@
                                         @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2))
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2)
                                     </dt>
                                     <dd class="col-sm-8">
                                         @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2, "Number")
@@ -702,76 +704,76 @@
                                 <hr />
                                 <dl class="row">
                                     <dt class="col-sm-4">
-                                        Onsite Score
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        32.68
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        A
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.A)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        2
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.A, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        B
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.B)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        4
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.B, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        C
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.C)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        1
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.C, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        Description
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Description)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        topsoil contamination
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Description, "StringOrNone")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        1D Chemical Name
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        Round Up
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D, "StringOrNone")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        1D Other
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        Nitric Acid
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D, "StringOrNone")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        D2
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D2)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        3
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D2, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        D3
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D3)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        6
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D3, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        CasNo
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        6712543
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO, "StringOrNone")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        E1
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E1)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        6
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E1, "Number")
                                     </dd>
                                     <dt class="col-sm-4">
-                                        E2
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E2)
                                     </dt>
                                     <dd class="col-sm-8">
-                                        0
+                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E2, "Number")
                                     </dd>
                                 </dl>
                             </div>
@@ -784,6 +786,7 @@
                         Substances
                         <a asp-page="/Substances/Edit" class="btn btn-sm btn-primary">Edit Substances</a>
                     </h3>
+                    <hr />
                     <div class="row justify-content-evenly">
                         <table class="table table-sm" aria-label="Parcels">
                             <thead class="thead-light">
@@ -812,7 +815,7 @@
                                     {
                                         <td>
                                             <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                            <a class="btn btn-sm btn-outline-danger">Delete</a>
                                         </td>
                                     }
                                 </tr>
@@ -827,7 +830,7 @@
                                     {
                                         <td>
                                             <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                            <a class="btn btn-sm btn-outline-danger">Delete</a>
                                         </td>
                                     }
                                 </tr>
@@ -839,9 +842,9 @@
                 <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
                     <h3>
                         Status
-                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-page="/Status/Add" class="btn btn-sm btn-primary">Add</a>
+                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit Status</a>
                     </h3>
+                    <hr />
                     <dl class="row">
                         <dt class="col-sm-2">
                             Source Status
@@ -980,6 +983,7 @@
                         Events
                         <a asp-page="/Event/Add" class="btn btn-sm btn-primary">Add Event</a>
                     </h3>
+                    <hr />
                     <div class="row justify-content-evenly">
                         <table class="table table-sm" aria-label="Parcels">
                             <thead class="thead-light">
@@ -1014,7 +1018,7 @@
                                     {
                                         <td>
                                             <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                            <a class="btn btn-sm btn-outline-danger">Delete</a>
                                         </td>
                                     }
                                 </tr>
@@ -1032,7 +1036,7 @@
                                     {
                                         <td>
                                             <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <a class="btn btn-sm btn-outline-warning">Delete</a>
+                                            <a class="btn btn-sm btn-outline-danger">Delete</a>
                                         </td>
                                     }
                                 </tr>

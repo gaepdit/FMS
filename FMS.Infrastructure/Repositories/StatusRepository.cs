@@ -82,7 +82,7 @@ namespace FMS.Infrastructure.Repositories
             existingStatus.FundingSourceId = statusUpdates.FundingSourceId;
             existingStatus.LandFill = statusUpdates.LandFill;
             existingStatus.SolidWastePermitNumber = statusUpdates.SolidWastePermitNumber;
-            existingStatus.HSPMScore = statusUpdates.HSPMScore;
+            existingStatus.GAPSScore = statusUpdates.GAPSScore;
             existingStatus.Comments = statusUpdates.Comments;
             existingStatus.Lien = statusUpdates.Lien;
             existingStatus.FinancialAssurance = statusUpdates.FinancialAssurance;

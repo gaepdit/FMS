@@ -26,8 +26,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock",
                     State = "GA",
                     PostalCode = "30188",
-                    Email = "jschmoe@pollent.com",
-                    Status = "Secondary"
+                    Email = "jschmoe@pollent.com"
                 },
                 new()
                 {
@@ -43,8 +42,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock",
                     State = "GA",
                     PostalCode = "30188",
-                    Email = "Bill.Bailey@pollent.com",
-                    Status = "Primary"
+                    Email = "Bill.Bailey@pollent.com"
                 },
                 new()
                 {
@@ -60,8 +58,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "TimTut@MyCo.com", 
-                    Status = "Secondary"
+                    Email = "TimTut@MyCo.com"
                 },
                 new()
                 {
@@ -77,8 +74,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "JenJun@MyCo.com", 
-                    Status = "Primary"
+                    Email = "JenJun@MyCo.com"
                 },
                 new()
                 {
@@ -94,8 +90,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "G.McGregor@AnotherCo.com", 
-                    Status = "Primary"
+                    Email = "G.McGregor@AnotherCo.com"
                 },
                 new()
                 {
@@ -111,8 +106,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "DrMasorati@AnotherCo.com", 
-                    Status = "Secondary",
+                    Email = "DrMasorati@AnotherCo.com"
                 }
             };
         }

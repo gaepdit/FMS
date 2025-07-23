@@ -37,9 +37,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Display(Name = "Status")]
-        public string Status { get; set; }
-
         public string GetMailTo()
         {
             return string.Concat("mailto:", Email);

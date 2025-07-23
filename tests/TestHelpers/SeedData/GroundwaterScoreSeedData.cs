@@ -37,20 +37,20 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("5E02A46B-16BB-4F58-B747-836CA2FF298A"),
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
-                    GWScore = "",
-                    A = 0,
-                    B1 = 0,
-                    B2 = 0,
-                    C = 0,
-                    Description = "",
+                    GWScore = "31.4",
+                    A = 3,
+                    B1 = 7,
+                    B2 = 1,
+                    C = 4,
+                    Description = "In Stream behind Store",
                     ChemName = "",
-                    Other = "",
-                    D2 = 0,
-                    D3 = 0,
+                    Other = "Other stuff again",
+                    D2 = 8,
+                    D3 = 2,
                     ChemicalId = new Guid("a39e6b98-0c37-432c-9a35-fccb9151703f"),
                     CASNO = "",
-                    E1 = 0,
-                    E2 = 0
+                    E1 = 3,
+                    E2 = 9
                 }
             };
         }
