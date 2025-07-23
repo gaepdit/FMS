@@ -63,7 +63,7 @@ namespace FMS.Infrastructure.Repositories
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.ContactType)
                     .Include(e => e.ContactTitle)
-                    .Include(e => e.Phones)
+                    .Include(e => e.Phones.OrderByDescending(p => p.Active))
                     .OrderByDescending(e => e.Active)
                     .ThenBy(e => e.FamilyName)
                     .ThenBy(e => e.GivenName)
@@ -76,10 +76,10 @@ namespace FMS.Infrastructure.Repositories
                     .FirstOrDefaultAsync();
 
                 GroundwaterScore groundwaterScore = await _context.GroundwaterScores
-                .AsNoTracking()
-                .Where(e => e.FacilityId == id)
-                .Include(e => e.Chemical)
-                .FirstOrDefaultAsync();
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.Chemical)
+                    .FirstOrDefaultAsync();
                 facility.GroundwaterScoreDetails = new GroundwaterScore(groundwaterScore);
 
                 OnsiteScore onsiteScore = await _context.OnsiteScores

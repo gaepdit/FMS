@@ -34,6 +34,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<Contact>> GetContactsByFacilityIdAsync(Guid facilityId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
+
             return await _context.Contacts
                 .AsNoTracking()
                 .Include(e => e.ContactType)
@@ -48,6 +49,7 @@ namespace FMS.Infrastructure.Repositories
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
             Prevent.NullOrEmpty(contactTypeId, nameof(contactTypeId));
+
             return await _context.Contacts
                 .AsNoTracking()
                 .Include(e => e.ContactType)

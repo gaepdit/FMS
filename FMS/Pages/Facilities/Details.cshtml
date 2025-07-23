@@ -599,9 +599,7 @@
                                     @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.Comments)
                                 </dt>
                                 <dd class="col-sm-8 pt-3">
-                                    <div class="p-3 border rounded-3">
-                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.Comments, "StringOrNone")
-                                    </div>
+                                    <textarea readonly class="form-control" rows="3" id="ScoreComments">@Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.Comments, "StringOrNone")</textarea>
                                 </dd>
                             </dl>
                         </div>
@@ -945,7 +943,7 @@
                         <dt class="col-sm-2 pt-3">
                             Comments
                         </dt>
-                        <dd class="col-sm-12 pt-3">
+                        <dd class="col-sm-8 pt-3">
                             <textarea class="form-control" rows="3" id="GAPSComments">some comments to use for info</textarea>
                         </dd>
                     </dl>
