@@ -49,40 +49,46 @@ namespace FMS.Infrastructure.Repositories
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
 
-            facility.Parcels = await _context.Parcels
+            if (facility.FacilityType.Name == "HSI")
+            {
+                facility.Parcels = await _context.Parcels
                 .AsNoTracking()
                 .Where(e => e.FacilityId == id)
                 .Include(e => e.ParcelType)
+                .OrderBy(e => e.Active)
                 .ToListAsync();
 
-            facility.Contacts = await _context.Contacts
-                .AsNoTracking()
-                .Where(e => e.FacilityId == id)
-                .Include(e => e.ContactType)
-                .Include(e => e.ContactTitle)
-                .Include(e => e.Phones)
-                .OrderBy(e => e.FamilyName)
-                .ToListAsync();
+                facility.Contacts = await _context.Contacts
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ContactType)
+                    .Include(e => e.ContactTitle)
+                    .Include(e => e.Phones)
+                    .OrderBy(e => e.Active)
+                    .ThenBy(e => e.FamilyName)
+                    .ThenBy(e => e.GivenName)
+                    .ToListAsync();
 
-            facility.ScoreDetails = await _context.Scores
-                .AsNoTracking()
-                .Where(e => e.FacilityId == id)
-                .Include(e => e.ScoredBy)
-                .FirstOrDefaultAsync();
+                facility.ScoreDetails = await _context.Scores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ScoredBy)
+                    .FirstOrDefaultAsync();
 
-            GroundwaterScore groundwaterScore = await _context.GroundwaterScores
+                GroundwaterScore groundwaterScore = await _context.GroundwaterScores
                 .AsNoTracking()
                 .Where(e => e.FacilityId == id)
                 .Include(e => e.Chemical)
                 .FirstOrDefaultAsync();
-            facility.GroundwaterScoreDetails = new GroundwaterScore(groundwaterScore);
+                facility.GroundwaterScoreDetails = new GroundwaterScore(groundwaterScore);
 
-            OnsiteScore onsiteScore = await _context.OnsiteScores
-                .AsNoTracking()
-                .Where(e => e.FacilityId == id)
-                .Include(e => e.Chemical)
-                .FirstOrDefaultAsync();
-            facility.OnsiteScoreDetails = new OnsiteScore(onsiteScore);
+                OnsiteScore onsiteScore = await _context.OnsiteScores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.Chemical)
+                    .FirstOrDefaultAsync();
+                facility.OnsiteScoreDetails = new OnsiteScore(onsiteScore);
+            }
 
             var facilityDetail = new FacilityDetailDto(facility);
 
