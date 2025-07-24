@@ -805,7 +805,7 @@
                             <tbody>
                                 @foreach (var s in Model.FacilityDetail.Substances)
                                 {
-                                    <tr class ="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
+                                    <tr class="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
                                         <td>@s.Chemical.CasNo</td>
                                         <td>@s.Chemical.ChemicalName</td>
                                         <td>@s.Chemical.CommonName</td>
@@ -835,134 +835,136 @@
                     <hr />
                     <dl class="row">
                         <dt class="col-sm-2">
-                            Source Status
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
                         </dt>
                         <dd class="col-sm-2">
-                            Source Status 2
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceStatus.Name, "StringOrNone")
                         </dd>
                         <dt class="col-sm-2">
-                            Source Date
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceDate)
                         </dt>
                         <dd class="col-sm-2">
-                            12-23-2017
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceDate, "DateOrNone")
                         </dd>
                         <dt class="col-sm-2">
-                            Source HWTF Projected
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceProjected)
                         </dt>
                         <dd class="col-sm-2">
-                            50,000
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceProjected)
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Soil Status
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilStatus)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            Soil Status 2
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilStatus.Name, "StringOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Soil Date
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilDate)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            12-23-2019
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilDate, "DateOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Soil HWTF Projected
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilProjected)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            20,000
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilProjected)
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Groundwater Status
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            Groundwater Status 3
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus.Name, "StringOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Groundwater Date
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterDate)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            12-23-2022
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterDate, "DateOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Groundwater HWTF Projected
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterHWTF)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            40,000
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterHWTF)
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Overall Status
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallStatus)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            Overall Status 2
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallStatus.Name, "StringOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Date
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallDate)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            12-23-2023
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallDate, "DateOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            ISWQS
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            <input class="form-check-input" type="checkbox" value="true" id="cbISWQS" checked />
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Primary Funding Source
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            Funding Source 3
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.Name, "StringOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Landfill
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            <input class="form-check-input" type="checkbox" value="true" id="cbLF" checked readonly />
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            SW Permit Number
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
                         </dt>
                         <dd class="col-sm-2 pt-3">
-                            SW293845
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber, "StringOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            GAPS Score
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSScore)
                         </dt>
                         <dd class="col-sm-10 pt-3">
-                            34
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSScore, "NumberOrNone")
                         </dd>
                         <dt class="col-sm-2 pt-3">
-                            Comments
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
                         </dt>
                         <dd class="col-sm-8 pt-3">
-                            <textarea class="form-control" rows="3" id="GAPSComments">some comments to use for info</textarea>
+                            <textarea readonly class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments, "StringOrNone")</textarea>
                         </dd>
                     </dl>
                     <hr />
                     <div class="row mb-3">
-                        <div class="col-md-3">
-                            <div class="form-check">
-                                <label class="form-check-label" for="cbLien">
-                                    Lien
-                                </label>
-                                <input class="form-check-input" type="checkbox" value="true" id="cbLien" checked readonly />
+                        <div class="col-md-1">
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien)
+                        </div>
+                        <div class="col-md-2">
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Lien)
+                        </div>
+                        @if (Model.FacilityDetail.StatusDetails.Lien)
+                        {
+                            <div class="col-md-3">
+                                <a class="btn btn-sm btn-primary" target="_blank">Lien Tracker</a>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-sm btn-primary">Lien Tracker</a>
-                        </div>
+                        }
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-3">
-                            <div class="form-check">
-                                <label class="form-check-label" for="cbFinancialAssurance">
-                                    Financial Assurance
-                                </label>
-                                <input class="form-check-input" type="checkbox" value="true" id="cbFinancialAssurance" checked readonly />
+                        <div class="col-md-1">
+                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
+                        </div>
+                        <div class="col-md-2">
+                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
+                        </div>
+                        @if (Model.FacilityDetail.StatusDetails.FinancialAssurance)
+                        {
+                            <div class="col-md-3">
+                                <a class="btn btn-sm btn-primary" target="_blank">Financial Assurance Tracker</a>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <a class="btn btn-sm btn-primary">Financial Assurance Tracker</a>
-                        </div>
+                        }
                     </div>
                 </div>
 

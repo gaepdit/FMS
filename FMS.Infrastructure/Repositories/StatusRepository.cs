@@ -22,6 +22,11 @@ namespace FMS.Infrastructure.Repositories
 
         public Task<StatusEditDto> GetStatusAsync(Guid id) =>
             _context.Statuses.AsNoTracking()
+                .Include(e => e.SourceStatus)
+                .Include(e => e.SoilStatus)
+                .Include(e => e.GroundwaterStatus)
+                .Include(e => e.OverallStatus)
+                .Include(e => e.FundingSource)
                 .Where(e => e.Id == id)
                 .Select(e => new StatusEditDto(e))
                 .SingleOrDefaultAsync();

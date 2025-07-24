@@ -40,7 +40,7 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
-        public Guid SourceStatusId { get; set; }
+        public Guid? SourceStatusId { get; set; }
         [Display(Name = "Source Status")]
         public SourceStatus SourceStatus { get; set; }
 
@@ -48,9 +48,9 @@ namespace FMS.Domain.Dto
         public DateOnly? SourceDate { get; set; }
 
         [Display(Name = "Source Projected")]
-        public string SourceProjected { get; set; }
+        public double? SourceProjected { get; set; }
 
-        public Guid SoilStatusId { get; set; }
+        public Guid? SoilStatusId { get; set; }
         [Display(Name = "Soil Status")]
         public SoilStatus SoilStatus { get; set; }
 
@@ -58,10 +58,10 @@ namespace FMS.Domain.Dto
         public DateOnly? SoilDate { get; set; }
 
         [Display(Name = "Soil Projected")]
-        public string SoilProjected { get; set; }
+        public double? SoilProjected { get; set; }
 
         [Display(Name = "Groundwater Status")]
-        public Guid GroundwaterStatusId { get; set; }
+        public Guid? GroundwaterStatusId { get; set; }
         [Display(Name = "Groundwater Status")]
         public GroundwaterStatus GroundwaterStatus { get; set; }
 
@@ -69,9 +69,9 @@ namespace FMS.Domain.Dto
         public DateOnly? GroundwaterDate { get; set; }
 
         [Display(Name = "Groundwater HWTF")]
-        public string GroundwaterHWTF { get; set; }
+        public double? GroundwaterHWTF { get; set; }
 
-        public Guid OverallStatusId { get; set; }
+        public Guid? OverallStatusId { get; set; }
         [Display(Name = "Overall Status")]
         public OverallStatus OverallStatus { get; set; }
 
@@ -79,9 +79,9 @@ namespace FMS.Domain.Dto
         public DateOnly? OverallDate { get; set; }
 
         [Display(Name = "ISWQS")]
-        public string ISWQS { get; set; }
+        public bool ISWQS { get; set; }
 
-        public Guid FundingSourceId { get; set; }
+        public Guid? FundingSourceId { get; set; }
         [Display(Name = "Funding Source")]
         public FundingSource FundingSource { get; set; }
 

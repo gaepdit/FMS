@@ -10,19 +10,19 @@ namespace FMS.Domain.Dto
         {
             Id = status.Id;
             FacilityId = status.FacilityId;
-            SourceStatusId = status.SourceStatusId;
+            SourceStatus = status.SourceStatus;
             SourceDate = status.SourceDate;
             SourceProjected = status.SourceProjected;
-            SoilStatusId = status.SoilStatusId;
+            SoilStatus = status.SoilStatus;
             SoilDate = status.SoilDate;
             SoilProjected = status.SoilProjected;
-            GroundwaterStatusId = status.GroundwaterStatusId;
+            GroundwaterStatus = status.GroundwaterStatus;
             GroundwaterDate = status.GroundwaterDate;
             GroundwaterHWTF = status.GroundwaterHWTF;
-            OverallStatusId = status.OverallStatusId;
+            OverallStatus = status.OverallStatus;
             OverallDate = status.OverallDate;
             ISWQS = status.ISWQS;
-            FundingSourceId = status.FundingSourceId;
+            FundingSource = status.FundingSource;
             LandFill = status.LandFill;
             SolidWastePermitNumber = status.SolidWastePermitNumber;
             GAPSScore = status.GAPSScore;
@@ -35,43 +35,43 @@ namespace FMS.Domain.Dto
 
         public Guid FacilityId { get; set; }
 
-        public Guid SourceStatusId { get; set; }
+        public SourceStatus SourceStatus { get; set; }
 
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
         [Display(Name = "Source Projected")]
-        public string SourceProjected { get; set; }
+        public double? SourceProjected { get; set; }
 
         [Display(Name = "Soil Status")]
-        public Guid SoilStatusId { get; set; }
+        public SoilStatus SoilStatus { get; set; }
 
         [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
         [Display(Name = "Soil Projected")]
-        public string SoilProjected { get; set; }
+        public double? SoilProjected { get; set; }
 
         [Display(Name = "Groundwater Status")]
-        public Guid GroundwaterStatusId { get; set; }
+        public GroundwaterStatus GroundwaterStatus { get; set; }
 
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
 
         [Display(Name = "Groundwater HWTF")]
-        public string GroundwaterHWTF { get; set; }
+        public double? GroundwaterHWTF { get; set; }
 
         [Display(Name = "Overall Status")]
-        public Guid OverallStatusId { get; set; }
+        public OverallStatus OverallStatus { get; set; }
 
         [Display(Name = "Overall Date")]
         public DateOnly? OverallDate { get; set; }
 
         [Display(Name = "ISWQS")]
-        public string ISWQS { get; set; }
+        public bool ISWQS { get; set; }
 
         [Display(Name = "Funding Source")]
-        public Guid FundingSourceId { get; set; }
+        public FundingSource FundingSource { get; set; }
 
         [Display(Name = "Land Fill")]
         public bool LandFill { get; set; }

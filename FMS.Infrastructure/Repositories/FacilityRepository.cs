@@ -35,10 +35,6 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File)
                 .Include(e => e.RetentionRecords)
-                .Include(e => e.HsrpFacilityProperties)
-                .Include(e => e.LocationDetails)
-                .Include(e => e.StatusDetails)
-                .Include(e => e.Events)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null) return null;
@@ -50,12 +46,22 @@ namespace FMS.Infrastructure.Repositories
 
             if (facility.FacilityType.Name == "HSI")
             {
+                facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+
+                facility.LocationDetails = await _context.Locations
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+
                 facility.Parcels = await _context.Parcels
-                .AsNoTracking()
-                .Where(e => e.FacilityId == id)
-                .Include(e => e.ParcelType)
-                .OrderBy(e => e.Active)
-                .ToListAsync();
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ParcelType)
+                    .OrderBy(e => e.Active)
+                    .ToListAsync();
 
                 facility.Contacts = await _context.Contacts
                     .AsNoTracking()
@@ -95,6 +101,26 @@ namespace FMS.Infrastructure.Repositories
                     .OrderByDescending(e => e.Active)
                     .ThenByDescending(e => e.Chemical.Active)
                     .ThenBy(e => e.Chemical.CommonName)
+                    .ToListAsync();
+
+                facility.StatusDetails = await _context.Statuses
+                    .AsNoTracking()
+                    .Include(e => e.SourceStatus)
+                    .Include(e => e.SoilStatus)
+                    .Include(e => e.GroundwaterStatus)
+                    .Include(e => e.OverallStatus)
+                    .Include(e => e.FundingSource)
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+
+                facility.Events = await _context.Events
+                    .AsNoTracking()
+                    .Include(e => e.EventType)
+                    .Include(e => e.ActionTaken)
+                    .Include(e => e.ComplianceOfficer)
+                    .Where(e => e.FacilityId == id)
+                    .OrderByDescending(e => e.Active)
+                    .ThenBy(e => e.StartDate)
                     .ToListAsync();
             }
 
