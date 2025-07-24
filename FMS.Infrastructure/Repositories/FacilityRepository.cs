@@ -119,9 +119,14 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.ActionTaken)
                     .Include(e => e.ComplianceOfficer)
                     .Where(e => e.FacilityId == id)
+                    .ToListAsync();
+
+                facility.Events = facility.Events
                     .OrderByDescending(e => e.Active)
                     .ThenBy(e => e.StartDate)
-                    .ToListAsync();
+                    .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
+                    .SelectMany(g => g)
+                    .ToList();
             }
 
             var facilityDetail = new FacilityDetailDto(facility);
