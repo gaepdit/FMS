@@ -37,7 +37,6 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.RetentionRecords)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.LocationDetails)
-                .Include(e => e.Substances)
                 .Include(e => e.StatusDetails)
                 .Include(e => e.Events)
                 .SingleOrDefaultAsync(e => e.Id == id);
@@ -88,6 +87,15 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.Chemical)
                     .FirstOrDefaultAsync();
                 facility.OnsiteScoreDetails = new OnsiteScore(onsiteScore);
+
+                facility.Substances = await _context.Substances
+                    .AsNoTracking()
+                    .Include(e => e.Chemical)
+                    .Where(e => e.FacilityId == id)
+                    .OrderByDescending(e => e.Active)
+                    .ThenByDescending(e => e.Chemical.Active)
+                    .ThenBy(e => e.Chemical.CommonName)
+                    .ToListAsync();
             }
 
             var facilityDetail = new FacilityDetailDto(facility);

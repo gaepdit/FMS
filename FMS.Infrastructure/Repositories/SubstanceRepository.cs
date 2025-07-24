@@ -22,19 +22,21 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id) =>
             await _context.Substances.AsNoTracking()
-                .Where(e => e.Id == id)
-                .Select(e => new SubstanceEditDto(e))
-                .SingleOrDefaultAsync();
+            .Where(e => e.Id == id)
+            .Include(e => e.Chemical)
+            .Select(e => new SubstanceEditDto(e))
+            .SingleOrDefaultAsync();
 
         public async Task<IReadOnlyList<SubstanceSummaryDto>> GetReadOnlySubstanceByFacilityIdAsync(Guid facilityId) =>
            await _context.Substances.AsNoTracking()
-                .Where(e => e.FacilityId == facilityId)
-                .Select(e => new SubstanceSummaryDto(e))
-                .OrderByDescending(e => e.UseForScoring)
-                .ToListAsync();
+            .Include(e => e.Chemical)
+            .Where(e => e.FacilityId == facilityId)
+            .Select(e => new SubstanceSummaryDto(e))
+            .OrderByDescending(e => e.UseForScoring)
+            .ToListAsync();
 
-        public async Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId) =>
-            await _context.Substances.AsNoTracking()
+        public async Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId) => await _context.Substances.AsNoTracking()
+            .Include(e => e.Chemical)
             .Where(e => e.FacilityId == facilityId)
             .Select(e => new SubstanceEditDto(e))
             .OrderByDescending(e => e.UseForScoring)

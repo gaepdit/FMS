@@ -105,7 +105,7 @@ namespace FMS.TestData.SeedData
                 new()
 {
                     Id = new Guid("FFEDC0D1-085C-4422-BFCF-83E8FA4A20E4"),
-                    Active = true,
+                    Active = false,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ChemicalId = new Guid("31A34C9F-5600-4D18-85E5-5242B4D8BB26"),
                     Groundwater = false,
