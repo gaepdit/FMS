@@ -21,13 +21,15 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<EventEditDto> GetEventByIdAsync(Guid id)
         {
-            var Event = await _context.Events.AsNoTracking()
+            var newEvent = await _context.Events.AsNoTracking()
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            return Event == null ? null : new EventEditDto(Event);
+            var eventSummary = newEvent == null ? null : new EventSummaryDto(newEvent);
+
+            return eventSummary == null ? null : new EventEditDto(eventSummary);
         }
 
         public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)

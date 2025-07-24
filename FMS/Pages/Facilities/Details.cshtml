@@ -987,6 +987,7 @@
                                     <th scope="col">Event Amount</th>
                                     <th scope="col">Entity Name or No.</th>
                                     <th scope="col">Comment</th>
+                                    <th scope="col" class="text-center">Active</th>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
@@ -994,42 +995,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>PAF</td>
-                                    <td>Approved</td>
-                                    <td>1/23/2017</td>
-                                    <td>10/2/2018</td>
-                                    <td></td>
-                                    <td>Joe Schmoe</td>
-                                    <td>123,000</td>
-                                    <td>856548</td>
-                                    <td>Beginning of PAF progress</td>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <td>
-                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <a class="btn btn-sm btn-outline-danger">Delete</a>
-                                        </td>
-                                    }
-                                </tr>
-                                <tr>
-                                    <td>Removal Work Plan</td>
-                                    <td>Submitted</td>
-                                    <td>3/23/2017</td>
-                                    <td>4/2/2017</td>
-                                    <td>10/2/2017</td>
-                                    <td>Joe Schmoe</td>
-                                    <td>23,000</td>
-                                    <td>856548</td>
-                                    <td>Plan Approved</td>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <td>
-                                            <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <a class="btn btn-sm btn-outline-danger">Delete</a>
-                                        </td>
-                                    }
-                                </tr>
+                                @foreach(var e in Model.FacilityDetail.Events)
+                                {
+                                    <tr class="@(!e.Active ? "text-muted table-warning" : "")">
+                                        <td>@e.EventType.Name</td>
+                                        <td>@e.ActionTaken.Name</td>
+                                        <td>@e.StartDate</td>
+                                        <td>@e.DueDate</td>
+                                        <td>@e.CompletionDate</td>
+                                        <td>@e.ComplianceOfficer.Name</td>
+                                        <td>@e.EventAmount</td>
+                                        <td>@e.EntityNameOrNumber</td>
+                                        <td>@e.Comment</td>
+                                        <td class="text-center">@Html.DisplayFor(m => e.Active)</td>
+                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                        {
+                                            <td>
+                                                <a asp-page="./Event/Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                <a asp-page="./Event/Delete" asp-route-id="@e.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

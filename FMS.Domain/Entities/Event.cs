@@ -33,11 +33,11 @@ namespace FMS.Domain.Entities
         public Guid? ActionTakenId { get; set; }
         public ActionTaken ActionTaken { get; set; }
 
-        public DateOnly StartDate { get; set; }
+        public DateOnly? StartDate { get; set; }
 
-        public DateOnly DueDate { get; set; }
+        public DateOnly? DueDate { get; set; }
 
-        public DateOnly CompletionDate { get; set; }
+        public DateOnly? CompletionDate { get; set; }
 
         public Guid? ComplianceOfficerId { get; set; }
         public ComplianceOfficer ComplianceOfficer { get; set; }
