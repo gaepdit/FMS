@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,14 +10,12 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> AllowedActionTakenExistsAsync(Guid id);
 
-        Task<AllowedActionTakenEditDto> GetAllowedActionTakenAsync(Guid id);
+        Task<bool> AllowedActionTakenExistsAsync(Guid eventTypeId, Guid actionTakenId);
 
-        Task<IReadOnlyList<AllowedActionTakenSummaryDto>> GetAllowedActionTakenListAsync();
+        Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId);
 
-        Task<Guid> CreateAllowedActionTakenAsync(AllowedActionTakenCreateDto allowedActionTaken);
+        Task<IReadOnlyList<AllowedActionTakenSummaryDto>> GetAllowedActionTakenListAsync(Guid eventTypeId);
 
-        Task UpdateAllowedActionTakenAsync(Guid id, AllowedActionTakenEditDto allowedActionTakenUpdates);
-
-        Task UpdateAllowedActionTakenStatusAsync(Guid id, bool active);
+        Task<Guid> UpdateAllowedActionTakenAsync(Guid actionTakenId, Guid eventTypeId);
     }
 }
