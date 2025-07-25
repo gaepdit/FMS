@@ -43,9 +43,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<List<SoilStatusSummaryDto>> GetSoilStatusListAsync() =>
             await _context.SoilStatuses.AsNoTracking()
-                .OrderBy(e => e.Name)
-                .Select(e => new SoilStatusSummaryDto(e))
-                .ToListAsync();
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new SoilStatusSummaryDto(e))
+            .ToListAsync();
 
         public Task<bool> CreateSoilStatusAsync(SoilStatusCreateDto soilStatus)
         {

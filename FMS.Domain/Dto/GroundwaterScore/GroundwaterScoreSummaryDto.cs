@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
@@ -9,7 +10,7 @@ namespace FMS.Domain.Dto
         {
             Id = groundwaterScore.Id;
             Active = groundwaterScore.Active;
-            ScoreId = groundwaterScore.ScoreId;
+            FacilityId = groundwaterScore.FacilityId;
             GWScore = groundwaterScore.GWScore;
             A = groundwaterScore.A;
             B1 = groundwaterScore.B1;
@@ -30,34 +31,50 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
-        public Guid ScoreId { get; set; }
+        public Guid FacilityId { get; set; }
 
+        [Display(Name = "Groundwater Score")]
         public string GWScore { get; set; }
 
+        [Display(Name = "A")]
         public int A { get; set; }
 
+        [Display(Name = "B1")]
         public int B1 { get; set; }
 
+        [Display(Name = "B2")]
         public int B2 { get; set; }
 
+        [Display(Name = "C")]
         public int C { get; set; }
 
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Display(Name = "Chemical Name")]
         public string ChemName { get; set; }
 
+        [Display(Name = "Other")]
         public string Other { get; set; }
 
+        [Display(Name = "D2")]
         public int D2 { get; set; }
 
+        [Display(Name = "D3")]
         public int D3 { get; set; }
 
-        public Guid ChemicalId { get; set; }
+        public Guid? ChemicalId { get; set; }
 
+        [Display(Name = "Chemical")]
+        public Chemical Chemical { get; set; }
+
+        [Display(Name = "CasNo")]
         public string CASNO { get; set; }
 
+        [Display(Name = "E1")]
         public int E1 { get; set; }
 
+        [Display(Name = "E2")]
         public int E2 { get; set; }
     }
 }

@@ -25,25 +25,23 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(id, nameof(id));
             return await _context.Contacts
                 .AsNoTracking()
+                .Include(e => e.ContactType)
+                .Include(e => e.ContactTitle)
+                .Include(e => e.Phones)
                 .SingleOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<IEnumerable<Contact>> GetContactsByFacilityIdAsync(Guid facilityId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
-            return await _context.Contacts
-                .AsNoTracking()
-                .Where(e => e.FacilityId == facilityId)
-                .ToListAsync();
-        }
 
-        public async Task<IEnumerable<Contact>> GetContactsByFacilityIdAndStatusAsync(Guid facilityId, string status)
-        {
-            Prevent.NullOrEmpty(facilityId, nameof(facilityId));
-            Prevent.NullOrEmpty(status, nameof(status));
             return await _context.Contacts
                 .AsNoTracking()
-                .Where(e => e.FacilityId == facilityId && e.Status == status)
+                .Include(e => e.ContactType)
+                .Include(e => e.ContactTitle)
+                .Include(e => e.Phones)
+                .Where(e => e.FacilityId == facilityId)
+                .OrderByDescending(e => e.Active)
                 .ToListAsync();
         }
 
@@ -51,9 +49,14 @@ namespace FMS.Infrastructure.Repositories
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
             Prevent.NullOrEmpty(contactTypeId, nameof(contactTypeId));
+
             return await _context.Contacts
                 .AsNoTracking()
+                .Include(e => e.ContactType)
+                .Include(e => e.ContactTitle)
+                .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId && e.ContactTypeId == contactTypeId)
+                .OrderByDescending(e => e.Active)
                 .ToListAsync();
         }
 
@@ -101,8 +104,6 @@ namespace FMS.Infrastructure.Repositories
             existingContact.PostalCode = contact.PostalCode;
             existingContact.Email = contact.Email;
             existingContact.Active = contact.Active;
-            existingContact.Status = contact.Status;
-
 
             _context.Contacts.Update(existingContact);
             await _context.SaveChangesAsync();

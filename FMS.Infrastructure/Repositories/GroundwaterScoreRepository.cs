@@ -17,17 +17,17 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> GroundwaterScoreExistsAsync(Guid id) =>
             _context.GroundwaterScores.AnyAsync(e => e.Id == id);
 
-        public async Task<GroundwaterScoreEditDto> GetGroundwaterScoreByScoreIdAsync(Guid scoreId)
+        public async Task<GroundwaterScoreEditDto> GetGroundwaterScoreByFacilityIdAsync(Guid facilityId)
             {
             var groundwaterScore = await _context.GroundwaterScores.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.ScoreId == scoreId);
+                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             return groundwaterScore == null ? null : new GroundwaterScoreEditDto(groundwaterScore);
         }
 
         public Task<Guid> CreateGroundwaterScoreAsync(GroundwaterScoreCreateDto groundwaterScore)
         {
             Prevent.Null(groundwaterScore, nameof(groundwaterScore));
-            Prevent.NullOrEmpty(groundwaterScore.ScoreId, nameof(groundwaterScore.ScoreId));
+            Prevent.NullOrEmpty(groundwaterScore.FacilityId, nameof(groundwaterScore.FacilityId));
 
             return CreateGroundwaterScoreInternalAsync(groundwaterScore);
         }
@@ -38,7 +38,7 @@ namespace FMS.Infrastructure.Repositories
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                ScoreId = groundwaterScore.ScoreId,
+                FacilityId = groundwaterScore.FacilityId,
                 GWScore = groundwaterScore.GWScore,
                 A = groundwaterScore.A,
                 B1 = groundwaterScore.B1,
@@ -78,7 +78,7 @@ namespace FMS.Infrastructure.Repositories
             }
 
             existingGroundwaterScore.Active = groundwaterScore.Active;
-            existingGroundwaterScore.ScoreId = groundwaterScore.ScoreId;
+            existingGroundwaterScore.FacilityId = groundwaterScore.FacilityId;
             existingGroundwaterScore.GWScore = groundwaterScore.GWScore;
             existingGroundwaterScore.A = groundwaterScore.A;
             existingGroundwaterScore.B1 = groundwaterScore.B1;

@@ -31,7 +31,8 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync()
         {
             return await _context.ComplianceOfficers.AsNoTracking()
-                .OrderBy(e => e.FamilyName)
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.FamilyName)
                 .ThenBy(e => e.GivenName)
                 .Select(e => new ComplianceOfficerSummaryDto(e))
                 .ToListAsync();

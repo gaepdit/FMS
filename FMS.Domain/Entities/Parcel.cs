@@ -10,27 +10,27 @@ namespace FMS.Domain.Entities
 
         public Parcel(Guid id, ParcelCreateDto parcel)
         {
-            LocationId = id;
+            FacilityId = id;
             ParcelNumber = parcel.ParcelNumber;
-            ParcelDescription = parcel.ParcelDescription;
-            ParcelTypeId = parcel.ParcelTypeId;
             Acres = parcel.Acres;
-            Latitude = parcel.Latitude;
-            Longitude = parcel.Longitude;
+            ParcelTypeId = parcel.ParcelTypeId;
+            ListDate = parcel.ListDate;
+            DeListDate = parcel.DeListDate;
+            SubListParcelName = parcel.SubListParcelName;
         }
-        public Guid LocationId { get; set; }
+        public Guid FacilityId { get; set; }
 
         public string ParcelNumber { get; set; }
 
-        public string ParcelDescription { get; set; } 
-
-        public Guid ParcelTypeId { get; set; }
-        public ParcelType ParcelType { get; set; }
-
         public double Acres { get; set; }
 
-        public double Latitude { get; set; }
+        public Guid? ParcelTypeId { get; set; }
+        public ParcelType ParcelType { get; set; }
 
-        public double Longitude { get; set; }
+        public DateOnly? ListDate { get; set; }
+
+        public DateOnly? DeListDate { get; set; }
+
+        public string SubListParcelName { get; set; }
     }
 }

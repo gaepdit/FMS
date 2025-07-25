@@ -46,9 +46,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<OverallStatusSummaryDto>> GetOverallStatusListAsync() =>
             await _context.OverallStatuses.AsNoTracking()
-                .OrderBy(e => e.Name)
-                .Select(e => new OverallStatusSummaryDto(e))
-                .ToListAsync();
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new OverallStatusSummaryDto(e))
+            .ToListAsync();
 
         public Task<Guid> CreateOverallStatusAsync(OverallStatusCreateDto overallStatus)
         {

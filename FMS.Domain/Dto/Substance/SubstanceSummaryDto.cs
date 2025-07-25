@@ -9,8 +9,9 @@ namespace FMS.Domain.Dto
         public SubstanceSummaryDto(Substance substance)
         {
             Id = substance.Id;
+            Active = substance.Active;
             FacilityId = substance.FacilityId;
-            ChemicalId = substance.ChemicalId;
+            Chemical = substance.Chemical;
             Groundwater = substance.Groundwater;
             Soil = substance.Soil;
             UseForScoring = substance.UseForScoring;
@@ -18,10 +19,10 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; set; }
 
+        public bool Active { get; set; }
+
         public Guid FacilityId { get; set; }
 
-        public Guid ChemicalId { get; set; }
-        [Display(Name = "Chemical Name")]
         public Chemical Chemical { get; set; }
 
         public bool Groundwater { get; set; }

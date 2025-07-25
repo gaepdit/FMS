@@ -38,7 +38,8 @@ namespace FMS.Infrastructure.Repositories
         }
 
         public async Task<IReadOnlyList<ContactTitleSummaryDto>> GetContactTitleListAsync() => await _context.ContactTitles.AsNoTracking()
-            .OrderBy(e => e.Id)
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
             .Select(e => new ContactTitleSummaryDto(e))
             .ToListAsync();
 

@@ -61,9 +61,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<FacilityStatusSummaryDto>> GetFacilityStatusListAsync() =>
             await _context.FacilityStatuses.AsNoTracking()
-                .OrderBy(e => e.Status)
-                .Select(e => new FacilityStatusSummaryDto(e))
-                .ToListAsync();
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Status)
+            .Select(e => new FacilityStatusSummaryDto(e))
+            .ToListAsync();
 
         public Task UpdateFacilityStatusAsync(Guid id, FacilityStatusEditDto facilityStatusUpdates)
         {

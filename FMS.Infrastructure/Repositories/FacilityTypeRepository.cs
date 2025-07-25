@@ -45,9 +45,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync() =>
             await _context.FacilityTypes.AsNoTracking()
-                .OrderBy(e => e.Name)
-                .Select(e => new FacilityTypeSummaryDto(e))
-                .ToListAsync();
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new FacilityTypeSummaryDto(e))
+            .ToListAsync();
 
         public Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType)
         {

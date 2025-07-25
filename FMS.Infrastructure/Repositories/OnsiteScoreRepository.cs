@@ -18,17 +18,17 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> OnsiteScoreExistsAsync(Guid id) =>
             _context.OnsiteScores.AnyAsync(e => e.Id == id);
 
-        public async Task<OnsiteScoreEditDto> GetOnsiteScoreByScoreIdAsync(Guid scoreId)
+        public async Task<OnsiteScoreEditDto> GetOnsiteScoreByFacilityIdAsync(Guid facilityId)
         {
             var onsiteScore = await _context.OnsiteScores.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.ScoreId == scoreId);
+                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }
 
         public Task<Guid> CreateOnsiteScoreAsync(OnsiteScoreCreateDto onsiteScore)
         {
             Prevent.Null(onsiteScore, nameof(onsiteScore));
-            Prevent.NullOrEmpty(onsiteScore.ScoreId, nameof(onsiteScore.ScoreId));
+            Prevent.NullOrEmpty(onsiteScore.FacilityId, nameof(onsiteScore.FacilityId));
 
             return CreateOnsiteScoreInternalAsync(onsiteScore);
         }
@@ -39,7 +39,7 @@ namespace FMS.Infrastructure.Repositories
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                ScoreId = onsiteScore.ScoreId,
+                FacilityId = onsiteScore.FacilityId,
                 OnsiteScoreValue = onsiteScore.OnsiteScoreValue,
                 A = onsiteScore.A,
                 B = onsiteScore.B,
@@ -62,7 +62,7 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> UpdateOnsiteScoreAsync(OnsiteScoreEditDto onsiteScore)
         {
             Prevent.Null(onsiteScore, nameof(onsiteScore));
-            Prevent.NullOrEmpty(onsiteScore.ScoreId, nameof(onsiteScore.ScoreId));
+            Prevent.NullOrEmpty(onsiteScore.FacilityId, nameof(onsiteScore.FacilityId));
 
             return UpdateOnsiteScoreInternalAsync(onsiteScore);
         }
@@ -71,7 +71,7 @@ namespace FMS.Infrastructure.Repositories
         {
            
             var existingOnsiteScore = await _context.OnsiteScores
-                .SingleOrDefaultAsync(e => e.ScoreId == onsiteScore.ScoreId);
+                .SingleOrDefaultAsync(e => e.FacilityId == onsiteScore.FacilityId);
 
             if (existingOnsiteScore == null)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -9,6 +10,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         public Guid ChemicalId { get; set; }
+        public Chemical Chemical { get; set; }
 
         public bool Groundwater { get; set; }
 

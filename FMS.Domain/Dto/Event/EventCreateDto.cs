@@ -10,27 +10,31 @@ namespace FMS.Domain.Dto
 
         public Guid? ParentId { get; set; }
 
-        [Required]
+        [Display(Name = "Event Type")]
         public Guid EventTypeId { get; set; }
-        public Guid EventType { get; set; }
 
-
+        [Display(Name = "Action Taken")]
         public Guid ActionTakenId { get; set; }
-        public Guid ActionTaken { get; set; }
 
-        public DateOnly StartDate { get; set; }
+        [Display(Name = "Start Date")]
+        public DateOnly? StartDate { get; set; }
 
-        public DateOnly DueDate { get; set; }
+        [Display(Name = "Due Date")]
+        public DateOnly? DueDate { get; set; }
 
-        public DateOnly CompletionDate { get; set; }
+        [Display(Name = "Completion Date")]
+        public DateOnly? CompletionDate { get; set; }
 
+        [Display(Name = "Done By (CO)")]
         public Guid ComplianceOfficerId { get; set; }
-        public string ComplianceOfficer { get; set; }
 
+        [Display(Name = "Event Amount")]
         public decimal EventAmount { get; set; }
 
+        [Display(Name = "Entity Name or Number")]
         public string EntityNameOrNumber { get; set; }
 
+        [Display(Name = "Comment")]
         public string Comment { get; set; }
     }
 }

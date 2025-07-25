@@ -44,6 +44,91 @@ namespace FMS.Infrastructure.Repositories
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
 
+            if (facility.FacilityType.Name == "HSI")
+            {
+                facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+
+                facility.LocationDetails = await _context.Locations
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+
+                facility.Parcels = await _context.Parcels
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ParcelType)
+                    .OrderBy(e => e.Active)
+                    .ToListAsync();
+
+                facility.Contacts = await _context.Contacts
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ContactType)
+                    .Include(e => e.ContactTitle)
+                    .Include(e => e.Phones.OrderByDescending(p => p.Active))
+                    .OrderByDescending(e => e.Active)
+                    .ThenBy(e => e.FamilyName)
+                    .ThenBy(e => e.GivenName)
+                    .ToListAsync();
+
+                facility.ScoreDetails = await _context.Scores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ScoredBy)
+                    .FirstOrDefaultAsync();
+
+                GroundwaterScore groundwaterScore = await _context.GroundwaterScores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.Chemical)
+                    .FirstOrDefaultAsync();
+                facility.GroundwaterScoreDetails = new GroundwaterScore(groundwaterScore);
+
+                OnsiteScore onsiteScore = await _context.OnsiteScores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.Chemical)
+                    .FirstOrDefaultAsync();
+                facility.OnsiteScoreDetails = new OnsiteScore(onsiteScore);
+
+                facility.Substances = await _context.Substances
+                    .AsNoTracking()
+                    .Include(e => e.Chemical)
+                    .Where(e => e.FacilityId == id)
+                    .OrderByDescending(e => e.Active)
+                    .ThenByDescending(e => e.Chemical.Active)
+                    .ThenBy(e => e.Chemical.CommonName)
+                    .ToListAsync();
+
+                facility.StatusDetails = await _context.Statuses
+                    .AsNoTracking()
+                    .Include(e => e.SourceStatus)
+                    .Include(e => e.SoilStatus)
+                    .Include(e => e.GroundwaterStatus)
+                    .Include(e => e.OverallStatus)
+                    .Include(e => e.FundingSource)
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+
+                facility.Events = await _context.Events
+                    .AsNoTracking()
+                    .Include(e => e.EventType)
+                    .Include(e => e.ActionTaken)
+                    .Include(e => e.ComplianceOfficer)
+                    .Where(e => e.FacilityId == id)
+                    .ToListAsync();
+
+                facility.Events = facility.Events
+                    .OrderByDescending(e => e.Active)
+                    .ThenBy(e => e.StartDate)
+                    .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
+                    .SelectMany(g => g)
+                    .ToList();
+            }
+
             var facilityDetail = new FacilityDetailDto(facility);
 
             if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
@@ -248,6 +333,17 @@ namespace FMS.Infrastructure.Repositories
             {
                 File = file
             };
+
+            if (newFacility.FacilityTypeName == "HSI")
+            {
+                // Create placeholder objects in new HSI Facility
+                newFac.HsrpFacilityProperties = new HsrpFacilityProperties(newFac.Id);
+                newFac.LocationDetails = new Location(newFac.Id);
+                newFac.ScoreDetails = new Score(newFac.Id);
+                newFac.GroundwaterScoreDetails = new GroundwaterScore(newFac.Id);
+                newFac.OnsiteScoreDetails = new OnsiteScore(newFac.Id);
+                newFac.StatusDetails = new Status(newFac.Id);
+            }
 
             await _context.Facilities.AddAsync(newFac);
             await _context.SaveChangesAsync();

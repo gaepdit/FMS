@@ -6,7 +6,7 @@ namespace FMS.Domain.Dto
     public class GroundwaterScoreCreateDto
     {
         [Required]
-        public Guid ScoreId { get; set; }
+        public Guid FacilityId { get; set; }
 
         [Display(Name = "Groundwater Score")]
         public string GWScore { get; set; }

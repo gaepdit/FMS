@@ -34,9 +34,12 @@ namespace FMS.Domain.Dto
         public string Geologist { get; set; }
 
         [Display(Name = "VRP Date")]
-        public DateOnly VRPDate { get; set; }
+        public DateOnly? VRPDate { get; set; }
 
         [Display(Name = "Brownfield Date")]
-        public DateOnly BrownfieldDate { get; set; }
+        public DateOnly? BrownfieldDate { get; set; }
+
+        [Display(Name = "Date De-listed")]
+        public DateOnly? DateDeListed { get; set; }
     }
 }

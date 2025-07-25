@@ -6,7 +6,7 @@ using FMS.Domain.Entities;
 
 namespace FMS.Domain.Repositories
 {
-    public interface IChemicalRepository : IDisposable
+    public interface IChemicalRepository : IDisposable 
     {
         Task<bool> ChemicalExistsAsync(Guid id);
 

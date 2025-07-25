@@ -35,7 +35,8 @@ namespace FMS.Infrastructure.Repositories
         }
 
         public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync() => await _context.ActionsTaken.AsNoTracking()
-           .OrderBy(e => e.Name)
+           .OrderByDescending(e => e.Active)
+           .ThenBy(e => e.Name)
            .Select(e => new ActionTakenSummaryDto(e))
            .ToListAsync();
 

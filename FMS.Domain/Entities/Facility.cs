@@ -132,5 +132,28 @@ namespace FMS.Domain.Entities
 
         // List of retention records for this Facility
         public ICollection<RetentionRecord> RetentionRecords { get; set; }
+
+        // Phase III additions for HSI
+        public HsrpFacilityProperties HsrpFacilityProperties { get; set; }
+
+        public Location LocationDetails { get; set; }
+
+        public ICollection<Parcel> Parcels { get; set; }
+
+        public ICollection<Contact> Contacts { get; set; }
+
+        public ICollection<Phone> Phones { get; set; }
+
+        public Score ScoreDetails { get; set; }
+
+        public GroundwaterScore GroundwaterScoreDetails { get; set; }
+
+        public OnsiteScore OnsiteScoreDetails { get; set; }
+
+        public ICollection<Substance> Substances { get; set; }
+
+        public Status StatusDetails { get; set; }
+
+        public ICollection<Event> Events { get; set; }
     }
 }

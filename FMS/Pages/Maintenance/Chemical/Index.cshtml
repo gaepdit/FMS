@@ -20,7 +20,7 @@
     <table class="table" aria-label="List of Chemicals">
         <thead class="thead-light">
             <tr>
-                <th scope="col" class="col-md-3">CasNo</th>
+                <th scope="col" class="col-md-2">CasNo</th>
                 <th scope="col">Chemical Name</th>
                 <th scope="col">Common Name</th>
                 <th scope="col">Tox Value</th>
@@ -46,7 +46,7 @@
                     <td>
                         @Html.DisplayFor(m => item.MCLs, "StringOrNone")<br />
                     </td>
-                    <td class="text-nowrap">
+                    <td class="text-nowrap align-content-center">
                         <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
                         @if (item.Active)
                         {

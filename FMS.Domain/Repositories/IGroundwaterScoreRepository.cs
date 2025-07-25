@@ -8,7 +8,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> GroundwaterScoreExistsAsync(Guid id);
 
-        Task<GroundwaterScoreEditDto> GetGroundwaterScoreByScoreIdAsync(Guid scoreId);
+        Task<GroundwaterScoreEditDto> GetGroundwaterScoreByFacilityIdAsync(Guid facilityId);
 
         Task<Guid> CreateGroundwaterScoreAsync(GroundwaterScoreCreateDto groundwaterScore);
 
