@@ -9,6 +9,12 @@ namespace FMS.Domain.Entities
     {
         public OnsiteScore() { }
 
+        public OnsiteScore(Guid facilityId)
+        {
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public OnsiteScore(OnsiteScoreCreateDto onsiteScore)
         {
             FacilityId = onsiteScore.FacilityId;
@@ -76,7 +82,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "3D")]
         public int D3 { get; set; }
 
-        public Guid ChemicalId { get; set; }
+        public Guid? ChemicalId { get; set; }
         [Display(Name = "Chemical")]
         public Chemical Chemical { get; set; }  
 

@@ -63,7 +63,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "D3")]
         public int D3 { get; set; }
 
-        public Guid ChemicalId { get; set; }
+        public Guid? ChemicalId { get; set; }
 
         [Display(Name = "Chemical")]
         public Chemical Chemical { get; set; }

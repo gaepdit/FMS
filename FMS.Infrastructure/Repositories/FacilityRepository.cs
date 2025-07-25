@@ -334,6 +334,17 @@ namespace FMS.Infrastructure.Repositories
                 File = file
             };
 
+            if (newFacility.FacilityTypeName == "HSI")
+            {
+                // Create placeholder objects in new HSI Facility
+                newFac.HsrpFacilityProperties = new HsrpFacilityProperties(newFac.Id);
+                newFac.LocationDetails = new Location(newFac.Id);
+                newFac.ScoreDetails = new Score(newFac.Id);
+                newFac.GroundwaterScoreDetails = new GroundwaterScore(newFac.Id);
+                newFac.OnsiteScoreDetails = new OnsiteScore(newFac.Id);
+                newFac.StatusDetails = new Status(newFac.Id);
+            }
+
             await _context.Facilities.AddAsync(newFac);
             await _context.SaveChangesAsync();
 

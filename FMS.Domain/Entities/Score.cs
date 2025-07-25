@@ -10,6 +10,12 @@ namespace FMS.Domain.Entities
     {
         public Score() { }
 
+        public Score(Guid facilityId)
+        {
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public Score(ScoreCreateDto score)
         {
             FacilityId = score.FacilityId;

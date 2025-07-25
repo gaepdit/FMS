@@ -9,6 +9,12 @@ namespace FMS.Domain.Entities
     {
         public HsrpFacilityProperties() { }
 
+        public HsrpFacilityProperties(Guid facilityId) 
+        {
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public HsrpFacilityProperties(Guid id, HsrpFacilityPropertiesCreateDto hsrpFacilityProperties) 
         {
             Id = id;

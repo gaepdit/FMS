@@ -9,6 +9,12 @@ namespace FMS.Domain.Entities
     {
         public Status() { }
 
+        public Status(Guid facilityId)
+        {
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public Status(StatusCreateDto status)
         {
             FacilityId = status.FacilityId;

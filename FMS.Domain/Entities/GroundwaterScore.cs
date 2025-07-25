@@ -9,6 +9,12 @@ namespace FMS.Domain.Entities
     {
         public GroundwaterScore() { }
 
+        public GroundwaterScore(Guid facilityId)
+        {
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public GroundwaterScore(GroundwaterScoreCreateDto groundwaterScore)
         {
             FacilityId = groundwaterScore.FacilityId;
@@ -81,7 +87,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "3D")]
         public int D3 { get; set; }
 
-        public Guid ChemicalId { get; set; }
+        public Guid? ChemicalId { get; set; }
         [Display(Name = "Chemical")]
         public Chemical Chemical { get; set; }
 
