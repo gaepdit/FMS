@@ -62,6 +62,7 @@ namespace FMS
             foreach (var actionTaken in actionTakenList)
             {
                 var newActionTaken = new ActionTaken(actionTaken);
+
                 if (!allowedActionsTaken.Any(e => e.EventTypeId == newEventType.Id && e.ActionTakenId == newActionTaken.Id))
                 {
                     var newAAT = new AllowedActionTaken

@@ -10,7 +10,7 @@
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.AllowedActionTaken} for {Model.EventType.Name}";
 }
 
-<a asp-page="/AllowedActionsTaken/Index">← Back</a>
+<a asp-page="./Index">← Back</a>
 <h1>
     @ViewData["Title"]
 </h1>
@@ -46,14 +46,14 @@
                         }
                     </td>
                 </tr>
-                <input asp-for="AllowedActionTakenSpec.Id" value="@Model.AllowedActionsTakenList[i].Id" type="hidden" />
-                <input asp-for="AllowedActionTakenSpec.Active" value="@Model.AllowedActionsTakenList[i].Active" type="hidden" />
-                <input asp-for="AllowedActionTakenSpec.EventTypeId" value="@Model.AllowedActionsTakenList[i].EventTypeId" type="hidden" />
-                <input asp-for="AllowedActionTakenSpec.EventTypeName" value="@Model.AllowedActionsTakenList[i].EventTypeName" type="hidden" />
-                <input asp-for="AllowedActionTakenSpec.EventTypeActive" value="@Model.AllowedActionsTakenList[i].EventTypeActive" type="hidden" />
-                <input asp-for="AllowedActionTakenSpec.ActionTakenId" value="@Model.AllowedActionsTakenList[i].ActionTakenId" type="hidden" />
-                <input asp-for="AllowedActionTakenSpec.ActionTakenName" value="@Model.AllowedActionsTakenList[i].ActionTakenName" type="hidden" />
-                <input asp-for="AllowedActionTakenSpec.ActionTakenActive" value="@Model.AllowedActionsTakenList[i].ActionTakenActive" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.Id" value="@Model.AllowedActionsTakenList[i].Id" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.Active" value="@Model.AllowedActionsTakenList[i].Active" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.EventTypeId" value="@Model.AllowedActionsTakenList[i].EventTypeId" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.EventTypeName" value="@Model.AllowedActionsTakenList[i].EventTypeName" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.EventTypeActive" value="@Model.AllowedActionsTakenList[i].EventTypeActive" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.ActionTakenId" value="@Model.AllowedActionsTakenList[i].ActionTakenId" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.ActionTakenName" value="@Model.AllowedActionsTakenList[i].ActionTakenName" type="hidden" />
+                <input asp-for="@Model.AllowedActionTakenSpec.ActionTakenActive" value="@Model.AllowedActionsTakenList[i].ActionTakenActive" type="hidden" />
             }
         </tbody>
     </table>
