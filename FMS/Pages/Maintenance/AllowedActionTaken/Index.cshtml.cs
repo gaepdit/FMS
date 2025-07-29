@@ -26,48 +26,5 @@ namespace FMS.Pages.Maintenance.AllowedActionTaken
             DisplayMessage = TempData?.GetDisplayMessage();
             return Page();
         }
-
-        //public async Task<IActionResult> OnPostAsync(Guid? itemId)
-        //{
-        //    if (itemId == null)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Page();
-        //    }
-
-        //    var eventType = await _repository.GetEventTypeByIdAsync(itemId.Value);
-
-        //    if (eventType == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    try
-        //    {
-        //        await _repository.UpdateEventTypeStatusAsync(itemId.Value, !eventType.Active);
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!await _repository.EventTypeExistsAsync(itemId.Value))
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        throw;
-        //    }
-
-        //    EventTypes = await _repository.GetEventTypeListAsync();
-
-        //    TempData?.SetDisplayMessage(Context.Success,
-        //        eventType.Active
-        //            ? $"{MaintenanceOptions.EventType} \"{eventType.Name}\" successfully removed from list."
-        //            : $"{MaintenanceOptions.EventType} \"{eventType.Name}\" successfully restored.");
-
-        //    return RedirectToPage("./Index");
-        //}
     }
 }

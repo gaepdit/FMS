@@ -67,24 +67,16 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.ActionTaken)
                 .SingleOrDefaultAsync(e => e.Id == id.Value);
 
-            return new AllowedActionTakenSpec()
-            {
-                Id = allowedActionTaken.Id,
-                EventTypeId = allowedActionTaken.EventTypeId,
-                ActionTakenId = allowedActionTaken.ActionTakenId,
-                EventTypeName = allowedActionTaken.EventType.Name,
-                ActionTakenName = allowedActionTaken.ActionTaken.Name,
-                Active = allowedActionTaken.Active
-            };
+            return new AllowedActionTakenSpec(allowedActionTaken);
         }
 
-        public async Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId)
-        {
-             return await _context.AllowedActionsTaken.AsNoTracking()
-                .Where(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId)
-                .Select(e => new AllowedActionTaken(e))
-                .SingleOrDefaultAsync();
-        }
+        //public async Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId)
+        //{
+        //     return await _context.AllowedActionsTaken.AsNoTracking()
+        //        .Where(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId)
+        //        .Select(e => new AllowedActionTaken(e))
+        //        .SingleOrDefaultAsync();
+        //}
 
         public async Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId)
         {

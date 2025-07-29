@@ -16,7 +16,7 @@ namespace FMS.Domain.Repositories
 
         Task<AllowedActionTakenSpec> GetAllowedActionTakenByAATIdAsync(Guid? id);
 
-        Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId);
+        //Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId);
 
         Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId);
 

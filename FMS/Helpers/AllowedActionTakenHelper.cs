@@ -67,21 +67,11 @@ namespace FMS
                     var newAAT = new AllowedActionTaken
                     {
                         Id = Guid.NewGuid(),
-                        ActionTaken = newActionTaken,
                         Active = false,
+                        ActionTaken = newActionTaken,
                         EventType = newEventType
                     };
-                    allowedActionsTaken.Add(new AllowedActionTakenSpec()
-                    {
-                        Id = newAAT.Id,
-                        EventTypeId = newAAT.EventType.Id,
-                        ActionTakenId = newAAT.ActionTaken.Id,
-                        EventTypeName = newAAT.EventType.Name,
-                        ActionTakenName = newAAT.ActionTaken.Name,
-                        EventTypeActive = newAAT.EventType.Active,
-                        ActionTakenActive = newAAT.ActionTaken.Active,
-                        Active = newAAT.Active
-                    });
+                    allowedActionsTaken.Add(new AllowedActionTakenSpec(newAAT));
                 }
             }
 
