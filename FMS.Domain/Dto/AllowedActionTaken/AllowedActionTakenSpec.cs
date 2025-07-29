@@ -32,18 +32,5 @@ namespace FMS.Domain.Dto
         public Guid ActionTakenId { get; set; }
         public string ActionTakenName { get; set; } 
         public bool ActionTakenActive { get; set; }
-
-        public IDictionary<string, string> AsRouteValues =>
-            new Dictionary<string, string>
-            {
-                {nameof(Id), Id.ToString()},
-                {nameof(Active), Active.ToString()},
-                {nameof(EventTypeId), EventTypeId.ToString()},
-                {nameof(EventTypeName), EventTypeName},
-                {nameof(EventTypeActive), EventTypeActive.ToString()},
-                {nameof(ActionTakenId), ActionTakenId.ToString()},
-                {nameof(ActionTakenName), ActionTakenName},
-                {nameof(ActionTakenActive), ActionTakenActive.ToString()}
-            };
     }
 }

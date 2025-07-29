@@ -23,33 +23,33 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> AllowedActionTakenExistsAsync(Guid eventTypeId, Guid actionTakenId) =>
             _context.AllowedActionsTaken.AnyAsync(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId);
 
-        public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByIdAsync(Guid? id)
-            {
-            if (!id.HasValue)
-            {
-                return null;
-            }
-            var allowedActionTaken =  await _context.AllowedActionsTaken.AsNoTracking()
-                .Where(e => e.Id == id.Value)
-                .Include(e => e.EventType)
-                .Include(e => e.ActionTaken)
-                .Select(e => new AllowedActionTaken(e))
-                .SingleOrDefaultAsync();
+        //public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByIdAsync(Guid? id)
+        //    {
+        //    if (!id.HasValue)
+        //    {
+        //        return null;
+        //    }
+        //    var allowedActionTaken =  await _context.AllowedActionsTaken.AsNoTracking()
+        //        .Where(e => e.Id == id.Value)
+        //        .Include(e => e.EventType)
+        //        .Include(e => e.ActionTaken)
+        //        .Select(e => new AllowedActionTaken(e))
+        //        .SingleOrDefaultAsync();
 
-            if (allowedActionTaken == null)
-            {
-                return null;
-            }
-            return new AllowedActionTakenSpec()
-            {
-                Id = allowedActionTaken.Id,
-                EventTypeId = allowedActionTaken.EventTypeId,
-                ActionTakenId = allowedActionTaken.ActionTakenId,
-                EventTypeName = allowedActionTaken.EventType.Name,
-                ActionTakenName = allowedActionTaken.ActionTaken.Name,
-                Active = allowedActionTaken.Active
-            };
-        }
+        //    if (allowedActionTaken == null)
+        //    {
+        //        return null;
+        //    }
+        //    return new AllowedActionTakenSpec()
+        //    {
+        //        Id = allowedActionTaken.Id,
+        //        EventTypeId = allowedActionTaken.EventTypeId,
+        //        ActionTakenId = allowedActionTaken.ActionTakenId,
+        //        EventTypeName = allowedActionTaken.EventType.Name,
+        //        ActionTakenName = allowedActionTaken.ActionTaken.Name,
+        //        Active = allowedActionTaken.Active
+        //    };
+        //}
 
         public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByAATIdAsync(Guid? id)
         {
@@ -110,6 +110,7 @@ namespace FMS.Infrastructure.Repositories
             {
                 throw new ArgumentException($"Allowed Action Taken already exists.");
             }
+
             var newAllowedActionTaken = new AllowedActionTaken
             {
                 ActionTakenId = allowedActionTaken.ActionTakenId,

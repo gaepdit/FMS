@@ -7,53 +7,43 @@
 }
 
 @{
-    ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.AllowedActionTaken} for {Model.EventType.Name}";
+    ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.AllowedActionTaken} for {Model.EventTypeName}";
 }
 
 <a asp-page="./Index">← Back</a>
-<h1>
+<h2>
     @ViewData["Title"]
-</h1>
+</h2>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
 <form method="post">
     <table class="table" aria-label="List of Actions Taken codes">
         <thead class="thead-light">
             <tr>
-                <th scope="col" class="col-md-4">Action Taken Name</th>
-                <th scope="col" class="col-md-2">Action Taken Active</th>
-                <th scope="col" class="col-md-2">Event Type Active</th>
-                <th scope="col" class="col-md-2">Allowed Active</th>
-                <th scope="col" class="col-md-2">Actions</th>
+                <th scope="col" class="col-md-4">Action Name</th>
+                <th scope="col" class="col-md-3 text-center">Action Active</th>
+                <th scope="col" class="col-md-3 text-center">Allowed Action Active</th>
+                <th scope="col" class="col-md-2 text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @for (int i=0; i < Model.AllowedActionsTakenList.Count; i++)
+            @foreach (var item in Model.AllowedActionsTakenList)
             {
-                <tr class="@(!Model.AllowedActionsTakenList[i].Active || !Model.AllowedActionsTakenList[i].ActionTakenActive || !Model.AllowedActionsTakenList[i].EventTypeActive ? "table-warning" : "")">
-                    <td class="text-nowrap">@Html.DisplayFor(m => Model.AllowedActionsTakenList[i].ActionTakenName)</td>
-                    <td>@Html.DisplayFor(m => Model.AllowedActionsTakenList[i].ActionTakenActive)</td>
-                    <td>@Html.DisplayFor(m => Model.AllowedActionsTakenList[i].EventTypeActive)</td>
-                    <td>@Html.DisplayFor(m => Model.AllowedActionsTakenList[i].Active)</td>
-                    <td class="text-nowrap">
-                        @if (Model.AllowedActionsTakenList[i].Active)
+                <tr>
+                    <td class="text-nowrap">@Html.DisplayFor(m => item.ActionTakenName)</td>
+                    <td class="@(!item.ActionTakenActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.ActionTakenActive)</td>
+                    <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active)</td>
+                    <td class="text-nowrap text-center">
+                        @if (item.Active)
                         {
-                            <button asp-type="submit" name="item" class="btn btn-outline-danger btn-sm">Delete from list</button>
+                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-danger btn-sm">Delete from list</button>
                         }
                         else
                         {
-                            <button type="submit" name="item" class="btn btn-outline-primary btn-sm">Add to list</button>
+                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-primary btn-sm">Add to list</button>
                         }
                     </td>
                 </tr>
-                <input asp-for="@Model.AllowedActionTakenSpec.Id" value="@Model.AllowedActionsTakenList[i].Id" type="hidden" />
-                <input asp-for="@Model.AllowedActionTakenSpec.Active" value="@Model.AllowedActionsTakenList[i].Active" type="hidden" />
-                <input asp-for="@Model.AllowedActionTakenSpec.EventTypeId" value="@Model.AllowedActionsTakenList[i].EventTypeId" type="hidden" />
-                <input asp-for="@Model.AllowedActionTakenSpec.EventTypeName" value="@Model.AllowedActionsTakenList[i].EventTypeName" type="hidden" />
-                <input asp-for="@Model.AllowedActionTakenSpec.EventTypeActive" value="@Model.AllowedActionsTakenList[i].EventTypeActive" type="hidden" />
-                <input asp-for="@Model.AllowedActionTakenSpec.ActionTakenId" value="@Model.AllowedActionsTakenList[i].ActionTakenId" type="hidden" />
-                <input asp-for="@Model.AllowedActionTakenSpec.ActionTakenName" value="@Model.AllowedActionsTakenList[i].ActionTakenName" type="hidden" />
-                <input asp-for="@Model.AllowedActionTakenSpec.ActionTakenActive" value="@Model.AllowedActionsTakenList[i].ActionTakenActive" type="hidden" />
             }
         </tbody>
     </table>
