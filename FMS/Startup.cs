@@ -105,6 +105,7 @@ namespace FMS
             services.AddScoped<IContactTitleRepository, ContactTitleRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
+            services.AddScoped<IAllowedActionTakenHelper, AllowedActionTakenHelper>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

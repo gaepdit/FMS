@@ -1,4 +1,5 @@
 using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
@@ -16,75 +17,90 @@ namespace FMS.Pages.Maintenance.AllowedActionTaken
     public class EditModel : PageModel
     {
         private readonly IAllowedActionTakenRepository _repository;
-        private readonly IActionTakenRepository _actionTakenRepository;
         private readonly IEventTypeRepository _eventTypeRepository;
+        private readonly IAllowedActionTakenHelper _allowedActionTakenHelper;
         public EditModel(
             IAllowedActionTakenRepository repository,
-            IActionTakenRepository actionTakenRepository,
-            IEventTypeRepository eventTypeRepository)
+            IEventTypeRepository eventTypeRepository,
+            IAllowedActionTakenHelper allowedActionTakenHelper)
         {
             _repository = repository;
-            _actionTakenRepository = actionTakenRepository;
             _eventTypeRepository = eventTypeRepository;
+            _allowedActionTakenHelper = allowedActionTakenHelper;
         }
-        public IReadOnlyList<AllowedActionTakenSummaryDto> AllowedActionsTaken { get; private set; }
+        public IList<AllowedActionTakenSpec> AllowedActionsTakenList { get; set; }
+
         public DisplayMessage DisplayMessage { get; private set; }
 
         public EventTypeEditDto EventType { get; private set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
-        {
-            AllowedActionsTaken = await _repository.GetAllowedActionTakenListAsync(id);
+        [BindProperty]
+        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; }
 
-            EventType = await _eventTypeRepository.GetEventTypeByIdAsync(id);
+        [BindProperty]
+        [HiddenInput]
+        public Guid Id { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Id = id.Value;
+            EventType = await _eventTypeRepository.GetEventTypeByIdAsync(id.Value);
+            AllowedActionTakenSpec = new AllowedActionTakenSpec();
+
+            if (EventType == null)
+            {
+                return NotFound();
+            }
+
+            AllowedActionsTakenList = await _allowedActionTakenHelper.GetAllowedActionTakenListByEventIdAsync(EventType.Id);
 
             DisplayMessage = TempData?.GetDisplayMessage();
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Guid? itemId, Guid? id)
-        {
-            if (itemId == null)
-            {
-                return BadRequest();
-            }
-
+        public async Task<IActionResult> OnPostAsync()
+        { 
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var actionTaken = await _actionTakenRepository.GetActionTakenAsync(itemId.Value);
+            Id = AllowedActionTakenSpec.EventTypeId;
 
-            var eventType = await _eventTypeRepository.GetEventTypeByIdAsync(id.Value);
-
-            if (actionTaken == null || eventType == null)
+            if (!await _repository.AllowedActionTakenExistsAsync(AllowedActionTakenSpec.Id))
             {
-                return NotFound();
+                await _repository.CreateAllowedActionTakenAsync(AllowedActionTakenSpec);
             }
-
-            try
+            else
             {
-                await _repository.UpdateAllowedActionTakenAsync(itemId.Value, id.Value);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!await _repository.AllowedActionTakenExistsAsync(itemId.Value))
+                try
                 {
-                    return NotFound();
+                    await _repository.DeleteAllowedActionTakenAsync(AllowedActionTakenSpec.Id);
                 }
-                throw;
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!await _repository.AllowedActionTakenExistsAsync(AllowedActionTakenSpec.Id))
+                    {
+                        return NotFound();
+                    }
+                    throw;
+                }
             }
-
-            var allowedActionTaken = await _repository.GetAllowedActionTakenAsync(id.Value, itemId.Value);
+                
+            AllowedActionsTakenList = await _repository.GetAllowedActionTakenListAsync(Id);
 
             TempData?.SetDisplayMessage(Context.Success,
-                allowedActionTaken.Active
-                    ? $"{MaintenanceOptions.ActionTaken} \"{allowedActionTaken.ActionTakenId}\" successfully removed from list."
-                    : $"{MaintenanceOptions.ActionTaken} \"{allowedActionTaken.ActionTakenId}\" successfully restored.");
+                AllowedActionTakenSpec.Active
+                    ? $"{MaintenanceOptions.AllowedActionTaken} \"{AllowedActionTakenSpec.ActionTakenName}\" successfully Deleted."
+                    : $"{MaintenanceOptions.AllowedActionTaken} \"{AllowedActionTakenSpec.ActionTakenName}\" successfully Added.");
 
-            return RedirectToPage("./Edit", new { id = allowedActionTaken.EventTypeId });
+            return RedirectToPage("Edit", new { id = Id });
         }
     }
 }

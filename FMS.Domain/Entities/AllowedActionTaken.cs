@@ -12,13 +12,10 @@ namespace FMS.Domain.Entities
         {
             Id = Guid.NewGuid();
             EventTypeId = allowedActionTaken.EventTypeId;
+            EventType = allowedActionTaken.EventType;
             ActionTakenId = allowedActionTaken.ActionTakenId;
-        }
-
-        public AllowedActionTaken(AllowedActionTakenCreateDto allowedActionTaken)
-        {
-            EventTypeId = allowedActionTaken.EventTypeId;
-            ActionTakenId = allowedActionTaken.ActionTakenId;
+            ActionTaken = allowedActionTaken.ActionTaken;
+            Active = allowedActionTaken.Active;
         }
 
         public Guid EventTypeId { get; set; }

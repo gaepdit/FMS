@@ -19,7 +19,7 @@ namespace FMS.Domain.Dto
         public bool Active { get; }
 
         public EventType EventType { get; }
-        
+
         public ActionTaken ActionTaken { get; }
     }
 }

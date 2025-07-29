@@ -12,10 +12,18 @@ namespace FMS.Domain.Repositories
 
         Task<bool> AllowedActionTakenExistsAsync(Guid eventTypeId, Guid actionTakenId);
 
+        Task<AllowedActionTakenSpec> GetAllowedActionTakenByIdAsync(Guid? id);
+
+        Task<AllowedActionTakenSpec> GetAllowedActionTakenByAATIdAsync(Guid? id);
+
         Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId);
 
-        Task<IReadOnlyList<AllowedActionTakenSummaryDto>> GetAllowedActionTakenListAsync(Guid eventTypeId);
+        Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId);
 
-        Task<Guid> UpdateAllowedActionTakenAsync(Guid actionTakenId, Guid eventTypeId);
+        Task<Guid> CreateAllowedActionTakenAsync(AllowedActionTakenSpec allowedActionTaken);
+
+        //Task<Guid> UpdateAllowedActionTakenAsync(Guid actionTakenId, Guid eventTypeId);
+
+        Task<Guid> DeleteAllowedActionTakenAsync(Guid? id);
     }
 }
