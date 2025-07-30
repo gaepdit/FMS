@@ -22,6 +22,11 @@ namespace FMS.Infrastructure.Repositories
 
         public Task<StatusEditDto> GetStatusAsync(Guid id) =>
             _context.Statuses.AsNoTracking()
+                .Include(e => e.SourceStatus)
+                .Include(e => e.SoilStatus)
+                .Include(e => e.GroundwaterStatus)
+                .Include(e => e.OverallStatus)
+                .Include(e => e.FundingSource)
                 .Where(e => e.Id == id)
                 .Select(e => new StatusEditDto(e))
                 .SingleOrDefaultAsync();
@@ -82,7 +87,7 @@ namespace FMS.Infrastructure.Repositories
             existingStatus.FundingSourceId = statusUpdates.FundingSourceId;
             existingStatus.LandFill = statusUpdates.LandFill;
             existingStatus.SolidWastePermitNumber = statusUpdates.SolidWastePermitNumber;
-            existingStatus.HSPMScore = statusUpdates.HSPMScore;
+            existingStatus.GAPSScore = statusUpdates.GAPSScore;
             existingStatus.Comments = statusUpdates.Comments;
             existingStatus.Lien = statusUpdates.Lien;
             existingStatus.FinancialAssurance = statusUpdates.FinancialAssurance;

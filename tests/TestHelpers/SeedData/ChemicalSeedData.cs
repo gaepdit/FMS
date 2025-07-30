@@ -18,7 +18,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     CasNo = "83329",
                     ChemicalName = "Acenaphthene",
-                    CommonName = "Acenaphthene",
+                    CommonName = "Napalm",
                     ToxValue = "2",
                     MCLs = ""
                 },

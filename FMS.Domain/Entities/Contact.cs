@@ -1,6 +1,8 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace FMS.Domain.Entities
 {
@@ -20,7 +22,6 @@ namespace FMS.Domain.Entities
             State = contact.State;
             PostalCode = contact.PostalCode;
             Email = contact.Email;
-            Status = contact.Status;
         }
         public Guid FacilityId { get; set; }
         public string GivenName { get; set; }
@@ -35,6 +36,21 @@ namespace FMS.Domain.Entities
         public string State { get; set; }
         public string PostalCode { get; set; }
         public string Email { get; set; }
-        public string Status { get; set; }
+        public ICollection<Phone> Phones { get; set; } = new List<Phone>();
+
+        public string GetMailTo()
+        {
+            return string.Concat("mailto:", Email);
+        }
+
+        public string GetFullNameAndType()
+        {
+            return $"{GivenName} {FamilyName} ({ContactType?.Name})";
+        }
+
+        public string GetFullName()
+        {
+            return $"{GivenName} {FamilyName}";
+        }
     }
 }

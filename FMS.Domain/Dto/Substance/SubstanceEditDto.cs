@@ -12,7 +12,7 @@ namespace FMS.Domain.Dto
         {
             Id = substance.Id;
             FacilityId = substance.FacilityId;
-            ChemicalId = substance.ChemicalId;
+            ChemicalId = substance.Chemical.Id;
             Groundwater = substance.Groundwater;
             Soil = substance.Soil;
             UseForScoring = substance.UseForScoring;

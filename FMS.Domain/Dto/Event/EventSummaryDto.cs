@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
@@ -11,12 +12,12 @@ namespace FMS.Domain.Dto
             Active = eventEntity.Active;
             FacilityId = eventEntity.FacilityId;
             ParentId = eventEntity.ParentId;
-            EventTypeId = eventEntity.EventTypeId;
-            ActionTakenId = eventEntity.ActionTakenId;
+            EventType = eventEntity.EventType;
+            ActionTaken = eventEntity.ActionTaken;
             StartDate = eventEntity.StartDate;
             DueDate = eventEntity.DueDate;
             CompletionDate = eventEntity.CompletionDate;
-            ComplianceOfficerId = eventEntity.ComplianceOfficerId;
+            ComplianceOfficer = eventEntity.ComplianceOfficer;
             EventAmount = eventEntity.EventAmount;
             EntityNameOrNumber = eventEntity.EntityNameOrNumber;
             Comment = eventEntity.Comment;
@@ -24,28 +25,38 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; set; }
 
+        [DisplayName("Active")]
         public bool Active { get; set; }
 
         public Guid FacilityId { get; set; }
 
         public Guid? ParentId { get; set; }
 
-        public Guid? EventTypeId { get; set; }
+        [DisplayName("Event Type")]
+        public EventType EventType { get; set; }
 
-        public Guid? ActionTakenId { get; set; }
+        [DisplayName("Action Taken")]
+        public ActionTaken ActionTaken { get; set; }
 
-        public DateOnly StartDate { get; set; }
+        [DisplayName("Start Date")]
+        public DateOnly? StartDate { get; set; }
 
-        public DateOnly DueDate { get; set; }
+        [DisplayName("Due Date")]
+        public DateOnly? DueDate { get; set; }
 
-        public DateOnly CompletionDate { get; set; }
+        [DisplayName("Completion Date")]
+        public DateOnly? CompletionDate { get; set; }
 
-        public Guid? ComplianceOfficerId { get; set; }
+        [DisplayName("Compliance Officer")]
+        public ComplianceOfficer ComplianceOfficer { get; set; }
 
+        [DisplayName("Event Amount")]
         public decimal EventAmount { get; set; }
 
+        [DisplayName("Entity Name or Number")]
         public string EntityNameOrNumber { get; set; }
 
+        [DisplayName("Comment")]
         public string Comment { get; set; }
     }
 }

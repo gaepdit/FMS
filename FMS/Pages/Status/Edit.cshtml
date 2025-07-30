@@ -1,0 +1,180 @@
+﻿@page
+@model FMS.Pages.Status.EditModel
+@{
+}
+
+<h1>Status</h1>
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label" for="SourceStatus">
+                    Source Status
+                </label>
+                <select class="form-select" id="SourceStatus">
+                    <option value="1">Source Status 1</option>
+                    <option value="2">Source Status 2</option>
+                    <option value="3">Source Status 3</option>
+                    <option value="4">Source Status 4</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="SourceDate">
+                    Source Date
+                </label>
+                <input type="date" class="form-control datepicker" value="2023-12-23" id="SourceDate" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="SourceHWTF">
+                    Source HWTF Projected
+                </label>
+                <input class="form-control" readonly="true" id="SourceHWTF" value="50,000" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label" for="SoilStatus">
+                    Soil Status
+                </label>
+                <select class="form-select" id="SoilStatus">
+                    <option value="1">Soil Status 1</option>
+                    <option value="2">Soil Status 2</option>
+                    <option value="3">Soil Status 3</option>
+                    <option value="4">Soil Status 4</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="SoilDate">
+                    Soil Date
+                </label>
+                <input type="date" class="form-control datepicker" value="2023-12-23" id="SoilDate" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="SoilHWTF">
+                    Soil HWTF Projected
+                </label>
+                <input class="form-control" readonly="true" id="SoilHWTF" value="20,000" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label" for="GroundwaterStatus">
+                    Groundwater Status
+                </label>
+                <select class="form-select" id="GroundwaterStatus">
+                    <option value="1">Groundwater Status 1</option>
+                    <option value="2">Groundwater Status 2</option>
+                    <option value="3">Groundwater Status 3</option>
+                    <option value="4">Groundwater Status 4</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="GroundwaterDate">
+                    Groundwater Date
+                </label>
+                <input type="date" class="form-control datepicker" value="2023-12-23" id="GroundwaterDate" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="GroundwaterHWTF">
+                    Groundwater HWTF Projected
+                </label>
+                <input class="form-control" readonly="true" id="GroundwaterHWTF" value="40,000" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label" for="OverallStatus">
+                    Overall Status
+                </label>
+                <select class="form-select" id="OverallStatus">
+                    <option value="1">Overall Status 1</option>
+                    <option value="2">Overall Status 2</option>
+                    <option value="3">Overall Status 3</option>
+                    <option value="4">Overall Status 4</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label" for="OverallDate">
+                    Date
+                </label>
+                <input type="date" class="form-control datepicker" value="2023-12-23" id="OverallDate" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-2 align-self-end">
+                <div class="form-check">
+                    <label class="form-check-label" for="cbISWQS">
+                        ISWQS
+                    </label>
+                    <input class="form-check-input" type="checkbox" value="true" id="cbISWQS" checked />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="PrimaryFundingSource">
+                    Primary Funding Source
+                </label>
+                <select class="form-select" id="PrimaryFundingSource">
+                    <option value="1">Funding Source 1</option>
+                    <option value="2">Funding Source 2</option>
+                    <option value="3">Funding Source 3</option>
+                    <option value="4">Funding Source 4</option>
+                </select>
+            </div>
+            <div class="col-md-2 offset-md-2 align-self-end">
+                <div class="form-check">
+                    <label class="form-check-label" for="cbLF">
+                        Landfill
+                    </label>
+                    <input class="form-check-input" type="checkbox" value="true" id="cbLF" checked />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label" for="SWPermitNumber">
+                    SW Permit Number
+                </label>
+                <input class="form-control" readonly="true" id="SWPermitNumber" value="SW293845" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label class="form-label" for="GAPSScore">
+                    GAPS Score
+                </label>
+                <input class="form-control" readonly="true" id="GAPSScore" value="34" />
+            </div>
+            <div class="col-md-8">
+                <label class="form-label" for="GAPSComments">Comments</label>
+                <textarea class="form-control" rows="3" id="GAPSComments">some comments to use for info</textarea>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="form-check">
+                    <label class="form-check-label" for="cbLien">
+                        Lien
+                    </label>
+                    <input class="form-check-input" type="checkbox" value="true" id="cbLien" checked />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-sm btn-primary">Lien Tracker</a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="form-check">
+                    <label class="form-check-label" for="cbFinancialAssurance">
+                        Financial Assurance
+                    </label>
+                    <input class="form-check-input" type="checkbox" value="true" id="cbFinancialAssurance" checked />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a class="btn btn-sm btn-primary">Financial Assurance Tracker</a>
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <a class="btn btn-outline-secondary col-md-2">Cancel</a>
+    </form>
+</div>

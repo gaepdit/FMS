@@ -22,33 +22,25 @@ namespace FMS.Infrastructure.Repositories
         public async Task<ParcelEditDto> GetParcelByIdAsync(Guid id)
             {
             var parcel = await _context.Parcels.AsNoTracking()
+                .Include(e => e.ParcelType)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             return parcel == null ? null : new ParcelEditDto(parcel);
         }
 
-        public async Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid locationId)
+        public async Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid facilityId)
         {
-            Prevent.NullOrEmpty(locationId, nameof(locationId));
+            Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
-            if (locationId == Guid.Empty)
-                throw new ArgumentException("Location ID cannot be empty.", nameof(locationId));
+            if (facilityId == Guid.Empty)
+                throw new ArgumentException("Facility ID cannot be empty.", nameof(facilityId));
 
             return await _context.Parcels.AsNoTracking()
-                .Where(e => e.LocationId == locationId)
-                .Select(e => new ParcelSummaryDto
-                {
-                    Id = e.Id,
-                    Active = e.Active,
-                    LocationId = e.LocationId,
-                    ParcelNumber = e.ParcelNumber,
-                    ParcelDescription = e.ParcelDescription,
-                    ParcelTypeId = e.ParcelTypeId,
-                    ParcelType = e.ParcelType,
-                    Acres = e.Acres,
-                    Latitude = e.Latitude,
-                    Longitude = e.Longitude
-                })
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.ListDate)
+                .Include(e => e.ParcelType)
+                .Where(e => e.FacilityId == facilityId)
+                .Select(e => new ParcelSummaryDto(e))
                 .ToListAsync();
         }
 
@@ -66,13 +58,13 @@ namespace FMS.Infrastructure.Repositories
             {
                 Id = Guid.NewGuid(),
                 Active = true,
-                LocationId = parcelCreate.LocationId,
+                FacilityId = parcelCreate.FacilityId,
                 ParcelNumber = parcelCreate.ParcelNumber,
-                ParcelDescription = parcelCreate.ParcelDescription,
-                ParcelTypeId = parcelCreate.ParcelTypeId,
                 Acres = parcelCreate.Acres,
-                Latitude = parcelCreate.Latitude,
-                Longitude = parcelCreate.Longitude
+                ParcelTypeId = parcelCreate.ParcelTypeId,
+                ListDate = parcelCreate.ListDate,
+                DeListDate = parcelCreate.DeListDate,
+                SubListParcelName = parcelCreate.SubListParcelName
             };
 
             _context.Parcels.Add(newParcel);
@@ -95,13 +87,13 @@ namespace FMS.Infrastructure.Repositories
             if (existingParcel == null) throw new InvalidOperationException($"Parcel with ID {id} not found.");
 
             existingParcel.Active = parcelUpdates.Active;
-            existingParcel.LocationId = parcelUpdates.LocationId;
+            existingParcel.FacilityId = parcelUpdates.FacilityId;
             existingParcel.ParcelNumber = parcelUpdates.ParcelNumber;
-            existingParcel.ParcelDescription = parcelUpdates.ParcelDescription;
-            existingParcel.ParcelTypeId = parcelUpdates.ParcelTypeId;
             existingParcel.Acres = parcelUpdates.Acres;
-            existingParcel.Latitude = parcelUpdates.Latitude;
-            existingParcel.Longitude = parcelUpdates.Longitude;
+            existingParcel.ParcelTypeId = parcelUpdates.ParcelTypeId;
+            existingParcel.ListDate = parcelUpdates.ListDate;
+            existingParcel.DeListDate = parcelUpdates.DeListDate;
+            existingParcel.SubListParcelName = parcelUpdates.SubListParcelName;
 
             _context.Parcels.Update(existingParcel);
             await _context.SaveChangesAsync();

@@ -11,7 +11,7 @@ namespace FMS.Domain.Repositories
 
         Task<ParcelEditDto> GetParcelByIdAsync(Guid id);
 
-        Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid locationId);
+        Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid facilityId);
 
         Task<Guid> CreateParcelAsync(ParcelCreateDto parcelCreate);
 

@@ -67,7 +67,8 @@ namespace FMS.Infrastructure.Repositories
             hsrpFacilityProperties.Geologist = hsrpFacilityPropertiesUpdates.Geologist;
             hsrpFacilityProperties.VRPDate = hsrpFacilityPropertiesUpdates.VRPDate;
             hsrpFacilityProperties.BrownfieldDate = hsrpFacilityPropertiesUpdates.BrownfieldDate;
-            
+            hsrpFacilityProperties.DateDeListed = hsrpFacilityPropertiesUpdates.DateDeListed;
+
             _context.HsrpFacilityProperties.Update(hsrpFacilityProperties);
             await _context.SaveChangesAsync();
         }

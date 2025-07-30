@@ -8,6 +8,12 @@ namespace FMS.Domain.Entities
     {
         public Location() { }
 
+        public Location(Guid facilityId)
+        {
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public Location(Guid id, LocationCreateDto location)
         {
             Id = id;

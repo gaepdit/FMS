@@ -43,9 +43,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<SourceStatusSummaryDto>> GetSourceStatusListAsync() =>
             await _context.SourceStatuses.AsNoTracking()
-                .OrderBy(e => e.Name)
-                .Select(e => new SourceStatusSummaryDto(e))
-                .ToListAsync();
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new SourceStatusSummaryDto(e))
+            .ToListAsync();
 
         public Task<bool> CreateSourceStatusAsync(SourceStatusCreateDto sourceStatus)
         {

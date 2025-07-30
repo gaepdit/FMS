@@ -10,36 +10,36 @@ namespace FMS.Domain.Dto
         public ParcelEditDto(Parcel parcel)
         {
             Active = parcel.Active;
-            LocationId = parcel.LocationId;
+            FacilityId = parcel.FacilityId;
             ParcelNumber = parcel.ParcelNumber;
-            ParcelDescription = parcel.ParcelDescription;
-            ParcelType = parcel.ParcelType;
             Acres = parcel.Acres;
-            Latitude = parcel.Latitude;
-            Longitude = parcel.Longitude;
+            ParcelTypeId = parcel.ParcelType?.Id;
+            ListDate = parcel.ListDate;
+            DeListDate = parcel.DeListDate;
+            SubListParcelName = parcel.SubListParcelName;
         }
         public bool Active { get; set; }
 
-        public Guid LocationId { get; set; }
+        public Guid FacilityId { get; set; }
 
         [Display(Name = "Parcel Number")]
         public string ParcelNumber { get; set; }
 
-        [Display(Name = "Description")]
-        public string ParcelDescription { get; set; }
-
-        [Display(Name = "Type")]
-        public Guid ParcelTypeId { get; set; }
-        public ParcelType ParcelType { get; set; }
-
         [Display(Name = "Acreage")]
         public double Acres { get; set; }
 
-        [Display(Name = "Latitude")]
-        public double Latitude { get; set; }
+        [Display(Name = "Type")]
+        public Guid? ParcelTypeId { get; set; }
+        public ParcelType ParcelType { get; set; }
 
-        [Display(Name = "Longitude")]
-        public double Longitude { get; set; }
+        [Display(Name = "List Date")]
+        public DateOnly? ListDate { get; set; }
+
+        [Display(Name = "De-List Date")]
+        public DateOnly? DeListDate { get; set; }
+
+        [Display(Name = "Sub-List Parcel Name")]
+        public string SubListParcelName { get; set; }
     }
 
 }

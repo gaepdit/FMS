@@ -16,24 +16,23 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("72E434BE-1F16-4AE6-9E67-9E0B4B01401B"),
                     Active = true,
-                    FacilityId = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
+                    FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     GivenName = "Joseph",
                     FamilyName = "Schmoe",
-                    ContactTitleId = new Guid("19A1359B-B4A0-4721-83FD-24BEAF7CBAD1"),
+                    ContactTitleId = new Guid("2D38E2D5-A188-4ACF-BE6C-492A85AF1521"),
                     ContactTypeId = new Guid("A5498528-773C-42ED-BDB5-D0F5F67CDE34"),
                     Company = "Pollution Enterprises",
                     Address = "123 Green St.",
                     City = "Woodstock",
                     State = "GA",
                     PostalCode = "30188",
-                    Email = "jschmoe@pollent.com",
-                    Status = "Secondary"
+                    Email = "jschmoe@pollent.com"
                 },
                 new()
                 {
                     Id = new Guid("2BD765CD-B463-431B-8C88-3D384891E680"),
                     Active = true,
-                    FacilityId = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
+                    FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     GivenName = "Bill",
                     FamilyName = "Bailey",
                     ContactTitleId = new Guid("19A1359B-B4A0-4721-83FD-24BEAF7CBAD1"),
@@ -43,8 +42,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock",
                     State = "GA",
                     PostalCode = "30188",
-                    Email = "Bill.Bailey@pollent.com",
-                    Status = "Primary"
+                    Email = "Bill.Bailey@pollent.com"
                 },
                 new()
                 {
@@ -60,8 +58,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "TimTut@MyCo.com", 
-                    Status = "Secondary"
+                    Email = "TimTut@MyCo.com"
                 },
                 new()
                 {
@@ -77,8 +74,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "JenJun@MyCo.com", 
-                    Status = "Primary"
+                    Email = "JenJun@MyCo.com"
                 },
                 new()
                 {
@@ -94,8 +90,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "G.McGregor@AnotherCo.com", 
-                    Status = "Primary"
+                    Email = "G.McGregor@AnotherCo.com"
                 },
                 new()
                 {
@@ -111,8 +106,7 @@ namespace FMS.TestData.SeedData
                     City = "Woodstock", 
                     State = "GA", 
                     PostalCode = "30188", 
-                    Email = "DrMasorati@AnotherCo.com", 
-                    Status = "Secondary",
+                    Email = "DrMasorati@AnotherCo.com"
                 }
             };
         }

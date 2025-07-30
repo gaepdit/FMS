@@ -21,10 +21,15 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<EventEditDto> GetEventByIdAsync(Guid id)
         {
-            var Event = await _context.Events.AsNoTracking()
+            var newEvent = await _context.Events.AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            return Event == null ? null : new EventEditDto(Event);
+            var eventSummary = newEvent == null ? null : new EventSummaryDto(newEvent);
+
+            return eventSummary == null ? null : new EventEditDto(eventSummary);
         }
 
         public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)
@@ -32,8 +37,12 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
             return await _context.Events.AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
                .Where(e => e.FacilityId == facilityId)
                .Select(e => new EventSummaryDto(e))
+               .OrderByDescending(e => e.Active)
                .ToListAsync();
         }
 
@@ -42,9 +51,13 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
             return await _context.Events.AsNoTracking()
-               .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
-               .Select(e => new EventSummaryDto(e))
-               .ToListAsync();
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
+                .OrderByDescending(e => e.Active)
+                .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
+                .Select(e => new EventSummaryDto(e))
+                .ToListAsync();
         }
 
         public Task<Guid> CreateEventAsync(EventCreateDto eventDto)

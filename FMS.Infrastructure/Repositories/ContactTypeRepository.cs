@@ -34,10 +34,12 @@ namespace FMS.Infrastructure.Repositories
             return new ContactTypeEditDto(contactType);
         }
 
-        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => await _context.ContactTypes.AsNoTracking()
-           .OrderBy(e => e.Name)
-           .Select(e => new ContactTypeSummaryDto(e))
-           .ToListAsync();
+        public async Task<IReadOnlyList<ContactTypeSummaryDto>> GetContactTypeListAsync() => 
+            await _context.ContactTypes.AsNoTracking()
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new ContactTypeSummaryDto(e))
+            .ToListAsync();
 
         public async Task<Guid> CreateContactTypeAsync(ContactTypeCreateDto contactType)
         {

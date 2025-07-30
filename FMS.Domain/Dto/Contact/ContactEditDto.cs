@@ -21,11 +21,11 @@ namespace FMS.Domain.Dto
             State = contact.State;
             PostalCode = contact.PostalCode;
             Email = contact.Email;
-            Status = contact.Status;
         }
 
         public Guid Id { get; set; }
 
+        [Display(Name = "Active")]
         public bool Active { get; set; }
 
         [Display(Name = "First Name")]
@@ -60,5 +60,10 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Status")]
         public string Status { get; set; }
+
+        public string GetMailTo()
+        {
+            return string.Concat("mailto:", Email);
+        }
     }
 }

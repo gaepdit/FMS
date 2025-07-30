@@ -12,7 +12,7 @@ namespace FMS.Domain.Dto
         {
             Id = onsiteScore.Id;
             Active = onsiteScore.Active;
-            ScoreId = onsiteScore.ScoreId;
+            ScoreId = onsiteScore.FacilityId;
             OnsiteScoreValue = onsiteScore.OnsiteScoreValue;
             A = onsiteScore.A;
             B = onsiteScore.B;
@@ -31,33 +31,46 @@ namespace FMS.Domain.Dto
 
         public bool Active { get; set; }
 
-        [Required]
         public Guid ScoreId { get; set; }
 
+        [Display(Name = "Onsite Score Value")]
         public string OnsiteScoreValue { get; set; }
 
+        [Display(Name = "A")]
         public int A { get; set; }
 
+        [Display(Name = "B")]
         public int B { get; set; }
 
+        [Display(Name = "C")]
         public int C { get; set; }
 
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Display(Name = "Chemical Name 1D")]
         public string ChemName1D { get; set; }
 
+        [Display(Name = "Other 1D")]
         public string Other1D { get; set; }
 
+        [Display(Name = "D2")]
         public int D2 { get; set; }
 
+        [Display(Name = "D3")]
         public int D3 { get; set; }
 
         public Guid ChemicalId { get; set; }
+        [Display(Name = "Chemical")]
+        public Chemical Chemical { get; set; }
 
+        [Display(Name = "CasNo")]
         public string CASNO { get; set; }
 
+        [Display(Name = "E1")]
         public int E1 { get; set; }
 
+        [Display(Name = "E2")]
         public int E2 { get; set; }
     }
 }

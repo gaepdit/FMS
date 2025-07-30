@@ -36,10 +36,12 @@ namespace FMS.Infrastructure.Repositories
             return new EventTypeEditDto(eventType);
         }
 
-        public async Task<IReadOnlyList<EventTypeSummaryDto>> GetEventTypeListAsync() => await _context.EventTypes.AsNoTracking()
-           .OrderBy(e => e.Name)
-           .Select(e => new EventTypeSummaryDto(e))
-           .ToListAsync();
+        public async Task<IReadOnlyList<EventTypeSummaryDto>> GetEventTypeListAsync() => 
+            await _context.EventTypes.AsNoTracking()
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new EventTypeSummaryDto(e))
+            .ToListAsync();
 
         public async Task<Guid> CreateEventTypeAsync(EventTypeCreateDto eventType)
         {

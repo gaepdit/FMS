@@ -31,7 +31,8 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<ParcelTypeSummaryDto>> GetParcelTypeListAsync() =>
             await _context.ParcelTypes.AsNoTracking()
-            .OrderBy(e => e.Name)
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
             .Select(e => new ParcelTypeSummaryDto(e))
             .ToListAsync();
 

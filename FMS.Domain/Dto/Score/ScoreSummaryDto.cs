@@ -18,7 +18,6 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; set; }
 
-        [Required]
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Scored Date")]
@@ -31,7 +30,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Comments")]
         public string Comments { get; set; }
 
-        [Display(Name = "Use alternate language from comments field")]
+        [Display(Name = "Use alt language for Site Summary Report")]
         public bool UseComments { get; set; }
     }
 }

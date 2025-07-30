@@ -28,13 +28,13 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("7805FD4F-081C-48CD-91A1-06E9A28FE7CB"),
                     Active = true,
-                    Name = "Office Manager",
+                    Name = "Secondary Contact",
                 },
                 new()
                 {
                     Id = new Guid("25AFB8D8-1718-4FC7-AE01-EDE08AB1785E"),
                     Active = true,
-                    Name = "Supervisor",
+                    Name = "Consultant",
                 },
                 new()
                 {
@@ -46,7 +46,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("56F74F8A-2F6D-4445-A0E0-529B1C885C2B"),
                     Active = true,
-                    Name = "Attorney",
+                    Name = "Legal Counsel",
                 }
             };
         }
