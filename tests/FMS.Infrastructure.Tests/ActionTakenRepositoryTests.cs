@@ -58,13 +58,51 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-        // Tests for ActionTakenExistsAsync method
-
+        // ActionTakenNameExistsAsync
         [Test]
-        public void ActionTakenExistsAsync_ReturnsTrue_WhenIdIsValid()
+        public async Task ActionTakenNameExistsAsync_ReturnsTrue_WhenNameIsValid()
         {
-            Assert.Pass();
+            var newActionTaken = new ActionTaken
+            {
+                Id = Guid.NewGuid(),
+                Name = "VALID_NAME",
+                Active = true
+            };
+            _context.ActionsTaken.Add(newActionTaken);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.ActionTakenNameExistsAsync("VALID_NAME");
+            result.Should().BeTrue();
         }
+        [Test]
+        public async Task ActionTakenNameExistsAsync_ReturnsFalse_WhenNameIsInvalid()
+        {
+            var newActionTaken = new ActionTaken
+            {
+                Id = Guid.NewGuid(),
+                Name = "VALID_NAME",
+                Active = true
+            };
+            _context.ActionsTaken.Add(newActionTaken);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.ActionTakenNameExistsAsync("INVALID_NAME");
+            result.Should().BeFalse();
+        }
+
+        // GetActionTakenAsync
+
+
+        // GetActionTakenListAsync
+
+
+        // CreateActionTakenAsync
+
+
+        // UpdateActionTakenAsync
+
+
+
     }
 
 }
