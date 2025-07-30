@@ -91,6 +91,16 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetActionTakenAsync
+        [Test]
+        public async Task GetActionTakenAsync_WhenIdExist()
+        {
+            var existingAT = await _context.ActionsTaken.FirstAsync();
+            var result = await _repository.GetActionTakenAsync(existingAT.Id);
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ActionTakenEditDto>();
+            result.Name.Should().Be(existingAT.Name);
+        }
 
 
         // GetActionTakenListAsync
