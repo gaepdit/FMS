@@ -77,13 +77,13 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task ActionTakenNameExistsAsync_ReturnsFalse_WhenNameIsInvalid()
         {
-            var newActionTaken = new ActionTaken
+            var newAT = new ActionTaken
             {
                 Id = Guid.NewGuid(),
                 Name = "VALID_NAME",
                 Active = true
             };
-            _context.ActionsTaken.Add(newActionTaken);
+            _context.ActionsTaken.Add(newAT);
             await _context.SaveChangesAsync();
 
             var result = await _repository.ActionTakenNameExistsAsync("INVALID_NAME");
@@ -101,13 +101,31 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeOfType<ActionTakenEditDto>();
             result.Name.Should().Be(existingAT.Name);
         }
+        [Test]
+        public async Task GetActionTakenAsync_WhenIdDoesNotExist_ReturnNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var result = await _repository.GetActionTakenAsync(nonExistingId);
+
+            result.Should().BeNull();
+        }
 
 
         // GetActionTakenListAsync
 
 
         // CreateActionTakenAsync
+        [Test]
+        public async Task CreateActionTakenAsync_CreateActionTaken_WhenDataIsValid()
+        {
+            var dto = new ActionTakenCreateDto { Name = "UNIQUE_NAME" };
 
+            var newId = await _repository.CreateActionTakenAsync(dto);
+            var createdAT = await _context.ActionsTaken.FindAsync(newId);
+
+            createdAT.Should().NotBeNull();
+            createdAT.Name.Should().Be(dto.Name);
+        }
 
         // UpdateActionTakenAsync
 
