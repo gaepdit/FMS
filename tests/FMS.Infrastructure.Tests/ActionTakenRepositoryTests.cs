@@ -57,18 +57,33 @@ namespace FMS.Infrastructure.Tests
                 _disposed = true;
             }
         }
+        // ActionTakenExistAsync
+        [Test]
+        public async Task ActionTakenExistAsync_ReturnsTrue_WhenIdIsValid()
+        {
+            var validAT = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+
+            _context.ActionsTaken.Add(validAT);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.ActionTakenExistsAsync(validAT.Id);
+            result.Should().BeTrue();
+        }
+        [Test]
+        public async Task ActionTakenExistAsync_ReturnsFalse_WhenIdIsInvalid()
+        {
+            var invalidId = Guid.NewGuid();
+
+            var result = await _repository.ActionTakenExistsAsync(invalidId);
+            result.Should().BeFalse();
+        }
 
         // ActionTakenNameExistsAsync
         [Test]
         public async Task ActionTakenNameExistsAsync_ReturnsTrue_WhenNameIsValid()
         {
-            var newActionTaken = new ActionTaken
-            {
-                Id = Guid.NewGuid(),
-                Name = "VALID_NAME",
-                Active = true
-            };
-            _context.ActionsTaken.Add(newActionTaken);
+            var newAT = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.ActionsTaken.Add(newAT);
             await _context.SaveChangesAsync();
 
             var result = await _repository.ActionTakenNameExistsAsync("VALID_NAME");
@@ -77,12 +92,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task ActionTakenNameExistsAsync_ReturnsFalse_WhenNameIsInvalid()
         {
-            var newAT = new ActionTaken
-            {
-                Id = Guid.NewGuid(),
-                Name = "VALID_NAME",
-                Active = true
-            };
+            var newAT = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_NAME"};
             _context.ActionsTaken.Add(newAT);
             await _context.SaveChangesAsync();
 
@@ -110,10 +120,6 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeNull();
         }
 
-
-        // GetActionTakenListAsync
-
-
         // CreateActionTakenAsync
         [Test]
         public async Task CreateActionTakenAsync_CreateActionTaken_WhenDataIsValid()
@@ -126,11 +132,27 @@ namespace FMS.Infrastructure.Tests
             createdAT.Should().NotBeNull();
             createdAT.Name.Should().Be(dto.Name);
         }
+        [Test]
+        public async Task CreateActionTakenAsync_ThrowException_WhereNameAlreadyExist()
+        {
+            var existingAT = new ActionTaken { Id = Guid.NewGuid(), Name = "DUPLICATE_NAME"};
+            _context.ActionsTaken.Add(existingAT);
+            await _context.SaveChangesAsync();
+
+            var dto = new ActionTakenCreateDto { Name = "DUPLICATE_NAME" };
+
+            Func<Task> action = async () => await _repository.CreateActionTakenAsync(dto);
+            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Action Taken " + existingAT.Name + " already exist.");
+        }
 
         // UpdateActionTakenAsync
+        [Test]
+        public async Task UpdateActionTakenAsync_UpdateExistingPhone_WhenDataIsValid()
+        {
 
+        }
 
-
+        //UpdateActionTakenStatusAsync
     }
 
 }
