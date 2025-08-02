@@ -1,0 +1,41 @@
+﻿@page
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.AllowedActionTaken.IndexModel
+
+@section Scripts {
+    <script src="~/js/formIndex.js"></script>
+}
+
+@{
+    ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.AllowedActionsTaken}";
+}
+
+<a asp-page="../Index">← Site Maintenance</a>
+<h1>
+    @MaintenanceOptions.AllowedActionsTaken
+</h1>
+<partial name="_AlertPartial" for="DisplayMessage" id="alert" />
+
+<table class="table" aria-label="List of Event Types">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col" class="col-md-9">Name</th>
+            <th scope="col" class="col-md-3">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EventTypes)
+        {
+            <tr class="@(!item.Active ? "table-warning" : "")">
+                <td class="text-nowrap">
+                    @Html.DisplayFor(m => item.Name, "StringOrNone")
+                    @Html.DisplayFor(m => item.Active, "BoolRemoved")
+                </td>
+                <td class="text-nowrap">
+                    <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit Allowed Actions Taken</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

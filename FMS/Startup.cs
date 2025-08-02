@@ -92,6 +92,7 @@ namespace FMS
             services.AddScoped<IOrganizationalUnitRepository, OrganizationalUnitRepository>();
             services.AddScoped<ICabinetRepository, CabinetRepository>();
             services.AddScoped<IActionTakenRepository, ActionTakenRepository>();
+            services.AddScoped<IAllowedActionTakenRepository, AllowedActionTakenRepository>();
             services.AddScoped<IEventTypeRepository, EventTypeRepository>();
             services.AddScoped<IFundingSourceRepository, FundingSourceRepository>();
             services.AddScoped<IGroundwaterStatusRepository, GroundwaterStatusRepository>();
@@ -104,6 +105,7 @@ namespace FMS
             services.AddScoped<IContactTitleRepository, ContactTitleRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
+            services.AddScoped<IAllowedActionTakenHelper, AllowedActionTakenHelper>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

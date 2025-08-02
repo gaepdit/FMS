@@ -12,6 +12,13 @@ namespace FMS.Domain.Entities
             Name = eventType.Name;
         }
 
+        public EventType(EventTypeEditDto eventType)
+        {
+            Id = eventType.Id;
+            Name = eventType.Name;
+            Active = eventType.Active;
+        }
+
         public string Name { get; set; }
 
         public void TrimAll()

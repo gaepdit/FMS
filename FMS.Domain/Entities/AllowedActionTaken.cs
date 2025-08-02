@@ -8,10 +8,14 @@ namespace FMS.Domain.Entities
     {
         public AllowedActionTaken() { }
 
-        public AllowedActionTaken(AllowedActionTakenCreateDto allowedActionTaken)
+        public AllowedActionTaken(AllowedActionTaken allowedActionTaken)
         {
+            Id = Guid.NewGuid();
             EventTypeId = allowedActionTaken.EventTypeId;
+            EventType = allowedActionTaken.EventType;
             ActionTakenId = allowedActionTaken.ActionTakenId;
+            ActionTaken = allowedActionTaken.ActionTaken;
+            Active = allowedActionTaken.Active;
         }
 
         public Guid EventTypeId { get; set; }

@@ -34,9 +34,10 @@ namespace FMS.Infrastructure.Repositories
             return new ActionTakenEditDto(actionTaken);
         }
 
-        public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync() => await _context.ActionsTaken.AsNoTracking()
+        public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListAsync(bool ActiveOnly = false) => await _context.ActionsTaken.AsNoTracking()
            .OrderByDescending(e => e.Active)
            .ThenBy(e => e.Name)
+           .Where(e => e.Active || e.Active == ActiveOnly)
            .Select(e => new ActionTakenSummaryDto(e))
            .ToListAsync();
 

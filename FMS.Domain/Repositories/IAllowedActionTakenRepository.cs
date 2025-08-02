@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,14 +10,20 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> AllowedActionTakenExistsAsync(Guid id);
 
-        Task<AllowedActionTakenEditDto> GetAllowedActionTakenAsync(Guid id);
+        Task<bool> AllowedActionTakenExistsAsync(Guid eventTypeId, Guid actionTakenId);
 
-        Task<IReadOnlyList<AllowedActionTakenSummaryDto>> GetAllowedActionTakenListAsync();
+        //Task<AllowedActionTakenSpec> GetAllowedActionTakenByIdAsync(Guid? id);
 
-        Task<Guid> CreateAllowedActionTakenAsync(AllowedActionTakenCreateDto allowedActionTaken);
+        Task<AllowedActionTakenSpec> GetAllowedActionTakenByAATIdAsync(Guid? id);
 
-        Task UpdateAllowedActionTakenAsync(Guid id, AllowedActionTakenEditDto allowedActionTakenUpdates);
+        //Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId);
 
-        Task UpdateAllowedActionTakenStatusAsync(Guid id, bool active);
+        Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId);
+
+        Task<Guid> CreateAllowedActionTakenAsync(AllowedActionTakenSpec allowedActionTaken);
+
+        //Task<Guid> UpdateAllowedActionTakenAsync(Guid actionTakenId, Guid eventTypeId);
+
+        Task<Guid> DeleteAllowedActionTakenAsync(Guid? id);
     }
 }

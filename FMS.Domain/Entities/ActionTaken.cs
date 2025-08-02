@@ -10,6 +10,12 @@ namespace FMS.Domain.Entities
         {
             Name = actionTaken.Name;
         }
+        public ActionTaken(ActionTakenSummaryDto actionTaken)
+        {
+            Id = actionTaken.Id;
+            Name = actionTaken.Name;
+            Active = actionTaken.Active;
+        }
         public string Name { get; set; }
         public void TrimAll()
         {

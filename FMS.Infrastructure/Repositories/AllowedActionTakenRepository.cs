@@ -4,6 +4,7 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Graph.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,117 +12,178 @@ using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
-    public class AllowedActionTakenRepository
+    public class AllowedActionTakenRepository : IAllowedActionTakenRepository
     {
         public readonly FmsDbContext _context;
         public AllowedActionTakenRepository(FmsDbContext context) => _context = context;
 
-
         public Task<bool> AllowedActionTakenExistsAsync(Guid id) =>
             _context.AllowedActionsTaken.AnyAsync(e => e.Id == id);
 
-        public async Task<AllowedActionTakenEditDto> GetAllowedActionTakenAsync(Guid id)
-        {
-            Prevent.Null(id, nameof(id));
+        public Task<bool> AllowedActionTakenExistsAsync(Guid eventTypeId, Guid actionTakenId) =>
+            _context.AllowedActionsTaken.AnyAsync(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId);
 
-            return await _context.AllowedActionsTaken.AsNoTracking()
-                .Where(e => e.Id == id)
-                .Select(e => new AllowedActionTakenEditDto(e))
-                .SingleOrDefaultAsync();
+        //public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByIdAsync(Guid? id)
+        //    {
+        //    if (!id.HasValue)
+        //    {
+        //        return null;
+        //    }
+        //    var allowedActionTaken =  await _context.AllowedActionsTaken.AsNoTracking()
+        //        .Where(e => e.Id == id.Value)
+        //        .Include(e => e.EventType)
+        //        .Include(e => e.ActionTaken)
+        //        .Select(e => new AllowedActionTaken(e))
+        //        .SingleOrDefaultAsync();
+
+        //    if (allowedActionTaken == null)
+        //    {
+        //        return null;
+        //    }
+        //    return new AllowedActionTakenSpec()
+        //    {
+        //        Id = allowedActionTaken.Id,
+        //        EventTypeId = allowedActionTaken.EventTypeId,
+        //        ActionTakenId = allowedActionTaken.ActionTakenId,
+        //        EventTypeName = allowedActionTaken.EventType.Name,
+        //        ActionTakenName = allowedActionTaken.ActionTaken.Name,
+        //        Active = allowedActionTaken.Active
+        //    };
+        //}
+
+        public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByAATIdAsync(Guid? id)
+        {
+            if (!id.HasValue)
+            {
+                return null;
+            }
+            if (!await AllowedActionTakenExistsAsync(id.Value))
+            {
+                return null;
+            }
+            AllowedActionTaken allowedActionTaken = await _context.AllowedActionsTaken
+                .AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .SingleOrDefaultAsync(e => e.Id == id.Value);
+
+            return new AllowedActionTakenSpec(allowedActionTaken);
         }
 
-        public async Task<IReadOnlyList<AllowedActionTakenSummaryDto>> GetAllowedActionTakenListAsync()
+        //public async Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId)
+        //{
+        //     return await _context.AllowedActionsTaken.AsNoTracking()
+        //        .Where(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId)
+        //        .Select(e => new AllowedActionTaken(e))
+        //        .SingleOrDefaultAsync();
+        //}
+
+        public async Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId)
         {
             return await _context.AllowedActionsTaken.AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Where(e => e.EventTypeId == eventTypeId)
                 .OrderByDescending(e => e.Active)
-                .ThenBy(e => e.EventType.Name)
                 .ThenBy(e => e.ActionTaken.Name)
-                .Select(e => new AllowedActionTakenSummaryDto(e))
+                .Select(e => new AllowedActionTakenSpec()
+                {
+                    Id = e.Id,
+                    EventTypeId = e.EventTypeId,
+                    ActionTakenId = e.ActionTakenId,
+                    EventTypeName = e.EventType.Name,
+                    EventTypeActive = e.EventType.Active,
+                    ActionTakenName = e.ActionTaken.Name,
+                    ActionTakenActive = e.ActionTaken.Active,
+                    Active = e.Active
+                })
                 .ToListAsync();
         }
 
-        public Task<Guid> CreateAllowedActionTakenAsync(AllowedActionTakenCreateDto allowedActionTaken)
+        public async Task<Guid> CreateAllowedActionTakenAsync(AllowedActionTakenSpec allowedActionTaken)
         {
             Prevent.Null(allowedActionTaken, nameof(allowedActionTaken));
+            Prevent.NullOrEmpty(allowedActionTaken.EventTypeId, nameof(allowedActionTaken.EventTypeId));
+            Prevent.NullOrEmpty(allowedActionTaken.ActionTakenId, nameof(allowedActionTaken.ActionTakenId));
 
-            if (allowedActionTaken.EventTypeId == Guid.Empty)
+            if (await AllowedActionTakenExistsAsync(allowedActionTaken.EventTypeId, allowedActionTaken.ActionTakenId))
             {
-                throw new ArgumentException($"{nameof(allowedActionTaken.EventTypeId)} cannot be an empty GUID.");
+                throw new ArgumentException($"Allowed Action Taken already exists.");
             }
 
-            if (allowedActionTaken.ActionTakenId == Guid.Empty)
+            var newAllowedActionTaken = new AllowedActionTaken
             {
-                throw new ArgumentException($"{nameof(allowedActionTaken.ActionTakenId)} cannot be an empty GUID.");
-            }
-
-            return CreateAllowedActionTakenInternalAsync(allowedActionTaken);
-        }
-
-        private async Task<Guid> CreateAllowedActionTakenInternalAsync(AllowedActionTakenCreateDto allowedActionTaken)
-        {
-            if (await _context.AllowedActionsTaken.AnyAsync(e =>
-                e.EventTypeId == allowedActionTaken.EventTypeId &&
-                e.ActionTakenId == allowedActionTaken.ActionTakenId))
-            {
-                throw new ArgumentException($"Allowed Action Taken for Event Type {allowedActionTaken.EventTypeId} and Action Taken {allowedActionTaken.ActionTakenId} already exists.");
-            }
-
-            var newAllowedActionTaken = new AllowedActionTaken(allowedActionTaken);
-
+                ActionTakenId = allowedActionTaken.ActionTakenId,
+                EventTypeId = allowedActionTaken.EventTypeId,
+                Active = true
+            };
             await _context.AllowedActionsTaken.AddAsync(newAllowedActionTaken);
             await _context.SaveChangesAsync();
             return newAllowedActionTaken.Id;
         }
 
-        public Task UpdateAllowedActionTakenAsync(Guid id, AllowedActionTakenEditDto allowedActionTakenUpdates)
+        //public async Task<Guid> UpdateAllowedActionTakenAsync(Guid actionTakenId, Guid eventTypeId)
+        //{
+        //    if (await AllowedActionTakenExistsAsync(eventTypeId, actionTakenId))
+        //    {
+        //        return await UpdateAllowedActionTakenInternalAsync(actionTakenId, eventTypeId);
+        //    }
+        //    else
+        //    {
+        //        return await UpdateAllowedActionTakenInternalAsync(actionTakenId, eventTypeId, true);
+        //    }
+        //}
+
+        //private async Task<Guid> UpdateAllowedActionTakenInternalAsync(Guid actionTakenId, Guid eventTypeId, bool? createNew = false)
+        //{
+        //    if(createNew == true)
+        //    {
+        //        var newAllowedActionTaken = new AllowedActionTaken
+        //        {
+        //            ActionTakenId = actionTakenId,
+        //            EventTypeId = eventTypeId,
+        //            Active = true
+        //        };
+        //        await _context.AllowedActionsTaken.AddAsync(newAllowedActionTaken);
+        //        await _context.SaveChangesAsync();
+        //        return newAllowedActionTaken.Id;
+        //    }
+        //    else
+        //    {
+        //        var existingAllowedActionTaken = await GetAllowedActionTakenAsync(eventTypeId, actionTakenId);
+
+        //        if (existingAllowedActionTaken == null)
+        //        {
+        //            throw new ArgumentException($"Allowed Action Taken with Id {existingAllowedActionTaken.Id} does not exist.");
+        //        }
+
+        //        existingAllowedActionTaken.Active = !existingAllowedActionTaken.Active;
+
+        //        _context.AllowedActionsTaken.Update(existingAllowedActionTaken);
+        //        await _context.SaveChangesAsync();
+        //        return existingAllowedActionTaken.Id;
+        //    }
+        //}
+
+        public async Task<Guid> DeleteAllowedActionTakenAsync(Guid? id)
         {
-            Prevent.Null(id, nameof(id));
-            Prevent.Null(allowedActionTakenUpdates, nameof(allowedActionTakenUpdates));
-            Prevent.NullOrEmpty(allowedActionTakenUpdates.EventTypeId, nameof(allowedActionTakenUpdates.EventTypeId));
-            Prevent.NullOrEmpty(allowedActionTakenUpdates.ActionTakenId, nameof(allowedActionTakenUpdates.ActionTakenId));
-
-            return UpdateAllowedActionTakenInternalAsync(id, allowedActionTakenUpdates);
-        }
-
-        private async Task UpdateAllowedActionTakenInternalAsync(Guid id, AllowedActionTakenEditDto allowedActionTakenUpdates)
-        {
-            if (await _context.AllowedActionsTaken.AnyAsync(e =>
-                e.EventTypeId == allowedActionTakenUpdates.EventTypeId &&
-                e.ActionTakenId == allowedActionTakenUpdates.ActionTakenId &&
-                e.Id != id))
+            if(!await AllowedActionTakenExistsAsync(id.Value))
             {
-                throw new ArgumentException($"Allowed Action Taken for Event Type {allowedActionTakenUpdates.EventTypeId} and Action Taken {allowedActionTakenUpdates.ActionTakenId} already exists.");
+                throw new ArgumentException("No Allowed Action Taken records found.");
             }
-
-            var existingAllowedActionTaken = await _context.AllowedActionsTaken.FindAsync(id);
-
-            if (existingAllowedActionTaken == null)
+            else
             {
-                throw new ArgumentException($"Allowed Action Taken with Id {id} does not exist.");
+                if (await GetAllowedActionTakenByAATIdAsync(id.Value) != null)
+                {
+                    var existingAllowedActionTaken = await _context.AllowedActionsTaken.FindAsync(id.Value);
+                    _context.AllowedActionsTaken.Remove(existingAllowedActionTaken);
+                    await _context.SaveChangesAsync();
+                    return id.Value;
+                }
+                else {   
+                    throw new ArgumentException($"Allowed Action Taken with Id {id.Value} does not exist.");
+                }
             }
-
-            existingAllowedActionTaken.EventTypeId = allowedActionTakenUpdates.EventTypeId;
-            existingAllowedActionTaken.ActionTakenId = allowedActionTakenUpdates.ActionTakenId;
-
-            _context.AllowedActionsTaken.Update(existingAllowedActionTaken);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAllowedActionTakenStatusAsync(Guid id, bool active)
-        {
-            Prevent.Null(id, nameof(id));
-
-            var existingAllowedActionTaken = await _context.AllowedActionsTaken.FindAsync(id);
-
-            if (existingAllowedActionTaken == null)
-            {
-                throw new ArgumentException($"Allowed Action Taken with Id {id} does not exist.");
-            }
-
-            existingAllowedActionTaken.Active = active;
-
-            _context.AllowedActionsTaken.Update(existingAllowedActionTaken);
-            await _context.SaveChangesAsync();
         }
 
 

@@ -10,18 +10,16 @@ namespace FMS.Domain.Dto
         {
             Id = allowedActionTaken.Id;
             Active = allowedActionTaken.Active;
-            EventTypeId = allowedActionTaken.EventTypeId;
-            ActionTakenId = allowedActionTaken.ActionTakenId;
+            EventType = allowedActionTaken.EventType;
+            ActionTaken = allowedActionTaken.ActionTaken;
         }
 
         public Guid Id { get; }
 
         public bool Active { get; }
 
-        public Guid EventTypeId { get; }
         public EventType EventType { get; }
 
-        public Guid ActionTakenId { get; }
         public ActionTaken ActionTaken { get; }
     }
 }
