@@ -92,7 +92,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task ActionTakenNameExistsAsync_ReturnsFalse_WhenNameIsInvalid()
         {
-            var newAT = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_NAME"};
+            var newAT = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_NAME" };
             _context.ActionsTaken.Add(newAT);
             await _context.SaveChangesAsync();
 
@@ -135,7 +135,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task CreateActionTakenAsync_ThrowException_WhereNameAlreadyExist()
         {
-            var existingAT = new ActionTaken { Id = Guid.NewGuid(), Name = "DUPLICATE_NAME"};
+            var existingAT = new ActionTaken { Id = Guid.NewGuid(), Name = "DUPLICATE_NAME" };
             _context.ActionsTaken.Add(existingAT);
             await _context.SaveChangesAsync();
 
@@ -149,11 +149,59 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task UpdateActionTakenAsync_UpdateExistingPhone_WhenDataIsValid()
         {
+            var existingAT = new ActionTaken { Id = Guid.NewGuid(), Name = "ORIGINAL_NAME" };
+            _context.ActionsTaken.Add(existingAT);
+            await _context.SaveChangesAsync();
 
+            var updateDto = new ActionTakenEditDto { Name = "UPDATED_NAME" };
+            await _repository.UpdateActionTakenAsync(existingAT.Id, updateDto);
+
+            var updatedAT = await _context.ActionsTaken.FindAsync(existingAT.Id);
+            updatedAT.Name.Should().Be("UPDATED_NAME");
+        }
+        [Test]
+        public async Task UpdateActionTakenAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new ActionTakenEditDto { Name = "NON_EXISTENT" };
+
+            Func<Task> action = async () => await _repository.UpdateActionTakenAsync(invalidId, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Action Taken ID not found. (Parameter 'id')");
+        }
+        [Test]
+        public async Task UpdateActionTakenAsync_ThrowsArgumentExeption_WhenNameAlreadyExist()
+        {
+            var existingAT = new ActionTaken { Id = Guid.NewGuid(), Name = "DUPLICATE_NAME" };
+            _context.ActionsTaken.Add(existingAT);
+            await _context.SaveChangesAsync();
+
+            var updateDto = new ActionTakenEditDto { Name = "DUPLICATE_NAME" };
+
+            Func<Task> action = async () => await _repository.UpdateActionTakenAsync(existingAT.Id, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Action Taken Name 'DUPLICATE_NAME' already exists.");
         }
 
         //UpdateActionTakenStatusAsync
-    }
+        [Test]
+        public async Task UpdateActionTakenStatusAsync_UpdatesStatusCorrectly()
+        {
+            var existingAT = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_NAME", Active = true };
+            _context.ActionsTaken.Add(existingAT);
+            await _context.SaveChangesAsync();
 
+            await _repository.UpdateActionTakenStatusAsync(existingAT.Id, false);
+
+            var updatedAT = await _context.ActionsTaken.FindAsync(existingAT.Id);
+            updatedAT.Active.Should().BeFalse();
+        }
+        [Test]
+        public async Task UpdateActionTakenStatusAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var updateDto = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_NAME", Active = true };
+
+            Func<Task> action = async () => await _repository.UpdateActionTakenStatusAsync(updateDto.Id, false);
+            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Action Taken ID not found");
+        }
+    }
 }
 
