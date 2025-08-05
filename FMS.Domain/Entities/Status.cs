@@ -34,9 +34,15 @@ namespace FMS.Domain.Entities
             LandFill = status.LandFill;
             SolidWastePermitNumber = status.SolidWastePermitNumber;
             GAPSScore = status.GAPSScore;
+            GAPSModelDate = status.GAPSModelDate;
+            GAPSNoOfUnknowns = status.GAPSNoOfUnknowns;
+            GAPSAssessmentId = status.GAPSAssessmentId;
             Comments = status.Comments;
             Lien = status.Lien;
             FinancialAssurance = status.FinancialAssurance;
+            CostEstimate = status.CostEstimate;
+            CostEstimateDate = status.CostEstimateDate;
+            AbandonSitesId = status.AbandonSitesId;
         }
 
         public Guid FacilityId { get; set; }
@@ -91,8 +97,18 @@ namespace FMS.Domain.Entities
         [Display(Name = "Solid Waste Permit Number")]
         public string SolidWastePermitNumber { get; set; }
 
-        [Display(Name = "GAPS Score")]
+        [Display(Name = "GAPS Model Score")]
         public int GAPSScore { get; set; }
+
+        [Display(Name = "GAPS Model Date")]
+        public DateOnly? GAPSModelDate { get; set; }
+
+        [Display(Name = "GAPS Model No. of Unknowns")]
+        public int GAPSNoOfUnknowns { get; set; }
+
+        public Guid GAPSAssessmentId { get; set; }
+        [Display(Name = "GAPS Assessment")]
+        public GapsAssessment GAPSAssessment { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -102,5 +118,15 @@ namespace FMS.Domain.Entities
 
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
+
+        [Display(Name = "Cost Estimate")]
+        public double? CostEstimate { get; set; }
+
+        [Display(Name = "Cost Estimate Date")]
+        public DateOnly? CostEstimateDate { get; set; }
+
+        public Guid AbandonSitesId { get; set; }
+        [Display(Name = "Abandon Sites")]
+        public AbandonSites AbandonSites { get; set; }
     }
 }

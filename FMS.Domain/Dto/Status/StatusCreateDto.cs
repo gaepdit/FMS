@@ -59,8 +59,18 @@ namespace FMS.Domain.Dto
         [Display(Name = "Solid Waste Permit Number")]
         public string SolidWastePermitNumber { get; set; }
 
-        [Display(Name = "GAPSScore")]
+        [Display(Name = "GAPS Model Score")]
         public int GAPSScore { get; set; }
+
+        [Display(Name = "GAPS Model Date")]
+        public DateOnly? GAPSModelDate { get; set; }
+
+        [Display(Name = "GAPS No. of Unknowns")]
+        public int GAPSNoOfUnknowns { get; set; }
+
+        public Guid GAPSAssessmentId { get; set; }
+        [Display(Name = "GAPS Assessment")]
+        public GapsAssessment GAPSAssessment { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }
@@ -70,5 +80,15 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
+
+        [Display(Name = "Cost Estimate")]
+        public double? CostEstimate { get; set; }
+
+        [Display(Name = "Cost Estimate Date")]
+        public DateOnly? CostEstimateDate { get; set; }
+
+        public Guid AbandonSitesId { get; set; }
+        [Display(Name = "Abandon Sites")]
+        public AbandonSites AbandonSites { get; set; }
     }
 }
