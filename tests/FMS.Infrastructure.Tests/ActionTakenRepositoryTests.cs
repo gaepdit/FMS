@@ -175,10 +175,14 @@ namespace FMS.Infrastructure.Tests
             _context.ActionsTaken.Add(existingAT);
             await _context.SaveChangesAsync();
 
+            var existingAT2 = new ActionTaken { Id = Guid.NewGuid(), Name = "FILLER_NAME" };
+            _context.ActionsTaken.Add(existingAT2);
+            await _context.SaveChangesAsync();
+
             var updateDto = new ActionTakenEditDto { Name = "DUPLICATE_NAME" };
 
-            Func<Task> action = async () => await _repository.UpdateActionTakenAsync(existingAT.Id, updateDto);
-            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Action Taken Name 'DUPLICATE_NAME' already exists.");
+            Func<Task> action = async () => await _repository.UpdateActionTakenAsync(existingAT2.Id, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Action Taken Name 'DUPLICATE_NAME' already exist.");
         }
 
         //UpdateActionTakenStatusAsync
