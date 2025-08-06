@@ -102,6 +102,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetAbandonSitesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<AbandonSites>(includeInactive);
 
+        public async Task<IEnumerable<ListItem>> GetGapsAssessmentListAsync(bool includeInactive = false) => 
+            await GetItemListAsync<GapsAssessment>(includeInactive);
+
         #endregion
 
         #region "Get single ListItem names"

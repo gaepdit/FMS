@@ -1,6 +1,7 @@
+using FMS.Domain.Entities;
+using Microsoft.Graph.Models;
 using System;
 using System.Collections.Generic;
-using FMS.Domain.Entities;
 
 // ReSharper disable StringLiteralTypo
 
@@ -8,9 +9,9 @@ namespace FMS.TestData.SeedData
 {
     public static partial class SeedData
     {
-        public static List<Status> GetStatuses()
+        public static List<Domain.Entities.Status> GetStatuses()
         {
-            return new List<Status>()
+            return new List<Domain.Entities.Status>()
             {
                 new()
                 {
@@ -35,8 +36,13 @@ namespace FMS.TestData.SeedData
                     GAPSScore = 4,
                     Comments = "comments for this status",
                     Lien = false,
-                    FinancialAssurance = true
-
+                    FinancialAssurance = true,
+                    GAPSModelDate = new(2018, 2, 13),
+                    GAPSNoOfUnknowns = 14,
+                    GAPSAssessmentId = new Guid("DC9738A8-7C88-421A-8E1A-36D0B518C582"),
+                    CostEstimate = 62000,
+                    CostEstimateDate = new(2018, 2, 13),
+                    AbandonSitesId = new Guid("E917B3C2-3F5A-480A-B26C-3B34BF7A33AF")
                 },
                 new()
                 {
@@ -65,7 +71,13 @@ namespace FMS.TestData.SeedData
                     "and more lines" + Environment.NewLine +
                     "and more and more",
                     Lien = true,
-                    FinancialAssurance = false
+                    FinancialAssurance = false,
+                    GAPSModelDate = new(2018, 2, 13),
+                    GAPSNoOfUnknowns = 14,
+                    GAPSAssessmentId = new Guid("E1F11C25-43EE-4C87-8461-1308E935451F"),
+                    CostEstimate = 62000,
+                    CostEstimateDate = new(2018, 2, 13),
+                    AbandonSitesId = new Guid("B0076048-DB94-4ADE-AAE9-2FA11D5EBB40")
                 }
             };
         }

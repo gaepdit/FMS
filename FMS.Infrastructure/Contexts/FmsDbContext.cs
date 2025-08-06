@@ -42,6 +42,8 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<AllowedActionTaken> AllowedActionsTaken { get; set; }
         public DbSet<FundingSource> FundingSources { get; set; }
         public DbSet<ParcelType> ParcelTypes { get; set; }
+        public DbSet<AbandonSites> AbandonSites { get; set; }
+        public DbSet<GapsAssessment> GapsAssessments { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<HsrpFacilityProperties> HsrpFacilityProperties { get; set; }
         public DbSet<Event> Events { get; set; }
@@ -56,8 +58,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<GroundwaterScore> GroundwaterScores { get; set; }
         public DbSet<Substance> Substances { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<AbandonSites> AbandonSites { get; set; }
-        public DbSet<GapsAssessment> GapsAssessments { get; set; }
+        
 
 
         // The "Counties" table is only used to add County data to the database for database-side use.

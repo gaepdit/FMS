@@ -1,11 +1,8 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TestHelpers.SeedData
+namespace FMS.TestData.SeedData
 {
     public static partial class SeedData
     {
