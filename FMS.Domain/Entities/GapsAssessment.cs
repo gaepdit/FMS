@@ -2,7 +2,7 @@
 using FMS.Domain.Entities.Base;
 namespace FMS.Domain.Entities
 {
-    public class GapsAssessment : BaseActiveModel
+    public class GapsAssessment : BaseActiveModel, INamedModel
     {
         public GapsAssessment() { }
 

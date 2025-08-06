@@ -36,6 +36,7 @@ namespace FMS.TestData.SeedData
                     Comments = "comments for this status",
                     Lien = false,
                     FinancialAssurance = true
+
                 },
                 new()
                 {
