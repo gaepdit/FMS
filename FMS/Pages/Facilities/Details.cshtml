@@ -325,657 +325,683 @@
     }
 </div>
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI")
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" || Model.FacilityDetail.FacilityType.Name == "VNHSI")
 {
     <div class="container-fluid">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <nav class="navbar navbar-expand-sm">
                 <ul class="nav nav-tabs" id="HSINavBar">
+                    @if (Model.FacilityDetail.FacilityType.Name == "HSI")
+                    {
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Contacts" type="text/html" role="tab" aria-controls="Contacts" aria-selected="false" href="#Contacts">Contacts</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Score" type="text/html" role="tab" aria-controls="Score" aria-selected="false" href="#Score">Score</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Substances" type="text/html" role="tab" aria-controls="Substances" aria-selected="false" href="#Substances">Substances</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
+                        </li>
+                    }
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="true" href="#HSIProperties">HSI Properties</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Contacts" type="text/html" role="tab" aria-controls="Contacts" aria-selected="false" href="#Contacts">Contacts</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Score" type="text/html" role="tab" aria-controls="Score" aria-selected="false" href="#Score">Score</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Substances" type="text/html" role="tab" aria-controls="Substances" aria-selected="false" href="#Substances">Substances</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="false" href="#Events">Events</a>
+                        <a class="nav-link @(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "true" : "false")" href="#Events">Events</a>
                     </li>
                 </ul>
             </nav>
 
             <div class="tab-content">
-                <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
-                    <H3>
-                        Additional HSI Information
-                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
-                    </H3>
-                    <hr />
-                    <dl class="row">
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateListed)
-                        </dt>
-                        <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateListed, "DateOrNone")
-                        </dd>
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.AdditionalOrgUnit)
-                        </dt>
-                        <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.AdditionalOrgUnit, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.Geologist)
-                        </dt>
-                        <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.Geologist, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate)
-                        </dt>
-                        <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate, "DateOrNone")
-                        </dd>
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate)
-                        </dt>
-                        <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate, "DateOrNone")
-                        </dd>
-                        <dt class="col-sm-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
-                        </dt>
-                        <dd class="col-sm-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed, "DateOrNone")
-                        </dd>
-                    </dl>
-                </div>
-
-                <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
-                    <h3>
-                        Location
-                        <a asp-page="/Location/Edit" class="btn btn-sm btn-primary">Edit Location</a>
-                    </h3>
-                    <hr />
-                    <div class="row">
-                        <div class="col-sm-1">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.Class)
-                        </div>
-                        <div class="col-sm-2">
-                            @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
-                        </div>
-                        <div class="col">
-                            <a href="~/images/h10789.bmp" target="_blank"><img src="~/images/h10789.bmp" class="rounded-0 border border-2" alt="Map Image Here" width="200" height="180"></a>
-                        </div>
+                @if (Model.FacilityDetail.FacilityType.Name == "HSI")
+                {
+                    <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
+                        <H3>
+                            Additional HSI Information
+                            <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit</a>
+                        </H3>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateListed)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateListed, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.AdditionalOrgUnit)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.AdditionalOrgUnit, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.Geologist)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.Geologist, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed, "DateOrNone")
+                            </dd>
+                        </dl>
                     </div>
-                    <hr />
-                    <h4>
-                        Parcels
-                        <button class="btn btn-sm btn-primary">Add Parcel</button>
-                    </h4>
-                    <div class="row justify-content-evenly">
-                        <table class="table table-sm" aria-label="Parcels">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Parcel Number</th>
-                                    <th scope="col">Acres</th>
-                                    <th scope="col">Parcel Type</th>
-                                    <th scope="col">List Date</th>
-                                    <th scope="col">De-List Date</th>
-                                    <th scope="col">Sub-List Parcel Name</th>
-                                    <th scope="col" class="text-center">Active</th>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <th scope="col" class="text-left">Actions</th>
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var p in Model.FacilityDetail.Parcels)
-                                {
-                                    <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
-                                        <td>@p.ParcelNumber</td>
-                                        <td>@p.Acres</td>
-                                        <td>@p.ParcelType?.Name</td>
-                                        <td>@p.ListDate</td>
-                                        <td>@p.DeListDate</td>
-                                        <td>@p.SubListParcelName</td>
-                                        <td class="text-center">@Html.DisplayFor(m => p.Active)</td>
+
+                    <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
+                        <h3>
+                            Location
+                            <a asp-page="/Location/Edit" class="btn btn-sm btn-primary">Edit Location</a>
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-1">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.Class)
+                            </div>
+                            <div class="col-sm-2">
+                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
+                            </div>
+                            <div class="col">
+                                <a href="~/images/h10789.bmp" target="_blank"><img src="~/images/h10789.bmp" class="rounded-0 border border-2" alt="Map Image Here" width="200" height="180"></a>
+                            </div>
+                        </div>
+                        <hr />
+                        <h4>
+                            Parcels
+                            <button class="btn btn-sm btn-primary">Add Parcel</button>
+                        </h4>
+                        <div class="row justify-content-evenly">
+                            <table class="table table-sm" aria-label="Parcels">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Parcel Number</th>
+                                        <th scope="col">Acres</th>
+                                        <th scope="col">Parcel Type</th>
+                                        <th scope="col">List Date</th>
+                                        <th scope="col">De-List Date</th>
+                                        <th scope="col">Sub-List Parcel Name</th>
+                                        <th scope="col" class="text-center">Active</th>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
-                                            <td>
-                                                <a asp-page="./Location/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="./Location/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                                            </td>
+                                            <th scope="col" class="text-left">Actions</th>
                                         }
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="tab-pane" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
-                    <h3>
-                        Contacts
-                        <a asp-page="/Contacts/Add" class="btn btn-sm btn-primary">Add Contact</a>
-                    </h3>
-                    <hr />
-                    <div class="row">
-                        <table class="table table-sm" aria-label="Parcels">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Contact Type</th>
-                                    <th scope="col">Company</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col" class="text-center">Active</th>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                </thead>
+                                <tbody>
+                                    @foreach (var p in Model.FacilityDetail.Parcels)
                                     {
-                                        <th scope="col" class="text-left">Actions</th>
+                                        <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
+                                            <td>@p.ParcelNumber</td>
+                                            <td>@p.Acres</td>
+                                            <td>@p.ParcelType?.Name</td>
+                                            <td>@p.ListDate</td>
+                                            <td>@p.DeListDate</td>
+                                            <td>@p.SubListParcelName</td>
+                                            <td class="text-center">@Html.DisplayFor(m => p.Active)</td>
+                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                            {
+                                                <td>
+                                                    <a asp-page="./Location/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                    <a asp-page="./Location/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                </td>
+                                            }
+                                        </tr>
                                     }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var c in Model.FacilityDetail.Contacts)
-                                {
-                                    <tr class="@(!c.Active ? "text-muted table-warning" : "")">
-                                        <td>@c.GivenName&nbsp;@c.FamilyName</td>
-                                        <td>@c.ContactType.Name</td>
-                                        <td>@c.Company</td>
-                                        <td>@c.ContactTitle.Name</td>
-                                        <td>
-                                            @c.Address<br />
-                                            @c.City, @c.State&nbsp;@c.PostalCode
-                                        </td>
-                                        <td><a href=@c.GetMailTo()>@c.Email</a></td>
-                                        <td class="text-center">@Html.DisplayFor(m => c.Active)</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
+                        <h3>
+                            Contacts
+                            <a asp-page="/Contacts/Add" class="btn btn-sm btn-primary">Add Contact</a>
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <table class="table table-sm" aria-label="Parcels">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Contact Type</th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col" class="text-center">Active</th>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
-                                            <td>
-                                                <a asp-page="./Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="./Contact/Delete" asp-route-id="@c.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                                            </td>
+                                            <th scope="col" class="text-left">Actions</th>
                                         }
                                     </tr>
-                                    @if (c.Phones.Count > 0 && c.Active)
+                                </thead>
+                                <tbody>
+                                    @foreach (var c in Model.FacilityDetail.Contacts)
                                     {
-                                        <tr class="offset-md-2">
-                                            <td colspan="4">
-                                                <div class="accordion accordion-flush" id="PhoneNumbers+@c.FamilyName+@c.GivenName">
-                                                    <div class="accordion-item">
-                                                        <h3 class="accordion-header" id="PhoneList1">
-                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList+@c.FamilyName+@c.GivenName" aria-expanded="true" aria-controls="PhoneNumberList+@c.FamilyName+@c.GivenName">
-                                                                Phone Numbers
-                                                            </button>
-                                                        </h3>
-                                                        <div id="PhoneNumberList+@c.FamilyName+@c.GivenName" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
-                                                            <div class="accordion-body">
-                                                                <a class="btn btn-sm btn-primary">Add New Phone Number</a>
-                                                                <table class="table table-sm" aria-label="Phone Numbers">
-                                                                    <thead class="thead-light">
-                                                                        <tr>
-                                                                            <th scope="col">Phone Type</th>
-                                                                            <th scope="col">Number</th>
-                                                                            <th scope="col">Active</th>
-                                                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                                                            {
-                                                                                <th scope="col" class="text-center">Actions</th>
-                                                                            }
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach (var p in c.Phones)
-                                                                        {
-                                                                            <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
-                                                                                <td>@p.PhoneType</td>
-                                                                                <td><a href=@p.GetTelTo()>@p.Number</a></td>
-                                                                                <td>@Html.DisplayFor(m => p.Active)</td>
+                                        <tr class="@(!c.Active ? "text-muted table-warning" : "")">
+                                            <td>@c.GivenName&nbsp;@c.FamilyName</td>
+                                            <td>@c.ContactType.Name</td>
+                                            <td>@c.Company</td>
+                                            <td>@c.ContactTitle.Name</td>
+                                            <td>
+                                                @c.Address<br />
+                                                @c.City, @c.State&nbsp;@c.PostalCode
+                                            </td>
+                                            <td><a href=@c.GetMailTo()>@c.Email</a></td>
+                                            <td class="text-center">@Html.DisplayFor(m => c.Active)</td>
+                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                            {
+                                                <td>
+                                                    <a asp-page="./Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                    <a asp-page="./Contact/Delete" asp-route-id="@c.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                </td>
+                                            }
+                                        </tr>
+                                        @if (c.Phones.Count > 0 && c.Active)
+                                        {
+                                            <tr class="offset-md-2">
+                                                <td colspan="4">
+                                                    <div class="accordion accordion-flush" id="PhoneNumbers+@c.FamilyName+@c.GivenName">
+                                                        <div class="accordion-item">
+                                                            <h3 class="accordion-header" id="PhoneList1">
+                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList+@c.FamilyName+@c.GivenName" aria-expanded="true" aria-controls="PhoneNumberList+@c.FamilyName+@c.GivenName">
+                                                                    Phone Numbers
+                                                                </button>
+                                                            </h3>
+                                                            <div id="PhoneNumberList+@c.FamilyName+@c.GivenName" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
+                                                                <div class="accordion-body">
+                                                                    <a class="btn btn-sm btn-primary">Add New Phone Number</a>
+                                                                    <table class="table table-sm" aria-label="Phone Numbers">
+                                                                        <thead class="thead-light">
+                                                                            <tr>
+                                                                                <th scope="col">Phone Type</th>
+                                                                                <th scope="col">Number</th>
+                                                                                <th scope="col">Active</th>
                                                                                 @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                                                                 {
-                                                                                    <td class="justify-content-end">
-                                                                                        <a asp-page="./Contact/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                                        <a asp-page="./Contact/Phone/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                                                                                    </td>
+                                                                                    <th scope="col" class="text-center">Actions</th>
                                                                                 }
                                                                             </tr>
-                                                                        }
-                                                                    </tbody>
-                                                                </table>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach (var p in c.Phones)
+                                                                            {
+                                                                                <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
+                                                                                    <td>@p.PhoneType</td>
+                                                                                    <td><a href=@p.GetTelTo()>@p.Number</a></td>
+                                                                                    <td>@Html.DisplayFor(m => p.Active)</td>
+                                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                                    {
+                                                                                        <td class="justify-content-end">
+                                                                                            <a asp-page="./Contact/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                                            <a asp-page="./Contact/Phone/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                                                        </td>
+                                                                                    }
+                                                                                </tr>
+                                                                            }
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        }
                                     }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
-                    <h3>
-                        Score
-                        <a asp-page="/Score/Edit" class="btn btn-sm btn-primary">Edit Score</a>
-                    </h3>
-                    <hr />
-                    <div class="row">
-                        <div class="container bg-light-subtle m-1">
-                            <dl class="row">
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredBy)
-                                </dt>
-                                <dd class="col-sm-2">
-                                    @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredBy.Name, "StringOrNone")
-                                </dd>
-                                <dt class="col-sm-2">
-                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredDate)
-                                </dt>
-                                <dd class="col-sm-2">
-                                    @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredDate, "Date")
-                                </dd>
-                                <dt class="col-sm-3">
-                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.UseComments)
-                                </dt>
-                                <dd class="col-sm-1">
-                                    @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.UseComments, "YesNo")
-                                </dd>
-                                <dt class="col-sm-2 pt-3">
-                                    @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.Comments)
-                                </dt>
-                                <dd class="col-sm-8 pt-3">
-                                    <textarea readonly class="form-control" rows="3" id="ScoreComments">@Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.Comments)</textarea>
-                                </dd>
-                            </dl>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <hr />
-                    <div class="row">
-                        <div class="container-fluid parent-container d-lg-inline-flex">
-                            <div class="container bg-light-subtle p-3 m-1">
-                                <h4>
-                                    Groundwater Score
-                                    <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                </h4>
-                                <hr />
+
+                    <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
+                        <h3>
+                            Score
+                            <a asp-page="/Score/Edit" class="btn btn-sm btn-primary">Edit Score</a>
+                        </h3>
+                        <hr />
+                        <div class="row">
+                            <div class="container bg-light-subtle m-1">
                                 <dl class="row">
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore)
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredBy)
                                     </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore, "Number")
+                                    <dd class="col-sm-2">
+                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredBy.Name, "StringOrNone")
                                     </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.A)
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredDate)
                                     </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.A, "Number")
+                                    <dd class="col-sm-2">
+                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredDate, "Date")
                                     </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1)
+                                    <dt class="col-sm-3">
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.UseComments)
                                     </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1, "Number")
+                                    <dd class="col-sm-1">
+                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.UseComments, "YesNo")
                                     </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2)
+                                    <dt class="col-sm-2 pt-3">
+                                        @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.Comments)
                                     </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.C)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.C, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2, "Number")
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="container bg-light-subtle p-3 m-1">
-                                <h4>
-                                    Onsite Score
-                                    <a class="btn btn-sm btn-outline-primary">Edit</a>
-                                </h4>
-                                <hr />
-                                <dl class="row">
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.A)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.A, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.B)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.B, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.C)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.C, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Description)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Description, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D2)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D2, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D3)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D3, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E1)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E1, "Number")
-                                    </dd>
-                                    <dt class="col-sm-4">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E2)
-                                    </dt>
-                                    <dd class="col-sm-8">
-                                        @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E2, "Number")
+                                    <dd class="col-sm-8 pt-3">
+                                        <textarea readonly class="form-control" rows="3" id="ScoreComments">@Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.Comments)</textarea>
                                     </dd>
                                 </dl>
                             </div>
                         </div>
+                        <hr />
+                        <div class="row">
+                            <div class="container-fluid parent-container d-lg-inline-flex">
+                                <div class="container bg-light-subtle p-3 m-1">
+                                    <h4>
+                                        Groundwater Score
+                                        <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                    </h4>
+                                    <hr />
+                                    <dl class="row">
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.A)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.A, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.C)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.C, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2, "Number")
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="container bg-light-subtle p-3 m-1">
+                                    <h4>
+                                        Onsite Score
+                                        <a class="btn btn-sm btn-outline-primary">Edit</a>
+                                    </h4>
+                                    <hr />
+                                    <dl class="row">
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.A)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.A, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.B)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.B, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.C)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.C, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Description)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Description, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D2)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D2, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D3)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D3, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E1)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E1, "Number")
+                                        </dd>
+                                        <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E2)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E2, "Number")
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
-                    <h3>
-                        Substances
-                        <a asp-page="/Substances/Edit" class="btn btn-sm btn-primary">Edit Substances</a>
-                    </h3>
-                    <hr />
-                    <div class="row justify-content-evenly">
-                        <table class="table table-sm" aria-label="Parcels">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">CAS Number</th>
-                                    <th scope="col">Substance Name</th>
-                                    <th scope="col">Common Name</th>
-                                    <th scope="col" class="text-center">Groundwater</th>
-                                    <th scope="col" class="text-center">Soil</th>
-                                    <th scope="col" class="text-center">Use for Scoring</th>
-                                    <th scope="col" class="text-center">Active</th>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                    {
-                                        <th scope="col" class="text-left">Actions</th>
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var s in Model.FacilityDetail.Substances)
-                                {
-                                    <tr class="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
-                                        <td>@s.Chemical.CasNo</td>
-                                        <td>@s.Chemical.ChemicalName</td>
-                                        <td>@s.Chemical.CommonName</td>
-                                        <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
-                                        <td class="text-center">@Html.DisplayFor(m => s.Soil)</td>
-                                        <td class="text-center">@Html.DisplayFor(m => s.UseForScoring)</td>
-                                        <td class="text-center">@Html.DisplayFor(m => s.Active)</td>
+                    <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
+                        <h3>
+                            Substances
+                            <a asp-page="/Substances/Edit" class="btn btn-sm btn-primary">Edit Substances</a>
+                        </h3>
+                        <hr />
+                        <div class="row justify-content-evenly">
+                            <table class="table table-sm" aria-label="Parcels">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">CAS Number</th>
+                                        <th scope="col">Substance Name</th>
+                                        <th scope="col">Common Name</th>
+                                        <th scope="col" class="text-center">Groundwater</th>
+                                        <th scope="col" class="text-center">Soil</th>
+                                        <th scope="col" class="text-center">Use for Scoring</th>
+                                        <th scope="col" class="text-center">Active</th>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
-                                            <td>
-                                                <a asp-page="./Substance/Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="./Substance/Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                                            </td>
+                                            <th scope="col" class="text-left">Actions</th>
                                         }
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var s in Model.FacilityDetail.Substances)
+                                    {
+                                        <tr class="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
+                                            <td>@s.Chemical.CasNo</td>
+                                            <td>@s.Chemical.ChemicalName</td>
+                                            <td>@s.Chemical.CommonName</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.Soil)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.UseForScoring)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.Active)</td>
+                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                            {
+                                                <td>
+                                                    <a asp-page="./Substance/Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                    <a asp-page="./Substance/Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
-                <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
-                    <h3>
-                        Status
-                        <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit Status</a>
-                    </h3>
-                    <hr />
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceStatus.Name, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceDate)
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceDate, "DateOrNone")
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceProjected)
-                        </dt>
-                        <dd class="col-sm-2">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceProjected)
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilStatus)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilStatus.Name, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilDate)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilDate, "DateOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilProjected)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilProjected)
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus.Name, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterDate)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterDate, "DateOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterHWTF)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterHWTF)
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallStatus)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallStatus.Name, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallDate)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallDate, "DateOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.Name, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
-                        </dt>
-                        <dd class="col-sm-2 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber, "StringOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSScore)
-                        </dt>
-                        <dd class="col-sm-10 pt-3">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSScore, "NumberOrNone")
-                        </dd>
-                        <dt class="col-sm-2 pt-3">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
-                        </dt>
-                        <dd class="col-sm-8 pt-3">
-                            <textarea readonly class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments)</textarea>
-                        </dd>
-                    </dl>
-                    <hr />
-                    <div class="row mb-3">
-                        <div class="col-md-1">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien)
-                        </div>
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Lien)
-                        </div>
-                        @if (Model.FacilityDetail.StatusDetails.Lien)
-                        {
-                            <div class="col-md-3">
-                                <a class="btn btn-sm btn-primary" target="_blank">Lien Tracker</a>
-                            </div>
-                        }
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-1">
-                            @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
-                        </div>
-                        <div class="col-md-2">
-                            @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
-                        </div>
-                        @if (Model.FacilityDetail.StatusDetails.FinancialAssurance)
-                        {
-                            <div class="col-md-3">
-                                <a class="btn btn-sm btn-primary" target="_blank">Financial Assurance Tracker</a>
-                            </div>
-                        }
-                    </div>
-                </div>
+                    <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
+                        <h3>
+                            Status
+                            <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit Status</a>
+                        </h3>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceStatus.Name, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceDate)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceDate, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilStatus)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilStatus.Name, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilDate)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilDate, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus.Name, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterDate)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterDate, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallStatus)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallStatus.Name, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallDate)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallDate, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.Name, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSScore)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSScore, "NumberOrNone")
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSModelDate)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSModelDate, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSNoOfUnknowns)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSNoOfUnknowns)
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment)
+                            </dt>
+                            <dd class="col-sm-1 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Name)
+                            </dd>
 
-                <div class="tab-pane" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonSites)
+                            </dt>
+                            <dd class="col-sm-2 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonSites.Name)
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
+                            </dt>
+                            <dd class="col-sm-2 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimateDate)
+                            </dt>
+                            <dd class="col-sm-2 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimateDate)
+                            </dd>
+                            
+
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
+                            </dt>
+                            <dd class="col-sm-8 pt-3">
+                                <textarea readonly class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments)</textarea>
+                            </dd>
+                        </dl>
+                        <hr />
+                        <div class="row mb-3">
+                            <div class="col-md-1">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien)
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Lien)
+                            </div>
+                            @if (Model.FacilityDetail.StatusDetails.Lien)
+                            {
+                                <div class="col-md-3">
+                                    <a class="btn btn-sm btn-primary" target="_blank">Lien Tracker</a>
+                                </div>
+                            }
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-1">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
+                            </div>
+                            @if (Model.FacilityDetail.StatusDetails.FinancialAssurance)
+                            {
+                                <div class="col-md-3">
+                                    <a class="btn btn-sm btn-primary" target="_blank">Financial Assurance Tracker</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                <div class="tab-pane @(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
                         Events
                         <a asp-page="/Event/Add" class="btn btn-sm btn-primary">Add Event</a>
                     </h3>
                     <hr />
                     <div class="row justify-content-evenly">
-                        <table class="table table-sm" aria-label="Parcels">
+                        <table class="table table-sm" aria-label="Events">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Event Type</th>
@@ -995,7 +1021,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach(var e in Model.FacilityDetail.Events)
+                                @foreach (var e in Model.FacilityDetail.Events)
                                 {
                                     <tr class="@(!e.Active ? "text-muted table-warning" : "")">
                                         <td>@e.EventType.Name</td>

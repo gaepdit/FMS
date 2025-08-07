@@ -27,6 +27,8 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.GroundwaterStatus)
                 .Include(e => e.OverallStatus)
                 .Include(e => e.FundingSource)
+                .Include(e => e.GAPSAssessment)
+                .Include(e => e.AbandonSites)
                 .Where(e => e.Id == id)
                 .Select(e => new StatusEditDto(e))
                 .SingleOrDefaultAsync();
@@ -74,13 +76,10 @@ namespace FMS.Infrastructure.Repositories
             existingStatus.FacilityId = statusUpdates.FacilityId;
             existingStatus.SourceStatusId = statusUpdates.SourceStatusId;
             existingStatus.SourceDate = statusUpdates.SourceDate;
-            existingStatus.SourceProjected = statusUpdates.SourceProjected;
             existingStatus.SoilStatusId = statusUpdates.SoilStatusId;
             existingStatus.SoilDate = statusUpdates.SoilDate;
-            existingStatus.SoilProjected = statusUpdates.SoilProjected;
             existingStatus.GroundwaterStatusId = statusUpdates.GroundwaterStatusId;
             existingStatus.GroundwaterDate = statusUpdates.GroundwaterDate;
-            existingStatus.GroundwaterHWTF = statusUpdates.GroundwaterHWTF;
             existingStatus.OverallStatusId = statusUpdates.OverallStatusId;
             existingStatus.OverallDate = statusUpdates.OverallDate;
             existingStatus.ISWQS = statusUpdates.ISWQS;
@@ -91,6 +90,12 @@ namespace FMS.Infrastructure.Repositories
             existingStatus.Comments = statusUpdates.Comments;
             existingStatus.Lien = statusUpdates.Lien;
             existingStatus.FinancialAssurance = statusUpdates.FinancialAssurance;
+            existingStatus.GAPSModelDate = statusUpdates.GAPSModelDate;
+            existingStatus.GAPSNoOfUnknowns = statusUpdates.GAPSNoOfUnknowns;
+            existingStatus.GAPSAssessmentId = statusUpdates.GAPSAssessmentId;
+            existingStatus.CostEstimate = statusUpdates.CostEstimate;
+            existingStatus.CostEstimateDate = statusUpdates.CostEstimateDate;
+            existingStatus.AbandonSitesId = statusUpdates.AbandonSitesId;
 
             _context.Statuses.Update(existingStatus);
             await _context.SaveChangesAsync();

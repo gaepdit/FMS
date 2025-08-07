@@ -14,13 +14,13 @@ namespace FMS.Domain.Dto
             FacilityId = status.FacilityId;
             SourceStatusId = status.SourceStatusId;
             SourceDate = status.SourceDate;
-            SourceProjected = status.SourceProjected;
+            //SourceProjected = status.SourceProjected;
             SoilStatusId = status.SoilStatusId;
             SoilDate = status.SoilDate;
-            SoilProjected = status.SoilProjected;
+            //SoilProjected = status.SoilProjected;
             GroundwaterStatusId = status.GroundwaterStatusId;
             GroundwaterDate = status.GroundwaterDate;
-            GroundwaterHWTF = status.GroundwaterHWTF;
+            //GroundwaterHWTF = status.GroundwaterHWTF;
             OverallStatusId = status.OverallStatusId;
             OverallDate = status.OverallDate;
             ISWQS = status.ISWQS;
@@ -31,6 +31,12 @@ namespace FMS.Domain.Dto
             Comments = status.Comments;
             Lien = status.Lien;
             FinancialAssurance = status.FinancialAssurance;
+            GAPSModelDate = status.GAPSModelDate;
+            GAPSNoOfUnknowns = status.GAPSNoOfUnknowns;
+            GAPSAssessmentId = status.GAPSAssessmentId;
+            CostEstimate = status.CostEstimate;
+            CostEstimateDate = status.CostEstimateDate;
+            AbandonSitesId = status.AbandonSitesId;
         }
 
         public Guid Id { get; set; }
@@ -47,8 +53,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
-        [Display(Name = "Source Projected")]
-        public double? SourceProjected { get; set; }
+        //[Display(Name = "Source Projected")]
+        //public double? SourceProjected { get; set; }
 
         public Guid? SoilStatusId { get; set; }
         [Display(Name = "Soil Status")]
@@ -57,8 +63,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
-        [Display(Name = "Soil Projected")]
-        public double? SoilProjected { get; set; }
+        //[Display(Name = "Soil Projected")]
+        //public double? SoilProjected { get; set; }
 
         [Display(Name = "Groundwater Status")]
         public Guid? GroundwaterStatusId { get; set; }
@@ -68,8 +74,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
 
-        [Display(Name = "Groundwater HWTF")]
-        public double? GroundwaterHWTF { get; set; }
+        //[Display(Name = "Groundwater HWTF")]
+        //public double? GroundwaterHWTF { get; set; }
 
         public Guid? OverallStatusId { get; set; }
         [Display(Name = "Overall Status")]
@@ -102,5 +108,25 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
-    }
+
+        [Display(Name = "GAPS Model Date")]
+        public DateOnly? GAPSModelDate { get; set; }
+
+        [Display(Name = "GAPS No Of Unknowns")]
+        public int GAPSNoOfUnknowns { get; set; }
+
+        public Guid? GAPSAssessmentId { get; set; }
+        [Display(Name = "GAPS Assessment")]
+        public GapsAssessment GAPSAssessment { get; set; }
+
+        [Display(Name = "Cost Estimate")]
+        public double? CostEstimate { get; set; }
+
+        [Display(Name = "Cost Estimate Date")]
+        public DateOnly? CostEstimateDate { get; set; }
+
+        public Guid? AbandonSitesId { get; set; }
+        [Display(Name = "Abandon/Inactive")]
+        public AbandonSites AbandonSites { get; set; }
+        }
 }

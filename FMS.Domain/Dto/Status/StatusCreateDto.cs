@@ -68,7 +68,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "GAPS No. of Unknowns")]
         public int GAPSNoOfUnknowns { get; set; }
 
-        public Guid GAPSAssessmentId { get; set; }
+        public Guid? GAPSAssessmentId { get; set; }
         [Display(Name = "GAPS Assessment")]
         public GapsAssessment GAPSAssessment { get; set; }
 
@@ -87,7 +87,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
 
-        public Guid AbandonSitesId { get; set; }
+        public Guid? AbandonSitesId { get; set; }
         [Display(Name = "Abandon Sites")]
         public AbandonSites AbandonSites { get; set; }
     }

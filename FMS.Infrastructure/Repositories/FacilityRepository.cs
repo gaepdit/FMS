@@ -110,6 +110,8 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.GroundwaterStatus)
                     .Include(e => e.OverallStatus)
                     .Include(e => e.FundingSource)
+                    .Include(e => e.GAPSAssessment)
+                    .Include(e => e.AbandonSites)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
 
@@ -129,7 +131,25 @@ namespace FMS.Infrastructure.Repositories
                     .ToList();
             }
 
-            var facilityDetail = new FacilityDetailDto(facility);
+            if (facility.FacilityType.Name == "VNHSI")
+            {
+                facility.Events = await _context.Events
+                    .AsNoTracking()
+                    .Include(e => e.EventType)
+                    .Include(e => e.ActionTaken)
+                    .Include(e => e.ComplianceOfficer)
+                    .Where(e => e.FacilityId == id)
+                    .ToListAsync();
+
+                facility.Events = facility.Events
+                    .OrderByDescending(e => e.Active)
+                    .ThenBy(e => e.StartDate)
+                    .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
+                    .SelectMany(g => g)
+                    .ToList();
+            }
+
+                var facilityDetail = new FacilityDetailDto(facility);
 
             if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
             {

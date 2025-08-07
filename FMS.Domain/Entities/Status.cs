@@ -20,13 +20,13 @@ namespace FMS.Domain.Entities
             FacilityId = status.FacilityId;
             SourceStatusId = status.SourceStatusId;
             SourceDate = status.SourceDate;
-            SourceProjected = status.SourceProjected;
+            //SourceProjected = status.SourceProjected;
             SoilStatusId = status.SoilStatusId;
             SoilDate = status.SoilDate;
-            SoilProjected = status.SoilProjected;
+            //SoilProjected = status.SoilProjected;
             GroundwaterStatusId = status.GroundwaterStatusId;
             GroundwaterDate = status.GroundwaterDate;
-            GroundwaterHWTF = status.GroundwaterHWTF;
+            //GroundwaterHWTF = status.GroundwaterHWTF;
             OverallStatusId = status.OverallStatusId;
             OverallDate = status.OverallDate;
             ISWQS = status.ISWQS;
@@ -54,8 +54,8 @@ namespace FMS.Domain.Entities
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
-        [Display(Name = "Source Projected Cost")]
-        public double? SourceProjected { get; set; }
+        //[Display(Name = "Source Projected Cost")]
+        //public double? SourceProjected { get; set; }
 
         public Guid? SoilStatusId { get; set; }
         [Display(Name = "Soil Status")]
@@ -64,8 +64,8 @@ namespace FMS.Domain.Entities
         [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
-        [Display(Name = "Soil Projected Cost")]
-        public double? SoilProjected { get; set; }
+        //[Display(Name = "Soil Projected Cost")]
+        //public double? SoilProjected { get; set; }
 
         public Guid? GroundwaterStatusId { get; set; }
         [Display(Name = "Groundwater Status")]
@@ -74,8 +74,8 @@ namespace FMS.Domain.Entities
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
 
-        [Display(Name = "Groundwater HWTF Cost")]
-        public double? GroundwaterHWTF { get; set; }
+        //[Display(Name = "Groundwater HWTF Cost")]
+        //public double? GroundwaterHWTF { get; set; }
 
         public Guid? OverallStatusId { get; set; }
         [Display(Name = "Overall Status")]
@@ -106,7 +106,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "GAPS Model No. of Unknowns")]
         public int GAPSNoOfUnknowns { get; set; }
 
-        public Guid GAPSAssessmentId { get; set; }
+        public Guid? GAPSAssessmentId { get; set; }
         [Display(Name = "GAPS Assessment")]
         public GapsAssessment GAPSAssessment { get; set; }
 
@@ -125,7 +125,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
 
-        public Guid AbandonSitesId { get; set; }
+        public Guid? AbandonSitesId { get; set; }
         [Display(Name = "Abandon Sites")]
         public AbandonSites AbandonSites { get; set; }
     }
