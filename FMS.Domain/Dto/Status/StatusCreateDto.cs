@@ -16,9 +16,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
-        [Display(Name = "Source Projected")]
-        public double? SourceProjected { get; set; }
-
         public Guid SoilStatusId { get; set; }
         [Display(Name = "Soil Status")]
         public SoilStatus SoilStatus { get; set; }
@@ -26,18 +23,12 @@ namespace FMS.Domain.Dto
         [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
-        [Display(Name = "Soil Projected")]
-        public double? SoilProjected { get; set; }
-
         public Guid GroundwaterStatusId { get; set; }
         [Display(Name = "Groundwater Status")]
         public GroundwaterStatus GroundwaterStatus { get; set; }
 
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
-
-        [Display(Name = "Groundwater HWTF")]
-        public double? GroundwaterHWTF { get; set; }
 
         public Guid OverallStatusId { get; set; }
         [Display(Name = "Overall Status")]

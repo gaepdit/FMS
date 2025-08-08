@@ -12,13 +12,10 @@ namespace FMS.Domain.Dto
             FacilityId = status.FacilityId;
             SourceStatus = status.SourceStatus;
             SourceDate = status.SourceDate;
-            //SourceProjected = status.SourceProjected;
             SoilStatus = status.SoilStatus;
             SoilDate = status.SoilDate;
-            //SoilProjected = status.SoilProjected;
             GroundwaterStatus = status.GroundwaterStatus;
             GroundwaterDate = status.GroundwaterDate;
-            //GroundwaterHWTF = status.GroundwaterHWTF;
             OverallStatus = status.OverallStatus;
             OverallDate = status.OverallDate;
             ISWQS = status.ISWQS;
@@ -46,26 +43,17 @@ namespace FMS.Domain.Dto
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
-        [Display(Name = "Source Projected")]
-        public double? SourceProjected { get; set; }
-
         [Display(Name = "Soil Status")]
         public SoilStatus SoilStatus { get; set; }
 
         [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
-        [Display(Name = "Soil Projected")]
-        public double? SoilProjected { get; set; }
-
         [Display(Name = "Groundwater Status")]
         public GroundwaterStatus GroundwaterStatus { get; set; }
 
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
-
-        [Display(Name = "Groundwater HWTF")]
-        public double? GroundwaterHWTF { get; set; }
 
         [Display(Name = "Overall Status")]
         public OverallStatus OverallStatus { get; set; }
