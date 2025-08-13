@@ -17,13 +17,10 @@ namespace FMS.Domain.Dto
 
         public AbandonSitesEditDto(AbandonSites abandonSites)
         {
-            Id = abandonSites.Id;
             Active = abandonSites.Active;
             Name = abandonSites.Name;
             Description = abandonSites.Description;
         }
-
-        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

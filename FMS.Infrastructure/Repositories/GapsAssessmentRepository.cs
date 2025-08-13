@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,9 +20,15 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> GapsAssessmentExistsAsync(Guid id) =>
             _context.GapsAssessments.AnyAsync(e => e.Id == id);
 
-        public Task<GapsAssessment> GetGapsAssessmentByIdAsync(Guid id) =>
+        public Task<bool> GapsAssessmentNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.GapsAssessments.AnyAsync(e =>
+                e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public Task<GapsAssessmentEditDto> GetGapsAssessmentByIdAsync(Guid id) =>
             _context.GapsAssessments.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
+                .Where(e => e.Id == id)
+                .Select(e => new GapsAssessmentEditDto(e))
+                .SingleOrDefaultAsync();
 
         public async Task<IReadOnlyList<GapsAssessmentSummaryDto>> GetGapsAssessmentListAsync(bool ActiveOnly = false) => await _context.GapsAssessments.AsNoTracking()
                 .OrderByDescending(e => e.Name)
@@ -41,30 +48,34 @@ namespace FMS.Infrastructure.Repositories
             return newGapsAssessment.Id;
         }
 
-        public async Task UpdateGapsAssessmentAsync(GapsAssessmentCreateDto gapsAssessment)
+        public Task UpdateGapsAssessmentAsync(Guid id, GapsAssessmentEditDto gapsAssessmentUpdates)
         {
-            if (gapsAssessment == null)
-            {
-                throw new ArgumentNullException(nameof(gapsAssessment));
-            }
-            var existingGapsAssessment = await _context.GapsAssessments
-                .SingleOrDefaultAsync(e => e.Id == gapsAssessment.Id);
-            if (existingGapsAssessment == null)
-            {
-                throw new KeyNotFoundException($"Gaps Assessment with ID {gapsAssessment.Id} not found.");
-            }
-            
-            existingGapsAssessment.Name = gapsAssessment.Name;
-            existingGapsAssessment.Description = gapsAssessment.Description;
-            existingGapsAssessment.Active = gapsAssessment.Active;
-
-            _context.GapsAssessments.Update(existingGapsAssessment);
-            await _context.SaveChangesAsync();
+            Prevent.NullOrEmpty(gapsAssessmentUpdates.Name, nameof(gapsAssessmentUpdates.Name));
+            return UpdateGapsAssessmentInternalAsync(id, gapsAssessmentUpdates);
         }
 
-        public async Task UpdateGapsAssessmentStatusAsync(Guid id)
+        public async Task<Guid> UpdateGapsAssessmentInternalAsync(Guid id, GapsAssessmentEditDto gapsAssessmentUpdates)
         {
-            var gapsAssessment = await _context.GapsAssessments.FindAsync(id);
+            var gapsAssessment = await _context.GapsAssessments.FindAsync(id) ?? throw new ArgumentException("Abandon Sites ID not found.", nameof(id));
+
+            if (await GapsAssessmentNameExistsAsync(gapsAssessmentUpdates.Name, id))
+            {
+                throw new ArgumentException($"GAPS Assessment Name '{gapsAssessmentUpdates.Name}' already exist.");
+            }
+
+            gapsAssessment.Name = gapsAssessmentUpdates.Name;
+            gapsAssessment.Description = gapsAssessmentUpdates.Description;
+
+            await _context.SaveChangesAsync();
+
+            // Ensure all code paths return a value
+            return gapsAssessment.Id;
+        }
+
+        public async Task UpdateGapsAssessmentStatusAsync(Guid id, bool active)
+        {
+            var gapsAssessment = await _context.GapsAssessments
+                .SingleOrDefaultAsync(e => e.Id == id);
             if (gapsAssessment == null)
             {
                 throw new KeyNotFoundException($"Gaps Assessment with ID {id} not found.");
