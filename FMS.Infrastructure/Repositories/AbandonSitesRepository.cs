@@ -20,9 +20,15 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> AbandonSitesExistsAsync(Guid id) =>
             _context.AbandonSites.AnyAsync(e => e.Id == id);
 
-        public Task<AbandonSites> GetAbandonSitesByIdAsync(Guid id) =>
+        public Task<bool> AbandonSitesNameExistsAsync(string name, Guid? ignoreId = null) =>
+            _context.AbandonSites.AnyAsync(e =>
+                e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
+        public Task<AbandonSitesEditDto> GetAbandonSitesByIdAsync(Guid id) =>
             _context.AbandonSites.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
+                .Where(e => e.Id == id)
+                .Select(e => new AbandonSitesEditDto(e))
+                .SingleOrDefaultAsync();
 
         public async Task<IReadOnlyList<AbandonSitesSummaryDto>> GetAbandonSitesListAsync(bool ActiveOnly = false) => await _context.AbandonSites.AsNoTracking()
                 .OrderByDescending(e => e.Name)
@@ -31,7 +37,7 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
 
         public async Task<Guid> CreateAbandonSitesAsync(AbandonSitesCreateDto abandonSite)
-            {
+        {
             if (abandonSite == null)
             {
                 throw new ArgumentNullException(nameof(abandonSite));
@@ -44,27 +50,31 @@ namespace FMS.Infrastructure.Repositories
             return newAbandonSite.Id;
         }
 
-        public async Task UpdateAbandonSitesAsync(AbandonSitesCreateDto abandonSite)
+        public Task UpdateAbandonSitesAsync(Guid id, AbandonSitesEditDto abandonSitesUpdates)
         {
-            if (abandonSite == null)
-            {
-                throw new ArgumentNullException(nameof(abandonSite));
-            }
-            var existingAbandonSite = await _context.AbandonSites
-                .SingleOrDefaultAsync(e => e.Id == abandonSite.Id);
-            if (existingAbandonSite == null)
-            {
-                throw new KeyNotFoundException($"Abandon Site with ID {abandonSite.Id} not found.");
-            }
-
-            existingAbandonSite.Name = abandonSite.Name;
-            existingAbandonSite.Description = abandonSite.Description;
-            existingAbandonSite.Active = abandonSite.Active;
-
-            await _context.SaveChangesAsync();
+            Prevent.NullOrEmpty(abandonSitesUpdates.Name, nameof(abandonSitesUpdates.Name));
+            return UpdateAbandonSitesInternalAsync(id, abandonSitesUpdates);
         }
 
-        public async Task UpdateAbandonSitesStatusAsync(Guid id)
+        public async Task<Guid> UpdateAbandonSitesInternalAsync(Guid id, AbandonSitesEditDto abandonSitesUpdates)
+        {
+            var abandonSites = await _context.AbandonSites.FindAsync(id) ?? throw new ArgumentException("Abandon Sites ID not found.", nameof(id));
+
+            if (await AbandonSitesNameExistsAsync(abandonSitesUpdates.Name, id))
+            {
+                throw new ArgumentException($"Abandon Sites Name '{abandonSitesUpdates.Name}' already exist.");
+            }
+
+            abandonSites.Name = abandonSitesUpdates.Name;
+            abandonSites.Description = abandonSitesUpdates.Description;
+
+            await _context.SaveChangesAsync();
+
+            // Ensure all code paths return a value
+            return abandonSites.Id;
+        }
+
+        public async Task UpdateAbandonSitesStatusAsync(Guid id, bool active)
         {
             var existingAbandonSite = await _context.AbandonSites
                 .SingleOrDefaultAsync(e => e.Id == id);

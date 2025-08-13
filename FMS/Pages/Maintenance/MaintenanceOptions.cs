@@ -20,5 +20,7 @@
         public const string Chemical = "Chemical";
         public const string AllowedActionsTaken = "Choose Event Type to Edit Allowed Actions";
         public const string AllowedActionTaken = "Allowed Actions Taken";
+        public const string AbandonSites = "Abandon Sites";
+        public const string GapsAssessment = "GAPS Assessment";
     }
 }
