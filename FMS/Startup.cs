@@ -7,7 +7,6 @@ using FMS.Infrastructure.Services;
 using FMS.Platform.Extensions.DevHelpers;
 using FMS.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +17,6 @@ using Microsoft.Identity.Web;
 using Mindscape.Raygun4Net;
 using Mindscape.Raygun4Net.AspNetCore;
 using System;
-using System.IO;
 using System.Reflection;
 
 namespace FMS
@@ -47,8 +45,7 @@ namespace FMS
             // Note: `cookieScheme: null` is mandatory. See https://github.com/AzureAD/microsoft-identity-web/issues/133#issuecomment-739550416
 
             // Persist data protection keys
-            var keysFolder = Path.Combine(Configuration["PersistedFilesBasePath"] ?? "", "DataProtectionKeys");
-            services.AddDataProtection().PersistKeysToFileSystem(Directory.CreateDirectory(keysFolder));
+            services.AddDataProtection();
 
             // Configure Razor pages 
             services.AddRazorPages();
