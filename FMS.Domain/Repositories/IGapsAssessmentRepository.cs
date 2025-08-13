@@ -55,8 +55,6 @@ namespace FMS.Domain.Repositories
         /// Deletes a Gaps Assessment by its ID.
         /// </summary>
         /// <param name="id">The ID of the Gaps Assessment to delete.</param>
-        Task UpdateGapsAssessmentStatusAsync(Guid id);
-
-
+        Task UpdateGapsAssessmentStatusAsync(Guid id, bool active);
     }
 }

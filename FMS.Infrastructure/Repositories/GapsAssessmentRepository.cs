@@ -72,9 +72,10 @@ namespace FMS.Infrastructure.Repositories
             return gapsAssessment.Id;
         }
 
-        public async Task UpdateGapsAssessmentStatusAsync(Guid id)
+        public async Task UpdateGapsAssessmentStatusAsync(Guid id, bool active)
         {
-            var gapsAssessment = await _context.GapsAssessments.FindAsync(id);
+            var gapsAssessment = await _context.GapsAssessments
+                .SingleOrDefaultAsync(e => e.Id == id);
             if (gapsAssessment == null)
             {
                 throw new KeyNotFoundException($"Gaps Assessment with ID {id} not found.");
