@@ -18,11 +18,19 @@ namespace FMS.Domain.Repositories
         Task<bool> AbandonSitesExistsAsync(Guid id);
 
         /// <summary>
+        /// Checks if an Abandon Site with the specified name exists.
+        /// </summary>  
+        /// <param name="name"> The name of the Abandon Site to check.</param>
+        /// <param name="ignoreId">Optional ID to ignore in the check (used for updates).</param>
+        /// <returns>True if the name exists, otherwise false.</returns>
+        Task<bool> AbandonSitesNameExistsAsync(string name, Guid? ignoreId = null);
+
+        /// <summary>
         /// Retrieves an Abandon Site by its ID.
         /// </summary>
         /// <param name="id">The ID of the Abandon Site.</param>
         /// <returns>The Abandon Site with the specified ID, or null if not found.</returns>
-        Task<AbandonSites> GetAbandonSitesByIdAsync(Guid id);
+        Task<AbandonSitesEditDto> GetAbandonSitesByIdAsync(Guid id);
 
         /// <summary>
         /// Retrieves all Abandon Sites.
@@ -40,14 +48,15 @@ namespace FMS.Domain.Repositories
         /// <summary>
         /// Updates an existing Abandon Site.
         /// </summary>
-        /// <param name="abandonSite">The Abandon Site to update.</param>
+        /// <param name="id">The ID of the Abandon Site to update.</param>
+        /// <param name="abandonSitesUpdates">The Abandon Site to update.</param>
         /// <returns>The updated Abandon Site.</returns>
-        Task UpdateAbandonSitesAsync(AbandonSitesCreateDto abandonSite);
+        Task UpdateAbandonSitesAsync(Guid id, AbandonSitesEditDto abandonSitesUpdates);
 
         /// <summary>
         /// Deletes an Abandon Site by its ID.
         /// </summary>
         /// <param name="id">The ID of the Abandon Site to delete.</param>
-        Task UpdateAbandonSitesStatusAsync(Guid id);
+        Task UpdateAbandonSitesStatusAsync(Guid id, bool active);
     }
 }
