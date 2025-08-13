@@ -99,6 +99,12 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetSourceStatusesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<SourceStatus>(includeInactive);
 
+        public async Task<IEnumerable<ListItem>> GetAbandonSitesListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<AbandonSites>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetGapsAssessmentListAsync(bool includeInactive = false) => 
+            await GetItemListAsync<GapsAssessment>(includeInactive);
+
         #endregion
 
         #region "Get single ListItem names"
@@ -285,6 +291,17 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.SourceStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetAbandonSiteNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.AbandonSites.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }

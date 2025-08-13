@@ -45,6 +45,10 @@ namespace FMS.TestData.SeedData
                 await context.SourceStatuses.AddRangeAsync(GetSourceStatuses(), token);
             if (!await context.AllowedActionsTaken.AnyAsync(token))
                 await context.AllowedActionsTaken.AddRangeAsync(GetAllowedActionsTaken(), token);
+            if (!await context.AbandonSites.AnyAsync(token))
+                await context.AbandonSites.AddRangeAsync(entities: GetAbandonSites(), token);
+            if (!await context.GapsAssessments.AnyAsync(token))
+                await context.GapsAssessments.AddRangeAsync(GetGapsAssessments(), token);
             if (!await context.Facilities.AnyAsync(token))
                 await context.Facilities.AddRangeAsync(GetFacilities(), token);
             if (!await context.RetentionRecords.AnyAsync(token))

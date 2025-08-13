@@ -106,6 +106,8 @@ namespace FMS
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
             services.AddScoped<IAllowedActionTakenHelper, AllowedActionTakenHelper>();
+            services.AddScoped<IAbandonSitesRepository, AbandonSitesRepository>();
+            services.AddScoped<IGapsAssessmentRepository, GapsAssessmentRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

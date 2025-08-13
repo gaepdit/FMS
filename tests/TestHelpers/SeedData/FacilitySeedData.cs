@@ -18,7 +18,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityNumber = "BRF1211825",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //FileLabel = "243-0001"
-                    FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // VRP
+                    FacilityTypeId = new Guid("9355EF20-B29B-4F77-A04E-EB3B8A362008"), // VRPNonHSI
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
                     Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",

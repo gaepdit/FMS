@@ -1,6 +1,7 @@
+using FMS.Domain.Entities;
+using Microsoft.Graph.Models;
 using System;
 using System.Collections.Generic;
-using FMS.Domain.Entities;
 
 // ReSharper disable StringLiteralTypo
 
@@ -8,9 +9,9 @@ namespace FMS.TestData.SeedData
 {
     public static partial class SeedData
     {
-        public static List<Status> GetStatuses()
+        public static List<Domain.Entities.Status> GetStatuses()
         {
-            return new List<Status>()
+            return new List<Domain.Entities.Status>()
             {
                 new()
                 {
@@ -19,13 +20,13 @@ namespace FMS.TestData.SeedData
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     SourceStatusId = new Guid("F2127F74-0B6F-4577-8D51-0AC8ADA71426"),
                     SourceDate = new(2018, 2, 13),
-                    SourceProjected = 20000,
+                    //SourceProjected = 20000,
                     SoilStatusId = new Guid("12345678-90AB-CDEF-1234-567890ABCDEF"),
                     SoilDate = new(2018, 2, 13),
-                    SoilProjected = 50000,
+                    //SoilProjected = 50000,
                     GroundwaterStatusId = new Guid("EE88D813-2199-4E6F-81EF-3F3837258B2E"),
                     GroundwaterDate = new(2018, 2, 13),
-                    GroundwaterHWTF = 12000,
+                    //GroundwaterHWTF = 12000,
                     OverallStatusId = new Guid("113C16FD-FB0D-478D-8287-FDE112A2FFA1"),
                     OverallDate = new(2018, 2, 13),
                     ISWQS = false,
@@ -35,7 +36,13 @@ namespace FMS.TestData.SeedData
                     GAPSScore = 4,
                     Comments = "comments for this status",
                     Lien = false,
-                    FinancialAssurance = true
+                    FinancialAssurance = true,
+                    GAPSModelDate = new(2018, 2, 13),
+                    GAPSNoOfUnknowns = 14,
+                    GAPSAssessmentId = new Guid("DC9738A8-7C88-421A-8E1A-36D0B518C582"),
+                    CostEstimate = 62000,
+                    CostEstimateDate = new(2018, 2, 13),
+                    AbandonSitesId = new Guid("E917B3C2-3F5A-480A-B26C-3B34BF7A33AF")
                 },
                 new()
                 {
@@ -44,13 +51,13 @@ namespace FMS.TestData.SeedData
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     SourceStatusId = new Guid("DA6FE988-4A8B-4173-A8BD-ECCCF1A1D115"),
                     SourceDate = new(2018, 2, 13),
-                    SourceProjected = 50000,
+                    //SourceProjected = 50000,
                     SoilStatusId = new Guid("FEDCBA98-7654-3210-FEDC-BA9876543210"),
                     SoilDate = new(2018, 2, 13),
-                    SoilProjected = null,
+                    //SoilProjected = null,
                     GroundwaterStatusId = new Guid("E4644119-683C-4793-9462-0B25C18797B5"),
                     GroundwaterDate = new(2018, 2, 13),
-                    GroundwaterHWTF = 27000,
+                    //GroundwaterHWTF = 27000,
                     OverallStatusId = new Guid("E79D213C-226D-499E-B64B-D3355B34EB9F"),
                     OverallDate = new(2018, 2, 13),
                     ISWQS = true,
@@ -64,7 +71,13 @@ namespace FMS.TestData.SeedData
                     "and more lines" + Environment.NewLine +
                     "and more and more",
                     Lien = true,
-                    FinancialAssurance = false
+                    FinancialAssurance = false,
+                    GAPSModelDate = new(2018, 2, 13),
+                    GAPSNoOfUnknowns = 14,
+                    GAPSAssessmentId = new Guid("E1F11C25-43EE-4C87-8461-1308E935451F"),
+                    CostEstimate = 62000,
+                    CostEstimateDate = new(2018, 2, 13),
+                    AbandonSitesId = new Guid("B0076048-DB94-4ADE-AAE9-2FA11D5EBB40")
                 }
             };
         }
