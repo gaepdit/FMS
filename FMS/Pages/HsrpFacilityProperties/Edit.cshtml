@@ -1,0 +1,16 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.HsrpFacilityProperties
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.HsrpFacilityProperties.EditModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = $"Edit HSRP Facility Properties: {{Model.HsrpFacilityProperties.FacilityNumber}}";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
