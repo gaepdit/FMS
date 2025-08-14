@@ -27,6 +27,110 @@ namespace FMS.Infrastructure.Tests
             var options = new DbContextOptionsBuilder<FmsDbContext>()
                 .UseInMemoryDatabase(databaseName: $"TestDatabase_{Guid.NewGuid()}")
                 .Options;
+            var httpContextAccessor = Substitute.For<HttpContextAccessor>();
+            _context = new FmsDbContext(options, httpContextAccessor);
+            _repository = new ContactTitleRepository(_context);
+
+            _context.ContactTitles.Add(new ContactTitle
+            {
+                Id = Guid.NewGuid(),
+                Name = "Contact Title",
+                Active = true
+            });
+            _context.SaveChanges();
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _context.Database.EnsureCreated();
+                _context.Dispose();
+                _repository.Dispose();
+                _disposed = true;
+            }
+        }
+
+        // ContactTitleExistAsync
+        [Test]
+        public async Task ContactTitleExistAsync_ReturnTrue_ContactTitleExist()
+        {
+            var existingCT = await _context.ContactTitles.Select(ft => ft.Id).FirstAsync();
+            var results = await _repository.ContactTitleExistsAsync(existingCT);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task ContactTitleExistAsync_ReturnFalse_ContactTitleDoesNotExist()
+        {
+            var nonExistingCT = Guid.NewGuid();
+            var results = await _repository.ContactTitleExistsAsync(nonExistingCT);
+            results.Should().BeFalse();
+        }
+
+        // GetContactTypeByIdAsync
+        [Test]
+        public async Task GetContactTitleByIdAsync_WhenIdExist()
+        {
+            var existingCT = await _context.ContactTitles.FirstAsync();
+            var result = await _repository.GetContactTitleByIdAsync(existingCT.Id);
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ContactTitleEditDto>();
+            result.Id.Should().Be(existingCT.Id);
+            result.Name.Should().Be(existingCT.Name);
+        }
+        [Test]
+        public async Task GetContactTitleByIdAsync_WhenIdDoesNotExist_ReturnsNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var result = await _repository.GetContactTitleByIdAsync(nonExistingId);
+
+            result.Should().BeNull();
+        }
+
+        // GetContactTitleListAsync
+        [Test]
+        public async Task GetContactTitleListAsync_ReturnsAllContactTitles()
+        {
+            var results = await _repository.GetContactTitleListAsync();
+            results.Should().NotBeNullOrEmpty();
+        }
+
+        // CreateContactTitleAsync
+        [Test]
+        public async Task CreateContactTitleAsync_CreateNewContactTitle_WhenDataIsValid()
+        {
+            var dto = new ContactTitleCreateDto { Name = "UniqueName" };
+
+            var newId = await _repository.CreateContactTitleAsync(dto);
+            var createdContactTitle = await _context.ContactTitles.FindAsync(newId);
+
+            createdContactTitle.Should().NotBeNull();
+            createdContactTitle.Name.Should().Be("UniqueName");
+        }
+        [Test]
+        public void CreateContactTitleAsync_ThrowsArgumentException_WhereNameAlreadyExist()
+        {
+            var existingContactTitle = new ContactTitle { Id = Guid.NewGuid(), Name = "DuplicateName" };
+            _context.ContactTitles.Add(existingContactTitle);
+            _context.SaveChanges();
+
+            var dto = new ContactTitleCreateDto { Name = "DuplicateName" };
+
+            Func<Task> action = async () => await _repository.CreateContactTitleAsync(dto);
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Title 'DuplicateName' already exist.");
+        }
+
+        // UpdateContactTitleAsync
+
+
+        // UpdateContactTitleTypeStatusAsync
+
+
     }
 }
