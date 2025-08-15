@@ -127,9 +127,42 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateContactTitleAsync
+        [Test]
+        public async Task UpdateContactTitleAsync_UpdatesExistingContactTitle_WhenDataIsValid()
+        {
+            var existingContactTitle = new ContactTitle { Id = Guid.NewGuid(), Name = "OriginalName" };
+            _context.ContactTitles.Add(existingContactTitle);
+            await _context.SaveChangesAsync();
 
+            var updateDto = new ContactTitleEditDto { Name = "UpdatedName" };
+            await _repository.UpdateContactTitleAsync(existingContactTitle.Id, updateDto);
 
-        // UpdateContactTitleTypeStatusAsync
+            var updatedContactTitle = await _context.ContactTitles.FindAsync(existingContactTitle.Id);
+            updatedContactTitle.Name.Should().Be("UpdatedName");
+        }
+        [Test]
+        public void UpdateContactTitleAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var updateDto = new ContactTitleEditDto { Name = "NonExistent" };
+
+            Func<Task> action = async () => await _repository.UpdateContactTitleAsync(Guid.NewGuid(), updateDto);
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Title ID not found.");
+        }
+        [Test]
+        public void UpdateContactTitleAsync_ThrowsArgumentException_WhenNameAlreadyExists()
+        {
+            var contact1 = new ContactTitle { Id = Guid.NewGuid(), Name = "Name1" };
+            var contact2 = new ContactTitle { Id = Guid.NewGuid(), Name = "Name2" };
+            _context.ContactTitles.AddRange(contact1, contact2);
+            _context.SaveChanges();
+
+            var updateDto = new ContactTitleEditDto { Name = "Name2" };
+
+            Func<Task> action = async () => await _repository.UpdateContactTitleAsync(contact1.Id, updateDto);
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Facility Type 'Name2' already exists.");
+        }
+
+        // UpdateContactTitleStatusAsync
 
 
     }

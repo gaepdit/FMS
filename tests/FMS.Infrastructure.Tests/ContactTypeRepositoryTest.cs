@@ -146,7 +146,7 @@ namespace FMS.Infrastructure.Tests
             var updateDto = new ContactTypeEditDto { Name = "NonExistent" };
 
             Func<Task> action = async () => await _repository.UpdateContactTypeAsync(Guid.NewGuid(), updateDto);
-            action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Type ID not found.");
+            action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Tye ID not found.");
         }
         [Test]
         public void UpdateContactTypeAsync_ThrowsArgumentException_WhenNameAlreadyExists()
