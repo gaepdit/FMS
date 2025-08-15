@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -7,9 +8,26 @@ namespace FMS.Domain.Dto
     {
         public HsrpFacilityPropertiesEditDto() { }
 
-        public HsrpFacilityPropertiesEditDto(Guid facilityId, HsrpFacilityPropertiesDetailDto Hfpcd)
+        public HsrpFacilityPropertiesEditDto(HsrpFacilityProperties hsrpFacilityProperties)
+        {
+            if (hsrpFacilityProperties == null)
+            {
+                throw new ArgumentNullException(nameof(hsrpFacilityProperties));
+            }
+            Id = hsrpFacilityProperties.Id;
+            FacilityId = hsrpFacilityProperties.FacilityId;
+            DateListed = hsrpFacilityProperties.DateListed;
+            AdditionalOrgUnit = hsrpFacilityProperties.AdditionalOrgUnit;
+            Geologist = hsrpFacilityProperties.Geologist;
+            VRPDate = hsrpFacilityProperties.VRPDate;
+            BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
+            DateDeListed = hsrpFacilityProperties.DateDeListed;
+        }
+
+        public HsrpFacilityPropertiesEditDto(Guid facilityId, string facilityNumber, HsrpFacilityPropertiesDetailDto Hfpcd)
         {
             FacilityId = facilityId;
+            FacilityNumber = facilityNumber;
             DateListed = Hfpcd.DateListed;
             AdditionalOrgUnit = Hfpcd.AdditionalOrgUnit;
             Geologist = Hfpcd.Geologist;
@@ -19,7 +37,12 @@ namespace FMS.Domain.Dto
         }
 
         [Required]
+        public Guid Id { get; set; }
+
+        [Required]
         public Guid FacilityId { get; set; }
+
+        public string FacilityNumber { get; set; }
 
         [Required]
         [Display(Name = "Date Listed")]

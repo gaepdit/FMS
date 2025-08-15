@@ -105,6 +105,7 @@ namespace FMS
             services.AddScoped<IAllowedActionTakenHelper, AllowedActionTakenHelper>();
             services.AddScoped<IAbandonSitesRepository, AbandonSitesRepository>();
             services.AddScoped<IGapsAssessmentRepository, GapsAssessmentRepository>();
+            services.AddScoped<IHsrpFacilityPropertiesRepository, HsrpFacilityPropertiesRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

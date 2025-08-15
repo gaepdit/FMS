@@ -364,7 +364,7 @@
                     <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
                         <H3>
                             Additional HSI Information
-                            <a asp-page="/HsrpFacilityProperties/Edit" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-page="/HsrpFacilityProperties/Edit" asp-route-id="@Model.FacilityDetail.HsrpFacilityPropertyDetails.Id" class="btn btn-sm btn-primary">Edit</a>
                         </H3>
                         <hr />
                         <dl class="row">

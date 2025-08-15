@@ -31,6 +31,17 @@ namespace FMS.Infrastructure.Repositories
             return new HsrpFacilityPropertiesDetailDto(hsrpFacilityProperties);
         }
 
+        public async Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesEditAsync(Guid id)
+        {
+            var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+            if (hsrpFacilityProperties == null)
+            {
+                return null;
+            }
+            return new HsrpFacilityPropertiesEditDto(hsrpFacilityProperties);
+        }
+
         public Task<Guid> CreateHsrpFacilityPropertiesAsync(HsrpFacilityPropertiesCreateDto hsrpFacilityProperties)
         {
             Prevent.Null(hsrpFacilityProperties, nameof(hsrpFacilityProperties));
