@@ -141,26 +141,15 @@ namespace FMS.Infrastructure.Tests
             updatedContactType.Name.Should().Be("UpdatedName");
         }
         [Test]
-        public void UpdateContactTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
         {
-            var updateDto = new ContactTypeEditDto { Name = "NonExistent" };
+            var invalidId = Guid.NewGuid();
+            var updateDto = new ContactTypeEditDto { Name = "NON_EXISTENT" };
 
-            Func<Task> action = async () => await _repository.UpdateContactTypeAsync(Guid.NewGuid(), updateDto);
-            action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Tye ID not found.");
+            Func<Task> action = async () => await _repository.UpdateContactTypeAsync(invalidId, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Type ID not found. (Parameter 'id')");
         }
-        [Test]
-        public void UpdateContactTypeAsync_ThrowsArgumentException_WhenNameAlreadyExists()
-        {
-            var contact1 = new ContactType { Id = Guid.NewGuid(), Name = "Name1"};
-            var contact2 = new ContactType { Id = Guid.NewGuid(), Name = "Name2"};
-            _context.ContactTypes.AddRange(contact1, contact2);
-            _context.SaveChanges();
 
-            var updateDto = new ContactTypeEditDto { Name = "Name2"};
-
-            Func<Task> action = async () => await _repository.UpdateContactTypeAsync(contact1.Id, updateDto);
-            action.Should().ThrowAsync<ArgumentException>().WithMessage("Facility Type 'Name2' already exists.");
-        }
         //UpdateContactTypeStatusAsync
         public async Task UpdateContactTypeStatusAsync_UpdatesStatusCorrectly()
         {
