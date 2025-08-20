@@ -69,17 +69,18 @@ namespace FMS.Infrastructure.Repositories
             return newLocation.Id;
         }
 
-        public Task UpdateLocationAsync(Guid id, LocationEditDto locationUpdates)
+        public Task UpdateLocationAsync(Guid facilityId, LocationEditDto locationUpdates)
         {
             Prevent.Null(locationUpdates, nameof(locationUpdates));
-            Prevent.NullOrEmpty(locationUpdates.Id, nameof(locationUpdates.Id));
+            Prevent.NullOrEmpty(facilityId, nameof(facilityId));
             
-            return UpdateLocationInternalAsync(id, locationUpdates);
+            return UpdateLocationInternalAsync(facilityId, locationUpdates);
         }
 
-        private async Task<Guid> UpdateLocationInternalAsync(Guid id, LocationEditDto locationUpdates)
+        private async Task<Guid> UpdateLocationInternalAsync(Guid facilityId, LocationEditDto locationUpdates)
         {
-            var location = await _context.Locations.FindAsync(id) ?? throw new ArgumentException("Location ID not found.", nameof(id));
+            var location = await _context.Locations
+                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
 
             location.FacilityId = locationUpdates.FacilityId;
             location.Class = locationUpdates.Class;

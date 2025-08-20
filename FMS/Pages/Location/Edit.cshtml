@@ -1,0 +1,37 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Location
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Location.EditModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = $"Edit Location Properties: {Model.Facility.FacilityNumber}";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="Location.FacilityId" />
+        <input type="hidden" asp-for="Location.Id" />
+        <div class="row mb-3">
+            <div class="col-2 mb-3">
+                <label asp-for="Location.Class" class="form-label">Class</label>
+                <select asp-for="Location.Class" asp-items="Model.Classes" class="form-select">
+                </select>
+                <span asp-validation-for="Location.Class" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row mb-3">
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
+            <a asp-page="../Facilities/Details" asp-route-id="@Model.Facility.Id" class="btn btn-outline-secondary col-md-2">Cancel Update</a>
+        </div>
+    </form>
+</div>

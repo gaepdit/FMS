@@ -15,7 +15,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreateLocationAsync(LocationCreateDto location);
 
-        Task UpdateLocationAsync(Guid id, LocationEditDto locationUpdates);
+        Task UpdateLocationAsync(Guid facilityId, LocationEditDto locationUpdates);
 
         Task UpdateLocationStatusAsync(Guid id, bool active);
     }

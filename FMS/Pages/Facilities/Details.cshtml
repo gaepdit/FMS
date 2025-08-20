@@ -410,7 +410,7 @@
                     <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
                         <h3>
                             Location
-                            <a asp-page="/Location/Edit" class="btn btn-sm btn-primary">Edit Location</a>
+                            <a asp-page="/Location/Edit" asp-route-id="@Model.FacilityDetail.LocationDetails.Id" class="btn btn-sm btn-primary">Edit</a>
                         </h3>
                         <hr />
                         <div class="row">
