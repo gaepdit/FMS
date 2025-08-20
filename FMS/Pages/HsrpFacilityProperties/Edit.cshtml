@@ -23,7 +23,6 @@
             <div class="col mb-3">
                 <label asp-for="HsrpFacilityProperties.ComplianceOfficerId" class="form-label">Geologist</label>
                 <select asp-for="HsrpFacilityProperties.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
-                    @* <option value="">[not assigned]</option> *@
                 </select>
                 <span asp-validation-for="HsrpFacilityProperties.ComplianceOfficerId" class="text-danger"></span>
             </div>
@@ -33,9 +32,10 @@
                 <span asp-validation-for="HsrpFacilityProperties.DateListed" class="text-danger"></span>
             </div>
             <div class="col mb-3">
-                <label asp-for="HsrpFacilityProperties.AdditionalOrgUnit" class="form-label"></label>
-                <input asp-for="HsrpFacilityProperties.AdditionalOrgUnit" class="form-control" />
-                <span asp-validation-for="HsrpFacilityProperties.AdditionalOrgUnit" class="text-danger"></span>
+                <label asp-for="HsrpFacilityProperties.OrganizationalUnitId" class="form-label">Additional Org. Unit</label>
+                <select asp-for="HsrpFacilityProperties.OrganizationalUnitId" asp-items="Model.OrganizationalUnit" class="form-select">
+                </select>
+                <span asp-validation-for="HsrpFacilityProperties.OrganizationalUnitId" class="text-danger"></span>
             </div>
         </div>
         <div class="row mb-3">

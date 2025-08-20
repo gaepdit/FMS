@@ -24,6 +24,7 @@ namespace FMS.Infrastructure.Repositories
         {
             var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             if (hsrpFacilityProperties == null)
             {
@@ -36,6 +37,7 @@ namespace FMS.Infrastructure.Repositories
         {
             var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
                 .SingleOrDefaultAsync(e => e.Id == id);
             if (hsrpFacilityProperties == null)
             {
@@ -76,7 +78,7 @@ namespace FMS.Infrastructure.Repositories
             }
 
             hsrpFacilityProperties.DateListed = hsrpFacilityPropertiesUpdates.DateListed;
-            hsrpFacilityProperties.AdditionalOrgUnit = hsrpFacilityPropertiesUpdates.AdditionalOrgUnit;
+            hsrpFacilityProperties.OrganizationalUnitId = hsrpFacilityPropertiesUpdates.OrganizationalUnitId;
             hsrpFacilityProperties.ComplianceOfficerId = hsrpFacilityPropertiesUpdates.ComplianceOfficerId;
             hsrpFacilityProperties.VRPDate = hsrpFacilityPropertiesUpdates.VRPDate;
             hsrpFacilityProperties.BrownfieldDate = hsrpFacilityPropertiesUpdates.BrownfieldDate;

@@ -48,6 +48,7 @@ namespace FMS.Infrastructure.Repositories
             {
                 facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
                     .AsNoTracking()
+                    .Include(e => e.OrganizationalUnit)
                     .Include(e => e.ComplianceOfficer)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();

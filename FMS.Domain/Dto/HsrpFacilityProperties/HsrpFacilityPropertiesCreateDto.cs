@@ -14,7 +14,7 @@ namespace FMS.Domain.Dto
         public DateOnly DateListed { get; set; }
 
         [Display(Name = "Additional Org Unit")]
-        public string AdditionalOrgUnit { get; set; }
+        public OrganizationalUnit OrganizationalUnit { get; set; }
 
         [Display(Name = "Geologist")]
         public Guid ComplianceOfficerId { get; set; }

@@ -37,6 +37,7 @@ namespace FMS.Pages.HsrpFacilityProperties
         public Guid Id { get; set; }
 
         public SelectList ComplianceOfficers { get; private set; }
+        public SelectList OrganizationalUnit { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
@@ -75,6 +76,7 @@ namespace FMS.Pages.HsrpFacilityProperties
         private async Task PopulateSelectsAsync()
         {
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            OrganizationalUnit = await _listHelper.OrganizationalUnitsSelectListAsync();
         }
     }
 }
