@@ -18,7 +18,7 @@ namespace FMS.Domain.Dto
             FacilityId = hsrpFacilityProperties.FacilityId;
             DateListed = hsrpFacilityProperties.DateListed;
             AdditionalOrgUnit = hsrpFacilityProperties.AdditionalOrgUnit;
-            Geologist = hsrpFacilityProperties.Geologist;
+            ComplianceOfficerId = hsrpFacilityProperties.ComplianceOfficer?.Id;
             VRPDate = hsrpFacilityProperties.VRPDate;
             BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
             DateDeListed = hsrpFacilityProperties.DateDeListed;
@@ -30,7 +30,7 @@ namespace FMS.Domain.Dto
             FacilityNumber = facilityNumber;
             DateListed = Hfpcd.DateListed;
             AdditionalOrgUnit = Hfpcd.AdditionalOrgUnit;
-            Geologist = Hfpcd.Geologist;
+            ComplianceOfficerId = Hfpcd.ComplianceOfficer?.Id;
             VRPDate = Hfpcd.VRPDate;
             BrownfieldDate = Hfpcd.BrownfieldDate;
             DateDeListed = Hfpcd.DateDeListed;
@@ -52,7 +52,7 @@ namespace FMS.Domain.Dto
         public string AdditionalOrgUnit { get; set; }
 
         [Display(Name = "Geologist")]
-        public string Geologist { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
 
         [Display(Name = "VRP Date")]
         public DateOnly? VRPDate { get; set; }

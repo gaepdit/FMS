@@ -23,6 +23,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<HsrpFacilityPropertiesDetailDto> GetHsrpFacilityPropertiesByFacilityIdAsync(Guid facilityId)
         {
             var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
+                .Include(e => e.ComplianceOfficer)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             if (hsrpFacilityProperties == null)
             {
@@ -34,6 +35,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesEditAsync(Guid id)
         {
             var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
+                .Include(e => e.ComplianceOfficer)
                 .SingleOrDefaultAsync(e => e.Id == id);
             if (hsrpFacilityProperties == null)
             {
@@ -75,7 +77,7 @@ namespace FMS.Infrastructure.Repositories
 
             hsrpFacilityProperties.DateListed = hsrpFacilityPropertiesUpdates.DateListed;
             hsrpFacilityProperties.AdditionalOrgUnit = hsrpFacilityPropertiesUpdates.AdditionalOrgUnit;
-            hsrpFacilityProperties.Geologist = hsrpFacilityPropertiesUpdates.Geologist;
+            hsrpFacilityProperties.ComplianceOfficerId = hsrpFacilityPropertiesUpdates.ComplianceOfficerId;
             hsrpFacilityProperties.VRPDate = hsrpFacilityPropertiesUpdates.VRPDate;
             hsrpFacilityProperties.BrownfieldDate = hsrpFacilityPropertiesUpdates.BrownfieldDate;
             hsrpFacilityProperties.DateDeListed = hsrpFacilityPropertiesUpdates.DateDeListed;

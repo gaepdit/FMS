@@ -1,9 +1,11 @@
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
 
@@ -14,22 +16,27 @@ namespace FMS.Pages.HsrpFacilityProperties
     {
         private readonly IHsrpFacilityPropertiesRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
+        private readonly ISelectListHelper _listHelper;
 
         public EditModel(
             IHsrpFacilityPropertiesRepository repository, 
-            IFacilityRepository facilityRepository)
+            IFacilityRepository facilityRepository,
+            ISelectListHelper listHelper)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
+            _listHelper = listHelper;
         }
 
+        [BindProperty]
         public HsrpFacilityPropertiesEditDto HsrpFacilityProperties { get; set; }
 
         public FacilityDetailDto Facility { get; set; }
 
-        public string FacilityNumber { get; set; }
-
+        [BindProperty]
         public Guid Id { get; set; }
+
+        public SelectList ComplianceOfficers { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
@@ -47,10 +54,27 @@ namespace FMS.Pages.HsrpFacilityProperties
                 return NotFound();
             }
 
-            FacilityNumber = Facility.FacilityNumber;
-
+            await PopulateSelectsAsync();
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+           
+            await _repository.UpdateHsrpFacilityPropertiesAsync(HsrpFacilityProperties.FacilityId, HsrpFacilityProperties);
+
+            return RedirectToPage("../Facilities/Details", new { id = HsrpFacilityProperties.FacilityId });
+        }
+
+        private async Task PopulateSelectsAsync()
+        {
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
         }
     }
 }

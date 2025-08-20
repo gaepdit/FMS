@@ -13,7 +13,7 @@ namespace FMS.Domain.Dto
             FacilityId = hsrpFacilityProperties.FacilityId;
             DateListed = hsrpFacilityProperties.DateListed;
             AdditionalOrgUnit = hsrpFacilityProperties.AdditionalOrgUnit;
-            Geologist = hsrpFacilityProperties.Geologist;
+            ComplianceOfficer = hsrpFacilityProperties.ComplianceOfficer;
             VRPDate = hsrpFacilityProperties.VRPDate;
             BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
         }
@@ -31,7 +31,7 @@ namespace FMS.Domain.Dto
         public string AdditionalOrgUnit { get; set; }
 
         [Display(Name = "Geologist")]
-        public string Geologist { get; set; }
+        public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [Display(Name = "VRP Date")]
         public DateOnly? VRPDate { get; set; }

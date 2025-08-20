@@ -21,7 +21,7 @@ namespace FMS.Domain.Entities
             FacilityId = hsrpFacilityProperties.FacilityId;
             DateListed = hsrpFacilityProperties.DateListed;
             AdditionalOrgUnit = hsrpFacilityProperties.AdditionalOrgUnit;
-            Geologist = hsrpFacilityProperties.Geologist;
+            ComplianceOfficerId = hsrpFacilityProperties.ComplianceOfficerId;
             VRPDate = hsrpFacilityProperties.VRPDate;
             BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
             DateDeListed = hsrpFacilityProperties.DateDeListed;
@@ -34,8 +34,9 @@ namespace FMS.Domain.Entities
         [Display(Name = "Additional Org Unit")]
         public string AdditionalOrgUnit { get; set; }
 
+        public Guid? ComplianceOfficerId { get; set; }
         [Display(Name = "Geologist")]
-        public string Geologist { get; set; }
+        public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [Display(Name = "VRP Date")]
         public DateOnly? VRPDate { get; set; }
