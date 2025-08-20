@@ -1,0 +1,64 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.HsrpFacilityProperties
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.HsrpFacilityProperties.EditModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = $"Edit HSI Facility Properties: {Model.Facility.FacilityNumber}";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="HsrpFacilityProperties.FacilityId" />
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="HsrpFacilityProperties.ComplianceOfficerId" class="form-label">Geologist</label>
+                <select asp-for="HsrpFacilityProperties.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                </select>
+                <span asp-validation-for="HsrpFacilityProperties.ComplianceOfficerId" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="HsrpFacilityProperties.DateListed" class="form-label"></label>
+                <input asp-for="HsrpFacilityProperties.DateListed" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="HsrpFacilityProperties.DateListed" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="HsrpFacilityProperties.OrganizationalUnitId" class="form-label">Additional Org. Unit</label>
+                <select asp-for="HsrpFacilityProperties.OrganizationalUnitId" asp-items="Model.OrganizationalUnit" class="form-select">
+                </select>
+                <span asp-validation-for="HsrpFacilityProperties.OrganizationalUnitId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="HsrpFacilityProperties.BrownfieldDate" class="form-label"></label>
+                <input asp-for="HsrpFacilityProperties.BrownfieldDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="HsrpFacilityProperties.BrownfieldDate" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="HsrpFacilityProperties.VRPDate" class="form-label"></label>
+                <input asp-for="HsrpFacilityProperties.VRPDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="HsrpFacilityProperties.VRPDate" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="HsrpFacilityProperties.DateDeListed" class="form-label"></label>
+                <input asp-for="HsrpFacilityProperties.DateDeListed" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="HsrpFacilityProperties.DateDeListed" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row mb-3">
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update Facility</button>
+            <a asp-page="../Facilities/Details" asp-route-id="@Model.Facility.Id" class="btn btn-outline-secondary col-md-2">Cancel Update</a>
+        </div>
+    </form>
+</div>

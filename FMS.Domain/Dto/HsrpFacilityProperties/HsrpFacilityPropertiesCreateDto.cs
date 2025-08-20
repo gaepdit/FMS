@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -13,10 +14,10 @@ namespace FMS.Domain.Dto
         public DateOnly DateListed { get; set; }
 
         [Display(Name = "Additional Org Unit")]
-        public string AdditionalOrgUnit { get; set; }
+        public OrganizationalUnit OrganizationalUnit { get; set; }
 
         [Display(Name = "Geologist")]
-        public string Geologist { get; set; }
+        public Guid ComplianceOfficerId { get; set; }
 
         [Display(Name = "VRP Date")]
         public DateOnly VRPDate { get; set; }
