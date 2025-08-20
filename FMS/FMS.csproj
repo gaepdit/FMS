@@ -68,7 +68,6 @@
   <Folder Include="Pages\OnsiteScore\" />
   <Folder Include="Pages\Score\" />
   <Folder Include="Pages\Phone\" />
-  <Folder Include="Pages\Parcel\" />
 </ItemGroup>
 
 </Project>

@@ -1,4 +1,15 @@
 ﻿@page
+@using FMS.Pages.Facilities
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Parcel.AddModel
-@{
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
 }
+
+@{
+    ViewData["Title"] = "Add Parcel";
+}
+<h1>@ViewData["Title"]</h1>
+
