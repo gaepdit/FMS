@@ -19,6 +19,7 @@
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="HsrpFacilityProperties.FacilityId" />
+        <input type="hidden" asp-for="HsrpFacilityProperties.Id" />
         <div class="row mb-3">
             <div class="col mb-3">
                 <label asp-for="HsrpFacilityProperties.ComplianceOfficerId" class="form-label">Geologist</label>
@@ -57,7 +58,7 @@
         </div>
         <hr />
         <div class="row mb-3">
-            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update Facility</button>
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
             <a asp-page="../Facilities/Details" asp-route-id="@Model.Facility.Id" class="btn btn-outline-secondary col-md-2">Cancel Update</a>
         </div>
     </form>
