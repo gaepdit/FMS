@@ -23,12 +23,27 @@ namespace FMS.Infrastructure.Repositories
         public async Task<HsrpFacilityPropertiesDetailDto> GetHsrpFacilityPropertiesByFacilityIdAsync(Guid facilityId)
         {
             var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             if (hsrpFacilityProperties == null)
             {
                 return null;
             }
             return new HsrpFacilityPropertiesDetailDto(hsrpFacilityProperties);
+        }
+
+        public async Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesEditAsync(Guid id)
+        {
+            var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .SingleOrDefaultAsync(e => e.Id == id);
+            if (hsrpFacilityProperties == null)
+            {
+                return null;
+            }
+            return new HsrpFacilityPropertiesEditDto(hsrpFacilityProperties);
         }
 
         public Task<Guid> CreateHsrpFacilityPropertiesAsync(HsrpFacilityPropertiesCreateDto hsrpFacilityProperties)
@@ -63,8 +78,8 @@ namespace FMS.Infrastructure.Repositories
             }
 
             hsrpFacilityProperties.DateListed = hsrpFacilityPropertiesUpdates.DateListed;
-            hsrpFacilityProperties.AdditionalOrgUnit = hsrpFacilityPropertiesUpdates.AdditionalOrgUnit;
-            hsrpFacilityProperties.Geologist = hsrpFacilityPropertiesUpdates.Geologist;
+            hsrpFacilityProperties.OrganizationalUnitId = hsrpFacilityPropertiesUpdates.OrganizationalUnitId;
+            hsrpFacilityProperties.ComplianceOfficerId = hsrpFacilityPropertiesUpdates.ComplianceOfficerId;
             hsrpFacilityProperties.VRPDate = hsrpFacilityPropertiesUpdates.VRPDate;
             hsrpFacilityProperties.BrownfieldDate = hsrpFacilityPropertiesUpdates.BrownfieldDate;
             hsrpFacilityProperties.DateDeListed = hsrpFacilityPropertiesUpdates.DateDeListed;
