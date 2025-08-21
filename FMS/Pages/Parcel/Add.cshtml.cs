@@ -18,8 +18,15 @@ namespace FMS.Pages.Parcel
     [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
     public class AddModel : PageModel
     {
-        public void OnGet()
+        private readonly ILocationRepository _repository;
+        private readonly ISelectListHelper _listHelper;
+
+        public AddModel(
+            ILocationRepository repository,
+            ISelectListHelper listHelper)
         {
+            _repository = repository;
+            _listHelper = listHelper;
         }
     }
 }
