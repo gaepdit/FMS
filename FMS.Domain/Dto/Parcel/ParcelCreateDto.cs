@@ -6,6 +6,8 @@ namespace FMS.Domain.Dto
 {
     public class ParcelCreateDto
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
+
         public bool Active { get; set; }
 
         [Required]

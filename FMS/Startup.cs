@@ -107,6 +107,7 @@ namespace FMS
             services.AddScoped<IGapsAssessmentRepository, GapsAssessmentRepository>();
             services.AddScoped<IHsrpFacilityPropertiesRepository, HsrpFacilityPropertiesRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IParcelRepository, ParcelRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

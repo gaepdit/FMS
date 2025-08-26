@@ -9,6 +9,7 @@ namespace FMS.Domain.Dto
         public ParcelEditDto() { }
         public ParcelEditDto(Parcel parcel)
         {
+            Id = parcel.Id;
             Active = parcel.Active;
             FacilityId = parcel.FacilityId;
             ParcelNumber = parcel.ParcelNumber;
@@ -18,6 +19,8 @@ namespace FMS.Domain.Dto
             DeListDate = parcel.DeListDate;
             SubListParcelName = parcel.SubListParcelName;
         }
+        public Guid Id { get; set; }
+
         public bool Active { get; set; }
 
         public Guid FacilityId { get; set; }

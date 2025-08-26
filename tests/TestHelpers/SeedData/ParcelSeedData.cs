@@ -21,7 +21,7 @@ namespace FMS.TestData.SeedData
                     SubListParcelName = "Back 40",
                     ParcelTypeId = new Guid("A5F9B7BE-0664-44BF-9A51-72792AE53253"),
                     Acres = 2,
-                    ListDate = new DateOnly(2020, 3, 14),
+                    ListDate = new DateOnly(2018, 3, 14),
                     DeListDate = null
                 },
                 new()
@@ -33,7 +33,7 @@ namespace FMS.TestData.SeedData
                     SubListParcelName = "Some chunk of land",
                     ParcelTypeId = new Guid("A5F9B7BE-0664-44BF-9A51-72792AE53253"),
                     Acres = .5,
-                    ListDate = new DateOnly(2020, 3, 14),
+                    ListDate = new DateOnly(2019, 3, 14),
                     DeListDate = new DateOnly(2024, 7, 12)
                 },
                 new()
@@ -45,7 +45,7 @@ namespace FMS.TestData.SeedData
                     SubListParcelName = "Some parcel",
                     ParcelTypeId = new Guid("A5F9B7BE-0664-44BF-9A51-72792AE53253"),
                     Acres = 0.73,
-                    ListDate = new DateOnly(2020, 3, 14),
+                    ListDate = new DateOnly(2016, 3, 14),
                     DeListDate = null
                 },
                 new()
@@ -87,13 +87,13 @@ namespace FMS.TestData.SeedData
                 new()
                 {
                     Id = new Guid("AFD49795-B941-40EF-A0AC-174C1993D2F3"),
-                    Active = true,
+                    Active = false,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParcelNumber = "RTY76435",
                     SubListParcelName = "Another chunk of land",
                     ParcelTypeId = new Guid("C52EBAF5-F777-4F16-AE84-B0D36BB2A248"),
                     Acres = 0.023,
-                    ListDate = new DateOnly(2020, 3, 14),
+                    ListDate = new DateOnly(2014, 3, 14),
                     DeListDate = new DateOnly(2024, 6, 23)
                 },
                 new()
@@ -105,7 +105,7 @@ namespace FMS.TestData.SeedData
                     SubListParcelName = "Vacant Lot",
                     ParcelTypeId = new Guid("C52EBAF5-F777-4F16-AE84-B0D36BB2A248"),
                     Acres = 1.0,
-                    ListDate = new DateOnly(2020, 3, 14),
+                    ListDate = new DateOnly(2016, 6, 14),
                     DeListDate = new DateOnly(2021, 7, 14)
                 },
                 new()
@@ -117,14 +117,14 @@ namespace FMS.TestData.SeedData
                     SubListParcelName = "Description of a lot",
                     ParcelTypeId = new Guid("C52EBAF5-F777-4F16-AE84-B0D36BB2A248"),
                     Acres = .234,
-                    ListDate = new DateOnly(2020, 3, 14),
+                    ListDate = new DateOnly(2019, 9, 14),
                     DeListDate = new DateOnly(2023, 3, 22)
                 },
                 new()
                 {
                     Id = new Guid("A239BC42-AE50-41F0-B41F-1BAAD5FD147A"),
                     Active = true,
-                    FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
+                    FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParcelNumber = "95767",
                     SubListParcelName = "kj&^&%$khdg",
                     ParcelTypeId = new Guid("990C501E-0E1B-4B8C-ABA3-5EC8B6F0321E"),
@@ -141,14 +141,14 @@ namespace FMS.TestData.SeedData
                     SubListParcelName = "Corn Field",
                     ParcelTypeId = new Guid("990C501E-0E1B-4B8C-ABA3-5EC8B6F0321E"),
                     Acres = 2.0,
-                    ListDate = new DateOnly(2020, 3, 14),
+                    ListDate = new DateOnly(2017, 8, 14),
                     DeListDate = new DateOnly(2023, 2, 21)
                 },
                 new()
                 {
                     Id = new Guid("4EB2A1E3-C8BD-4BB4-9631-79BE81B5CCBA"),
                     Active = true,
-                    FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
+                    FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParcelNumber = "HYT",
                     SubListParcelName = "Hog Paddock",
                     ParcelTypeId = new Guid("990C501E-0E1B-4B8C-ABA3-5EC8B6F0321E"),

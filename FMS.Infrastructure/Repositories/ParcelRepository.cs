@@ -38,6 +38,7 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Parcels.AsNoTracking()
                 .OrderByDescending(e => e.Active)
                 .ThenBy(e => e.ListDate)
+                .ThenBy(e => e.DeListDate)
                 .Include(e => e.ParcelType)
                 .Where(e => e.FacilityId == facilityId)
                 .Select(e => new ParcelSummaryDto(e))

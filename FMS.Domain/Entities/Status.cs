@@ -20,13 +20,10 @@ namespace FMS.Domain.Entities
             FacilityId = status.FacilityId;
             SourceStatusId = status.SourceStatusId;
             SourceDate = status.SourceDate;
-            //SourceProjected = status.SourceProjected;
             SoilStatusId = status.SoilStatusId;
             SoilDate = status.SoilDate;
-            //SoilProjected = status.SoilProjected;
             GroundwaterStatusId = status.GroundwaterStatusId;
             GroundwaterDate = status.GroundwaterDate;
-            //GroundwaterHWTF = status.GroundwaterHWTF;
             OverallStatusId = status.OverallStatusId;
             OverallDate = status.OverallDate;
             ISWQS = status.ISWQS;
@@ -54,9 +51,6 @@ namespace FMS.Domain.Entities
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
-        //[Display(Name = "Source Projected Cost")]
-        //public double? SourceProjected { get; set; }
-
         public Guid? SoilStatusId { get; set; }
         [Display(Name = "Soil Status")]
         public SoilStatus SoilStatus { get; set; }
@@ -64,18 +58,12 @@ namespace FMS.Domain.Entities
         [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
-        //[Display(Name = "Soil Projected Cost")]
-        //public double? SoilProjected { get; set; }
-
         public Guid? GroundwaterStatusId { get; set; }
         [Display(Name = "Groundwater Status")]
         public GroundwaterStatus GroundwaterStatus { get; set; }
 
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
-
-        //[Display(Name = "Groundwater HWTF Cost")]
-        //public double? GroundwaterHWTF { get; set; }
 
         public Guid? OverallStatusId { get; set; }
         [Display(Name = "Overall Status")]
