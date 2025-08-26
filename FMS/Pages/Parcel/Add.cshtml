@@ -30,7 +30,7 @@
                 <span asp-validation-for="NewParcel.Acres" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewParcel.ParcelTypeId" class="form-label">Parcel Type</label>
+                <label asp-for="NewParcel.ParcelTypeId"></label>
                 <select asp-for="NewParcel.ParcelTypeId" asp-items="Model.ParcelTypes" class="form-select">
                     <option value="">-- Select Parcel Type --</option>
                 </select>
@@ -49,8 +49,8 @@
                 <span asp-validation-for="NewParcel.DeListDate" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewParcel.SubListParcelName"></label>
-                <input asp-for="NewParcel.SubListParcelName" class="form-control" />
+                <label asp-for="NewParcel.SubListParcelName" class="form-label text-center"></label>
+                <input asp-for="NewParcel.SubListParcelName" class="form-control text-center" />
                 <span asp-validation-for="NewParcel.SubListParcelName" class="text-danger"></span>
             </div>
         </div>
