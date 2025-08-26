@@ -460,8 +460,8 @@
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
-                                                    <a asp-page="./Location/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                    <a asp-page="./Location/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                    <a asp-page="/Parcel/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                    <a asp-page="/Parcel/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                                 </td>
                                             }
                                         </tr>
