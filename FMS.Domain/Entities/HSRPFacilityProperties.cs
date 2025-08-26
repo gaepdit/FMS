@@ -29,7 +29,7 @@ namespace FMS.Domain.Entities
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Date Listed")]
-        public DateOnly DateListed {  get; set; }
+        public DateOnly? DateListed {  get; set; }
 
         public Guid? OrganizationalUnitId { get; set; }
         [Display(Name = "Additional Org Unit")]

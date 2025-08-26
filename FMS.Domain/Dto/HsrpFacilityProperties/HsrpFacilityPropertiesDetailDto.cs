@@ -25,7 +25,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Date Listed")]
-        public DateOnly DateListed { get; set; }
+        public DateOnly? DateListed { get; set; }
 
         [Display(Name = "Additional Org Unit")]
         public OrganizationalUnit OrganizationalUnit { get; set; }

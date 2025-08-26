@@ -6,6 +6,8 @@ namespace FMS.Domain.Dto
 {
     public class ParcelCreateDto
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
+
         public bool Active { get; set; }
 
         [Required]
@@ -17,7 +19,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Acreage")]
         public double Acres { get; set; }
 
-        [Display(Name = "Type")]
+        [Display(Name = "Parcel Type")]
         public Guid ParcelTypeId { get; set; }
         public string ParcelTypeName { get; set; }
 

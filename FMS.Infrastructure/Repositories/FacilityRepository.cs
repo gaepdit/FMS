@@ -62,7 +62,9 @@ namespace FMS.Infrastructure.Repositories
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.ParcelType)
-                    .OrderBy(e => e.Active)
+                    .OrderByDescending(e => e.Active)
+                    .ThenBy(e => e.ListDate)
+                    .ThenBy(e => e.DeListDate)
                     .ToListAsync();
 
                 facility.Contacts = await _context.Contacts

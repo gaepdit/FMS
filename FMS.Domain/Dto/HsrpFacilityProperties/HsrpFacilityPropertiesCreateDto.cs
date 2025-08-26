@@ -11,7 +11,7 @@ namespace FMS.Domain.Dto
 
         [Required]
         [Display(Name = "Date Listed")]
-        public DateOnly DateListed { get; set; }
+        public DateOnly? DateListed { get; set; }
 
         [Display(Name = "Additional Org Unit")]
         public OrganizationalUnit OrganizationalUnit { get; set; }
@@ -20,10 +20,10 @@ namespace FMS.Domain.Dto
         public Guid ComplianceOfficerId { get; set; }
 
         [Display(Name = "VRP Date")]
-        public DateOnly VRPDate { get; set; }
+        public DateOnly? VRPDate { get; set; }
 
         [Display(Name = "Brownfield Date")]
-        public DateOnly BrownfieldDate { get; set; }
+        public DateOnly? BrownfieldDate { get; set; }
 
         [Display(Name = "Date De-listed")]
         public DateOnly? DateDeListed { get; set; }
