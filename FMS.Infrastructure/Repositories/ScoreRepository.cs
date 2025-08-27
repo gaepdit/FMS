@@ -19,9 +19,9 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> ScoreExistsAsync(Guid id) =>
             _context.Scores.AnyAsync(e => e.Id == id);
 
-        public Task<Score> GetScoreByIdAsync(Guid id) =>
-            _context.Scores.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Id == id);
+        public Task<ScoreEditDto> GetScoreByIdAsync(Guid id)
+            => _context.Scores.FirstOrDefaultAsync(e => e.Id == id)
+                .ContinueWith(task => task.Result == null ? null : new ScoreEditDto(task.Result));
 
         public Task<IEnumerable<Score>> GetScoreByFacilityIdAsync(Guid facilityId) =>
             _context.Scores.AsNoTracking()
@@ -57,7 +57,9 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Score: {score.Id} does not exist.");
             }
 
-            var existingScore = await GetScoreByIdAsync(score.Id);
+            var existingScoreEditDto = await GetScoreByIdAsync(score.Id);
+
+            var existingScore = new Score(existingScoreEditDto);
 
             _context.Scores.Update(existingScore);
             await _context.SaveChangesAsync();
@@ -80,9 +82,11 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Score: {id} does not exist.");
             }
 
-            score.Active = active;
+            var existingScore = new Score(score);
 
-            _context.Scores.Update(score);
+            existingScore.Active = active;
+
+            _context.Scores.Update(existingScore);
             await _context.SaveChangesAsync();
             return true;
         }

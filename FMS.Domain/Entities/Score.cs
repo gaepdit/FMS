@@ -24,10 +24,22 @@ namespace FMS.Domain.Entities
             Comments = score.Comments;
             UseComments = score.UseComments;
         }
+
+        public Score(ScoreEditDto score)
+        {
+            Id = score.Id;
+            Active = score.Active;
+            FacilityId = score.FacilityId;
+            ScoredDate = score.ScoredDate;
+            ScoredById = score.ScoredById;
+            Comments = score.Comments;
+            UseComments = score.UseComments;
+        }
+
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Scored Date")]
-        public DateOnly ScoredDate { get; set; }
+        public DateOnly? ScoredDate { get; set; }
 
         public Guid? ScoredById { get; set; }
         [Display(Name = "Scored By")]

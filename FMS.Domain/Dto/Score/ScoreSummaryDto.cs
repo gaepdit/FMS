@@ -21,7 +21,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Scored Date")]
-        public DateOnly ScoredDate { get; set; }
+        public DateOnly? ScoredDate { get; set; }
 
         public Guid? ScoredById { get; set; }
         [Display(Name = "Scored By")]
