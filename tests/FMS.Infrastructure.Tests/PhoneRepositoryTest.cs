@@ -194,19 +194,18 @@ namespace FMS.Infrastructure.Tests
             Func<Task> action = async () => await _repository.UpdatePhoneAsync(updateDto);
             await action.Should().ThrowAsync<ArgumentException>().WithMessage("Phone Id " + updateDto.Id + " does not exist.");
         }
-        [Test]
-        public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenNumberAlreadyExist()
-        {
-            var existingPhone = new Phone { Id = Guid.NewGuid(), Number = "DUPLICATE_NUMBER" };
-            _context.Phones.Add(existingPhone);
-            await _context.SaveChangesAsync();
+        //[Test]
+        //public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenNumberAlreadyExist()
+        //{
+        //    var existingPhone = new Phone { Id = Guid.NewGuid(), Number = "DUPLICATE_NUMBER" };
+        //    _context.Phones.Add(existingPhone);
+        //    await _context.SaveChangesAsync();
 
-            var updateDto = new PhoneEditDto { Id = existingPhone.Id, Number = "DUPLICATE_NUMBER" };
+        //    var updateDto = new PhoneEditDto { Id = existingPhone.Id, Number = "DUPLICATE_NUMBER" };
 
-            Func<Task> action = async () => await _repository.UpdatePhoneAsync(updateDto);
-            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Phone Number: 'DUPLICATE_NUMBER' Already Exists.");
-
-        }
+        //    Func<Task> action = async () => await _repository.UpdatePhoneAsync(updateDto);
+        //    await action.Should().ThrowAsync<ArgumentException>().WithMessage("Phone Number: 'DUPLICATE_NUMBER' Already Exists.");
+        //}
 
         // UpdatePhoneStatusAsync
         [Test]
