@@ -68,7 +68,14 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Phone Number: {phone.Number} Already Exists.");
             }
 
-            var newPhone = new Phone(phone);
+            var newPhone = new Phone()
+            {
+                Id = Guid.NewGuid(),
+                ContactId = phone.ContactId,
+                Number = phone.Number,
+                PhoneType = phone.PhoneType,
+                Active = phone.Active
+            };
 
             await _context.Phones.AddAsync(newPhone);
             await _context.SaveChangesAsync();

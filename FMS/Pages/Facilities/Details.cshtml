@@ -526,7 +526,7 @@
                                                         </h3>
                                                         <div id="PhoneNumberList+@c.FamilyName+@c.GivenName" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
                                                             <div class="accordion-body">
-                                                                <a class="btn btn-sm btn-primary">Add New Phone Number</a>
+                                                                <a asp-page="/Phone/Add" asp-route-Id="@c.Id" class="btn btn-sm btn-primary">Add Phone</a>
                                                                 <table class="table table-sm" aria-label="Phone Numbers">
                                                                     @if (c.Phones.Count > 0 && c.Active)
                                                                     {
@@ -551,8 +551,7 @@
                                                                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                                                                     {
                                                                                         <td class="justify-content-end">
-                                                                                            <a asp-page="./Contact/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                                            <a asp-page="./Contact/Phone/Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                                                            <a asp-page="./Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                                                         </td>
                                                                                     }
                                                                                 </tr>
