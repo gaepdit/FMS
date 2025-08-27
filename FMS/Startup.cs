@@ -110,6 +110,7 @@ namespace FMS
             services.AddScoped<IParcelRepository, ParcelRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IPhoneRepository, PhoneRepository>();
+            services.AddScoped<IScoreRepository, ScoreRepository>();
 
 
             // Set up database

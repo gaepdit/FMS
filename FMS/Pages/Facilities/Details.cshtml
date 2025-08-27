@@ -551,7 +551,7 @@
                                                                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                                                                     {
                                                                                         <td class="justify-content-end">
-                                                                                            <a asp-page="./Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                                            <a asp-page="/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                                                         </td>
                                                                                     }
                                                                                 </tr>
