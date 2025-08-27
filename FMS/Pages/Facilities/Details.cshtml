@@ -574,7 +574,7 @@
                     <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
                         <h3>
                             Score
-                            <a asp-page="/Score/Edit" class="btn btn-sm btn-primary">Edit Score</a>
+                            <a asp-page="/Score/Edit" asp-route-id="@Model.FacilityDetail.ScoreDetails.Id" class="btn btn-sm btn-primary">Edit Score</a>
                         </h3>
                         <hr />
                         <div class="row">

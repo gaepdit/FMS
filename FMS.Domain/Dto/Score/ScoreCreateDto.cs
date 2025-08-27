@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -8,11 +9,11 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Scored Date")]
-        public DateOnly ScoredDate { get; set; }
+        public DateOnly? ScoredDate { get; set; }
 
         [Display(Name = "Scored By")]
         public Guid ScoredById { get; set; }
-        public string ScoredBy { get; set; } 
+        public ComplianceOfficer ScoredBy { get; set; } 
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }

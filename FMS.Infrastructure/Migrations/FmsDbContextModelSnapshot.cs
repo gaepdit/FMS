@@ -22,6 +22,38 @@ namespace FMS.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("FMS.Domain.Entities.AbandonSites", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AbandonSites");
+                });
+
             modelBuilder.Entity("FMS.Domain.Entities.ActionTaken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -290,9 +322,6 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
 
@@ -304,6 +333,8 @@ namespace FMS.Infrastructure.Migrations
                     b.HasIndex("ContactTitleId");
 
                     b.HasIndex("ContactTypeId");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("Contacts");
                 });
@@ -1211,13 +1242,13 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("CompletionDate")
+                    b.Property<DateOnly?>("CompletionDate")
                         .HasColumnType("date");
 
                     b.Property<Guid?>("ComplianceOfficerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("DueDate")
+                    b.Property<DateOnly?>("DueDate")
                         .HasColumnType("date");
 
                     b.Property<string>("EntityNameOrNumber")
@@ -1241,7 +1272,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("StartDate")
+                    b.Property<DateOnly?>("StartDate")
                         .HasColumnType("date");
 
                     b.Property<DateTimeOffset?>("UpdateDateTime")
@@ -1257,6 +1288,8 @@ namespace FMS.Infrastructure.Migrations
                     b.HasIndex("ComplianceOfficerId");
 
                     b.HasIndex("EventTypeId");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("Events");
                 });
@@ -1564,6 +1597,38 @@ namespace FMS.Infrastructure.Migrations
                     b.ToTable("FundingSources");
                 });
 
+            modelBuilder.Entity("FMS.Domain.Entities.GapsAssessment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GapsAssessments");
+                });
+
             modelBuilder.Entity("FMS.Domain.Entities.GroundwaterScore", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1591,7 +1656,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("ChemName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ChemicalId")
+                    b.Property<Guid?>("ChemicalId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("D2")
@@ -1609,6 +1674,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<int>("E2")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("FacilityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("GWScore")
                         .HasColumnType("nvarchar(max)");
 
@@ -1621,9 +1689,6 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("Other")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ScoreId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
 
@@ -1631,6 +1696,11 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChemicalId");
+
+                    b.HasIndex("FacilityId")
+                        .IsUnique();
 
                     b.ToTable("GroundwaterScores");
                 });
@@ -1677,20 +1747,20 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<string>("AdditionalOrgUnit")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("BrownfieldDate")
+                    b.Property<DateOnly?>("BrownfieldDate")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly>("DateListed")
+                    b.Property<Guid?>("ComplianceOfficerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly?>("DateDeListed")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("DateListed")
                         .HasColumnType("date");
 
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Geologist")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
@@ -1698,16 +1768,26 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("InsertUser")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("OrganizationalUnitId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("UpdateUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("VRPDate")
+                    b.Property<DateOnly?>("VRPDate")
                         .HasColumnType("date");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ComplianceOfficerId");
+
+                    b.HasIndex("FacilityId")
+                        .IsUnique();
+
+                    b.HasIndex("OrganizationalUnitId");
 
                     b.ToTable("HsrpFacilityProperties");
                 });
@@ -1741,6 +1821,9 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FacilityId")
+                        .IsUnique();
+
                     b.ToTable("Locations");
                 });
 
@@ -1768,7 +1851,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("ChemName1D")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ChemicalId")
+                    b.Property<Guid?>("ChemicalId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("D2")
@@ -1786,6 +1869,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<int>("E2")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("FacilityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
 
@@ -1798,9 +1884,6 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("Other1D")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ScoreId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
 
@@ -1808,6 +1891,11 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChemicalId");
+
+                    b.HasIndex("FacilityId")
+                        .IsUnique();
 
                     b.ToTable("OnsiteScores");
                 });
@@ -1885,29 +1973,29 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<DateOnly?>("DeListDate")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("FacilityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("InsertUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("LocationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
-                    b.Property<string>("ParcelDescription")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateOnly?>("ListDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("ParcelNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ParcelTypeId")
+                    b.Property<Guid?>("ParcelTypeId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SubListParcelName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
@@ -1916,6 +2004,8 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
 
                     b.HasIndex("ParcelTypeId");
 
@@ -1963,6 +2053,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid>("ContactId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("FacilityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
 
@@ -1984,6 +2077,10 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("Phones");
                 });
@@ -2063,7 +2160,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("ScoredById")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("ScoredDate")
+                    b.Property<DateOnly?>("ScoredDate")
                         .HasColumnType("date");
 
                     b.Property<DateTimeOffset?>("UpdateDateTime")
@@ -2076,6 +2173,9 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacilityId")
+                        .IsUnique();
 
                     b.HasIndex("ScoredById");
 
@@ -2152,11 +2252,20 @@ namespace FMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AbandonSitesId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("CostEstimate")
+                        .HasColumnType("float");
+
+                    b.Property<DateOnly?>("CostEstimateDate")
+                        .HasColumnType("date");
 
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
@@ -2164,23 +2273,29 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("FinancialAssurance")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("FundingSourceId")
+                    b.Property<Guid?>("FundingSourceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GAPSAssessmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateOnly?>("GAPSModelDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("GAPSNoOfUnknowns")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GAPSScore")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly?>("GroundwaterDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("GroundwaterHWTF")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("GroundwaterStatusId")
+                    b.Property<Guid?>("GroundwaterStatusId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("HSPMScore")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ISWQS")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("ISWQS")
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
@@ -2197,16 +2312,13 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<DateOnly?>("OverallDate")
                         .HasColumnType("date");
 
-                    b.Property<Guid>("OverallStatusId")
+                    b.Property<Guid?>("OverallStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateOnly?>("SoilDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("SoilProjected")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SoilStatusId")
+                    b.Property<Guid?>("SoilStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SolidWastePermitNumber")
@@ -2215,10 +2327,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<DateOnly?>("SourceDate")
                         .HasColumnType("date");
 
-                    b.Property<string>("SourceProjected")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SourceStatusId")
+                    b.Property<Guid?>("SourceStatusId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset?>("UpdateDateTime")
@@ -2229,7 +2338,14 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AbandonSitesId");
+
+                    b.HasIndex("FacilityId")
+                        .IsUnique();
+
                     b.HasIndex("FundingSourceId");
+
+                    b.HasIndex("GAPSAssessmentId");
 
                     b.HasIndex("GroundwaterStatusId");
 
@@ -2281,6 +2397,8 @@ namespace FMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChemicalId");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("Substances");
                 });
@@ -2621,6 +2739,12 @@ namespace FMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithMany("Contacts")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("ContactTitle");
 
                     b.Navigation("ContactType");
@@ -2639,6 +2763,12 @@ namespace FMS.Infrastructure.Migrations
                     b.HasOne("FMS.Domain.Entities.EventType", "EventType")
                         .WithMany()
                         .HasForeignKey("EventTypeId");
+
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithMany("Events")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ActionTaken");
 
@@ -2694,15 +2824,92 @@ namespace FMS.Infrastructure.Migrations
                     b.Navigation("OrganizationalUnit");
                 });
 
-            modelBuilder.Entity("FMS.Domain.Entities.Parcel", b =>
+            modelBuilder.Entity("FMS.Domain.Entities.GroundwaterScore", b =>
                 {
-                    b.HasOne("FMS.Domain.Entities.ParcelType", "ParcelType")
+                    b.HasOne("FMS.Domain.Entities.Chemical", "Chemical")
                         .WithMany()
-                        .HasForeignKey("ParcelTypeId")
+                        .HasForeignKey("ChemicalId");
+
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithOne("GroundwaterScoreDetails")
+                        .HasForeignKey("FMS.Domain.Entities.GroundwaterScore", "FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Chemical");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.HsrpFacilityProperties", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.ComplianceOfficer", "ComplianceOfficer")
+                        .WithMany()
+                        .HasForeignKey("ComplianceOfficerId");
+
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithOne("HsrpFacilityProperties")
+                        .HasForeignKey("FMS.Domain.Entities.HsrpFacilityProperties", "FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.OrganizationalUnit", "OrganizationalUnit")
+                        .WithMany()
+                        .HasForeignKey("OrganizationalUnitId");
+
+                    b.Navigation("ComplianceOfficer");
+
+                    b.Navigation("OrganizationalUnit");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.Location", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithOne("LocationDetails")
+                        .HasForeignKey("FMS.Domain.Entities.Location", "FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.OnsiteScore", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.Chemical", "Chemical")
+                        .WithMany()
+                        .HasForeignKey("ChemicalId");
+
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithOne("OnsiteScoreDetails")
+                        .HasForeignKey("FMS.Domain.Entities.OnsiteScore", "FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chemical");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.Parcel", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithMany("Parcels")
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.ParcelType", "ParcelType")
+                        .WithMany()
+                        .HasForeignKey("ParcelTypeId");
+
                     b.Navigation("ParcelType");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.Phone", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.Contact", null)
+                        .WithMany("Phones")
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithMany("Phones")
+                        .HasForeignKey("FacilityId");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.RetentionRecord", b =>
@@ -2718,6 +2925,12 @@ namespace FMS.Infrastructure.Migrations
 
             modelBuilder.Entity("FMS.Domain.Entities.Score", b =>
                 {
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithOne("ScoreDetails")
+                        .HasForeignKey("FMS.Domain.Entities.Score", "FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FMS.Domain.Entities.ComplianceOfficer", "ScoredBy")
                         .WithMany()
                         .HasForeignKey("ScoredById");
@@ -2727,37 +2940,45 @@ namespace FMS.Infrastructure.Migrations
 
             modelBuilder.Entity("FMS.Domain.Entities.Status", b =>
                 {
-                    b.HasOne("FMS.Domain.Entities.FundingSource", "FundingSource")
+                    b.HasOne("FMS.Domain.Entities.AbandonSites", "AbandonSites")
                         .WithMany()
-                        .HasForeignKey("FundingSourceId")
+                        .HasForeignKey("AbandonSitesId");
+
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithOne("StatusDetails")
+                        .HasForeignKey("FMS.Domain.Entities.Status", "FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.FundingSource", "FundingSource")
+                        .WithMany()
+                        .HasForeignKey("FundingSourceId");
+
+                    b.HasOne("FMS.Domain.Entities.GapsAssessment", "GAPSAssessment")
+                        .WithMany()
+                        .HasForeignKey("GAPSAssessmentId");
 
                     b.HasOne("FMS.Domain.Entities.GroundwaterStatus", "GroundwaterStatus")
                         .WithMany()
-                        .HasForeignKey("GroundwaterStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroundwaterStatusId");
 
                     b.HasOne("FMS.Domain.Entities.OverallStatus", "OverallStatus")
                         .WithMany()
-                        .HasForeignKey("OverallStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OverallStatusId");
 
                     b.HasOne("FMS.Domain.Entities.SoilStatus", "SoilStatus")
                         .WithMany()
-                        .HasForeignKey("SoilStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SoilStatusId");
 
                     b.HasOne("FMS.Domain.Entities.SourceStatus", "SourceStatus")
                         .WithMany()
-                        .HasForeignKey("SourceStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SourceStatusId");
+
+                    b.Navigation("AbandonSites");
 
                     b.Navigation("FundingSource");
+
+                    b.Navigation("GAPSAssessment");
 
                     b.Navigation("GroundwaterStatus");
 
@@ -2773,6 +2994,12 @@ namespace FMS.Infrastructure.Migrations
                     b.HasOne("FMS.Domain.Entities.Chemical", "Chemical")
                         .WithMany()
                         .HasForeignKey("ChemicalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.Facility", null)
+                        .WithMany("Substances")
+                        .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2830,9 +3057,36 @@ namespace FMS.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FMS.Domain.Entities.Contact", b =>
+                {
+                    b.Navigation("Phones");
+                });
+
             modelBuilder.Entity("FMS.Domain.Entities.Facility", b =>
                 {
+                    b.Navigation("Contacts");
+
+                    b.Navigation("Events");
+
+                    b.Navigation("GroundwaterScoreDetails");
+
+                    b.Navigation("HsrpFacilityProperties");
+
+                    b.Navigation("LocationDetails");
+
+                    b.Navigation("OnsiteScoreDetails");
+
+                    b.Navigation("Parcels");
+
+                    b.Navigation("Phones");
+
                     b.Navigation("RetentionRecords");
+
+                    b.Navigation("ScoreDetails");
+
+                    b.Navigation("StatusDetails");
+
+                    b.Navigation("Substances");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.File", b =>

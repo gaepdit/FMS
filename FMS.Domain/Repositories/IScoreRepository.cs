@@ -10,13 +10,13 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> ScoreExistsAsync(Guid id);
 
-        Task<Score> GetScoreByIdAsync(Guid id);
+        Task<ScoreEditDto> GetScoreByIdAsync(Guid id);
 
         Task<IEnumerable<Score>> GetScoreByFacilityIdAsync(Guid facilityId);
 
         Task<Guid> CreateScoreAsync(ScoreCreateDto score);
 
-        Task<Score> UpdateScoreAsync(ScoreEditDto score);
+        Task<Score> UpdateScoreAsync(Guid facilityId, ScoreEditDto scoreUpdates);
 
         Task<bool> UpdateScoreStatusAsync(Guid id, bool active);
     }
