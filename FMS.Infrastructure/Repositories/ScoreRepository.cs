@@ -47,23 +47,29 @@ namespace FMS.Infrastructure.Repositories
             return newScore.Id;
         }
 
-        public async Task<Score> UpdateScoreAsync(ScoreEditDto score)
+        public async Task<Score> UpdateScoreAsync(Guid facilityId, ScoreEditDto scoreUpdates)
         {
-            Prevent.Null(score, nameof(score));
-            Prevent.NullOrEmpty(score.Id, nameof(score.Id));
+            Prevent.Null(scoreUpdates, nameof(scoreUpdates));
+            Prevent.NullOrEmpty(scoreUpdates.FacilityId, nameof(scoreUpdates.FacilityId));
 
-            if (!await ScoreExistsAsync(score.Id))
+            var score = await _context.Scores
+                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+
+            if (score == null)
             {
-                throw new ArgumentException($"Score: {score.Id} does not exist.");
+                throw new KeyNotFoundException($"Score with Facility ID {facilityId} not found.");
             }
 
-            var existingScoreEditDto = await GetScoreByIdAsync(score.Id);
+            score.FacilityId = scoreUpdates.FacilityId;
+            score.ScoredDate = scoreUpdates.ScoredDate;
+            score.ScoredById = scoreUpdates.ScoredById;
+            score.Active = scoreUpdates.Active;
+            score.Comments = scoreUpdates.Comments;
+            score.UseComments = scoreUpdates.UseComments;
 
-            var existingScore = new Score(existingScoreEditDto);
-
-            _context.Scores.Update(existingScore);
+            _context.Scores.Update(score);
             await _context.SaveChangesAsync();
-            return existingScore;
+            return score;
         }
 
         public async Task<bool> UpdateScoreStatusAsync(Guid id, bool active)

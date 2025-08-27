@@ -16,7 +16,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreateScoreAsync(ScoreCreateDto score);
 
-        Task<Score> UpdateScoreAsync(ScoreEditDto score);
+        Task<Score> UpdateScoreAsync(Guid facilityId, ScoreEditDto scoreUpdates);
 
         Task<bool> UpdateScoreStatusAsync(Guid id, bool active);
     }

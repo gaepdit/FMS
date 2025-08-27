@@ -15,4 +15,41 @@
     @ViewData["Title"]
 </h1>
 <hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="Score.FacilityId" />
+        <input type="hidden" asp-for="Score.Id" />
+        <input type="hidden" asp-for="Score.Active" />
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="Score.ScoredById" class="form-label">Scored By</label>
+                <select asp-for="Score.ScoredById" asp-items="Model.ComplianceOfficers" class="form-select">
+                </select>
+                <span asp-validation-for="Score.ScoredById" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="Score.ScoredDate" class="form-label
+"></label>
+                <input asp-for="Score.ScoredDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="Score.ScoredDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Score.Comments" class="form-label"></label>
+            <textarea asp-for="Score.Comments" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Score.Comments" class="text-danger"></span>
+        </div>
+        <div class="mb-3 form-check">
+            <input asp-for="Score.UseComments" class="form-check-input" />
+            <label asp-for="Score.UseComments" class="form-check-label"></label>
+            <span asp-validation-for="Score.UseComments" class="text-danger"></span>
+        </div>
+        <hr />
+        <div class="row mb-3">
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
+            <a asp-page="../Facilities/Details" asp-route-id="@Model.Facility.Id" class="btn btn-outline-secondary col-md-2">Cancel Update</a>
+        </div>
+    </form>
+</div>
 

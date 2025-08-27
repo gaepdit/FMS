@@ -29,7 +29,7 @@ namespace FMS.Pages.Score
         }
 
         [BindProperty]
-        public ScoreEditDto ScoreEditDto { get; set; }
+        public ScoreEditDto Score { get; set; }
 
         public FacilityDetailDto Facility { get; set; }
 
@@ -42,13 +42,13 @@ namespace FMS.Pages.Score
         {
             Id = id;
 
-            ScoreEditDto = await _repository.GetScoreByIdAsync(id);
-            if (ScoreEditDto == null)
+            Score = await _repository.GetScoreByIdAsync(id);
+            if (Score == null)
             {
                 return NotFound();
             }
 
-            Facility = await _facilityRepository.GetFacilityAsync(ScoreEditDto.FacilityId);
+            Facility = await _facilityRepository.GetFacilityAsync(Score.FacilityId);
             if (Facility == null)
             {
                 return NotFound();
@@ -57,6 +57,19 @@ namespace FMS.Pages.Score
             await PopulateSelectsAsync();
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+            
+            await _repository.UpdateScoreAsync(Score.FacilityId, Score);
+
+            return RedirectToPage("../Facilities/Details", new { id = Score.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()
