@@ -20,15 +20,17 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> ContactExistsAsync(Guid id) =>
             _context.Contacts.AnyAsync(e => e.Id == id);
 
-        public async Task<Contact> GetContactByIdAsync(Guid id)
+        public async Task<ContactEditDto> GetContactByIdAsync(Guid id)
             {
             Prevent.NullOrEmpty(id, nameof(id));
-            return await _context.Contacts
+            var contact = await _context.Contacts
                 .AsNoTracking()
                 .Include(e => e.ContactType)
                 .Include(e => e.ContactTitle)
                 .Include(e => e.Phones)
                 .SingleOrDefaultAsync(e => e.Id == id);
+
+            return contact == null ? null : new ContactEditDto(contact);
         }
 
         public async Task<IEnumerable<Contact>> GetContactsByFacilityIdAsync(Guid facilityId)

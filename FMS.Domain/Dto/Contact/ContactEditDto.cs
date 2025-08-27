@@ -11,6 +11,7 @@ namespace FMS.Domain.Dto
         {
             Id = contact.Id;
             Active = contact.Active;
+            FacilityId = contact.FacilityId;
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
             ContactTitleId = contact.ContactTitleId;
@@ -27,6 +28,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Active")]
         public bool Active { get; set; }
+
+        public Guid FacilityId { get; set; }
 
         [Display(Name = "First Name")]
         public string GivenName { get; set; }

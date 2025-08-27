@@ -10,7 +10,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> ContactExistsAsync(Guid id);
        
-        Task<Contact> GetContactByIdAsync(Guid id);
+        Task<ContactEditDto> GetContactByIdAsync(Guid id);
 
         Task<IEnumerable<Contact>> GetContactsByFacilityIdAsync(Guid facilityId);
 
