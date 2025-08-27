@@ -97,10 +97,6 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Phone Id {phoneUpdates.Id} does not exist.");
             }
 
-            if (await PhoneNumberExistsAsync(phoneUpdates.Number))
-            {
-                throw new ArgumentException($"Phone Number: '{phoneUpdates.Number}' Already Exists.");
-            }
             var existingPhone = await _context.Phones.FindAsync(phoneUpdates.Id);
 
             existingPhone.Number = phoneUpdates.Number;
