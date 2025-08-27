@@ -473,11 +473,11 @@
                     <div class="tab-pane" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
                         <h3>
                             Contacts
-                            <a asp-page="/Contacts/Add" class="btn btn-sm btn-primary">Add Contact</a>
+                            <a asp-page="/Contact/Add" asp-route-Id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Contact</a>
                         </h3>
                         <hr />
                         <div class="row">
-                            <table class="table table-sm" aria-label="Parcels">
+                            <table class="table table-sm" aria-label="Contacts">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Name</th>
@@ -510,26 +510,26 @@
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
-                                                    <a asp-page="./Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                    <a asp-page="./Contact/Delete" asp-route-id="@c.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                    <a asp-page="/Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                 </td>
                                             }
                                         </tr>
-                                        @if (c.Phones.Count > 0 && c.Active)
-                                        {
-                                            <tr class="offset-md-2">
-                                                <td colspan="4">
-                                                    <div class="accordion accordion-flush" id="PhoneNumbers+@c.FamilyName+@c.GivenName">
-                                                        <div class="accordion-item">
-                                                            <h3 class="accordion-header" id="PhoneList1">
-                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList+@c.FamilyName+@c.GivenName" aria-expanded="true" aria-controls="PhoneNumberList+@c.FamilyName+@c.GivenName">
-                                                                    Phone Numbers
-                                                                </button>
-                                                            </h3>
-                                                            <div id="PhoneNumberList+@c.FamilyName+@c.GivenName" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
-                                                                <div class="accordion-body">
-                                                                    <a class="btn btn-sm btn-primary">Add New Phone Number</a>
-                                                                    <table class="table table-sm" aria-label="Phone Numbers">
+
+                                        <tr class="offset-md-2">
+                                            <td colspan="4">
+                                                <div class="accordion accordion-flush" id="PhoneNumbers+@c.FamilyName+@c.GivenName">
+                                                    <div class="accordion-item">
+                                                        <h3 class="accordion-header" id="PhoneList1">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList+@c.FamilyName+@c.GivenName" aria-expanded="true" aria-controls="PhoneNumberList+@c.FamilyName+@c.GivenName">
+                                                                Phone Numbers
+                                                            </button>
+                                                        </h3>
+                                                        <div id="PhoneNumberList+@c.FamilyName+@c.GivenName" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
+                                                            <div class="accordion-body">
+                                                                <a class="btn btn-sm btn-primary">Add New Phone Number</a>
+                                                                <table class="table table-sm" aria-label="Phone Numbers">
+                                                                    @if (c.Phones.Count > 0 && c.Active)
+                                                                    {
                                                                         <thead class="thead-light">
                                                                             <tr>
                                                                                 <th scope="col">Phone Type</th>
@@ -558,14 +558,14 @@
                                                                                 </tr>
                                                                             }
                                                                         </tbody>
-                                                                    </table>
-                                                                </div>
+                                                                    }
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                        }
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

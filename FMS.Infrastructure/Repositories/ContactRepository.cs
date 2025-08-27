@@ -60,24 +60,35 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task AddContactAsync(ContactCreateDto contact)
+        public Task<Guid> CreateContactAsync(ContactCreateDto contactCreate)
         {
-            Prevent.Null(contact, nameof(contact));
-            Prevent.NullOrEmpty(contact.FacilityId, nameof(contact.FacilityId));
+            Prevent.Null(contactCreate, nameof(contactCreate));
 
-            var newContact = new Contact(Guid.NewGuid(), contact);
+            return CreateContactInternalAsync(contactCreate);
+        }
 
-            if (await _context.Contacts.AnyAsync(e => e.Email == contact.Email && e.FacilityId == contact.FacilityId))
+        public async Task<Guid> CreateContactInternalAsync(ContactCreateDto contactCreate)
+        {
+            var newContact = new Contact
             {
-                throw new ArgumentException($"Contact with email {contact.Email} already exists for this facility.");
-            }
-            if (await _context.Contacts.AnyAsync(e => e.GivenName == contact.GivenName && e.FacilityId == contact.FacilityId && e.FamilyName == contact.FamilyName))
-            {
-                throw new ArgumentException($"Contact with name {contact.GivenName} {contact.FamilyName} already exists for this facility.");
-            }
+                Id = Guid.NewGuid(),
+                FacilityId = contactCreate.FacilityId,
+                FamilyName = contactCreate.FamilyName,
+                GivenName = contactCreate.GivenName,
+                ContactTitleId = contactCreate.ContactTitleId,
+                ContactTypeId = contactCreate.ContactTypeId,
+                Company = contactCreate.Company,
+                Address = contactCreate.Address,
+                City = contactCreate.City,
+                State = contactCreate.State,
+                PostalCode = contactCreate.PostalCode,
+                Email = contactCreate.Email,
+                Active = contactCreate.Active,
+            };
 
             _context.Contacts.Add(newContact);
             await _context.SaveChangesAsync();
+            return newContact.Id;
         }
 
         public async Task UpdateContactAsync(ContactEditDto contact)

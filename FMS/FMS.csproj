@@ -62,7 +62,6 @@
     </ItemGroup>
 
 <ItemGroup>
-  <Folder Include="Pages\Contact\" />
   <Folder Include="Pages\GroundwaterScore\" />
   <Folder Include="Pages\Substance\" />
   <Folder Include="Pages\OnsiteScore\" />

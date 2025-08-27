@@ -16,7 +16,7 @@ namespace FMS.Domain.Repositories
 
         Task<IEnumerable<Contact>> GetContactsByFacilityIdAndTypeAsync(Guid facilityId, Guid contactTypeId);
 
-        Task AddContactAsync(ContactCreateDto contact);
+        Task<Guid> CreateContactAsync(ContactCreateDto contactCreate);
 
         Task UpdateContactAsync(ContactEditDto contact);
 

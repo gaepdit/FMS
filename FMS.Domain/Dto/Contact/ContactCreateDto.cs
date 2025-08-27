@@ -5,6 +5,10 @@ namespace FMS.Domain.Dto
 {
     public class ContactCreateDto
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        public bool Active { get; set; } = true;
+
         public Guid FacilityId { get; set; }
 
         [Display(Name = "First Name")]
@@ -13,7 +17,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Last Name")]
         public string FamilyName { get; set; }
 
-        [Display(Name = "Title")]
+        [Display(Name = "Contact Title")]
         public Guid ContactTitleId { get; set; }
 
         [Display(Name = "Contact Type")]
