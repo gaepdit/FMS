@@ -1,0 +1,99 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Contact
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Contact.EditModel
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Edit Contact";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="EditContact.FacilityId" />
+        <input type="hidden" asp-for="EditContact.Id" />
+        <div class="row">
+            <div class="col">
+                <label asp-for="EditContact.GivenName"></label>
+                <input asp-for="EditContact.GivenName" class="form-control" />
+                <span asp-validation-for="EditContact.GivenName" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditContact.FamilyName"></label>
+                <input asp-for="EditContact.FamilyName" class="form-control" />
+                <span asp-validation-for="EditContact.FamilyName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="EditContact.Company"></label>
+                <input asp-for="EditContact.Company" class="form-control" />
+                <span asp-validation-for="EditContact.Company" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditContact.ContactTypeId"></label>
+                <select asp-for="EditContact.ContactTypeId" asp-items="Model.ContactTypes" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditContact.ContactTypeId" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditContact.ContactTitleId"></label>
+                <select asp-for="EditContact.ContactTitleId" asp-items="Model.ContactTitles" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditContact.ContactTitleId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="EditContact.Address"></label>
+                <input asp-for="EditContact.Address" class="form-control" />
+                <span asp-validation-for="EditContact.Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label asp-for="EditContact.City"></label>
+                <input asp-for="EditContact.City" class="form-control" />
+                <span asp-validation-for="EditContact.City" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditContact.State"></label>
+                <select asp-for="EditContact.State" asp-items="EditModel.States" class="form-select">
+                    <option value="@Model.EditContact.State">@Model.EditContact.State</option>
+                </select>
+                <span asp-validation-for="EditContact.State" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditContact.PostalCode"></label>
+                <input asp-for="EditContact.PostalCode" class="form-control" />
+                <span asp-validation-for="EditContact.PostalCode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="EditContact.Email"></label>
+                <input asp-for="EditContact.Email" class="form-control" />
+                <span asp-validation-for="EditContact.Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <input asp-for="EditContact.Active" class="form-check-input" type="checkbox" />
+                <label asp-for="EditContact.Active" class="form-check-label"></label>
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">
+            Edit Contact
+        </button>
+        <a asp-page="../Facilities/Details" asp-route-Id="@Model.EditContact.FacilityId" class="btn
+            btn-outline-secondary col-md-2">Cancel</a>
+    </form>
+</div>
