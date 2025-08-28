@@ -52,7 +52,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("E6F234FF-4C66-4A1E-B99A-039F538951AA"),
                     Active = true,
-                    FacilityId = new Guid("7B20DE98-4726-4789-9AEA-2D995FF6839A"),
+                    FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     DateListed = new(2018, 2, 13),
                     OrganizationalUnitId = new Guid("513A1958-0506-415E-A551-431E318ABB34"),
                     ComplianceOfficerId = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),

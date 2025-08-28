@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateNullable : Migration
+    public partial class UpdateNullFieldsII : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
