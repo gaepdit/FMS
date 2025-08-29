@@ -21,7 +21,7 @@ namespace FMS.Domain.Entities
             FacilityId = hsrpFacilityProperties.FacilityId;
             DateListed = hsrpFacilityProperties.DateListed;
             OrganizationalUnit = hsrpFacilityProperties.OrganizationalUnit;
-            ComplianceOfficerId = hsrpFacilityProperties.ComplianceOfficerId;
+            ComplianceOfficer = hsrpFacilityProperties.ComplianceOfficer;
             VRPDate = hsrpFacilityProperties.VRPDate;
             BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
             DateDeListed = hsrpFacilityProperties.DateDeListed;

@@ -9,7 +9,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> LocationExistsAsync(Guid id);
 
-        Task<LocationEditDto> GetLocationByIdAsync(Guid id);
+        Task<LocationEditDto> GetLocationByIdAsync(Guid? id);
 
         Task<LocationEditDto> GetLocationByFacilityIdAsync(Guid facilityId);
 

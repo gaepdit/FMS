@@ -18,8 +18,10 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> LocationExistsAsync(Guid id) =>
             _context.Locations.AnyAsync(e => e.Id == id);
 
-        public async Task<LocationEditDto> GetLocationByIdAsync(Guid id)
+        public async Task<LocationEditDto> GetLocationByIdAsync(Guid? id)
         {
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
             var location = await _context.Locations.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
             if (location == null)

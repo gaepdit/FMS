@@ -8,6 +8,12 @@ namespace FMS.Domain.Dto
     {
         public HsrpFacilityPropertiesEditDto() { }
 
+        public HsrpFacilityPropertiesEditDto(Guid facilityId)
+        {
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public HsrpFacilityPropertiesEditDto(HsrpFacilityProperties hsrpFacilityProperties)
         {
             if (hsrpFacilityProperties == null)

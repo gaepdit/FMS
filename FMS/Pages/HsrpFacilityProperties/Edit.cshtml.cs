@@ -43,10 +43,22 @@ namespace FMS.Pages.HsrpFacilityProperties
         {
             Id = id;
 
-            HsrpFacilityProperties = await _repository.GetHsrpFacilityPropertiesEditAsync(id);
+            HsrpFacilityProperties = await _repository.GetHsrpFacilityPropertiesEditByFacilityIdAsync(id);
             if (HsrpFacilityProperties == null)
             {
-                return NotFound();
+                HsrpFacilityPropertiesCreateDto newHsrp = new HsrpFacilityPropertiesCreateDto()
+                {
+                    FacilityId = id
+                };
+                Guid? newHsrpId = await _repository.CreateHsrpFacilityPropertiesAsync(newHsrp);
+                if (newHsrpId != null)
+                {
+                    HsrpFacilityProperties = await _repository.GetHsrpFacilityPropertiesByIdAsync(newHsrpId);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
 
             Facility = await _facilityRepository.GetFacilityAsync(HsrpFacilityProperties.FacilityId);

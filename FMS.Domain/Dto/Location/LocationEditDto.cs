@@ -8,6 +8,12 @@ namespace FMS.Domain.Dto
     {
         public LocationEditDto() { }
 
+        public LocationEditDto(Guid facilityId)
+        {
+            Id = Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public LocationEditDto(Location location)
         {
             Id = location.Id;

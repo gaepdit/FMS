@@ -33,17 +33,22 @@ namespace FMS.Infrastructure.Repositories
             return new HsrpFacilityPropertiesDetailDto(hsrpFacilityProperties);
         }
 
-        public async Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesEditAsync(Guid id)
+        public async Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesByIdAsync(Guid? id)
         {
             var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
                 .SingleOrDefaultAsync(e => e.Id == id);
-            if (hsrpFacilityProperties == null)
-            {
-                return null;
-            }
-            return new HsrpFacilityPropertiesEditDto(hsrpFacilityProperties);
+            return hsrpFacilityProperties == null ? null : new HsrpFacilityPropertiesEditDto(hsrpFacilityProperties);
+        }
+
+        public async Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesEditByFacilityIdAsync(Guid? id)
+        {
+            var hsrpFacilityProperties = await _context.HsrpFacilityProperties.AsNoTracking()
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .SingleOrDefaultAsync(e => e.FacilityId == id);
+            return hsrpFacilityProperties == null ? null : new HsrpFacilityPropertiesEditDto(hsrpFacilityProperties);
         }
 
         public Task<Guid> CreateHsrpFacilityPropertiesAsync(HsrpFacilityPropertiesCreateDto hsrpFacilityProperties)
