@@ -364,7 +364,7 @@
                     <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
                         <H3>
                             Additional HSI Information
-                            <a asp-page="/HsrpFacilityProperties/Edit" asp-route-id="@Model.FacilityDetail.HsrpFacilityPropertyDetails.Id" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-page="/HsrpFacilityProperties/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit</a>
                         </H3>
                         <hr />
                         <dl class="row">
@@ -410,7 +410,7 @@
                     <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
                         <h3>
                             Location
-                            <a asp-page="/Location/Edit" asp-route-id="@Model.FacilityDetail.LocationDetails.Id" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-page="/Location/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit</a>
                         </h3>
                         <hr />
                         <div class="row">
@@ -574,7 +574,7 @@
                     <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
                         <h3>
                             Score
-                            <a asp-page="/Score/Edit" asp-route-id="@Model.FacilityDetail.ScoreDetails.Id" class="btn btn-sm btn-primary">Edit Score</a>
+                            <a asp-page="/Score/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit Score</a>
                         </h3>
                         <hr />
                         <div class="row">

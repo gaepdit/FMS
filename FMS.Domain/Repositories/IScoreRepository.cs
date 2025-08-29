@@ -12,6 +12,8 @@ namespace FMS.Domain.Repositories
 
         Task<ScoreEditDto> GetScoreByIdAsync(Guid id);
 
+        Task<ScoreEditDto> GetScoreEditByFacilityIdAsync(Guid facilityId);
+
         Task<IEnumerable<Score>> GetScoreByFacilityIdAsync(Guid facilityId);
 
         Task<Guid> CreateScoreAsync(ScoreCreateDto score);

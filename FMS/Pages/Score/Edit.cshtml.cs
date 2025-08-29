@@ -42,10 +42,19 @@ namespace FMS.Pages.Score
         {
             Id = id;
 
-            Score = await _repository.GetScoreByIdAsync(id);
+            Score = await _repository.GetScoreEditByFacilityIdAsync(id);
             if (Score == null)
             {
-                return NotFound();
+                ScoreCreateDto newScore = new ScoreCreateDto() { FacilityId = id };
+                Guid? newScoreId = await _repository.CreateScoreAsync(newScore);
+                if (newScoreId != null)
+                {
+                    Score = await _repository.GetScoreByIdAsync(newScoreId.Value);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
 
             Facility = await _facilityRepository.GetFacilityAsync(Score.FacilityId);

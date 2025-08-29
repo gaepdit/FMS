@@ -52,11 +52,13 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.ComplianceOfficer)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
+                facility.HsrpFacilityProperties ??= new HsrpFacilityProperties(facility.Id);
 
                 facility.LocationDetails = await _context.Locations
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
+                facility.LocationDetails ??= new Location(facility.Id);
 
                 facility.Parcels = await _context.Parcels
                     .AsNoTracking()
@@ -83,29 +85,32 @@ namespace FMS.Infrastructure.Repositories
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.ScoredBy)
                     .FirstOrDefaultAsync();
+                facility.ScoreDetails ??= new Score(facility.Id);
 
                 GroundwaterScore groundwaterScore = await _context.GroundwaterScores
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.Chemical)
                     .FirstOrDefaultAsync();
-                facility.GroundwaterScoreDetails = new GroundwaterScore(groundwaterScore);
+                facility.GroundwaterScoreDetails = groundwaterScore != null ? new GroundwaterScore(groundwaterScore) : new GroundwaterScore(facility.Id);
+
 
                 OnsiteScore onsiteScore = await _context.OnsiteScores
-                    .AsNoTracking()
-                    .Where(e => e.FacilityId == id)
-                    .Include(e => e.Chemical)
-                    .FirstOrDefaultAsync();
-                facility.OnsiteScoreDetails = new OnsiteScore(onsiteScore);
+                        .AsNoTracking()
+                        .Where(e => e.FacilityId == id)
+                        .Include(e => e.Chemical)
+                        .FirstOrDefaultAsync();
+                facility.OnsiteScoreDetails = onsiteScore != null ? new OnsiteScore(onsiteScore) : new OnsiteScore(facility.Id);
+
 
                 facility.Substances = await _context.Substances
-                    .AsNoTracking()
-                    .Include(e => e.Chemical)
-                    .Where(e => e.FacilityId == id)
-                    .OrderByDescending(e => e.Active)
-                    .ThenByDescending(e => e.Chemical.Active)
-                    .ThenBy(e => e.Chemical.CommonName)
-                    .ToListAsync();
+                        .AsNoTracking()
+                        .Include(e => e.Chemical)
+                        .Where(e => e.FacilityId == id)
+                        .OrderByDescending(e => e.Active)
+                        .ThenByDescending(e => e.Chemical.Active)
+                        .ThenBy(e => e.Chemical.CommonName)
+                        .ToListAsync();
 
                 facility.StatusDetails = await _context.Statuses
                     .AsNoTracking()
@@ -118,6 +123,7 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.AbandonSites)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
+                facility.StatusDetails ??= new Status(facility.Id);
 
                 facility.Events = await _context.Events
                     .AsNoTracking()
@@ -153,7 +159,7 @@ namespace FMS.Infrastructure.Repositories
                     .ToList();
             }
 
-                var facilityDetail = new FacilityDetailDto(facility);
+            var facilityDetail = new FacilityDetailDto(facility);
 
             if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
             {
@@ -516,8 +522,8 @@ namespace FMS.Infrastructure.Repositories
                 && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public Task<bool> DuplicateFacilityNumberExists(string newFacilityNumber, Guid oldFacilityId, Guid facilityTypeId) => _context.Facilities.AnyAsync(
-            e => e.FacilityNumber == newFacilityNumber 
-            && e.Id != oldFacilityId 
+            e => e.FacilityNumber == newFacilityNumber
+            && e.Id != oldFacilityId
             && e.FacilityTypeId == facilityTypeId);
 
         public Task<bool> FileLabelExists(string fileLabel) =>

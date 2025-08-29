@@ -12,7 +12,6 @@ namespace FMS.Domain.Dto
         public DateOnly? ScoredDate { get; set; }
 
         [Display(Name = "Scored By")]
-        public Guid ScoredById { get; set; }
         public ComplianceOfficer ScoredBy { get; set; } 
 
         [Display(Name = "Comments")]

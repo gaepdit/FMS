@@ -23,6 +23,13 @@ namespace FMS.Infrastructure.Repositories
             => _context.Scores.FirstOrDefaultAsync(e => e.Id == id)
                 .ContinueWith(task => task.Result == null ? null : new ScoreEditDto(task.Result));
 
+        public async Task<ScoreEditDto> GetScoreEditByFacilityIdAsync(Guid facilityId)
+        {
+            var score = await _context.Scores.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+            return score == null ? null : new ScoreEditDto(score);
+        }
+
         public Task<IEnumerable<Score>> GetScoreByFacilityIdAsync(Guid facilityId) =>
             _context.Scores.AsNoTracking()
                 .Where(e => e.FacilityId == facilityId)
