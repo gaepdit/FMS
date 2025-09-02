@@ -19,12 +19,13 @@ namespace FMS.Domain.Dto
             B2 = groundwaterScore.B2;
             C = groundwaterScore.C;
             Description = groundwaterScore.Description;
-            ChemName = groundwaterScore.ChemName;
-            Other = groundwaterScore.Other;
+            ChemName = groundwaterScore.Chemical.ChemicalName;
+            Other = groundwaterScore.Chemical.CommonName;
             D2 = groundwaterScore.D2;
             D3 = groundwaterScore.D3;
             ChemicalId = groundwaterScore.ChemicalId;
-            CASNO = groundwaterScore.CASNO;
+            Chemical = groundwaterScore.Chemical;
+            CASNO = groundwaterScore.Chemical.CasNo;
             E1 = groundwaterScore.E1;
             E2 = groundwaterScore.E2;
         }
@@ -65,8 +66,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "3D")]
         public int D3 { get; set; }
 
-        public Guid? ChemicalId { get; set; }
         [Display(Name = "Chemical")]
+        public Guid? ChemicalId { get; set; }
         public Chemical Chemical { get; set; }
 
         [Display(Name = "CasNo")]

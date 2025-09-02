@@ -32,7 +32,7 @@ namespace FMS.Infrastructure.Repositories
             _context.Chemicals.AnyAsync(e =>
                 e.CommonName == commonName && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
-        public async Task<ChemicalEditDto> GetChemicalByIdAsync(Guid id)
+        public async Task<ChemicalEditDto> GetChemicalByIdAsync(Guid? id)
         {
             var chemical = await _context.Chemicals.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
@@ -43,7 +43,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<Chemical> GetChemicalByNameAsync(string name)
         {
             var chemical = await _context.Chemicals.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Name == name);
+                .SingleOrDefaultAsync(e => e.Name== name);
 
             return chemical;
         }

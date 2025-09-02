@@ -1,4 +1,110 @@
-﻿@page
+﻿@page "{id:Guid?}"
+@using FMS.Pages.GroundwaterScore
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.GroundwaterScore.EditModel
-@{
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
 }
+
+@{
+    ViewData["Title"] = "Edit Groundwater Score Properties";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="GroundwaterScore.FacilityId" />
+        <input type="hidden" asp-for="GroundwaterScore.Id" />
+        <input type="hidden" asp-for="GroundwaterScore.Active" />
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.GWScore" class="form-label"></label>
+                <input asp-for="GroundwaterScore.GWScore" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.GWScore" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.A" class="form-label"></label>
+                <input asp-for="GroundwaterScore.A" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.A" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.B1" class="form-label"></label>
+                <input asp-for="GroundwaterScore.B1" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.B1" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.B2" class="form-label"></label>
+                <input asp-for="GroundwaterScore.B2" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.B2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.CASNO" class="form-label"></label>
+                <input asp-for="GroundwaterScore.CASNO" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.CASNO" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.ChemicalId" class="form-label"></label>
+                <select asp-for="GroundwaterScore.ChemicalId" asp-items="Model.Chemicals" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="GroundwaterScore.ChemicalId" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.ChemName" class="form-label"></label>
+                <input asp-for="GroundwaterScore.ChemName" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.ChemName" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.Other" class="form-label"></label>
+                <input asp-for="GroundwaterScore.Other" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.Other" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.C" class="form-label"></label>
+                <input asp-for="GroundwaterScore.C" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.C" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.D2" class="form-label"></label>
+                <input asp-for="GroundwaterScore.D2" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.D2" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.D3" class="form-label"></label>
+                <input asp-for="GroundwaterScore.D3" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.D3" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.E1" class="form-label"></label>
+                <input asp-for="GroundwaterScore.E1" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.E1" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-3 mb-3">
+                <label asp-for="GroundwaterScore.E2" class="form-label"></label>
+                <input asp-for="GroundwaterScore.E2" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.E2" class="text-danger"></span>
+            </div>
+            <div class="col-9 mb-3">
+                <label asp-for="GroundwaterScore.Description" class="form-label"></label>
+                <input asp-for="GroundwaterScore.Description" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row mb-3">
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
+            <a asp-page="../Facilities/Details" asp-route-id="@Model.Facility.Id" class="btn btn-outline-secondary col-md-2">Cancel Update</a>
+        </div>
+    </form>
+</div>
