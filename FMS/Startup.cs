@@ -113,7 +113,7 @@ namespace FMS
             services.AddScoped<IScoreRepository, ScoreRepository>();
             services.AddScoped<IGroundwaterScoreRepository, GroundwaterScoreRepository>();
             services.AddScoped<IOnsiteScoreRepository, OnsiteScoreRepository>();
-
+            services.AddScoped<ISubstanceRepository, SubstanceRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();
