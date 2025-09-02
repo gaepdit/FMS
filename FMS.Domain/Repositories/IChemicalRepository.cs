@@ -16,7 +16,7 @@ namespace FMS.Domain.Repositories
 
         Task<bool> ChemicalCommonNameExistsAsync(string commonName, Guid? ignoreId = null);
 
-        Task<ChemicalEditDto> GetChemicalByIdAsync(Guid id);
+        Task<ChemicalEditDto> GetChemicalByIdAsync(Guid? id);
 
         Task<Chemical> GetChemicalByNameAsync(string name);
 
