@@ -70,6 +70,15 @@ namespace FMS.Infrastructure.Repositories
             {
                 throw new KeyNotFoundException($"Substance with Id {id} not found.");
             }
+
+            existingSubstance.Id = substanceUpdates.Id;
+            existingSubstance.Active = substanceUpdates.Active;
+            existingSubstance.FacilityId = substanceUpdates.FacilityId;
+            existingSubstance.ChemicalId = substanceUpdates.ChemicalId;
+            existingSubstance.Groundwater = substanceUpdates.Groundwater;
+            existingSubstance.Soil = substanceUpdates.Soil;
+            existingSubstance.UseForScoring = substanceUpdates.UseForScoring;
+
             _context.Substances.Update(existingSubstance);
             await _context.SaveChangesAsync();
         }

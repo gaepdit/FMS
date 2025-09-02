@@ -19,12 +19,12 @@ using System.Threading.Tasks;
 namespace FMS.Pages.Substance
 {
     [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
-    public class AddModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly ISubstanceRepository _repository;
         private readonly ISelectListHelper _listHelper;
 
-        public AddModel(
+        public EditModel(
             ISubstanceRepository repository,
             ISelectListHelper listHelper)
         {
@@ -33,22 +33,22 @@ namespace FMS.Pages.Substance
         }
 
         [BindProperty]
-        public SubstanceCreateDto NewSubstance { get; set; }
+        public SubstanceEditDto EditSubstance { get; set; }
 
         public SelectList Chemicals { get; private set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        [BindProperty]
+        public Guid Id { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            if (id == null || id == Guid.Empty)
+            Id = id;
+            EditSubstance = await _repository.GetSubstanceByIdAsync(id);
+
+            if (EditSubstance == null)
             {
                 return NotFound();
             }
-
-            NewSubstance = new SubstanceCreateDto
-            {
-                FacilityId = id.Value,
-                Active = true
-            };
 
             await PopulateSelectsAsync();
             return Page();
@@ -63,11 +63,8 @@ namespace FMS.Pages.Substance
             }
             try
             {
-                var newId = await _repository.CreateSubstanceAsync(NewSubstance);
-
-                TempData?.SetDisplayMessage(Context.Success, "The substance was created successfully.");
-
-                return RedirectToPage("../Facilities/Details", new { id = NewSubstance.FacilityId, tab = "substances" });
+                await _repository.UpdateSubstanceAsync(EditSubstance.Id, EditSubstance);
+                return RedirectToPage("../Facilities/Details", new { id = EditSubstance.FacilityId });
             }
             catch (Exception ex)
             {
