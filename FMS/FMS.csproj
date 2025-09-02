@@ -65,7 +65,6 @@
   <Folder Include="Pages\Event\" />
   <Folder Include="Pages\SoilScore\" />
   <Folder Include="Pages\Substance\" />
-  <Folder Include="Pages\OnsiteScore\" />
 </ItemGroup>
 
 </Project>
