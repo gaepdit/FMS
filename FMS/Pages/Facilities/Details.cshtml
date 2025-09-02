@@ -785,7 +785,7 @@
                     <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
                         <h3>
                             Substances
-                            <a asp-page="/Substance/Add" class="btn btn-sm btn-primary">Add Substance</a>
+                            <a asp-page="/Substance/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Substance</a>
                         </h3>
                         <hr />
                         <div class="row justify-content-evenly">
@@ -819,8 +819,7 @@
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
-                                                    <a asp-page="./Substance/Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                    <a asp-page="./Substance/Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Remove</a>
+                                                    <a asp-page="/Substance/Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                 </td>
                                             }
                                         </tr>
