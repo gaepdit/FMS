@@ -112,6 +112,7 @@ namespace FMS
             services.AddScoped<IPhoneRepository, PhoneRepository>();
             services.AddScoped<IScoreRepository, ScoreRepository>();
             services.AddScoped<IGroundwaterScoreRepository, GroundwaterScoreRepository>();
+            services.AddScoped<IOnsiteScoreRepository, OnsiteScoreRepository>();
 
 
             // Set up database

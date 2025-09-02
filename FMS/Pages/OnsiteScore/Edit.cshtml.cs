@@ -9,17 +9,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
 
-namespace FMS.Pages.GroundwaterScore
+namespace FMS.Pages.OnsiteScore
 {
     [Authorize(Roles = UserRoles.FileEditor)]
     public class EditModel : PageModel
     {
-        private readonly IGroundwaterScoreRepository _repository;
+        private readonly IOnsiteScoreRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
 
         public EditModel(
-            IGroundwaterScoreRepository repository,
+            IOnsiteScoreRepository repository,
             IFacilityRepository facilityRepository,
             ISelectListHelper listHelper)
         {
@@ -29,7 +29,7 @@ namespace FMS.Pages.GroundwaterScore
         }
 
         [BindProperty]
-        public GroundwaterScoreEditDto GroundwaterScore { get; set; }
+        public OnsiteScoreEditDto OnsiteScore { get; set; }
 
         public FacilityDetailDto Facility { get; set; }
 
@@ -42,14 +42,15 @@ namespace FMS.Pages.GroundwaterScore
         {
             Id = id;
 
-            GroundwaterScore = await _repository.GetGroundwaterScoreByFacilityIdAsync(id);
-            if (GroundwaterScore == null)
+            OnsiteScore = await _repository.GetOnsiteScoreByFacilityIdAsync(id);
+
+            if (OnsiteScore == null)
             {
-                GroundwaterScoreCreateDto newGroundwaterScore = new GroundwaterScoreCreateDto() { FacilityId = id };
-                Guid? newGroundwaterScoreId = await _repository.CreateGroundwaterScoreAsync(newGroundwaterScore);
-                if (newGroundwaterScoreId != null)
+                OnsiteScoreCreateDto newOnsiteScore = new OnsiteScoreCreateDto() { FacilityId = id };
+                Guid? newOnsiteScoreId = await _repository.CreateOnsiteScoreAsync(newOnsiteScore);
+                if (newOnsiteScoreId != null)
                 {
-                    GroundwaterScore = await _repository.GetGroundwaterScoreByFacilityIdAsync(id);
+                    OnsiteScore = await _repository.GetOnsiteScoreByFacilityIdAsync(id);
                 }
                 else
                 {
@@ -57,12 +58,13 @@ namespace FMS.Pages.GroundwaterScore
                 }
             }
 
-            Facility = await _facilityRepository.GetFacilityAsync(GroundwaterScore.FacilityId);
+            Facility = await _facilityRepository.GetFacilityAsync(OnsiteScore.FacilityId);
             
-            if (Facility == null)
+            if (OnsiteScore == null || Facility == null)
             {
                 return NotFound();
             }
+
             await PopulateSelectsAsync();
             return Page();
         }
@@ -74,9 +76,10 @@ namespace FMS.Pages.GroundwaterScore
                 await PopulateSelectsAsync();
                 return Page();
             }
+
             try
             {
-                await _repository.UpdateGroundwaterScoreAsync(GroundwaterScore);
+                await _repository.UpdateOnsiteScoreAsync(OnsiteScore);
             }
             catch (Exception ex)
             {
@@ -84,7 +87,8 @@ namespace FMS.Pages.GroundwaterScore
                 await PopulateSelectsAsync();
                 return Page();
             }
-            return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId });
+
+            return RedirectToPage("../Facilities/Details", new { id = OnsiteScore.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()
