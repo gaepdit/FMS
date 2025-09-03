@@ -302,6 +302,17 @@ namespace FMS.Infrastructure.Repositories
             return null;
         }
 
+        public async Task<string> GetGAPSAssessmentNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.GapsAssessments.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
         public async Task<string> GetAbandonSiteNameAsync(Guid? id)
         {
             if (id.HasValue)

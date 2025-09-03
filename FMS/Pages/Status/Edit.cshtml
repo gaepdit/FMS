@@ -7,24 +7,20 @@
 <div class="container bg-light-subtle py-3 rounded-3">
     <form>
         <div class="row mb-3">
-            <div class="col-md-4">
-                <label class="form-label" for="SourceStatus">
-                    Source Status
-                </label>
-                <select class="form-select" id="SourceStatus">
-                    <option value="1">Source Status 1</option>
-                    <option value="2">Source Status 2</option>
-                    <option value="3">Source Status 3</option>
-                    <option value="4">Source Status 4</option>
+            <div class="col-md-3">
+                <label asp-for="EditStatus.SourceStatusId" class="form-label"></label>
+                <select asp-for="EditStatus.SourceStatusId" asp-items="Model.SourceStatuses" class="form-select">
+                    <option value=""></option>
                 </select>
+                <span asp-validation-for="EditStatus.SourceStatusId" class="text-danger"></span>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label class="form-label" for="SourceDate">
                     Source Date
                 </label>
                 <input type="date" class="form-control datepicker" value="2023-12-23" id="SourceDate" />
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label class="form-label" for="SourceHWTF">
                     Source HWTF Projected
                 </label>
