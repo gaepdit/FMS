@@ -86,13 +86,16 @@ namespace FMS.Pages.Status
                 return Page();
             }
 
-            bool updateResult = await _repository.UpdateStatusAsync(EditStatus.Id, EditStatus);
-
-            if (!updateResult)
+            try
             {
-                return NotFound();
+                await _repository.UpdateStatusAsync(EditStatus.FacilityId, EditStatus);
             }
-
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Unable to save changes: {ex.Message}");
+                await PopulateSelectsAsync();
+                return Page();
+            }
             TempData?.SetDisplayMessage(Context.Success, $"Status successfully Updated.");
 
             return RedirectToPage("../Facilities/Details", new { id = EditStatus.FacilityId });
