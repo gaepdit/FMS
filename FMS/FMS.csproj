@@ -62,7 +62,6 @@
     </ItemGroup>
 
 <ItemGroup>
-  <Folder Include="Pages\Event\" />
   <Folder Include="Pages\SoilScore\" />
 </ItemGroup>
 

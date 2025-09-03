@@ -991,7 +991,7 @@
                 <div class="tab-pane @(Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
                         Events
-                        <a asp-page="/Event/Add" class="btn btn-sm btn-primary">Add Event</a>
+                        <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Event</a>
                     </h3>
                     <hr />
                     <div class="row justify-content-evenly">
@@ -1032,7 +1032,6 @@
                                         {
                                             <td>
                                                 <a asp-page="./Event/Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="./Event/Delete" asp-route-id="@e.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                             </td>
                                         }
                                     </tr>
