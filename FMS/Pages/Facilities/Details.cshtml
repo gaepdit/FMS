@@ -832,7 +832,7 @@
                     <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
                         <h3>
                             Status
-                            <a asp-page="/Status/Edit" class="btn btn-sm btn-primary">Edit Status</a>
+                            <a asp-page="/Status/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit Status</a>
                         </h3>
                         <hr />
                         <dl class="row">

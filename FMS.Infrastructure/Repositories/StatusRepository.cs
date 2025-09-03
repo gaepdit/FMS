@@ -20,7 +20,7 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> StatusExistsAsync(Guid id) =>
             _context.Statuses.AnyAsync(e => e.Id == id);
 
-        public Task<StatusEditDto> GetStatusAsync(Guid id) =>
+        public Task<StatusEditDto> GetStatusAsync(Guid facilityId) =>
             _context.Statuses.AsNoTracking()
                 .Include(e => e.SourceStatus)
                 .Include(e => e.SoilStatus)
@@ -29,7 +29,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.FundingSource)
                 .Include(e => e.GAPSAssessment)
                 .Include(e => e.AbandonSites)
-                .Where(e => e.Id == id)
+                .Where(e => e.FacilityId == facilityId)
                 .Select(e => new StatusEditDto(e))
                 .SingleOrDefaultAsync();
 
