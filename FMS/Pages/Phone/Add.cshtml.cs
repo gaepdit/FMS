@@ -66,8 +66,6 @@ namespace FMS.Pages.Phone
             try
             {
                 await _repository.CreatePhoneAsync(NewPhone);
-                Contact = await _contactRepository.GetContactByIdAsync(NewPhone.ContactId);
-                return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId });
             }
             catch (Exception ex)
             {
@@ -75,6 +73,12 @@ namespace FMS.Pages.Phone
                 
                 return Page();
             }
+
+            Contact = await _contactRepository.GetContactByIdAsync(NewPhone.ContactId);
+
+            TempData?.SetDisplayMessage(Context.Success, $"Phone Number for \"{Contact.GivenName + " " + Contact.FamilyName}\" successfully Added.");
+
+            return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId, tab = "Contacts" });
         }
     }
 }

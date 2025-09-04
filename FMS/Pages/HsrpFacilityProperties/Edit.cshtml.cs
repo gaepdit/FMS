@@ -1,7 +1,8 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -82,7 +83,9 @@ namespace FMS.Pages.HsrpFacilityProperties
            
             await _repository.UpdateHsrpFacilityPropertiesAsync(HsrpFacilityProperties.FacilityId, HsrpFacilityProperties);
 
-            return RedirectToPage("../Facilities/Details", new { id = HsrpFacilityProperties.FacilityId });
+            TempData?.SetDisplayMessage(Context.Success, $"HSI Properties successfully Updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = HsrpFacilityProperties.FacilityId, tab = "HSIProperties" });
         }
 
         private async Task PopulateSelectsAsync()

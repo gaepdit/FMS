@@ -1,7 +1,8 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -88,7 +89,9 @@ namespace FMS.Pages.OnsiteScore
                 return Page();
             }
 
-            return RedirectToPage("../Facilities/Details", new { id = OnsiteScore.FacilityId });
+            TempData?.SetDisplayMessage(Context.Success, $"Onsite Score successfully Updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = OnsiteScore.FacilityId, tab = "Score" });
         }
 
         private async Task PopulateSelectsAsync()

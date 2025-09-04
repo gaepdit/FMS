@@ -334,7 +334,7 @@
                     @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                     {
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
+                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
@@ -361,7 +361,7 @@
             <div class="tab-content">
                 @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                 {
-                    <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
+                    <div class="tab-pane" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
                         <H3>
                             Additional HSI Information
                             <a asp-page="/HsrpFacilityProperties/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit</a>
@@ -1031,7 +1031,7 @@
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
                                             <td>
-                                                <a asp-page="./Event/Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                <a asp-page="/Event/Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                             </td>
                                         }
                                     </tr>

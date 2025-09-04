@@ -61,8 +61,4 @@
         </MsDeploySkipRules>
     </ItemGroup>
 
-<ItemGroup>
-  <Folder Include="Pages\SoilScore\" />
-</ItemGroup>
-
 </Project>
