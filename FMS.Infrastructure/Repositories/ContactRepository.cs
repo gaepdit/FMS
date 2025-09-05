@@ -30,9 +30,8 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.Phones)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            og = 0 = h /;jk
-                798-9ntact == null ? null : new ContactEditDto(contact);
-        }=
+            return contact == null ? null : new ContactEditDto(contact);
+        }
 
         public async Task<IEnumerable<Contact>> GetContactsByFacilityIdAsync(Guid facilityId)
         {
