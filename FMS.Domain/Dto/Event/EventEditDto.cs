@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
@@ -31,6 +32,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         public Guid? ParentId { get; set; }
+        public Event Parent { get; set; }
 
         public Guid? EventTypeId { get; set; }
 
@@ -42,7 +44,9 @@ namespace FMS.Domain.Dto
 
         public DateOnly? CompletionDate { get; set; }
 
+        [Display(Name = "Done By (CO)")]
         public Guid? ComplianceOfficerId { get; set; }
+        public ComplianceOfficer ComplianceOfficer { get; set; }
 
         public decimal EventAmount { get; set; }
 

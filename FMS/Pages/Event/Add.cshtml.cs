@@ -22,18 +22,28 @@ namespace FMS.Pages.Event
     public class AddModel : PageModel
     {
         private readonly IEventRepository _repository;
+        private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
 
         public AddModel(
             IEventRepository repository,
+            IFacilityRepository facilityRepository,
             ISelectListHelper listHelper)
         {
             _repository = repository;
+            _facilityRepository = facilityRepository;
             _listHelper = listHelper;
         }
 
         [BindProperty]
         public EventCreateDto NewEvent { get; set; }
+
+        public FacilityDetailDto Facility { get; set; }
+
+        [BindProperty]
+        public EventSummaryDto ParentEvent { get; set; }
+
+        public IEnumerable<EventSummaryDto> Events { get; set; }
 
         public SelectList EventTypes { get; private set; }
         public SelectList ActionsTaken { get; private set; }
@@ -51,6 +61,12 @@ namespace FMS.Pages.Event
                 FacilityId = id.Value,
                 ParentId = parentId,
             };
+
+            Facility = await _facilityRepository.GetFacilityAsync(id.Value); 
+
+            Events = (parentId.HasValue
+                ? await _repository.GetEventsByFacilityIdAndParentIdAsync(id.Value, parentId.Value)
+                : await _repository.GetEventsByFacilityIdAsync(id.Value));
 
             await PopulateSelectsAsync();
             return Page();
