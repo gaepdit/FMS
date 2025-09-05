@@ -21,7 +21,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreateSubstanceAsync(SubstanceCreateDto substance);
 
-        Task UpdateSubstanceAsync(Guid Id, SubstanceEditDto substanceUpdates);
+        Task UpdateSubstanceAsync(Guid id, SubstanceEditDto substanceUpdates);
 
         Task UpdateSubstanceStatusAsync(Guid id, bool active);
     }

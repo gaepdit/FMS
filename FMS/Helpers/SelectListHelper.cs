@@ -26,7 +26,9 @@ namespace FMS
         Task<SelectList> ParcelTypesSelectListAsync(bool includeInactive = false);
         Task<SelectList> SoilStatusesSelectListAsync(bool includeInactive = false);
         Task<SelectList> SourceStatusesSelectListAsync(bool includeInactive = false);
-        
+        Task<SelectList> GAPSAssessmentSelectListAsync(bool includeInactive = false);
+        Task<SelectList> AbandonSitesSelectListAsync(bool includeInactive = false);
+
     }
 
     public class SelectListHelper : ISelectListHelper
@@ -64,6 +66,8 @@ namespace FMS
         public async Task<SelectList> ParcelTypesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetParcelTypesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> SoilStatusesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetSoilStatusesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> SourceStatusesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetSourceStatusesListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> GAPSAssessmentSelectListAsync(bool includeInactive = false) => (await _listRepository.GetGapsAssessmentListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> AbandonSitesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetAbandonSitesListAsync(includeInactive)).ToSelectList();
     }
 
     /// <summary>

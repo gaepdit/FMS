@@ -11,7 +11,7 @@ namespace FMS.Domain.Dto
             Id = score.Id;
             FacilityId = score.FacilityId;
             ScoredDate = score.ScoredDate;
-            ScoredById = score.ScoredById;
+            ScoredBy = score.ScoredBy;
             Comments = score.Comments;
             UseComments = score.UseComments;
         }
@@ -23,7 +23,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Scored Date")]
         public DateOnly? ScoredDate { get; set; }
 
-        public Guid? ScoredById { get; set; }
         [Display(Name = "Scored By")]
         public ComplianceOfficer ScoredBy { get; set; }
 

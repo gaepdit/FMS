@@ -111,7 +111,11 @@ namespace FMS
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IPhoneRepository, PhoneRepository>();
             services.AddScoped<IScoreRepository, ScoreRepository>();
-
+            services.AddScoped<IGroundwaterScoreRepository, GroundwaterScoreRepository>();
+            services.AddScoped<IOnsiteScoreRepository, OnsiteScoreRepository>();
+            services.AddScoped<ISubstanceRepository, SubstanceRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

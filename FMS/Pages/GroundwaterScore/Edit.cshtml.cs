@@ -9,17 +9,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
 
-namespace FMS.Pages.HsrpFacilityProperties
+namespace FMS.Pages.GroundwaterScore
 {
     [Authorize(Roles = UserRoles.FileEditor)]
     public class EditModel : PageModel
     {
-        private readonly IHsrpFacilityPropertiesRepository _repository;
+        private readonly IGroundwaterScoreRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
 
         public EditModel(
-            IHsrpFacilityPropertiesRepository repository, 
+            IGroundwaterScoreRepository repository,
             IFacilityRepository facilityRepository,
             ISelectListHelper listHelper)
         {
@@ -29,31 +29,27 @@ namespace FMS.Pages.HsrpFacilityProperties
         }
 
         [BindProperty]
-        public HsrpFacilityPropertiesEditDto HsrpFacilityProperties { get; set; }
+        public GroundwaterScoreEditDto GroundwaterScore { get; set; }
 
         public FacilityDetailDto Facility { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
 
-        public SelectList ComplianceOfficers { get; private set; }
-        public SelectList OrganizationalUnit { get; private set; }
+        public SelectList Chemicals { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
 
-            HsrpFacilityProperties = await _repository.GetHsrpFacilityPropertiesEditByFacilityIdAsync(id);
-            if (HsrpFacilityProperties == null)
+            GroundwaterScore = await _repository.GetGroundwaterScoreByFacilityIdAsync(id);
+            if (GroundwaterScore == null)
             {
-                HsrpFacilityPropertiesCreateDto newHsrp = new HsrpFacilityPropertiesCreateDto()
+                GroundwaterScoreCreateDto newGroundwaterScore = new GroundwaterScoreCreateDto() { FacilityId = id };
+                Guid? newGroundwaterScoreId = await _repository.CreateGroundwaterScoreAsync(newGroundwaterScore);
+                if (newGroundwaterScoreId != null)
                 {
-                    FacilityId = id
-                };
-                Guid? newHsrpId = await _repository.CreateHsrpFacilityPropertiesAsync(newHsrp);
-                if (newHsrpId != null)
-                {
-                    HsrpFacilityProperties = await _repository.GetHsrpFacilityPropertiesByIdAsync(newHsrpId);
+                    GroundwaterScore = await _repository.GetGroundwaterScoreByFacilityIdAsync(id);
                 }
                 else
                 {
@@ -61,14 +57,13 @@ namespace FMS.Pages.HsrpFacilityProperties
                 }
             }
 
-            Facility = await _facilityRepository.GetFacilityAsync(HsrpFacilityProperties.FacilityId);
+            Facility = await _facilityRepository.GetFacilityAsync(GroundwaterScore.FacilityId);
+            
             if (Facility == null)
             {
                 return NotFound();
             }
-
             await PopulateSelectsAsync();
-
             return Page();
         }
 
@@ -79,16 +74,22 @@ namespace FMS.Pages.HsrpFacilityProperties
                 await PopulateSelectsAsync();
                 return Page();
             }
-           
-            await _repository.UpdateHsrpFacilityPropertiesAsync(HsrpFacilityProperties.FacilityId, HsrpFacilityProperties);
-
-            return RedirectToPage("../Facilities/Details", new { id = HsrpFacilityProperties.FacilityId });
+            try
+            {
+                await _repository.UpdateGroundwaterScoreAsync(GroundwaterScore);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Unable to save changes: {ex.Message}");
+                await PopulateSelectsAsync();
+                return Page();
+            }
+            return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()
         {
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
-            OrganizationalUnit = await _listHelper.OrganizationalUnitsSelectListAsync();
+            Chemicals = await _listHelper.ChemicalsSelectListAsync();
         }
     }
 }

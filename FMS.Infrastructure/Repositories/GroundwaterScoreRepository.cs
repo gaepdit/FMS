@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
@@ -20,7 +21,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<GroundwaterScoreEditDto> GetGroundwaterScoreByFacilityIdAsync(Guid facilityId)
             {
             var groundwaterScore = await _context.GroundwaterScores.AsNoTracking()
+                .Include(e => e.Chemical)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+
             return groundwaterScore == null ? null : new GroundwaterScoreEditDto(groundwaterScore);
         }
 

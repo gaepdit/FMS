@@ -70,7 +70,12 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetActionsTakenListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ActionTaken>(includeInactive);
 
-        public async Task<IEnumerable<ListItem>> GetChemicalListAsync(bool includeInactive = false) => await GetItemListAsync<Chemical>(includeInactive);
+        public async Task<IEnumerable<ListItem>> GetChemicalListAsync(bool includeInactive = false) => 
+            await _context.Chemicals.AsNoTracking()
+            .Where(e => e.Active || includeInactive)
+            .OrderBy(e => e.CasNo)
+            .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+            .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetContactTitlesListAsync(bool includeInactive = false) => 
             await GetItemListAsync<ContactTitle>(includeInactive);
@@ -291,6 +296,17 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.SourceStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetGAPSAssessmentNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.GapsAssessments.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }

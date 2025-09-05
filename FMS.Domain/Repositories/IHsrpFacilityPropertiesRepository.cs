@@ -13,7 +13,9 @@ namespace FMS.Domain.Repositories
 
         Task<HsrpFacilityPropertiesDetailDto> GetHsrpFacilityPropertiesByFacilityIdAsync(Guid facilityId);
 
-        Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesEditAsync(Guid id);
+        Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesByIdAsync(Guid? id);
+
+        Task<HsrpFacilityPropertiesEditDto> GetHsrpFacilityPropertiesEditByFacilityIdAsync(Guid? id);
 
         Task<Guid> CreateHsrpFacilityPropertiesAsync(HsrpFacilityPropertiesCreateDto hsrpFacilityProperties);
 

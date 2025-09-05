@@ -99,18 +99,5 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeNull();
         }
 
-        // GetContactsByFavilityIdAsync
-
-
-        // GetContactsByFacilityIdAndTypeAsync
-
-
-        //CreateContactAsync
-
-
-        // UpdateContactASync
-
-
-        // UpdateContactActiveAsync
     }
 }

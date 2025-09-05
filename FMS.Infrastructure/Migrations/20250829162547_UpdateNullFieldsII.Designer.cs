@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FMS.Infrastructure.Migrations
 {
     [DbContext(typeof(FmsDbContext))]
-    [Migration("20250827130429_UpdateNullable")]
-    partial class UpdateNullable
+    [Migration("20250829162547_UpdateNullFieldsII")]
+    partial class UpdateNullFieldsII
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

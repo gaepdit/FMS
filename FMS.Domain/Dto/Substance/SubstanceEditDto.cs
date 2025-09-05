@@ -11,6 +11,7 @@ namespace FMS.Domain.Dto
         public SubstanceEditDto(Substance substance)
         {
             Id = substance.Id;
+            Active = substance.Active;
             FacilityId = substance.FacilityId;
             ChemicalId = substance.Chemical.Id;
             Groundwater = substance.Groundwater;
@@ -20,9 +21,13 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; set; }
 
+        public bool Active { get; set; }
+
         public Guid FacilityId { get; set; }
 
+        [Display(Name = "Chemical")]
         public Guid ChemicalId { get; set; }
+        public Chemical Chemical { get; set; }
 
         public bool Groundwater { get; set; }
 

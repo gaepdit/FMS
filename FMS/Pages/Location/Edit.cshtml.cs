@@ -40,10 +40,19 @@ namespace FMS.Pages.Location
         {
             Id = id;
 
-            Location = await _repository.GetLocationByIdAsync(id);
+            Location = await _repository.GetLocationByFacilityIdAsync(id);
             if (Location == null)
             {
-                return NotFound();
+                LocationCreateDto newLocation = new LocationCreateDto() { FacilityId = Id };
+                Guid? newLocationId = await _repository.CreateLocationAsync(newLocation);
+                if (newLocationId != null)
+                {
+                    Location = await _repository.GetLocationByIdAsync(newLocationId);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
 
             Facility = await _facilityRepository.GetFacilityAsync(Location.FacilityId);

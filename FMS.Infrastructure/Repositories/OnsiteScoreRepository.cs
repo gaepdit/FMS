@@ -21,6 +21,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<OnsiteScoreEditDto> GetOnsiteScoreByFacilityIdAsync(Guid facilityId)
         {
             var onsiteScore = await _context.OnsiteScores.AsNoTracking()
+                .Include(e => e.Chemical)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }
@@ -78,12 +79,17 @@ namespace FMS.Infrastructure.Repositories
                 throw new InvalidOperationException($"Onsite Score with ID {onsiteScore.Id} does not exist.");
             }
 
+            existingOnsiteScore.Active = onsiteScore.Active;
+            existingOnsiteScore.Id = onsiteScore.Id;
+            existingOnsiteScore.FacilityId = onsiteScore.FacilityId;
             existingOnsiteScore.OnsiteScoreValue = onsiteScore.OnsiteScoreValue;
             existingOnsiteScore.A = onsiteScore.A;
             existingOnsiteScore.B = onsiteScore.B;
             existingOnsiteScore.C = onsiteScore.C;
             existingOnsiteScore.Description = onsiteScore.Description;
             existingOnsiteScore.ChemName1D = onsiteScore.ChemName1D;
+            existingOnsiteScore.Chemical = onsiteScore.Chemical;
+            existingOnsiteScore.ChemicalId = onsiteScore.ChemicalId;
             existingOnsiteScore.Other1D = onsiteScore.Other1D;
             existingOnsiteScore.D2 = onsiteScore.D2;
             existingOnsiteScore.D3 = onsiteScore.D3;
