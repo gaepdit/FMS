@@ -34,7 +34,14 @@ namespace FMS.Infrastructure.Tests
             _context.Contacts.Add(new Contact
             {
                 Id = Guid.NewGuid(),
-
+                GivenName = "VALID_GN",
+                FamilyName = "VALID_FN",
+                Company = "VALID_COMPANY",
+                Address = "VALID_ADDRESS",
+                City = "VALID_CITY",
+                State = "VALID_STATE",
+                PostalCode = "VALID_PC",
+                Email = "VALID_EMAIL"
             });
             _context.SaveChanges();
         }
@@ -55,6 +62,55 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-        //Test
+        // ContactExistAsync
+        [Test]
+        public async Task ContactExistAsync_ReturnsTrue_ContactExist()
+        {
+            var existingContact = await _context.Contacts.Select(ft => ft.Id).FirstAsync();
+            var results = await _repository.ContactExistsAsync(existingContact);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task ContactExistAsync_ReturnsFalse_ContactDoesNotExist()
+        {
+            var nonExistingContact = Guid.NewGuid();
+            var results = await _repository.ContactExistsAsync(nonExistingContact);
+            results.Should().BeFalse();
+        }
+
+        // GetContactByIdAsync
+        [Test]
+        public async Task GetContactByIdAsync_ReturnsContact_WhenIdExist()
+        {
+            var existingContact = await _context.Contacts.FirstAsync();
+            var results = await _repository.GetContactByIdAsync(existingContact.Id);
+
+            results.Should().NotBeNull();
+            results.Should().BeOfType<Contact>();
+            results.Id.Should().Be(existingContact.Id);
+            results.GivenName.Should().Be(existingContact.GivenName);
+        }
+        [Test]
+        public async Task GetContactByIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var results = await _repository.GetContactByIdAsync(nonExistingId);
+
+            results.Should().BeNull();
+        }
+
+        // GetContactsByFavilityIdAsync
+
+
+        // GetContactsByFacilityIdAndTypeAsync
+
+
+        //CreateContactAsync
+
+
+        // UpdateContactASync
+
+
+        // UpdateContactActiveAsync
     }
 }
