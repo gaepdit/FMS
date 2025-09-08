@@ -11,6 +11,7 @@ using FMS.Domain.Dto;
 using Microsoft.AspNetCore.Http;
 using FluentAssertions;
 using System.Collections.Generic;
+using static System.Collections.Specialized.BitVector32;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -79,7 +80,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetContactByIdAsync
-        [Test]
+        [Test] //Not working
         public async Task GetContactByIdAsync_ReturnsContactEditDto_WhenIdExist()
         {
             var existingContact = await _context.Contacts.FirstAsync();
@@ -106,7 +107,6 @@ namespace FMS.Infrastructure.Tests
 
 
         // CreateContactAsync
-
         [Test]
         public async Task CreateContactAsync_CreatesContact_WithValidData()
         {
@@ -123,6 +123,7 @@ namespace FMS.Infrastructure.Tests
 
             createdContact.Should().NotBeNull();
             createdContact.FamilyName.Should().Be("VALID_FN");
+            createdContact.Email.Should().Be("VALID_EMAIL");
         }
 
         // UpdateContactAsync
@@ -178,7 +179,34 @@ namespace FMS.Infrastructure.Tests
             updatedContact.Email.Should().Be(updateDto.Email);
             updatedContact.Active.Should().BeFalse();
         }
+        [Test]
+        public async Task UpdateContactsAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new ContactEditDto { Id = invalidId, FamilyName = "NEW_FN" };
+
+            Func<Task> action = async () => await _repository.UpdateContactAsync(updateDto);
+            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage("Contact with ID " + invalidId + " does not exist.");
+        }
 
         // UpdateContactActiveAsync
+        [Test]
+        public async Task UpdateContactActiveAsync_UpdatesStatusCorrectly()
+        {
+            var existingContact = await _context.Contacts.FirstAsync(c => c.Active);
+
+            await _repository.UpdateContactActiveAsync(existingContact.Id, false);
+
+            var updatedContact = await _context.Contacts.FindAsync(existingContact.Id);
+            updatedContact.Active.Should().BeFalse();
+        }
+        [Test]
+        public async Task UpdateContactActiveAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            Func<Task> action = async ()=> await _repository.UpdateContactActiveAsync(invalidId, false);
+            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage("Contact with ID " + invalidId + " does not exist.");
+
+        }
     }
 }
