@@ -39,7 +39,7 @@ namespace FMS.Infrastructure.Tests
                 Company = "VALID_COMPANY",
                 Address = "VALID_ADDRESS",
                 City = "VALID_CITY",
-                State = "VALID_STATE",
+                State = "VALID_STATE", 
                 PostalCode = "VALID_PC",
                 Email = "VALID_EMAIL"
             });
@@ -80,13 +80,13 @@ namespace FMS.Infrastructure.Tests
 
         // GetContactByIdAsync
         [Test]
-        public async Task GetContactByIdAsync_ReturnsContact_WhenIdExist()
+        public async Task GetContactByIdAsync_ReturnsContactEditDto_WhenIdExist()
         {
             var existingContact = await _context.Contacts.FirstAsync();
             var results = await _repository.GetContactByIdAsync(existingContact.Id);
 
             results.Should().NotBeNull();
-            results.Should().BeOfType<Contact>();
+            results.Should().BeOfType<ContactEditDto>();
             results.Id.Should().Be(existingContact.Id);
             results.GivenName.Should().Be(existingContact.GivenName);
         }
@@ -99,5 +99,86 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeNull();
         }
 
+        // GetContactsByFacilityIdAsync
+
+
+        // GetContactsByFacilityIdAndTypeAsync
+
+
+        // CreateContactAsync
+
+        [Test]
+        public async Task CreateContactAsync_CreatesContact_WithValidData()
+        {
+            var dto = new ContactCreateDto
+            {
+                Id = Guid.NewGuid(),
+                FamilyName = "VALID_FN",
+                Address = "VALID_ADDRESS",
+                Email = "VALID_EMAIL"
+            };
+
+            var newId = await _repository.CreateContactAsync(dto);
+            var createdContact = await _context.Contacts.FindAsync(newId);
+
+            createdContact.Should().NotBeNull();
+            createdContact.FamilyName.Should().Be("VALID_FN");
+        }
+
+        // UpdateContactAsync
+        [Test]
+        public async Task UpdateContactsAsync_UpdatesExistingContact_WhenDataIsValid()
+        {
+            var existingContact = new Contact
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                FamilyName = "VALID_FN",
+                GivenName = "VALID_GN",
+                ContactTitleId = Guid.NewGuid(),
+                ContactTypeId = Guid.NewGuid(),
+                Company = "VALID_COMPANY",
+                Address = "VALID_ADDRESS",
+                City = "VALID_CITY",
+                State = "VALID_STATE",
+                PostalCode = "VALID_PC",
+                Email = "VALID_EMAIL",
+                Active = true,
+            };
+            _context.Contacts.Add(existingContact);
+            await _context.SaveChangesAsync();
+
+            var updateDto = new ContactEditDto
+            {
+                Id = existingContact.Id,
+                FamilyName = "NEW_FN",
+                GivenName = "NEW_GN",
+                ContactTitleId = Guid.NewGuid(),
+                ContactTypeId = Guid.NewGuid(),
+                Company = "NEW_COMPANY",
+                Address = "NEW_ADDRESS",
+                City = "NEW_CITY",
+                State = "NEW_STATE",
+                PostalCode = "NEW_PC",
+                Email = "NEW_EMAIL",
+                Active = false,
+            };
+            await _repository.UpdateContactAsync(updateDto);
+            var updatedContact = await _context.Contacts.FindAsync(existingContact.Id);
+
+            updatedContact.FamilyName.Should().Be(updateDto.FamilyName);
+            updatedContact.GivenName.Should().Be(updateDto.GivenName);
+            updatedContact.ContactTitleId.Should().Be(updateDto.ContactTitleId);
+            updatedContact.ContactTypeId.Should().Be(updateDto.ContactTypeId);
+            updatedContact.Company.Should().Be(updateDto.Company);
+            updatedContact.Address.Should().Be(updateDto.Address);
+            updatedContact.City.Should().Be(updateDto.City);
+            updatedContact.State.Should().Be(updateDto.State);
+            updatedContact.PostalCode.Should().Be(updateDto.PostalCode);
+            updatedContact.Email.Should().Be(updateDto.Email);
+            updatedContact.Active.Should().BeFalse();
+        }
+
+        // UpdateContactActiveAsync
     }
 }
