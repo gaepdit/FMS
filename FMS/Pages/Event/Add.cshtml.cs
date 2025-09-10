@@ -41,14 +41,17 @@ namespace FMS.Pages.Event
         public FacilityDetailDto Facility { get; set; }
 
         [BindProperty]
-        public EventSummaryDto ParentEvent { get; set; }
+        public Guid? ParentEventId { get; set; } = Guid.Empty;
 
         public IEnumerable<EventSummaryDto> Events { get; set; }
 
         public SelectList EventTypes { get; private set; }
         public SelectList ActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
-       
+
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? parentId)
         {
             if (id == null || id == Guid.Empty)
@@ -68,6 +71,7 @@ namespace FMS.Pages.Event
                 ? await _repository.GetEventsByFacilityIdAndParentIdAsync(id.Value, parentId.Value)
                 : await _repository.GetEventsByFacilityIdAsync(id.Value));
 
+            ActiveTab = "Events";
             await PopulateSelectsAsync();
             return Page();
         }
@@ -81,6 +85,7 @@ namespace FMS.Pages.Event
             }
             try
             {
+                NewEvent.ParentId = ParentEventId;
                 await _repository.CreateEventAsync(NewEvent);
                 
             }
@@ -93,7 +98,10 @@ namespace FMS.Pages.Event
             }
 
             TempData?.SetDisplayMessage(Context.Success, $"Event created successfully.");
+            //TempData?.Set("tab", "Events");
+            //var activeTab = TempData?.Get<string>("tab");
 
+            ActiveTab = "Events";
             return RedirectToPage("../Facilities/Details", new { id = NewEvent.FacilityId, tab = "Events" });
         }
 

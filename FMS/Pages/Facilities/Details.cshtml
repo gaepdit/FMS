@@ -325,7 +325,7 @@
     }
 </div>
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI" || Model.FacilityDetail.FacilityType.Name == "RN")
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT"))
 {
     <div class="container-fluid">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
@@ -334,7 +334,7 @@
                     @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                     {
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
+                            <a class="nav-link @(Model.FacilityDetail.FacilityType.Name == "HSI" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
@@ -361,7 +361,7 @@
             <div class="tab-content">
                 @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                 {
-                    <div class="tab-pane active" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
+                    <div class="tab-pane @(Model.FacilityDetail.FacilityType.Name == "HSI" ? "active" : "")" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
                         <H3>
                             Additional HSI Information
                             <a asp-page="/HsrpFacilityProperties/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit</a>
@@ -1193,3 +1193,24 @@
         </div>
     </div>
 }
+
+@*                                <asp:HiddenField ID="hidTAB" runat="server" Value="#login" />
+</form>
+  *@
+@* <script type="text/javascript">
+    $(document).ready(function () {
+        // Handling data-toggle manually
+        $('.nav-tabs a').click(function () {
+            $('#<%=(dvValidationError.ClientID)%>').hide();
+            $(this).tab('show');
+        });
+        // The on tab shown event
+        $('.nav-tabs a').on('shown.bs.tab', function (e) {
+            var current_tab = e.target;
+            var previous_tab = e.relatedTarget;
+        });
+
+        var val = $("#" + '<%= hidTAB.ClientID %>').val();
+        $('#myTabs a[href="' + val + '"]').tab('show');
+    });
+</script> *@
