@@ -39,6 +39,9 @@ namespace FMS.Pages.Facilities
 
         public string PendingNotificationFolderLink { get; set; } = string.Empty;
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
             if (id == null)

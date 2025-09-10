@@ -22,8 +22,8 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id) =>
             await _context.Substances.AsNoTracking()
-            .Where(e => e.Id == id)
             .Include(e => e.Chemical)
+            .Where(e => e.Id == id)
             .Select(e => new SubstanceEditDto(e))
             .SingleOrDefaultAsync();
 

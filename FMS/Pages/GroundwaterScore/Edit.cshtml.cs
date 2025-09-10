@@ -1,7 +1,8 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -84,7 +85,10 @@ namespace FMS.Pages.GroundwaterScore
                 await PopulateSelectsAsync();
                 return Page();
             }
-            return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId });
+
+            TempData?.SetDisplayMessage(Context.Success, $"Groundwater Score successfully updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId, tab = "Score" });
         }
 
         private async Task PopulateSelectsAsync()

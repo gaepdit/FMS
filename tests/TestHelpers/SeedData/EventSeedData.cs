@@ -47,7 +47,7 @@ namespace FMS.TestData.SeedData
                 new()
                 {
                     Id = new Guid("271BA527-2624-49EB-9751-6E4E646A684E"),
-                    Active = false,
+                    Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParentId = Guid.Empty,   //HWTF Master Project
                     EventTypeId = new Guid("7AF4D45F-0C17-4231-9D0B-3971051B75E6"),   //PAF
@@ -111,7 +111,7 @@ namespace FMS.TestData.SeedData
                 new()
                 {
                     Id = new Guid("A4D1E5C2-0F7B-4F8A-9C3D-6E5B0A2E1F7A"),
-                    Active = false,
+                    Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParentId = Guid.Empty,
                     EventTypeId = new Guid("766262E9-38BD-4819-B9FB-546FA193EDEF"),
@@ -159,7 +159,7 @@ namespace FMS.TestData.SeedData
                 new()
                 {
                     Id = new Guid("79B3C0FD-A06A-4766-A973-F60A86D8AE2C"),
-                    Active = false,
+                    Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParentId = Guid.Empty,
                     EventTypeId = new Guid("C1A6B598-9502-4310-8D43-7030EF3A44FA"),

@@ -1,14 +1,15 @@
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
-using FMS.Domain.Data;
 
 namespace FMS.Pages.Location
 {
@@ -73,7 +74,9 @@ namespace FMS.Pages.Location
 
             await _repository.UpdateLocationAsync(Location.FacilityId, Location);
 
-            return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId });
+            TempData?.SetDisplayMessage(Context.Success, $"Location successfully Updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId, tab = "Location" });
         }
     }
 }

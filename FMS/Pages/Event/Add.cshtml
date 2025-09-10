@@ -1,0 +1,132 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Event
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Event.AddModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Add Event";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+<h3>Existing Events for @Model.Facility.FacilityNumber</h3>
+<form method="post">
+    <div class="row justify-content-evenly">
+        <table class="table table-sm" aria-label="Events">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col"><em class="">Select Parent</em>  Event Type</th>
+                    <th scope="col">Action Taken</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Completion Date</th>
+                    <th scope="col">Done By</th>
+                    <th scope="col">Event Amount</th>
+                    <th scope="col">Entity Name or No.</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col" class="text-center">Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in Model.Facility.Events)
+                {
+                    <tr class="@(!e.Active ? "text-muted table-warning" : "")">
+                        <td class="text-nowrap">
+                            <label>
+                                @Html.RadioButtonFor(m => m.ParentEventId, e.Id)
+                                @Html.DisplayFor(m => e.EventType.Name)
+                            </label>
+                        </td>
+                        <td>@e.ActionTaken.Name</td>
+                        <td>@e.StartDate</td>
+                        <td>@e.DueDate</td>
+                        <td>@e.CompletionDate</td>
+                        <td>@e.ComplianceOfficer.Name</td>
+                        <td>@e.EventAmount</td>
+                        <td>@e.EntityNameOrNumber</td>
+                        <td>@e.Comment</td>
+                        <td class="text-center">@Html.DisplayFor(m => e.Active)</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="12">
+                        <label>
+                            @Html.RadioButtonFor(m => m.ParentEventId, string.Empty)
+                            None
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr />
+    <div class="container bg-light-subtle py-3 rounded-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="NewEvent.FacilityId" />
+        <input type="hidden" asp-for="NewEvent.ParentId" />
+        <div class="row">
+            <div class="col">
+                <label asp-for="NewEvent.EventTypeId"></label>
+                <select asp-for="NewEvent.EventTypeId" asp-items="Model.EventTypes" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.EventTypeId" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.ActionTakenId"></label>
+                <select asp-for="NewEvent.ActionTakenId" asp-items="Model.ActionsTaken" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.ActionTakenId" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.StartDate" class="form-label"></label>
+                <input asp-for="NewEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewEvent.StartDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.DueDate" class="form-label"></label>
+                <input asp-for="NewEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewEvent.DueDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="NewEvent.CompletionDate" class="form-label"></label>
+                <input asp-for="NewEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewEvent.CompletionDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.ComplianceOfficerId"></label>
+                <select asp-for="NewEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.ComplianceOfficerId" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.EventAmount"></label>
+                <input asp-for="NewEvent.EventAmount" class="form-control" />
+                <span asp-validation-for="NewEvent.EventAmount" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.EntityNameOrNumber"></label>
+                <input asp-for="NewEvent.EntityNameOrNumber" class="form-control" />
+                <span asp-validation-for="NewEvent.EntityNameOrNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <label asp-for="NewEvent.Comment" class="form-label"></label>
+                <textarea asp-for="NewEvent.Comment" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="NewEvent.Comment" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Create New Event</button>
+        <a asp-page="../Facilities/Details" asp-route-Id="@Model.NewEvent.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
+    </div>
+</form>

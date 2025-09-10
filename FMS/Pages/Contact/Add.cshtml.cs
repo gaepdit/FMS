@@ -69,7 +69,6 @@ namespace FMS.Pages.Contact
             try
             {
                 await _repository.CreateContactAsync(NewContact);
-                return RedirectToPage("../Facilities/Details", new { id = NewContact.FacilityId });
             }
             catch (Exception ex)
             {
@@ -77,6 +76,10 @@ namespace FMS.Pages.Contact
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            TempData?.SetDisplayMessage(Context.Success, $"Contact: \"{NewContact.GivenName + " " + NewContact.FamilyName}\" successfully added.");
+
+            return RedirectToPage("../Facilities/Details", new { id = NewContact.FacilityId, tab = "Contacts" });
         }
 
         private async Task PopulateSelectsAsync()

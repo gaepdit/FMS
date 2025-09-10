@@ -7,6 +7,7 @@ using FMS.Helpers;
 using FMS.Pages.Maintenance;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -63,11 +64,7 @@ namespace FMS.Pages.Substance
             }
             try
             {
-                var newId = await _repository.CreateSubstanceAsync(NewSubstance);
-
-                TempData?.SetDisplayMessage(Context.Success, "The substance was created successfully.");
-
-                return RedirectToPage("../Facilities/Details", new { id = NewSubstance.FacilityId, tab = "substances" });
+                await _repository.CreateSubstanceAsync(NewSubstance);
             }
             catch (Exception ex)
             {
@@ -75,6 +72,10 @@ namespace FMS.Pages.Substance
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            TempData?.SetDisplayMessage(Context.Success, "The substance was created successfully.");
+
+            return RedirectToPage("../Facilities/Details", new { id = NewSubstance.FacilityId, tab = "Substances" });
         }
 
         private async Task PopulateSelectsAsync()

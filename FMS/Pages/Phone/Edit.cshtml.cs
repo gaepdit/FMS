@@ -1,14 +1,15 @@
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
-using FMS.Domain.Data;
 
 namespace FMS.Pages.Phone
 {
@@ -60,8 +61,7 @@ namespace FMS.Pages.Phone
             try
             {
                 await _repository.UpdatePhoneAsync(EditPhone);
-                Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
-                return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId });
+                
             }
             catch (Exception ex)
             {
@@ -71,6 +71,11 @@ namespace FMS.Pages.Phone
                 Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
                 return Page();
             }
+            Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
+
+            TempData?.SetDisplayMessage(Context.Success, $"Phone Number for \"{Contact.GivenName + " " + Contact.FamilyName}\" successfully updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId, tab = "Contacts" });
         }
     }
 }
