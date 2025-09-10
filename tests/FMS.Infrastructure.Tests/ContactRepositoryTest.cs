@@ -101,7 +101,23 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetContactsByFacilityIdAsync
+        [Test]
+        public async Task GetContactsByFacilityIdAsync_ReturnsContact_WhenFacilityIdExist()
+        {
+            var existingContact = new Contact
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                Company = "VALID_COMPANY",
+                Active = true,
+            };
+            _context.Contacts.Add(existingContact);
+            await _context.SaveChangesAsync();
 
+            var results = await _repository.GetContactsByFacilityIdAsync(existingContact.FacilityId);
+            results.Should().NotBeNull();
+
+        }
 
         // GetContactsByFacilityIdAndTypeAsync
 
