@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -7,8 +8,10 @@ namespace FMS.Domain.Dto
     {
         [Required]
         public Guid FacilityId { get; set; }
+        public Facility Facility { get; set; }
 
         public Guid? ParentId { get; set; }
+        public Event Parent { get; set; }
 
         [Display(Name = "Event Type")]
         public Guid EventTypeId { get; set; }
@@ -27,6 +30,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Done By (CO)")]
         public Guid ComplianceOfficerId { get; set; }
+        public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [Display(Name = "Event Amount")]
         public decimal EventAmount { get; set; }

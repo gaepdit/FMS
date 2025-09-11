@@ -30,6 +30,7 @@ namespace FMS.Infrastructure.Tests
             .Options;
             var httpContextAccessor = Substitute.For<HttpContextAccessor>();
             _context = new FmsDbContext(options, httpContextAccessor);
+            _repository = new ContactRepository(_context);
 
             _context.Contacts.Add(new Contact
             {
@@ -57,6 +58,7 @@ namespace FMS.Infrastructure.Tests
         {
             if (!_disposed)
             {
+                _context.Database.EnsureCreated();
                 _context.Dispose();
                 _repository.Dispose();
                 _disposed = true;

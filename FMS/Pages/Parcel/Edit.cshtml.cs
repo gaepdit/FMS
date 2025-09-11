@@ -1,7 +1,8 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -55,7 +56,6 @@ namespace FMS.Pages.Parcel
             try
             {
                 await _repository.UpdateParcelAsync(EditParcel.Id, EditParcel);
-                return RedirectToPage("../Facilities/Details", new { id = EditParcel.FacilityId });
             }
             catch (Exception ex)
             {
@@ -63,6 +63,10 @@ namespace FMS.Pages.Parcel
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            TempData?.SetDisplayMessage(Context.Success, $"Parcel Number \"{EditParcel.ParcelNumber}\" successfully updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = EditParcel.FacilityId, tab = "Location" });
         }
 
         private async Task PopulateSelectsAsync()

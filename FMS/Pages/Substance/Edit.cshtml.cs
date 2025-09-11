@@ -64,14 +64,17 @@ namespace FMS.Pages.Substance
             try
             {
                 await _repository.UpdateSubstanceAsync(EditSubstance.Id, EditSubstance);
-                return RedirectToPage("../Facilities/Details", new { id = EditSubstance.FacilityId });
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                TempData?.SetDisplayMessage(Context.Danger, $"Substance was NOT Updated. Error Occured: ");
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            TempData?.SetDisplayMessage(Context.Success, $"Substance successfully Updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = EditSubstance.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()

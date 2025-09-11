@@ -14,6 +14,7 @@ namespace FMS.Domain.Dto
             Active = substance.Active;
             FacilityId = substance.FacilityId;
             ChemicalId = substance.Chemical.Id;
+            Chemical = substance.Chemical;
             Groundwater = substance.Groundwater;
             Soil = substance.Soil;
             UseForScoring = substance.UseForScoring;

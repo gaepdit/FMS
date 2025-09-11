@@ -36,14 +36,22 @@ namespace FMS.Infrastructure.Repositories
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
-            return await _context.Events.AsNoTracking()
-                .Include(e => e.EventType)
-                .Include(e => e.ActionTaken)
-                .Include(e => e.ComplianceOfficer)
-               .Where(e => e.FacilityId == facilityId)
-               .Select(e => new EventSummaryDto(e))
-               .OrderByDescending(e => e.Active)
-               .ToListAsync();
+            var events = await _context.Events
+                   .AsNoTracking()
+                   .Include(e => e.EventType)
+                   .Include(e => e.ActionTaken)
+                   .Include(e => e.ComplianceOfficer)
+                   .Where(e => e.FacilityId == facilityId)
+                   .ToListAsync();
+
+            events = events
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.StartDate)
+                .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
+                .SelectMany(g => g)
+                .ToList();
+
+            return events.Select(e => new EventSummaryDto(e)).ToList();
         }
 
         public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId)

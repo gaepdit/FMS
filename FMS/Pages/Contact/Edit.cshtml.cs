@@ -1,14 +1,15 @@
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
-using FMS.Domain.Data;
 
 namespace FMS.Pages.Contact
 {
@@ -61,7 +62,6 @@ namespace FMS.Pages.Contact
             try
             {
                 await _repository.UpdateContactAsync(EditContact);
-                return RedirectToPage("../Facilities/Details", new { id = EditContact.FacilityId });
             }
             catch (Exception ex)
             {
@@ -69,6 +69,10 @@ namespace FMS.Pages.Contact
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            TempData?.SetDisplayMessage(Context.Success, $"Contact: \"{EditContact.GivenName + " " + EditContact.FamilyName}\" successfully updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = EditContact.FacilityId, tab = "Contacts" });
         }
 
         private async Task PopulateSelectsAsync()
