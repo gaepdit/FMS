@@ -30,11 +30,10 @@ namespace FMS.Infrastructure.Tests
             .Options;
             var httpContextAccessor = Substitute.For<HttpContextAccessor>();
             _context = new FmsDbContext(options, httpContextAccessor);
-            _repository = new ContactRepository(_context);
 
             _context.Contacts.Add(new Contact
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Empty,
                 GivenName = "VALID_GN",
                 FamilyName = "VALID_FN",
                 Company = "VALID_COMPANY",
@@ -45,6 +44,8 @@ namespace FMS.Infrastructure.Tests
                 Email = "VALID_EMAIL"
             });
             _context.SaveChanges();
+            _repository = new ContactRepository(_context);
+
         }
 
         [TearDown]
@@ -56,7 +57,6 @@ namespace FMS.Infrastructure.Tests
         {
             if (!_disposed)
             {
-                _context.Database.EnsureCreated();
                 _context.Dispose();
                 _repository.Dispose();
                 _disposed = true;
@@ -168,6 +168,7 @@ namespace FMS.Infrastructure.Tests
             var updateDto = new ContactEditDto
             {
                 Id = existingContact.Id,
+                FacilityId = Guid.NewGuid(),
                 FamilyName = "NEW_FN",
                 GivenName = "NEW_GN",
                 ContactTitleId = Guid.NewGuid(),
@@ -181,6 +182,7 @@ namespace FMS.Infrastructure.Tests
                 Active = false,
             };
             await _repository.UpdateContactAsync(updateDto);
+            _context.ChangeTracker.Clear();
             var updatedContact = await _context.Contacts.FindAsync(existingContact.Id);
 
             updatedContact.FamilyName.Should().Be(updateDto.FamilyName);
@@ -194,6 +196,12 @@ namespace FMS.Infrastructure.Tests
             updatedContact.PostalCode.Should().Be(updateDto.PostalCode);
             updatedContact.Email.Should().Be(updateDto.Email);
             updatedContact.Active.Should().BeFalse();
+
+
+            updatedContact.Should().BeEquivalentTo(updateDto);
+            updatedContact.Should().BeEquivalentTo(updateDto);
+            //exlude facility id
+
         }
         [Test]
         public async Task UpdateContactsAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
