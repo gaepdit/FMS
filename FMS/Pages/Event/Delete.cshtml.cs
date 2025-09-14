@@ -14,14 +14,10 @@ namespace FMS.Pages.Event
     public class DeleteModel : PageModel
     {
         private readonly IEventRepository _repository;
-        private readonly IFacilityRepository _facilityRepository;
 
-        public DeleteModel(
-            IEventRepository repository,
-            IFacilityRepository facilityRepository)
+        public DeleteModel(IEventRepository repository)
         {
             _repository = repository;
-            _facilityRepository = facilityRepository;
         }
 
         [BindProperty]
