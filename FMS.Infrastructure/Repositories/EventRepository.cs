@@ -32,6 +32,17 @@ namespace FMS.Infrastructure.Repositories
             return eventSummary == null ? null : new EventEditDto(eventSummary);
         }
 
+        public async Task<EventSummaryDto> GetEventSummaryByIdAsync(Guid id)
+        {
+            var EventSummary = await _context.Events.AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            return EventSummary == null ? null : new EventSummaryDto(EventSummary);
+        }
+
         public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
@@ -143,6 +154,16 @@ namespace FMS.Infrastructure.Repositories
             return _context.SaveChangesAsync();
         }
 
+        public async Task DeleteEventByIdAsync(Guid id)
+        {
+            var eventToDelete = await _context.Events.FindAsync(id);
+            if (eventToDelete == null)
+            {
+                throw new InvalidOperationException($"Event with ID {id} does not exist.");
+            }
+            _context.Events.Remove(eventToDelete);
+            await _context.SaveChangesAsync();
+        }
 
         #region IDisposable Support
 

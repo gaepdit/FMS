@@ -1007,7 +1007,6 @@
                                     <th scope="col">Event Amount</th>
                                     <th scope="col">Entity Name or No.</th>
                                     <th scope="col">Comment</th>
-                                    <th scope="col" class="text-center">Active</th>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
@@ -1027,11 +1026,11 @@
                                         <td>@e.EventAmount</td>
                                         <td>@e.EntityNameOrNumber</td>
                                         <td>@e.Comment</td>
-                                        <td class="text-center">@Html.DisplayFor(m => e.Active)</td>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
                                             <td>
                                                 <a asp-page="/Event/Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                <a asp-page="/Event/Delete" asp-route-id="@e.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                             </td>
                                         }
                                     </tr>
