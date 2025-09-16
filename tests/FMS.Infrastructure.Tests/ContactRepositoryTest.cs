@@ -121,7 +121,7 @@ namespace FMS.Infrastructure.Tests
             await _context.SaveChangesAsync();
 
             var results = await _repository.GetContactsByFacilityIdAsync(existingContact.FacilityId);
-            
+
             results.Should().NotBeNull();
             results.Should().HaveCount(1);
 
@@ -192,6 +192,7 @@ namespace FMS.Infrastructure.Tests
             var existingContact = new Contact
             {
                 Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
                 FamilyName = "VALID_FN",
                 GivenName = "VALID_GN",
                 ContactTitleId = Guid.NewGuid(),

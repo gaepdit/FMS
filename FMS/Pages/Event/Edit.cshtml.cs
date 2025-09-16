@@ -3,29 +3,24 @@ using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
-using FMS.Helpers;
-using FMS.Pages.Maintenance;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Event
 {
     [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
-    public class AddModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly IEventRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
 
-        public AddModel(
+        public EditModel(
             IEventRepository repository,
             IFacilityRepository facilityRepository,
             ISelectListHelper listHelper)
@@ -36,42 +31,32 @@ namespace FMS.Pages.Event
         }
 
         [BindProperty]
-        public EventCreateDto NewEvent { get; set; }
+        public EventEditDto EditEvent { get; set; }
 
         public FacilityDetailDto Facility { get; set; }
 
         [BindProperty]
         public Guid? ParentEventId { get; set; } = Guid.Empty;
 
-        public IEnumerable<EventSummaryDto> Events { get; set; }
-
         public SelectList EventTypes { get; private set; }
         public SelectList ActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
 
+        [BindProperty]
+        public Guid Id { get; set; }
+
         [TempData]
         public string ActiveTab { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? parentId)
+        public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            if (id == null || id == Guid.Empty)
+            Id = id;
+            EditEvent = await _repository.GetEventByIdAsync(id);
+            if (EditEvent == null)
             {
                 return NotFound();
             }
-
-            NewEvent = new EventCreateDto
-            {
-                FacilityId = id.Value,
-                ParentId = parentId,
-            };
-
-            Facility = await _facilityRepository.GetFacilityAsync(id.Value); 
-
-            Events = (parentId.HasValue
-                ? await _repository.GetEventsByFacilityIdAndParentIdAsync(id.Value, parentId.Value)
-                : await _repository.GetEventsByFacilityIdAsync(id.Value));
-
-            ActiveTab = "Events";
+            Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
             await PopulateSelectsAsync();
             return Page();
         }
@@ -85,22 +70,20 @@ namespace FMS.Pages.Event
             }
             try
             {
-                NewEvent.ParentId = ParentEventId;
-                await _repository.CreateEventAsync(NewEvent);
-                
+                await _repository.UpdateEventAsync(EditEvent);
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the event.");
-                
+                ModelState.AddModelError(string.Empty, ex.Message);
                 await PopulateSelectsAsync();
                 return Page();
             }
 
-            TempData?.SetDisplayMessage(Context.Success, $"Event created successfully.");
-
             ActiveTab = "Events";
-            return RedirectToPage("../Facilities/Details", new { id = NewEvent.FacilityId });
+
+            TempData?.SetDisplayMessage(Context.Success, $"Event successfully updated.");
+
+            return RedirectToPage("../Facilities/Details", new { id = EditEvent.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()

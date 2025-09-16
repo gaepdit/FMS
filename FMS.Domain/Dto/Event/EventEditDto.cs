@@ -35,8 +35,10 @@ namespace FMS.Domain.Dto
         public Event Parent { get; set; }
 
         public Guid? EventTypeId { get; set; }
+        public EventType EventType { get; set; }
 
         public Guid? ActionTakenId { get; set; }
+        public ActionTaken ActionTaken { get; set; }
 
         public DateOnly? StartDate { get; set; }
 
