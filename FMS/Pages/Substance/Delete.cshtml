@@ -1,0 +1,39 @@
+﻿@page
+@model FMS.Pages.Substance.DeleteModel
+
+@{
+    ViewData["Title"] = $"Delete Substance";
+}
+
+<h1><em>Confirm</em> @ViewData["Title"]</h1>
+<form method="post">
+    <p class="lead text-danger font-weight-medium">Are you sure you want to delete this Substance?</p>
+    <div class="row justify-content-evenly">
+        <table class="table table-sm" aria-label="Substances">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">CAS Number</th>
+                    <th scope="col">Substance Name</th>
+                    <th scope="col">Common Name</th>
+                    <th scope="col" class="text-center">Groundwater</th>
+                    <th scope="col" class="text-center">Soil</th>
+                    <th scope="col" class="text-center">Use for Scoring</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.SubstanceDetail.Chemical.CasNo</td>
+                    <td>@Model.SubstanceDetail.Chemical.ChemicalName</td>
+                    <td>@Model.SubstanceDetail.Chemical.CommonName</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.Groundwater)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.Soil)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.UseForScoring)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <input type="hidden" asp-for="SubstanceDetail.Id" />
+    <input type="hidden" asp-for="@Model.FacilityId" />
+    <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Confirm Delete</button>
+    <a asp-page="../Facilities/Details" asp-route-Id="@Model.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
+</form>

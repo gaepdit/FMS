@@ -73,6 +73,8 @@ namespace FMS.Pages.HsrpFacilityProperties
 
             await PopulateSelectsAsync();
 
+            ActiveTab = "HSIProperties";
+
             return Page();
         }
 

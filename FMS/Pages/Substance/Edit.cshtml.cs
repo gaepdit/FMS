@@ -40,6 +40,9 @@ namespace FMS.Pages.Substance
         [BindProperty]
         public Guid Id { get; set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -51,6 +54,7 @@ namespace FMS.Pages.Substance
             }
 
             await PopulateSelectsAsync();
+            ActiveTab = "Substances";
             return Page();
         }
 
@@ -73,7 +77,7 @@ namespace FMS.Pages.Substance
             }
 
             TempData?.SetDisplayMessage(Context.Success, $"Substance successfully Updated.");
-
+            ActiveTab = "Substances";
             return RedirectToPage("../Facilities/Details", new { id = EditSubstance.FacilityId });
         }
 

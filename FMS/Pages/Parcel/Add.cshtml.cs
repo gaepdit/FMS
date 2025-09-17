@@ -37,6 +37,9 @@ namespace FMS.Pages.Parcel
 
         public SelectList ParcelTypes { get; private set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null || id == Guid.Empty)
@@ -51,6 +54,7 @@ namespace FMS.Pages.Parcel
             };
 
             await PopulateSelectsAsync();
+            ActiveTab = "Location";
             return Page();
         }
 
@@ -72,7 +76,7 @@ namespace FMS.Pages.Parcel
             await _repository.CreateParcelAsync(NewParcel);
 
             TempData?.SetDisplayMessage(Context.Success, $"Parcel Number \"{NewParcel.ParcelNumber}\" successfully created.");
-
+            ActiveTab = "Location";
             return RedirectToPage("../Facilities/Details", new { id = NewParcel.FacilityId });
         }
 

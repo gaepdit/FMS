@@ -57,7 +57,9 @@ namespace FMS.Pages.Event
                 return NotFound();
             }
             Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
+
             await PopulateSelectsAsync();
+            ActiveTab = "Events";
             return Page();
         }
 

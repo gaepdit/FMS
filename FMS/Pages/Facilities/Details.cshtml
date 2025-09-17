@@ -135,8 +135,9 @@
                 <dd class="col-sm-3">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
+                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Map</a>
                 </dd>
-
+                
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
                 </dt>
@@ -144,6 +145,7 @@
                     @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
                 </dd>
             </dl>
+            
         </div>
     }
     else
@@ -247,8 +249,9 @@
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
+                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Map</a>
                 </dd>
-
+                
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
                 </dt>
@@ -256,6 +259,7 @@
                     @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
                 </dd>
             </dl>
+            
         </div>
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <H2>Release Notification Information</H2>
@@ -334,26 +338,26 @@
                     @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                     {
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link @(Model.FacilityDetail.FacilityType.Name == "HSI" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
+                            <a class="nav-link @(Model.ActiveTab == "HSIProperties" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
+                            <a class="nav-link @(Model.ActiveTab == "Location" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Contacts" type="text/html" role="tab" aria-controls="Contacts" aria-selected="false" href="#Contacts">Contacts</a>
+                            <a class="nav-link @(Model.ActiveTab == "Contacts" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Contacts" type="text/html" role="tab" aria-controls="Contacts" aria-selected="false" href="#Contacts">Contacts</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Score" type="text/html" role="tab" aria-controls="Score" aria-selected="false" href="#Score">Score</a>
+                            <a class="nav-link @(Model.ActiveTab == "Score" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Score" type="text/html" role="tab" aria-controls="Score" aria-selected="false" href="#Score">Score</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Substances" type="text/html" role="tab" aria-controls="Substances" aria-selected="false" href="#Substances">Substances</a>
+                            <a class="nav-link @(Model.ActiveTab == "Substances" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Substances" type="text/html" role="tab" aria-controls="Substances" aria-selected="false" href="#Substances">Substances</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
+                            <a class="nav-link @(Model.ActiveTab == "Status" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
                         </li>
                     }
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link @(Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@(Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ? "true" : "false")" href="#Events">Events</a>
+                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT") ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ? "true" : "false")" href="#Events">Events</a>
                     </li>
                 </ul>
             </nav>
@@ -361,7 +365,7 @@
             <div class="tab-content">
                 @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                 {
-                    <div class="tab-pane @(Model.FacilityDetail.FacilityType.Name == "HSI" ? "active" : "")" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
+                    <div class="tab-pane @(Model.ActiveTab == "HSIProperties" ? "active" : "")" id="HSIProperties" role="tabpanel" aria-labelledby="HSIProperties-tab">
                         <H3>
                             Additional HSI Information
                             <a asp-page="/HsrpFacilityProperties/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit</a>
@@ -407,7 +411,7 @@
                         </dl>
                     </div>
 
-                    <div class="tab-pane" id="Location" role="tabpanel" aria-labelledby="Location-tab">
+                    <div class="tab-pane @(Model.ActiveTab == "Location" ? "active" : "")" id="Location" role="tabpanel" aria-labelledby="Location-tab">
                         <h3>
                             Location
                             <a asp-page="/Location/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit</a>
@@ -422,6 +426,7 @@
                             </div>
                             <div class="col">
                                 <a href="~/images/h10789.bmp" target="_blank"><img src="~/images/h10789.bmp" class="rounded-0 border border-2" alt="Map Image Here" width="200" height="180"></a>
+                                @* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.580231682855!2d-74.0059728845942!3d40.71277647933095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a2e16d4d1d9%3A0x8e8e8e8e8e8e8e8e!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sus!4v1678901234567!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> *@
                             </div>
                         </div>
                         <hr />
@@ -470,7 +475,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
+                    <div class="tab-pane @(Model.ActiveTab == "Contacts" ? "active" : "")" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
                         <h3>
                             Contacts
                             <a asp-page="/Contact/Add" asp-route-Id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Contact</a>
@@ -571,7 +576,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane" id="Score" role="tabpanel" aria-labelledby="Score-tab">
+                    <div class="tab-pane @(Model.ActiveTab == "Score" ? "active" : "")" id="Score" role="tabpanel" aria-labelledby="Score-tab">
                         <h3>
                             Score
                             <a asp-page="/Score/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit Score</a>
@@ -782,7 +787,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
+                    <div class="tab-pane @(Model.ActiveTab == "Substances" ? "active" : "")" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
                         <h3>
                             Substances
                             <a asp-page="/Substance/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Substance</a>
@@ -798,7 +803,6 @@
                                         <th scope="col" class="text-center">Groundwater</th>
                                         <th scope="col" class="text-center">Soil</th>
                                         <th scope="col" class="text-center">Use for Scoring</th>
-                                        <th scope="col" class="text-center">Active</th>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
                                             <th scope="col" class="text-left">Actions</th>
@@ -815,11 +819,11 @@
                                             <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Soil)</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.UseForScoring)</td>
-                                            <td class="text-center">@Html.DisplayFor(m => s.Active)</td>
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
                                                     <a asp-page="/Substance/Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                    <a asp-page="/Substance/Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                                 </td>
                                             }
                                         </tr>
@@ -829,7 +833,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane" id="Status" role="tabpanel" aria-labelledby="Status-tab">
+                    <div class="tab-pane @(Model.ActiveTab == "Status" ? "active" : "")" id="Status" role="tabpanel" aria-labelledby="Status-tab">
                         <h3>
                             Status
                             <a asp-page="/Status/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit Status</a>
@@ -988,7 +992,7 @@
                         </div>
                     </div>
                 }
-                <div class="tab-pane @(Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                <div class="tab-pane @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT") ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
                         Events
                         <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Event</a>
@@ -1192,24 +1196,3 @@
         </div>
     </div>
 }
-
-@*                                <asp:HiddenField ID="hidTAB" runat="server" Value="#login" />
-</form>
-  *@
-@* <script type="text/javascript">
-    $(document).ready(function () {
-        // Handling data-toggle manually
-        $('.nav-tabs a').click(function () {
-            $('#<%=(dvValidationError.ClientID)%>').hide();
-            $(this).tab('show');
-        });
-        // The on tab shown event
-        $('.nav-tabs a').on('shown.bs.tab', function (e) {
-            var current_tab = e.target;
-            var previous_tab = e.relatedTarget;
-        });
-
-        var val = $("#" + '<%= hidTAB.ClientID %>').val();
-        $('#myTabs a[href="' + val + '"]').tab('show');
-    });
-</script> *@

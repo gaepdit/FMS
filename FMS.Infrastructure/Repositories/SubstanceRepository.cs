@@ -27,6 +27,13 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new SubstanceEditDto(e))
             .SingleOrDefaultAsync();
 
+        public async Task<SubstanceSummaryDto> GetSubstanceSummaryByIdAsync(Guid id) =>
+            await _context.Substances.AsNoTracking()
+            .Include(e => e.Chemical)
+            .Where(e => e.Id == id)
+            .Select(e => new SubstanceSummaryDto(e))
+            .SingleOrDefaultAsync();
+
         public async Task<IReadOnlyList<SubstanceSummaryDto>> GetReadOnlySubstanceByFacilityIdAsync(Guid facilityId) =>
            await _context.Substances.AsNoTracking()
             .Include(e => e.Chemical)
@@ -92,6 +99,18 @@ namespace FMS.Infrastructure.Repositories
                 throw new KeyNotFoundException($"Substance with Id {id} not found.");
             }
             existingSubstance.Active = active;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteSubstanceAsync(Guid id)
+        {
+            Prevent.NullOrEmpty(id, nameof(id));
+            var existingSubstance = await _context.Substances.SingleOrDefaultAsync(e => e.Id == id);
+            if (existingSubstance == null)
+            {
+                throw new KeyNotFoundException($"Substance with Id {id} not found.");
+            }
+            _context.Substances.Remove(existingSubstance);
             await _context.SaveChangesAsync();
         }
 

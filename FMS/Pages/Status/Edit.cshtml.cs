@@ -45,7 +45,10 @@ namespace FMS.Pages.Status
         public SelectList FundingSources { get; private set; }
         public SelectList GAPSAssessments { get; private set; }
         public SelectList AbandonSites { get; private set; }
-        
+
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -75,6 +78,7 @@ namespace FMS.Pages.Status
                 return NotFound();
             }
             await PopulateSelectsAsync();
+            ActiveTab = "Status";
             return Page();
         }
 
@@ -97,8 +101,8 @@ namespace FMS.Pages.Status
                 return Page();
             }
             TempData?.SetDisplayMessage(Context.Success, $"Status successfully Updated.");
-
-            return RedirectToPage("../Facilities/Details", new { id = EditStatus.FacilityId, tab = "Status" });
+            ActiveTab = "Status";
+            return RedirectToPage("../Facilities/Details", new { id = EditStatus.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()

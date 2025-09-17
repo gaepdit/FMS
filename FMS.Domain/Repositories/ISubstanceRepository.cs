@@ -15,6 +15,8 @@ namespace FMS.Domain.Repositories
 
         Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id);
 
+        Task<SubstanceSummaryDto> GetSubstanceSummaryByIdAsync(Guid id);
+
         Task<IReadOnlyList<SubstanceSummaryDto>> GetReadOnlySubstanceByFacilityIdAsync(Guid facilityId);
 
         Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId);
@@ -24,5 +26,7 @@ namespace FMS.Domain.Repositories
         Task UpdateSubstanceAsync(Guid id, SubstanceEditDto substanceUpdates);
 
         Task UpdateSubstanceStatusAsync(Guid id, bool active);
+
+        Task DeleteSubstanceAsync(Guid id);
     }
 }

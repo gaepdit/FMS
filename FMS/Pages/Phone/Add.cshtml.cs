@@ -41,6 +41,9 @@ namespace FMS.Pages.Phone
 
         public SelectList PhoneTypes => new(Data.PhoneTypes);
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null || id == Guid.Empty)
@@ -53,7 +56,7 @@ namespace FMS.Pages.Phone
                 ContactId = id.Value,
                 Active = true
             };
-            
+            ActiveTab = "Contacts";
             return Page();
         }
 
@@ -77,8 +80,8 @@ namespace FMS.Pages.Phone
             Contact = await _contactRepository.GetContactByIdAsync(NewPhone.ContactId);
 
             TempData?.SetDisplayMessage(Context.Success, $"Phone Number for \"{Contact.GivenName + " " + Contact.FamilyName}\" successfully Added.");
-
-            return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId, tab = "Contacts" });
+            ActiveTab = "Contacts";
+            return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId });
         }
     }
 }
