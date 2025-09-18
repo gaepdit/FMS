@@ -249,9 +249,9 @@
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Google Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href="/Facilities/Map">Location Search</a>
                 </dd>
-                
                 <dt class="col-sm-4">
                     @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
                 </dt>
@@ -423,10 +423,6 @@
                             </div>
                             <div class="col-sm-2">
                                 @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
-                            </div>
-                            <div class="col">
-                                <a href="~/images/h10789.bmp" target="_blank"><img src="~/images/h10789.bmp" class="rounded-0 border border-2" alt="Map Image Here" width="200" height="180"></a>
-                                @* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.580231682855!2d-74.0059728845942!3d40.71277647933095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a2e16d4d1d9%3A0x8e8e8e8e8e8e8e8e!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sus!4v1678901234567!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> *@
                             </div>
                         </div>
                         <hr />

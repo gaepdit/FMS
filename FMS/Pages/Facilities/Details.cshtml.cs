@@ -54,6 +54,12 @@ namespace FMS.Pages.Facilities
         [TempData]
         public string ActiveTab { get; set; }
 
+        [TempData]
+        public decimal? Latitude { get; set; }
+
+        [TempData]
+        public decimal? Longitude { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
             if (id == null)
@@ -95,6 +101,9 @@ namespace FMS.Pages.Facilities
             {
                 ActiveTab = "HSIProperties";
             }
+
+            Latitude = FacilityDetail.Latitude != 0 ? FacilityDetail.Latitude : null;
+            Longitude = FacilityDetail.Longitude != 0 ? FacilityDetail.Longitude : null;
 
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();

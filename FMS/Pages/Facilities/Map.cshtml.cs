@@ -51,6 +51,8 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGet()
         {
+            Spec.Latitude = 0;
+            Spec.Longitude = 0;
             await PopulateSelectsAsync();
             return Page();
         }

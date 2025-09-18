@@ -20,10 +20,7 @@ namespace FMS.Platform.Extensions
         // Link to Pending Notifications folder
         public const string PendingNotificationFolder = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/RNs/Pending%20RNs/";
 
-        public const string GapiKey = "AIzaSyBdAw22HTMQO9Y93G1vvHRH9PEqNzzLjKc";
-
         public const string MapCoordLink = "https://www.google.com/maps/search/?api=1&query=";
 
-        public const string EmbedMapLink = "https://www.google.com/maps/embed/v1/view?key=" + GapiKey + "&center=";
     }
 }
