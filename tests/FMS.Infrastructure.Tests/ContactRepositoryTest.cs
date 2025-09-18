@@ -1,18 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
+﻿using FluentAssertions;
+using FMS.Domain.Dto;
+using FMS.Domain.Entities;
+using FMS.Infrastructure.Contexts;
+using FMS.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using NSubstitute;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FMS.Infrastructure.Contexts;
-using FMS.Infrastructure.Repositories;
-using FMS.Domain.Entities;
-using FMS.Domain.Dto;
-using Microsoft.AspNetCore.Http;
-using FluentAssertions;
-using System.Collections.Generic;
-using static System.Collections.Specialized.BitVector32;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -21,35 +18,42 @@ namespace FMS.Infrastructure.Tests
     {
         private FmsDbContext _context;
         private ContactRepository _repository;
-        private bool _disposed = false;
+        private bool _disposed;
+
+        private readonly Guid _titleId = new("20000000-0000-0000-0000-000000000001");
+        private readonly Guid _typeId = new("20000000-0000-0000-0000-000000000002");
+        private readonly Guid _facilityId = new("20000000-0000-0000-0000-000000000003");
 
         [SetUp]
         public void SetUp()
         {
             var options = new DbContextOptionsBuilder<FmsDbContext>()
-            .UseInMemoryDatabase(databaseName: $"TestDatabase_{Guid.NewGuid()}")
-            .Options;
+                .UseInMemoryDatabase(databaseName: $"TestDatabase_{Guid.NewGuid()}")
+                .Options;
             var httpContextAccessor = Substitute.For<HttpContextAccessor>();
             _context = new FmsDbContext(options, httpContextAccessor);
-            _repository = new ContactRepository(_context);
 
             _context.Contacts.Add(new Contact
             {
                 Id = Guid.Empty,
                 GivenName = "VALID_GN",
                 FamilyName = "VALID_FN",
-                ContactTitleId = Guid.Empty,
-                ContactTypeId = Guid.Empty,
+                ContactTitleId = _titleId,
+                ContactTypeId = _typeId,
                 Company = "VALID_COMPANY",
                 Address = "VALID_ADDRESS",
                 City = "VALID_CITY",
-                State = "VALID_STATE", 
+                State = "VALID_STATE",
                 PostalCode = "VALID_PC",
-                Email = "VALID_EMAIL"
+                Email = "VALID_EMAIL",
+                FacilityId = _facilityId,
             });
+
+            _context.ContactTitles.Add(new ContactTitle { Id = _titleId });
+            _context.ContactTypes.Add(new ContactType { Id = _typeId });
+
             _context.SaveChanges();
             _repository = new ContactRepository(_context);
-
         }
 
         [TearDown]
@@ -57,11 +61,11 @@ namespace FMS.Infrastructure.Tests
         {
             Dispose();
         }
-        public void Dispose()
+
+        private void Dispose()
         {
             if (!_disposed)
             {
-                _context.Database.EnsureCreated();
                 _context.Dispose();
                 _repository.Dispose();
                 _disposed = true;
@@ -76,6 +80,7 @@ namespace FMS.Infrastructure.Tests
             var results = await _repository.ContactExistsAsync(existingContact);
             results.Should().BeTrue();
         }
+
         [Test]
         public async Task ContactExistAsync_ReturnsFalse_ContactDoesNotExist()
         {
@@ -85,7 +90,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetContactByIdAsync
-        /*[Test] 
+        [Test]
         public async Task GetContactByIdAsync_ReturnsContactEditDto_WhenIdExist()
         {
             var existingContact = await _context.Contacts.FirstAsync();
@@ -95,7 +100,7 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeOfType<ContactEditDto>();
             results.Id.Should().Be(existingContact.Id);
             results.GivenName.Should().Be(existingContact.GivenName);
-        }*/
+        }
 
         [Test]
         public async Task GetContactByIdAsync_ReturnsNull_WhenIdDoesNotExist()
@@ -107,25 +112,15 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetContactsByFacilityIdAsync
-        /*[Test]
+        [Test]
         public async Task GetContactsByFacilityIdAsync_ReturnsContact_WhenFacilityIdExist()
         {
-            var existingContact = new Contact
-            {
-                Id = Guid.NewGuid(),
-                FacilityId = Guid.NewGuid(),
-                Company = "VALID_COMPANY",
-                Active = true,
-            };
-            _context.Contacts.Add(existingContact);
-            await _context.SaveChangesAsync();
-
-            var results = await _repository.GetContactsByFacilityIdAsync(existingContact.FacilityId);
+            var results = (await _repository.GetContactsByFacilityIdAsync(_facilityId)).ToList();
 
             results.Should().NotBeNull();
-            results.Should().HaveCount(1);
+            results.Should().ContainSingle();
+        }
 
-        }*/
         [Test]
         public async Task GetContactsByFacilityIdAsync_ReturnsNull_WhenIdDoesNotExist()
         {
@@ -136,31 +131,22 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetContactsByFacilityIdAndTypeAsync
-        /*[Test]
+        [Test]
         public async Task GetContactsByFacilityIdAndTypeAsync_ReturnsContact_WhenFacilityIdExist()
         {
-            var existingContact = new Contact
-            {
-                Id = Guid.NewGuid(),
-                FacilityId = Guid.NewGuid(),
-                ContactTypeId = Guid.NewGuid(),
-                Company = "VALID_COMPANY",
-                Active = true,
-            };
-            _context.Contacts.Add(existingContact);
-            await _context.SaveChangesAsync();
-
-            var results = await _repository.GetContactsByFacilityIdAndTypeAsync(existingContact.FacilityId, existingContact.ContactTypeId);
+            var results = (await _repository.GetContactsByFacilityIdAndTypeAsync(_facilityId, _typeId)).ToList();
 
             results.Should().NotBeNull();
-            results.Should().HaveCount(1);
-        }*/
+            results.Should().ContainSingle();
+        }
+
         [Test]
         public async Task GetContactsByFacilityIdAndTypeAsync_ReturnsNull_WhenIdDoesNotExist()
         {
             var nonExistingFacilityId = Guid.NewGuid();
             var nonExistingContactTypeId = Guid.NewGuid();
-            var results = await _repository.GetContactsByFacilityIdAndTypeAsync(nonExistingFacilityId, nonExistingContactTypeId);
+            var results =
+                await _repository.GetContactsByFacilityIdAndTypeAsync(nonExistingFacilityId, nonExistingContactTypeId);
 
             results.Should().BeEmpty();
         }
@@ -178,10 +164,12 @@ namespace FMS.Infrastructure.Tests
             };
 
             var newId = await _repository.CreateContactAsync(dto);
+
+            _context.ChangeTracker.Clear();
             var createdContact = await _context.Contacts.FindAsync(newId);
 
             createdContact.Should().NotBeNull();
-            createdContact.FamilyName.Should().Be("VALID_FN");
+            createdContact!.FamilyName.Should().Be("VALID_FN");
             createdContact.Email.Should().Be("VALID_EMAIL");
         }
 
@@ -207,6 +195,7 @@ namespace FMS.Infrastructure.Tests
             };
             _context.Contacts.Add(existingContact);
             await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
             var updateDto = new ContactEditDto
             {
@@ -225,21 +214,24 @@ namespace FMS.Infrastructure.Tests
             };
             await _repository.UpdateContactAsync(updateDto);
             _context.ChangeTracker.Clear();
+
             var updatedContact = await _context.Contacts.FindAsync(existingContact.Id);
 
             updatedContact.Should().BeEquivalentTo(updateDto, options => options
                 .Excluding(e => e.FacilityId)
                 .Excluding(e => e.Status));
-
         }
+
         [Test]
         public async Task UpdateContactsAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
         {
             var invalidId = Guid.NewGuid();
             var updateDto = new ContactEditDto { Id = invalidId, FamilyName = "NEW_FN" };
 
-            Func<Task> action = async () => await _repository.UpdateContactAsync(updateDto);
-            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage("Contact with ID " + invalidId + " does not exist.");
+            var action = async () => await _repository.UpdateContactAsync(updateDto);
+
+            await action.Should().ThrowAsync<InvalidOperationException>()
+                .WithMessage("Contact with ID " + invalidId + " does not exist.");
         }
 
         // UpdateContactActiveAsync
@@ -249,17 +241,20 @@ namespace FMS.Infrastructure.Tests
             var existingContact = await _context.Contacts.FirstAsync(c => c.Active);
 
             await _repository.UpdateContactActiveAsync(existingContact.Id, false);
+            _context.ChangeTracker.Clear();
 
             var updatedContact = await _context.Contacts.FindAsync(existingContact.Id);
-            updatedContact.Active.Should().BeFalse();
+            updatedContact.Should().NotBeNull();
+            updatedContact!.Active.Should().BeFalse();
         }
+
         [Test]
         public async Task UpdateContactActiveAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
         {
             var invalidId = Guid.NewGuid();
-            Func<Task> action = async ()=> await _repository.UpdateContactActiveAsync(invalidId, false);
-            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage("Contact with ID " + invalidId + " does not exist.");
-
+            var action = async () => await _repository.UpdateContactActiveAsync(invalidId, false);
+            await action.Should().ThrowAsync<InvalidOperationException>()
+                .WithMessage("Contact with ID " + invalidId + " does not exist.");
         }
     }
 }
