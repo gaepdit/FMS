@@ -45,6 +45,14 @@ namespace FMS.Infrastructure.Repositories
         {
             var newStatus = new Status(status);
 
+            newStatus.AbandonSitesId = null;
+            newStatus.FundingSourceId = null;
+            newStatus.GAPSAssessmentId = null;
+            newStatus.GroundwaterStatusId = null;
+            newStatus.OverallStatusId = null;
+            newStatus.SoilStatusId = null;
+            newStatus.SourceStatusId = null;
+
             if (status.FacilityId == Guid.Empty)
             {
                 throw new ArgumentException("FacilityId cannot be empty.", nameof(status));

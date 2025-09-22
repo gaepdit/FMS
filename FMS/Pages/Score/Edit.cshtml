@@ -25,6 +25,7 @@
             <div class="col mb-3">
                 <label asp-for="Score.ScoredById" class="form-label">Scored By</label>
                 <select asp-for="Score.ScoredById" asp-items="Model.ComplianceOfficers" class="form-select">
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="Score.ScoredById" class="text-danger"></span>
             </div>

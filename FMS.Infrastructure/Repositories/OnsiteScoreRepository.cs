@@ -51,6 +51,7 @@ namespace FMS.Infrastructure.Repositories
                 D2 = onsiteScore.D2,
                 D3 = onsiteScore.D3,
                 CASNO = onsiteScore.CASNO,
+                ChemicalId = null,
                 E1 = onsiteScore.E1,
                 E2 = onsiteScore.E2
             };
