@@ -52,7 +52,7 @@ namespace FMS.Infrastructure.Repositories
                 Other = groundwaterScore.Other,
                 D2 = groundwaterScore.D2,
                 D3 = groundwaterScore.D3,
-                ChemicalId = groundwaterScore.ChemicalId,
+                ChemicalId = null,
                 CASNO = groundwaterScore.CASNO,
                 E1 = groundwaterScore.E1,
                 E2 = groundwaterScore.E2

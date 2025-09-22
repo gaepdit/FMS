@@ -18,13 +18,13 @@ namespace FMS.Domain.Dto
             B = onsiteScore.B;
             C = onsiteScore.C;
             Description = onsiteScore.Description;
-            ChemName1D = onsiteScore.Chemical.ChemicalName;
+            ChemName1D = onsiteScore.Chemical?.ChemicalName;
             ChemicalId = onsiteScore.ChemicalId;
             Chemical = onsiteScore.Chemical;
             Other1D = onsiteScore.Other1D;
             D2 = onsiteScore.D2;
             D3 = onsiteScore.D3;
-            CASNO = onsiteScore.Chemical.CasNo;
+            CASNO = onsiteScore.Chemical?.CasNo;
             E1 = onsiteScore.E1;
             E2 = onsiteScore.E2;
         }
