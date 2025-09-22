@@ -39,6 +39,9 @@ namespace FMS.Pages.GroundwaterScore
 
         public SelectList Chemicals { get; private set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -65,6 +68,7 @@ namespace FMS.Pages.GroundwaterScore
                 return NotFound();
             }
             await PopulateSelectsAsync();
+            ActiveTab = "Score";
             return Page();
         }
 
@@ -87,8 +91,8 @@ namespace FMS.Pages.GroundwaterScore
             }
 
             TempData?.SetDisplayMessage(Context.Success, $"Groundwater Score successfully updated.");
-
-            return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId, tab = "Score" });
+            ActiveTab = "Score";
+            return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()

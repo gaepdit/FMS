@@ -40,6 +40,9 @@ namespace FMS.Pages.HsrpFacilityProperties
         public SelectList ComplianceOfficers { get; private set; }
         public SelectList OrganizationalUnit { get; private set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -70,6 +73,8 @@ namespace FMS.Pages.HsrpFacilityProperties
 
             await PopulateSelectsAsync();
 
+            ActiveTab = "HSIProperties";
+
             return Page();
         }
 
@@ -85,7 +90,9 @@ namespace FMS.Pages.HsrpFacilityProperties
 
             TempData?.SetDisplayMessage(Context.Success, $"HSI Properties successfully Updated.");
 
-            return RedirectToPage("../Facilities/Details", new { id = HsrpFacilityProperties.FacilityId, tab = "HSIProperties" });
+            ActiveTab = "HSIProperties";
+
+            return RedirectToPage("../Facilities/Details", new { id = HsrpFacilityProperties.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()

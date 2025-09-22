@@ -37,6 +37,9 @@ namespace FMS.Pages.Phone
         [BindProperty]
         public Guid Id { get; set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -48,6 +51,7 @@ namespace FMS.Pages.Phone
             }
 
             Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
+            ActiveTab = "Contacts";
             return Page();
         }
 
@@ -74,7 +78,7 @@ namespace FMS.Pages.Phone
             Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
 
             TempData?.SetDisplayMessage(Context.Success, $"Phone Number for \"{Contact.GivenName + " " + Contact.FamilyName}\" successfully updated.");
-
+            ActiveTab = "Contacts";
             return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId, tab = "Contacts" });
         }
     }

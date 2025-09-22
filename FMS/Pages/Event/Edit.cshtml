@@ -32,22 +32,25 @@
             <tbody>
                 @foreach (var e in Model.Facility.Events)
                 {
-                    <tr class="@(!e.Active ? "text-muted table-warning" : "")">
-                        <td class="text-nowrap">
-                            <label>
-                                @Html.RadioButtonFor(m => m.ParentEventId, e.Id)
-                                @Html.DisplayFor(m => e.EventType.Name)
-                            </label>
-                        </td>
-                        <td>@e.ActionTaken.Name</td>
-                        <td>@e.StartDate</td>
-                        <td>@e.DueDate</td>
-                        <td>@e.CompletionDate</td>
-                        <td>@e.ComplianceOfficer.Name</td>
-                        <td>@e.EventAmount</td>
-                        <td>@e.EntityNameOrNumber</td>
-                        <td>@e.Comment</td>
-                    </tr>
+                    if (e.EventType.Name == "HWTF Master Project")
+                    {
+                        <tr class="@(!e.Active ? "text-muted table-warning" : "")">
+                            <td class="text-nowrap">
+                                <label>
+                                    @Html.RadioButtonFor(m => m.ParentEventId, e.Id)
+                                    @Html.DisplayFor(m => e.EventType.Name)
+                                </label>
+                            </td>
+                            <td>@e.ActionTaken.Name</td>
+                            <td>@e.StartDate</td>
+                            <td>@e.DueDate</td>
+                            <td>@e.CompletionDate</td>
+                            <td>@e.ComplianceOfficer.Name</td>
+                            <td>@e.EventAmount</td>
+                            <td>@e.EntityNameOrNumber</td>
+                            <td>@e.Comment</td>
+                        </tr>
+                    }
                 }
                 <tr>
                     <td colspan="12">

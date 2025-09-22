@@ -37,6 +37,9 @@ namespace FMS.Pages.Location
 
         public SelectList Classes => new(Data.Classes);
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -62,6 +65,8 @@ namespace FMS.Pages.Location
                 return NotFound();
             }
 
+            ActiveTab = "Location";
+
             return Page();
         }
 
@@ -75,6 +80,8 @@ namespace FMS.Pages.Location
             await _repository.UpdateLocationAsync(Location.FacilityId, Location);
 
             TempData?.SetDisplayMessage(Context.Success, $"Location successfully Updated.");
+
+            ActiveTab = "Location";
 
             return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId, tab = "Location" });
         }

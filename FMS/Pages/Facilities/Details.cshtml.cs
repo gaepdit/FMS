@@ -39,8 +39,26 @@ namespace FMS.Pages.Facilities
 
         public string PendingNotificationFolderLink { get; set; } = string.Empty;
 
+        public string MapLink
+        {
+            get
+            {
+                if (FacilityDetail != null && FacilityDetail.Latitude != 0 && FacilityDetail.Longitude != 0)
+                {
+                    return UrlHelper.GetMapLink(FacilityDetail.Latitude, FacilityDetail.Longitude);
+                }
+                return string.Empty;
+            }
+        }
+
         [TempData]
         public string ActiveTab { get; set; }
+
+        [TempData]
+        public string Latitude { get; set; }
+
+        [TempData]
+        public string Longitude { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
         {
@@ -79,6 +97,14 @@ namespace FMS.Pages.Facilities
                 RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
             
+            if (string.IsNullOrEmpty(ActiveTab))
+            {
+                ActiveTab = "HSIProperties";
+            }
+
+            Latitude = FacilityDetail.Latitude != 0 ? FacilityDetail.Latitude.ToString() : null;
+            Longitude = FacilityDetail.Longitude != 0 ? FacilityDetail.Longitude.ToString() : null;
+
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
             return Page();

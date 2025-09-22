@@ -39,6 +39,9 @@ namespace FMS.Pages.OnsiteScore
 
         public SelectList Chemicals { get; private set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -67,6 +70,7 @@ namespace FMS.Pages.OnsiteScore
             }
 
             await PopulateSelectsAsync();
+            ActiveTab = "Score";
             return Page();
         }
 
@@ -90,8 +94,8 @@ namespace FMS.Pages.OnsiteScore
             }
 
             TempData?.SetDisplayMessage(Context.Success, $"Onsite Score successfully Updated.");
-
-            return RedirectToPage("../Facilities/Details", new { id = OnsiteScore.FacilityId, tab = "Score" });
+            ActiveTab = "Score";
+            return RedirectToPage("../Facilities/Details", new { id = OnsiteScore.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()

@@ -34,6 +34,9 @@ namespace FMS.Pages.Parcel
         [BindProperty]
         public Guid Id { get; set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -43,6 +46,7 @@ namespace FMS.Pages.Parcel
                 return NotFound();
             }
             await PopulateSelectsAsync();
+            ActiveTab = "Location";
             return Page();
         }
 
@@ -65,7 +69,7 @@ namespace FMS.Pages.Parcel
             }
 
             TempData?.SetDisplayMessage(Context.Success, $"Parcel Number \"{EditParcel.ParcelNumber}\" successfully updated.");
-
+            ActiveTab = "Location";
             return RedirectToPage("../Facilities/Details", new { id = EditParcel.FacilityId, tab = "Location" });
         }
 

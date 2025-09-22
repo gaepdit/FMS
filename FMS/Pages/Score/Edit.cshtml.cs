@@ -38,6 +38,9 @@ namespace FMS.Pages.Score
 
         public SelectList ComplianceOfficers { get; private set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
@@ -64,7 +67,7 @@ namespace FMS.Pages.Score
             }
 
             await PopulateSelectsAsync();
-
+            ActiveTab = "Score";
             return Page();
         }
 
@@ -77,7 +80,7 @@ namespace FMS.Pages.Score
             }
             
             await _repository.UpdateScoreAsync(Score.FacilityId, Score);
-
+            ActiveTab = "Score";
             return RedirectToPage("../Facilities/Details", new { id = Score.FacilityId });
         }
 

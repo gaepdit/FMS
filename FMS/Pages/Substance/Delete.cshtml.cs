@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS.Pages.Event
+namespace FMS.Pages.Substance
 {
     [Authorize(Roles = UserRoles.FileEditor)]
     public class DeleteModel : PageModel
     {
-        private readonly IEventRepository _repository;
+        private readonly ISubstanceRepository _repository;
 
-        public DeleteModel(IEventRepository repository)
+        public DeleteModel(ISubstanceRepository repository)
         {
             _repository = repository;
         }
@@ -23,7 +23,8 @@ namespace FMS.Pages.Event
         [BindProperty]
         [HiddenInput]
         public Guid Id { get; set; }
-        public EventSummaryDto EventDetail { get; set; }
+
+        public SubstanceSummaryDto SubstanceDetail { get; set; }
 
         [BindProperty]
         public Guid FacilityId { get; set; }
@@ -37,31 +38,24 @@ namespace FMS.Pages.Event
             {
                 return NotFound();
             }
-
-            EventDetail = await _repository.GetEventSummaryByIdAsync(id.Value);
-            if (EventDetail == null)
+            SubstanceDetail = await _repository.GetSubstanceSummaryByIdAsync(id.Value);
+            if (SubstanceDetail == null)
             {
                 return NotFound();
             }
-
-            FacilityId = EventDetail.FacilityId;
+            FacilityId = SubstanceDetail.FacilityId;
 
             Id = id.Value;
-
-            ActiveTab = "Events";
-
+            ActiveTab = "Substances";
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _repository.DeleteEventByIdAsync(Id);
-
-            TempData?.SetDisplayMessage(Context.Success, "Event deleted.");
-
-            ActiveTab = "Events";
-
-            return RedirectToPage("../Facilities/Details", new { id = FacilityId });
+            await _repository.DeleteSubstanceAsync(Id);
+            TempData?.SetDisplayMessage(Context.Success, "Substance deleted.");
+            ActiveTab = "Substances";
+            return RedirectToPage("/Facilities/Details", new { id = FacilityId, hr = Guid.Empty });
         }
     }
 }

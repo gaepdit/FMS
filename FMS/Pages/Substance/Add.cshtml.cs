@@ -38,6 +38,9 @@ namespace FMS.Pages.Substance
 
         public SelectList Chemicals { get; private set; }
 
+        [TempData]
+        public string ActiveTab { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null || id == Guid.Empty)
@@ -52,6 +55,7 @@ namespace FMS.Pages.Substance
             };
 
             await PopulateSelectsAsync();
+            ActiveTab = "Substances";
             return Page();
         }
 
@@ -74,8 +78,8 @@ namespace FMS.Pages.Substance
             }
 
             TempData?.SetDisplayMessage(Context.Success, "The substance was created successfully.");
-
-            return RedirectToPage("../Facilities/Details", new { id = NewSubstance.FacilityId, tab = "Substances" });
+            ActiveTab = "Substances";
+            return RedirectToPage("../Facilities/Details", new { id = NewSubstance.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()
