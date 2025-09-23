@@ -42,7 +42,7 @@ namespace FMS.Domain.Entities
         public Guid? ComplianceOfficerId { get; set; }
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
-        public decimal EventAmount { get; set; }
+        public decimal? EventAmount { get; set; }
 
         public string EntityNameOrNumber { get; set; }
 

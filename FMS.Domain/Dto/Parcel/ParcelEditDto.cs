@@ -29,7 +29,7 @@ namespace FMS.Domain.Dto
         public string ParcelNumber { get; set; }
 
         [Display(Name = "Acreage")]
-        public double Acres { get; set; }
+        public double? Acres { get; set; }
 
         [Display(Name = "Type")]
         public Guid? ParcelTypeId { get; set; }
