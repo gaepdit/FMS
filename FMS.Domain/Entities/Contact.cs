@@ -26,9 +26,9 @@ namespace FMS.Domain.Entities
         public Guid FacilityId { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
-        public Guid ContactTitleId { get; set; }
+        public Guid? ContactTitleId { get; set; }
         public ContactTitle ContactTitle { get; set; }
-        public Guid ContactTypeId { get; set; }
+        public Guid? ContactTypeId { get; set; }
         public ContactType ContactType { get; set; }
         public string Company { get; set; }
         public string Address { get; set; }
