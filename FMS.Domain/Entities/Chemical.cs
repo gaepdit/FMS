@@ -14,6 +14,8 @@ namespace FMS.Domain.Entities
             CommonName = chemical.CommonName;
             ToxValue = chemical.ToxValue;
             MCLs = chemical.MCLs;
+            FinalRc = chemical.FinalRc;
+            RQ = chemical.RQ;
         }
 
         public string CasNo { get; set; }
@@ -25,6 +27,10 @@ namespace FMS.Domain.Entities
         public string ToxValue { get; set; }
 
         public string MCLs { get; set; }
+
+        public string FinalRc { get; set; }
+
+        public string RQ { get; set; }
 
         public string Name => CasNo;
 

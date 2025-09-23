@@ -20,7 +20,9 @@ namespace FMS.TestData.SeedData
                     ChemicalName = "Acenaphthene",
                     CommonName = "Napalm",
                     ToxValue = "2",
-                    MCLs = ""
+                    MCLs = "1",
+                    FinalRc = "4",
+                    RQ = "100"
                 },
                 new() 
                 {
@@ -30,7 +32,9 @@ namespace FMS.TestData.SeedData
                     ChemicalName = "Antimony",
                     CommonName = "Antimony",
                     ToxValue = "16",
-                    MCLs = ".006"
+                    MCLs = ".006",
+                    FinalRc = "3",
+                    RQ = "22"
                 },
                 new() 
                 {
@@ -41,6 +45,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Arsenic",
                     ToxValue = "16", 
                     MCLs = ".010",
+                    FinalRc = "4",
+                    RQ = "70"
                 },
                 new()
                 {
@@ -51,6 +57,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Ethyl Alcohol",
                     ToxValue = "4", 
                     MCLs = "",
+                    FinalRc = "7",
+                    RQ = "90"
                 },
                 new()
                 {
@@ -61,6 +69,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Benzene",
                     ToxValue = "8", 
                     MCLs = "0.005",
+                    FinalRc = "6",
+                    RQ = "34"
                 },
                 new()
                 {
@@ -71,6 +81,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Benzene 4",
                     ToxValue = "4", 
                     MCLs = "",
+                    FinalRc = "34",
+                    RQ = "66"
                 },
                 new()
                 {
@@ -81,6 +93,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Pyrene",
                     ToxValue = "16",
                     MCLs = "2E-4",
+                    FinalRc = "12",
+                    RQ = "23"
                 },
                 new()
                 {
@@ -91,6 +105,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Fluoranthene",
                     ToxValue = "8",
                     MCLs = "",
+                    FinalRc = "5",
+                    RQ = "78"
                 },
                 new()
                 {
@@ -101,6 +117,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Chloroform",
                     ToxValue = "4",
                     MCLs = "0.080",
+                    FinalRc = "8",
+                    RQ = "55"
                 },
                 new()
                 {
@@ -111,6 +129,8 @@ namespace FMS.TestData.SeedData
                     CommonName = "Ether",
                     ToxValue = "16",
                     MCLs = "",
+                    FinalRc = "4",
+                    RQ = "78"
                 },
                 new()
                 {
@@ -120,7 +140,9 @@ namespace FMS.TestData.SeedData
                     ChemicalName = "Chromium (VI)",
                     CommonName = "Chromium",
                     ToxValue = "16",
-                    MCLs = "",
+                    MCLs = "8",
+                    FinalRc = "3",
+                    RQ = "34"
                 }
             };
         }
