@@ -19,7 +19,8 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> ParcelTypeExistsAsync(Guid id) =>
             _context.ParcelTypes.AnyAsync(e => e.Id == id);
 
-        public Task<bool> ParcelTypeNameExistsAsync(string name, Guid? ignoreId = null) => _context.ParcelTypes.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+        public Task<bool> ParcelTypeNameExistsAsync(string name, Guid? ignoreId = null) => 
+            _context.ParcelTypes.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<ParcelTypeEditDto> GetParcelTypeAsync(Guid id)
         {

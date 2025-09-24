@@ -62,24 +62,44 @@ namespace FMS.Infrastructure.Tests
         {
             var existingPT = await _context.ParcelTypes.Select(ft => ft.Id).FirstAsync();
             var results = await _repository.ParcelTypeExistsAsync(existingPT);
-            results.Should().BeFalse();
+            results.Should().BeTrue();
         }
         [Test]
         public async Task ParcelTypeExistAsync_ReturnFalse_ParcelTypeDoesNotExist()
         {
             var nonExistingPT = Guid.NewGuid();
             var results = await _repository.ParcelTypeExistsAsync(nonExistingPT);
-            results.Should().BeTrue();
+            results.Should().BeFalse();
         }
 
-        // ParcelTypeNameExistAsync
+        // ParcelTypeNameExistsAsync
+        [Test]
+        public async Task ParcelTypeNameExistsAsync_ReturnsTrue_WhenNameIsValid()
+        {
+            var newPT = new ParcelType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.ParcelTypes.Add(newPT);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.ParcelTypeNameExistsAsync("VALID_NAME");
+            result.Should().BeTrue();
+        }
+        [Test]
+        public async Task ParcelTypeNameExistsAsync_ReturnsFalse_WhenNameIsInvalid()
+        {
+            var newPT = new ParcelType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.ParcelTypes.Add(newPT);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.ParcelTypeNameExistsAsync("INVALID_NAME");
+            result.Should().BeFalse();
+        }
 
         // GetParcelTypeListAsync
         [Test]
         public async Task GetParcelTypeListAsync_ReturnsAllParcelTypes()
         {
             var results = await _repository.GetParcelTypeListAsync();
-            results.Should().BeNull();
+            results.Should().NotBeNullOrEmpty();
         }
 
         // CreateParcelTypeAsync
@@ -92,7 +112,7 @@ namespace FMS.Infrastructure.Tests
             var createdParcelType = await _context.ParcelTypes.FindAsync(newId);
 
             createdParcelType.Should().NotBeNull();
-            createdParcelType.Name.Should().Be("VALID_PACRCELTYP");
+            createdParcelType.Name.Should().Be("VALID_PACRCELTYPE");
         }
 
         // UpdateParcelTypeAsync
@@ -107,7 +127,7 @@ namespace FMS.Infrastructure.Tests
             await _repository.UpdateParcelTypeAsync(existingParcelType.Id, updateDto);
 
             var updatedParcelType = await _context.ParcelTypes.FindAsync(existingParcelType.Id);
-            updatedParcelType.Name.Should().Be("NEW_PARCELTYP");
+            updatedParcelType.Name.Should().Be("NEW_PARCELTYPE");
         }
         [Test]
         public async Task UpdateParcelTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
@@ -130,7 +150,7 @@ namespace FMS.Infrastructure.Tests
             await _repository.UpdateParcelTypeStatusAsync(parcelType.Id, false);
 
             var updatedParcelType = await _context.ParcelTypes.FindAsync(parcelType.Id);
-            updatedParcelType.Active.Should().BeTrue();
+            updatedParcelType.Active.Should().BeFalse();
         }
 
         [Test]
