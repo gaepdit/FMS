@@ -215,6 +215,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("CommonName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FinalRc")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
 
@@ -222,6 +225,9 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MCLs")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RQ")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ToxValue")
@@ -292,10 +298,10 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("Company")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ContactTitleId")
+                    b.Property<Guid?>("ContactTitleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ContactTypeId")
+                    b.Property<Guid?>("ContactTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
@@ -1254,7 +1260,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("EntityNameOrNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("EventAmount")
+                    b.Property<decimal?>("EventAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("EventTypeId")
@@ -1635,19 +1641,19 @@ namespace FMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("A")
+                    b.Property<int?>("A")
                         .HasColumnType("int");
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int>("B1")
+                    b.Property<int?>("B1")
                         .HasColumnType("int");
 
-                    b.Property<int>("B2")
+                    b.Property<int?>("B2")
                         .HasColumnType("int");
 
-                    b.Property<int>("C")
+                    b.Property<int?>("C")
                         .HasColumnType("int");
 
                     b.Property<string>("CASNO")
@@ -1659,19 +1665,19 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("ChemicalId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("D2")
+                    b.Property<int?>("D2")
                         .HasColumnType("int");
 
-                    b.Property<int>("D3")
+                    b.Property<int?>("D3")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("E1")
+                    b.Property<int?>("E1")
                         .HasColumnType("int");
 
-                    b.Property<int>("E2")
+                    b.Property<int?>("E2")
                         .HasColumnType("int");
 
                     b.Property<Guid>("FacilityId")
@@ -1833,16 +1839,16 @@ namespace FMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("A")
+                    b.Property<int?>("A")
                         .HasColumnType("int");
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int>("B")
+                    b.Property<int?>("B")
                         .HasColumnType("int");
 
-                    b.Property<int>("C")
+                    b.Property<int?>("C")
                         .HasColumnType("int");
 
                     b.Property<string>("CASNO")
@@ -1854,19 +1860,19 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("ChemicalId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("D2")
+                    b.Property<int?>("D2")
                         .HasColumnType("int");
 
-                    b.Property<int>("D3")
+                    b.Property<int?>("D3")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("E1")
+                    b.Property<int?>("E1")
                         .HasColumnType("int");
 
-                    b.Property<int>("E2")
+                    b.Property<int?>("E2")
                         .HasColumnType("int");
 
                     b.Property<Guid>("FacilityId")
@@ -1967,7 +1973,7 @@ namespace FMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Acres")
+                    b.Property<double?>("Acres")
                         .HasColumnType("float");
 
                     b.Property<bool>("Active")
@@ -2063,9 +2069,7 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Number")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneType")
                         .HasColumnType("nvarchar(max)");
@@ -2282,10 +2286,10 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<DateOnly?>("GAPSModelDate")
                         .HasColumnType("date");
 
-                    b.Property<int>("GAPSNoOfUnknowns")
+                    b.Property<int?>("GAPSNoOfUnknowns")
                         .HasColumnType("int");
 
-                    b.Property<int>("GAPSScore")
+                    b.Property<int?>("GAPSScore")
                         .HasColumnType("int");
 
                     b.Property<DateOnly?>("GroundwaterDate")
@@ -2729,15 +2733,11 @@ namespace FMS.Infrastructure.Migrations
                 {
                     b.HasOne("FMS.Domain.Entities.ContactTitle", "ContactTitle")
                         .WithMany()
-                        .HasForeignKey("ContactTitleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContactTitleId");
 
                     b.HasOne("FMS.Domain.Entities.ContactType", "ContactType")
                         .WithMany()
-                        .HasForeignKey("ContactTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ContactTypeId");
 
                     b.HasOne("FMS.Domain.Entities.Facility", null)
                         .WithMany("Contacts")
