@@ -72,6 +72,28 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeFalse();
         }
 
+        // ContactTitleNameExistsAsync
+        [Test]
+        public async Task ContactTitleNameExistsAsync_ReturnsTrue_WhenNameIsValid()
+        {
+            var newCT = new ContactTitle { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.ContactTitles.Add(newCT);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.ContactTitleNameExistsAsync("VALID_NAME");
+            result.Should().BeTrue();
+        }
+        [Test]
+        public async Task ContactTitleNameExistsAsync_ReturnsFalse_WhenNameIsInvalid()
+        {
+            var newCT = new ContactTitle { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.ContactTitles.Add(newCT);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.ContactTitleNameExistsAsync("INVALID_NAME");
+            result.Should().BeFalse();
+        }
+
         // GetContactTypeByIdAsync
         [Test]
         public async Task GetContactTitleByIdAsync_WhenIdExist()
