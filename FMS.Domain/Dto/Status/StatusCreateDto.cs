@@ -51,13 +51,13 @@ namespace FMS.Domain.Dto
         public string SolidWastePermitNumber { get; set; }
 
         [Display(Name = "GAPS Model Score")]
-        public int GAPSScore { get; set; }
+        public int? GAPSScore { get; set; }
 
         [Display(Name = "GAPS Model Date")]
         public DateOnly? GAPSModelDate { get; set; }
 
         [Display(Name = "GAPS No. of Unknowns")]
-        public int GAPSNoOfUnknowns { get; set; }
+        public int? GAPSNoOfUnknowns { get; set; }
 
         public Guid? GAPSAssessmentId { get; set; }
         [Display(Name = "GAPS Assessment")]

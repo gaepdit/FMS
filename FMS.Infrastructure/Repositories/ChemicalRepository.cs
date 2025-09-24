@@ -81,7 +81,9 @@ namespace FMS.Infrastructure.Repositories
                 CasNo = chemical.CasNo,
                 ToxValue = chemical.ToxValue,
                 CommonName = chemical.CommonName,
-                MCLs = chemical.MCLs
+                MCLs = chemical.MCLs,
+                FinalRc = chemical.FinalRc,
+                RQ = chemical.RQ
             };
             await _context.Chemicals.AddAsync(newChemical);
             await _context.SaveChangesAsync();
@@ -108,6 +110,8 @@ namespace FMS.Infrastructure.Repositories
             chemical.CommonName = chemicalUpdates.CommonName;
             chemical.ToxValue = chemicalUpdates.ToxValue;
             chemical.MCLs = chemicalUpdates.MCLs;
+            chemical.FinalRc = chemicalUpdates.FinalRc;
+            chemical.RQ = chemicalUpdates.RQ;
 
             await _context.SaveChangesAsync();
         }

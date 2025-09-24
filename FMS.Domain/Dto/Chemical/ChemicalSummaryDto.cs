@@ -15,6 +15,8 @@ namespace FMS.Domain.Dto
             CommonName = chemical.CommonName;
             ToxValue = chemical.ToxValue;
             MCLs = chemical.MCLs;
+            FinalRc = chemical.FinalRc;
+            RQ = chemical.RQ;
         }
 
         public Guid Id { get; set; }
@@ -33,6 +35,12 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "MCL Value")]
         public string MCLs { get; set; }
+
+        [Display(Name = "Final RC")]
+        public string FinalRc { get; set; }
+
+        [Display(Name = "RQ")]
+        public string RQ { get; set; }
 
         public bool Active { get; set; }
     }

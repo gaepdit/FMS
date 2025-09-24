@@ -26,7 +26,7 @@ namespace FMS.Domain.Dto
 
         public string ParcelNumber { get; set; }
 
-        public double Acres { get; set; }
+        public double? Acres { get; set; }
 
         public ParcelType ParcelType { get; set; }
 

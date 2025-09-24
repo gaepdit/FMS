@@ -50,7 +50,7 @@ namespace FMS.Domain.Dto
         public Guid? ComplianceOfficerId { get; set; }
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
-        public decimal EventAmount { get; set; }
+        public decimal? EventAmount { get; set; }
 
         public string EntityNameOrNumber { get; set; }
 

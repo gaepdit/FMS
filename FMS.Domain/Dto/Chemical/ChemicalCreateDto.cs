@@ -21,6 +21,12 @@ namespace FMS.Domain.Dto
         [Display(Name = "MCL Value")]
         public string MCLs { get; set; }
 
+        [Display(Name = "Final RC")]
+        public string FinalRc { get; set; }
+
+        [Display(Name = "RQ")]
+        public string RQ { get; set; }
+
         public void TrimAll()
         {
             CasNo = CasNo?.Trim();
