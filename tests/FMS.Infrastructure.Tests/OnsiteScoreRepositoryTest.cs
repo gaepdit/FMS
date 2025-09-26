@@ -17,7 +17,7 @@ namespace FMS.Infrastructure.Tests
     public class OnsiteScoreRepositoryTest
     {
         private FmsDbContext _context;
-        private ContactRepository _repository;
+        private OnsiteScoreRepository _repository;
         private bool _disposed;
 
 
@@ -33,7 +33,8 @@ namespace FMS.Infrastructure.Tests
             _context.OnsiteScores.Add(new OnsiteScore
             {
                 Id = Guid.Empty,
-                
+                FacilityId = Guid.Empty,
+                OnsiteScoreValue = "VALID_OSSValue"
             });
             _context.SaveChanges();
         }
@@ -55,6 +56,66 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-       
+        // OnsiteScoreExistAsync
+        [Test]
+        public async Task OnsiteScoreExistAsync_ReturnTrue_OnsiteScoreExist()
+        {
+            var existingCT = await _context.OnsiteScores.Select(ft => ft.Id).FirstAsync();
+            var results = await _repository.OnsiteScoreExistsAsync(existingCT);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task OnsiteScoreExistAsync_ReturnFalse_OnsiteScoreDoesNotExist()
+        {
+            var nonExistingCT = Guid.NewGuid();
+            var results = await _repository.OnsiteScoreExistsAsync(nonExistingCT);
+            results.Should().BeFalse();
+        }
+
+        // GetOnsiteScoreByFacilityIdAsync
+        [Test]
+        public async Task GetOnsiteScoreByIdAsync_WhenFacilityIdExist()
+        {
+            var existingOSS = await _context.OnsiteScores.FirstAsync();
+            var result = await _repository.GetOnsiteScoreByFacilityIdAsync(existingOSS.FacilityId);
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<OnsiteScoreEditDto>();
+            result.FacilityId.Should().Be(existingOSS.FacilityId);
+        }
+        [Test]
+        public async Task GetOnsiteScoreByIdAsync_WhenFacilityIdDoesNotExist_ReturnsNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var result = await _repository.GetOnsiteScoreByFacilityIdAsync(nonExistingId);
+
+            result.Should().BeNull();
+        }
+
+        // CreateOnsiteScoreAsync
+        [Test]
+        public async Task CreateOnsiteScoreAsync_CreatesOnsiteScore_WithValidData()
+        {
+            var dto = new OnsiteScoreCreateDto
+            {
+                FacilityId = Guid.NewGuid(),
+                OnsiteScoreValue = "VALID_OSSValue",
+                A = 1,
+                B = 2,
+                C = 3
+            };
+
+            var newId = await _repository.CreateOnsiteScoreAsync(dto);
+
+            _context.ChangeTracker.Clear();
+            var createdOSS = await _context.OnsiteScores.FindAsync(newId);
+
+            createdOSS.Should().NotBeNull();
+            createdOSS.OnsiteScoreValue.Should().Be("VALID_OSSValue");
+            createdOSS.A.Should().Be(1);
+            createdOSS.B.Should().Be(2);
+            createdOSS.C.Should().Be(3);
+
+        }
     }
 }
