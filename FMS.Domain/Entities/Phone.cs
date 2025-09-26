@@ -17,11 +17,6 @@ namespace FMS.Domain.Entities
         }
         public Guid ContactId { get; set; }
 
-        [Display(Name = "Number")]
-        [Required(ErrorMessage = "Phone number is required")]
-        [StringLength(15, ErrorMessage = "Phone number cannot exceed 15 characters")]
-        [RegularExpression(@"^\+?[0-9\s\-()]+$", ErrorMessage = "Invalid phone number format. Only digits, spaces, dashes, parentheses, and an optional leading '+' are allowed.")]
-        [DataType(DataType.PhoneNumber)]
         public string Number { get; set; }
 
         public string PhoneType { get; set; }

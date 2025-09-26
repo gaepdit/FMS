@@ -34,8 +34,6 @@ namespace FMS.Pages.Phone
 
         [BindProperty]
         public PhoneCreateDto NewPhone { get; set; }
-        
-        public Guid ContactId { get; set; }
 
         public ContactEditDto Contact { get; set; }
 
@@ -50,7 +48,12 @@ namespace FMS.Pages.Phone
             {
                 return NotFound();
             }
-            ContactId = id.Value;
+            Contact = await _contactRepository.GetContactByIdAsync(id.Value);
+            if (Contact == null)
+            {
+                return NotFound();
+            }
+
             NewPhone = new PhoneCreateDto
             {
                 ContactId = id.Value,

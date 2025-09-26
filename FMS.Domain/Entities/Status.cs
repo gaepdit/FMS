@@ -86,13 +86,13 @@ namespace FMS.Domain.Entities
         public string SolidWastePermitNumber { get; set; }
 
         [Display(Name = "GAPS Model Score")]
-        public int GAPSScore { get; set; }
+        public int? GAPSScore { get; set; }
 
         [Display(Name = "GAPS Model Date")]
         public DateOnly? GAPSModelDate { get; set; }
 
         [Display(Name = "GAPS Model No. of Unknowns")]
-        public int GAPSNoOfUnknowns { get; set; }
+        public int? GAPSNoOfUnknowns { get; set; }
 
         public Guid? GAPSAssessmentId { get; set; }
         [Display(Name = "GAPS Assessment")]

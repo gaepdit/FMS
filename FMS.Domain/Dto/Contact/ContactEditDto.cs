@@ -38,10 +38,10 @@ namespace FMS.Domain.Dto
         public string FamilyName { get; set; }
 
         [Display(Name = "Title")]
-        public Guid ContactTitleId { get; set; }
+        public Guid? ContactTitleId { get; set; }
 
         [Display(Name = "Contact Type")]
-        public Guid ContactTypeId { get; set; }
+        public Guid? ContactTypeId { get; set; }
 
         [Display(Name = "Company")]
         public string Company { get; set; }

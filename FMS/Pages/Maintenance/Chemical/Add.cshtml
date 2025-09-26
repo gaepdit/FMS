@@ -19,18 +19,18 @@
                 <input asp-for="Chemical.CasNo" class="form-control" aria-describedby="FileIdHelpBlock" />
                 <span asp-validation-for="Chemical.CasNo" class="text-danger"></span>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-5">
                 <label asp-for="Chemical.ChemicalName">@($"{MaintenanceOptions.Chemical} Name ")<span class="text-danger">*</span></label>
                 <input asp-for="Chemical.ChemicalName" class="form-control" />
                 <span asp-validation-for="Chemical.ChemicalName" class="text-danger"></span>
             </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <label asp-for="Chemical.CommonName">Common Name</label>
                 <input asp-for="Chemical.CommonName" class="form-control" />
                 <span asp-validation-for="Chemical.CommonName" class="text-danger"></span>
             </div>
+        </div>
+        <div class="row mb-3">
             <div class="col-md-3">
                 <label asp-for="Chemical.ToxValue">Tox Value</label>
                 <input asp-for="Chemical.ToxValue" class="form-control" />
@@ -40,6 +40,16 @@
                 <label asp-for="Chemical.MCLs">MCLs</label>
                 <input asp-for="Chemical.MCLs" class="form-control" />
                 <span asp-validation-for="Chemical.MCLs" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.FinalRc">Final RC</label>
+                <input asp-for="Chemical.FinalRc" class="form-control" />
+                <span asp-validation-for="Chemical.FinalRc" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.RQ">RQ</label>
+                <input asp-for="Chemical.RQ" class="form-control" />
+                <span asp-validation-for="Chemical.RQ" class="text-danger"></span>
             </div>
         </div>
         <hr />

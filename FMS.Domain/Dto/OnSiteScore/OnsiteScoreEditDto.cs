@@ -40,13 +40,13 @@ namespace FMS.Domain.Dto
         public string OnsiteScoreValue { get; set; }
 
         [Display(Name = "A")]
-        public int A { get; set; }
+        public int? A { get; set; }
 
         [Display(Name = "B")]
-        public int B { get; set; }
+        public int? B { get; set; }
 
         [Display(Name = "C")]
-        public int C { get; set; }
+        public int? C { get; set; }
 
         [Display(Name = "Description")]
         public string Description { get; set; }
@@ -58,10 +58,10 @@ namespace FMS.Domain.Dto
         public string Other1D { get; set; }
 
         [Display(Name = "D2")]
-        public int D2 { get; set; }
+        public int? D2 { get; set; }
 
         [Display(Name = "D3")]
-        public int D3 { get; set; }
+        public int? D3 { get; set; }
 
         public Guid? ChemicalId { get; set; }
         [Display(Name = "Chemical")]
@@ -71,9 +71,9 @@ namespace FMS.Domain.Dto
         public string CASNO { get; set; }
 
         [Display(Name = "1E")]
-        public int E1 { get; set; }
+        public int? E1 { get; set; }
 
         [Display(Name = "2E")]
-        public int E2 { get; set; }
+        public int? E2 { get; set; }
     }
 }

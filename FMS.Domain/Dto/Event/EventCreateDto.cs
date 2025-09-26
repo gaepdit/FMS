@@ -33,7 +33,7 @@ namespace FMS.Domain.Dto
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [Display(Name = "Event Amount")]
-        public decimal EventAmount { get; set; }
+        public decimal? EventAmount { get; set; }
 
         [Display(Name = "Entity Name or Number")]
         public string EntityNameOrNumber { get; set; }

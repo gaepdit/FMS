@@ -5,9 +5,9 @@ namespace FMS.Domain.Dto
 {
     public class PhoneCreateDto
     {
-        public bool Active { get; set; } = true;
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Guid Id { get; set; }
+        public bool Active { get; set; } = true;
 
         public Guid ContactId { get; set; }
 
