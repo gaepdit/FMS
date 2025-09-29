@@ -29,6 +29,7 @@ namespace FMS.Infrastructure.Tests
                 .Options;
             var httpContextAccessor = Substitute.For<HttpContextAccessor>();
             _context = new FmsDbContext(options, httpContextAccessor);
+            _repository = new OnsiteScoreRepository(_context);
 
             _context.OnsiteScores.Add(new OnsiteScore
             {
@@ -115,7 +116,56 @@ namespace FMS.Infrastructure.Tests
             createdOSS.A.Should().Be(1);
             createdOSS.B.Should().Be(2);
             createdOSS.C.Should().Be(3);
+        }
 
+        // UpdateOnsiteScoreAsync
+        [Test]
+        public async Task UpdateOnsiteScoreAsync_UpdatesExistingOnsiteScore_WhenDataIsValid()
+        {
+            var existingOOS = new OnsiteScore
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                FacilityId = Guid.NewGuid(),
+                OnsiteScoreValue = "VALID_OSSV",
+                A = 01,
+                B = 02,
+                C = 03,
+                Description = "VALID_DESCRIPTION",
+                ChemName1D = "VALID_CN1D",
+                ChemicalId = Guid.NewGuid(),
+                Chemical = "VALID_CHEMICAL",
+                Other1D = "VALID_O1D",
+                D2 = 11,
+                D3 = 12,
+                CASNO = "VALID_CASNO",
+                E1 = 21,
+                E2 = 22
+            };
+            _context.OnsiteScores.Add(existingOOS);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            var updateDto = new OnsiteScoreEditDto
+            {
+                Id = Guid.NewGuid(),
+                Active = false,
+                FacilityId = Guid.NewGuid(),
+                OnsiteScoreValue = "NEW_OSSV",
+                A = 10,
+                B = 20,
+                C = 30,
+                Description = "NEW_DESCRIPTION",
+                ChemName1D = "NEW_CN1D",
+                ChemicalId = Guid.NewGuid(),
+                Chemical = onsiteScore.Chemical;
+                Other1D = "NEW_O1D",
+                D2 = 110,
+                D3 = 120,
+                CASNO = "NEW_CASNO",
+                E1 = 210,
+                E2 = 220
+            };
         }
     }
 }
