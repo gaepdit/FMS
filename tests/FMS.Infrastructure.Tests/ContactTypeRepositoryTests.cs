@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace FMS.Infrastructure.Tests
 {
     [TestFixture]
-    public class ContactTypeRepositoryTest
+    public class ContactTypeRepositoryTests
     {
         private FmsDbContext _context;
         private ContactTypeRepository _repository;
