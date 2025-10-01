@@ -122,7 +122,8 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task UpdateOnsiteScoreAsync_UpdatesExistingOnsiteScore_WhenDataIsValid()
         {
-            var existingOOS = new OnsiteScore
+
+            var existingOSS = new OnsiteScore
             {
                 Id = Guid.NewGuid(),
                 Active = true,
@@ -134,7 +135,7 @@ namespace FMS.Infrastructure.Tests
                 Description = "VALID_DESCRIPTION",
                 ChemName1D = "VALID_CN1D",
                 ChemicalId = Guid.NewGuid(),
-                Chemical = "VALID_CHEMICAL",
+                Chemical = null,
                 Other1D = "VALID_O1D",
                 D2 = 11,
                 D3 = 12,
@@ -142,15 +143,15 @@ namespace FMS.Infrastructure.Tests
                 E1 = 21,
                 E2 = 22
             };
-            _context.OnsiteScores.Add(existingOOS);
+            _context.OnsiteScores.Add(existingOSS);
             await _context.SaveChangesAsync();
             _context.ChangeTracker.Clear();
 
             var updateDto = new OnsiteScoreEditDto
             {
-                Id = Guid.NewGuid(),
+                Id = existingOSS.Id,
                 Active = false,
-                FacilityId = Guid.NewGuid(),
+                FacilityId = existingOSS.FacilityId,
                 OnsiteScoreValue = "NEW_OSSV",
                 A = 10,
                 B = 20,
@@ -158,7 +159,7 @@ namespace FMS.Infrastructure.Tests
                 Description = "NEW_DESCRIPTION",
                 ChemName1D = "NEW_CN1D",
                 ChemicalId = Guid.NewGuid(),
-                Chemical = onsiteScore.Chemical;
+                Chemical = null,
                 Other1D = "NEW_O1D",
                 D2 = 110,
                 D3 = 120,
@@ -166,6 +167,44 @@ namespace FMS.Infrastructure.Tests
                 E1 = 210,
                 E2 = 220
             };
+            await _repository.UpdateOnsiteScoreAsync(updateDto);
+            _context.ChangeTracker.Clear();
+
+            var updatedOSS = await _context.OnsiteScores.FindAsync(existingOSS.Id);
+
+            updatedOSS.Should().BeEquivalentTo(updateDto);
+        }
+        [Test]
+        public async Task UpdateOnsiteScoreAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new OnsiteScoreEditDto { Id = invalidId, Active = true };
+
+            var action = async () => await _repository.UpdateOnsiteScoreAsync(updateDto);
+
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
+
+        // UpdateOnsiteScoreStatusAsync
+        [Test]
+        public async Task UpdateOnsiteScoreStatusAsync_UpdatesStatusCorrectly()
+        {
+            var existingOnsiteScore = await _context.OnsiteScores.FirstAsync(c => c.Active);
+
+            await _repository.UpdateOnsiteScoreStatusAsync(existingOnsiteScore.Id, false);
+            _context.ChangeTracker.Clear();
+
+            var updatedOnsiteScore = await _context.OnsiteScores.FindAsync(existingOnsiteScore.Id);
+            updatedOnsiteScore.Should().NotBeNull();
+            updatedOnsiteScore!.Active.Should().BeFalse();
+        }
+
+        [Test]
+        public async Task UpdateOnsiteScoreActiveAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.UpdateOnsiteScoreStatusAsync(invalidId, false);
+            await action.Should().ThrowAsync<InvalidOperationException>();
         }
     }
 }
