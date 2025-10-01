@@ -38,6 +38,7 @@ namespace FMS.Domain.Dto
 
         public Guid FacilityId { get; set; }
 
+        [Display(Name = "Source Status")]
         public SourceStatus SourceStatus { get; set; }
 
         [Display(Name = "Source Date")]

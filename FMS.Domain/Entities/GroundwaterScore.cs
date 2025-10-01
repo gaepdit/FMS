@@ -72,7 +72,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "C")]
         public int? C { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "GW Comments")]
         public string Description { get; set; }
 
         [Display(Name = "Chemical Name")]

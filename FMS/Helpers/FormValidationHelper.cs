@@ -24,7 +24,7 @@ namespace FMS.Helpers
 
         public static ModelErrorCollection ValidateFacilityAddForm(FacilityCreateDto facilityCreateDto)
         {
-            FacilityValidationDtoScalar facilityValidation = new(facilityCreateDto);    
+            FacilityValidationDtoScalar facilityValidation = new(facilityCreateDto);
             return ValidateFacilityAddEditForms(facilityValidation);
         }
 
@@ -54,7 +54,7 @@ namespace FMS.Helpers
             if (facility.FacilityTypeName == "RN")
             {
                 // Check Date Received
-                if ( facility.RNDateReceived is null)
+                if (facility.RNDateReceived is null)
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.RNDateReceived", "^", "Date Received must be entered.")));
                 }
@@ -77,12 +77,13 @@ namespace FMS.Helpers
                     errCol.Add(new ModelError(string.Concat("Facility.HSInumber", "^", "HSI Number must be 5 digits Only.")));
                 }
             }
-            else if(facility.FacilityTypeName == "HSI")
+            else if (facility.FacilityTypeName == "HSI")
             {
                 // Check Facility Number 
-                if (!string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
+                //if (!string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
+                if (!string.IsNullOrEmpty(facility.FacilityNumber) && (facility.FacilityNumber.Length < 3 || facility.FacilityNumber.Length > 6))
                 {
-                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "HSI Number must be 5 digits Only.")));
+                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "HSI Number must between 3 and 6 digits Only.")));
                 }
             }
             else

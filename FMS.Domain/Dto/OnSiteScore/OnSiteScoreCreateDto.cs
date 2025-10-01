@@ -32,7 +32,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "3D")]
         public int? D3 { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "On-Site Comment")]
         public string Description { get; set; }
 
         public Guid ChemicalId { get; set; }

@@ -67,7 +67,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "C")]
         public int? C { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "On-Site Comments")]
         public string Description { get; set; }
 
         [Display(Name = "1D Chemical Name")]

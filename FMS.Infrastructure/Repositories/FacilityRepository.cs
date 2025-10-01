@@ -124,24 +124,9 @@ namespace FMS.Infrastructure.Repositories
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
                 facility.StatusDetails ??= new Status(facility.Id);
-
-                facility.Events = await _context.Events
-                    .AsNoTracking()
-                    .Include(e => e.EventType)
-                    .Include(e => e.ActionTaken)
-                    .Include(e => e.ComplianceOfficer)
-                    .Where(e => e.FacilityId == id)
-                    .ToListAsync();
-
-                facility.Events = facility.Events
-                    .OrderByDescending(e => e.Active)
-                    .ThenBy(e => e.StartDate)
-                    .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
-                    .SelectMany(g => g)
-                    .ToList();
             }
 
-            if (facility.FacilityType.Name == "VNHSI")
+            if (facility.FacilityType.Name == "VNHSI" || facility.FacilityType.Name == "HSI" || facility.FacilityStatus.Name == "COMPLAINT" || facility.FacilityStatus.Name == "Event Tracking On")
             {
                 facility.Events = await _context.Events
                     .AsNoTracking()
@@ -340,7 +325,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
             }
 
-            if (string.IsNullOrEmpty(newFacility.FacilityNumber) && newFacility.FacilityTypeName == "RN")
+            if (string.IsNullOrEmpty(newFacility.FacilityNumber) && newFacility.FacilityTypeName == "RN" && newFacility.FacilityStatusName != "COMPLAINT")
             {
                 newFacility.FacilityNumber = await CreateRNFacilityNumberInternalAsync();
             }
