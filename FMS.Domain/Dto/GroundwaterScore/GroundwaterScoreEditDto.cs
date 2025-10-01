@@ -51,7 +51,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "C")]
         public int? C { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "GW Comment")]
         public string Description { get; set; }
 
         [Display(Name = "Chemical Name")]

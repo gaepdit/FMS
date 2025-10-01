@@ -43,6 +43,7 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
+        [Display(Name = "Source Status")]
         public Guid? SourceStatusId { get; set; }
         [Display(Name = "Source Status")]
         public SourceStatus SourceStatus { get; set; }
@@ -50,6 +51,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
+        [Display(Name = "Soil Status")]
         public Guid? SoilStatusId { get; set; }
         [Display(Name = "Soil Status")]
         public SoilStatus SoilStatus { get; set; }
@@ -65,6 +67,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
 
+        [Display(Name = "Overall Status")]
         public Guid? OverallStatusId { get; set; }
         [Display(Name = "Overall Status")]
         public OverallStatus OverallStatus { get; set; }
@@ -75,6 +78,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "ISWQS")]
         public bool ISWQS { get; set; }
 
+        [Display(Name = "Funding Source")]
         public Guid? FundingSourceId { get; set; }
         [Display(Name = "Funding Source")]
         public FundingSource FundingSource { get; set; }
@@ -103,6 +107,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "GAPS No Of Unknowns")]
         public int? GAPSNoOfUnknowns { get; set; }
 
+        [Display(Name = "GAPS Assessment")]
         public Guid? GAPSAssessmentId { get; set; }
         [Display(Name = "GAPS Assessment")]
         public GapsAssessment GAPSAssessment { get; set; }
@@ -113,6 +118,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
 
+        [Display(Name = "Abandon/Inactive")]
         public Guid? AbandonSitesId { get; set; }
         [Display(Name = "Abandon/Inactive")]
         public AbandonSites AbandonSites { get; set; }
