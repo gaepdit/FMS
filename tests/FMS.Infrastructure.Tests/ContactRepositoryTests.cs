@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace FMS.Infrastructure.Tests
 {
     [TestFixture]
-    public class ContactRepositoryTest
+    public class ContactRepositoryTests
     {
         private FmsDbContext _context;
         private ContactRepository _repository;

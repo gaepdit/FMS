@@ -9,7 +9,7 @@ using FMS.TestData.SeedData;
 
 namespace FMS.Infrastructure.Tests
 {
-    public class CabinetRepositoryTest
+    public class CabinetRepositoryTests
     {
         // CabinetExistsAsync
 
