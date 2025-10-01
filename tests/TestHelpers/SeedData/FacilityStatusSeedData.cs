@@ -44,6 +44,12 @@ namespace FMS.TestData.SeedData
                 },
                 new()
                 {
+                    Id = new Guid("8866d267-0883-462e-b04d-4d1894fa1a06"),
+                    Active = true,
+                    Status = "Event Tracking On",
+                },
+                new()
+                {
                     Id = new Guid("899849DD-ECF8-4A67-982F-6EAD601DB291"),
                     Active = true,
                     Status = "DELISTED",

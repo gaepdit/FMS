@@ -59,6 +59,19 @@ namespace FMS.Infrastructure.Repositories
             return new FacilityStatusEditDto(facilityStatus);
         }
 
+        public async Task<string> GetFacilityStatusNameAsync(Guid? id)
+        {
+            if (!id.HasValue)
+            {
+                return null;
+            }
+            string facilityStatusName = await _context.FacilityStatuses.AsNoTracking()
+                .Where(e => e.Id == id.Value)
+                .Select(e => e.Status)
+                .SingleOrDefaultAsync();
+            return facilityStatusName;
+        }
+
         public async Task<IReadOnlyList<FacilityStatusSummaryDto>> GetFacilityStatusListAsync() =>
             await _context.FacilityStatuses.AsNoTracking()
             .OrderByDescending(e => e.Active)

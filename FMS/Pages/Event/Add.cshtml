@@ -12,60 +12,63 @@
     ViewData["Title"] = "Add Event";
 }
 <h1>@ViewData["Title"]</h1>
-<hr />
-<h3>Existing Events for @Model.Facility.FacilityNumber</h3>
 <form method="post">
-    <div class="row justify-content-evenly">
-        <table class="table table-sm" aria-label="Events">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col"><em class="">Select Parent</em>  Event Type</th>
-                    <th scope="col">Action Taken</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Completion Date</th>
-                    <th scope="col">Done By</th>
-                    <th scope="col">Event Amount</th>
-                    <th scope="col">Entity Name or No.</th>
-                    <th scope="col">Comment</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var e in Model.Facility.Events)
-                {
-                    if (e.EventType.Name == "HWTF Master Project")
-                    {
-                        <tr class="@(!e.Active ? "text-muted table-warning" : "")">
-                            <td class="text-nowrap">
-                                <label>
-                                    @Html.RadioButtonFor(m => m.ParentEventId, e.Id)
-                                    @Html.DisplayFor(m => e.EventType.Name)
+    @if (Model.Facility.FacilityStatus.Name == "COMPLAINT" || Model.Facility.FacilityStatus.Name == "Event Tracking On")
+    {
+        <div class="container bg-light-subtle py-3 rounded-3">
+            <p>Select a Master Project as the Parent for this new Event, if applicable.</p>
+            <div class="row justify-content-evenly">
+                <table class="table table-sm" aria-label="Events">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col"><em class="">Select Parent</em>  Event Type</th>
+                            <th scope="col">Action Taken</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Completion Date</th>
+                            <th scope="col">Done By</th>
+                            <th scope="col">Event Amount</th>
+                            <th scope="col">Entity Name or No.</th>
+                            <th scope="col">Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var e in Model.Facility.Events)
+                        {
+                            if (e.EventType.Name == "HWTF Master Project")
+                            {
+                                <tr class="@(!e.Active ? "text-muted table-warning" : "")">
+                                    <td class="text-nowrap">
+                                        <label>
+                                            @Html.RadioButtonFor(m => m.ParentEventId, e.Id)
+                                            @Html.DisplayFor(m => e.EventType.Name)
+                                        </label>
+                                    </td>
+                                    <td>@e.ActionTaken.Name</td>
+                                    <td>@e.StartDate</td>
+                                    <td>@e.DueDate</td>
+                                    <td>@e.CompletionDate</td>
+                                    <td>@e.ComplianceOfficer.Name</td>
+                                    <td>@e.EventAmount</td>
+                                    <td>@e.EntityNameOrNumber</td>
+                                    <td>@e.Comment</td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td colspan="12">
+                                <label class="active">
+                                    @Html.RadioButtonFor(m => m.ParentEventId, string.Empty)
+                                    None
                                 </label>
                             </td>
-                            <td>@e.ActionTaken.Name</td>
-                            <td>@e.StartDate</td>
-                            <td>@e.DueDate</td>
-                            <td>@e.CompletionDate</td>
-                            <td>@e.ComplianceOfficer.Name</td>
-                            <td>@e.EventAmount</td>
-                            <td>@e.EntityNameOrNumber</td>
-                            <td>@e.Comment</td>
                         </tr>
-                    }
-                }
-                <tr>
-                    <td colspan="12">
-                        <label>
-                            @Html.RadioButtonFor(m => m.ParentEventId, string.Empty)
-                            None
-                        </label>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <hr />
-    <div class="container bg-light-subtle py-3 rounded-3">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    <div class="container bg-light-subtle py-3 my-3 rounded-3">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="NewEvent.FacilityId" />
         <input type="hidden" asp-for="NewEvent.ParentId" />
@@ -130,4 +133,43 @@
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Create New Event</button>
         <a asp-page="../Facilities/Details" asp-route-Id="@Model.NewEvent.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
     </div>
+    @if (Model.Facility.Events.Count > 0)
+    {
+        <div class="container bg-light-subtle py-3 rounded-3">
+            <h3>Existing Events for @Model.Facility.FacilityNumber</h3>
+            <div class="row justify-content-evenly">
+                <table class="table table-sm" aria-label="Events">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Event Type</th>
+                            <th scope="col">Action Taken</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Completion Date</th>
+                            <th scope="col">Done By</th>
+                            <th scope="col">Event Amount</th>
+                            <th scope="col">Entity Name or No.</th>
+                            <th scope="col">Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var e in Model.Facility.Events)
+                        {
+                            <tr class="@(!e.Active ? "text-muted table-warning" : "")">
+                                <td>@e.EventType.Name</td>
+                                <td>@e.ActionTaken.Name</td>
+                                <td>@e.StartDate</td>
+                                <td>@e.DueDate</td>
+                                <td>@e.CompletionDate</td>
+                                <td>@e.ComplianceOfficer.Name</td>
+                                <td>@e.EventAmount</td>
+                                <td>@e.EntityNameOrNumber</td>
+                                <td>@e.Comment</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
 </form>

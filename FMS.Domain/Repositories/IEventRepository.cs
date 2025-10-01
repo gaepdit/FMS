@@ -18,8 +18,6 @@ namespace FMS.Domain.Repositories
 
         Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId);
 
-        Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListByEventType(EventTypeSummaryDto eventType);
-
         Task<Guid> CreateEventAsync(EventCreateDto eventDto);
 
         Task UpdateEventAsync(EventEditDto eventDto);

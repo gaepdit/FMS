@@ -135,7 +135,8 @@
                 <dd class="col-sm-3">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href="/Facilities/Map">Location Search</a>
                 </dd>
                 
                 <dt class="col-sm-3">
@@ -249,7 +250,7 @@
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Google Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
                     <a class="btn btn-sm btn-primary" target="_blank" href="/Facilities/Map">Location Search</a>
                 </dd>
                 <dt class="col-sm-4">
@@ -329,7 +330,7 @@
     }
 </div>
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT"))
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" || (Model.FacilityDetail.FacilityType.Name == "RN" && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
 {
     <div class="container-fluid">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
@@ -357,7 +358,7 @@
                         </li>
                     }
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT") ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ? "true" : "false")" href="#Events">Events</a>
+                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "RN" && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On") ? "true" : "false")" href="#Events">Events</a>
                     </li>
                 </ul>
             </nav>
@@ -988,7 +989,7 @@
                         </div>
                     </div>
                 }
-                <div class="tab-pane @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT") ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                <div class="tab-pane @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT"  || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
                         Events
                         <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Event</a>
