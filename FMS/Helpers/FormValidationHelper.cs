@@ -12,9 +12,10 @@ namespace FMS.Helpers
         private static readonly DateOnly minDate = new(1990, 1, 1);
         private static readonly DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
         private static readonly string rnPattern = @"^\bRN\d{4}$";
-        private static readonly string hsiPattern = @"^\d{5}$";
+        private static readonly string hsiPattern1 = @"^\d{5}$";
+        private static readonly string hsiPattern2 = @"^\d{3,6}$";
         private static readonly Regex rnRegex = new(rnPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
-        private static readonly Regex hsiRegex = new(hsiPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
+        private static readonly Regex hsiRegex = new(hsiPattern2, RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
         public static ModelErrorCollection ValidateFacilityEditForm(FacilityEditDto facilityEditDto)
         {
@@ -79,9 +80,8 @@ namespace FMS.Helpers
             }
             else if (facility.FacilityTypeName == "HSI")
             {
-                // Check Facility Number 
-                //if (!string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
-                if (!string.IsNullOrEmpty(facility.FacilityNumber) && (facility.FacilityNumber.Length < 3 || facility.FacilityNumber.Length > 6))
+                //Check Facility Number
+                if (!string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "HSI Number must between 3 and 6 digits Only.")));
                 }
