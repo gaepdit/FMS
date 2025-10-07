@@ -56,7 +56,7 @@ namespace FMS.Domain.Entities
         public Guid FacilityId { get; set; }
 
         [Display(Name = "On-Site Score")]
-        public string OnsiteScoreValue { get; set; }
+        public decimal OnsiteScoreValue { get; set; }
 
         [Display(Name = "A")]
         public int? A { get; set; }

@@ -108,7 +108,7 @@ namespace FMS.Domain.Entities
         public bool FinancialAssurance { get; set; }
 
         [Display(Name = "Cost Estimate")]
-        public double? CostEstimate { get; set; }
+        public decimal? CostEstimate { get; set; }
 
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
