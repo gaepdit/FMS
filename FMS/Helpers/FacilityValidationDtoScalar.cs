@@ -13,6 +13,7 @@ namespace FMS.Helpers
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             FacilityTypeName = facility.FacilityTypeName;
+            FacilityStatusName = facility.FacilityStatusName;
             Latitude = (decimal)facility.Latitude;
             Longitude = (decimal)facility.Longitude;
             HSInumber = facility.HSInumber;
@@ -25,6 +26,7 @@ namespace FMS.Helpers
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
             FacilityTypeName = facility.FacilityTypeName;
+            FacilityStatusName = facility.FacilityStatusName;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
             HSInumber = facility.HSInumber;
@@ -38,6 +40,8 @@ namespace FMS.Helpers
         public string FileLabel { get; set; }
 
         public string FacilityTypeName { get; set; }
+
+        public string FacilityStatusName { get; set; }
 
         public decimal Latitude { get; set; }
 
