@@ -330,7 +330,7 @@
     }
 </div>
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VNHSI") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
 {
     <div class="container-fluid">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
@@ -339,7 +339,7 @@
                     @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                     {
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link @(Model.ActiveTab == "HSIProperties" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
+                            <a class="nav-link @(Model.ActiveTab == "HSIProperties" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VRP" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "Location" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
@@ -358,7 +358,7 @@
                         </li>
                     }
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VNHSI") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@((Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VNHSI") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "true" : "false")" href="#Events">Events</a>
+                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@((Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "true" : "false")" href="#Events">Events</a>
                     </li>
                 </ul>
             </nav>
@@ -989,7 +989,7 @@
                         </div>
                     </div>
                 }
-                <div class="tab-pane @(Model.ActiveTab == "Events" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VNHSI") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                <div class="tab-pane @(Model.ActiveTab == "Events" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
                         Events
                         <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Event</a>

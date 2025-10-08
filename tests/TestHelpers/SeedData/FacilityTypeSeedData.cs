@@ -42,13 +42,6 @@ namespace FMS.TestData.SeedData
                 },
                 new()
                 {
-                    Id = new Guid("9355EF20-B29B-4F77-A04E-EB3B8A362008"),
-                    Active = true,
-                    Name = "VNHSI",
-                    Description = "VRP Non-HSI",
-                },
-                new()
-                {
                     Id = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"),
                     Active = true,
                     Name = "HSI",

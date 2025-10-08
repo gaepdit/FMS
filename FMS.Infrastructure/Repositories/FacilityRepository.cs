@@ -126,7 +126,7 @@ namespace FMS.Infrastructure.Repositories
                 facility.StatusDetails ??= new Status(facility.Id);
             }
 
-            if (facility.FacilityType.Name == "VNHSI" || facility.FacilityType.Name == "HSI" || facility.FacilityStatus.Name == "COMPLAINT" || facility.FacilityStatus.Name == "Event Tracking On")
+            if (facility.FacilityType.Name == "VRP" || facility.FacilityType.Name == "HSI" || facility.FacilityStatus.Name == "COMPLAINT" || facility.FacilityStatus.Name == "Event Tracking On")
             {
                 facility.Events = await _context.Events
                     .AsNoTracking()
