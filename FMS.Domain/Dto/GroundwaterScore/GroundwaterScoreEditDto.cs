@@ -37,7 +37,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Groundwater Score")]
-        public string GWScore { get; set; }
+        public decimal GWScore { get; set; }
 
         [Display(Name = "A")]
         public int? A { get; set; }

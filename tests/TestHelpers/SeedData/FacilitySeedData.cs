@@ -18,12 +18,12 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityNumber = "BRF1211825",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //FileLabel = "243-0001"
-                    FacilityTypeId = new Guid("9355EF20-B29B-4F77-A04E-EB3B8A362008"), // VRPNonHSI
+                    FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2"), // VRP
                     OrganizationalUnitId = new Guid("57B8BEB5-368A-4056-872D-0DB0ADE175E3"), //Org Unit
                     BudgetCodeId = new Guid("457D191A-D2B1-4C38-8633-9061C4268E37"), //HWRCRA
                     Name = "3 BRANCHES SUBDIVISION (CAPITAL DESIGN CONSTRUCT.)",
                     ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"), //01069946 
-                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
+                    FacilityStatusId = new Guid("68C6FBEC-CB38-41CF-ADD9-9355BD2FB214"), //Complaint
                     Location = "Description of Location",
                     Address = "102 THREE BRANCHES DR.",
                     City = "WOODSTOCK",
