@@ -33,7 +33,6 @@ namespace FMS.Domain.Repositories
         Task<IEnumerable<ListItem>> GetSoilStatusesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetSourceStatusesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetGapsAssessmentListAsync(bool includeInactive = false);
-        Task<IEnumerable<ListItem>> GetAbandonSitesListAsync(bool includeInactive = false);
 
         #endregion
 
@@ -57,7 +56,6 @@ namespace FMS.Domain.Repositories
         Task<string> GetSoilStatusNameAsync(Guid? id);
         Task<string> GetSourceStatusNameAsync(Guid? id);
         Task<string> GetGAPSAssessmentNameAsync(Guid? id);
-        Task<string> GetAbandonSiteNameAsync(Guid? id);
         #endregion
     }
 

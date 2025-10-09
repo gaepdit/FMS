@@ -88,6 +88,8 @@ namespace FMS.Infrastructure.Repositories
             hsrpFacilityProperties.VRPDate = hsrpFacilityPropertiesUpdates.VRPDate;
             hsrpFacilityProperties.BrownfieldDate = hsrpFacilityPropertiesUpdates.BrownfieldDate;
             hsrpFacilityProperties.DateDeListed = hsrpFacilityPropertiesUpdates.DateDeListed;
+            hsrpFacilityProperties.VRPTerminated = hsrpFacilityPropertiesUpdates.VRPTerminated;
+            hsrpFacilityProperties.BrownfieldTerminated = hsrpFacilityPropertiesUpdates.BrownfieldTerminated;
 
             _context.HsrpFacilityProperties.Update(hsrpFacilityProperties);
             await _context.SaveChangesAsync();

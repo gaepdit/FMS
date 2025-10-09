@@ -22,7 +22,9 @@ namespace FMS.TestData.SeedData
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
-                    DateDeListed = null
+                    DateDeListed = null,
+                    VRPTerminated = false,
+                    BrownfieldTerminated = false
                 },
                 new()
                 {
@@ -34,7 +36,9 @@ namespace FMS.TestData.SeedData
                     ComplianceOfficerId = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
-                    DateDeListed = new(2023, 3, 12)
+                    DateDeListed = new(2023, 3, 12),
+                    VRPTerminated = true,
+                    BrownfieldTerminated = true
                 },
                 new()
                 {
@@ -46,7 +50,9 @@ namespace FMS.TestData.SeedData
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     VRPDate = new(2018, 12, 13),
                     BrownfieldDate = new(2019, 2, 13),
-                    DateDeListed = null
+                    DateDeListed = null,
+                    VRPTerminated = false,
+                    BrownfieldTerminated = true
                 },
                 new()
                 {
@@ -58,7 +64,9 @@ namespace FMS.TestData.SeedData
                     ComplianceOfficerId = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),
                     VRPDate = new(2018, 2, 13),
                     BrownfieldDate = new(2018, 2, 13),
-                    DateDeListed = null
+                    DateDeListed = null,
+                    VRPTerminated = true,
+                    BrownfieldTerminated = false
                 }
             };
         }

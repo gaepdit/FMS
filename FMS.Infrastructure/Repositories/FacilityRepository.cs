@@ -120,7 +120,6 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.OverallStatus)
                     .Include(e => e.FundingSource)
                     .Include(e => e.GAPSAssessment)
-                    .Include(e => e.AbandonSites)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
                 facility.StatusDetails ??= new Status(facility.Id);

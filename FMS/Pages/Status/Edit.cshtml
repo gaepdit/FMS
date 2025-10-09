@@ -140,13 +140,6 @@
                 <input asp-for="EditStatus.CostEstimateDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="EditStatus.CostEstimateDate" class="text-danger"></span>
             </div>
-            <div class="col-md-3">
-                <label asp-for="EditStatus.AbandonSitesId" class="form-label"></label>
-                <select asp-for="EditStatus.AbandonSitesId" asp-items="Model.AbandonSites" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="EditStatus.AbandonSitesId" class="text-danger"></span>
-            </div>
         </div>
         <div class="row mb-3">
             <div class="col-8 mb-3">

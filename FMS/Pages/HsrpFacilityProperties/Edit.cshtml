@@ -48,9 +48,19 @@
                 <span asp-validation-for="HsrpFacilityProperties.BrownfieldDate" class="text-danger"></span>
             </div>
             <div class="col mb-3">
+                <input asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-input" />
+                <label asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-label"></label>
+                <span asp-validation-for="HsrpFacilityProperties.BrownfieldTerminated" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
                 <label asp-for="HsrpFacilityProperties.VRPDate" class="form-label"></label>
                 <input asp-for="HsrpFacilityProperties.VRPDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="HsrpFacilityProperties.VRPDate" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <input asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-input" />
+                <label asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-label"></label>
+                <span asp-validation-for="HsrpFacilityProperties.VRPTerminated" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="HsrpFacilityProperties.DateDeListed" class="form-label"></label>

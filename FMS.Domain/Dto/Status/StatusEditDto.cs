@@ -33,7 +33,6 @@ namespace FMS.Domain.Dto
             GAPSAssessmentId = status.GAPSAssessmentId;
             CostEstimate = status.CostEstimate;
             CostEstimateDate = status.CostEstimateDate;
-            AbandonSitesId = status.AbandonSitesId;
         }
 
         public Guid Id { get; set; }
@@ -117,10 +116,5 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
-
-        [Display(Name = "Abandon/Inactive")]
-        public Guid? AbandonSitesId { get; set; }
-        [Display(Name = "Abandon/Inactive")]
-        public AbandonSites AbandonSites { get; set; }
         }
 }

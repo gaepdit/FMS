@@ -27,5 +27,11 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Date De-listed")]
         public DateOnly? DateDeListed { get; set; }
+
+        [Display(Name = "VRP Terminated")]
+        public bool VRPTerminated { get; set; }
+
+        [Display(Name = "Brownfield Terminated")]
+        public bool BrownfieldTerminated { get; set; }
     }
 }
