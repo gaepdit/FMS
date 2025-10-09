@@ -25,6 +25,8 @@ namespace FMS.Domain.Entities
             VRPDate = hsrpFacilityProperties.VRPDate;
             BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
             DateDeListed = hsrpFacilityProperties.DateDeListed;
+            VRPTerminated = hsrpFacilityProperties.VRPTerminated;
+            BrownfieldTerminated = hsrpFacilityProperties.BrownfieldTerminated;
         }
         public Guid FacilityId { get; set; }
 
@@ -47,5 +49,11 @@ namespace FMS.Domain.Entities
 
         [Display(Name = "Date De-listed")]
         public DateOnly? DateDeListed { get; set; }
+
+        [Display(Name = "VRP Terminated")]
+        public bool VRPTerminated { get; set; }
+
+        [Display(Name = "Brownfield Terminated")]
+        public bool BrownfieldTerminated { get; set; }
     }
 }

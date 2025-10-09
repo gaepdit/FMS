@@ -392,6 +392,12 @@
                                 @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.ComplianceOfficer.Name, "StringOrNone")
                             </dd>
                             <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate)
                             </dt>
                             <dd class="col-sm-3">
@@ -404,10 +410,16 @@
                                 @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate, "DateOrNone")
                             </dd>
                             <dt class="col-sm-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPTerminated)
                             </dt>
                             <dd class="col-sm-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed, "DateOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPTerminated)
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldTerminated)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldTerminated)
                             </dd>
                         </dl>
                     </div>
@@ -931,7 +943,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Name)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Description)
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
@@ -944,12 +956,6 @@
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimateDate)
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonSites)
-                            </dt>
-                            <dd class="col-sm-9 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonSites.Name)
                             </dd>
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)

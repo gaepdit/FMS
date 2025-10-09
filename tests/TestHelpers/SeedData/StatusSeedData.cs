@@ -42,7 +42,6 @@ namespace FMS.TestData.SeedData
                     GAPSAssessmentId = new Guid("DC9738A8-7C88-421A-8E1A-36D0B518C582"),
                     CostEstimate = 62000,
                     CostEstimateDate = new(2018, 2, 13),
-                    AbandonSitesId = new Guid("E917B3C2-3F5A-480A-B26C-3B34BF7A33AF")
                 },
                 new()
                 {
@@ -77,7 +76,6 @@ namespace FMS.TestData.SeedData
                     GAPSAssessmentId = new Guid("E1F11C25-43EE-4C87-8461-1308E935451F"),
                     CostEstimate = 62000,
                     CostEstimateDate = new(2018, 2, 13),
-                    AbandonSitesId = new Guid("B0076048-DB94-4ADE-AAE9-2FA11D5EBB40")
                 }
             };
         }
