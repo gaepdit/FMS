@@ -23,5 +23,7 @@ namespace FMS.Domain.Entities
             Name = Name?.Trim();
             Description = Description?.Trim();
         }
+
+        public string DisplayName => $"{Name} ({Description})";
     }
 }

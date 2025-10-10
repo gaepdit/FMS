@@ -33,5 +33,7 @@ namespace FMS.Domain.Dto
             Name = Name?.Trim();
             Description = Description?.Trim();
         }
+
+        public string DisplayName => $"{Name} ({Description})";
     }
 }

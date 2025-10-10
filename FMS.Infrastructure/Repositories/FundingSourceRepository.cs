@@ -72,6 +72,7 @@ namespace FMS.Infrastructure.Repositories
             var fundingSource = await _context.FundingSources.FindAsync(id) ?? throw new ArgumentException("Funding Source ID not found.", nameof(id));
 
             fundingSource.Name = fundingSourceUpdates.Name;
+            fundingSource.Description = fundingSourceUpdates.Description;
 
             await _context.SaveChangesAsync();
 

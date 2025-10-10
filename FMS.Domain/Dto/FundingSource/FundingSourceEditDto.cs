@@ -12,6 +12,7 @@ namespace FMS.Domain.Dto
         {
             Id = fundingSource.Id;
             Name = fundingSource.Name;
+            Description = fundingSource.Description;
             Active = fundingSource.Active;
         }
 
@@ -23,10 +24,14 @@ namespace FMS.Domain.Dto
         [Required(ErrorMessage = "Funding Source is required.")]
         public string Name { get; set; }
 
+        public string Description { get; set; }
 
         public void TrimAll()
         {
             Name = Name?.Trim();
+            Description = Description?.Trim();
         }
+
+        public string DisplayName => $"{Name} ({Description})";
     }
 }

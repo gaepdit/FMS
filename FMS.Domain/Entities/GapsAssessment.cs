@@ -16,10 +16,7 @@ namespace FMS.Domain.Entities
 
         public string Description { get; set; }
 
-        public string GetName()
-        {
-            return $"{Name} - ({Description})";
-        }  
+        public string DisplayName => $"{Name} ({Description})";
 
         public void TrimAll()
         {

@@ -8,9 +8,13 @@ namespace FMS.Domain.Dto
         [Required(ErrorMessage = "Funding Source Name is required.")]
         public string Name { get; set; }
 
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
         public void TrimAll()
         {
             Name = Name?.Trim();
+            Description = Description?.Trim();
         }
     }
 }
