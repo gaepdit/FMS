@@ -87,25 +87,49 @@ namespace FMS.Infrastructure.Repositories
             await GetItemListAsync<EventType>(includeInactive);
 
         public async Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<FundingSource>(includeInactive);
+            await _context.FundingSources.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+                .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetGroundwaterStatusesListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<GroundwaterStatus>(includeInactive);
+            await _context.GroundwaterStatuses.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+                .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetOverallStatusesListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<OverallStatus>(includeInactive);
+            await _context.OverallStatuses.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+                .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetParcelTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ParcelType>(includeInactive);
 
         public async Task<IEnumerable<ListItem>> GetSoilStatusesListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<SoilStatus>(includeInactive);
+            await _context.SoilStatuses.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+                .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetSourceStatusesListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<SourceStatus>(includeInactive);
+            await _context.SourceStatuses.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+                .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetGapsAssessmentListAsync(bool includeInactive = false) => 
-            await GetItemListAsync<GapsAssessment>(includeInactive);
+        public async Task<IEnumerable<ListItem>> GetGapsAssessmentListAsync(bool includeInactive = false) =>
+            await _context.GapsAssessments.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+                .ToListAsync();
 
         #endregion
 

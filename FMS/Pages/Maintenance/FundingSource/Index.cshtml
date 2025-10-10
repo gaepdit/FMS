@@ -20,8 +20,9 @@
     <table class="table" aria-label="List of Funding Sources">
         <thead class="thead-light">
             <tr>
-                <th scope="col" class="col-md-6">Name</th>
-                <th scope="col" class="col-md-6">Actions</th>
+                <th scope="col" class="col-md-2">Name</th>
+                <th scope="col" class="col-md-8">Description</th>
+                <th scope="col" class="col-md-2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,9 @@
                     <td class="text-nowrap">
                         @Html.DisplayFor(m => item.Name, "StringOrNone")
                         @Html.DisplayFor(m => item.Active, "BoolRemoved")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Description, "StringOrNone")
                     </td>
                     <td class="text-nowrap">
                         <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>

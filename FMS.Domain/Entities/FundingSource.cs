@@ -10,13 +10,19 @@ namespace FMS.Domain.Entities
         public FundingSource(FundingSourceCreateDto fundingSource)
         {
             Name = fundingSource.Name;
+            Description = fundingSource.Description;
         }
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public void TrimAll()
         {
             Name = Name?.Trim();
+            Description = Description?.Trim();
         }
+
+        public string DisplayName => $"{Name} ({Description})";
     }
 }

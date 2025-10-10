@@ -10,6 +10,7 @@ namespace FMS.Domain.Dto
         {
             Id = fundingSource.Id;
             Name = fundingSource.Name;
+            Description = fundingSource.Description;
             Active = fundingSource.Active;
         }
 
@@ -19,5 +20,10 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Funding Source")]
         public string Name { get; set; }
+
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        public string DisplayName => $"{Name} ({Description})";
     }
 }

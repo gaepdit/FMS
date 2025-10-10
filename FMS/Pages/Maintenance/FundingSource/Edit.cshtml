@@ -23,10 +23,15 @@
         <input type="hidden" asp-for="FundingSource.Active" />
         <input type="hidden" asp-for="Id" />
         <div class="row mb-3">
-            <div class="col-md-10">
+            <div class="col-md-3">
                 <label asp-for="FundingSource.Name">@MaintenanceOptions.FundingSource Name <span class="text-danger">*</span></label>
                 <input asp-for="FundingSource.Name" class="form-control" />
                 <span asp-validation-for="FundingSource.Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-8">
+                <label asp-for="FundingSource.Description">@MaintenanceOptions.FundingSource Description <span class="text-danger">*</span></label>
+                <input asp-for="FundingSource.Description" class="form-control" />
+                <span asp-validation-for="FundingSource.Description" class="text-danger"></span>
             </div>
         </div>
         <hr />
