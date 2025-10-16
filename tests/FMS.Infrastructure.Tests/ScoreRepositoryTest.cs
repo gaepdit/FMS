@@ -58,16 +58,85 @@ namespace FMS.Infrastructure.Tests
         }
 
         // ScoreExistAsync
+        [Test]
+        public async Task ScoreExistAsync_ReturnsTrue_ScoreExist()
+        {
+            var existingScore = await _context.Scores.Select(ft => ft.Id).FirstAsync();
+            var results = await _repository.ScoreExistsAsync(existingScore);
+            results.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task ScoreExistAsync_ReturnsFalse_ScoreDoesNotExist()
+        {
+            var nonExistingScore = Guid.NewGuid();
+            var results = await _repository.ScoreExistsAsync(nonExistingScore);
+            results.Should().BeFalse();
+        }
 
 
         // GetScoreByIdAsync
+        [Test]
+        public async Task GetScoreByIdAsync_ReturnsScoreEditDto_WhenIdExist()
+        {
+            var existingScore = await _context.Scores.FirstAsync();
+            var results = await _repository.GetScoreByIdAsync(existingScore.Id);
 
+            results.Should().NotBeNull();
+            results.Should().BeOfType<ScoreEditDto>();
+            results.Id.Should().Be(existingScore.Id);
+            results.Active.Should().Be(existingScore.Active);
+        }
+
+        [Test]
+        public async Task GetScoreByIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var results = await _repository.GetScoreByIdAsync(nonExistingId);
+
+            results.Should().BeNull();
+        }
 
         // GetScoreEditByFacilityIdAsync
+        [Test]
+        public async Task GetScoreByIdAsync_WhenIdExist()
+        {
+            var existingScore = await _context.Scores.FirstAsync();
+            var result = await _repository.GetScoreEditByFacilityIdAsync(existingScore.FacilityId);
 
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ScoreEditDto>();
+            result.FacilityId.Should().Be(existingScore.FacilityId);
+            result.Active.Should().Be(existingScore.Active);
+        }
+        [Test]
+        public async Task GetScoreByIdAsync_WhenIdDoesNotExist_ReturnsNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var result = await _repository.GetScoreEditByFacilityIdAsync(nonExistingId);
+
+            result.Should().BeNull();
+        }
 
         // GetScoreByFacilityIdAsync
+        [Test]
+        public async Task GetScoreByFacilityIdAsync_ReturnsScore_WhenIdExist()
+        {
+            var existingScore = await _context.Scores.FirstAsync();
+            var results = await _repository.GetScoreByIdAsync(existingScore.Id);
 
+            results.Should().NotBeNull();
+            results.FacilityId.Should().Be(existingScore.FacilityId);
+        }
+
+        [Test]
+        public async Task GetScoreByFacilityIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var results = await _repository.GetScoreByFacilityIdAsync(nonExistingId);
+
+            results.Should().BeEmpty();
+        }
 
         // CreateScoreAsync
 
