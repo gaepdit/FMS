@@ -6,44 +6,36 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System;
 using System.Net;
 using System.Threading.Tasks;
-using System.Threading.Tasks;
+using TestSupport.SeedDatabase;
 
 namespace FMS.Api
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
     public class eventActionController(
-        IUserService _userService) : ControllerBase
+        IEventTypeRepository _eventTypeRepository,
+        IActionTakenRepository _actionTakenRepository,
+        IAllowedActionTakenRepository _allowedActionTakenRepository) : ControllerBase
     {
-        
-        [HttpGet("{id:guid}/staff")]
-        public async Task<JsonResult> GetActionsAsync([FromRoute] Guid id) =>
-        new(await _userService;
 
-        [HttpGet("{id:guid}/all-staff")]
-        public async Task<IActionResult> GetAllStaffAsync([FromRoute] Guid id) =>
-            await authorization.Succeeded(User, Policies.ActiveUser)
-                ? new JsonResult(await officeService.GetStaffAsListItemsAsync(id, includeInactive: true))
-                : Unauthorized();
+        [HttpGet("eventType")]
+        public async Task<JsonResult> GetEventTypesAsync() =>
+            new JsonResult(await _eventTypeRepository.GetEventTypeListAsync());
 
-        [HttpGet("{id:guid}/staff-for-assignment")]
-        public async Task<IActionResult> GetStaffForAssignmentAsync([FromRoute] Guid id)
-        {
-            if (!await authorization.Succeeded(User, Policies.ActiveUser)) return Unauthorized();
+        [HttpGet("all-actions")]
+        public async Task<IActionResult> GetAllActionsAsync() =>
+            new JsonResult(await _actionTakenRepository.GetActionTakenListAsync());
 
-            var office = await officeService.FindAsync(id);
-
-            return new JsonResult(await authorization.Succeeded(User, office, new OfficeAssignmentRequirement())
-                ? await officeService.GetStaffAsListItemsAsync(id)
-                : null);
-        }
+        [HttpGet("{id:guid}/all-allowed-actions")]
+        public async Task<IActionResult> GetStaffForAssignmentAsync([FromRoute] Guid id) =>
+            new JsonResult(await _allowedActionTakenRepository.GetAllowedActionTakenListAsync(id));
     }
 }
+

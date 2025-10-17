@@ -5,6 +5,13 @@
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+    <partial name="_ActionSelectPartial" />
+    <script>
+        setUpActionTypeDropdown(
+            "EditEvent_EventTypeId",
+            "EditEvent_ActionTakenId",
+            "");
+    </script>
 }
 
 @{
