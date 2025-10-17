@@ -19,7 +19,7 @@ namespace FMS.Api
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    public class eventActionController(
+    public class EventActionController(
         IEventTypeRepository _eventTypeRepository,
         IActionTakenRepository _actionTakenRepository,
         IAllowedActionTakenRepository _allowedActionTakenRepository) : ControllerBase
