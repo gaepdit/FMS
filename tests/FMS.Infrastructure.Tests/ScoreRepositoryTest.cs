@@ -139,12 +139,94 @@ namespace FMS.Infrastructure.Tests
         }
 
         // CreateScoreAsync
+        [Test]
+        public async Task CreateScoreAsync_CreatesScore_WithValidData()
+        {
+            var dto = new ScoreCreateDto
+            {
+                FacilityId = Guid.NewGuid(),
+                ScoredDate = new DateOnly(2025, 1, 1),
+                Comments = "VALID_COMMENTS",
+                UseComments = true
+            };
 
+            var newId = await _repository.CreateScoreAsync(dto);
+
+            _context.ChangeTracker.Clear();
+            var createdScore = await _context.Scores.FindAsync(newId);
+
+            createdScore.Should().NotBeNull();
+            createdScore!.ScoredDate.Should().Be(dto.ScoredDate);
+            createdScore.Comments.Should().Be(dto.Comments);
+        }
 
         // UpdateScoreAsync
+        [Test]
+        public async Task UpdateScoresAsync_UpdatesExistingScore_WhenDataIsValid()
+        {
+            var existingScore = new Score
+            {
+                Active = true,
+                FacilityId = Guid.NewGuid(),
+                ScoredDate = new DateOnly(2025, 1, 1),
+                ScoredById = Guid.NewGuid(),
+                Comments = "VALID_COMMENTS",
+                UseComments = true
+            };
+            _context.Scores.Add(existingScore);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
+            var updateDto = new ScoreEditDto
+            {
+                Active = false,
+                FacilityId = Guid.NewGuid(),
+                ScoredDate = new DateOnly(2025, 1, 30),
+                ScoredById = Guid.NewGuid(),
+                Comments = "NEW_COMMENTS",
+                UseComments = false
+            };
+            await _repository.UpdateScoreAsync(existingScore.FacilityId, updateDto);
+            _context.ChangeTracker.Clear();
+
+            var updatedScore = await _context.Scores.FindAsync(existingScore.Id);
+
+            updatedScore.Should().BeEquivalentTo(updateDto, options => options
+                .Excluding(e => e.Id));
+        }
+
+        [Test]
+        public async Task UpdateScoresAsync_ThrowsKeyNotFoundException_WhenIdDoesNotExist()
+        {
+            var invalidFacilityId = Guid.NewGuid();
+            var updateDto = new ScoreEditDto { FacilityId = invalidFacilityId, Comments = "NEW_COMMENTS" };
+
+            var action = async () => await _repository.UpdateScoreAsync(invalidFacilityId, updateDto);
+
+            await action.Should().ThrowAsync<KeyNotFoundException>();
+        }
 
         // UpdateScoreStatusAsync
+        [Test]
+        public async Task UpdateScoreStatusAsync_UpdatesStatusCorrectly()
+        {
+            var existingScore = new Score { Id = Guid.NewGuid(), Active = true };
+            _context.Scores.Add(existingScore);
+            await _context.SaveChangesAsync();
 
+            await _repository.UpdateScoreStatusAsync(existingScore.Id, false);
+
+            var updatedScore = await _context.Scores.FindAsync(existingScore.Id);
+            updatedScore.Active.Should().BeFalse();
+
+        }
+
+        [Test]
+        public async Task UpdateScoreStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.UpdateScoreStatusAsync(invalidId, false);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }
