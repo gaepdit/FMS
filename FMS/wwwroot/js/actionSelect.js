@@ -1,6 +1,6 @@
 ﻿// Populate the ActionType dropdown when an EventType selection is made.
 function setUpActionTypeDropdown(eventElementId, actionElementId, placeholder) {
-    let apiPath;
+    const apiPath = "all-allowed-actions";
 
     const eventSelect = document.getElementById(eventElementId);
 
@@ -10,7 +10,7 @@ function setUpActionTypeDropdown(eventElementId, actionElementId, placeholder) {
         actionSelect.disabled = true;
         if (eventSelect.value === '') return;
 
-        axios.get(`/api/events/${eventSelect.value}/${apiPath}`)
+        axios.get(`/api/${eventSelect.id}/${apiPath}`)
             .then(function (response) {
                 const data = response.data;
                 if (data == null || data.length === 0) return;
