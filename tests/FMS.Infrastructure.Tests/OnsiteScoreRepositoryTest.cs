@@ -35,7 +35,7 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.Empty,
                 FacilityId = Guid.Empty,
-                OnsiteScoreValue = "VALID_OSSValue"
+                OnsiteScoreValue = 1.23m
             });
             _context.SaveChanges();
         }
@@ -100,7 +100,7 @@ namespace FMS.Infrastructure.Tests
             var dto = new OnsiteScoreCreateDto
             {
                 FacilityId = Guid.NewGuid(),
-                OnsiteScoreValue = "VALID_OSSValue",
+                OnsiteScoreValue = 1.23m,
                 A = 1,
                 B = 2,
                 C = 3
@@ -112,7 +112,7 @@ namespace FMS.Infrastructure.Tests
             var createdOSS = await _context.OnsiteScores.FindAsync(newId);
 
             createdOSS.Should().NotBeNull();
-            createdOSS.OnsiteScoreValue.Should().Be("VALID_OSSValue");
+            createdOSS.OnsiteScoreValue.Should().Be(1.23m);
             createdOSS.A.Should().Be(1);
             createdOSS.B.Should().Be(2);
             createdOSS.C.Should().Be(3);
@@ -128,7 +128,7 @@ namespace FMS.Infrastructure.Tests
                 Id = Guid.NewGuid(),
                 Active = true,
                 FacilityId = Guid.NewGuid(),
-                OnsiteScoreValue = "VALID_OSSV",
+                OnsiteScoreValue = 1.23m,
                 A = 01,
                 B = 02,
                 C = 03,
@@ -152,7 +152,7 @@ namespace FMS.Infrastructure.Tests
                 Id = existingOSS.Id,
                 Active = false,
                 FacilityId = existingOSS.FacilityId,
-                OnsiteScoreValue = "NEW_OSSV",
+                OnsiteScoreValue = 3.21m,
                 A = 10,
                 B = 20,
                 C = 30,
