@@ -163,7 +163,7 @@ namespace FMS.TestData.SeedData
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ParentId = Guid.Empty,
                     EventTypeId = new Guid("C1A6B598-9502-4310-8D43-7030EF3A44FA"),
-                    ActionTakenId = new Guid("0d7ee6cd-f975-40cf-94ff-406fe71075ff"),
+                    ActionTakenId = new Guid("6aae6fa2-17ca-4edd-9c59-87c6af3885c3"),
                     StartDate = new(2018, 2, 13),
                     DueDate = new(2018, 2, 13),
                     CompletionDate = new(2018, 2, 13),

@@ -17,7 +17,7 @@ namespace FMS
 
         // Phase III updates
         Task<SelectList> ActionTakenSelectListAsync(bool includeInactive = false);
-        Task<SelectList> AllowedActionTakenSelectListAsync(Guid id, bool includeInactive = false);
+        Task<SelectList> AllowedActionTakenSelectListAsync(Guid? id, bool includeInactive = false);
         Task<SelectList> ChemicalsSelectListAsync(bool includeInactive = false);
         Task<SelectList> ContactTitlesSelectListAsync(bool includeInactive = false);
         Task<SelectList> ContactTypesSelectListAsync(bool includeInactive = false);
@@ -53,7 +53,7 @@ namespace FMS
         // Phase III updates
         public async Task<SelectList> ActionTakenSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetActionsTakenListAsync(includeInactive)).ToSelectList();
-        public async Task<SelectList> AllowedActionTakenSelectListAsync(Guid id, bool includeInactive = false) => (await _listRepository.GetAllowedActionsTakenListAsync(id, includeInactive)).ToSelectList();
+        public async Task<SelectList> AllowedActionTakenSelectListAsync(Guid? id, bool includeInactive = false) => (await _listRepository.GetAllowedActionsTakenListAsync(id, includeInactive)).ToSelectList();
         public async Task<SelectList> ChemicalsSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetChemicalListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> ContactTitlesSelectListAsync(bool includeInactive = false) =>

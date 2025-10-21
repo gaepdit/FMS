@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Dto;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
@@ -20,22 +21,11 @@ namespace FMS.Api
     [Route("api")]
     [Produces("application/json")]
     public class EventActionController(
-        IEventTypeRepository _eventTypeRepository,
-        IActionTakenRepository _actionTakenRepository,
-        IAllowedActionTakenRepository _allowedActionTakenRepository) : ControllerBase
+        ISelectListHelper _listHelper) : ControllerBase
     {
-
-        [HttpGet("eventType")]
-        public async Task<JsonResult> GetEventTypesAsync() =>
-            new JsonResult(await _eventTypeRepository.GetEventTypeListAsync());
-
-        [HttpGet("all-actions")]
-        public async Task<IActionResult> GetAllActionsAsync() =>
-            new JsonResult(await _actionTakenRepository.GetActionTakenListAsync());
-
-        [HttpGet("{id:guid}/all-allowed-actions")]
-        public async Task<IActionResult> GetStaffForAssignmentAsync([FromRoute] Guid id) =>
-            new JsonResult(await _allowedActionTakenRepository.GetAllowedActionTakenListAsync(id));
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetAllowedActionsAsync([FromRoute] Guid id) =>
+            new JsonResult(await _listHelper.AllowedActionTakenSelectListAsync(id));
     }
 }
 

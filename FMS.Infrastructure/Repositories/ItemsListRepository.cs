@@ -70,8 +70,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetActionsTakenListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ActionTaken>(includeInactive);
 
-        public async Task<IEnumerable<ListItem>> GetAllowedActionsTakenListAsync(Guid id, bool includeInactive = false) =>
-            await _context.AllowedActionsTaken.AsNoTracking()
+        public async Task<IEnumerable<ListItem>> GetAllowedActionsTakenListAsync(Guid? id, bool includeInactive = false) => await _context.AllowedActionsTaken.AsNoTracking()
             .Where(e => (e.EventTypeId == id) && (e.Active || includeInactive))
             .Include(e => e.ActionTaken)
             .OrderBy(e => e.ActionTaken.Name)
