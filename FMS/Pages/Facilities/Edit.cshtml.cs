@@ -22,6 +22,7 @@ namespace FMS.Pages.Facilities
     {
         private readonly IFacilityRepository _repository;
         private readonly IFacilityTypeRepository _repositoryType;
+        private readonly IFacilityStatusRepository _repositoryStatus;
         private readonly ISelectListHelper _listHelper;
 
         [BindProperty]
@@ -52,10 +53,12 @@ namespace FMS.Pages.Facilities
         public EditModel(
             IFacilityRepository repository,
             IFacilityTypeRepository repositoryType,
+            IFacilityStatusRepository repositoryStatus,
             ISelectListHelper listHelper)
         {
             _repository = repository;
             _repositoryType = repositoryType;
+            _repositoryStatus = repositoryStatus;
             _listHelper = listHelper;
         }
 
@@ -111,6 +114,7 @@ namespace FMS.Pages.Facilities
             // Validate User input based on Business Logic
             // Populate FacilityTypeName to use for User Input validity
             Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+            Facility.FacilityStatusName = await _repositoryStatus.GetFacilityStatusNameAsync(Facility.FacilityStatusId);
             ModelErrorCollection errors = FormValidationHelper.ValidateFacilityEditForm(Facility);
             if (errors.Count > 0)
             {
@@ -222,6 +226,7 @@ namespace FMS.Pages.Facilities
             // Validate User input based on Business Logic
             // Populate FacilityTypeName to use for User Input validity
             Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
+            Facility.FacilityStatusName = await _repositoryStatus.GetFacilityStatusNameAsync(Facility.FacilityStatusId);
 
             ModelErrorCollection errors = FormValidationHelper.ValidateFacilityEditForm(Facility);
             if (errors.Count > 0)
