@@ -6,7 +6,7 @@ $(document).ready(function formAdd() {
     });
 
     $("#Facility_FacilityTypeId").on("change", function () {
-        if ($("#Facility_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)") {
+        if ($("#Facility_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)" && $("#Facility_FacilityStatusId option:selected").text().trim() != "COMPLAINT") {
             $("#RNBlock").removeClass("d-none");
             $("#FacilityNumberHelpBlock").removeClass("d-none");
             $("#Facility_FacilityNumber").prop('value', '')

@@ -46,7 +46,7 @@ namespace FMS.Pages.Event
         public IEnumerable<EventSummaryDto> Events { get; set; }
 
         public SelectList EventTypes { get; private set; }
-        public SelectList ActionsTaken { get; private set; }
+        public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
 
         [TempData]
@@ -106,7 +106,7 @@ namespace FMS.Pages.Event
         private async Task PopulateSelectsAsync()
         {
             EventTypes = await _listHelper.EventTypesSelectListAsync();
-            ActionsTaken = await _listHelper.ActionTakenSelectListAsync();
+            AllowedActionsTaken = await _listHelper.ActionTakenSelectListAsync();
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
         }
     }

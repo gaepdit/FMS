@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="axios" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" />
     <PackageReference Include="Microsoft.Graph" />
     <PackageReference Include="SonarAnalyzer.CSharp" Condition="'$(Configuration)' == 'Debug'">
