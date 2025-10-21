@@ -19,7 +19,10 @@ $(document).ready(function formAdd() {
         if ($("#Facility_FacilityNumber").text().trim() === "") {
             switch ($("#Facility_FacilityTypeId option:selected").text().trim()) {
                 case "RN (Release Notification)":
-                    $("#Facility_FacilityNumber").attr('placeholder', 'RNdddd');
+                    if ($("#Facility_FacilityStatusId option:selected").text().trim() = "COMPLAINT") { $("#Facility_FacilityNumber").attr('placeholder', 'RNdddddd') }
+                    else {
+                        $("#Facility_FacilityNumber").attr('placeholder', 'RNdddd')
+                    };
                     break;
                 case "GEN (RCRA generator)":
                     $("#Facility_FacilityNumber").attr('placeholder', 'ddddd');

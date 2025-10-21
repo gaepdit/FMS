@@ -68,11 +68,10 @@ namespace FMS.Helpers
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.RNDateReceived", "^", "Date must not be before 1/1/1990.")));
                 }
-                ///***************** FIX THIS ****************************
                 // Check Facility Number
                 if (facility.FacilityNumber != null 
-                    && facility.FacilityStatusName != "Event Tracking On"
-                    && !rnRegex.IsMatch(facility.FacilityNumber) )
+                    && facility.FacilityStatusName != "COMPLAINT"
+                    && !rnRegex.IsMatch(facility.FacilityNumber))
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddd'")));
                 }
@@ -80,6 +79,11 @@ namespace FMS.Helpers
                 if (facility.FacilityNumber != null
                     && facility.FacilityStatusName == "COMPLAINT"
                     && !rnCmpltRegex.IsMatch(facility.FacilityNumber))
+                {
+                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddddd' for COMPLAINT status.")));
+                }
+                if (facility.FacilityNumber == null
+                    && facility.FacilityStatusName == "COMPLAINT")
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddddd' for COMPLAINT status.")));
                 }
