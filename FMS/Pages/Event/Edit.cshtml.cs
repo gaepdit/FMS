@@ -39,7 +39,7 @@ namespace FMS.Pages.Event
         public Guid? ParentEventId { get; set; } = Guid.Empty;
 
         public SelectList EventTypes { get; private set; }
-        public SelectList ActionsTaken { get; private set; }
+        public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
 
         [BindProperty]
@@ -91,7 +91,7 @@ namespace FMS.Pages.Event
         private async Task PopulateSelectsAsync()
         {
             EventTypes = await _listHelper.EventTypesSelectListAsync();
-            ActionsTaken = await _listHelper.ActionTakenSelectListAsync();
+            AllowedActionsTaken = await _listHelper.AllowedActionTakenSelectListAsync(Id);
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
         }
     }

@@ -91,7 +91,7 @@
             </div>
             <div class="col">
                 <label asp-for="EditEvent.ActionTakenId"></label>
-                <select asp-for="EditEvent.ActionTakenId" asp-items="Model.ActionsTaken" class="form-select">
+                <select asp-for="EditEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="EditEvent.ActionTakenId" class="text-danger"></span>
