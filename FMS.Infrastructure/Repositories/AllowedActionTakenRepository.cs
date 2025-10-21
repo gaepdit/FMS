@@ -23,34 +23,6 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> AllowedActionTakenExistsAsync(Guid eventTypeId, Guid actionTakenId) =>
             _context.AllowedActionsTaken.AnyAsync(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId);
 
-        //public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByIdAsync(Guid? id)
-        //    {
-        //    if (!id.HasValue)
-        //    {
-        //        return null;
-        //    }
-        //    var allowedActionTaken =  await _context.AllowedActionsTaken.AsNoTracking()
-        //        .Where(e => e.Id == id.Value)
-        //        .Include(e => e.EventType)
-        //        .Include(e => e.ActionTaken)
-        //        .Select(e => new AllowedActionTaken(e))
-        //        .SingleOrDefaultAsync();
-
-        //    if (allowedActionTaken == null)
-        //    {
-        //        return null;
-        //    }
-        //    return new AllowedActionTakenSpec()
-        //    {
-        //        Id = allowedActionTaken.Id,
-        //        EventTypeId = allowedActionTaken.EventTypeId,
-        //        ActionTakenId = allowedActionTaken.ActionTakenId,
-        //        EventTypeName = allowedActionTaken.EventType.Name,
-        //        ActionTakenName = allowedActionTaken.ActionTaken.Name,
-        //        Active = allowedActionTaken.Active
-        //    };
-        //}
-
         public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByAATIdAsync(Guid? id)
         {
             if (!id.HasValue)
@@ -69,14 +41,6 @@ namespace FMS.Infrastructure.Repositories
 
             return new AllowedActionTakenSpec(allowedActionTaken);
         }
-
-        //public async Task<AllowedActionTaken> GetAllowedActionTakenAsync(Guid eventTypeId, Guid actionTakenId)
-        //{
-        //     return await _context.AllowedActionsTaken.AsNoTracking()
-        //        .Where(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId)
-        //        .Select(e => new AllowedActionTaken(e))
-        //        .SingleOrDefaultAsync();
-        //}
 
         public async Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId)
         {
@@ -121,49 +85,6 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return newAllowedActionTaken.Id;
         }
-
-        //public async Task<Guid> UpdateAllowedActionTakenAsync(Guid actionTakenId, Guid eventTypeId)
-        //{
-        //    if (await AllowedActionTakenExistsAsync(eventTypeId, actionTakenId))
-        //    {
-        //        return await UpdateAllowedActionTakenInternalAsync(actionTakenId, eventTypeId);
-        //    }
-        //    else
-        //    {
-        //        return await UpdateAllowedActionTakenInternalAsync(actionTakenId, eventTypeId, true);
-        //    }
-        //}
-
-        //private async Task<Guid> UpdateAllowedActionTakenInternalAsync(Guid actionTakenId, Guid eventTypeId, bool? createNew = false)
-        //{
-        //    if(createNew == true)
-        //    {
-        //        var newAllowedActionTaken = new AllowedActionTaken
-        //        {
-        //            ActionTakenId = actionTakenId,
-        //            EventTypeId = eventTypeId,
-        //            Active = true
-        //        };
-        //        await _context.AllowedActionsTaken.AddAsync(newAllowedActionTaken);
-        //        await _context.SaveChangesAsync();
-        //        return newAllowedActionTaken.Id;
-        //    }
-        //    else
-        //    {
-        //        var existingAllowedActionTaken = await GetAllowedActionTakenAsync(eventTypeId, actionTakenId);
-
-        //        if (existingAllowedActionTaken == null)
-        //        {
-        //            throw new ArgumentException($"Allowed Action Taken with Id {existingAllowedActionTaken.Id} does not exist.");
-        //        }
-
-        //        existingAllowedActionTaken.Active = !existingAllowedActionTaken.Active;
-
-        //        _context.AllowedActionsTaken.Update(existingAllowedActionTaken);
-        //        await _context.SaveChangesAsync();
-        //        return existingAllowedActionTaken.Id;
-        //    }
-        //}
 
         public async Task<Guid> DeleteAllowedActionTakenAsync(Guid? id)
         {

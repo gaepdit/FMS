@@ -37,7 +37,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Onsite Score Value")]
-        public string OnsiteScoreValue { get; set; }
+        public decimal OnsiteScoreValue { get; set; }
 
         [Display(Name = "A")]
         public int? A { get; set; }
@@ -48,7 +48,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "C")]
         public int? C { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "On-Site Comment")]
         public string Description { get; set; }
 
         [Display(Name = "Chemical Name 1D")]

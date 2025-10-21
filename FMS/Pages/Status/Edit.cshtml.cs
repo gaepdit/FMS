@@ -113,7 +113,6 @@ namespace FMS.Pages.Status
             OverallStatuses = await _listHelper.OverallStatusesSelectListAsync();
             FundingSources = await _listHelper.FundingSourceSelectListAsync();
             GAPSAssessments = await _listHelper.GAPSAssessmentSelectListAsync();
-            AbandonSites = await _listHelper.AbandonSitesSelectListAsync();
         }
     }
 }

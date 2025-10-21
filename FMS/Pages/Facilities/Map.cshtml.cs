@@ -49,8 +49,25 @@ namespace FMS.Pages.Facilities
             _listHelper = listHelper;
         }
 
+        [TempData]
+        public string Lat { get; set; }
+
+        [TempData]
+        public string Lon { get; set; }
+
         public async Task<IActionResult> OnGet()
         {
+            if(Lat != null && Lon != null)
+            {
+                Spec = new FacilityMapSpec()
+                {
+                    Latitude = decimal.TryParse(Lat, out decimal dLat) ? dLat : 0,
+                    Longitude = decimal.TryParse(Lon, out decimal dLon) ? dLon : 0,
+                    Radius = 3m,
+                    Output = "1"
+                };
+            }
+           
             await PopulateSelectsAsync();
             return Page();
         }

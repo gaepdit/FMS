@@ -28,6 +28,8 @@ namespace FMS.Domain.Dto
             VRPDate = hsrpFacilityProperties.VRPDate;
             BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
             DateDeListed = hsrpFacilityProperties.DateDeListed;
+            VRPTerminated = hsrpFacilityProperties.VRPTerminated;
+            BrownfieldTerminated = hsrpFacilityProperties.BrownfieldTerminated;
         }
 
         public HsrpFacilityPropertiesEditDto(Guid facilityId, string facilityNumber, HsrpFacilityPropertiesDetailDto Hfpcd)
@@ -40,6 +42,8 @@ namespace FMS.Domain.Dto
             VRPDate = Hfpcd.VRPDate;
             BrownfieldDate = Hfpcd.BrownfieldDate;
             DateDeListed = Hfpcd.DateDeListed;
+            VRPTerminated = Hfpcd.VRPTerminated;
+            BrownfieldTerminated = Hfpcd.BrownfieldTerminated;
         }
 
         [Required]
@@ -68,5 +72,11 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Date De-listed")]
         public DateOnly? DateDeListed { get; set; }
-    }
+
+        [Display(Name = "VRP Terminated")]
+        public bool VRPTerminated { get; set; }
+
+        [Display(Name = "Brownfield Terminated")]
+        public bool BrownfieldTerminated { get; set; }
+        }
 }

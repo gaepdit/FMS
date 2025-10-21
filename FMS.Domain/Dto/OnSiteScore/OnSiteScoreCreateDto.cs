@@ -9,7 +9,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "On-Site Score")]
-        public string OnsiteScoreValue { get; set; }
+        public decimal OnsiteScoreValue { get; set; }
 
         [Display(Name = "A")]
         public int? A { get; set; }
@@ -32,7 +32,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "3D")]
         public int? D3 { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "On-Site Comment")]
         public string Description { get; set; }
 
         public Guid ChemicalId { get; set; }

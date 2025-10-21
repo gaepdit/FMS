@@ -17,6 +17,7 @@ namespace FMS.Domain.Entities
         }
         public Guid ContactId { get; set; }
 
+        [Phone]
         public string Number { get; set; }
 
         public string PhoneType { get; set; }

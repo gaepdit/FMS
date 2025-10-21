@@ -42,7 +42,6 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<AllowedActionTaken> AllowedActionsTaken { get; set; }
         public DbSet<FundingSource> FundingSources { get; set; }
         public DbSet<ParcelType> ParcelTypes { get; set; }
-        public DbSet<AbandonSites> AbandonSites { get; set; }
         public DbSet<GapsAssessment> GapsAssessments { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<HsrpFacilityProperties> HsrpFacilityProperties { get; set; }

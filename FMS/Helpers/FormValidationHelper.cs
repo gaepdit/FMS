@@ -24,7 +24,7 @@ namespace FMS.Helpers
 
         public static ModelErrorCollection ValidateFacilityAddForm(FacilityCreateDto facilityCreateDto)
         {
-            FacilityValidationDtoScalar facilityValidation = new(facilityCreateDto);    
+            FacilityValidationDtoScalar facilityValidation = new(facilityCreateDto);
             return ValidateFacilityAddEditForms(facilityValidation);
         }
 
@@ -54,7 +54,7 @@ namespace FMS.Helpers
             if (facility.FacilityTypeName == "RN")
             {
                 // Check Date Received
-                if ( facility.RNDateReceived is null)
+                if (facility.RNDateReceived is null)
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.RNDateReceived", "^", "Date Received must be entered.")));
                 }
@@ -67,7 +67,10 @@ namespace FMS.Helpers
                     errCol.Add(new ModelError(string.Concat("Facility.RNDateReceived", "^", "Date must not be before 1/1/1990.")));
                 }
                 // Check Facility Number
-                if (facility.FacilityNumber != null && !rnRegex.IsMatch(facility.FacilityNumber))
+                if (facility.FacilityNumber != null 
+                    && (facility.FacilityStatusName != "Event Tracking On" 
+                    || facility.FacilityStatusName != "COMPLAINT")
+                    && !rnRegex.IsMatch(facility.FacilityNumber) )
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddd'")));
                 }
@@ -77,9 +80,9 @@ namespace FMS.Helpers
                     errCol.Add(new ModelError(string.Concat("Facility.HSInumber", "^", "HSI Number must be 5 digits Only.")));
                 }
             }
-            else if(facility.FacilityTypeName == "HSI")
+            else if (facility.FacilityTypeName == "HSI")
             {
-                // Check Facility Number 
+                //Check Facility Number
                 if (!string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "HSI Number must be 5 digits Only.")));

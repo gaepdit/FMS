@@ -19,6 +19,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Facility Status")]
         public Guid FacilityStatusId { get; set; }
+        public string FacilityStatusName { get; set; }
 
         [Required]
         [Display(Name = "Type/Environmental Interest")]

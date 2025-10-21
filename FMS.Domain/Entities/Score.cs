@@ -48,7 +48,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "Comments")]
         public string Comments { get; set; }   
 
-        [Display(Name = "Use alt language for Site Summary Report")]
+        [Display(Name = "Use language from comments field in Site Summary")]
         public bool UseComments { get; set; } = false;
     }
 }

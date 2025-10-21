@@ -22,38 +22,6 @@ namespace FMS.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FMS.Domain.Entities.AbandonSites", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("InsertDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("InsertUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("UpdateDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AbandonSites");
-                });
-
             modelBuilder.Entity("FMS.Domain.Entities.ActionTaken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1683,8 +1651,8 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("GWScore")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("GWScore")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
@@ -1756,6 +1724,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<DateOnly?>("BrownfieldDate")
                         .HasColumnType("date");
 
+                    b.Property<bool>("BrownfieldTerminated")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("ComplianceOfficerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1785,6 +1756,9 @@ namespace FMS.Infrastructure.Migrations
 
                     b.Property<DateOnly?>("VRPDate")
                         .HasColumnType("date");
+
+                    b.Property<bool>("VRPTerminated")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -1884,8 +1858,8 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("InsertUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OnsiteScoreValue")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("OnsiteScoreValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Other1D")
                         .HasColumnType("nvarchar(max)");
@@ -2256,17 +2230,14 @@ namespace FMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AbandonSitesId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("CostEstimate")
-                        .HasColumnType("float");
+                    b.Property<decimal?>("CostEstimate")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateOnly?>("CostEstimateDate")
                         .HasColumnType("date");
@@ -2341,8 +2312,6 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AbandonSitesId");
 
                     b.HasIndex("FacilityId")
                         .IsUnique();
@@ -2940,10 +2909,6 @@ namespace FMS.Infrastructure.Migrations
 
             modelBuilder.Entity("FMS.Domain.Entities.Status", b =>
                 {
-                    b.HasOne("FMS.Domain.Entities.AbandonSites", "AbandonSites")
-                        .WithMany()
-                        .HasForeignKey("AbandonSitesId");
-
                     b.HasOne("FMS.Domain.Entities.Facility", null)
                         .WithOne("StatusDetails")
                         .HasForeignKey("FMS.Domain.Entities.Status", "FacilityId")
@@ -2973,8 +2938,6 @@ namespace FMS.Infrastructure.Migrations
                     b.HasOne("FMS.Domain.Entities.SourceStatus", "SourceStatus")
                         .WithMany()
                         .HasForeignKey("SourceStatusId");
-
-                    b.Navigation("AbandonSites");
 
                     b.Navigation("FundingSource");
 

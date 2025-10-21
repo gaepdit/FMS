@@ -39,7 +39,6 @@ namespace FMS.Domain.Entities
             FinancialAssurance = status.FinancialAssurance;
             CostEstimate = status.CostEstimate;
             CostEstimateDate = status.CostEstimateDate;
-            AbandonSitesId = status.AbandonSitesId;
         }
 
         public Guid FacilityId { get; set; }
@@ -108,13 +107,9 @@ namespace FMS.Domain.Entities
         public bool FinancialAssurance { get; set; }
 
         [Display(Name = "Cost Estimate")]
-        public double? CostEstimate { get; set; }
+        public decimal? CostEstimate { get; set; }
 
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
-
-        public Guid? AbandonSitesId { get; set; }
-        [Display(Name = "Abandon Sites")]
-        public AbandonSites AbandonSites { get; set; }
     }
 }

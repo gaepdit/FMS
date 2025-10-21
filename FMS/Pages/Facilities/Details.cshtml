@@ -135,9 +135,10 @@
                 <dd class="col-sm-3">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href="/Facilities/Map">Location Search</a>
                 </dd>
-                
+
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.FacilityDetail.Comments)
                 </dt>
@@ -145,7 +146,7 @@
                     @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
                 </dd>
             </dl>
-            
+
         </div>
     }
     else
@@ -249,7 +250,7 @@
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Open Google Map</a>
+                    <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
                     <a class="btn btn-sm btn-primary" target="_blank" href="/Facilities/Map">Location Search</a>
                 </dd>
                 <dt class="col-sm-4">
@@ -259,7 +260,7 @@
                     @Html.DisplayFor(model => model.FacilityDetail.Comments, "StringOrNone")
                 </dd>
             </dl>
-            
+
         </div>
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <H2>Release Notification Information</H2>
@@ -329,7 +330,7 @@
     }
 </div>
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT"))
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
 {
     <div class="container-fluid">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
@@ -338,7 +339,7 @@
                     @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                     {
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link @(Model.ActiveTab == "HSIProperties" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VNHSI" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
+                            <a class="nav-link @(Model.ActiveTab == "HSIProperties" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VRP" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "Location" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
@@ -357,7 +358,7 @@
                         </li>
                     }
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT") ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ? "true" : "false")" href="#Events">Events</a>
+                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@((Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "true" : "false")" href="#Events">Events</a>
                     </li>
                 </ul>
             </nav>
@@ -391,6 +392,12 @@
                                 @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.ComplianceOfficer.Name, "StringOrNone")
                             </dd>
                             <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed, "DateOrNone")
+                            </dd>
+                            <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPDate)
                             </dt>
                             <dd class="col-sm-3">
@@ -403,10 +410,16 @@
                                 @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldDate, "DateOrNone")
                             </dd>
                             <dt class="col-sm-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed)
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPTerminated)
                             </dt>
                             <dd class="col-sm-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.DateDeListed, "DateOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPTerminated)
+                            </dd>
+                            <dt class="col-sm-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldTerminated)
+                            </dt>
+                            <dd class="col-sm-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldTerminated)
                             </dd>
                         </dl>
                     </div>
@@ -930,7 +943,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Name)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Description)
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
@@ -943,12 +956,6 @@
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimateDate)
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonSites)
-                            </dt>
-                            <dd class="col-sm-9 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonSites.Name)
                             </dd>
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
@@ -988,7 +995,7 @@
                         </div>
                     </div>
                 }
-                <div class="tab-pane @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" && Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT") ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                <div class="tab-pane @(Model.ActiveTab == "Events" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
                         Events
                         <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Event</a>
