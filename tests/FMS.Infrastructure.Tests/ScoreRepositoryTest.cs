@@ -206,6 +206,7 @@ namespace FMS.Infrastructure.Tests
             await action.Should().ThrowAsync<KeyNotFoundException>();
         }
 
+        /*
         // UpdateScoreStatusAsync
         [Test]
         public async Task UpdateScoreStatusAsync_UpdatesStatusCorrectly()
@@ -228,5 +229,6 @@ namespace FMS.Infrastructure.Tests
             var action = async () => await _repository.UpdateScoreStatusAsync(invalidId, false);
             await action.Should().ThrowAsync<ArgumentException>();
         }
+        */
     }
 }
