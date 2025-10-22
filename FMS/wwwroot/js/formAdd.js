@@ -19,8 +19,12 @@ $(document).ready(function formAdd() {
         if ($("#Facility_FacilityNumber").text().trim() === "") {
             switch ($("#Facility_FacilityTypeId option:selected").text().trim()) {
                 case "RN (Release Notification)":
-                    if ($("#Facility_FacilityStatusId option:selected").text().trim() = "COMPLAINT") { $("#Facility_FacilityNumber").attr('placeholder', 'RNdddddd') }
-                    else {
+                    if ($("#Facility_FacilityStatusId option:selected").text().trim() === "COMPLAINT")
+                    {
+                        $("#Facility_FacilityNumber").attr('placeholder', 'RNdddddd')
+                    }
+                    else
+                    {
                         $("#Facility_FacilityNumber").attr('placeholder', 'RNdddd')
                     };
                     break;
