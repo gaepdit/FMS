@@ -1,15 +1,16 @@
-﻿using FluentAssertions;
-using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Infrastructure.Contexts;
-using FMS.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using NSubstitute;
+﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using NSubstitute;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FMS.Infrastructure.Contexts;
+using FMS.Infrastructure.Repositories;
+using FMS.Domain.Entities;
+using FMS.Domain.Dto;
+using Microsoft.AspNetCore.Http;
+using FluentAssertions;
+using System.Collections.Generic;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -18,7 +19,7 @@ namespace FMS.Infrastructure.Tests
     {
         private FmsDbContext _context;
         private EventTypeRepository _repository;
-        private bool _disposed;
+        private bool _disposed = false;
 
         [SetUp]
         public void SetUp()
@@ -28,10 +29,11 @@ namespace FMS.Infrastructure.Tests
                 .Options;
             var httpContextAccessor = Substitute.For<HttpContextAccessor>();
             _context = new FmsDbContext(options, httpContextAccessor);
+            _repository = new EventTypeRepository(_context);
 
             _context.EventTypes.Add(new EventType
             {
-                Id = Guid.Empty,
+                Id = Guid.NewGuid(),
                 Name = "VALID_NAME",
                 Active = true
             });
@@ -43,8 +45,7 @@ namespace FMS.Infrastructure.Tests
         {
             Dispose();
         }
-
-        private void Dispose()
+        public void Dispose()
         {
             if (!_disposed)
             {
@@ -74,11 +75,30 @@ namespace FMS.Infrastructure.Tests
 
 
         // EventTypeNameExistAsync
+        [Test]
+        public async Task EventTypeNameExistAsync_ReturnsTrue_EventTypeNameExist()
+        {
+            var existingET = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.EventTypes.Add(existingET);
+            await _context.SaveChangesAsync();
 
+            var results = await _repository.EventTypeNameExistsAsync(existingET.Name);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task EventTypeNameExistAsync_ReturnsFlase_EventTypeNameDoesNotExist()
+        {
+            var existingET = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.EventTypes.Add(existingET);
+            await _context.SaveChangesAsync();
+
+            var results = await _repository.EventTypeNameExistsAsync("INVALID_NAME");
+            results.Should().BeFalse();
+        }
 
 
         // GetEventTypeByIdAsync
-        
+
 
 
         // GetEventTypeNameAsync
@@ -94,9 +114,9 @@ namespace FMS.Infrastructure.Tests
 
 
         // CreateEventTypeAsync
-        
-        
-        
+
+
+
         // UpdateEventTypeAsync
 
 
