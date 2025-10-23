@@ -156,7 +156,9 @@ namespace FMS
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => endpoints.MapRazorPages().RequireAuthorization());
+            app.UseEndpoints(endpoints => { endpoints.MapRazorPages().RequireAuthorization();
+                endpoints.MapControllers();
+            });
         }
     }
 }

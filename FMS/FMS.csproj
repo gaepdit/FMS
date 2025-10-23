@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="axios" />
     <PackageReference Include="ClosedXML" />
     <PackageReference Include="FreeSpire.PDF" />
     <PackageReference Include="JetBrains.Annotations" />

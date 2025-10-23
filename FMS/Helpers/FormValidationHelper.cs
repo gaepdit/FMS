@@ -12,8 +12,10 @@ namespace FMS.Helpers
         private static readonly DateOnly minDate = new(1990, 1, 1);
         private static readonly DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
         private static readonly string rnPattern = @"^\bRN\d{4}$";
+        private static readonly string rnPatternCmplt = @"^\bRN\d{6}$";
         private static readonly string hsiPattern = @"^\d{5}$";
         private static readonly Regex rnRegex = new(rnPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
+        private static readonly Regex rnCmpltRegex = new(rnPatternCmplt, RegexOptions.None, TimeSpan.FromMilliseconds(100));
         private static readonly Regex hsiRegex = new(hsiPattern, RegexOptions.None, TimeSpan.FromMilliseconds(100));
 
         public static ModelErrorCollection ValidateFacilityEditForm(FacilityEditDto facilityEditDto)
@@ -68,11 +70,22 @@ namespace FMS.Helpers
                 }
                 // Check Facility Number
                 if (facility.FacilityNumber != null 
-                    && (facility.FacilityStatusName != "Event Tracking On" 
-                    || facility.FacilityStatusName != "COMPLAINT")
-                    && !rnRegex.IsMatch(facility.FacilityNumber) )
+                    && facility.FacilityStatusName != "COMPLAINT"
+                    && !rnRegex.IsMatch(facility.FacilityNumber))
                 {
                     errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddd'")));
+                }
+                // Check Facility Number for COMPLAINT status
+                if (facility.FacilityNumber != null
+                    && facility.FacilityStatusName == "COMPLAINT"
+                    && !rnCmpltRegex.IsMatch(facility.FacilityNumber))
+                {
+                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddddd' for COMPLAINT status.")));
+                }
+                if (facility.FacilityNumber == null
+                    && facility.FacilityStatusName == "COMPLAINT")
+                {
+                    errCol.Add(new ModelError(string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddddd' for COMPLAINT status.")));
                 }
                 // Check HSI Number 
                 if (!string.IsNullOrEmpty(facility.HSInumber) && !hsiRegex.IsMatch(facility.HSInumber))

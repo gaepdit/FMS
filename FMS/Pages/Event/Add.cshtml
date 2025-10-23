@@ -6,6 +6,13 @@
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+    <partial name="_ActionSelectPartial" />
+    <script>
+        setUpActionTypeDropdown(
+            "NewEvent_EventTypeId",
+            "NewEvent_ActionTakenId",
+            "None Selected");
+    </script>
 }
 
 @{
@@ -82,7 +89,7 @@
             </div>
             <div class="col">
                 <label asp-for="NewEvent.ActionTakenId"></label>
-                <select asp-for="NewEvent.ActionTakenId" asp-items="Model.ActionsTaken" class="form-select">
+                <select asp-for="NewEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="NewEvent.ActionTakenId" class="text-danger"></span>
