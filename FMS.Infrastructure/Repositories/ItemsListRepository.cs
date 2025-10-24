@@ -77,6 +77,13 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new ListItem() { Id = e.ActionTaken.Id, Name = e.ActionTaken.Name })
             .ToListAsync();
 
+        public async Task<IEnumerable<ListItem>> GetAllowedEventsListAsync(Guid? id, bool includeInactive = false) => await _context.AllowedActionsTaken.AsNoTracking()
+            .Where(e => (e.ActionTakenId == id) && (e.Active || includeInactive))
+            .Include(e => e.EventType)
+            .OrderBy(e => e.EventType.Name)
+            .Select(e => new ListItem() { Id = e.EventType.Id, Name = e.EventType.Name })
+            .ToListAsync();
+
         public async Task<IEnumerable<ListItem>> GetChemicalListAsync(bool includeInactive = false) => 
             await _context.Chemicals.AsNoTracking()
             .Where(e => e.Active || includeInactive)
