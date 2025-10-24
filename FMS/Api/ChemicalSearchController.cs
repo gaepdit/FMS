@@ -27,8 +27,8 @@ namespace FMS.Api
     [Route("api/chem")]
     public class ChemicalSearchController(FmsDbContext _context) : ControllerBase
     {
-        [HttpGet("{query:alpha}")]
-        public async Task<IActionResult> Get([FromRoute] string query)
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] string query)
         {
             if (string.IsNullOrWhiteSpace(query))
             {

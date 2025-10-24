@@ -17,9 +17,9 @@
             type: 'json',
             data: { query: searchTerm },
             success: function (data) {
-                $('#NewSubstance_Chemical_ChemicalName').val(data.ChemicalName[0]);
-                $('#NewSubstance_Chemical_CASNumber').val(data.CASNumber[0]);
-                $('#NewSubstance_Chemical_CommonName').val(data.CommonName[0]);
+                $('#NewSubstance_Chemical_ChemicalName').value = data[0].ChemicalName;
+                $('#NewSubstance_Chemical_CASNumber').value = data[0].CASNumber;
+                $('#NewSubstance_Chemical_CommonName').value = data[0].CommonName;
             },
             error: function (error) {
                 console.error('Error fetching search results:', error);
