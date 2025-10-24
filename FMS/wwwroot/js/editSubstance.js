@@ -2,24 +2,24 @@
     let typingTimer;
     const doneTypingInterval = 500; // milliseconds
 
-    $('#NewSubstance_Chemical_ChemicalName').on('keyup', function () {
+    $('#EditSubstance_Chemical_ChemicalName').on('keyup', function () {
         clearTimeout(typingTimer);
-        if ($('#NewSubstance_Chemical_ChemicalName').val()) {
+        if ($('#EditSubstance_Chemical_ChemicalName').val()) {
             typingTimer = setTimeout(performSearch, doneTypingInterval);
         }
     });
 
     function performSearch() {
-        const searchTerm = $('#NewSubstance_Chemical_ChemicalName').val();
+        const searchTerm = $('#EditSubstance_Chemical_ChemicalName').val();
         $.ajax({
             url: '/api/chem',
             method: 'GET',
             type: 'json',
             data: { query: searchTerm },
             success: function (data) {
-                $('#NewSubstance_Chemical_ChemicalName').val(data.ChemicalName[0]);
-                $('#NewSubstance_Chemical_CASNumber').val(data.CASNumber[0]);
-                $('#NewSubstance_Chemical_CommonName').val(data.CommonName[0]);
+                $('#EditSubstance_Chemical_ChemicalName').val(data.ChemicalName[0]);
+                $('#EditSubstance_Chemical_CASNumber').val(data.CASNumber[0]);
+                $('#EditSubstance_Chemical_CommonName').val(data.CommonName[0]);
             },
             error: function (error) {
                 console.error('Error fetching search results:', error);

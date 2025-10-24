@@ -24,10 +24,10 @@ namespace FMS.Api
 {
     [Authorize]
     [ApiController]
-    [Route("api/chemsearch")]
+    [Route("api/chem")]
     public class ChemicalSearchController(FmsDbContext _context) : ControllerBase
     {
-        [HttpGet("{query:string}")]
+        [HttpGet("{query:alpha}")]
         public async Task<IActionResult> Get([FromRoute] string query)
         {
             if (string.IsNullOrWhiteSpace(query))
@@ -35,10 +35,9 @@ namespace FMS.Api
                 return Ok(new List<string>()); // Return empty if no query
             }
 
-            var results = await _context.Chemicals.AsNoTracking()
-                                        .Where(e => e.ChemicalName.ToString().Contains(query)) // Example filtering
-                                        .Select(e => e.ChemicalName) // Select relevant data
-                                        .ToListAsync();
+            var results = new JsonResult(await _context.Chemicals.AsNoTracking()
+                                        .Where(e => e.ChemicalName.ToString().Contains(query))
+                                        .ToListAsync());
 
             return Ok(results);
         }
