@@ -90,7 +90,7 @@ namespace FMS.Pages.Event
 
         private async Task PopulateSelectsAsync()
         {
-            EventTypes = await _listHelper.EventTypesSelectListAsync();
+            EventTypes = await _listHelper.AllowedEventsSelectListAsync(EditEvent.ActionTakenId);
             AllowedActionsTaken = await _listHelper.AllowedActionTakenSelectListAsync(EditEvent.EventTypeId);
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
         }

@@ -5,7 +5,11 @@ function setUpActionTypeDropdown(eventElementId, actionElementId, placeholder) {
 
     eventSelect.addEventListener("change", () => {
         const actionSelect = document.getElementById(actionElementId);
-        actionSelect.innerHTML = `<option value="">${placeholder}</option>`;
+        if (actionSelect.innerHTML === '') {
+            actionSelect.innerHTML = `<option value="">${placeholder}</option>`
+        } else {
+            return;
+        };
         actionSelect.disabled = false;
         if (eventSelect.value === '') return;
 
