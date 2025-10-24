@@ -93,7 +93,7 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeTrue();
         }
         [Test]
-        public async Task EventTypeNameExistAsync_ReturnsFlase_EventTypeNameDoesNotExist()
+        public async Task EventTypeNameExistAsync_ReturnsFalse_EventTypeNameDoesNotExist()
         {
             var existingET = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
             _context.EventTypes.Add(existingET);
@@ -107,13 +107,36 @@ namespace FMS.Infrastructure.Tests
         // GetEventTypeByIdAsync
         
 
-
         // GetEventTypeNameAsync
+        [Test]
+        public async Task GetEventTypeByIdAsync_ReturnsEventType_WhenIdExist()
+        {
+            var existingET = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.EventTypes.Add(existingET);
+            await _context.SaveChangesAsync();
 
+            var results = await _repository.GetEventTypeByIdAsync(existingET.Id);
+            results.Should().NotBeNull();
+            results.Id.Should().Be(existingET.Id);
+            results.Name.Should().Be(existingET.Name);
+        }
+        [Test]
+        public async Task GetEventTypeByIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+
+            var results = await _repository.GetEventTypeByIdAsync(nonExistingId);
+            results.Should().BeNull();
+        }
 
 
         // GetEventTypeListAsync
-
+        [Test]
+        public async Task GetEventTypeListAsync_ReturnsAllEventTypes()
+        {
+            var results = await _repository.GetEventTypeListAsync();
+            results.Should().NotBeNullOrEmpty();
+        }
 
 
         // GetActionTakenListByEventType
@@ -121,9 +144,9 @@ namespace FMS.Infrastructure.Tests
 
 
         // CreateEventTypeAsync
-        
-        
-        
+
+
+
         // UpdateEventTypeAsync
 
 
