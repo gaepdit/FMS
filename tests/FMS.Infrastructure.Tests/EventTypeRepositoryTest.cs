@@ -115,6 +115,26 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetEventTypeNameAsync_ReturnsEventTypeName_WhenIdExist()
         {
+            var existingET = await _context.EventTypes.FirstAsync();
+            var results = await _repository.GetEventTypeByIdAsync(existingET.Id);
+
+            var results = await _repository.GetEventTypeNameAsync(existingET.Id);
+
+            results.Should().Be(existingET.Name);
+        }
+        [Test]
+        public async Task GetEventTypeNameAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var results = await _repository.GetEventTypeNameAsync(nonExistingId);
+            
+            results.Should().BeNull();
+        }
+
+        // GetEventTypeNameAsync
+        [Test]
+        public async Task GetEventTypeNameAsync_ReturnsEventTypeName_WhenIdExist()
+        {
             var existingET = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
             _context.EventTypes.Add(existingET);
             await _context.SaveChangesAsync();
