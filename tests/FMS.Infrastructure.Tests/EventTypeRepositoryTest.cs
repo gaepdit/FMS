@@ -7,16 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;
-using NSubstitute;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using FMS.Infrastructure.Contexts;
-using FMS.Infrastructure.Repositories;
-using FMS.Domain.Entities;
-using FMS.Domain.Dto;
-using Microsoft.AspNetCore.Http;
-using FluentAssertions;
 using System.Collections.Generic;
 
 namespace FMS.Infrastructure.Tests
@@ -105,18 +98,14 @@ namespace FMS.Infrastructure.Tests
 
 
         // GetEventTypeByIdAsync
-        
-
-        // GetEventTypeNameAsync
         [Test]
-        public async Task GetEventTypeByIdAsync_ReturnsEventType_WhenIdExist()
+        public async Task GetEventTypeByIdAsync_ReturnsEventTypeEditEto_WhenIdExist()
         {
-            var existingET = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
-            _context.EventTypes.Add(existingET);
-            await _context.SaveChangesAsync();
-
+            var existingET = await _context.EventTypes.FirstAsync();
             var results = await _repository.GetEventTypeByIdAsync(existingET.Id);
+
             results.Should().NotBeNull();
+            results.Should().BeOfType<EventTypeEditDto>();
             results.Id.Should().Be(existingET.Id);
             results.Name.Should().Be(existingET.Name);
         }
@@ -124,8 +113,29 @@ namespace FMS.Infrastructure.Tests
         public async Task GetEventTypeByIdAsync_ReturnsNull_WhenIdDoesNotExist()
         {
             var nonExistingId = Guid.NewGuid();
-
             var results = await _repository.GetEventTypeByIdAsync(nonExistingId);
+
+            results.Should().BeNull();
+        }
+
+        // GetEventTypeNameAsync
+        [Test]
+        public async Task GetEventTypeNameAsync_ReturnsEventTypeName_WhenIdExist()
+        {
+            var existingET = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.EventTypes.Add(existingET);
+            await _context.SaveChangesAsync();
+
+            var results = await _repository.GetEventTypeNameAsync(existingET.Id);
+
+            results.Should().Be(existingET.Name);
+        }
+        [Test]
+        public async Task GetEventTypeNameAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var results = await _repository.GetEventTypeNameAsync(nonExistingId);
+            
             results.Should().BeNull();
         }
 
@@ -144,13 +154,60 @@ namespace FMS.Infrastructure.Tests
 
 
         // CreateEventTypeAsync
+        /*[Test]
+        public async Task CreateEventTypeAsync_CreatesEventType_WhenDataIsValid()
+        {
+            var dto = new EventTypeCreateDto { Name = "VALID_NAME" };
 
+            var newId = _repository.CreateEventTypeAsync(dto);
+            var results = await _repository.GetEventTypeByIdAsync(newId);
+
+        }*/
 
 
         // UpdateEventTypeAsync
+        [Test]
+        public async Task UpdateEventTypeAsync_UpdatesEventType_WhenDataIsValid()
+        {
+            var existingEventType = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.EventTypes.Add(existingEventType);
+            await _context.SaveChangesAsync();
 
+            var updateDto = new EventTypeEditDto { Name = "NEW_NAME" };
+            await _repository.UpdateEventTypeAsync(existingEventType.Id, updateDto);
 
+            var updatedEventType = await _context.EventTypes.FindAsync(existingEventType.Id);
+            updatedEventType.Name.Should().Be("NEW_NAME");
+        }
+        [Test]
+        public async Task UpdateEventTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new EventTypeEditDto { Name = "NON_EXISTENT" };
+
+            Func<Task> action = async () => await _repository.UpdateEventTypeAsync(invalidId, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
 
         // UpdateEventTypeStatusAsync
+        [Test]
+        public async Task UpdateEventTypeStatusAsync_UpdatesStatusCorrectly()
+        {
+            var eventType = new EventType { Id = Guid.NewGuid(), Name = "VALID_NAME", Active = true };
+            _context.EventTypes.Add(eventType);
+            await _context.SaveChangesAsync();
+
+            await _repository.UpdateEventTypeStatusAsync(eventType.Id, false);
+
+            var updatedEventType = await _context.EventTypes.FindAsync(eventType.Id);
+            updatedEventType.Active.Should().BeFalse();
+        }
+
+        [Test]
+        public async Task UpdateEventTypeStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            Func<Task> action = async () => await _repository.UpdateEventTypeStatusAsync(Guid.NewGuid(), false);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }
