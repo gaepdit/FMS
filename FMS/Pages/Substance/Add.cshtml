@@ -242,6 +242,7 @@
             <input type="hidden" asp-for="NewSubstance.Id" />
             <input type="hidden" asp-for="NewSubstance.FacilityId" />
             <input type="hidden" asp-for="NewSubstance.ChemicalId" />
+            <input type="hidden" asp-for="NewSubstance.Active" />
             <div class="row">
                 <div class="col">
                     <label asp-for="NewSubstance.Chemical.CasNo"></label>
@@ -271,10 +272,6 @@
                 <div class="col">
                     <input asp-for="NewSubstance.UseForScoring" class="form-check-input" type="checkbox" />
                     <label asp-for="NewSubstance.UseForScoring" class="form-check-label"></label>
-                </div>
-                <div class="col">
-                    <input asp-for="NewSubstance.Active" class="form-check-input" type="checkbox" />
-                    <label asp-for="NewSubstance.Active" class="form-check-label"></label>
                 </div>
             </div>
             <hr />

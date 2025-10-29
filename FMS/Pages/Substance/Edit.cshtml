@@ -18,6 +18,7 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="EditSubstance.Id" />
         <input type="hidden" asp-for="EditSubstance.FacilityId" />
+        <input type="hidden" asp-for="EditSubstance.Active" />
         <div class="row">
             <div class="col">
                 <label asp-for="EditSubstance.ChemicalId"></label>
@@ -54,10 +55,6 @@
             <div class="col">
                 <input asp-for="EditSubstance.UseForScoring" class="form-check-input" type="checkbox" />
                 <label asp-for="EditSubstance.UseForScoring" class="form-check-label"></label>
-            </div>
-            <div class="col">
-                <input asp-for="EditSubstance.Active" class="form-check-input" type="checkbox" />
-                <label asp-for="EditSubstance.Active" class="form-check-label"></label>
             </div>
         </div>
         <div class="row mt-3">

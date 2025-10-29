@@ -72,7 +72,8 @@ namespace FMS.Pages.Substance
         {
             NewSubstance = newSubstance;
             Id = NewSubstance.FacilityId;
-            NewSubstance.Chemical = await _chemicalRepository.GetChemicalByChemIdAsync(NewSubstance.Chemical.Id);
+            NewSubstance.ChemicalId = NewSubstance.Chemical?.Id ?? Guid.Empty;
+            NewSubstance.Chemical = await _chemicalRepository.GetChemicalByChemIdAsync(NewSubstance.ChemicalId);
 
             if (NewSubstance.Chemical == null)
             {
@@ -82,8 +83,7 @@ namespace FMS.Pages.Substance
                 return Page();
             }
 
-            NewSubstance.ChemicalId = NewSubstance.Chemical.Id;
-            if (await _repository.SubstanceExistsForChemicalAsync(NewSubstance.ChemicalId))
+            if (await _repository.SubstanceExistsForChemicalAsync(NewSubstance.ChemicalId, NewSubstance.FacilityId))
             {
                 ModelState.AddModelError(string.Empty, "A substance for the selected chemical already exists.");
                 ResultsActive = false;

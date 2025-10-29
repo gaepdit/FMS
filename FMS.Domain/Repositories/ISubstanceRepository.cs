@@ -15,7 +15,7 @@ namespace FMS.Domain.Repositories
 
         Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id);
 
-        Task<bool> SubstanceExistsForChemicalAsync(Guid chemicalId);
+        Task<bool> SubstanceExistsForChemicalAsync(Guid chemicalId, Guid facilityId);
 
         Task<SubstanceSummaryDto> GetSubstanceSummaryByIdAsync(Guid id);
 
