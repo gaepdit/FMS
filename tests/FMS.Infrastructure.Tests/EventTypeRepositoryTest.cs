@@ -150,19 +150,40 @@ namespace FMS.Infrastructure.Tests
 
 
         // GetActionTakenListByEventType
+        [Test]
+        public async Task GetActionTakenListByEventType_ReturnsList_WhenDataIsValid()
+        {
+            var existingActionTaken = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_ATNAME" };
+            _context.ActionsTaken.Add(existingActionTaken);
+            await _context.SaveChangesAsync();
 
+            var existingEventType = new EventType { Id = Guid.NewGuid(), Name = "VALID_ETNAME" };
+            _context.EventTypes.Add(existingEventType);
+            await _context.SaveChangesAsync();
+
+            var existingAllowedActionTaken = new AllowedActionTaken
+            {
+                Id = Guid.NewGuid(),
+                EventTypeId = existingEventType.Id,
+                ActionTakenId = existingActionTaken.Id
+            };
+            _context.AllowedActionsTaken.Add(existingAllowedActionTaken);
+            await _context.SaveChangesAsync();
+        }
 
 
         // CreateEventTypeAsync
-        /*[Test]
+        [Test]
         public async Task CreateEventTypeAsync_CreatesEventType_WhenDataIsValid()
         {
             var dto = new EventTypeCreateDto { Name = "VALID_NAME" };
 
-            var newId = _repository.CreateEventTypeAsync(dto);
+            var newId = await _repository.CreateEventTypeAsync(dto);
             var results = await _repository.GetEventTypeByIdAsync(newId);
 
-        }*/
+            results.Name.Should().Be(dto.Name);
+
+        }
 
 
         // UpdateEventTypeAsync
