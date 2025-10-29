@@ -48,6 +48,14 @@ namespace FMS.Infrastructure.Repositories
             return chemical;
         }
 
+        public async Task<Chemical> GetChemicalByChemIdAsync(Guid id)
+        {
+            var chemical = await _context.Chemicals.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            return chemical;
+        }
+
         public async Task<IReadOnlyList<ChemicalSummaryDto>> GetChemicalListAsync()
         {
             return await _context.Chemicals.AsNoTracking()

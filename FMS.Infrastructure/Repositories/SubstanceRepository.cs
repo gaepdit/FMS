@@ -20,6 +20,9 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> SubstanceExistsAsync(Guid id) =>
             _context.Substances.AnyAsync(e => e.Id == id);
 
+        public Task<bool> SubstanceExistsForChemicalAsync(Guid chemicalId) =>
+            _context.Substances.AnyAsync(e => e.ChemicalId == chemicalId);
+
         public async Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id) =>
             await _context.Substances.AsNoTracking()
             .Include(e => e.Chemical)

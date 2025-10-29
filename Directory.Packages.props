@@ -3,6 +3,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="AjaxControlToolkit" Version="20.1.0" />
     <PackageVersion Include="AwesomeAssertions" Version="8.1.0" />
     <PackageVersion Include="AwesomeAssertions.Analyzers" Version="0.34.2" />
     <PackageVersion Include="axios" Version="0.16.2" />
