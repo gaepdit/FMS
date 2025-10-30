@@ -907,7 +907,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.Name, "StringOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.DisplayName, "StringOrNone")
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
@@ -960,7 +960,7 @@
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
                             </dt>
-                            <dd class="col-sm-8 pt-3">
+                            <dd class="col-sm-4 pt-3">
                                 <textarea readonly enabled="false" class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments)</textarea>
                             </dd>
                         </dl>
