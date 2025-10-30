@@ -38,13 +38,21 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new SubstanceSummaryDto(e))
             .SingleOrDefaultAsync();
 
-        public async Task<IReadOnlyList<SubstanceSummaryDto>> GetReadOnlySubstanceByFacilityIdAsync(Guid facilityId) =>
-           await _context.Substances.AsNoTracking()
+        public async Task<IEnumerable<SubstanceSummaryDto>> GetSubstanceListByFacilityIdAsync(Guid facilityId)
+        {
+            var substances = await _context.Substances
+            .AsNoTracking()
             .Include(e => e.Chemical)
             .Where(e => e.FacilityId == facilityId)
             .Select(e => new SubstanceSummaryDto(e))
-            .OrderByDescending(e => e.UseForScoring)
             .ToListAsync();
+
+            substances = [.. substances.OrderByDescending(e => e.Chemical.ChemicalName)];
+
+            return substances;
+        }
+           
+
 
         public async Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId) => await _context.Substances.AsNoTracking()
             .Include(e => e.Chemical)

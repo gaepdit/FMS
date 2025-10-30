@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Substance
@@ -41,6 +42,8 @@ namespace FMS.Pages.Substance
 
         [BindProperty]
         public SubstanceCreateDto NewSubstance { get; set; }
+
+        public IEnumerable<SubstanceSummaryDto> Substances { get; set; }
 
         public SelectList Chemicals { get; private set; }
 
@@ -123,6 +126,7 @@ namespace FMS.Pages.Substance
         private async Task PopulateSelectsAsync()
         {
             Chemicals = await _listHelper.ChemicalsSelectListAsync();
+            Substances = await _repository.GetSubstanceListByFacilityIdAsync(Id);
         }
     }
 }

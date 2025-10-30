@@ -301,3 +301,22 @@ a[target]::after {
 [data-bs-theme=dark] {
     --bs-body-bg: #013901;
 }
+/* Chemical select box
+-------------------------------------------------- */
+.custom-combobox {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+}
+
+.custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+}

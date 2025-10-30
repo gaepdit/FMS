@@ -19,7 +19,7 @@ namespace FMS.Domain.Repositories
 
         Task<SubstanceSummaryDto> GetSubstanceSummaryByIdAsync(Guid id);
 
-        Task<IReadOnlyList<SubstanceSummaryDto>> GetReadOnlySubstanceByFacilityIdAsync(Guid facilityId);
+        Task<IEnumerable<SubstanceSummaryDto>> GetSubstanceListByFacilityIdAsync(Guid facilityId);
 
         Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId);
 

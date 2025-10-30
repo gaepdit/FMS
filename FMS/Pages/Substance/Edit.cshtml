@@ -19,29 +19,24 @@
         <input type="hidden" asp-for="EditSubstance.Id" />
         <input type="hidden" asp-for="EditSubstance.FacilityId" />
         <input type="hidden" asp-for="EditSubstance.Active" />
+        <input type="hidden" asp-for="EditSubstance.ChemicalId" />
         <div class="row">
             <div class="col">
-                <label asp-for="EditSubstance.ChemicalId"></label>
-                <select asp-for="EditSubstance.ChemicalId" asp-items="Model.Chemicals" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="EditSubstance.ChemicalId" class="text-danger"></span>
-            </div>
-            <div class="col">
                 <label asp-for="EditSubstance.Chemical.CasNo"></label>
-                <input asp-for="EditSubstance.Chemical.CasNo" class="form-control" />
+                <input asp-for="EditSubstance.Chemical.CasNo" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.CasNo" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="EditSubstance.Chemical.ChemicalName"></label>
-                <input asp-for="EditSubstance.Chemical.ChemicalName" class="form-control" />
+                <input asp-for="EditSubstance.Chemical.ChemicalName" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.ChemicalName" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="EditSubstance.Chemical.CommonName"></label>
-                <input asp-for="EditSubstance.Chemical.CommonName" class="form-control" />
+                <input asp-for="EditSubstance.Chemical.CommonName" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.CommonName" class="text-danger"></span>
             </div>
+            <p><small>Edit these values in Chemical List Only</small></p>
         </div>
         <div class="row mt-3">
             <div class="col">
