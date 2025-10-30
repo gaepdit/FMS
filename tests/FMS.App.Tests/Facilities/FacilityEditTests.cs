@@ -27,6 +27,7 @@ namespace FMS.App.Tests.Facilities
 
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
             mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns(facility);
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
@@ -36,7 +37,7 @@ namespace FMS.App.Tests.Facilities
             var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor());
             var pageContext = new PageContext(actionContext);
 
-            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper) { PageContext = pageContext };
+            var pageModel = new EditModel(mockRepo, mockType, mockStatus, mockSelectListHelper) { PageContext = pageContext };
 
             var result = await pageModel.OnGetAsync(facility.Id);
 
@@ -50,10 +51,11 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
             mockRepo.GetFacilityAsync(Arg.Any<Guid>()).Returns((FacilityDetailDto)null);
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper);
+            var pageModel = new EditModel(mockRepo, mockType, mockStatus, mockSelectListHelper);
 
             var result = await pageModel.OnGetAsync(Guid.Empty);
 
@@ -67,8 +69,9 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper);
+            var pageModel = new EditModel(mockRepo, mockType, mockStatus, mockSelectListHelper);
 
             var result = await pageModel.OnGetAsync(null);
 
@@ -83,6 +86,7 @@ namespace FMS.App.Tests.Facilities
             var id = Guid.NewGuid();
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
 
@@ -91,7 +95,7 @@ namespace FMS.App.Tests.Facilities
             var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor());
             var pageContext = new PageContext(actionContext);
 
-            var pageModel = new EditModel(mockRepo, mockType, mockSelectListHelper)
+            var pageModel = new EditModel(mockRepo, mockType, mockStatus, mockSelectListHelper)
             {
                 Id = id,
                 Facility = new FacilityEditDto { Latitude = 31, Longitude = -81, FacilityNumber = "a" },

@@ -98,6 +98,9 @@ namespace FMS.Infrastructure.Tests
 
 
         // GetEventTypeByIdAsync
+
+
+        // GetEventTypeNameAsync
         [Test]
         public async Task GetEventTypeByIdAsync_ReturnsEventTypeEditEto_WhenIdExist()
         {
