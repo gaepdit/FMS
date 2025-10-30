@@ -154,6 +154,8 @@ namespace FMS.Infrastructure.Tests
             _context.EventTypes.Add(existingEventType);
             await _context.SaveChangesAsync();
 
+            var ETSummaryDto = new EventTypeSummaryDto(existingEventType);
+
             var existingAllowedActionTaken = new AllowedActionTaken
             {
                 Id = Guid.NewGuid(),
@@ -162,6 +164,10 @@ namespace FMS.Infrastructure.Tests
             };
             _context.AllowedActionsTaken.Add(existingAllowedActionTaken);
             await _context.SaveChangesAsync();
+
+            var results = await _repository.GetActionTakenListByEventType(ETSummaryDto);
+
+            results.Should().NotBeNullOrEmpty();
         }
 
 
