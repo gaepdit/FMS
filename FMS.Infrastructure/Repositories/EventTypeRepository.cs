@@ -60,15 +60,6 @@ namespace FMS.Infrastructure.Repositories
             .ThenBy(e => e.Name)
             .Select(e => new EventTypeSummaryDto(e))
             .ToListAsync();
-        
-        public async Task<IReadOnlyList<ActionTakenSummaryDto>> GetActionTakenListByEventType(EventTypeSummaryDto eventType)
-        {
-            var query = from at in _context.ActionsTaken
-                        join ae in _context.AllowedActionsTaken on at.Id equals ae.ActionTakenId
-                        where ae.EventTypeId == eventType.Id && at.Active && ae.Active
-                        select new ActionTakenSummaryDto(at);
-            return await query.Distinct().OrderBy(at => at.Name).ToListAsync();
-        }
 
         public async Task<Guid> CreateEventTypeAsync(EventTypeCreateDto eventType)
         {

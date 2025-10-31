@@ -4,6 +4,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FMS.Domain.Entities;
+using FMS.Infrastructure.Contexts;
+using FMS.Domain.Dto;
+using FMS.Infrastructure.Repositories;
+using FluentAssertions;
+using NSubstitute;
+using Microsoft.AspNetCore.Http;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -113,17 +120,16 @@ namespace FMS.Infrastructure.Tests
 
         // GetEventTypeNameAsync
         [Test]
-        public async Task GetEventTypeNameAsync_ReturnsEventTypeName_WhenIdExist()
+        public async Task GetEventTypeNameAsyncReturnsEventTypeNameWhenIdExist()
         {
             var existingET = await _context.EventTypes.FirstAsync();
-            var results = await _repository.GetEventTypeByIdAsync(existingET.Id);
 
             var results = await _repository.GetEventTypeNameAsync(existingET.Id);
 
             results.Should().Be(existingET.Name);
         }
         [Test]
-        public async Task GetEventTypeNameAsync_ReturnsNull_WhenIdDoesNotExist()
+        public async Task GetEventTypeNameAsyncReturnsNullWhenIdDoesNotExist()
         {
             var nonExistingId = Guid.NewGuid();
             var results = await _repository.GetEventTypeNameAsync(nonExistingId);
@@ -160,36 +166,6 @@ namespace FMS.Infrastructure.Tests
             var results = await _repository.GetEventTypeListAsync();
             results.Should().NotBeNullOrEmpty();
         }
-
-
-        // GetActionTakenListByEventType
-        [Test]
-        public async Task GetActionTakenListByEventType_ReturnsList_WhenDataIsValid()
-        {
-            var existingActionTaken = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_ATNAME" };
-            _context.ActionsTaken.Add(existingActionTaken);
-            await _context.SaveChangesAsync();
-
-            var existingEventType = new EventType { Id = Guid.NewGuid(), Name = "VALID_ETNAME" };
-            _context.EventTypes.Add(existingEventType);
-            await _context.SaveChangesAsync();
-
-            var ETSummaryDto = new EventTypeSummaryDto(existingEventType);
-
-            var existingAllowedActionTaken = new AllowedActionTaken
-            {
-                Id = Guid.NewGuid(),
-                EventTypeId = existingEventType.Id,
-                ActionTakenId = existingActionTaken.Id
-            };
-            _context.AllowedActionsTaken.Add(existingAllowedActionTaken);
-            await _context.SaveChangesAsync();
-
-            var results = await _repository.GetActionTakenListByEventType(ETSummaryDto);
-
-            results.Should().NotBeNullOrEmpty();
-        }
-
 
         // CreateEventTypeAsync
         [Test]
