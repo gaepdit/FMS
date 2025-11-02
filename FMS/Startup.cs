@@ -103,6 +103,7 @@ namespace FMS
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
             services.AddScoped<IAllowedActionTakenHelper, AllowedActionTakenHelper>();
+            services.AddScoped<IAbandonedInactiveRepository, AbandonedInactiveRepository>();
             services.AddScoped<IGapsAssessmentRepository, GapsAssessmentRepository>();
             services.AddScoped<IHsrpFacilityPropertiesRepository, HsrpFacilityPropertiesRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();

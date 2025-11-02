@@ -34,6 +34,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<RetentionRecord> RetentionRecords { get; set; }
         public DbSet<Chemical> Chemicals { get; set; }
+        public DbSet<AbandonedInactive> AbandonedInactives { get; set; }
         public DbSet<ActionTaken> ActionsTaken { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
