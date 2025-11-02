@@ -849,6 +849,31 @@
                         </h3>
                         <hr />
                         <dl class="row">
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.DisplayName, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber, "StringOrNone")
+                            </dd>
+                            <div><hr /></div>
                             <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
                             </dt>
@@ -896,30 +921,6 @@
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallDate, "DateOrNone")
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.DisplayName, "StringOrNone")
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber, "StringOrNone")
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSScore)
