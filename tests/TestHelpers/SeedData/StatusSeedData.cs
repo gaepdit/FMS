@@ -42,6 +42,8 @@ namespace FMS.TestData.SeedData
                     GAPSAssessmentId = new Guid("DC9738A8-7C88-421A-8E1A-36D0B518C582"),
                     CostEstimate = 62000,
                     CostEstimateDate = new(2018, 2, 13),
+                    AbandonedInactiveId = new Guid("9c9582b2-c065-4640-933c-eeff05626b04"),
+                    ReportComments = "Report comments for this status"
                 },
                 new()
                 {
@@ -76,6 +78,8 @@ namespace FMS.TestData.SeedData
                     GAPSAssessmentId = new Guid("E1F11C25-43EE-4C87-8461-1308E935451F"),
                     CostEstimate = 62000,
                     CostEstimateDate = new(2018, 2, 13),
+                    AbandonedInactiveId = new Guid("74f1dbdd-cd4a-463d-b426-3ccc98fc0ab6"),
+                    ReportComments = "Another report comment for this status"
                 }
             };
         }
