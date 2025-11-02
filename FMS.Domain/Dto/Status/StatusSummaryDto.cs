@@ -102,7 +102,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
 
-        [Display(Name = "Pertinent Information<br/>for Aban/Inac sites")]
+        [Display(Name = "Pertinent Information for Aban/Inac sites")]
         public AbandonedInactive AbandonedInactive { get; set; }
 
         [Display(Name = "Report Comments")]
