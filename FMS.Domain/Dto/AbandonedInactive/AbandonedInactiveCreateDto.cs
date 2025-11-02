@@ -2,10 +2,10 @@
 
 namespace FMS.Domain.Dto
 {
-    public class ActionTakenCreateDto
+    public class AbandonedInactiveCreateDto
     {
-        [Display(Name = "Action Taken")]
-        [Required(ErrorMessage = "Action Taken Name is required.")]
+        [Display(Name = "Pertinent Information for Aban/Inac Sites")]
+        [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
 
         public void TrimAll()
