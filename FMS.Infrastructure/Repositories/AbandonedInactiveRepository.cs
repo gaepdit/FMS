@@ -23,6 +23,10 @@ namespace FMS.Infrastructure.Repositories
             _context.AbandonedInactives.AnyAsync(e =>
                 e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
+        public Task<bool> AbandonedInactiveDescriptionExistsAsync(string description, Guid? ignoreId = null) =>
+            _context.AbandonedInactives.AnyAsync(e =>
+                e.Description == description && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<IReadOnlyList<AbandonedInactiveSummaryDto>> GetAbandonedInactiveListAsync(bool activeOnly = false) => await _context.AbandonedInactives.AsNoTracking()
               .OrderByDescending(e => e.Active)
               .ThenBy(e => e.Name)
@@ -75,6 +79,7 @@ namespace FMS.Infrastructure.Repositories
             }
             // Update properties 
             existingAI.Name = abandonedInactive.Name;
+            existingAI.Description = abandonedInactive.Description;
             existingAI.Active = abandonedInactive.Active;
 
             await _context.SaveChangesAsync();

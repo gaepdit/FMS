@@ -31,6 +31,8 @@ namespace FMS.TestData.SeedData
                 await context.ContactTypes.AddRangeAsync(GetContactTypes(), token);
             if (!await context.ActionsTaken.AnyAsync(token))
                 await context.ActionsTaken.AddRangeAsync(GetActionsTaken(), token);
+            if (!await context.AbandonedInactives.AnyAsync(token))
+                await context.AbandonedInactives.AddRangeAsync(GetAbandonedInactives(), token);
             if (!await context.EventTypes.AnyAsync(token))
                 await context.EventTypes.AddRangeAsync(GetEventTypes(), token);
             if (!await context.FundingSources.AnyAsync(token))

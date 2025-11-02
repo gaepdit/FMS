@@ -9,6 +9,7 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> AbandonedInactiveExistsAsync(Guid id);
         Task<bool> AbandonedInactiveNameExistsAsync(string name, Guid? ignoreId = null);
+        Task<bool> AbandonedInactiveDescriptionExistsAsync(string description, Guid? ignoreId = null);
         Task<IReadOnlyList<AbandonedInactiveSummaryDto>> GetAbandonedInactiveListAsync(bool activeOnly = false);
         Task<AbandonedInactiveEditDto> GetAbandonedInactiveAsync(Guid id);
         Task<Guid> CreateAbandonedInactiveAsync(AbandonedInactiveCreateDto abandonedInactive);

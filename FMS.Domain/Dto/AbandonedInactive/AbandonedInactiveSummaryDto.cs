@@ -11,6 +11,7 @@ namespace FMS.Domain.Dto
             Id = abandonedInactive.Id;
             Active = abandonedInactive.Active;
             Name = abandonedInactive.Name;
+            Description = abandonedInactive.Description;
         }
 
         public Guid Id { get; }
@@ -19,5 +20,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Pertinent Information for Aban/Inac Sites")]
         public string Name { get; }
+
+        public string Description { get; }
     }
 }

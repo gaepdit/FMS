@@ -14,6 +14,7 @@ namespace FMS.Domain.Dto
         {
             Active = abanInac.Active;
             Name = abanInac.Name;
+            Description = abanInac.Description;
         }
 
         public bool Active { get; set; }
@@ -22,9 +23,12 @@ namespace FMS.Domain.Dto
         [Display(Name = "Pertinent Information for Aban/Inac Sites")]
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public void TrimAll()
         {
             Name = Name?.Trim();
+            Description = Description?.Trim();
         }
     }
 }
