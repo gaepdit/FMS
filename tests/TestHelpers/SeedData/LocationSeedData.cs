@@ -17,8 +17,8 @@ namespace FMS.TestData.SeedData
                     Id = new Guid("533EBBD5-4144-41D5-9338-C3C5317C3E5E"),
                     Active = true,
                     FacilityId = new Guid("3FF8B38C-B2A0-4A32-B703-BEAB9138B7F0"),
-                    Name = "The Director has determined that this site requires corrective action.",
-                    Class = "I",
+                    Description = "The Director has determined that this site requires corrective action.",
+                    Description = "I",
                 },
                 new()
                 {
@@ -26,7 +26,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("AB44F9C7-C2EC-47BC-8886-60D72B5BD5EB"),
                     Name = "Pending",
-                    Class = "II",
+                    Description = "II",
                 },
                 new()
                 {
@@ -34,7 +34,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     Name = "The Director has determined that this site requires corrective action. ",
-                    Class = "III",
+                    Description = "III",
                 },
                 new()
                 {
@@ -42,7 +42,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("7B20DE98-4726-4789-9AEA-2D995FF6839A"),
                     Name = "The Director has determined that this site requires corrective action. ",
-                    Class = "IV",
+                    Description = "IV",
                 },
                 new()
                 {
@@ -50,7 +50,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     Name = "The Director has determined that this site requires corrective action. ",
-                    Class = "V",
+                    Description = "V",
                 },
                 new()
                 {
@@ -58,7 +58,7 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("E697F074-9C1C-4CEF-93F0-FCD9610ECCD3"),
                     Name = "Error",
-                    Class = "ER",
+                    Description = "ER",
                 }
             };
         }

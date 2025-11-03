@@ -6,6 +6,7 @@ using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
@@ -44,17 +45,13 @@ namespace FMS.Infrastructure.Repositories
             return new LocationEditDto(location);
         }
 
-        public async Task<List<LocationSummaryDto>> GetLocationClassesSelectListAsync()
-        {
-            var locations = await _context.Locations.AsNoTracking()
+        public async Task<List<LocationSummaryDto>> GetLocationListAsync() =>
+            await _context.Locations.AsNoTracking()
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.Name)
+                .Select(e => new LocationSummaryDto(e))
                 .ToListAsync();
-            var locationSummaries = new List<LocationSummaryDto>();
-            foreach (var location in locations)
-            {
-                locationSummaries.Add(new LocationSummaryDto(location));
-            }
-            return locationSummaries;
-        }
+        
 
         public Task<Guid> CreateLocationAsync(LocationCreateDto location)
         {
@@ -97,7 +94,7 @@ namespace FMS.Infrastructure.Repositories
 
             location.FacilityId = locationUpdates.FacilityId;
             location.Name = locationUpdates.Name;
-            location.Class = locationUpdates.Class;
+            location.Description = locationUpdates.Class;
 
             _context.Locations.Update(location);
             await _context.SaveChangesAsync();

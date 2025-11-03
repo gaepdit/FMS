@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace FMS.Domain.Data
 {
-    public static partial class ContactStatus
+    public static partial class Data
     {
         public static List<string> ContactStatuses => new List<string>
         {

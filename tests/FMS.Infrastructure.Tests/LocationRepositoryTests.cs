@@ -35,7 +35,7 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
-                Class = "VALID_CLASS",
+                Description = "VALID_CLASS",
                 Active = true
             });
             _context.SaveChanges();
@@ -83,7 +83,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().NotBeNull();
             result.Should().BeOfType<LocationEditDto>();
             result.Id.Should().Be(existingLocation.Id);
-            result.Class.Should().Be(existingLocation.Class);
+            result.Class.Should().Be(existingLocation.Description);
         }
         [Test]
         public async Task GetLocationByIdAsync_WhenIdDoesNotExist_ReturnsNull()
@@ -104,7 +104,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().NotBeNull();
             result.Should().BeOfType<LocationEditDto>();
             result.Id.Should().Be(existingLocation.Id);
-            result.Class.Should().Be(existingLocation.Class);
+            result.Class.Should().Be(existingLocation.Description);
         }
         [Test]
         public async Task GetLocationByFacilityIdAsync_WhenFacilityIdDoesNotExist_ReturnsNull()
@@ -125,14 +125,14 @@ namespace FMS.Infrastructure.Tests
             var createdLocation = await _context.Locations.FindAsync(newId);
 
             createdLocation.Should().NotBeNull();
-            createdLocation.Class.Should().Be("VALID_CLASS");
+            createdLocation.Description.Should().Be("VALID_CLASS");
         }
 
         // UpdateLocationAsync
         [Test]
         public async Task UpdateLocationAsync_UpdatesExistingLocation_WhenDataIsValid()
         {
-            var existingLocation = new Location { Id = Guid.NewGuid(), FacilityId = Guid.NewGuid(), Class = "VALID_CLASS" };
+            var existingLocation = new Location { Id = Guid.NewGuid(), FacilityId = Guid.NewGuid(), Description = "VALID_CLASS" };
             _context.Locations.Add(existingLocation);
             await _context.SaveChangesAsync();
 
@@ -140,7 +140,7 @@ namespace FMS.Infrastructure.Tests
             await _repository.UpdateLocationAsync(existingLocation.FacilityId, updateDto);
 
             var updatedLocation = await _context.Locations.FindAsync(existingLocation.Id);
-            updatedLocation.Class.Should().Be("NEW_CLASS");
+            updatedLocation.Description.Should().Be("NEW_CLASS");
         }
         [Test]
         public async Task UpdateLocationAsync_ThrowsArgumentException_WhenIdDoesNotExist()
@@ -156,7 +156,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task UpdateLocationStatusAsync_UpdatesStatusCorrectly()
         {
-            var newLocation = new Location { Id = Guid.NewGuid(), Class = "VALID_CLASS", Active = true };
+            var newLocation = new Location { Id = Guid.NewGuid(), Description = "VALID_CLASS", Active = true };
             _context.Locations.Add(newLocation);
             await _context.SaveChangesAsync();
 

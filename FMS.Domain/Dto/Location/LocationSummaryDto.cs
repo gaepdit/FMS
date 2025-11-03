@@ -14,7 +14,7 @@ namespace FMS.Domain.Dto
             Active = location.Active;
             FacilityId = location.FacilityId;
             Name = location.Name;
-            Class = location.Class;
+            Class = location.Description;
         }
 
         public Guid Id { get; set; }

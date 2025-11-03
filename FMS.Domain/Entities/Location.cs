@@ -20,7 +20,7 @@ namespace FMS.Domain.Entities
             Id = id;
             FacilityId = location.FacilityId;
             Name = location.Name;
-            Class = location.Class;
+            Description = location.Class;
         }
 
         public Guid FacilityId { get; set; }
@@ -28,6 +28,6 @@ namespace FMS.Domain.Entities
         [Display (Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
         public string Name { get; set; }
 
-        public string Class { get; set; }
+        public string Description { get; set; }
     }
 }
