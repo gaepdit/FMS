@@ -1,10 +1,11 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class Location : BaseActiveModel
+    public class Location : BaseActiveModel, INamedModel
     {
         public Location() { }
 
@@ -18,10 +19,14 @@ namespace FMS.Domain.Entities
         {
             Id = id;
             FacilityId = location.FacilityId;
+            Name = location.Name;
             Class = location.Class;
         }
 
         public Guid FacilityId { get; set; }
+
+        [Display (Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
+        public string Name { get; set; }
 
         public string Class { get; set; }
     }

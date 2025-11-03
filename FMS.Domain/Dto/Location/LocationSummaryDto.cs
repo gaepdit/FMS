@@ -13,6 +13,7 @@ namespace FMS.Domain.Dto
             Id = location.Id;
             Active = location.Active;
             FacilityId = location.FacilityId;
+            Name = location.Name;
             Class = location.Class;
         }
 
@@ -21,6 +22,8 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         public Guid FacilityId { get; set; }
+
+        public string Name { get; set; }
 
         [Display(Name = "Class")]
         public string Class { get; set; }

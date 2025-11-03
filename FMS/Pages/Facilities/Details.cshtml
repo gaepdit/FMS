@@ -437,6 +437,12 @@
                             <div class="col-sm-2">
                                 @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
                             </div>
+                            <div class="col-sm-9">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.Name)
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Name, "StringOrNone")
+                            </div>
                         </div>
                         <hr />
                         <h4>
@@ -877,7 +883,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name,"StringOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name, "StringOrNone")
                             </dd>
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ReportComments)

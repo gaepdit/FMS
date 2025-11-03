@@ -110,6 +110,13 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
                 .ToListAsync();
 
+        public async Task<IEnumerable<ListItem>> GetLocationItemListAsync(bool includeInactive = false) =>
+            await _context.Locations.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.Class })
+                .ToListAsync();
+
         public async Task<IEnumerable<ListItem>> GetOverallStatusesListAsync(bool includeInactive = false) =>
             await _context.OverallStatuses.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
@@ -293,6 +300,17 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.GroundwaterStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetLocationNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.Locations.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }

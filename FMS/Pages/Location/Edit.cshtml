@@ -21,11 +21,16 @@
         <input type="hidden" asp-for="Location.FacilityId" />
         <input type="hidden" asp-for="Location.Id" />
         <div class="row mb-3">
-            <div class="col-2 mb-3">
+            <div class="col-3 mb-3">
                 <label asp-for="Location.Class" class="form-label">Class</label>
                 <select asp-for="Location.Class" asp-items="Model.Classes" class="form-select">
                 </select>
                 <span asp-validation-for="Location.Class" class="text-danger"></span>
+            </div>
+            <div class="col-9 mb-3">
+                <label asp-for="Location.Name" class="form-label">GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: </label>
+                <input asp-for="Location.Name" class="form-control" readonly />
+                <span asp-validation-for="Location.Name" class="text-danger"></span>
             </div>
         </div>
         <hr />

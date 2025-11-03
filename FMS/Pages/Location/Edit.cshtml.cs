@@ -18,13 +18,15 @@ namespace FMS.Pages.Location
     {
         private readonly ILocationRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
-
+        private readonly ISelectListHelper _selectListHelper;
         public EditModel(
             ILocationRepository repository, 
-            IFacilityRepository facilityRepository)
+            IFacilityRepository facilityRepository,
+            ISelectListHelper selectListHelper)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
+            _selectListHelper = selectListHelper;
         }
 
         [BindProperty]
@@ -35,7 +37,7 @@ namespace FMS.Pages.Location
         [BindProperty]
         public Guid Id { get; set; }
 
-        public SelectList Classes => new(Data.Classes);
+        public SelectList Classes { get; set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -43,6 +45,7 @@ namespace FMS.Pages.Location
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
+            Classes = await _selectListHelper.LocationSelectListAsync();
 
             Location = await _repository.GetLocationByFacilityIdAsync(id);
             if (Location == null)
