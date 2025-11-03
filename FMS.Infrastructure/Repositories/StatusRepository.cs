@@ -28,6 +28,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.OverallStatus)
                 .Include(e => e.FundingSource)
                 .Include(e => e.GAPSAssessment)
+                .Include(e => e.AbandonedInactive)
                 .Where(e => e.FacilityId == facilityId)
                 .Select(e => new StatusEditDto(e))
                 .SingleOrDefaultAsync();
@@ -50,6 +51,7 @@ namespace FMS.Infrastructure.Repositories
             newStatus.OverallStatusId = null;
             newStatus.SoilStatusId = null;
             newStatus.SourceStatusId = null;
+            newStatus.AbandonedInactiveId = null;
 
             if (status.FacilityId == Guid.Empty)
             {
@@ -101,6 +103,8 @@ namespace FMS.Infrastructure.Repositories
             existingStatus.GAPSAssessmentId = statusUpdates.GAPSAssessmentId;
             existingStatus.CostEstimate = statusUpdates.CostEstimate;
             existingStatus.CostEstimateDate = statusUpdates.CostEstimateDate;
+            existingStatus.AbandonedInactiveId = statusUpdates.AbandonedInactiveId;
+            existingStatus.ReportComments = statusUpdates.ReportComments;
 
             _context.Statuses.Update(existingStatus);
             await _context.SaveChangesAsync();

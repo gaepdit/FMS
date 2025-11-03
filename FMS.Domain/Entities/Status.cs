@@ -39,6 +39,8 @@ namespace FMS.Domain.Entities
             FinancialAssurance = status.FinancialAssurance;
             CostEstimate = status.CostEstimate;
             CostEstimateDate = status.CostEstimateDate;
+            AbandonedInactiveId = status.AbandonedInactiveId;
+            ReportComments = status.ReportComments;
         }
 
         public Guid FacilityId { get; set; }
@@ -111,5 +113,11 @@ namespace FMS.Domain.Entities
 
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
+
+        public Guid? AbandonedInactiveId { get; set; }
+        [Display(Name = "Pertinent Information for Aban/Inac sites")]
+        public AbandonedInactive AbandonedInactive { get; set; }
+
+        public string ReportComments {  get; set; }
     }
 }

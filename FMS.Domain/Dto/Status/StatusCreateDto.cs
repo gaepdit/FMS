@@ -83,5 +83,12 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Cost Estimate Date")]
         public DateOnly? CostEstimateDate { get; set; }
+
+        [Display(Name = "Pertinent Information for Aban/Inac sites")]
+        public Guid? AbandonedInactiveId { get; set; }
+        [Display(Name = "Abandoned/Inactive")]
+        public AbandonedInactive AbandonedInactive { get; set; }
+
+        public string ReportComments { get; set; }
     }
 }

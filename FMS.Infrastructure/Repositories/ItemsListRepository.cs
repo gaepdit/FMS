@@ -70,6 +70,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetActionsTakenListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ActionTaken>(includeInactive);
 
+        public async Task<IEnumerable<ListItem>> GetAbandonedInactiveListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<AbandonedInactive>(includeInactive);
+
         public async Task<IEnumerable<ListItem>> GetAllowedActionsTakenListAsync(Guid? id, bool includeInactive = false) => await _context.AllowedActionsTaken.AsNoTracking()
             .Where(e => (e.EventTypeId == id) && (e.Active || includeInactive))
             .Include(e => e.ActionTaken)
@@ -215,6 +218,16 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.ActionsTaken.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+        public async Task<string> GetAbandonedInactiveNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.AbandonedInactives.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }
