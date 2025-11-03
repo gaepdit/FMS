@@ -39,17 +39,8 @@ namespace FMS.Pages.Facilities
 
         public string PendingNotificationFolderLink { get; set; } = string.Empty;
 
-        public string MapLink
-        {
-            get
-            {
-                if (FacilityDetail != null && FacilityDetail.Latitude != 0 && FacilityDetail.Longitude != 0)
-                {
-                    return UrlHelper.GetMapLink(FacilityDetail.Latitude, FacilityDetail.Longitude);
-                }
-                return string.Empty;
-            }
-        }
+        [BindProperty]
+        public string MapLink { get; set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -104,6 +95,7 @@ namespace FMS.Pages.Facilities
 
             Lat = FacilityDetail.Latitude != 0 ? FacilityDetail.Latitude.ToString() : null;
             Lon = FacilityDetail.Longitude != 0 ? FacilityDetail.Longitude.ToString() : null;
+            MapLink = GetMapLink();
 
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
@@ -147,5 +139,13 @@ namespace FMS.Pages.Facilities
             return RedirectToPage();
         }
        
+        public string GetMapLink()
+        {
+            if (FacilityDetail != null && FacilityDetail.Latitude != 0 && FacilityDetail.Longitude != 0)
+            {
+                return UrlHelper.GetMapLink(FacilityDetail.Latitude, FacilityDetail.Longitude);
+            }
+            return string.Empty;
+        }
     }
 }

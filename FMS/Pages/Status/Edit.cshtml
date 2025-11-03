@@ -22,6 +22,45 @@
         <input type="hidden" asp-for="EditStatus.Id" />
         <input type="hidden" asp-for="EditStatus.Active" />
         <div class="row mb-3">
+            <div class="col mb-4">
+                <label asp-for="EditStatus.FundingSourceId" class="form-label"></label>
+                <select asp-for="EditStatus.FundingSourceId" asp-items="Model.FundingSources" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.FundingSourceId" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <input asp-for="EditStatus.ISWQS" class="form-check-input" />
+                <label asp-for="EditStatus.ISWQS" class="form-check-label"></label>
+                <span asp-validation-for="EditStatus.ISWQS" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <input asp-for="EditStatus.LandFill" class="form-check-input" />
+                <label asp-for="EditStatus.LandFill" class="form-check-label"></label>
+                <span asp-validation-for="EditStatus.LandFill" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="EditStatus.SolidWastePermitNumber" class="form-label"></label>
+                <input asp-for="EditStatus.SolidWastePermitNumber" class="form-control" />
+                <span asp-validation-for="EditStatus.SolidWastePermitNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-4 mb-3">
+                <label asp-for="EditStatus.AbandonedInactiveId" class="form-label"></label>
+                <select asp-for="EditStatus.AbandonedInactiveId" asp-items="Model.AbandonedInactive" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.AbandonedInactiveId" class="text-danger"></span>
+            </div>
+            <div class="col-sm-8 mb-3">
+                <label asp-for="EditStatus.ReportComments" class="form-label"></label>
+                <textarea asp-for="EditStatus.ReportComments" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="EditStatus.ReportComments" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row mb-3">
             <div class="col-md-3">
                 <label asp-for="EditStatus.SourceStatusId" class="form-label"></label>
                 <select asp-for="EditStatus.SourceStatusId" asp-items="Model.SourceStatuses" class="form-select">
@@ -79,30 +118,6 @@
                     <input asp-for="EditStatus.OverallDate" class="form-control datepicker" type="date" placeholder="" />
                     <span asp-validation-for="EditStatus.OverallDate" class="text-danger"></span>
                 </div>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-3">
-                <input asp-for="EditStatus.ISWQS" class="form-check-input" />
-                <label asp-for="EditStatus.ISWQS" class="form-check-label"></label>
-                <span asp-validation-for="EditStatus.ISWQS" class="text-danger"></span>
-            </div>
-            <div class="col mb-3">
-                <label asp-for="EditStatus.FundingSourceId" class="form-label"></label>
-                <select asp-for="EditStatus.FundingSourceId" asp-items="Model.FundingSources" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="EditStatus.FundingSourceId" class="text-danger"></span>
-            </div>
-            <div class="col-md-3">
-                <input asp-for="EditStatus.LandFill" class="form-check-input" />
-                <label asp-for="EditStatus.LandFill" class="form-check-label"></label>
-                <span asp-validation-for="EditStatus.LandFill" class="text-danger"></span>
-            </div>
-            <div class="col-md-3">
-                <label asp-for="EditStatus.SolidWastePermitNumber" class="form-label"></label>
-                <input asp-for="EditStatus.SolidWastePermitNumber" class="form-control" />
-                <span asp-validation-for="EditStatus.SolidWastePermitNumber" class="text-danger"></span>
             </div>
         </div>
         <div class="row mb-3">

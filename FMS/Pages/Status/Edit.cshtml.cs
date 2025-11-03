@@ -44,7 +44,7 @@ namespace FMS.Pages.Status
         public SelectList OverallStatuses { get; private set; }
         public SelectList FundingSources { get; private set; }
         public SelectList GAPSAssessments { get; private set; }
-        public SelectList AbandonSites { get; private set; }
+        public SelectList AbandonedInactive { get; private set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -113,6 +113,7 @@ namespace FMS.Pages.Status
             OverallStatuses = await _listHelper.OverallStatusesSelectListAsync();
             FundingSources = await _listHelper.FundingSourceSelectListAsync();
             GAPSAssessments = await _listHelper.GAPSAssessmentSelectListAsync();
+            AbandonedInactive = await _listHelper.AbandonedInactiveSelectListAsync();
         }
     }
 }

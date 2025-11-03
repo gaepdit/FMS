@@ -22,6 +22,7 @@ namespace FMS.Domain.Repositories
 
         // Phase III updates
         Task<IEnumerable<ListItem>> GetActionsTakenListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetAbandonedInactiveListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetAllowedActionsTakenListAsync(Guid? id, bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetChemicalListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetContactTitlesListAsync(bool includeInactive = false);
@@ -46,6 +47,7 @@ namespace FMS.Domain.Repositories
 
         //Phase III updates
         Task<string> GetActionTakenNameAsync(Guid? id);
+        Task<string> GetAbandonedInactiveNameAsync(Guid? id);
         Task<string> GetChemicalNameAsync(Guid? id);
         Task<string> GetContactTitleNameAsync(Guid? id);
         Task<string> GetContactTypeNameAsync(Guid? id);

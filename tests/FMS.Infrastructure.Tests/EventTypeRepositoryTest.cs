@@ -11,6 +11,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FMS.Domain.Entities;
+using FMS.Infrastructure.Contexts;
+using FMS.Domain.Dto;
+using FMS.Infrastructure.Repositories;
+using FluentAssertions;
+using NSubstitute;
+using Microsoft.AspNetCore.Http;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -118,6 +125,25 @@ namespace FMS.Infrastructure.Tests
             var nonExistingId = Guid.NewGuid();
             var results = await _repository.GetEventTypeByIdAsync(nonExistingId);
 
+            results.Should().BeNull();
+        }
+
+        // GetEventTypeNameAsync
+        [Test]
+        public async Task GetEventTypeNameAsyncReturnsEventTypeNameWhenIdExist()
+        {
+            var existingET = await _context.EventTypes.FirstAsync();
+
+            var results = await _repository.GetEventTypeNameAsync(existingET.Id);
+
+            results.Should().Be(existingET.Name);
+        }
+        [Test]
+        public async Task GetEventTypeNameAsyncReturnsNullWhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var results = await _repository.GetEventTypeNameAsync(nonExistingId);
+            
             results.Should().BeNull();
         }
 

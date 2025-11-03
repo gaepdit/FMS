@@ -849,6 +849,43 @@
                         </h3>
                         <hr />
                         <dl class="row">
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.DisplayName, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber, "StringOrNone")
+                            </dd>
+                            <dt class="col-sm-3 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive)
+                            </dt>
+                            <dd class="col-sm-3 pt-3">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name,"StringOrNone")
+                            </dd>
+                            <dt class="col-sm-2 pt-3">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ReportComments)
+                            </dt>
+                            <dd class="col-sm-4 pt-3">
+                                <textarea readonly enabled="false" class="form-control" rows="3" id="ReportComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ReportComments)</textarea>
+                            </dd>
+                            <div><hr /></div>
                             <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
                             </dt>
@@ -898,30 +935,6 @@
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallDate, "DateOrNone")
                             </dd>
                             <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.Name, "StringOrNone")
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
-                            </dt>
-                            <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber, "StringOrNone")
-                            </dd>
-                            <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSScore)
                             </dt>
                             <dd class="col-sm-3 pt-3">
@@ -960,7 +973,7 @@
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
                             </dt>
-                            <dd class="col-sm-8 pt-3">
+                            <dd class="col-sm-10 pt-3">
                                 <textarea readonly enabled="false" class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments)</textarea>
                             </dd>
                         </dl>
