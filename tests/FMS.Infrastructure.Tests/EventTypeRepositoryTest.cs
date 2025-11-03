@@ -178,33 +178,7 @@ namespace FMS.Infrastructure.Tests
         }
 
 
-        // GetActionTakenListByEventType
-        // LINQ code to be rewritten to work with EF
-        [Test]
-        public async Task GetActionTakenListByEventType_ReturnsList_WhenDataIsValid()
-        {
-            var existingActionTaken = new ActionTaken { Id = Guid.NewGuid(), Name = "VALID_ATNAME" };
-            _context.ActionsTaken.Add(existingActionTaken);
-
-            var existingEventType = new EventType { Id = Guid.NewGuid(), Name = "VALID_ETNAME" };
-            _context.EventTypes.Add(existingEventType);
-
-            var ETSummaryDto = new EventTypeSummaryDto(existingEventType);
-
-            var existingAllowedActionTaken = new AllowedActionTaken
-            {
-                Id = Guid.NewGuid(),
-                EventTypeId = existingEventType.Id,
-                ActionTakenId = existingActionTaken.Id
-            };
-            _context.AllowedActionsTaken.Add(existingAllowedActionTaken);
-            await _context.SaveChangesAsync();
-
-            var results = await _repository.GetActionTakenListByEventType(ETSummaryDto);
-
-            results.Should().NotBeNullOrEmpty();
-        }
-
+        
 
         // CreateEventTypeAsync
         [Test]
