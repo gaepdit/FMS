@@ -37,6 +37,8 @@ namespace FMS.TestData.SeedData
                 await context.EventTypes.AddRangeAsync(GetEventTypes(), token);
             if (!await context.FundingSources.AnyAsync(token))
                 await context.FundingSources.AddRangeAsync(GetFundingSources(), token);
+            if (!await context.LocationClasses.AnyAsync(token))
+                await context.LocationClasses.AddRangeAsync(GetLocationClasses(), token);
             if (!await context.ParcelTypes.AnyAsync(token))
                 await context.ParcelTypes.AddRangeAsync(GetParcelTypes(), token);
             if (!await context.OverallStatuses.AnyAsync(token))

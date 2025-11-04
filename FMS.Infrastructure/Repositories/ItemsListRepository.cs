@@ -110,8 +110,8 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
                 .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetLocationItemListAsync(bool includeInactive = false) =>
-            await _context.Locations.AsNoTracking()
+        public async Task<IEnumerable<ListItem>> GetLocationClassesListAsync(bool includeInactive = false) =>
+            await _context.LocationClasses.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
                 .Select(e => new ListItem() { Id = e.Id, Name = e.Name })
@@ -306,11 +306,11 @@ namespace FMS.Infrastructure.Repositories
             return null;
         }
 
-        public async Task<string> GetLocationNameAsync(Guid? id)
+        public async Task<string> GetLocationClassNameAsync(Guid? id)
         {
             if (id.HasValue)
             {
-                var item = await _context.Locations.AsNoTracking()
+                var item = await _context.LocationClasses.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }

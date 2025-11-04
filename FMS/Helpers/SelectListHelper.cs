@@ -25,7 +25,7 @@ namespace FMS
         Task<SelectList> EventTypesSelectListAsync(bool includeInactive = false);
         Task<SelectList> FundingSourceSelectListAsync(bool includeInactive = false);
         Task<SelectList> GroundwaterStatusesSelectListAsync(bool includeInactive = false);
-        Task<SelectList> LocationSelectListAsync(bool includeInactive = false);
+        Task<SelectList> LocationClassesSelectListAsync(bool includeInactive = false);
         Task<SelectList> OverallStatusesSelectListAsync(bool includeInactive = false);
         Task<SelectList> ParcelTypesSelectListAsync(bool includeInactive = false);
         Task<SelectList> SoilStatusesSelectListAsync(bool includeInactive = false);
@@ -67,8 +67,8 @@ namespace FMS
         public async Task<SelectList> EventTypesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetEventTypesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> FundingSourceSelectListAsync(bool includeInactive = false) => (await _listRepository.GetFundingSourceListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> GroundwaterStatusesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetGroundwaterStatusesListAsync(includeInactive)).ToSelectList();
-        public async Task<SelectList> LocationSelectListAsync(bool includeInactive = false) =>
-            (await _listRepository.GetLocationItemListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> LocationClassesSelectListAsync(bool includeInactive = false) =>
+            (await _listRepository.GetLocationClassesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> OverallStatusesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetOverallStatusesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> ParcelTypesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetParcelTypesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> SoilStatusesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetSoilStatusesListAsync(includeInactive)).ToSelectList();

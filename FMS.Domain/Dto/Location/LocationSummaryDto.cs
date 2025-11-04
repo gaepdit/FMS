@@ -13,8 +13,7 @@ namespace FMS.Domain.Dto
             Id = location.Id;
             Active = location.Active;
             FacilityId = location.FacilityId;
-            Name = location.Name;
-            Description = location.Description;
+            LocationClassId = location.LocationClassId;
         }
 
         public Guid Id { get; set; }
@@ -23,10 +22,8 @@ namespace FMS.Domain.Dto
 
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
-        public string Description { get; set; }
-
         [Display(Name = "Class")]
-        public string Name { get; set; }
+        public Guid? LocationClassId { get; set; }
+        public LocationClass LocationClass { get; set; }
     }
 }

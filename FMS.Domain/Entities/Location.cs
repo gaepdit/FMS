@@ -5,7 +5,7 @@ using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {
-    public class Location : BaseActiveModel, INamedModel
+    public class Location : BaseActiveModel
     {
         public Location() { }
 
@@ -19,16 +19,12 @@ namespace FMS.Domain.Entities
         {
             Id = id;
             FacilityId = location.FacilityId;
-            Name = location.Name;
-            Description = location.Description;
+            LocationClassId = location.LocationClassId;
         }
 
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Class")]
-        public string Name { get; set; }
-
-        [Display(Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
-        public string Description { get; set; }
+        public Guid? LocationClassId { get; set; }
+        public LocationClass LocationClass { get; set; }
     }
 }

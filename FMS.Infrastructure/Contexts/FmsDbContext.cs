@@ -47,6 +47,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<Phone> Phones { get; set; }
         public DbSet<HsrpFacilityProperties> HsrpFacilityProperties { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<LocationClass> LocationClasses { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<OverallStatus> OverallStatuses { get; set; }
         public DbSet<Parcel> Parcels { get; set; }

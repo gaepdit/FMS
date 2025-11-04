@@ -30,7 +30,7 @@ namespace FMS.Domain.Repositories
         Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetGroundwaterStatusesListAsync(bool includeInactive = false);
-        Task<IEnumerable<ListItem>> GetLocationItemListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetLocationClassesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetOverallStatusesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetParcelTypesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetSoilStatusesListAsync(bool includeInactive = false);
@@ -55,7 +55,7 @@ namespace FMS.Domain.Repositories
         Task<string> GetEventTypeNameAsync(Guid? id);
         Task<string> GetFundingSourceNameAsync(Guid? id);
         Task<string> GetGroundwaterStatusNameAsync(Guid? id);
-        Task<string> GetLocationNameAsync(Guid? id);
+        Task<string> GetLocationClassNameAsync(Guid? id);
         Task<string> GetOverallStatusNameAsync(Guid? id);
         Task<string> GetParcelTypeNameAsync(Guid? id);
         Task<string> GetSoilStatusNameAsync(Guid? id);

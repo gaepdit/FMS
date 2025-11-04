@@ -24,6 +24,7 @@ namespace FMS.Infrastructure.Repositories
             if (id == null) throw new ArgumentNullException(nameof(id));
 
             var location = await _context.Locations.AsNoTracking()
+                .Include(e => e.LocationClass)
                 .SingleOrDefaultAsync(e => e.Id == id);
             if (location == null)
             {
@@ -37,6 +38,7 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
             var location = await _context.Locations.AsNoTracking()
+                .Include(e => e.LocationClass)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             if (location == null)
             {
@@ -47,8 +49,9 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<List<LocationSummaryDto>> GetLocationListAsync() =>
             await _context.Locations.AsNoTracking()
+                .Include(e => e.LocationClass)
                 .OrderByDescending(e => e.Active)
-                .ThenBy(e => e.Name)
+                .ThenBy(e => e.LocationClass.Name)
                 .Select(e => new LocationSummaryDto(e))
                 .ToListAsync();
         
@@ -93,8 +96,7 @@ namespace FMS.Infrastructure.Repositories
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
 
             location.FacilityId = locationUpdates.FacilityId;
-            location.Name = locationUpdates.Name;
-            location.Description = locationUpdates.Description;
+            location.LocationClassId = locationUpdates.LocationClassId;
 
             _context.Locations.Update(location);
             await _context.SaveChangesAsync();

@@ -1,26 +1,31 @@
-﻿using FMS.Domain.Dto;
-using FMS.Domain.Entities.Base;
-using Microsoft.Graph.Models.Security;
+﻿using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FMS.Domain.Entities
+namespace FMS.Domain.Dto
 {
-    public class LocationClass : BaseActiveModel, INamedModel
+    public class LocationClassEditDto
     {
-        public LocationClass() { }
-
-        public LocationClass(LocationClassCreateDto locClass)
+        public LocationClassEditDto()
         {
+            // Required for Edit page
+        }
+
+        public LocationClassEditDto(LocationClass locClass)
+        {
+            Active = locClass.Active;
             Name = locClass.Name;
             Description = locClass.Description;
         }
 
+        public bool Active { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
+        [Display(Name = "Class")]
         public string Name { get; set; }
 
         public string Description { get; set; }

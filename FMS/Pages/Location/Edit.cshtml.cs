@@ -90,7 +90,7 @@ namespace FMS.Pages.Location
 
         private async Task PopulateSelectsAsync()
         {
-            Classes = await _listHelper.LocationSelectListAsync();
+            Classes = await _listHelper.LocationClassesSelectListAsync();
         }
     }
 }

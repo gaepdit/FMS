@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -8,17 +9,9 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
-        public string Description { get; set; }
-
         [Display(Name = "Class")]
         [Required(ErrorMessage = "Class is required.")]
-        public string Name { get; set; }
-
-        public void TrimAll()
-        {
-            Description = Description?.Trim();
-            Name = Name?.Trim();
-        }
+        public Guid LocationClassId { get; set; }
+        public LocationClass LocationClass { get; set; }
     }
 }
