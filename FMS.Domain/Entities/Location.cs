@@ -20,7 +20,7 @@ namespace FMS.Domain.Entities
             Id = id;
             FacilityId = location.FacilityId;
             Name = location.Name;
-            Description = location.Class;
+            Description = location.Description;
         }
 
         public Guid FacilityId { get; set; }

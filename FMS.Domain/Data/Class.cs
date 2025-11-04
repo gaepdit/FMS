@@ -5,17 +5,17 @@ using FMS.Domain.Entities;
 
 namespace FMS.Domain.Data
 {
-    public static partial class Data
-    {
-        public static List<Location> Classes => new List<Location>()
-        {
-            new() { Class = "I", Name = "The Director has determined that this site requires corrective action." },
-            new() { Class = "II", Name = "Pending" },
-            new() { Class = "III", Name = "The Director has determined that this site requires corrective action." },
-            new() { Class = "IV", Name = "The Director has determined that this site requires corrective action." },
-            new() { Class = "V", Name = "The Director has determined that this site requires corrective action." },
-            new() { Class = "ER", Name = "Error" }
-        };
+    //public static partial class Data
+    //{
+    //    public static List<Location> Classes => new List<Location>()
+    //    {
+    //        new() { Name = "I", Description = "The Director has determined that this site requires corrective action." },
+    //        new() { Name = "II", Description = "Pending" },
+    //        new() { Name = "III", Description = "The Director has determined that this site requires corrective action." },
+    //        new() { Name = "IV", Description = "The Director has determined that this site requires corrective action." },
+    //        new() { Name = "V", Description = "The Director has determined that this site requires corrective action." },
+    //        new() { Name = "ER", Description = "Error" }
+    //    };
         
-    }
+    //}
 }

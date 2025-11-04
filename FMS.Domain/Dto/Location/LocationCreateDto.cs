@@ -8,15 +8,15 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
-        public string Name { get; set; }
+        public string Description { get; set; }
 
         [Display(Name = "Class")]
         [Required(ErrorMessage = "Class is required.")]
-        public string Class { get; set; }
+        public string Name { get; set; }
 
         public void TrimAll()
         {
-            Class = Class?.Trim();
+            Description = Description?.Trim();
             Name = Name?.Trim();
         }
     }

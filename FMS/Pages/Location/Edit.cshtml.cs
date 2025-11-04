@@ -18,7 +18,7 @@ namespace FMS.Pages.Location
     {
         private readonly ILocationRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
-        private readonly ISelectListHelper _selectListHelper;
+        private readonly ISelectListHelper _listHelper;
         public EditModel(
             ILocationRepository repository, 
             IFacilityRepository facilityRepository,
@@ -26,7 +26,7 @@ namespace FMS.Pages.Location
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
-            _selectListHelper = selectListHelper;
+            _listHelper = selectListHelper;
         }
 
         [BindProperty]
@@ -45,7 +45,6 @@ namespace FMS.Pages.Location
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
             Id = id;
-            Classes = await _selectListHelper.LocationSelectListAsync();
 
             Location = await _repository.GetLocationByFacilityIdAsync(id);
             if (Location == null)
@@ -69,7 +68,7 @@ namespace FMS.Pages.Location
             }
 
             ActiveTab = "Location";
-
+            await PopulateSelectsAsync();
             return Page();
         }
 
@@ -87,6 +86,11 @@ namespace FMS.Pages.Location
             ActiveTab = "Location";
 
             return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId, tab = "Location" });
+        }
+
+        private async Task PopulateSelectsAsync()
+        {
+            Classes = await _listHelper.LocationSelectListAsync();
         }
     }
 }

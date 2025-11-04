@@ -94,7 +94,7 @@ namespace FMS.Infrastructure.Repositories
 
             location.FacilityId = locationUpdates.FacilityId;
             location.Name = locationUpdates.Name;
-            location.Description = locationUpdates.Class;
+            location.Description = locationUpdates.Description;
 
             _context.Locations.Update(location);
             await _context.SaveChangesAsync();
