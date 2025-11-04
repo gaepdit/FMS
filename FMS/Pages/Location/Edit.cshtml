@@ -19,18 +19,17 @@
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="Location.FacilityId" />
-        <input type="hidden" asp-for="Location.Id" />
         <div class="row mb-3">
             <div class="col-3 mb-3">
-                <label asp-for="Location.Name" class="form-label">Class</label>
-                <select asp-for="Location.Name" asp-items="Model.Classes" class="form-select">
+                <label asp-for="Location.Id" class="form-label">Class</label>
+                <select asp-for="Location.Id" asp-items="Model.Classes" class="form-select">
                 </select>
-                <span asp-validation-for="Location.Name" class="text-danger"></span>
+                <span asp-validation-for="Location.Id" class="text-danger"></span>
             </div>
             <div class="col-9 mb-3">
-                <label asp-for="Location.Name" class="form-label">GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: </label>
-                <input asp-for="Location.Name" class="form-control" readonly />
-                <span asp-validation-for="Location.Name" class="text-danger"></span>
+                <label asp-for="Location.Description" class="form-label">GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: </label>
+                <input asp-for="Location.Description" class="form-control" readonly />
+                <span asp-validation-for="Location.Description" class="text-danger"></span>
             </div>
         </div>
         <hr />

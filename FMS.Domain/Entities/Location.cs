@@ -25,9 +25,10 @@ namespace FMS.Domain.Entities
 
         public Guid FacilityId { get; set; }
 
-        [Display (Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
+        [Display(Name = "Class")]
         public string Name { get; set; }
 
+        [Display(Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
         public string Description { get; set; }
     }
 }

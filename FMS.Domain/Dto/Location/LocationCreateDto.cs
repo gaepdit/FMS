@@ -8,6 +8,7 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
+        [Display(Name = "GA EPD DIRECTOR’S DETERMINATION REGARDING CORRECTIVE ACTION: ")]
         public string Description { get; set; }
 
         [Display(Name = "Class")]
