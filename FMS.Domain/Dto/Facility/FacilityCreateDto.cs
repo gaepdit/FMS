@@ -79,7 +79,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Determination Letter Date")]
         public DateOnly? DeterminationLetterDate { get; set; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "General Comments for this Facility")]
         public string Comments { get; set; }
 
         [Display(Name = "Pre-RQSM Cleanup")]

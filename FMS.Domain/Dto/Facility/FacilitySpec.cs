@@ -94,7 +94,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Has Electronic Records")]
         public bool HasERecord { get; set; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "General Comments for this Facility")]
         public string Comments { get; set; }
 
         public IDictionary<string, string> AsRouteValues =>
