@@ -38,7 +38,6 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<ActionTaken> ActionsTaken { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
-        public DbSet<ContactTitle> ContactTitles { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<AllowedActionTaken> AllowedActionsTaken { get; set; }
         public DbSet<FundingSource> FundingSources { get; set; }

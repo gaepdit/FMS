@@ -100,7 +100,6 @@ namespace FMS
             services.AddScoped<ISourceStatusRepository, SourceStatusRepository>();
             services.AddScoped<IChemicalRepository, ChemicalRepository>();
             services.AddScoped<IContactTypeRepository, ContactTypeRepository>();
-            services.AddScoped<IContactTitleRepository, ContactTitleRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
             services.AddScoped<IAllowedActionTakenHelper, AllowedActionTakenHelper>();

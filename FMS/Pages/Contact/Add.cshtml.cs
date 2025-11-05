@@ -37,8 +37,6 @@ namespace FMS.Pages.Contact
 
         public SelectList ContactTypes { get; private set; }
 
-        public SelectList ContactTitles { get; private set; }
-
         public static SelectList States => new(Data.States);
 
         [BindProperty(SupportsGet = true)]
@@ -89,7 +87,6 @@ namespace FMS.Pages.Contact
         private async Task PopulateSelectsAsync()
         {
             ContactTypes = await _listHelper.ContactTypesSelectListAsync();
-            ContactTitles = await _listHelper.ContactTitlesSelectListAsync();
         }
     }
 }

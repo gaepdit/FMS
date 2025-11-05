@@ -87,9 +87,6 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
             .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetContactTitlesListAsync(bool includeInactive = false) => 
-            await GetItemListAsync<ContactTitle>(includeInactive);
-
         public async Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ContactType>(includeInactive);
 
@@ -245,17 +242,6 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.Chemicals.AsNoTracking()
-                    .SingleOrDefaultAsync(e => e.Id == id);
-                return item?.Name;
-            }
-            return null;
-        }
-
-        public async Task<string> GetContactTitleNameAsync(Guid? id)
-        {
-            if (id.HasValue)
-            {
-                var item = await _context.ContactTitles.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }

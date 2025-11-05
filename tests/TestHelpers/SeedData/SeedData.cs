@@ -25,8 +25,6 @@ namespace FMS.TestData.SeedData
                 await context.Files.AddRangeAsync(GetFiles(), token);
             if (!await context.Chemicals.AnyAsync(token))
                 await context.Chemicals.AddRangeAsync(GetChemicals(), token);
-            if (!await context.ContactTitles.AnyAsync(token))
-                await context.ContactTitles.AddRangeAsync(GetContactTitles(), token);
             if (!await context.ContactTypes.AnyAsync(token))
                 await context.ContactTypes.AddRangeAsync(GetContactTypes(), token);
             if (!await context.ActionsTaken.AnyAsync(token))

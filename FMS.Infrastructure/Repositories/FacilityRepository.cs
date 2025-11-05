@@ -74,7 +74,6 @@ namespace FMS.Infrastructure.Repositories
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.ContactType)
-                    .Include(e => e.ContactTitle)
                     .Include(e => e.Phones.OrderByDescending(p => p.Active))
                     .OrderByDescending(e => e.Active)
                     .ThenBy(e => e.FamilyName)
