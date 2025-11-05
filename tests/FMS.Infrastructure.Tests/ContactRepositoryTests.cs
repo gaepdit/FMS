@@ -20,7 +20,6 @@ namespace FMS.Infrastructure.Tests
         private ContactRepository _repository;
         private bool _disposed;
 
-        private readonly Guid _titleId = new("20000000-0000-0000-0000-000000000001");
         private readonly Guid _typeId = new("20000000-0000-0000-0000-000000000002");
         private readonly Guid _facilityId = new("20000000-0000-0000-0000-000000000003");
 
@@ -38,7 +37,7 @@ namespace FMS.Infrastructure.Tests
                 Id = Guid.Empty,
                 GivenName = "VALID_GN",
                 FamilyName = "VALID_FN",
-                ContactTitleId = _titleId,
+                ContactTitle = "VALID_TITLE",
                 ContactTypeId = _typeId,
                 Company = "VALID_COMPANY",
                 Address = "VALID_ADDRESS",
@@ -49,7 +48,6 @@ namespace FMS.Infrastructure.Tests
                 FacilityId = _facilityId,
             });
 
-            _context.ContactTitles.Add(new ContactTitle { Id = _titleId });
             _context.ContactTypes.Add(new ContactType { Id = _typeId });
 
             _context.SaveChanges();
@@ -183,7 +181,7 @@ namespace FMS.Infrastructure.Tests
                 FacilityId = Guid.NewGuid(),
                 FamilyName = "VALID_FN",
                 GivenName = "VALID_GN",
-                ContactTitleId = Guid.NewGuid(),
+                ContactTitle = "VALID_TITLE",
                 ContactTypeId = Guid.NewGuid(),
                 Company = "VALID_COMPANY",
                 Address = "VALID_ADDRESS",
@@ -202,7 +200,7 @@ namespace FMS.Infrastructure.Tests
                 Id = existingContact.Id,
                 FamilyName = "NEW_FN",
                 GivenName = "NEW_GN",
-                ContactTitleId = Guid.NewGuid(),
+                ContactTitle = "VALID_TITLE",
                 ContactTypeId = Guid.NewGuid(),
                 Company = "NEW_COMPANY",
                 Address = "NEW_ADDRESS",
