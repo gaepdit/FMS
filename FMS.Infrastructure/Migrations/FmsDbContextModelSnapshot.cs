@@ -22,6 +22,38 @@ namespace FMS.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("FMS.Domain.Entities.AbandonedInactive", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AbandonedInactives");
+                });
+
             modelBuilder.Entity("FMS.Domain.Entities.ActionTaken", b =>
                 {
                     b.Property<Guid>("Id")
@@ -63,6 +95,12 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("CompletionDateRequired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("DueDateRequired")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("EventTypeId")
                         .HasColumnType("uniqueidentifier");
 
@@ -71,6 +109,9 @@ namespace FMS.Infrastructure.Migrations
 
                     b.Property<string>("InsertUser")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("StartDateRequired")
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
@@ -1784,9 +1825,6 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("FacilityId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1795,6 +1833,9 @@ namespace FMS.Infrastructure.Migrations
 
                     b.Property<string>("InsertUser")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("LocationClassId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
@@ -1807,7 +1848,41 @@ namespace FMS.Infrastructure.Migrations
                     b.HasIndex("FacilityId")
                         .IsUnique();
 
+                    b.HasIndex("LocationClassId");
+
                     b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.LocationClass", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LocationClasses");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.OnsiteScore", b =>
@@ -2233,6 +2308,9 @@ namespace FMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AbandonedInactiveId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
@@ -2293,6 +2371,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("OverallStatusId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ReportComments")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateOnly?>("SoilDate")
                         .HasColumnType("date");
 
@@ -2315,6 +2396,8 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AbandonedInactiveId");
 
                     b.HasIndex("FacilityId")
                         .IsUnique();
@@ -2839,6 +2922,12 @@ namespace FMS.Infrastructure.Migrations
                         .HasForeignKey("FMS.Domain.Entities.Location", "FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.LocationClass", "LocationClass")
+                        .WithMany()
+                        .HasForeignKey("LocationClassId");
+
+                    b.Navigation("LocationClass");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.OnsiteScore", b =>
@@ -2912,6 +3001,10 @@ namespace FMS.Infrastructure.Migrations
 
             modelBuilder.Entity("FMS.Domain.Entities.Status", b =>
                 {
+                    b.HasOne("FMS.Domain.Entities.AbandonedInactive", "AbandonedInactive")
+                        .WithMany()
+                        .HasForeignKey("AbandonedInactiveId");
+
                     b.HasOne("FMS.Domain.Entities.Facility", null)
                         .WithOne("StatusDetails")
                         .HasForeignKey("FMS.Domain.Entities.Status", "FacilityId")
@@ -2941,6 +3034,8 @@ namespace FMS.Infrastructure.Migrations
                     b.HasOne("FMS.Domain.Entities.SourceStatus", "SourceStatus")
                         .WithMany()
                         .HasForeignKey("SourceStatusId");
+
+                    b.Navigation("AbandonedInactive");
 
                     b.Navigation("FundingSource");
 
