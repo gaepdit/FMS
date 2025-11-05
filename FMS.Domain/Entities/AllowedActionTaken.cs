@@ -23,5 +23,11 @@ namespace FMS.Domain.Entities
 
         public Guid ActionTakenId { get; set; }
         public ActionTaken ActionTaken { get; set; }
+
+        public bool StartDateRequired { get; set; }
+
+        public bool DueDateRequired { get; set; }
+
+        public bool CompletionDateRequired { get; set; }
     }
 }

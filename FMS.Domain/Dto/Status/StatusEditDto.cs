@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
-using FMS.Domain.Entities;
+using System.Diagnostics;
 
 namespace FMS.Domain.Dto
 {
@@ -93,7 +94,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "GAPS Score")]
         public int? GAPSScore { get; set; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "General Status Comments (not used in reporting)")]
         public string Comments { get; set; }
 
         [Display(Name = "Lien")]
@@ -124,6 +125,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Abandoned/Inactive")]
         public AbandonedInactive AbandonedInactive { get; set; }
 
+        [Display(Name = "Comments for Aban/Inac Status Tracker Report")]
         public string ReportComments { get; set; }
     }
 }

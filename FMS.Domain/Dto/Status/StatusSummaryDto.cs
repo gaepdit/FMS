@@ -78,7 +78,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "GAPS Score")]
         public int? GAPSScore { get; set; }
 
-        [Display(Name = "General Comments")]
+        [Display(Name = "General Status Comments (not used in reporting)")]
         public string Comments { get; set; }
 
         [Display(Name = "Lien")]
@@ -105,7 +105,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Pertinent Information for Aban/Inac sites")]
         public AbandonedInactive AbandonedInactive { get; set; }
 
-        [Display(Name = "Report Comments")]
+        [Display(Name = "Comments for Aban/Inac Status Tracker Report")]
         public string ReportComments { get; set; }
     }
 }

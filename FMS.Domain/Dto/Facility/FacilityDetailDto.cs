@@ -162,7 +162,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "General Comments for this Facility")]
         public string Comments { get; set; }
 
         [Display(Name = "Cabinets")]
