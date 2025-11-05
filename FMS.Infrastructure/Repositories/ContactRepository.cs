@@ -26,7 +26,6 @@ namespace FMS.Infrastructure.Repositories
             var contact = await _context.Contacts
                 .AsNoTracking()
                 .Include(e => e.ContactType)
-                .Include(e => e.ContactTitle)
                 .Include(e => e.Phones)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
@@ -40,7 +39,6 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Contacts
                 .AsNoTracking()
                 .Include(e => e.ContactType)
-                .Include(e => e.ContactTitle)
                 .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId)
                 .OrderByDescending(e => e.Active)
@@ -55,7 +53,6 @@ namespace FMS.Infrastructure.Repositories
             return await _context.Contacts
                 .AsNoTracking()
                 .Include(e => e.ContactType)
-                .Include(e => e.ContactTitle)
                 .Include(e => e.Phones)
                 .Where(e => e.FacilityId == facilityId && e.ContactTypeId == contactTypeId)
                 .OrderByDescending(e => e.Active)
@@ -77,7 +74,7 @@ namespace FMS.Infrastructure.Repositories
                 FacilityId = contactCreate.FacilityId,
                 FamilyName = contactCreate.FamilyName,
                 GivenName = contactCreate.GivenName,
-                ContactTitleId = contactCreate.ContactTitleId,
+                ContactTitle = contactCreate.ContactTitle,
                 ContactTypeId = contactCreate.ContactTypeId,
                 Company = contactCreate.Company,
                 Address = contactCreate.Address,
@@ -108,7 +105,7 @@ namespace FMS.Infrastructure.Repositories
             
             existingContact.FamilyName = contact.FamilyName;
             existingContact.GivenName = contact.GivenName;
-            existingContact.ContactTitleId = contact.ContactTitleId;
+            existingContact.ContactTitle = contact.ContactTitle;
             existingContact.ContactTypeId = contact.ContactTypeId;
             existingContact.Company = contact.Company;
             existingContact.Address = contact.Address;

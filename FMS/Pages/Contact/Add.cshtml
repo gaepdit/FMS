@@ -44,11 +44,9 @@
                 <span asp-validation-for="NewContact.ContactTypeId" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewContact.ContactTitleId"></label>
-                <select asp-for="NewContact.ContactTitleId" asp-items="Model.ContactTitles" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="NewContact.ContactTitleId" class="text-danger"></span>
+                <label asp-for="NewContact.ContactTitle"></label>
+                <input asp-for="NewContact.ContactTitle" class="form-control" />
+                <span asp-validation-for="NewContact.ContactTitle" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
