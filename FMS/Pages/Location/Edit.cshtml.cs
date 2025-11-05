@@ -72,20 +72,28 @@ namespace FMS.Pages.Location
             return Page();
         }
 
+       
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+            try
+            {
+                await _repository.UpdateLocationAsync(Location.FacilityId, Location);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Unable to save changes: {ex.Message}");
+                await PopulateSelectsAsync();
                 return Page();
             }
 
-            await _repository.UpdateLocationAsync(Location.FacilityId, Location);
-
-            TempData?.SetDisplayMessage(Context.Success, $"Location successfully Updated.");
-
+            TempData?.SetDisplayMessage(Context.Success, $"Location successfully updated.");
             ActiveTab = "Location";
-
-            return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId, tab = "Location" });
+            return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId });
         }
 
         private async Task PopulateSelectsAsync()

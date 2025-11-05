@@ -21,8 +21,10 @@ namespace FMS.Domain.Entities
             Description = locClass.Description;
         }
 
+        [Display(Name = "Class Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Class Description")]
         public string Description { get; set; }
 
         public void TrimAll()

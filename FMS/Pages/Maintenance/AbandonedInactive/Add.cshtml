@@ -15,12 +15,12 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="row mb-3">
             <div class="col-md-3">
-                <label asp-for="AbandonedInactive.Name">@MaintenanceOptions.GroundwaterStatus Name <span class="text-danger">*</span></label>
+                <label asp-for="AbandonedInactive.Name">@MaintenanceOptions.AbandonedInactive Name <span class="text-danger">*</span></label>
                 <input asp-for="AbandonedInactive.Name" class="form-control" />
                 <span asp-validation-for="AbandonedInactive.Name" class="text-danger"></span>
             </div>
             <div class="col-md">
-                <label asp-for="AbandonedInactive.Description">@MaintenanceOptions.GroundwaterStatus Description <span class="text-danger">*</span></label>
+                <label asp-for="AbandonedInactive.Description">@MaintenanceOptions.AbandonedInactive Description <span class="text-danger">*</span></label>
                 <input asp-for="AbandonedInactive.Description" class="form-control" />
                 <span asp-validation-for="AbandonedInactive.Description" class="text-danger"></span>
             </div>
