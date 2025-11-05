@@ -307,8 +307,8 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("Company")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ContactTitleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ContactTitle")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ContactTypeId")
                         .HasColumnType("uniqueidentifier");
@@ -345,42 +345,11 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactTitleId");
-
                     b.HasIndex("ContactTypeId");
 
                     b.HasIndex("FacilityId");
 
                     b.ToTable("Contacts");
-                });
-
-            modelBuilder.Entity("FMS.Domain.Entities.ContactTitle", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("InsertDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("InsertUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("UpdateDateTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("UpdateUser")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ContactTitles");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.ContactType", b =>
@@ -2786,10 +2755,6 @@ namespace FMS.Infrastructure.Migrations
 
             modelBuilder.Entity("FMS.Domain.Entities.Contact", b =>
                 {
-                    b.HasOne("FMS.Domain.Entities.ContactTitle", "ContactTitle")
-                        .WithMany()
-                        .HasForeignKey("ContactTitleId");
-
                     b.HasOne("FMS.Domain.Entities.ContactType", "ContactType")
                         .WithMany()
                         .HasForeignKey("ContactTypeId");
@@ -2799,8 +2764,6 @@ namespace FMS.Infrastructure.Migrations
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ContactTitle");
 
                     b.Navigation("ContactType");
                 });
