@@ -56,6 +56,7 @@ namespace FMS.Infrastructure.Repositories
 
                 facility.LocationDetails = await _context.Locations
                     .AsNoTracking()
+                    .Include(e => e.LocationClass)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
                 facility.LocationDetails ??= new Location(facility.Id);

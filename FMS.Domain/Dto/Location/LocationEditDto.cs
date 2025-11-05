@@ -19,18 +19,18 @@ namespace FMS.Domain.Dto
             Id = location.Id;
             Active = location.Active;
             FacilityId = location.FacilityId;
-            Class = location.Class;
+            LocationClassId = location.LocationClass?.Id;
         }
 
         public Guid Id { get; set; }
 
         public bool Active { get; set; }
 
-        [Required(ErrorMessage = "Facility is required.")]
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Class")]   
+        [Display(Name = "Class")]
         [Required(ErrorMessage = "Class is required.")]
-        public string Class { get; set; }
+        public Guid? LocationClassId { get; set; }
+        public LocationClass LocationClass { get; set; }
     }
 }

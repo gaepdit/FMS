@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -10,11 +11,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Class")]
         [Required(ErrorMessage = "Class is required.")]
-        public string Class { get; set; }
-
-        public void TrimAll()
-        {
-            Class = Class?.Trim();
-        }
+        public Guid LocationClassId { get; set; }
+        public LocationClass LocationClass { get; set; }
     }
 }

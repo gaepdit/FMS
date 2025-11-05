@@ -431,11 +431,19 @@
                         </h3>
                         <hr />
                         <div class="row">
-                            <div class="col-sm-1">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.Class)
+                            <div class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.LocationClass.Name)
                             </div>
                             <div class="col-sm-2">
-                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.LocationClass.Name, "StringOrNone")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.LocationClass.Description)
+                            </div>
+                            <div class="col-sm-10">
+                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.LocationClass.Description, "StringOrNone")
                             </div>
                         </div>
                         <hr />
@@ -877,7 +885,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name,"StringOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name, "StringOrNone")
                             </dd>
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ReportComments)
