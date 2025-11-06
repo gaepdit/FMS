@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Entities
 {
-    internal class EventContractor
+    public class EventContractor
     {
     }
 }
