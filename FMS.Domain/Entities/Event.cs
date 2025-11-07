@@ -1,6 +1,7 @@
-﻿using FMS.Domain.Entities.Base;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System;
-using FMS.Domain.Dto;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -27,9 +28,11 @@ namespace FMS.Domain.Entities
 
         public Guid? ParentId { get; set; }
 
+        [Required]
         public Guid? EventTypeId { get; set; }
         public EventType EventType { get; set; }
 
+        [Required]
         public Guid? ActionTakenId { get; set; }
         public ActionTaken ActionTaken { get; set; }
 
@@ -39,6 +42,7 @@ namespace FMS.Domain.Entities
 
         public DateOnly? CompletionDate { get; set; }
 
+        [Required]
         public Guid? ComplianceOfficerId { get; set; }
         public ComplianceOfficer ComplianceOfficer { get; set; }
 

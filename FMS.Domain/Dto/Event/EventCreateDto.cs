@@ -10,12 +10,15 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
         public Facility Facility { get; set; }
 
+        [Required]
         public Guid? ParentId { get; set; }
         public Event Parent { get; set; }
 
+        [Required]
         [Display(Name = "Event Type")]
         public Guid EventTypeId { get; set; }
-
+        
+        [Required]
         [Display(Name = "Action Taken")]
         public Guid ActionTakenId { get; set; }
 
@@ -28,6 +31,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Completion Date")]
         public DateOnly? CompletionDate { get; set; }
 
+        [Required]
         [Display(Name = "Done By (CO)")]
         public Guid ComplianceOfficerId { get; set; }
         public ComplianceOfficer ComplianceOfficer { get; set; }
