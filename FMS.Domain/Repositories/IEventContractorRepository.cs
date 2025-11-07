@@ -12,9 +12,9 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> EventContractorExistsAsync(Guid id);
         Task<EventContractorEditDto> GetEventContractorByIdAsync(Guid id);
-        public Task<IReadOnlyList<EventContractorSummaryDto>> GetAllEventContractorsAsync(bool activeOnly = true);
-        Task CreateEventContractorAsync(EventContractor contractor);
-        Task UpdateEventContractorAsync(EventContractor contractor);
-        Task DeleteEventContractorAsync(Guid id);
+        public Task<IReadOnlyList<EventContractorSummaryDto>> GetEventContractorListAsync(bool activeOnly = true);
+        Task CreateEventContractorAsync(EventContractorCreateDto contractor);
+        Task UpdateEventContractorAsync(EventContractorEditDto contractor);
+        Task UpdateEventContractorStatusAsync(Guid id);
     }
 }
