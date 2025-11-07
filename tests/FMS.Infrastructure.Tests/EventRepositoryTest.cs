@@ -81,7 +81,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetEventByIdAsync_ReturnsEventEditDto_WhenIdExist()
         {
-            var existingEvent = await _context.Contacts.FirstAsync();
+            var existingEvent = await _context.Events.FirstAsync();
             var results = await _repository.GetEventByIdAsync(existingEvent.Id);
 
             results.Should().NotBeNull();
@@ -98,15 +98,64 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetEventSummaryByIdAsync
+        [Test]
+        public async Task GetEventSummaryByIdAsync_ReturnsEventSummaryDto_WhenIdExist()
+        {
+            var existingEvent = await _context.Events.FirstAsync();
+            var results = await _repository.GetEventSummaryByIdAsync(existingEvent.Id);
+
+            results.Should().NotBeNull();
+            results.Should().BeOfType<EventSummaryDto>();
+
+        }
+        [Test]
+        public async Task GetEventSummaryByIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingEvent = Guid.NewGuid();
+            var results = await _repository.GetEventSummaryByIdAsync(nonExistingEvent);
+
+            results.Should().BeNull();
+        }
 
 
+        // GetEventsByFacilityIdAsync
+        [Test]
+        public async Task GetEventsByFacilityIdAsync_ReturnsEventSummaryDtoList_WhenFacilityIdExist()
+        {
+            var existingEvent = await _context.Events.Select(ft => ft.FacilityId).FirstAsync();
+            var results = await _repository.GetEventsByFacilityIdAsync(existingEvent);
 
-        // GetEventByFacilityIdAsync
+            results.Should().NotBeNull();
+            results.Should().BeOfType<List<EventSummaryDto>>();
+        }
+        [Test]
+        public async Task GetEventsByFacilityIdAsync_ReturnsEmpty_WhenFacilityIdDoesNotExist()
+        {
+            var nonExistingFacilityId = Guid.NewGuid();
+            var results = await _repository.GetEventsByFacilityIdAsync(nonExistingFacilityId);
 
+            results.Should().BeEmpty();
+        }
 
+        // GetEventsByFacilityIdAndParentIdAsync
+        [Test]
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEventSummaryDtoList_WhenBothIdExist()
+        {
+            var existingEvent = new Event 
+            { 
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
-        // GetEventByFacilityIdAndParentIdAsync
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(existingEvent.FacilityId, (Guid)existingEvent.ParentId);
 
+            results.Should().NotBeNull();
+            results.Should().BeOfType<List<EventSummaryDto>>();
+        }
 
 
         // CreateEventAsync
