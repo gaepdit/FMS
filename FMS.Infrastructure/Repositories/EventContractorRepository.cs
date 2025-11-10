@@ -18,6 +18,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<bool> EventContractorExistsAsync(Guid id) =>
             await _context.EventContractors.AnyAsync(e => e.Id == id);
+
+        public async Task<bool> EventContractorNameExistsAsync(string name) =>
+            await _context.EventContractors.AnyAsync(e => e.Name == name);
+
         public async Task<EventContractorEditDto> GetEventContractorByIdAsync(Guid id)
         {
             var eventContractor = await _context.EventContractors.AsNoTracking().SingleOrDefaultAsync(e => e.Id == id);
