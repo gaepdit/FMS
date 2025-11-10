@@ -20,61 +20,66 @@
 }
 <h1>@ViewData["Title"]</h1>
 <form method="post">
-    @if (Model.Facility.FacilityStatus.Name == "COMPLAINT" || Model.Facility.FacilityStatus.Name == "Event Tracking On")
-    {
-        <div class="container bg-light-subtle py-3 rounded-3">
-            <p>Select a Master Project as the Parent for this new Event, if applicable.</p>
-            <div class="row justify-content-evenly">
-                <table class="table table-sm" aria-label="Events">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col"><em class="">Select Parent</em>  Event Type</th>
-                            <th scope="col">Action Taken</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">Due Date</th>
-                            <th scope="col">Completion Date</th>
-                            <th scope="col">Done By</th>
-                            <th scope="col">Event Amount</th>
-                            <th scope="col">Contractor</th>
-                            <th scope="col">Comment</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var e in Model.Facility.Events)
+    @*  @if (Model.Facility.FacilityStatus.Name == "COMPLAINT" || Model.Facility.FacilityStatus.Name == "Event Tracking On")
+    { *@
+    <div class="container bg-light-subtle py-3 rounded-3">
+        <p>Select a Master Project as the Parent for this new Event, if applicable.</p>
+        <div class="row justify-content-evenly">
+            <table class="table table-sm" aria-label="Events">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col"><em class="">Select Parent</em>  Event Type</th>
+                        <th scope="col">Action Taken</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Completion Date</th>
+                        <th scope="col">Done By</th>
+                        <th scope="col">Event Amount</th>
+                        <th scope="col">Contractor</th>
+                        <th scope="col">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Facility.Events)
+                    {
+                        if (item.EventType.Name == "HWTF Master Project")
                         {
-                            if (e.EventType.Name == "HWTF Master Project")
-                            {
-                                <tr class="@(!e.Active ? "text-muted table-warning" : "")">
-                                    <td class="text-nowrap">
-                                        <label>
-                                            @Html.RadioButtonFor(m => m.ParentEventId, e.Id)
-                                            @Html.DisplayFor(m => e.EventType.Name)
-                                        </label>
-                                    </td>
-                                    <td>@e.ActionTaken.Name</td>
-                                    <td>@e.StartDate</td>
-                                    <td>@e.DueDate</td>
-                                    <td>@e.CompletionDate</td>
-                                    <td>@e.ComplianceOfficer.Name</td>
-                                    <td>@e.EventAmount</td>
-                                    <td>@e.EventContractor?.Name</td>
-                                    <td>@e.Comment</td>
-                                </tr>
-                            }
+                            <tr class="@(!item.Active ? "text-muted table-warning" : "")">
+                                <td class="text-nowrap">
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ParentEventId, item.Id)
+                                        @Html.DisplayFor(m => item.EventType.Name)
+                                    </label>
+                                </td>
+                                <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
+                                <td>@Html.DisplayFor(m => item.StartDate)</td>
+                                <td>@Html.DisplayFor(m => item.DueDate)</td>
+                                <td>@Html.DisplayFor(m => item.CompletionDate)</td>
+                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                                <td>@Html.DisplayFor(m => item.EventAmount)</td>
+                                <td>
+                                    @if (item.EventContractor != null)
+                                    {
+                                        @Html.DisplayFor(m => item.EventContractor.Name)
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(m => item.Comment)</td>
+                            </tr>
                         }
-                        <tr>
-                            <td colspan="12">
-                                <label class="active">
-                                    @Html.RadioButtonFor(m => m.ParentEventId, string.Empty)
-                                    None
-                                </label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    }
+                    <tr>
+                        <td colspan="12">
+                            <label class="active">
+                                @Html.RadioButtonFor(m => m.ParentEventId, Guid.Empty)
+                                None
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    }
+    </div>
+    @*   } *@
     <div class="container bg-light-subtle py-3 my-3 rounded-3">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="NewEvent.FacilityId" />
@@ -162,19 +167,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var e in Model.Facility.Events)
+                        @foreach (var item in Model.Facility.Events)
                         {
-                            <tr class="@(!e.Active ? "text-muted table-warning" : "")">
-                                <td>@e.EventType.Name</td>
-                                <td>@e.ActionTaken.Name</td>
-                                <td>@e.StartDate</td>
-                                <td>@e.DueDate</td>
-                                <td>@e.CompletionDate</td>
-                                <td>@e.ComplianceOfficer.Name</td>
-                                <td>@e.EventAmount</td>
-                                <td>@e.EventContractor?.Name</td>
-                                <td>@e.Comment</td>
-                            </tr>
+                            @* @if (item.EventType.Name != "HWTF Master Project")
+                            { *@
+                                <tr class="@(item.ParentId != Guid.Empty ? "text-muted table-warning" : "")">
+                                    <td>@item.EventType.Name</td>
+                                    <td>@item.ActionTaken.Name</td>
+                                    <td>@item.StartDate</td>
+                                    <td>@item.DueDate</td>
+                                    <td>@item.CompletionDate</td>
+                                    <td>@item.ComplianceOfficer.Name</td>
+                                    <td>@item.EventAmount</td>
+                                    <td>@item.EventContractor?.Name</td>
+                                    <td>@item.Comment</td>
+                                </tr>
+                            @* } *@
                         }
                     </tbody>
                 </table>

@@ -138,8 +138,7 @@ namespace FMS.Infrastructure.Repositories
                     .ToListAsync();
 
                 facility.Events = facility.Events
-                    .OrderByDescending(e => e.Active)
-                    .ThenBy(e => e.StartDate)
+                    .OrderBy(e => e.StartDate)
                     .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
                     .SelectMany(g => g)
                     .ToList();
