@@ -1033,7 +1033,7 @@
                                     <th scope="col">Completion Date</th>
                                     <th scope="col">Done By</th>
                                     <th scope="col">Event Amount</th>
-                                    <th scope="col">Entity Name or No.</th>
+                                    <th scope="col">Contractor</th>
                                     <th scope="col">Comment</th>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
@@ -1050,9 +1050,9 @@
                                         <td>@e.StartDate</td>
                                         <td>@e.DueDate</td>
                                         <td>@e.CompletionDate</td>
-                                        <td>@e.ComplianceOfficer.Name</td>
+                                        <td>@e.ComplianceOfficer?.Name</td>
                                         <td>@e.EventAmount</td>
-                                        <td>@e.EntityNameOrNumber</td>
+                                        <td>@e.EventContractor?.Name</td>
                                         <td>@e.Comment</td>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {

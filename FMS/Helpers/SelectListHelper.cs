@@ -22,6 +22,7 @@ namespace FMS
         Task<SelectList> ChemicalsSelectListAsync(bool includeInactive = false);
         Task<SelectList> ContactTypesSelectListAsync(bool includeInactive = false);
         Task<SelectList> EventTypesSelectListAsync(bool includeInactive = false);
+        Task<SelectList> EventContractorListAsync(bool includeInactive = false);
         Task<SelectList> FundingSourceSelectListAsync(bool includeInactive = false);
         Task<SelectList> GroundwaterStatusesSelectListAsync(bool includeInactive = false);
         Task<SelectList> LocationClassesSelectListAsync(bool includeInactive = false);
@@ -62,6 +63,8 @@ namespace FMS
         public async Task<SelectList> ContactTypesSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetContactTypesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> EventTypesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetEventTypesListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> EventContractorListAsync(bool includeInactive = false) =>
+                    (await _listRepository.GetEventContractorsListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> FundingSourceSelectListAsync(bool includeInactive = false) => (await _listRepository.GetFundingSourceListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> GroundwaterStatusesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetGroundwaterStatusesListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> LocationClassesSelectListAsync(bool includeInactive = false) =>

@@ -93,6 +93,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<EventType>(includeInactive);
 
+        public async Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactice = false) =>
+            await GetItemListAsync<EventContractor>(includeInactice);
+
         public async Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false) =>
             await _context.FundingSources.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
@@ -264,6 +267,17 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.EventTypes.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetEventContractorNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.EventContractors.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }

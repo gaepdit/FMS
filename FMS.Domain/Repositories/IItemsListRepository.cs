@@ -27,6 +27,7 @@ namespace FMS.Domain.Repositories
         Task<IEnumerable<ListItem>> GetChemicalListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetGroundwaterStatusesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetLocationClassesListAsync(bool includeInactive = false);
@@ -51,6 +52,7 @@ namespace FMS.Domain.Repositories
         Task<string> GetChemicalNameAsync(Guid? id);
         Task<string> GetContactTypeNameAsync(Guid? id);
         Task<string> GetEventTypeNameAsync(Guid? id);
+        Task<string> GetEventContractorNameAsync(Guid? id);
         Task<string> GetFundingSourceNameAsync(Guid? id);
         Task<string> GetGroundwaterStatusNameAsync(Guid? id);
         Task<string> GetLocationClassNameAsync(Guid? id);

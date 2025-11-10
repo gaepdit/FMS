@@ -35,7 +35,7 @@
                             <th scope="col">Completion Date</th>
                             <th scope="col">Done By</th>
                             <th scope="col">Event Amount</th>
-                            <th scope="col">Entity Name or No.</th>
+                            <th scope="col">Contractor</th>
                             <th scope="col">Comment</th>
                         </tr>
                     </thead>
@@ -57,7 +57,7 @@
                                     <td>@e.CompletionDate</td>
                                     <td>@e.ComplianceOfficer.Name</td>
                                     <td>@e.EventAmount</td>
-                                    <td>@e.EntityNameOrNumber</td>
+                                    <td>@e.EventContractor?.Name</td>
                                     <td>@e.Comment</td>
                                 </tr>
                             }
@@ -124,9 +124,11 @@
                 <span asp-validation-for="NewEvent.EventAmount" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewEvent.EntityNameOrNumber"></label>
-                <input asp-for="NewEvent.EntityNameOrNumber" class="form-control" />
-                <span asp-validation-for="NewEvent.EntityNameOrNumber" class="text-danger"></span>
+                <label asp-for="NewEvent.EventContractorId"></label>
+                <select asp-for="NewEvent.EventContractorId" asp-items="Model.EventContractors" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.EventContractorId" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
@@ -155,7 +157,7 @@
                             <th scope="col">Completion Date</th>
                             <th scope="col">Done By</th>
                             <th scope="col">Event Amount</th>
-                            <th scope="col">Entity Name or No.</th>
+                            <th scope="col">Contractor</th>
                             <th scope="col">Comment</th>
                         </tr>
                     </thead>
@@ -170,7 +172,7 @@
                                 <td>@e.CompletionDate</td>
                                 <td>@e.ComplianceOfficer.Name</td>
                                 <td>@e.EventAmount</td>
-                                <td>@e.EntityNameOrNumber</td>
+                                <td>@e.EventContractor?.Name</td>
                                 <td>@e.Comment</td>
                             </tr>
                         }

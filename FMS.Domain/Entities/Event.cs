@@ -20,7 +20,7 @@ namespace FMS.Domain.Entities
             CompletionDate = eventDto.CompletionDate;
             ComplianceOfficerId = eventDto.ComplianceOfficerId;
             EventAmount = eventDto.EventAmount;
-            EntityNameOrNumber = eventDto.EntityNameOrNumber;
+            EventContractorId = eventDto.EventContractorId;
             Comment = eventDto.Comment;
         }
 
@@ -48,7 +48,8 @@ namespace FMS.Domain.Entities
 
         public decimal? EventAmount { get; set; }
 
-        public string EntityNameOrNumber { get; set; }
+        public Guid? EventContractorId { get; set; }
+        public EventContractor EventContractor { get; set; }
 
         public string Comment { get; set; }
     }

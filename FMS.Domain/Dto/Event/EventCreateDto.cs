@@ -39,8 +39,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Event Amount")]
         public decimal? EventAmount { get; set; }
 
-        [Display(Name = "Entity Name or Number")]
-        public string EntityNameOrNumber { get; set; }
+        [Display(Name = "Contractor")]
+        public Guid? EventContractorId { get; set; }
+        public EventContractor EventContractor { get; set; }
 
         [Display(Name = "Comment")]
         public string Comment { get; set; }
