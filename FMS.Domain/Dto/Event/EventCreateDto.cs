@@ -10,7 +10,6 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
         public Facility Facility { get; set; }
 
-        [Required]
         public Guid? ParentId { get; set; }
         public Event Parent { get; set; }
 

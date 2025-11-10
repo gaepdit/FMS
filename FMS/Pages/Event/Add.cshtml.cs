@@ -36,9 +36,11 @@ namespace FMS.Pages.Event
         }
 
         [BindProperty]
-        public EventCreateDto NewEvent { get; set; }
+        public Guid Id { get; set; }
 
         [BindProperty]
+        public EventCreateDto NewEvent { get; set; }
+
         public FacilityDetailDto Facility { get; set; }
 
         [BindProperty]
@@ -60,18 +62,21 @@ namespace FMS.Pages.Event
             {
                 return NotFound();
             }
+            Id = id.Value;
+
+            Facility = await _facilityRepository.GetFacilityAsync(Id);
+
+            Events = parentId.HasValue
+                ? await _repository.GetEventsByFacilityIdAndParentIdAsync(Id, parentId.Value)
+                : await _repository.GetEventsByFacilityIdAsync(Id);
+
+            parentId ??= Guid.Empty;
 
             NewEvent = new EventCreateDto
             {
-                FacilityId = id.Value,
-                ParentId = parentId,
+                FacilityId = Id,
+                ParentId = parentId
             };
-
-            Facility = await _facilityRepository.GetFacilityAsync(id.Value); 
-
-            Events = (parentId.HasValue
-                ? await _repository.GetEventsByFacilityIdAndParentIdAsync(id.Value, parentId.Value)
-                : await _repository.GetEventsByFacilityIdAsync(id.Value));
 
             ActiveTab = "Events";
             await PopulateSelectsAsync();
@@ -82,6 +87,7 @@ namespace FMS.Pages.Event
         {
             if (!ModelState.IsValid)
             {
+                Facility = await _facilityRepository.GetFacilityAsync(Id);
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -89,12 +95,11 @@ namespace FMS.Pages.Event
             {
                 NewEvent.ParentId = ParentEventId;
                 await _repository.CreateEventAsync(NewEvent);
-                
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the event.");
-                
+                Facility = await _facilityRepository.GetFacilityAsync(Id);
                 await PopulateSelectsAsync();
                 return Page();
             }
