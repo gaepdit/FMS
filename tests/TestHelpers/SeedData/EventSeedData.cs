@@ -16,7 +16,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("1105FB87-229E-417C-B0F5-3F1E70F1C66D"),
                     Active = true,
-                    FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"), 
+                    FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ParentId = Guid.Empty,   //Self
                     EventTypeId = new Guid("F1A8BCAD-B09E-42BB-ABFD-74E230567A65"),   // HWTF Master Project
                     ActionTakenId = new Guid("0d7ee6cd-f975-40cf-94ff-406fe71075ff"),
@@ -25,7 +25,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = null,
                     ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("0DBEDF10-14FA-4FE9-A241-40FD5374ACFC"),
                     Comment = ""
                 },
                 new()
@@ -41,7 +41,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2021, 6, 13),
                     ComplianceOfficerId = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("0DBEDF10-14FA-4FE9-A241-40FD5374ACFC"),
                     Comment = ""
                 },
                 new()
@@ -57,7 +57,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2020, 7, 13),
                     ComplianceOfficerId = new Guid("FCE1195E-BF17-4513-B617-029EE8766A6E"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("9E4EAF2E-251C-48EE-8A1E-5F34BE80CD27"),
                     Comment = ""
                 },
                 new()
@@ -73,7 +73,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = null,
                     ComplianceOfficerId = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("CF994588-4B71-4188-9A66-369D437E91B8"),
                     Comment = ""
                 },
                 new()
@@ -89,7 +89,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2022, 3, 18),
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("3E2E125D-7CA7-45CA-8070-CDB6F3623E18"),
                     Comment = ""
                 },
                 new()
@@ -105,7 +105,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2018, 2, 13),
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("0DBEDF10-14FA-4FE9-A241-40FD5374ACFC"),
                     Comment = ""
                 },
                 new()
@@ -121,7 +121,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2018, 2, 13),
                     ComplianceOfficerId = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("CF994588-4B71-4188-9A66-369D437E91B8"),
                     Comment = ""
                 },
                 new()
@@ -137,7 +137,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2018, 2, 13),
                     ComplianceOfficerId = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("9E4EAF2E-251C-48EE-8A1E-5F34BE80CD27"),
                     Comment = ""
                 },
                 new()
@@ -153,7 +153,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2018, 2, 13),
                     ComplianceOfficerId = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("3E2E125D-7CA7-45CA-8070-CDB6F3623E18"),
                     Comment = ""
                 },
                 new()
@@ -169,7 +169,7 @@ namespace FMS.TestData.SeedData
                     CompletionDate = new(2018, 2, 13),
                     ComplianceOfficerId = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"),
                     EventAmount = 0,
-                    EntityNameOrNumber = "",
+                    EventContractorId = new Guid("3E2E125D-7CA7-45CA-8070-CDB6F3623E18"),
                     Comment = ""
                 }
             };

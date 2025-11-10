@@ -41,6 +41,7 @@ namespace FMS.Pages.Event
         public SelectList EventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
+        public SelectList EventContractors { get; private set; }
 
         [BindProperty]
         public Guid Id { get; set; }
@@ -93,6 +94,7 @@ namespace FMS.Pages.Event
             EventTypes = await _listHelper.EventTypesSelectListAsync();
             AllowedActionsTaken = await _listHelper.AllowedActionTakenSelectListAsync(EditEvent.EventTypeId);
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            EventContractors = await _listHelper.EventContractorListAsync();
         }
     }
 }

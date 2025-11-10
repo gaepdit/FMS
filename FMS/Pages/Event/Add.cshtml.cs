@@ -36,6 +36,9 @@ namespace FMS.Pages.Event
         }
 
         [BindProperty]
+        public Guid Id { get; set; }
+
+        [BindProperty]
         public EventCreateDto NewEvent { get; set; }
 
         public FacilityDetailDto Facility { get; set; }
@@ -48,6 +51,7 @@ namespace FMS.Pages.Event
         public SelectList EventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
+        public SelectList EventContractors { get; private set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -58,18 +62,21 @@ namespace FMS.Pages.Event
             {
                 return NotFound();
             }
+            Id = id.Value;
+
+            Facility = await _facilityRepository.GetFacilityAsync(Id);
+
+            Events = parentId.HasValue
+                ? await _repository.GetEventsByFacilityIdAndParentIdAsync(Id, parentId.Value)
+                : await _repository.GetEventsByFacilityIdAsync(Id);
+
+            parentId ??= Guid.Empty;
 
             NewEvent = new EventCreateDto
             {
-                FacilityId = id.Value,
-                ParentId = parentId,
+                FacilityId = Id,
+                ParentId = parentId
             };
-
-            Facility = await _facilityRepository.GetFacilityAsync(id.Value); 
-
-            Events = (parentId.HasValue
-                ? await _repository.GetEventsByFacilityIdAndParentIdAsync(id.Value, parentId.Value)
-                : await _repository.GetEventsByFacilityIdAsync(id.Value));
 
             ActiveTab = "Events";
             await PopulateSelectsAsync();
@@ -80,6 +87,7 @@ namespace FMS.Pages.Event
         {
             if (!ModelState.IsValid)
             {
+                Facility = await _facilityRepository.GetFacilityAsync(Id);
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -87,12 +95,11 @@ namespace FMS.Pages.Event
             {
                 NewEvent.ParentId = ParentEventId;
                 await _repository.CreateEventAsync(NewEvent);
-                
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the event.");
-                
+                Facility = await _facilityRepository.GetFacilityAsync(Id);
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -108,6 +115,7 @@ namespace FMS.Pages.Event
             EventTypes = await _listHelper.EventTypesSelectListAsync();
             AllowedActionsTaken = await _listHelper.ActionTakenSelectListAsync();
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            EventContractors = await _listHelper.EventContractorListAsync();
         }
     }
 }

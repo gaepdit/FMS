@@ -91,6 +91,7 @@ namespace FMS
             services.AddScoped<IActionTakenRepository, ActionTakenRepository>();
             services.AddScoped<IAllowedActionTakenRepository, AllowedActionTakenRepository>();
             services.AddScoped<IEventTypeRepository, EventTypeRepository>();
+            services.AddScoped<IEventContractorRepository, EventContractorRepository>();
             services.AddScoped<IFundingSourceRepository, FundingSourceRepository>();
             services.AddScoped<IGroundwaterStatusRepository, GroundwaterStatusRepository>();
             services.AddScoped<ILocationClassRepository, LocationClassRepository>();

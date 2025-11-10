@@ -57,7 +57,7 @@
                                     <td>@e.CompletionDate</td>
                                     <td>@e.ComplianceOfficer.Name</td>
                                     <td>@e.EventAmount</td>
-                                    <td>@e.EntityNameOrNumber</td>
+                                    <td>@e.EventContractor.Name</td>
                                     <td>@e.Comment</td>
                                 </tr>
                             }
@@ -126,9 +126,11 @@
                 <span asp-validation-for="EditEvent.EventAmount" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="EditEvent.EntityNameOrNumber"></label>
-                <input asp-for="EditEvent.EntityNameOrNumber" class="form-control" />
-                <span asp-validation-for="EditEvent.EntityNameOrNumber" class="text-danger"></span>
+                <label asp-for="EditEvent.EventContractorId"></label>
+                <select asp-for="EditEvent.EventContractorId" asp-items="Model.EventContractors" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditEvent.EventContractorId" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
@@ -172,7 +174,7 @@
                                 <td>@e.CompletionDate</td>
                                 <td>@e.ComplianceOfficer.Name</td>
                                 <td>@e.EventAmount</td>
-                                <td>@e.EntityNameOrNumber</td>
+                                <td>@e.EventContractor?.Name</td>
                                 <td>@e.Comment</td>
                             </tr>
                         }

@@ -25,6 +25,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.EventContractor)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             var eventSummary = newEvent == null ? null : new EventSummaryDto(newEvent);
@@ -38,6 +39,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.EventContractor)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             return EventSummary == null ? null : new EventSummaryDto(EventSummary);
@@ -52,6 +54,7 @@ namespace FMS.Infrastructure.Repositories
                    .Include(e => e.EventType)
                    .Include(e => e.ActionTaken)
                    .Include(e => e.ComplianceOfficer)
+                   .Include(e => e.EventContractor)
                    .Where(e => e.FacilityId == facilityId)
                    .ToListAsync();
 
@@ -73,6 +76,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.EventContractor)
                 .OrderByDescending(e => e.Active)
                 .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
                 .Select(e => new EventSummaryDto(e))
@@ -102,7 +106,7 @@ namespace FMS.Infrastructure.Repositories
                 CompletionDate = eventDto.CompletionDate,
                 ComplianceOfficerId = eventDto.ComplianceOfficerId,
                 EventAmount = eventDto.EventAmount,
-                EntityNameOrNumber = eventDto.EntityNameOrNumber,
+                EventContractorId = eventDto.EventContractorId,
                 Comment = eventDto.Comment
             };
 
@@ -134,7 +138,7 @@ namespace FMS.Infrastructure.Repositories
             existingEvent.CompletionDate = eventDto.CompletionDate;
             existingEvent.ComplianceOfficerId = eventDto.ComplianceOfficerId;
             existingEvent.EventAmount = eventDto.EventAmount;
-            existingEvent.EntityNameOrNumber = eventDto.EntityNameOrNumber;
+            existingEvent.EventContractorId = eventDto.EventContractorId;
             existingEvent.Comment = eventDto.Comment;
 
             _context.Events.Update(existingEvent);

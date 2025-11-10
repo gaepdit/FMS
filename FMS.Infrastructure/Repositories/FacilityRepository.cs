@@ -133,6 +133,7 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.EventType)
                     .Include(e => e.ActionTaken)
                     .Include(e => e.ComplianceOfficer)
+                    .Include(e => e.EventContractor)
                     .Where(e => e.FacilityId == id)
                     .ToListAsync();
 
