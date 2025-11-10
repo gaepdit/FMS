@@ -156,10 +156,72 @@ namespace FMS.Infrastructure.Tests
             results.Should().NotBeNull();
             results.Should().BeOfType<List<EventSummaryDto>>();
         }
+        [Test]
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenFacilityIdDoesNotExist()
+        {
+            var nonExistingFacilityId = Guid.NewGuid();
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(nonExistingFacilityId, (Guid)existingEvent.ParentId);
+
+            results.Should().BeEmpty();
+        }
+        [Test]
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenParentIdDoesNotExist()
+        {
+            var nonExistingParentId = Guid.NewGuid();
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(existingEvent.FacilityId, nonExistingParentId);
+
+            results.Should().BeEmpty();
+        }
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenBothIdsDoesNotExist()
+        {
+            var nonExistingFacilityId = Guid.NewGuid();
+            var nonExistingParentId = Guid.NewGuid();
+
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(nonExistingFacilityId, nonExistingParentId);
+
+            results.Should().BeEmpty();
+        }
 
         // CreateEventAsync
+        [Test]
+        public async Task CreateEventAsync_CreatesEvent_WhenDataIsValid()
+        {
+            var dto = new EventCreateDto
+            {
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                StartDate = new DateOnly(2025, 1, 1),
+                DueDate = new DateOnly(2025, 1, 2),
+                CompletionDate = new DateOnly(2025, 1, 3),
+                Comment = "VALID_COMMENT"
+            };
 
+            var results = await _repository.CreateEventAsync(dto);
+
+            results.Should().NotBeEmpty();
+
+
+        }
 
 
         // UpdateEventAsync
