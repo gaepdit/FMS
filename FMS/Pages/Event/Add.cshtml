@@ -28,7 +28,7 @@
             <table class="table table-sm" aria-label="Events">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col"><em class="">Select Parent</em>  Event Type</th>
+                        <th scope="col"><em class="">Select Parent Master Project</em></th>
                         <th scope="col">Action Taken</th>
                         <th scope="col">Start Date</th>
                         <th scope="col">Due Date</th>
@@ -167,22 +167,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Facility.Events)
+                        @for (var i = 0; i < Model.Events.Count; i++)
                         {
-                            @* @if (item.EventType.Name != "HWTF Master Project")
-                            { *@
-                                <tr class="@(item.ParentId != Guid.Empty ? "text-muted table-warning" : "")">
-                                    <td>@item.EventType.Name</td>
-                                    <td>@item.ActionTaken.Name</td>
-                                    <td>@item.StartDate</td>
-                                    <td>@item.DueDate</td>
-                                    <td>@item.CompletionDate</td>
-                                    <td>@item.ComplianceOfficer.Name</td>
-                                    <td>@item.EventAmount</td>
-                                    <td>@item.EventContractor?.Name</td>
-                                    <td>@item.Comment</td>
-                                </tr>
-                            @* } *@
+                            var item = Model.Events[i];
+                            <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
+                                <td>
+                                    @if (item.ParentId != Guid.Empty)
+                                    {
+                                        <span class="badge text-bg-info"> ^ </span>
+                                    }
+                                    @item.EventType.Name
+                                </td>
+                                <td>@item.ActionTaken.Name</td>
+                                <td>@item.StartDate</td>
+                                <td>@item.DueDate</td>
+                                <td>@item.CompletionDate</td>
+                                <td>@item.ComplianceOfficer.Name</td>
+                                <td>@item.EventAmount</td>
+                                <td>@item.EventContractor?.Name</td>
+                                <td>@item.Comment</td>
+                            </tr>
                         }
                     </tbody>
                 </table>

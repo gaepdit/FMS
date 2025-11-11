@@ -14,9 +14,9 @@ namespace FMS.Domain.Repositories
 
         Task<EventSummaryDto> GetEventSummaryByIdAsync(Guid id);
 
-        Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId);
+        Task<IList<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId);
 
-        Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId);
+        Task<IList<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId);
 
         Task<Guid> CreateEventAsync(EventCreateDto eventDto);
 

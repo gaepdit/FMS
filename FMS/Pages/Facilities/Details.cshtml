@@ -1042,23 +1042,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var e in Model.FacilityDetail.Events)
+                                @for (var i = 0; i < Model.FacilityDetail.Events.Count; i++)
                                 {
-                                    <tr class="@(!e.Active ? "text-muted table-warning" : "")">
-                                        <td>@e.EventType.Name</td>
-                                        <td>@e.ActionTaken.Name</td>
-                                        <td>@e.StartDate</td>
-                                        <td>@e.DueDate</td>
-                                        <td>@e.CompletionDate</td>
-                                        <td>@e.ComplianceOfficer?.Name</td>
-                                        <td>@e.EventAmount</td>
-                                        <td>@e.EventContractor?.Name</td>
-                                        <td>@e.Comment</td>
+                                    var item = Model.FacilityDetail.Events[i];
+                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
+                                        <td>
+                                            @if (item.ParentId != Guid.Empty)
+                                            {
+                                                <span class="badge text-bg-info"> ^ </span>
+                                            }
+                                            @item.EventType.Name
+                                        </td>
+                                        <td>@item.ActionTaken.Name</td>
+                                        <td>@item.StartDate</td>
+                                        <td>@item.DueDate</td>
+                                        <td>@item.CompletionDate</td>
+                                        <td>@item.ComplianceOfficer.Name</td>
+                                        <td>@item.EventAmount</td>
+                                        <td>@item.EventContractor?.Name</td>
+                                        <td>@item.Comment</td>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
                                             <td>
-                                                <a asp-page="/Event/Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="/Event/Delete" asp-route-id="@e.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                <a asp-page="/Event/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                <a asp-page="/Event/Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                             </td>
                                         }
                                     </tr>

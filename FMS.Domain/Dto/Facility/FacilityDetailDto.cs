@@ -198,6 +198,6 @@ namespace FMS.Domain.Dto
 
         public Status StatusDetails { get; set; }
 
-        public List<EventSummaryDto> Events { get; }
+        public IList<EventSummaryDto> Events { get; set; }
     }
 }

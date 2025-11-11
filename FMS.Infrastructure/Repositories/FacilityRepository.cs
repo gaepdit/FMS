@@ -139,6 +139,7 @@ namespace FMS.Infrastructure.Repositories
 
                 facility.Events = facility.Events
                     .OrderBy(e => e.StartDate)
+                    .ThenBy(e => e.CompletionDate)
                     .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
                     .SelectMany(g => g)
                     .ToList();
