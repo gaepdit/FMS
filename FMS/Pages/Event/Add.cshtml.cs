@@ -46,7 +46,7 @@ namespace FMS.Pages.Event
         [BindProperty]
         public Guid? ParentEventId { get; set; } = Guid.Empty;
 
-        public IEnumerable<EventSummaryDto> Events { get; set; }
+        public IList<EventSummaryDto> Events { get; set; }
 
         public SelectList EventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
@@ -56,7 +56,7 @@ namespace FMS.Pages.Event
         [TempData]
         public string ActiveTab { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? parentId)
+        public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null || id == Guid.Empty)
             {
@@ -66,16 +66,16 @@ namespace FMS.Pages.Event
 
             Facility = await _facilityRepository.GetFacilityAsync(Id);
 
-            Events = parentId.HasValue
-                ? await _repository.GetEventsByFacilityIdAndParentIdAsync(Id, parentId.Value)
-                : await _repository.GetEventsByFacilityIdAsync(Id);
+            Events = await _repository.GetEventsByFacilityIdAsync(Id);
 
-            parentId ??= Guid.Empty;
+            ParentEventId ??= Guid.Empty;
+
+            Events = EventSortHelper.SortEvents(Events);
 
             NewEvent = new EventCreateDto
             {
                 FacilityId = Id,
-                ParentId = parentId
+                ParentId = ParentEventId
             };
 
             ActiveTab = "Events";

@@ -95,6 +95,27 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     ActionTakenId = new Guid("51e5d358-f991-4574-a21b-79ccfa31ac9d"),   //Issued
                     EventTypeId = new Guid("F1A8BCAD-B09E-42BB-ABFD-74E230567A65"),   //HWTF Master Project
+                },
+                new()
+                {
+                    Id = new Guid("86ED497B-7DA7-4961-B0A4-FEE0A066A1CB"),
+                    Active = true,
+                    ActionTakenId = new Guid("6aae6fa2-17ca-4edd-9c59-87c6af3885c3"),   //Draft Received
+                    EventTypeId = new Guid("4CF16FE7-B240-49DE-AB17-0595DDD45F4E"),   //HWTF Request for Advance
+                },
+                new()
+                {
+                    Id = new Guid("24A52FDD-3D94-437F-92B6-BDD52507E49B"),
+                    Active = true,
+                    ActionTakenId = new Guid("51e5d358-f991-4574-a21b-79ccfa31ac9d"),   //Issued
+                    EventTypeId = new Guid("7AF4D45F-0C17-4231-9D0B-3971051B75E6"),   //PAF
+                },
+                new()
+                {
+                    Id = new Guid("A8A2C814-8F89-4726-B88F-40BBF205501B"),
+                    Active = true,
+                    ActionTakenId = new Guid("51e5d358-f991-4574-a21b-79ccfa31ac9d"),   //Issued
+                    EventTypeId = new Guid("43F184E5-0CD9-4C4B-B2C1-1F093076C60F"),   //PAF Invoice
                 }
             };
         }

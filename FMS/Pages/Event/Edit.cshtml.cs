@@ -3,12 +3,14 @@ using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Event
@@ -38,6 +40,8 @@ namespace FMS.Pages.Event
         [BindProperty]
         public Guid? ParentEventId { get; set; } = Guid.Empty;
 
+        public IList<EventSummaryDto> Events { get; set; }
+
         public SelectList EventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
@@ -58,6 +62,8 @@ namespace FMS.Pages.Event
                 return NotFound();
             }
             Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
+            ParentEventId = EditEvent.ParentId == Guid.Empty ? null : EditEvent.ParentId;
+            Events = EventSortHelper.SortEvents(Facility.Events);
 
             await PopulateSelectsAsync();
             ActiveTab = "Events";
@@ -73,6 +79,7 @@ namespace FMS.Pages.Event
             }
             try
             {
+                EditEvent.ParentId = ParentEventId ?? Guid.Empty;
                 await _repository.UpdateEventAsync(EditEvent);
             }
             catch (Exception ex)

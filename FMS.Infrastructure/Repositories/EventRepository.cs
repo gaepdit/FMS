@@ -45,7 +45,7 @@ namespace FMS.Infrastructure.Repositories
             return EventSummary == null ? null : new EventSummaryDto(EventSummary);
         }
 
-        public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)
+        public async Task<IList<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
@@ -55,32 +55,31 @@ namespace FMS.Infrastructure.Repositories
                    .Include(e => e.ActionTaken)
                    .Include(e => e.ComplianceOfficer)
                    .Include(e => e.EventContractor)
+                   .OrderBy(e => e.StartDate)
+                   .ThenBy(e => e.CompletionDate)
                    .Where(e => e.FacilityId == facilityId)
+                   .Select(e => new EventSummaryDto(e))
                    .ToListAsync();
 
-            events = events
-                .OrderByDescending(e => e.Active)
-                .ThenBy(e => e.StartDate)
-                .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
-                .SelectMany(g => g)
-                .ToList();
-
-            return events.Select(e => new EventSummaryDto(e)).ToList();
+            return events;
         }
 
-        public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId)
+        public async Task<IList<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
-            return await _context.Events.AsNoTracking()
+            var events = await _context.Events.AsNoTracking()
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.EventContractor)
-                .OrderByDescending(e => e.Active)
+                .OrderBy(e => e.StartDate)
+                .ThenBy(e => e.CompletionDate)
                 .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
                 .Select(e => new EventSummaryDto(e))
                 .ToListAsync();
+
+            return events;
         }
 
         public Task<Guid> CreateEventAsync(EventCreateDto eventDto)
@@ -168,6 +167,7 @@ namespace FMS.Infrastructure.Repositories
             _context.Events.Remove(eventToDelete);
             await _context.SaveChangesAsync();
         }
+        
 
         #region IDisposable Support
 
