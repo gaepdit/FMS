@@ -100,6 +100,7 @@ namespace FMS.Infrastructure.Repositories
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.Substance)
+                    .Include(e => e.Substance.Chemical)
                     .FirstOrDefaultAsync();
                 facility.GroundwaterScoreDetails = groundwaterScore != null ? new GroundwaterScore(groundwaterScore) : new GroundwaterScore(facility.Id);
 
@@ -107,6 +108,7 @@ namespace FMS.Infrastructure.Repositories
                         .AsNoTracking()
                         .Where(e => e.FacilityId == id)
                         .Include(e => e.Substance)
+                        .Include(e => e.Substance.Chemical)
                         .FirstOrDefaultAsync();
                 facility.OnsiteScoreDetails = onsiteScore != null ? new OnsiteScore(onsiteScore) : new OnsiteScore(facility.Id);
 

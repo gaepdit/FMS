@@ -22,6 +22,7 @@ namespace FMS.Infrastructure.Repositories
             {
             var groundwaterScore = await _context.GroundwaterScores.AsNoTracking()
                 .Include(e => e.Substance)
+                .Include(e => e.Substance.Chemical)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
 
             return groundwaterScore == null ? null : new GroundwaterScoreEditDto(groundwaterScore);
