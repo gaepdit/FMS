@@ -21,7 +21,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<OnsiteScoreEditDto> GetOnsiteScoreByFacilityIdAsync(Guid facilityId)
         {
             var onsiteScore = await _context.OnsiteScores.AsNoTracking()
-                .Include(e => e.Chemical)
+                .Include(e => e.Substance)
                 .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
             return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }
@@ -51,7 +51,7 @@ namespace FMS.Infrastructure.Repositories
                 D2 = onsiteScore.D2,
                 D3 = onsiteScore.D3,
                 CASNO = onsiteScore.CASNO,
-                ChemicalId = null,
+                SubstanceId = null,
                 E1 = onsiteScore.E1,
                 E2 = onsiteScore.E2
             };
@@ -89,8 +89,8 @@ namespace FMS.Infrastructure.Repositories
             existingOnsiteScore.C = onsiteScore.C;
             existingOnsiteScore.Description = onsiteScore.Description;
             existingOnsiteScore.ChemName1D = onsiteScore.ChemName1D;
-            existingOnsiteScore.Chemical = onsiteScore.Chemical;
-            existingOnsiteScore.ChemicalId = onsiteScore.ChemicalId;
+            existingOnsiteScore.Substance = onsiteScore.Substance;
+            existingOnsiteScore.SubstanceId = onsiteScore.SubstanceId;
             existingOnsiteScore.Other1D = onsiteScore.Other1D;
             existingOnsiteScore.D2 = onsiteScore.D2;
             existingOnsiteScore.D3 = onsiteScore.D3;

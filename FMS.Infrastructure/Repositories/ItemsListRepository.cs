@@ -16,7 +16,17 @@ namespace FMS.Infrastructure.Repositories
     public class ItemsListRepository : IItemsListRepository
     {
         private readonly FmsDbContext _context;
-        public ItemsListRepository(FmsDbContext context) => _context = context;
+        private readonly ISubstanceRepository _substanceRepository;
+        public ItemsListRepository(FmsDbContext context, ISubstanceRepository substanceRepository)
+        {
+            _context = context;
+            _substanceRepository = substanceRepository;
+        }
+
+        public ItemsListRepository(FmsDbContext fmsDbContext)
+        {
+            FmsDbContext = fmsDbContext;
+        }
 
         #region "Get All List Items Lists"
         /// <summary>
@@ -87,14 +97,28 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
             .ToListAsync();
 
+        public async Task<IEnumerable<ListItem>> GetChemicalsBySubstanceIdAsync(Guid facilityId, bool includeInactive = false)
+        {
+            var substances = await _substanceRepository.GetSubstanceListByFacilityIdAsync(facilityId);
+            if (substances == null) return Enumerable.Empty<ListItem>();
+
+            var chemicalList = await _context.Chemicals.AsNoTracking()
+                .Where(c => (c.Active || includeInactive) && substances.Any(s => s.Chemical.Id == c.Id))
+                .OrderBy(c => c.CasNo)
+                .Select(c => new ListItem() { Id = c.Id, Name = c.DisplayName })
+                .ToListAsync();
+
+            return chemicalList;
+        }
+
         public async Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ContactType>(includeInactive);
 
         public async Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<EventType>(includeInactive);
 
-        public async Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactice = false) =>
-            await GetItemListAsync<EventContractor>(includeInactice);
+        public async Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<EventContractor>(includeInactive);
 
         public async Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false) =>
             await _context.FundingSources.AsNoTracking()
@@ -377,6 +401,8 @@ namespace FMS.Infrastructure.Repositories
         #region IDisposable Support
 
         private bool _disposedValue;
+
+        public FmsDbContext FmsDbContext { get; }
 
         protected virtual void Dispose(bool disposing)
         {

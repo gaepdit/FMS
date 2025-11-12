@@ -62,7 +62,7 @@ namespace FMS.Pages.GroundwaterScore
             }
 
             Facility = await _facilityRepository.GetFacilityAsync(GroundwaterScore.FacilityId);
-            
+
             if (Facility == null)
             {
                 return NotFound();

@@ -50,11 +50,11 @@
                 <span asp-validation-for="OnsiteScore.CASNO" class="text-danger"></span>
             </div>
             <div class="col mb-3">
-                <label asp-for="OnsiteScore.ChemicalId" class="form-label"></label>
-                <select asp-for="OnsiteScore.ChemicalId" asp-items="Model.Chemicals" class="form-select">
+                <label asp-for="OnsiteScore.Substance.ChemicalId" class="form-label"></label>
+                <select asp-for="OnsiteScore.Substance.ChemicalId" asp-items="Model.Chemicals" class="form-select">
                     <option value=""></option>
                 </select>
-                <span asp-validation-for="OnsiteScore.ChemicalId" class="text-danger"></span>
+                <span asp-validation-for="OnsiteScore.Substance.ChemicalId" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.ChemName1D" class="form-label"></label>

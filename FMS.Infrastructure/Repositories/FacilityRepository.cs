@@ -87,22 +87,6 @@ namespace FMS.Infrastructure.Repositories
                     .FirstOrDefaultAsync();
                 facility.ScoreDetails ??= new Score(facility.Id);
 
-                GroundwaterScore groundwaterScore = await _context.GroundwaterScores
-                    .AsNoTracking()
-                    .Where(e => e.FacilityId == id)
-                    .Include(e => e.Chemical)
-                    .FirstOrDefaultAsync();
-                facility.GroundwaterScoreDetails = groundwaterScore != null ? new GroundwaterScore(groundwaterScore) : new GroundwaterScore(facility.Id);
-
-
-                OnsiteScore onsiteScore = await _context.OnsiteScores
-                        .AsNoTracking()
-                        .Where(e => e.FacilityId == id)
-                        .Include(e => e.Chemical)
-                        .FirstOrDefaultAsync();
-                facility.OnsiteScoreDetails = onsiteScore != null ? new OnsiteScore(onsiteScore) : new OnsiteScore(facility.Id);
-
-
                 facility.Substances = await _context.Substances
                         .AsNoTracking()
                         .Include(e => e.Chemical)
@@ -111,6 +95,20 @@ namespace FMS.Infrastructure.Repositories
                         .ThenByDescending(e => e.Chemical.Active)
                         .ThenBy(e => e.Chemical.CommonName)
                         .ToListAsync();
+
+                GroundwaterScore groundwaterScore = await _context.GroundwaterScores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.Substance)
+                    .FirstOrDefaultAsync();
+                facility.GroundwaterScoreDetails = groundwaterScore != null ? new GroundwaterScore(groundwaterScore) : new GroundwaterScore(facility.Id);
+
+                OnsiteScore onsiteScore = await _context.OnsiteScores
+                        .AsNoTracking()
+                        .Where(e => e.FacilityId == id)
+                        .Include(e => e.Substance)
+                        .FirstOrDefaultAsync();
+                facility.OnsiteScoreDetails = onsiteScore != null ? new OnsiteScore(onsiteScore) : new OnsiteScore(facility.Id);
 
                 facility.StatusDetails = await _context.Statuses
                     .AsNoTracking()

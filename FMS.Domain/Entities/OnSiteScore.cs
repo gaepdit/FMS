@@ -46,8 +46,8 @@ namespace FMS.Domain.Entities
             Other1D = onsiteScore.Other1D;
             D2 = onsiteScore.D2;
             D3 = onsiteScore.D3;
-            ChemicalId = onsiteScore.ChemicalId;
-            Chemical = onsiteScore.Chemical;
+            SubstanceId = onsiteScore.SubstanceId;
+            Substance = onsiteScore.Substance;
             CASNO = onsiteScore.GetCasNo();
             E1 = onsiteScore.E1;
             E2 = onsiteScore.E2;
@@ -82,9 +82,9 @@ namespace FMS.Domain.Entities
         [Display(Name = "3D")]
         public int? D3 { get; set; }
 
-        public Guid? ChemicalId { get; set; }
-        [Display(Name = "Chemical")]
-        public Chemical Chemical { get; set; }  
+        [Display(Name = "Substance")]
+        public Guid? SubstanceId { get; set; }
+        public Substance Substance { get; set; }
 
         [Display(Name = "CasNo")]
         public string CASNO { get; set; }
@@ -97,12 +97,12 @@ namespace FMS.Domain.Entities
 
         public string GetCasNo()
         {
-            return Chemical?.CasNo ?? CASNO;
+            return Substance?.Chemical.CasNo ?? CASNO;
         }
 
         public string GetChemName()
         {
-            return Chemical?.ChemicalName ?? ChemName1D;
+            return Substance?.Chemical.ChemicalName ?? ChemName1D;
         }
     }
 }

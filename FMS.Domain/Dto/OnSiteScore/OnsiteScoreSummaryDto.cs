@@ -22,6 +22,7 @@ namespace FMS.Domain.Dto
             Other1D = onsiteScore.Other1D;
             D2 = onsiteScore.D2;
             D3 = onsiteScore.D3;
+            SubstanceId = onsiteScore.SubstanceId;
             CASNO = onsiteScore.CASNO;
             E1 = onsiteScore.E1;
             E2 = onsiteScore.E2;
@@ -60,9 +61,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "D3")]
         public int? D3 { get; set; }
 
-        public Guid ChemicalId { get; set; }
-        [Display(Name = "Chemical")]
-        public Chemical Chemical { get; set; }
+        [Display(Name = "Substance")]
+        public Guid? SubstanceId { get; set; }
+
+        public Substance Substance { get; set; }
 
         [Display(Name = "CasNo")]
         public string CASNO { get; set; }
