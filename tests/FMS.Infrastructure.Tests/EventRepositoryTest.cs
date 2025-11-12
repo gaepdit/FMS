@@ -21,7 +21,7 @@ namespace FMS.Infrastructure.Tests
     {
         private FmsDbContext _context;
         private EventRepository _repository;
-        private bool _disposed = false;
+        private bool _disposed = false; 
 
         [SetUp]
         public void SetUp()
@@ -219,19 +219,115 @@ namespace FMS.Infrastructure.Tests
             var results = await _repository.CreateEventAsync(dto);
 
             results.Should().NotBeEmpty();
-
-
         }
 
 
         // UpdateEventAsync
+        [Test]
+        public async Task UpdateEventAsync_UpdatesExistingEvent_WhenDataIsValid()
+        {
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                StartDate = new DateOnly(1, 1, 1),
+                DueDate = new DateOnly(2, 2, 2),
+                CompletionDate = new DateOnly(3, 3, 3),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventAmount = 0,
+                EntityNameOrNumber = "VALID_ENoN",
+                Comment = "VALID_COMMENT",
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
+            var updateDto = new EventEditDto
+            {
+                Id = existingEvent.Id,
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                StartDate = new DateOnly(10, 1, 10),
+                DueDate = new DateOnly(20, 2, 20),
+                CompletionDate = new DateOnly(30, 3, 30),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventAmount = 1,
+                EntityNameOrNumber = "NEW_ENoN",
+                Comment = "NEW_COMMENT",
+            };
+            await _repository.UpdateEventAsync(updateDto);
+            _context.ChangeTracker.Clear();
+
+            var updatedEvent = await _context.Events.FindAsync(existingEvent.Id);
+
+            updatedEvent.Should().BeEquivalentTo(updateDto, options => options
+                .Excluding(e=> e.Parent));
+        }
+        [Test]
+        public async Task UpdateEventAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new EventEditDto { Id = invalidId, FacilityId = Guid.NewGuid() };
+
+            var action = async () => await _repository.UpdateEventAsync(updateDto);
+
+            await action.Should().ThrowAsync<InvalidOperationException>();
+        }
 
 
         // UpdateEventStatusAsync
+        [Test]
+        public async Task UpdateEventStatusAsync_UpdatesStatusCorrectly_WhenIdExist()
+        {
+            var existingEvent = await _context.Events.FirstAsync(c => c.Active);
+            await _repository.UpdateEventStatusAsync(existingEvent.Id, false);
+            _context.ChangeTracker.Clear();
 
+            var updatedEvent = await _context.Events.FindAsync(existingEvent.Id);
+
+            updatedEvent.Should().NotBeNull();
+            updatedEvent!.Active.Should().BeFalse();
+        }
+
+        [Test]
+        public async Task UpdateEventStatusAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.UpdateEventStatusAsync(invalidId, false);
+            await action.Should().ThrowAsync<InvalidOperationException>();
+        }
 
 
         // DeleteEventByIdAsync
+        [Test]
+        public async Task DeleteEventByIdAsync_DeletesEvent_WhenIdExist()
+        {
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            await _repository.DeleteEventByIdAsync(existingEvent.Id);
+            var results = await _repository.EventExistsAsync(existingEvent.Id);
+
+            results.Should().BeFalse();
+        }
+        [Test]
+        public async Task DeleteEventByIdAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.DeleteEventByIdAsync(invalidId);
+            await action.Should().ThrowAsync<InvalidOperationException>();
+        }
     }
 }
