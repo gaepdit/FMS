@@ -19,11 +19,12 @@ namespace FMS.Infrastructure.Repositories
             _context.GroundwaterScores.AnyAsync(e => e.Id == id);
 
         public async Task<GroundwaterScoreEditDto> GetGroundwaterScoreByFacilityIdAsync(Guid facilityId)
-            {
+        {
             var groundwaterScore = await _context.GroundwaterScores.AsNoTracking()
                 .Include(e => e.Substance)
                 .Include(e => e.Substance.Chemical)
-                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+                .Where(e => e.FacilityId == facilityId && e.Substance.ChemicalId == e.Substance.Chemical.Id && e.SubstanceId == e.Substance.Id && e.Substance.Groundwater && e.Substance.UseForScoring)
+                .SingleOrDefaultAsync();
 
             return groundwaterScore == null ? null : new GroundwaterScoreEditDto(groundwaterScore);
         }
@@ -68,7 +69,7 @@ namespace FMS.Infrastructure.Repositories
         {
             Prevent.Null(groundwaterScore, nameof(groundwaterScore));
             Prevent.NullOrEmpty(groundwaterScore.Id, nameof(groundwaterScore.Id));
-           
+
             return UpdateGroundwaterScoreInternalAsync(groundwaterScore);
         }
 

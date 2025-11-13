@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -23,7 +24,9 @@ namespace FMS.Infrastructure.Repositories
             var onsiteScore = await _context.OnsiteScores.AsNoTracking()
                 .Include(e => e.Substance)
                 .Include(e => e.Substance.Chemical)
-                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+                .Where(e => e.FacilityId == facilityId && e.Substance.ChemicalId == e.Substance.Chemical.Id && e.SubstanceId == e.Substance.Id && e.Substance.Soil && e.Substance.UseForScoring)
+                .SingleOrDefaultAsync();
+
             return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }
 

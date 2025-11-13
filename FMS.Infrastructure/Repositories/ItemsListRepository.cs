@@ -97,7 +97,7 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
             .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetChemicalsBySubstanceIdAsync(Guid facilityId, bool includeInactive = false)
+        public async Task<IEnumerable<ListItem>> GetChemicalsFromSubstanceAsync(Guid facilityId, bool includeInactive = false)
         {
             var substances = await _substanceRepository.GetSubstanceListByFacilityIdAsync(facilityId);
             if (substances == null) return Enumerable.Empty<ListItem>();

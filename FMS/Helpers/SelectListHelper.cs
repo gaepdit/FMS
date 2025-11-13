@@ -64,7 +64,7 @@ namespace FMS
         {
             if (substanceId.HasValue)
             {
-                return (await _listRepository.GetChemicalsBySubstanceIdAsync(substanceId.Value, includeInactive)).ToSelectList();
+                return (await _listRepository.GetChemicalsFromSubstanceAsync(substanceId.Value, includeInactive)).ToSelectList();
             }
             else
             {

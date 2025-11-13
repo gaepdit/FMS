@@ -97,7 +97,7 @@ namespace FMS.Pages.GroundwaterScore
 
         private async Task PopulateSelectsAsync()
         {
-            Chemicals = await _listHelper.ChemicalsSelectListAsync();
+            Chemicals = await _listHelper.ChemicalsSelectListAsync(false, GroundwaterScore.Substance.Id);
         }
     }
 }
