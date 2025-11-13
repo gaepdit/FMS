@@ -18,13 +18,15 @@ namespace FMS.Pages.Location
     {
         private readonly ILocationRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
-
+        private readonly ISelectListHelper _listHelper;
         public EditModel(
             ILocationRepository repository, 
-            IFacilityRepository facilityRepository)
+            IFacilityRepository facilityRepository,
+            ISelectListHelper selectListHelper)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
+            _listHelper = selectListHelper;
         }
 
         [BindProperty]
@@ -35,7 +37,7 @@ namespace FMS.Pages.Location
         [BindProperty]
         public Guid Id { get; set; }
 
-        public SelectList Classes => new(Data.Classes);
+        public SelectList Classes { get; set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -66,24 +68,37 @@ namespace FMS.Pages.Location
             }
 
             ActiveTab = "Location";
-
+            await PopulateSelectsAsync();
             return Page();
         }
 
+       
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                await PopulateSelectsAsync();
+                return Page();
+            }
+            try
+            {
+                await _repository.UpdateLocationAsync(Location.FacilityId, Location);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Unable to save changes: {ex.Message}");
+                await PopulateSelectsAsync();
                 return Page();
             }
 
-            await _repository.UpdateLocationAsync(Location.FacilityId, Location);
-
-            TempData?.SetDisplayMessage(Context.Success, $"Location successfully Updated.");
-
+            TempData?.SetDisplayMessage(Context.Success, $"Location successfully updated.");
             ActiveTab = "Location";
+            return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId });
+        }
 
-            return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId, tab = "Location" });
+        private async Task PopulateSelectsAsync()
+        {
+            Classes = await _listHelper.LocationClassesSelectListAsync();
         }
     }
 }

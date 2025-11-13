@@ -14,7 +14,7 @@ namespace FMS.Domain.Dto
             FacilityId = contact.FacilityId;
             GivenName = contact.GivenName;
             FamilyName = contact.FamilyName;
-            ContactTitleId = contact.ContactTitleId;
+            ContactTitle = contact.ContactTitle;
             ContactTypeId = contact.ContactTypeId;
             Company = contact.Company;
             Address = contact.Address;
@@ -38,7 +38,7 @@ namespace FMS.Domain.Dto
         public string FamilyName { get; set; }
 
         [Display(Name = "Title")]
-        public Guid? ContactTitleId { get; set; }
+        public string ContactTitle { get; set; }
 
         [Display(Name = "Contact Type")]
         public Guid? ContactTypeId { get; set; }

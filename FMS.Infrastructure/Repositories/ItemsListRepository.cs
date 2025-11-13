@@ -87,14 +87,14 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
             .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetContactTitlesListAsync(bool includeInactive = false) => 
-            await GetItemListAsync<ContactTitle>(includeInactive);
-
         public async Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ContactType>(includeInactive);
 
         public async Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<EventType>(includeInactive);
+
+        public async Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactice = false) =>
+            await GetItemListAsync<EventContractor>(includeInactice);
 
         public async Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false) =>
             await _context.FundingSources.AsNoTracking()
@@ -108,6 +108,13 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
                 .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
+                .ToListAsync();
+
+        public async Task<IEnumerable<ListItem>> GetLocationClassesListAsync(bool includeInactive = false) =>
+            await _context.LocationClasses.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.Name })
                 .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetOverallStatusesListAsync(bool includeInactive = false) =>
@@ -244,17 +251,6 @@ namespace FMS.Infrastructure.Repositories
             return null;
         }
 
-        public async Task<string> GetContactTitleNameAsync(Guid? id)
-        {
-            if (id.HasValue)
-            {
-                var item = await _context.ContactTitles.AsNoTracking()
-                    .SingleOrDefaultAsync(e => e.Id == id);
-                return item?.Name;
-            }
-            return null;
-        }
-
         public async Task<string> GetContactTypeNameAsync(Guid? id)
         {
             if (id.HasValue)
@@ -277,6 +273,17 @@ namespace FMS.Infrastructure.Repositories
             return null;
         }
 
+        public async Task<string> GetEventContractorNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.EventContractors.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
         public async Task<string> GetFundingSourceNameAsync(Guid? id)
         {
             if (id.HasValue)
@@ -293,6 +300,17 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.GroundwaterStatuses.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetLocationClassNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.LocationClasses.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }

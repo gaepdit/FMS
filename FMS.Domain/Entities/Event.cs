@@ -1,6 +1,7 @@
-﻿using FMS.Domain.Entities.Base;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System;
-using FMS.Domain.Dto;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -19,7 +20,7 @@ namespace FMS.Domain.Entities
             CompletionDate = eventDto.CompletionDate;
             ComplianceOfficerId = eventDto.ComplianceOfficerId;
             EventAmount = eventDto.EventAmount;
-            EntityNameOrNumber = eventDto.EntityNameOrNumber;
+            EventContractorId = eventDto.EventContractorId;
             Comment = eventDto.Comment;
         }
 
@@ -27,9 +28,11 @@ namespace FMS.Domain.Entities
 
         public Guid? ParentId { get; set; }
 
+        [Required]
         public Guid? EventTypeId { get; set; }
         public EventType EventType { get; set; }
 
+        [Required]
         public Guid? ActionTakenId { get; set; }
         public ActionTaken ActionTaken { get; set; }
 
@@ -39,12 +42,14 @@ namespace FMS.Domain.Entities
 
         public DateOnly? CompletionDate { get; set; }
 
+        [Required]
         public Guid? ComplianceOfficerId { get; set; }
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
         public decimal? EventAmount { get; set; }
 
-        public string EntityNameOrNumber { get; set; }
+        public Guid? EventContractorId { get; set; }
+        public EventContractor EventContractor { get; set; }
 
         public string Comment { get; set; }
     }

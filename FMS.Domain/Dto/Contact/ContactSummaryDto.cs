@@ -40,7 +40,7 @@ namespace FMS.Domain.Dto
         public string FamilyName { get; set; }
 
         [Display(Name = "Title")]
-        public ContactTitle ContactTitle { get; set; }
+        public string ContactTitle { get; set; }
 
         [Display(Name = "Type")]
         public ContactType ContactType { get; set; }

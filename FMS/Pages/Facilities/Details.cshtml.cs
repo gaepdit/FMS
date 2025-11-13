@@ -93,10 +93,8 @@ namespace FMS.Pages.Facilities
                 ActiveTab = "HSIProperties";
             }
 
-            Lat = FacilityDetail.Latitude != 0 ? FacilityDetail.Latitude.ToString() : null;
-            Lon = FacilityDetail.Longitude != 0 ? FacilityDetail.Longitude.ToString() : null;
             MapLink = GetMapLink();
-
+            FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events);
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
             return Page();
@@ -133,7 +131,7 @@ namespace FMS.Pages.Facilities
             }
 
             RecordCreate.TrimAll();
-
+            GetMapLink();
             HighlightRecord = await _repository.CreateRetentionRecordAsync(FacilityId, RecordCreate);
 
             return RedirectToPage();
@@ -143,6 +141,8 @@ namespace FMS.Pages.Facilities
         {
             if (FacilityDetail != null && FacilityDetail.Latitude != 0 && FacilityDetail.Longitude != 0)
             {
+                Lat = FacilityDetail.Latitude.ToString();
+                Lon = FacilityDetail.Longitude.ToString();
                 return UrlHelper.GetMapLink(FacilityDetail.Latitude, FacilityDetail.Longitude);
             }
             return string.Empty;

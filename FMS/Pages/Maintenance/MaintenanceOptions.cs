@@ -22,5 +22,7 @@
         public const string AllowedActionTaken = "Allowed Actions Taken";
         public const string AbandonedInactive = "Abandoned Inactive";
         public const string GapsAssessment = "GAPS Assessment";
+        public const string LocationClass = "Location Class";
+        public const string EventContractor = "Event Contractor";
     }
 }

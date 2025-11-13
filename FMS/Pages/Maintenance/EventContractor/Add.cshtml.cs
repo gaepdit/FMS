@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FMS.Pages.Maintenance.ContactTitle
+namespace FMS.Pages.Maintenance.EventContractor
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class AddModel : PageModel
     {
-        private readonly IContactTitleRepository _repository;
-        public AddModel(IContactTitleRepository repository) => _repository = repository;
+        private readonly IEventContractorRepository _repository;
+        public AddModel(IEventContractorRepository repository) => _repository = repository;
 
         [BindProperty]
-        public ContactTitleCreateDto ContactTitle { get; set; }
+        public EventContractorCreateDto EventContractor { get; set; }
 
         public void OnGet()
         {
@@ -30,11 +30,11 @@ namespace FMS.Pages.Maintenance.ContactTitle
                 return Page();
             }
 
-            ContactTitle.TrimAll();
+            EventContractor.TrimAll();
 
-            if (await _repository.ContactTitleNameExistsAsync(ContactTitle.Name))
+            if (await _repository.EventContractorNameExistsAsync(EventContractor.Name))
             {
-                ModelState.AddModelError("ContactTitle.Name", "Name entered already exists.");
+                ModelState.AddModelError("EventContractor.Name", "Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -42,13 +42,13 @@ namespace FMS.Pages.Maintenance.ContactTitle
                 return Page();
             }
 
-            await _repository.CreateContactTitleAsync(ContactTitle);
+            await _repository.CreateEventContractorAsync(EventContractor);
 
             TempData?.SetDisplayMessage(Context.Success,
-                $"{MaintenanceOptions.ContactTitle} \"{ContactTitle.Name}\" successfully created.");
+                $"{MaintenanceOptions.EventContractor} \"{EventContractor.Name}\" successfully created.");
 
             return RedirectToPage("./Index", "select",
-                new { MaintenanceSelection = MaintenanceOptions.ContactTitle });
+                new { MaintenanceSelection = MaintenanceOptions.EventContractor });
         }
     }
 }

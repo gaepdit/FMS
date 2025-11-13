@@ -25,8 +25,6 @@ namespace FMS.TestData.SeedData
                 await context.Files.AddRangeAsync(GetFiles(), token);
             if (!await context.Chemicals.AnyAsync(token))
                 await context.Chemicals.AddRangeAsync(GetChemicals(), token);
-            if (!await context.ContactTitles.AnyAsync(token))
-                await context.ContactTitles.AddRangeAsync(GetContactTitles(), token);
             if (!await context.ContactTypes.AnyAsync(token))
                 await context.ContactTypes.AddRangeAsync(GetContactTypes(), token);
             if (!await context.ActionsTaken.AnyAsync(token))
@@ -35,8 +33,12 @@ namespace FMS.TestData.SeedData
                 await context.AbandonedInactives.AddRangeAsync(GetAbandonedInactives(), token);
             if (!await context.EventTypes.AnyAsync(token))
                 await context.EventTypes.AddRangeAsync(GetEventTypes(), token);
+            if (!await context.EventContractors.AnyAsync(token))
+                await context.EventContractors.AddRangeAsync(GetEventContractors(), token);
             if (!await context.FundingSources.AnyAsync(token))
                 await context.FundingSources.AddRangeAsync(GetFundingSources(), token);
+            if (!await context.LocationClasses.AnyAsync(token))
+                await context.LocationClasses.AddRangeAsync(GetLocationClasses(), token);
             if (!await context.ParcelTypes.AnyAsync(token))
                 await context.ParcelTypes.AddRangeAsync(GetParcelTypes(), token);
             if (!await context.OverallStatuses.AnyAsync(token))

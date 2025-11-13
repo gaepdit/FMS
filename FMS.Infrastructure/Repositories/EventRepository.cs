@@ -25,6 +25,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.EventContractor)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             var eventSummary = newEvent == null ? null : new EventSummaryDto(newEvent);
@@ -38,12 +39,13 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.EventContractor)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             return EventSummary == null ? null : new EventSummaryDto(EventSummary);
         }
 
-        public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)
+        public async Task<IList<EventSummaryDto>> GetEventsByFacilityIdAsync(Guid facilityId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
@@ -52,31 +54,32 @@ namespace FMS.Infrastructure.Repositories
                    .Include(e => e.EventType)
                    .Include(e => e.ActionTaken)
                    .Include(e => e.ComplianceOfficer)
+                   .Include(e => e.EventContractor)
+                   .OrderBy(e => e.StartDate)
+                   .ThenBy(e => e.CompletionDate)
                    .Where(e => e.FacilityId == facilityId)
+                   .Select(e => new EventSummaryDto(e))
                    .ToListAsync();
 
-            events = events
-                .OrderByDescending(e => e.Active)
-                .ThenBy(e => e.StartDate)
-                .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
-                .SelectMany(g => g)
-                .ToList();
-
-            return events.Select(e => new EventSummaryDto(e)).ToList();
+            return events;
         }
 
-        public async Task<IEnumerable<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId)
+        public async Task<IList<EventSummaryDto>> GetEventsByFacilityIdAndParentIdAsync(Guid facilityId, Guid parentId)
         {
             Prevent.NullOrEmpty(facilityId, nameof(facilityId));
 
-            return await _context.Events.AsNoTracking()
+            var events = await _context.Events.AsNoTracking()
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.ComplianceOfficer)
-                .OrderByDescending(e => e.Active)
+                .Include(e => e.EventContractor)
+                .OrderBy(e => e.StartDate)
+                .ThenBy(e => e.CompletionDate)
                 .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
                 .Select(e => new EventSummaryDto(e))
                 .ToListAsync();
+
+            return events;
         }
 
         public Task<Guid> CreateEventAsync(EventCreateDto eventDto)
@@ -102,7 +105,7 @@ namespace FMS.Infrastructure.Repositories
                 CompletionDate = eventDto.CompletionDate,
                 ComplianceOfficerId = eventDto.ComplianceOfficerId,
                 EventAmount = eventDto.EventAmount,
-                EntityNameOrNumber = eventDto.EntityNameOrNumber,
+                EventContractorId = eventDto.EventContractorId,
                 Comment = eventDto.Comment
             };
 
@@ -134,7 +137,7 @@ namespace FMS.Infrastructure.Repositories
             existingEvent.CompletionDate = eventDto.CompletionDate;
             existingEvent.ComplianceOfficerId = eventDto.ComplianceOfficerId;
             existingEvent.EventAmount = eventDto.EventAmount;
-            existingEvent.EntityNameOrNumber = eventDto.EntityNameOrNumber;
+            existingEvent.EventContractorId = eventDto.EventContractorId;
             existingEvent.Comment = eventDto.Comment;
 
             _context.Events.Update(existingEvent);
@@ -164,6 +167,7 @@ namespace FMS.Infrastructure.Repositories
             _context.Events.Remove(eventToDelete);
             await _context.SaveChangesAsync();
         }
+        
 
         #region IDisposable Support
 

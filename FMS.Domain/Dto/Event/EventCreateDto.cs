@@ -13,9 +13,11 @@ namespace FMS.Domain.Dto
         public Guid? ParentId { get; set; }
         public Event Parent { get; set; }
 
+        [Required]
         [Display(Name = "Event Type")]
         public Guid EventTypeId { get; set; }
-
+        
+        [Required]
         [Display(Name = "Action Taken")]
         public Guid ActionTakenId { get; set; }
 
@@ -28,6 +30,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Completion Date")]
         public DateOnly? CompletionDate { get; set; }
 
+        [Required]
         [Display(Name = "Done By (CO)")]
         public Guid ComplianceOfficerId { get; set; }
         public ComplianceOfficer ComplianceOfficer { get; set; }
@@ -35,8 +38,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Event Amount")]
         public decimal? EventAmount { get; set; }
 
-        [Display(Name = "Entity Name or Number")]
-        public string EntityNameOrNumber { get; set; }
+        [Display(Name = "Contractor")]
+        public Guid? EventContractorId { get; set; }
+        public EventContractor EventContractor { get; set; }
 
         [Display(Name = "Comment")]
         public string Comment { get; set; }

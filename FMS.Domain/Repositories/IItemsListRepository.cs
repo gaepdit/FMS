@@ -25,11 +25,12 @@ namespace FMS.Domain.Repositories
         Task<IEnumerable<ListItem>> GetAbandonedInactiveListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetAllowedActionsTakenListAsync(Guid? id, bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetChemicalListAsync(bool includeInactive = false);
-        Task<IEnumerable<ListItem>> GetContactTitlesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetGroundwaterStatusesListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetLocationClassesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetOverallStatusesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetParcelTypesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetSoilStatusesListAsync(bool includeInactive = false);
@@ -49,11 +50,12 @@ namespace FMS.Domain.Repositories
         Task<string> GetActionTakenNameAsync(Guid? id);
         Task<string> GetAbandonedInactiveNameAsync(Guid? id);
         Task<string> GetChemicalNameAsync(Guid? id);
-        Task<string> GetContactTitleNameAsync(Guid? id);
         Task<string> GetContactTypeNameAsync(Guid? id);
         Task<string> GetEventTypeNameAsync(Guid? id);
+        Task<string> GetEventContractorNameAsync(Guid? id);
         Task<string> GetFundingSourceNameAsync(Guid? id);
         Task<string> GetGroundwaterStatusNameAsync(Guid? id);
+        Task<string> GetLocationClassNameAsync(Guid? id);
         Task<string> GetOverallStatusNameAsync(Guid? id);
         Task<string> GetParcelTypeNameAsync(Guid? id);
         Task<string> GetSoilStatusNameAsync(Guid? id);

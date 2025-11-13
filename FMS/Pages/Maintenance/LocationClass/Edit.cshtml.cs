@@ -9,16 +9,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance.ContactTitle
+namespace FMS.Pages.Maintenance.LocationClass
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class EditModel : PageModel
     {
-        private readonly IContactTitleRepository _repository;
-        public EditModel(IContactTitleRepository repository) => _repository = repository;
+        private readonly ILocationClassRepository _repository;
+        public EditModel(ILocationClassRepository repository) => _repository = repository;
 
         [BindProperty]
-        public ContactTitleEditDto ContactTitle { get; set; }
+        public LocationClassEditDto LocationClass { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }
@@ -31,9 +31,9 @@ namespace FMS.Pages.Maintenance.ContactTitle
             }
 
             Id = id.Value;
-            ContactTitle = await _repository.GetContactTitleByIdAsync(id.Value);
+            LocationClass = await _repository.GetLocationClassAsync(id.Value);
 
-            if (ContactTitle == null)
+            if (LocationClass == null)
             {
                 return NotFound();
             }
@@ -48,12 +48,12 @@ namespace FMS.Pages.Maintenance.ContactTitle
                 return Page();
             }
 
-            ContactTitle.TrimAll();
+            LocationClass.TrimAll();
 
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _repository.ContactTitleNameExistsAsync(ContactTitle.Name, Id))
+            if (await _repository.LocationClassNameExistsAsync(LocationClass.Name, Id))
             {
-                ModelState.AddModelError("ContactTitle.Name", "Name entered already exists.");
+                ModelState.AddModelError("LocationClass.Name", "Class Name entered already exists.");
             }
 
             if (!ModelState.IsValid)
@@ -63,11 +63,11 @@ namespace FMS.Pages.Maintenance.ContactTitle
 
             try
             {
-                await _repository.UpdateContactTitleAsync(Id, ContactTitle);
+                await _repository.UpdateLocationClassAsync(Id, LocationClass);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _repository.ContactTitleExistsAsync(Id))
+                if (!await _repository.LocationClassExistsAsync(Id))
                 {
                     return NotFound();
                 }
@@ -75,9 +75,7 @@ namespace FMS.Pages.Maintenance.ContactTitle
                 throw;
             }
 
-            TempData?.SetDisplayMessage(Context.Success,
-                $"{MaintenanceOptions.ContactTitle} \"{ContactTitle.Name}\" successfully updated.");
-
+            TempData?.SetDisplayMessage(Context.Success, $"{MaintenanceOptions.LocationClass} \"{LocationClass.Name}\" successfully updated.");
             return RedirectToPage("./Index");
         }
     }

@@ -10,20 +10,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance.ContactTitle
+namespace FMS.Pages.Maintenance.LocationClass
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
     public class IndexModel : PageModel
     {
-        private readonly IContactTitleRepository _repository;
-        public IndexModel(IContactTitleRepository repository) => _repository = repository;
+        private readonly ILocationClassRepository _repository;
+        public IndexModel(ILocationClassRepository repository) => _repository = repository;
 
-        public IReadOnlyList<ContactTitleSummaryDto> ContactTitles { get; private set; }
+        public IReadOnlyList<LocationClassSummaryDto> LocationClasses { get; private set; }
         public DisplayMessage DisplayMessage { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ContactTitles = await _repository.GetContactTitleListAsync();
+            LocationClasses = await _repository.GetLocationClassListAsync();
             DisplayMessage = TempData?.GetDisplayMessage();
             return Page();
         }
@@ -40,20 +40,20 @@ namespace FMS.Pages.Maintenance.ContactTitle
                 return Page();
             }
 
-            var contactTitle = await _repository.GetContactTitleByIdAsync(itemId.Value);
+            var LocationClass = await _repository.GetLocationClassAsync(itemId.Value);
 
-            if (contactTitle == null)
+            if (LocationClass == null)
             {
                 return NotFound();
             }
 
             try
             {
-                await _repository.UpdateContactTitleStatusAsync(itemId.Value, !contactTitle.Active);
+                await _repository.UpdateLocationClassStatusAsync(itemId.Value, !LocationClass.Active);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _repository.ContactTitleExistsAsync(itemId.Value))
+                if (!await _repository.LocationClassExistsAsync(itemId.Value))
                 {
                     return NotFound();
                 }
@@ -61,12 +61,10 @@ namespace FMS.Pages.Maintenance.ContactTitle
                 throw;
             }
 
-            ContactTitles = await _repository.GetContactTitleListAsync();
-
             TempData?.SetDisplayMessage(Context.Success,
-                contactTitle.Active
-                    ? $"{MaintenanceOptions.ContactTitle} \"{contactTitle.Name}\" successfully removed from list."
-                    : $"{MaintenanceOptions.ContactTitle}  \" {contactTitle.Name}\" successfully restored.");
+                LocationClass.Active
+                    ? $"{MaintenanceOptions.LocationClass} \"{LocationClass.Name}\" successfully removed from list."
+                    : $"{MaintenanceOptions.LocationClass} \"{LocationClass.Name}\" successfully restored.");
 
             return RedirectToPage("./Index");
         }

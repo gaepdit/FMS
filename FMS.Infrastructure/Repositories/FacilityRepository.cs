@@ -56,6 +56,7 @@ namespace FMS.Infrastructure.Repositories
 
                 facility.LocationDetails = await _context.Locations
                     .AsNoTracking()
+                    .Include(e => e.LocationClass)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
                 facility.LocationDetails ??= new Location(facility.Id);
@@ -73,7 +74,6 @@ namespace FMS.Infrastructure.Repositories
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.ContactType)
-                    .Include(e => e.ContactTitle)
                     .Include(e => e.Phones.OrderByDescending(p => p.Active))
                     .OrderByDescending(e => e.Active)
                     .ThenBy(e => e.FamilyName)
@@ -133,12 +133,13 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.EventType)
                     .Include(e => e.ActionTaken)
                     .Include(e => e.ComplianceOfficer)
+                    .Include(e => e.EventContractor)
                     .Where(e => e.FacilityId == id)
                     .ToListAsync();
 
                 facility.Events = facility.Events
-                    .OrderByDescending(e => e.Active)
-                    .ThenBy(e => e.StartDate)
+                    .OrderBy(e => e.StartDate)
+                    .ThenBy(e => e.CompletionDate)
                     .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
                     .SelectMany(g => g)
                     .ToList();

@@ -431,11 +431,19 @@
                         </h3>
                         <hr />
                         <div class="row">
-                            <div class="col-sm-1">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.Class)
+                            <div class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.LocationClass.Name)
                             </div>
                             <div class="col-sm-2">
-                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.Class, "StringOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.LocationClass.Name, "StringOrNone")
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.LocationDetails.LocationClass.Description)
+                            </div>
+                            <div class="col-sm-10">
+                                @Html.DisplayFor(model => model.FacilityDetail.LocationDetails.LocationClass.Description, "StringOrNone")
                             </div>
                         </div>
                         <hr />
@@ -514,7 +522,7 @@
                                             <td>@c.GivenName&nbsp;@c.FamilyName</td>
                                             <td>@c.ContactType.Name</td>
                                             <td>@c.Company</td>
-                                            <td>@c.ContactTitle.Name</td>
+                                            <td>@c.ContactTitle</td>
                                             <td>
                                                 @c.Address<br />
                                                 @c.City, @c.State&nbsp;@c.PostalCode
@@ -877,7 +885,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name,"StringOrNone")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name, "StringOrNone")
                             </dd>
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ReportComments)
@@ -1025,7 +1033,7 @@
                                     <th scope="col">Completion Date</th>
                                     <th scope="col">Done By</th>
                                     <th scope="col">Event Amount</th>
-                                    <th scope="col">Entity Name or No.</th>
+                                    <th scope="col">Contractor</th>
                                     <th scope="col">Comment</th>
                                     @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                     {
@@ -1034,23 +1042,30 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var e in Model.FacilityDetail.Events)
+                                @for (var i = 0; i < Model.FacilityDetail.Events.Count; i++)
                                 {
-                                    <tr class="@(!e.Active ? "text-muted table-warning" : "")">
-                                        <td>@e.EventType.Name</td>
-                                        <td>@e.ActionTaken.Name</td>
-                                        <td>@e.StartDate</td>
-                                        <td>@e.DueDate</td>
-                                        <td>@e.CompletionDate</td>
-                                        <td>@e.ComplianceOfficer.Name</td>
-                                        <td>@e.EventAmount</td>
-                                        <td>@e.EntityNameOrNumber</td>
-                                        <td>@e.Comment</td>
+                                    var item = Model.FacilityDetail.Events[i];
+                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
+                                        <td>
+                                            @if (item.ParentId != Guid.Empty)
+                                            {
+                                                <span class="badge text-bg-info"> ^ </span>
+                                            }
+                                            @item.EventType.Name
+                                        </td>
+                                        <td>@item.ActionTaken.Name</td>
+                                        <td>@item.StartDate</td>
+                                        <td>@item.DueDate</td>
+                                        <td>@item.CompletionDate</td>
+                                        <td>@item.ComplianceOfficer.Name</td>
+                                        <td>@item.EventAmount</td>
+                                        <td>@item.EventContractor?.Name</td>
+                                        <td>@item.Comment</td>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
                                             <td>
-                                                <a asp-page="/Event/Edit" asp-route-id="@e.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                <a asp-page="/Event/Delete" asp-route-id="@e.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                <a asp-page="/Event/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                <a asp-page="/Event/Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                             </td>
                                         }
                                     </tr>

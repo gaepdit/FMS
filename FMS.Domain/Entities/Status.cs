@@ -99,7 +99,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "GAPS Assessment")]
         public GapsAssessment GAPSAssessment { get; set; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "General Status Comments (not used in reporting)")]
         public string Comments { get; set; }
 
         [Display(Name = "Lien")]
@@ -118,6 +118,7 @@ namespace FMS.Domain.Entities
         [Display(Name = "Pertinent Information for Aban/Inac sites")]
         public AbandonedInactive AbandonedInactive { get; set; }
 
+        [Display(Name = "Comments for Aban/Inac Status Tracker Report")]
         public string ReportComments {  get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace FMS.Infrastructure.Tests
     {
         private FmsDbContext _context;
         private EventRepository _repository;
-        private bool _disposed = false; 
+        private bool _disposed = false;
 
         [SetUp]
         public void SetUp()

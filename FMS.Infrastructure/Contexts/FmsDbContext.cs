@@ -38,7 +38,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<ActionTaken> ActionsTaken { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContactType> ContactTypes { get; set; }
-        public DbSet<ContactTitle> ContactTitles { get; set; }
+        public DbSet<EventContractor> EventContractors { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<AllowedActionTaken> AllowedActionsTaken { get; set; }
         public DbSet<FundingSource> FundingSources { get; set; }
@@ -47,6 +47,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<Phone> Phones { get; set; }
         public DbSet<HsrpFacilityProperties> HsrpFacilityProperties { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<LocationClass> LocationClasses { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<OverallStatus> OverallStatuses { get; set; }
         public DbSet<Parcel> Parcels { get; set; }
