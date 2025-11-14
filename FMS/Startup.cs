@@ -76,6 +76,14 @@ namespace FMS
             {
                 opts.AddPolicy(UserPolicies.FileCreatorOrEditor, policy =>
                     policy.RequireRole(UserRoles.FileCreator, UserRoles.FileEditor));
+                opts.AddPolicy(UserPolicies.FileCreator, policy =>
+                    policy.RequireRole(UserRoles.FileCreator));
+                opts.AddPolicy(UserPolicies.FileEditor, policy =>
+                    policy.RequireRole(UserRoles.FileEditor));
+                opts.AddPolicy(UserPolicies.SiteMaintenance, policy =>
+                    policy.RequireRole(UserRoles.SiteMaintenance));
+                opts.AddPolicy(UserPolicies.UserMaintenance, policy =>
+                    policy.RequireRole(UserRoles.UserMaintenance));
             });
 
             // Configure dependencies

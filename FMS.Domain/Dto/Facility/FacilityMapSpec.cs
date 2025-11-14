@@ -6,6 +6,15 @@ namespace FMS.Domain.Dto
 {
     public class FacilityMapSpec
     {
+        public FacilityMapSpec() { }
+        
+        public FacilityMapSpec(FacilityDetailDto facility)
+        {
+            Latitude = facility.Latitude;
+            Longitude = facility.Longitude;
+            Radius = 3m;
+        }
+
         [Display(Name = "Include deleted records")]
         public bool ShowDeleted { get; set; }
 
