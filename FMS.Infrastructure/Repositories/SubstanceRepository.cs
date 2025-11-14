@@ -77,13 +77,7 @@ namespace FMS.Infrastructure.Repositories
             return substances;
         }
 
-        //public async Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId) => await _context.Substances.AsNoTracking()
-        //    .Include(e => e.Chemical)
-        //    .Where(e => e.FacilityId == facilityId)
-        //    .Select(e => new SubstanceEditDto(e))
-        //    .OrderByDescending(e => e.UseForScoring)
-        //    .ToListAsync();
-
+       
         public async Task<Guid> CreateSubstanceAsync(SubstanceCreateDto substance)
         {
             Prevent.Null(substance, nameof(substance));
