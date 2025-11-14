@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,13 +33,20 @@ namespace FMS.Infrastructure.Tests
         //        _context = new FmsDbContext(options, httpContextAccessor);
         //        _repository = new EventRepository(_context);
 
-        //        _context.Events.Add (new Event
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            FacilityId = Guid.NewGuid(),
-        //            ParentId = Guid.NewGuid(),
-        //            Comment = "VALID_COMMENT",
-        //            Active = true,
+            _context.Events.Add (new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                Comment = "VALID_COMMENT",
+                Active = true,
+                
+            });
+            _context.SaveChanges();
+        }
 
         //        });
         //        _context.SaveChanges();
@@ -134,8 +141,22 @@ namespace FMS.Infrastructure.Tests
         //        var nonExistingFacilityId = Guid.NewGuid();
         //        var results = await _repository.GetEventsByFacilityIdAsync(nonExistingFacilityId);
 
-        //        results.Should().BeEmpty();
-        //    }
+        // GetEventsByFacilityIdAndParentIdAsync
+        [Test]
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEventSummaryDtoList_WhenBothIdExist()
+        {
+            var existingEvent = new Event 
+            { 
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
         //    // GetEventsByFacilityIdAndParentIdAsync
         //    [Test]
@@ -151,7 +172,24 @@ namespace FMS.Infrastructure.Tests
         //        await _context.SaveChangesAsync();
         //        _context.ChangeTracker.Clear();
 
-        //        var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(existingEvent.FacilityId, (Guid)existingEvent.ParentId);
+            results.Should().NotBeNull();
+            results.Should().BeOfType<List<EventSummaryDto>>();
+        }
+        [Test]
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenFacilityIdDoesNotExist()
+        {
+            var nonExistingFacilityId = Guid.NewGuid();
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
         //        results.Should().NotBeNull();
         //        results.Should().BeOfType<List<EventSummaryDto>>();
@@ -169,7 +207,23 @@ namespace FMS.Infrastructure.Tests
         //        await _context.SaveChangesAsync();
         //        _context.ChangeTracker.Clear();
 
-        //        var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(nonExistingFacilityId, (Guid)existingEvent.ParentId);
+            results.Should().BeEmpty();
+        }
+        [Test]
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenParentIdDoesNotExist()
+        {
+            var nonExistingParentId = Guid.NewGuid();
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
         //        results.Should().BeEmpty();
         //    }
@@ -302,6 +356,22 @@ namespace FMS.Infrastructure.Tests
         //        await action.Should().ThrowAsync<InvalidOperationException>();
         //    }
 
+        // DeleteEventByIdAsync
+        [Test]
+        public async Task DeleteEventByIdAsync_DeletesEvent_WhenIdExist()
+        {
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
         //    // DeleteEventByIdAsync
         //    [Test]
