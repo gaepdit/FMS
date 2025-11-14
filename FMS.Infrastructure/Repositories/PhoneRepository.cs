@@ -63,10 +63,6 @@ namespace FMS.Infrastructure.Repositories
             {
                 throw new ArgumentException($"Phone: {phone.Id} Already Exists.");
             }
-            if (await PhoneNumberExistsAsync(phone.Number))
-            {
-                throw new ArgumentException($"Phone Number: {phone.Number} Already Exists.");
-            }
 
             var newPhone = new Phone()
             {
