@@ -13,16 +13,29 @@ namespace FMS.Infrastructure.Repositories
     public class GroundwaterScoreRepository : IGroundwaterScoreRepository
     {
         private readonly FmsDbContext _context;
-        public GroundwaterScoreRepository(FmsDbContext context) => _context = context;
+        private readonly ISubstanceRepository _substanceRepository;
+        public GroundwaterScoreRepository(FmsDbContext context, ISubstanceRepository substanceRepository)
+        {
+            _context = context;
+            _substanceRepository = substanceRepository;
+        }
 
         public Task<bool> GroundwaterScoreExistsAsync(Guid id) =>
             _context.GroundwaterScores.AnyAsync(e => e.Id == id);
 
+        public async Task<bool> SubstanceExistsInGroundwaterScoreAsync(Guid substanceId, Guid facilityId) =>
+            await _context.GroundwaterScores.AnyAsync(e => e.SubstanceId == substanceId && e.FacilityId == facilityId);
+
         public async Task<GroundwaterScoreEditDto> GetGroundwaterScoreByFacilityIdAsync(Guid facilityId)
-            {
+        {
             var groundwaterScore = await _context.GroundwaterScores.AsNoTracking()
-                .Include(e => e.Chemical)
-                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+                .Include(e => e.Substance)
+                .Include(e => e.Substance.Chemical)
+                .Where(e => e.FacilityId == facilityId)
+                .SingleOrDefaultAsync();
+
+            groundwaterScore.Substance = await _substanceRepository.GetSubstanceForGWByFacilityIdAsync(facilityId);
+            groundwaterScore.SubstanceId = groundwaterScore.Substance?.Id;
 
             return groundwaterScore == null ? null : new GroundwaterScoreEditDto(groundwaterScore);
         }
@@ -37,6 +50,8 @@ namespace FMS.Infrastructure.Repositories
 
         private async Task<Guid> CreateGroundwaterScoreInternalAsync(GroundwaterScoreCreateDto groundwaterScore)
         {
+            Substance substance = await _substanceRepository.GetSubstanceForGWByFacilityIdAsync(groundwaterScore.FacilityId);
+
             var newGroundwaterScore = new GroundwaterScore
             {
                 Id = Guid.NewGuid(),
@@ -48,12 +63,12 @@ namespace FMS.Infrastructure.Repositories
                 B2 = groundwaterScore.B2,
                 C = groundwaterScore.C,
                 Description = groundwaterScore.Description,
-                ChemName = groundwaterScore.ChemName,
+                ChemName = substance?.Chemical?.Name,
                 Other = groundwaterScore.Other,
                 D2 = groundwaterScore.D2,
                 D3 = groundwaterScore.D3,
-                ChemicalId = null,
-                CASNO = groundwaterScore.CASNO,
+                SubstanceId = substance?.Id,
+                CASNO = substance?.Chemical?.CasNo,
                 E1 = groundwaterScore.E1,
                 E2 = groundwaterScore.E2
             };
@@ -67,7 +82,7 @@ namespace FMS.Infrastructure.Repositories
         {
             Prevent.Null(groundwaterScore, nameof(groundwaterScore));
             Prevent.NullOrEmpty(groundwaterScore.Id, nameof(groundwaterScore.Id));
-           
+
             return UpdateGroundwaterScoreInternalAsync(groundwaterScore);
         }
 
@@ -92,7 +107,7 @@ namespace FMS.Infrastructure.Repositories
             existingGroundwaterScore.Other = groundwaterScore.Other;
             existingGroundwaterScore.D2 = groundwaterScore.D2;
             existingGroundwaterScore.D3 = groundwaterScore.D3;
-            existingGroundwaterScore.ChemicalId = groundwaterScore.ChemicalId;
+            existingGroundwaterScore.SubstanceId = groundwaterScore.SubstanceId;
             existingGroundwaterScore.CASNO = groundwaterScore.CASNO;
             existingGroundwaterScore.E1 = groundwaterScore.E1;
             existingGroundwaterScore.E2 = groundwaterScore.E2;

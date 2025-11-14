@@ -1,19 +1,12 @@
-using FMS.Domain.Data;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
-using FMS.Helpers;
-using FMS.Pages.Maintenance;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Substance
@@ -65,6 +58,21 @@ namespace FMS.Pages.Substance
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            if (EditSubstance.Soil && EditSubstance.UseForScoring && await _repository.SubstanceUsedForOnsiteScoreExistsAsync(EditSubstance.Id, EditSubstance.FacilityId))
+            {
+                ModelState.AddModelError(string.Empty, "A Substance for use in Onsite Scoring already exists.");
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            if (EditSubstance.Groundwater && EditSubstance.UseForScoring && await _repository.SubstanceUsedForGroundwaterScoreExistsAsync(EditSubstance.Id, EditSubstance.FacilityId))
+            {
+                ModelState.AddModelError(string.Empty, "A Substance for use in Groundwater Scoring already exists.");
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
             try
             {
                 await _repository.UpdateSubstanceAsync(EditSubstance.Id, EditSubstance);

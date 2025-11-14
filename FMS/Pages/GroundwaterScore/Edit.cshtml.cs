@@ -6,7 +6,6 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
 
@@ -17,16 +16,13 @@ namespace FMS.Pages.GroundwaterScore
     {
         private readonly IGroundwaterScoreRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
-        private readonly ISelectListHelper _listHelper;
 
         public EditModel(
             IGroundwaterScoreRepository repository,
-            IFacilityRepository facilityRepository,
-            ISelectListHelper listHelper)
+            IFacilityRepository facilityRepository)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
-            _listHelper = listHelper;
         }
 
         [BindProperty]
@@ -37,7 +33,7 @@ namespace FMS.Pages.GroundwaterScore
         [BindProperty]
         public Guid Id { get; set; }
 
-        public SelectList Chemicals { get; private set; }
+        public Chemical Chemical { get; private set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -60,14 +56,27 @@ namespace FMS.Pages.GroundwaterScore
                     return NotFound();
                 }
             }
+           
+            if (GroundwaterScore.SubstanceId == null)
+            {
+                TempData?.SetDisplayMessage(Context.Danger, $"Substance for Groundwater Scoring has not been chosen. Please choose a Substance for Groundwater Scoring.");
+                ActiveTab = "Substances";
+                return RedirectToPage("../Facilities/Details", new { id });
+            }
+
+            Chemical = GroundwaterScore.Substance?.Chemical;
+
+            GroundwaterScore.ChemName = Chemical?.ChemicalName;
+            GroundwaterScore.CASNO = Chemical?.CasNo;
+            GroundwaterScore.Other = Chemical?.CommonName;
 
             Facility = await _facilityRepository.GetFacilityAsync(GroundwaterScore.FacilityId);
-            
+
             if (Facility == null)
             {
                 return NotFound();
             }
-            await PopulateSelectsAsync();
+
             ActiveTab = "Score";
             return Page();
         }
@@ -76,7 +85,6 @@ namespace FMS.Pages.GroundwaterScore
         {
             if (!ModelState.IsValid)
             {
-                await PopulateSelectsAsync();
                 return Page();
             }
             try
@@ -86,18 +94,13 @@ namespace FMS.Pages.GroundwaterScore
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, $"Unable to save changes: {ex.Message}");
-                await PopulateSelectsAsync();
+
                 return Page();
             }
 
             TempData?.SetDisplayMessage(Context.Success, $"Groundwater Score successfully updated.");
             ActiveTab = "Score";
             return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId });
-        }
-
-        private async Task PopulateSelectsAsync()
-        {
-            Chemicals = await _listHelper.ChemicalsSelectListAsync();
         }
     }
 }

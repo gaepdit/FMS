@@ -16,7 +16,16 @@ namespace FMS.Infrastructure.Repositories
     public class ItemsListRepository : IItemsListRepository
     {
         private readonly FmsDbContext _context;
-        public ItemsListRepository(FmsDbContext context) => _context = context;
+        
+        public ItemsListRepository(FmsDbContext context)
+        {
+            _context = context;
+        }
+
+        //public ItemsListRepository(FmsDbContext fmsDbContext)
+        //{
+        //    FmsDbContext = fmsDbContext;
+        //}
 
         #region "Get All List Items Lists"
         /// <summary>
@@ -93,8 +102,8 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<EventType>(includeInactive);
 
-        public async Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactice = false) =>
-            await GetItemListAsync<EventContractor>(includeInactice);
+        public async Task<IEnumerable<ListItem>> GetEventContractorsListAsync(bool includeInactive = false) =>
+            await GetItemListAsync<EventContractor>(includeInactive);
 
         public async Task<IEnumerable<ListItem>> GetFundingSourceListAsync(bool includeInactive = false) =>
             await _context.FundingSources.AsNoTracking()
@@ -377,6 +386,8 @@ namespace FMS.Infrastructure.Repositories
         #region IDisposable Support
 
         private bool _disposedValue;
+
+        public FmsDbContext FmsDbContext { get; }
 
         protected virtual void Dispose(bool disposing)
         {

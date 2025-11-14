@@ -55,14 +55,18 @@ namespace FMS
         // Phase III updates
         public async Task<SelectList> ActionTakenSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetActionsTakenListAsync(includeInactive)).ToSelectList();
+
         public async Task<SelectList> AbandonedInactiveSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetAbandonedInactiveListAsync(includeInactive)).ToSelectList();
+
         public async Task<SelectList> AllowedActionTakenSelectListAsync(Guid? id, bool includeInactive = false) => (await _listRepository.GetAllowedActionsTakenListAsync(id, includeInactive)).ToSelectList();
-        public async Task<SelectList> ChemicalsSelectListAsync(bool includeInactive = false) =>
-            (await _listRepository.GetChemicalListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> ChemicalsSelectListAsync(bool includeInactive = false) => (await _listRepository.GetChemicalListAsync(includeInactive)).ToSelectList();
+
         public async Task<SelectList> ContactTypesSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetContactTypesListAsync(includeInactive)).ToSelectList();
+
         public async Task<SelectList> EventTypesSelectListAsync(bool includeInactive = false) => (await _listRepository.GetEventTypesListAsync(includeInactive)).ToSelectList();
+
         public async Task<SelectList> EventContractorListAsync(bool includeInactive = false) =>
                     (await _listRepository.GetEventContractorsListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> FundingSourceSelectListAsync(bool includeInactive = false) => (await _listRepository.GetFundingSourceListAsync(includeInactive)).ToSelectList();

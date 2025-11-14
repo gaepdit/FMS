@@ -1,28 +1,43 @@
-﻿using System;
-using System.Threading.Tasks;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {
     public class OnsiteScoreRepository : IOnsiteScoreRepository
     {
         private readonly FmsDbContext _context;
-        public OnsiteScoreRepository(FmsDbContext context) => _context = context;
+        private readonly ISubstanceRepository _substanceRepository;
+        public OnsiteScoreRepository(FmsDbContext context, ISubstanceRepository substanceRepository)
+        {
+            _context = context;
+            _substanceRepository = substanceRepository;
+        }
 
 
         public Task<bool> OnsiteScoreExistsAsync(Guid id) =>
             _context.OnsiteScores.AnyAsync(e => e.Id == id);
 
+        public async Task<bool> SubstanceExistsInOnsiteScoreAsync(Guid substanceId, Guid facilityId) =>
+            await _context.OnsiteScores.AnyAsync(e => e.SubstanceId == substanceId && e.FacilityId == facilityId);
+
         public async Task<OnsiteScoreEditDto> GetOnsiteScoreByFacilityIdAsync(Guid facilityId)
         {
             var onsiteScore = await _context.OnsiteScores.AsNoTracking()
-                .Include(e => e.Chemical)
-                .SingleOrDefaultAsync(e => e.FacilityId == facilityId);
+                .Include(e => e.Substance)
+                .Include(e => e.Substance.Chemical)
+                .Where(e => e.FacilityId == facilityId)
+                .SingleOrDefaultAsync();
+
+            onsiteScore.Substance = await _substanceRepository.GetSubstanceForSoilByFacilityIdAsync(facilityId);
+            onsiteScore.SubstanceId = onsiteScore.Substance?.Id;
+
             return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }
 
@@ -51,7 +66,7 @@ namespace FMS.Infrastructure.Repositories
                 D2 = onsiteScore.D2,
                 D3 = onsiteScore.D3,
                 CASNO = onsiteScore.CASNO,
-                ChemicalId = null,
+                SubstanceId = null,
                 E1 = onsiteScore.E1,
                 E2 = onsiteScore.E2
             };
@@ -89,8 +104,8 @@ namespace FMS.Infrastructure.Repositories
             existingOnsiteScore.C = onsiteScore.C;
             existingOnsiteScore.Description = onsiteScore.Description;
             existingOnsiteScore.ChemName1D = onsiteScore.ChemName1D;
-            existingOnsiteScore.Chemical = onsiteScore.Chemical;
-            existingOnsiteScore.ChemicalId = onsiteScore.ChemicalId;
+            existingOnsiteScore.Substance = onsiteScore.Substance;
+            existingOnsiteScore.SubstanceId = onsiteScore.SubstanceId;
             existingOnsiteScore.Other1D = onsiteScore.Other1D;
             existingOnsiteScore.D2 = onsiteScore.D2;
             existingOnsiteScore.D3 = onsiteScore.D3;

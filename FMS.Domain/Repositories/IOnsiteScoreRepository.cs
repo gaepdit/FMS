@@ -8,6 +8,8 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> OnsiteScoreExistsAsync(Guid id);
 
+        Task<bool> SubstanceExistsInOnsiteScoreAsync(Guid substanceId, Guid facilityId);
+
         Task<OnsiteScoreEditDto> GetOnsiteScoreByFacilityIdAsync(Guid facilityId);
 
         Task<Guid> CreateOnsiteScoreAsync(OnsiteScoreCreateDto onsiteScore);

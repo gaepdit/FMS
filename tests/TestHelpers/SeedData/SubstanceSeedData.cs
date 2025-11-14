@@ -50,7 +50,7 @@ namespace FMS.TestData.SeedData
                     ChemicalId = new Guid("a6c4e176-f45d-47e9-a61b-4fe5f3341dec"),
                     Groundwater = true,
                     Soil = true,
-                    UseForScoring = true
+                    UseForScoring = false
                 },
                 new()
                 {
@@ -100,7 +100,7 @@ namespace FMS.TestData.SeedData
                     ChemicalId = new Guid("816D044A-8B2C-4C71-AB75-C1137971E6D6"),
                     Groundwater = true,
                     Soil = false,
-                    UseForScoring = true
+                    UseForScoring = false
                 },
                 new()
 {
@@ -120,7 +120,7 @@ namespace FMS.TestData.SeedData
                     ChemicalId = new Guid("AF3F6523-91C9-41E2-B08A-6BEAD2599FAA"),
                     Groundwater = false,
                     Soil = true,
-                    UseForScoring = false
+                    UseForScoring = true
                 }
             };
         }

@@ -107,6 +107,23 @@ namespace FMS.Pages.Substance
                 await PopulateSelectsAsync();
                 return Page();
             }
+
+            if (NewSubstance.Soil && NewSubstance.UseForScoring && await _repository.SubstanceUsedForOnsiteScoreForFacilityExistsAsync(NewSubstance.FacilityId))
+            {
+                ModelState.AddModelError(string.Empty, "A Substance for use in Onsite Scoring already exists for this Facility.");
+                ResultsActive = true;
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            if (NewSubstance.Groundwater && NewSubstance.UseForScoring && await _repository.SubstanceUsedForGroundwaterScoreForFacilityExistsAsync(NewSubstance.FacilityId))
+            {
+                ModelState.AddModelError(string.Empty, "A Substance for use in Groundwater Scoring already exists.");
+                ResultsActive = true;
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
             try
             {
                 await _repository.CreateSubstanceAsync(NewSubstance);
