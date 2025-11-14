@@ -13,19 +13,30 @@ namespace FMS.Infrastructure.Repositories
     public class OnsiteScoreRepository : IOnsiteScoreRepository
     {
         private readonly FmsDbContext _context;
-        public OnsiteScoreRepository(FmsDbContext context) => _context = context;
+        private readonly ISubstanceRepository _substanceRepository;
+        public OnsiteScoreRepository(FmsDbContext context, ISubstanceRepository substanceRepository)
+        {
+            _context = context;
+            _substanceRepository = substanceRepository;
+        }
 
 
         public Task<bool> OnsiteScoreExistsAsync(Guid id) =>
             _context.OnsiteScores.AnyAsync(e => e.Id == id);
+
+        public async Task<bool> SubstanceExistsInOnsiteScoreAsync(Guid substanceId, Guid facilityId) =>
+            await _context.OnsiteScores.AnyAsync(e => e.SubstanceId == substanceId && e.FacilityId == facilityId);
 
         public async Task<OnsiteScoreEditDto> GetOnsiteScoreByFacilityIdAsync(Guid facilityId)
         {
             var onsiteScore = await _context.OnsiteScores.AsNoTracking()
                 .Include(e => e.Substance)
                 .Include(e => e.Substance.Chemical)
-                .Where(e => e.FacilityId == facilityId && e.Substance.ChemicalId == e.Substance.Chemical.Id && e.SubstanceId == e.Substance.Id && e.Substance.Soil && e.Substance.UseForScoring)
+                .Where(e => e.FacilityId == facilityId)
                 .SingleOrDefaultAsync();
+
+            onsiteScore.Substance = await _substanceRepository.GetSubstanceForSoilByFacilityIdAsync(facilityId);
+            onsiteScore.SubstanceId = onsiteScore.Substance?.Id;
 
             return onsiteScore == null ? null : new OnsiteScoreEditDto(onsiteScore);
         }

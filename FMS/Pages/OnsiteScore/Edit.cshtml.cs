@@ -6,7 +6,6 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
 
@@ -17,16 +16,13 @@ namespace FMS.Pages.OnsiteScore
     {
         private readonly IOnsiteScoreRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
-        private readonly ISelectListHelper _listHelper;
 
         public EditModel(
             IOnsiteScoreRepository repository,
-            IFacilityRepository facilityRepository,
-            ISelectListHelper listHelper)
+            IFacilityRepository facilityRepository)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
-            _listHelper = listHelper;
         }
 
         [BindProperty]
@@ -37,7 +33,7 @@ namespace FMS.Pages.OnsiteScore
         [BindProperty]
         public Guid Id { get; set; }
 
-        public SelectList Chemicals { get; private set; }
+        public Chemical Chemical { get; private set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -62,6 +58,19 @@ namespace FMS.Pages.OnsiteScore
                 }
             }
 
+            if (OnsiteScore.SubstanceId == null)
+            {
+                TempData?.SetDisplayMessage(Context.Danger, $"Substance for Onsite Scoring has not been chosen. Please choose a Substance for Onsite Scoring.");
+                ActiveTab = "Substances";
+                return RedirectToPage("../Facilities/Details", new { id });
+            }
+
+            Chemical = OnsiteScore.Substance?.Chemical;
+
+            OnsiteScore.CASNO = Chemical?.CasNo;
+            OnsiteScore.ChemName1D = Chemical?.ChemicalName;
+            OnsiteScore.Other1D = Chemical?.CommonName;
+
             Facility = await _facilityRepository.GetFacilityAsync(OnsiteScore.FacilityId);
             
             if (OnsiteScore == null || Facility == null)
@@ -69,7 +78,6 @@ namespace FMS.Pages.OnsiteScore
                 return NotFound();
             }
 
-            await PopulateSelectsAsync();
             ActiveTab = "Score";
             return Page();
         }
@@ -78,7 +86,6 @@ namespace FMS.Pages.OnsiteScore
         {
             if (!ModelState.IsValid)
             {
-                await PopulateSelectsAsync();
                 return Page();
             }
 
@@ -89,18 +96,12 @@ namespace FMS.Pages.OnsiteScore
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, $"Unable to save changes: {ex.Message}");
-                await PopulateSelectsAsync();
                 return Page();
             }
 
             TempData?.SetDisplayMessage(Context.Success, $"Onsite Score successfully Updated.");
             ActiveTab = "Score";
             return RedirectToPage("../Facilities/Details", new { id = OnsiteScore.FacilityId });
-        }
-
-        private async Task PopulateSelectsAsync()
-        {
-            Chemicals = await _listHelper.ChemicalsSelectListAsync();
         }
     }
 }

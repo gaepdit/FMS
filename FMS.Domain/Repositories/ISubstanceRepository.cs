@@ -13,15 +13,27 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> SubstanceExistsAsync(Guid id);
 
-        Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid id);
+        Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid? id);
+
+        Task<Substance> GetSubstanceForGWByFacilityIdAsync(Guid? facilityId);
+
+        Task<Substance> GetSubstanceForSoilByFacilityIdAsync(Guid? facilityId);
 
         Task<bool> SubstanceExistsForChemicalAsync(Guid chemicalId, Guid facilityId);
+
+        Task<bool> SubstanceUsedForOnsiteScoreForFacilityExistsAsync(Guid facilityId);
+
+        Task<bool> SubstanceUsedForOnsiteScoreExistsAsync(Guid id, Guid facilityId);
+
+        Task<bool> SubstanceUsedForGroundwaterScoreForFacilityExistsAsync(Guid facilityId);
+
+        Task<bool> SubstanceUsedForGroundwaterScoreExistsAsync(Guid id, Guid facilityId);
 
         Task<SubstanceSummaryDto> GetSubstanceSummaryByIdAsync(Guid id);
 
         Task<IEnumerable<SubstanceSummaryDto>> GetSubstanceListByFacilityIdAsync(Guid facilityId);
 
-        Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId);
+        //Task<IList<SubstanceEditDto>> GetSubstanceByFacilityIdAsync(Guid facilityId);
 
         Task<Guid> CreateSubstanceAsync(SubstanceCreateDto substance);
 

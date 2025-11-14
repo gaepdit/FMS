@@ -21,6 +21,24 @@
         <input type="hidden" asp-for="GroundwaterScore.FacilityId" />
         <input type="hidden" asp-for="GroundwaterScore.Id" />
         <input type="hidden" asp-for="GroundwaterScore.Active" />
+        <input type="hidden" asp-for="GroundwaterScore.SubstanceId" />
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.CASNO" class="form-label"></label>
+                <input readonly asp-for="GroundwaterScore.CASNO" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.CASNO" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.ChemName" class="form-label"></label>
+                <input readonly asp-for="GroundwaterScore.ChemName" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.ChemName" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="GroundwaterScore.Other" class="form-label"></label>
+                <input readonly asp-for="GroundwaterScore.Other" class="form-control" />
+                <span asp-validation-for="GroundwaterScore.Other" class="text-danger"></span>
+            </div>
+        </div>
         <div class="row mb-3">
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.GWScore" class="form-label"></label>
@@ -41,30 +59,6 @@
                 <label asp-for="GroundwaterScore.B2" class="form-label"></label>
                 <input asp-for="GroundwaterScore.B2" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.B2" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col mb-3">
-                <label asp-for="GroundwaterScore.CASNO" class="form-label"></label>
-                <input asp-for="GroundwaterScore.CASNO" class="form-control" />
-                <span asp-validation-for="GroundwaterScore.CASNO" class="text-danger"></span>
-            </div>
-            <div class="col mb-3">
-                <label asp-for="GroundwaterScore.Substance.ChemicalId" class="form-label"></label>
-                <select asp-for="GroundwaterScore.Substance.ChemicalId" asp-items="Model.Chemicals" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="GroundwaterScore.Substance.ChemicalId" class="text-danger"></span>
-            </div>
-            <div class="col mb-3">
-                <label asp-for="GroundwaterScore.ChemName" class="form-label"></label>
-                <input asp-for="GroundwaterScore.ChemName" class="form-control" />
-                <span asp-validation-for="GroundwaterScore.ChemName" class="text-danger"></span>
-            </div>
-            <div class="col mb-3">
-                <label asp-for="GroundwaterScore.Other" class="form-label"></label>
-                <input asp-for="GroundwaterScore.Other" class="form-control" />
-                <span asp-validation-for="GroundwaterScore.Other" class="text-danger"></span>
             </div>
         </div>
         <div class="row mb-3">

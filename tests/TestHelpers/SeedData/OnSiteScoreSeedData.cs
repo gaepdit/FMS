@@ -26,7 +26,7 @@ namespace FMS.TestData.SeedData
                     Other1D = "",
                     D2 = 2,
                     D3 = 1,
-                    SubstanceId = new Guid("BAEAEFD6-F758-4BBE-971E-ACC44D038A39"),
+                    SubstanceId = new Guid("81900062-3B08-455E-AA87-1485E3D207AA"),
                     CASNO = "",
                     E1 = 9,
                     E2 = 0
@@ -45,7 +45,7 @@ namespace FMS.TestData.SeedData
                     Other1D = "",
                     D2 = 6,
                     D3 = 8,
-                    SubstanceId = new Guid("7CFCB7BD-C22D-44F6-8723-4C036F98308C"),
+                    SubstanceId = new Guid("A45057D5-DC61-4CC9-9E3C-C6F4505D9EAB"),
                     CASNO = "",
                     E1 = 0,
                     E2 = 2

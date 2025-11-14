@@ -14,10 +14,14 @@ namespace FMS.Pages.Substance
     public class DeleteModel : PageModel
     {
         private readonly ISubstanceRepository _repository;
+        private readonly IGroundwaterScoreRepository _groundwaterScoreRepository;
+        private readonly IOnsiteScoreRepository _onsiteScoreRepository;
 
-        public DeleteModel(ISubstanceRepository repository)
+        public DeleteModel(ISubstanceRepository repository, IGroundwaterScoreRepository groundwaterScoreRepository, IOnsiteScoreRepository onsiteScoreRepository)
         {
             _repository = repository;
+            _groundwaterScoreRepository = groundwaterScoreRepository;
+            _onsiteScoreRepository = onsiteScoreRepository;
         }
 
         [BindProperty]
@@ -52,7 +56,16 @@ namespace FMS.Pages.Substance
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (await _groundwaterScoreRepository.SubstanceExistsInGroundwaterScoreAsync(Id, FacilityId) ||
+                await _onsiteScoreRepository.SubstanceExistsInOnsiteScoreAsync(Id, FacilityId))
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "Cannot delete Substance because it is referenced by existing scores.");
+                ActiveTab = "Substances";
+                return RedirectToPage("/Facilities/Details", new { id = FacilityId, hr = Guid.Empty });
+            }
+
             await _repository.DeleteSubstanceAsync(Id);
+
             TempData?.SetDisplayMessage(Context.Success, "Substance deleted.");
             ActiveTab = "Substances";
             return RedirectToPage("/Facilities/Details", new { id = FacilityId, hr = Guid.Empty });

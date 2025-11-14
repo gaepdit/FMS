@@ -85,7 +85,11 @@ namespace FMS.Infrastructure.Repositories
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.ScoredBy)
                     .FirstOrDefaultAsync();
-                facility.ScoreDetails ??= new Score(facility.Id);
+                if (facility.ScoreDetails == null)
+                {
+                    facility.ScoreDetails = new Score(facility.Id);
+                    await _context.Scores.AddAsync(facility.ScoreDetails);
+                }
 
                 facility.Substances = await _context.Substances
                         .AsNoTracking()
@@ -96,21 +100,29 @@ namespace FMS.Infrastructure.Repositories
                         .ThenBy(e => e.Chemical.CommonName)
                         .ToListAsync();
 
-                GroundwaterScore groundwaterScore = await _context.GroundwaterScores
+                facility.GroundwaterScoreDetails = await _context.GroundwaterScores
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
                     .Include(e => e.Substance)
                     .Include(e => e.Substance.Chemical)
                     .FirstOrDefaultAsync();
-                facility.GroundwaterScoreDetails = groundwaterScore != null ? new GroundwaterScore(groundwaterScore) : new GroundwaterScore(facility.Id);
+                if (facility.GroundwaterScoreDetails == null)
+                {
+                    facility.GroundwaterScoreDetails = new GroundwaterScore(facility.Id);
+                    await _context.GroundwaterScores.AddAsync(facility.GroundwaterScoreDetails);
+                }
 
-                OnsiteScore onsiteScore = await _context.OnsiteScores
+                facility.OnsiteScoreDetails = await _context.OnsiteScores
                         .AsNoTracking()
                         .Where(e => e.FacilityId == id)
                         .Include(e => e.Substance)
                         .Include(e => e.Substance.Chemical)
                         .FirstOrDefaultAsync();
-                facility.OnsiteScoreDetails = onsiteScore != null ? new OnsiteScore(onsiteScore) : new OnsiteScore(facility.Id);
+                if (facility.OnsiteScoreDetails == null)
+                {
+                    facility.OnsiteScoreDetails = new OnsiteScore(facility.Id);
+                    await _context.OnsiteScores.AddAsync(facility.OnsiteScoreDetails);
+                }
 
                 facility.StatusDetails = await _context.Statuses
                     .AsNoTracking()
@@ -123,7 +135,11 @@ namespace FMS.Infrastructure.Repositories
                     .Include(e => e.AbandonedInactive)
                     .Where(e => e.FacilityId == id)
                     .FirstOrDefaultAsync();
-                facility.StatusDetails ??= new Status(facility.Id);
+                if (facility.StatusDetails == null)
+                {
+                    facility.StatusDetails = new Status(facility.Id);
+                    await _context.Statuses.AddAsync(facility.StatusDetails);
+                }
             }
 
             if (facility.FacilityType.Name == "VRP" || facility.FacilityType.Name == "HSI" || facility.FacilityStatus.Name == "COMPLAINT" || facility.FacilityStatus.Name == "Event Tracking On")

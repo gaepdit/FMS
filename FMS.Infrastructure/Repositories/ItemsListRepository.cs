@@ -97,20 +97,6 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
             .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetChemicalsFromSubstanceAsync(Guid facilityId, bool includeInactive = false)
-        {
-            var substances = await _substanceRepository.GetSubstanceListByFacilityIdAsync(facilityId);
-            if (substances == null) return Enumerable.Empty<ListItem>();
-
-            var chemicalList = await _context.Chemicals.AsNoTracking()
-                .Where(c => (c.Active || includeInactive) && substances.Any(s => s.Chemical.Id == c.Id))
-                .OrderBy(c => c.CasNo)
-                .Select(c => new ListItem() { Id = c.Id, Name = c.DisplayName })
-                .ToListAsync();
-
-            return chemicalList;
-        }
-
         public async Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false) =>
             await GetItemListAsync<ContactType>(includeInactive);
 
