@@ -238,7 +238,7 @@ namespace FMS.Infrastructure.Tests
                 CompletionDate = new DateOnly(3, 3, 3),
                 ComplianceOfficerId = Guid.NewGuid(),
                 EventAmount = 0,
-                EntityNameOrNumber = "VALID_ENoN",
+                EventContractorId = Guid.NewGuid(),
                 Comment = "VALID_COMMENT",
             };
             _context.Events.Add(existingEvent);
@@ -257,7 +257,7 @@ namespace FMS.Infrastructure.Tests
                 CompletionDate = new DateOnly(30, 3, 30),
                 ComplianceOfficerId = Guid.NewGuid(),
                 EventAmount = 1,
-                EntityNameOrNumber = "NEW_ENoN",
+                EventContractorId = Guid.NewGuid(),
                 Comment = "NEW_COMMENT",
             };
             await _repository.UpdateEventAsync(updateDto);

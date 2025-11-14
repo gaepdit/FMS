@@ -55,6 +55,7 @@ namespace FMS.Infrastructure.Tests
                 _context.Database.EnsureCreated();
                 _context.Dispose();
                 _repository.Dispose();
+                _substanceRepository.Dispose();
                 _disposed = true;
             }
         }
@@ -87,14 +88,14 @@ namespace FMS.Infrastructure.Tests
             result.FacilityId.Should().Be(existingOSS.FacilityId);
         }
 
-        //[Test]
-        //public async Task GetOnsiteScoreByIdAsync_WhenFacilityIdDoesNotExist_ReturnsNull()
-        //{
-        //    var nonExistingId = Guid.NewGuid();
-        //    var result = await _repository.GetOnsiteScoreByFacilityIdAsync(nonExistingId);
+        [Test]
+        public async Task GetOnsiteScoreByIdAsync_WhenFacilityIdDoesNotExist_ReturnsNull()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var result = await _repository.GetOnsiteScoreByFacilityIdAsync(nonExistingId);
 
-        //    result.Should().BeNull();
-        //}
+            result.Should().BeNull();
+        }
 
         // CreateOnsiteScoreAsync
         [Test]

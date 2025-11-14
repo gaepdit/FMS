@@ -89,6 +89,7 @@ namespace FMS.Infrastructure.Repositories
                 {
                     facility.ScoreDetails = new Score(facility.Id);
                     await _context.Scores.AddAsync(facility.ScoreDetails);
+                    await _context.SaveChangesAsync();
                 }
 
                 facility.Substances = await _context.Substances
@@ -110,6 +111,7 @@ namespace FMS.Infrastructure.Repositories
                 {
                     facility.GroundwaterScoreDetails = new GroundwaterScore(facility.Id);
                     await _context.GroundwaterScores.AddAsync(facility.GroundwaterScoreDetails);
+                    await _context.SaveChangesAsync();
                 }
 
                 facility.OnsiteScoreDetails = await _context.OnsiteScores
@@ -122,6 +124,7 @@ namespace FMS.Infrastructure.Repositories
                 {
                     facility.OnsiteScoreDetails = new OnsiteScore(facility.Id);
                     await _context.OnsiteScores.AddAsync(facility.OnsiteScoreDetails);
+                    await _context.SaveChangesAsync();
                 }
 
                 facility.StatusDetails = await _context.Statuses
