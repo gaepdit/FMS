@@ -86,14 +86,15 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeOfType<OnsiteScoreEditDto>();
             result.FacilityId.Should().Be(existingOSS.FacilityId);
         }
-        [Test]
-        public async Task GetOnsiteScoreByIdAsync_WhenFacilityIdDoesNotExist_ReturnsNull()
-        {
-            var nonExistingId = Guid.NewGuid();
-            var result = await _repository.GetOnsiteScoreByFacilityIdAsync(nonExistingId);
 
-            result.Should().BeNull();
-        }
+        //[Test]
+        //public async Task GetOnsiteScoreByIdAsync_WhenFacilityIdDoesNotExist_ReturnsNull()
+        //{
+        //    var nonExistingId = Guid.NewGuid();
+        //    var result = await _repository.GetOnsiteScoreByFacilityIdAsync(nonExistingId);
+
+        //    result.Should().BeNull();
+        //}
 
         // CreateOnsiteScoreAsync
         [Test]

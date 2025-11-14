@@ -16,17 +16,16 @@ namespace FMS.Infrastructure.Repositories
     public class ItemsListRepository : IItemsListRepository
     {
         private readonly FmsDbContext _context;
-        private readonly ISubstanceRepository _substanceRepository;
-        public ItemsListRepository(FmsDbContext context, ISubstanceRepository substanceRepository)
+        
+        public ItemsListRepository(FmsDbContext context)
         {
             _context = context;
-            _substanceRepository = substanceRepository;
         }
 
-        public ItemsListRepository(FmsDbContext fmsDbContext)
-        {
-            FmsDbContext = fmsDbContext;
-        }
+        //public ItemsListRepository(FmsDbContext fmsDbContext)
+        //{
+        //    FmsDbContext = fmsDbContext;
+        //}
 
         #region "Get All List Items Lists"
         /// <summary>
