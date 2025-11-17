@@ -69,7 +69,6 @@ namespace FMS.Infrastructure.Repositories
 
             score.FacilityId = scoreUpdates.FacilityId;
             score.ScoredDate = scoreUpdates.ScoredDate;
-            score.ScoredById = scoreUpdates.ScoredById;
             score.Active = scoreUpdates.Active;
             score.Comments = scoreUpdates.Comments;
             score.UseComments = scoreUpdates.UseComments;

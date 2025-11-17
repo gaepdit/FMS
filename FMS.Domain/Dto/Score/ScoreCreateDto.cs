@@ -11,9 +11,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Scored Date")]
         public DateOnly? ScoredDate { get; set; }
 
-        [Display(Name = "Scored By")]
-        public ComplianceOfficer ScoredBy { get; set; } 
-
         [Display(Name = "Comments")]
         public string Comments { get; set; }
 

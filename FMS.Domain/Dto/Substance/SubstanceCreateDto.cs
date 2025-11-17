@@ -18,11 +18,16 @@ namespace FMS.Domain.Dto
         public Guid ChemicalId { get; set; }
         public Chemical Chemical { get; set; }
 
+        [Display(Name = "Present in GW")]
         public bool Groundwater { get; set; }
 
+        [Display(Name = "Present in Soil")]
         public bool Soil { get; set; }
 
-        [Display(Name = "Use for Scoring")]
-        public bool UseForScoring { get; set; }
+        [Display(Name = "Use for GW Scoring")]
+        public bool UseForGroundwaterScoring { get; set; }
+
+        [Display(Name = "Use for Onsite Scoring")]
+        public bool UseForSoilScoring { get; set; }
     }
 }

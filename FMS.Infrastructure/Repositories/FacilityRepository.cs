@@ -83,7 +83,6 @@ namespace FMS.Infrastructure.Repositories
                 facility.ScoreDetails = await _context.Scores
                     .AsNoTracking()
                     .Where(e => e.FacilityId == id)
-                    .Include(e => e.ScoredBy)
                     .FirstOrDefaultAsync();
                 if (facility.ScoreDetails == null)
                 {

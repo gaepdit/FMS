@@ -13,7 +13,8 @@ namespace FMS.Domain.Entities
             ChemicalId = newSubstance.ChemicalId;
             Groundwater = newSubstance.Groundwater;
             Soil = newSubstance.Soil;
-            UseForScoring = newSubstance.UseForScoring;
+            UseForGroundwaterScoring = newSubstance.UseForGroundwaterScoring;
+            UseForSoilScoring = newSubstance.UseForSoilScoring;
         }
         public Guid FacilityId { get; set; }
 
@@ -24,7 +25,9 @@ namespace FMS.Domain.Entities
 
         public bool Soil { get; set; } = false;
 
-        public bool UseForScoring { get; set; } = false;
+        public bool UseForGroundwaterScoring { get; set; } = false;
+
+        public bool UseForSoilScoring { get; set; } = false;
 
         public string Name => Chemical?.Name ?? string.Empty;
     }

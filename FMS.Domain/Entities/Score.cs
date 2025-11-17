@@ -20,7 +20,6 @@ namespace FMS.Domain.Entities
         {
             FacilityId = score.FacilityId;
             ScoredDate = score.ScoredDate;
-            ScoredBy = score.ScoredBy;
             Comments = score.Comments;
             UseComments = score.UseComments;
         }
@@ -31,7 +30,6 @@ namespace FMS.Domain.Entities
             Active = score.Active;
             FacilityId = score.FacilityId;
             ScoredDate = score.ScoredDate;
-            ScoredById = score.ScoredById;
             Comments = score.Comments;
             UseComments = score.UseComments;
         }
@@ -40,10 +38,6 @@ namespace FMS.Domain.Entities
 
         [Display(Name = "Scored Date")]
         public DateOnly? ScoredDate { get; set; }
-
-        public Guid? ScoredById { get; set; }
-        [Display(Name = "Scored By")]
-        public ComplianceOfficer ScoredBy { get; set; }
 
         [Display(Name = "Comments")]
         public string Comments { get; set; }   

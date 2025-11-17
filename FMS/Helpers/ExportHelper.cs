@@ -26,8 +26,8 @@ namespace FMS
         /// <summary>
         /// Takes in a list of generic T, input it into the XLWorkbook, convert it to a byte array.
         /// </summary>
-        /// <param name="list">A list of FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar</param>
-        /// <typeparam name="T">FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar</typeparam>
+        /// <param name="list">A list of FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar or EventSummaryDtoScalar or FacilityPendingDtoScalar</param>
+        /// <typeparam name="T">FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar or EventSummaryDtoScalar or FacilityPendingDtoScalar</typeparam>
         /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list, ReportType reportType)
         {

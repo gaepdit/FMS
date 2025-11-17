@@ -59,14 +59,28 @@ namespace FMS.Pages.Substance
                 return Page();
             }
 
-            if (EditSubstance.Soil && EditSubstance.UseForScoring && await _repository.SubstanceUsedForOnsiteScoreExistsAsync(EditSubstance.Id, EditSubstance.FacilityId))
+            if (!EditSubstance.Soil && EditSubstance.UseForSoilScoring)
+            {
+                ModelState.AddModelError(string.Empty, "Cannot use for Onsite Scoring if not marked as present in Soil.");
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            if (!EditSubstance.Groundwater && EditSubstance.UseForGroundwaterScoring)
+            {
+                ModelState.AddModelError(string.Empty, "Cannot use for Groundwater Scoring if not marked as present in Groundwater.");
+                await PopulateSelectsAsync();
+                return Page();
+            }
+
+            if (EditSubstance.Soil && EditSubstance.UseForSoilScoring && await _repository.SubstanceUsedForOnsiteScoreExistsAsync(EditSubstance.Id, EditSubstance.FacilityId))
             {
                 ModelState.AddModelError(string.Empty, "A Substance for use in Onsite Scoring already exists.");
                 await PopulateSelectsAsync();
                 return Page();
             }
 
-            if (EditSubstance.Groundwater && EditSubstance.UseForScoring && await _repository.SubstanceUsedForGroundwaterScoreExistsAsync(EditSubstance.Id, EditSubstance.FacilityId))
+            if (EditSubstance.Groundwater && EditSubstance.UseForGroundwaterScoring && await _repository.SubstanceUsedForGroundwaterScoreExistsAsync(EditSubstance.Id, EditSubstance.FacilityId))
             {
                 ModelState.AddModelError(string.Empty, "A Substance for use in Groundwater Scoring already exists.");
                 await PopulateSelectsAsync();
