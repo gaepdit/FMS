@@ -4,6 +4,7 @@ using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
+using FMS.Infrastructure.Repositories;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Event
@@ -37,9 +39,6 @@ namespace FMS.Pages.Event
 
         public FacilityDetailDto Facility { get; set; }
 
-        [BindProperty]
-        public Guid? ParentEventId { get; set; } = Guid.Empty;
-
         public IList<EventSummaryDto> Events { get; set; }
 
         public SelectList EventTypes { get; private set; }
@@ -51,7 +50,8 @@ namespace FMS.Pages.Event
         public Guid Id { get; set; }
 
         [TempData]
-        public string ActiveTab { get; set; }
+        [BindProperty]
+        public string ActiveTab { get; set; } = "Events";
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
@@ -62,7 +62,7 @@ namespace FMS.Pages.Event
                 return NotFound();
             }
             Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
-            ParentEventId = EditEvent.ParentId == Guid.Empty ? null : EditEvent.ParentId;
+           
             Events = EventSortHelper.SortEvents(Facility.Events);
 
             await PopulateSelectsAsync();
@@ -79,7 +79,6 @@ namespace FMS.Pages.Event
             }
             try
             {
-                EditEvent.ParentId = ParentEventId ?? Guid.Empty;
                 await _repository.UpdateEventAsync(EditEvent);
             }
             catch (Exception ex)
@@ -94,6 +93,22 @@ namespace FMS.Pages.Event
             TempData?.SetDisplayMessage(Context.Success, $"Event successfully updated.");
 
             return RedirectToPage("../Facilities/Details", new { id = EditEvent.FacilityId });
+        }
+
+        public async Task<IActionResult> OnPostExportButtonAsync()
+        {
+            var facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
+            var fileName = $"FMS_{facility.Name}_Event_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var eventEdit = await _repository.GetEventByIdAsync(Id);
+            var parentId = eventEdit.EventType.Name == "HWTF Master Project" ? eventEdit.Id : eventEdit.ParentId;
+
+            // "EventDetailList" Detailed Event List to go to a report
+            IReadOnlyList<EventSummaryDto> eventReportList = 
+                eventEdit.EventType.Name == "HWTF Master Project" ? (IReadOnlyList<EventSummaryDto>)await _repository.GetEventsByFacilityIdAndParentIdAsync(facility.Id, (Guid)parentId) : (IReadOnlyList<EventSummaryDto>)await _repository.GetEventsByFacilityIdAsync(facility.Id);
+
+            var eventDetailList = from p in eventReportList select new EventSummaryDtoScalar(p, facility.Name, facility.FacilityNumber);
+            ActiveTab = "Events";
+            return File(eventDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Event), "application/vnd.ms-excel", fileName);
         }
 
         private async Task PopulateSelectsAsync()

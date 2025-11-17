@@ -16,16 +16,13 @@ namespace FMS.Pages.Score
     {
         private readonly IScoreRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
-        private readonly ISelectListHelper _listHelper;
 
         public EditModel(
             IScoreRepository repository,
-            IFacilityRepository facilityRepository,
-            ISelectListHelper listHelper)
+            IFacilityRepository facilityRepository)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
-            _listHelper = listHelper;
         }
 
         [BindProperty]
@@ -35,8 +32,6 @@ namespace FMS.Pages.Score
 
         [BindProperty]
         public Guid Id { get; set; }
-
-        public SelectList ComplianceOfficers { get; private set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -66,7 +61,6 @@ namespace FMS.Pages.Score
                 return NotFound();
             }
 
-            await PopulateSelectsAsync();
             ActiveTab = "Score";
             return Page();
         }
@@ -75,7 +69,6 @@ namespace FMS.Pages.Score
         {
             if (!ModelState.IsValid)
             {
-                await PopulateSelectsAsync();
                 return Page();
             }
             
@@ -84,9 +77,5 @@ namespace FMS.Pages.Score
             return RedirectToPage("../Facilities/Details", new { id = Score.FacilityId });
         }
 
-        private async Task PopulateSelectsAsync()
-        {
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
-        }
     }
 }

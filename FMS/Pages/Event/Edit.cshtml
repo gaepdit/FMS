@@ -20,63 +20,66 @@
 }
 <h1>@ViewData["Title"]</h1>
 <form method="post">
-    <div class="container bg-light-subtle py-3 rounded-3">
-        <p>Select a Master Project as the Parent for this new Event, if applicable.</p>
-        <div class="row justify-content-evenly">
-            <table class="table table-sm" aria-label="Events">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col"><em class="">Select Parent Master Project</em></th>
-                        <th scope="col">Action Taken</th>
-                        <th scope="col">Start Date</th>
-                        <th scope="col">Due Date</th>
-                        <th scope="col">Completion Date</th>
-                        <th scope="col">Done By</th>
-                        <th scope="col">Event Amount</th>
-                        <th scope="col">Entity Name or No.</th>
-                        <th scope="col">Comment</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Facility.Events)
-                    {
-                        if (item.EventType.Name == "HWTF Master Project")
+    @if (Model.EditEvent.EventType.Name != "HWTF Master Project")
+    {
+        <div class="container bg-light-subtle py-3 rounded-3">
+            <p>Select a Master Project as the Parent for this new Event, if applicable.</p>
+            <div class="row justify-content-evenly">
+                <table class="table table-sm" aria-label="Events">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col"><em class="">Select Parent Master Project</em></th>
+                            <th scope="col">Action Taken</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col">Completion Date</th>
+                            <th scope="col">Done By</th>
+                            <th scope="col">Event Amount</th>
+                            <th scope="col">Entity Name or No.</th>
+                            <th scope="col">Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Facility.Events)
                         {
-                            <tr class="@(item.Id == Model.Id ? " table-danger" : "")">
-                                <td class="text-nowrap">
-                                    <label>
-                                        @Html.RadioButtonFor(m => m.ParentEventId, item.Id)
-                                        @Html.DisplayFor(m => item.EventType.Name)
-                                    </label>
-                                </td>
-                                <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
-                                <td>@Html.DisplayFor(m => item.StartDate)</td>
-                                <td>@Html.DisplayFor(m => item.DueDate)</td>
-                                <td>@Html.DisplayFor(m => item.CompletionDate)</td>
-                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
-                                <td>@Html.DisplayFor(m => item.EventAmount)</td>
-                                <td>
-                                    @if (item.EventContractor != null)
-                                    {
-                                        @Html.DisplayFor(m => item.EventContractor.Name)
-                                    }
-                                </td>
-                                <td>@Html.DisplayFor(m => item.Comment)</td>
-                            </tr>
+                            if (item.EventType.Name == "HWTF Master Project")
+                            {
+                                <tr class="@(item.Id == Model.Id ? " table-danger" : "")">
+                                    <td class="text-nowrap">
+                                        <label>
+                                            @Html.RadioButtonFor(m => m.EditEvent.ParentId, item.Id)
+                                            @Html.DisplayFor(m => item.EventType.Name)
+                                        </label>
+                                    </td>
+                                    <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
+                                    <td>@Html.DisplayFor(m => item.StartDate)</td>
+                                    <td>@Html.DisplayFor(m => item.DueDate)</td>
+                                    <td>@Html.DisplayFor(m => item.CompletionDate)</td>
+                                    <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                                    <td>@Html.DisplayFor(m => item.EventAmount)</td>
+                                    <td>
+                                        @if (item.EventContractor != null)
+                                        {
+                                            @Html.DisplayFor(m => item.EventContractor.Name)
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(m => item.Comment)</td>
+                                </tr>
+                            }
                         }
-                    }
-                    <tr>
-                        <td colspan="12">
-                            <label class="active">
-                                @Html.RadioButtonFor(m => m.ParentEventId, Guid.Empty)
-                                None
-                            </label>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        <tr>
+                            <td colspan="12">
+                                <label class="active">
+                                    @Html.RadioButtonFor(m => m.EditEvent.ParentId, Guid.Empty)
+                                    None
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    }
     <div class="container bg-light-subtle py-3 my-3 rounded-3">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="EditEvent.FacilityId" />
@@ -144,12 +147,25 @@
         </div>
         <hr />
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Save Event</button>
-        <a asp-page="../Facilities/Details" asp-route-Id="@Model.EditEvent.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
+        <a asp-page="../Facilities/Details" asp-route-Id="@Model.EditEvent.FacilityId"  class="btn btn-outline-secondary col-md-2">Cancel</a>
     </div>
     @if (Model.Facility.Events.Count > 0)
     {
         <div class="container bg-light-subtle py-3 rounded-3">
-            <h3>Existing Events for @Model.Facility.FacilityNumber</h3>
+            <h3>
+                <form method="post">
+                    Existing Events for @Model.Facility.FacilityNumber
+                    <input type="hidden" asp-for="Facility.Id" />
+                    <input type="hidden" asp-for="ActiveTab" />
+                    <input type="hidden" asp-for="EditEvent.ParentId" />
+                    <input type="hidden" asp-for="EditEvent.Id" />
+                    <input type="hidden" asp-for="EditEvent.Active" />
+                    <button id="ExportButton" asp-page-handler="ExportButton"
+                            class="btn btn-sm btn-outline-primary mb-1">
+                        Excel Export
+                    </button>
+                </form>
+            </h3>
             <div class="row justify-content-evenly">
                 <table class="table table-sm" aria-label="Events">
                     <thead class="thead-light">

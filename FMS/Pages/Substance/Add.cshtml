@@ -272,8 +272,12 @@
                     <label asp-for="NewSubstance.Soil" class="form-check-label"></label>
                 </div>
                 <div class="col">
-                    <input asp-for="NewSubstance.UseForScoring" class="form-check-input" type="checkbox" />
-                    <label asp-for="NewSubstance.UseForScoring" class="form-check-label"></label>
+                    <input asp-for="NewSubstance.UseForGroundwaterScoring" class="form-check-input" type="checkbox" />
+                    <label asp-for="NewSubstance.UseForGroundwaterScoring" class="form-check-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="NewSubstance.UseForSoilScoring" class="form-check-input" type="checkbox" />
+                    <label asp-for="NewSubstance.UseForSoilScoring" class="form-check-label"></label>
                 </div>
             </div>
             <hr />
@@ -295,7 +299,8 @@
                     <th scope="col">Common Name</th>
                     <th scope="col" class="text-center">Groundwater</th>
                     <th scope="col" class="text-center">Soil</th>
-                    <th scope="col" class="text-center">Use for Scoring</th>
+                    <th scope="col" class="text-center">Use for GW Scoring</th>
+                    <th scope="col" class="text-center">Use for Soil Scoring</th>
                 </tr>
             </thead>
             <tbody>
@@ -307,7 +312,8 @@
                         <td>@s.Chemical.CommonName</td>
                         <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
                         <td class="text-center">@Html.DisplayFor(m => s.Soil)</td>
-                        <td class="text-center">@Html.DisplayFor(m => s.UseForScoring)</td>
+                        <td class="text-center">@Html.DisplayFor(m => s.UseForGroundwaterScoring)</td>
+                        <td class="text-center">@Html.DisplayFor(m => s.UseForSoilScoring)</td>
                     </tr>
                 }
             </tbody>

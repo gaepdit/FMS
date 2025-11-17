@@ -14,7 +14,8 @@ namespace FMS.Domain.Dto
             Chemical = substance.Chemical;
             Groundwater = substance.Groundwater;
             Soil = substance.Soil;
-            UseForScoring = substance.UseForScoring;
+            UseForGroundwaterScoring = substance.UseForGroundwaterScoring;
+            UseForSoilScoring = substance.UseForSoilScoring;
         }
 
         public Guid Id { get; set; }
@@ -25,11 +26,16 @@ namespace FMS.Domain.Dto
 
         public Chemical Chemical { get; set; }
 
+        [Display(Name = "Present in GW")]
         public bool Groundwater { get; set; }
 
+        [Display(Name = "Present in Soil")]
         public bool Soil { get; set; }
 
-        [Display(Name = "Use for Scoring")]
-        public bool UseForScoring { get; set; }
+        [Display(Name = "Use for Groundwater Scoring")]
+        public bool UseForGroundwaterScoring { get; set; }
+
+        [Display(Name = "Use for Onsite Scoring")]
+        public bool UseForSoilScoring { get; set; }
     }
 }

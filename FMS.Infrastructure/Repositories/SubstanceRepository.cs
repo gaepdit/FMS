@@ -26,16 +26,16 @@ namespace FMS.Infrastructure.Repositories
             e.ChemicalId == chemicalId && e.FacilityId == facilityId);
         
         public Task<bool> SubstanceUsedForOnsiteScoreForFacilityExistsAsync(Guid facilityId) =>
-            _context.Substances.AnyAsync(e => e.UseForScoring && e.Soil && e.FacilityId == facilityId);
+            _context.Substances.AnyAsync(e => e.UseForSoilScoring && e.Soil && e.FacilityId == facilityId);
 
         public Task<bool> SubstanceUsedForOnsiteScoreExistsAsync(Guid id, Guid facilityId) =>
-            _context.Substances.AnyAsync(e => e.UseForScoring && e.Soil && e.Id != id && e.FacilityId == facilityId);
+            _context.Substances.AnyAsync(e => e.UseForSoilScoring && e.Soil && e.Id != id && e.FacilityId == facilityId);
 
         public Task<bool> SubstanceUsedForGroundwaterScoreForFacilityExistsAsync(Guid facilityId) =>
-            _context.Substances.AnyAsync(e => e.UseForScoring && e.Groundwater && e.FacilityId == facilityId);
+            _context.Substances.AnyAsync(e => e.UseForGroundwaterScoring && e.Groundwater && e.FacilityId == facilityId);
 
         public Task<bool> SubstanceUsedForGroundwaterScoreExistsAsync(Guid id, Guid facilityId) =>
-            _context.Substances.AnyAsync(e => e.UseForScoring && e.Groundwater && e.Id != id && e.FacilityId == facilityId);
+            _context.Substances.AnyAsync(e => e.UseForGroundwaterScoring && e.Groundwater && e.Id != id && e.FacilityId == facilityId);
 
         public async Task<SubstanceEditDto> GetSubstanceByIdAsync(Guid? id) =>
             await _context.Substances.AsNoTracking()
@@ -47,13 +47,13 @@ namespace FMS.Infrastructure.Repositories
         public async Task<Substance> GetSubstanceForGWByFacilityIdAsync(Guid? facilityId) =>
             await _context.Substances.AsNoTracking()
             .Include(e => e.Chemical)
-            .Where(e => e.FacilityId == facilityId && e.Groundwater && e.UseForScoring)
+            .Where(e => e.FacilityId == facilityId && e.Groundwater && e.UseForGroundwaterScoring)
             .SingleOrDefaultAsync();
 
         public async Task<Substance> GetSubstanceForSoilByFacilityIdAsync(Guid? facilityId) =>
             await _context.Substances.AsNoTracking()
             .Include(e => e.Chemical)
-            .Where(e => e.FacilityId == facilityId && e.Soil && e.UseForScoring)
+            .Where(e => e.FacilityId == facilityId && e.Soil && e.UseForSoilScoring)
             .SingleOrDefaultAsync();
 
         public async Task<SubstanceSummaryDto> GetSubstanceSummaryByIdAsync(Guid id) =>
@@ -113,7 +113,8 @@ namespace FMS.Infrastructure.Repositories
             existingSubstance.ChemicalId = substanceUpdates.ChemicalId;
             existingSubstance.Groundwater = substanceUpdates.Groundwater;
             existingSubstance.Soil = substanceUpdates.Soil;
-            existingSubstance.UseForScoring = substanceUpdates.UseForScoring;
+            existingSubstance.UseForGroundwaterScoring = substanceUpdates.UseForGroundwaterScoring;
+            existingSubstance.UseForSoilScoring = substanceUpdates.UseForSoilScoring;
 
             _context.Substances.Update(existingSubstance);
             await _context.SaveChangesAsync();

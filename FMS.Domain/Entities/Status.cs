@@ -2,6 +2,7 @@ using System;
 using FMS.Domain.Entities.Base;
 using FMS.Domain.Dto;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 
 namespace FMS.Domain.Entities
 {

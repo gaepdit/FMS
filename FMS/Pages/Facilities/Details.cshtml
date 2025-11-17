@@ -624,21 +624,15 @@
                             <div class="container bg-light-subtle m-1">
                                 <dl class="row">
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredBy)
-                                    </dt>
-                                    <dd class="col-sm-2">
-                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredBy.Name, "StringOrNone")
-                                    </dd>
-                                    <dt class="col-sm-2">
                                         @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.ScoredDate)
                                     </dt>
-                                    <dd class="col-sm-2">
+                                    <dd class="col-sm-4">
                                         @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.ScoredDate, "Date")
                                     </dd>
                                     <dt class="col-sm-3">
                                         @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.UseComments)
                                     </dt>
-                                    <dd class="col-sm-1">
+                                    <dd class="col-sm-3">
                                         @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.UseComments, "YesNo")
                                     </dd>
                                     <dt class="col-sm-2 pt-3">
@@ -849,7 +843,8 @@
                                         <th scope="col">Common Name</th>
                                         <th scope="col" class="text-center">Groundwater</th>
                                         <th scope="col" class="text-center">Soil</th>
-                                        <th scope="col" class="text-center">Use for Scoring</th>
+                                        <th scope="col" class="text-center">Use for GW Scoring</th>
+                                        <th scope="col" class="text-center">Use for Soil Scoring</th>
                                         @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                         {
                                             <th scope="col" class="text-left">Actions</th>
@@ -865,7 +860,8 @@
                                             <td>@s.Chemical.CommonName</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Soil)</td>
-                                            <td class="text-center">@Html.DisplayFor(m => s.UseForScoring)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.UseForGroundwaterScoring)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.UseForSoilScoring)</td>
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
@@ -1057,11 +1053,18 @@
                 }
                 <div class="tab-pane @(Model.ActiveTab == "Events" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
-                        Events
-                        @if (User.IsInRole(UserRoles.FileEditor))
-                        {
-                            <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Event</a>
-                        }
+                        <form method="post">
+                            Events
+                            @if (User.IsInRole(UserRoles.FileEditor))
+                            {
+                                <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary mb-1">Add Event</a>
+                            }
+                            <input type="hidden" asp-for="@Model.FacilityId" />
+                            <button id="ExportButton" asp-page-handler="ExportButton"
+                                    class="btn btn-sm btn-outline-primary mb-1">
+                                Excel Export
+                            </button>
+                        </form>
                     </h3>
                     <hr />
                     <div class="row justify-content-evenly">

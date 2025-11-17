@@ -19,14 +19,15 @@ namespace FMS
         {
             Normal,
             Pending,
-            Map
+            Map,
+            Event
         }
 
         /// <summary>
         /// Takes in a list of generic T, input it into the XLWorkbook, convert it to a byte array.
         /// </summary>
-        /// <param name="list">A list of FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar</param>
-        /// <typeparam name="T">FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar</typeparam>
+        /// <param name="list">A list of FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar or EventSummaryDtoScalar or FacilityPendingDtoScalar</param>
+        /// <typeparam name="T">FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar or EventSummaryDtoScalar or FacilityPendingDtoScalar</typeparam>
         /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list, ReportType reportType)
         {
@@ -39,6 +40,12 @@ namespace FMS
             if (reportType == ReportType.Pending)
             {
                 ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+            if (reportType == ReportType.Event)
+            {
+                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
             if (reportType == ReportType.Normal)
             {

@@ -17,7 +17,8 @@
                     <th scope="col">Common Name</th>
                     <th scope="col" class="text-center">Groundwater</th>
                     <th scope="col" class="text-center">Soil</th>
-                    <th scope="col" class="text-center">Use for Scoring</th>
+                    <th scope="col" class="text-center">Use for GW Scoring</th>
+                    <th scope="col" class="text-center">Use for Soil Scoring</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +28,8 @@
                     <td>@Model.SubstanceDetail.Chemical.CommonName</td>
                     <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.Groundwater)</td>
                     <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.Soil)</td>
-                    <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.UseForScoring)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.UseForGroundwaterScoring)</td>
+                    <td class="text-center">@Html.DisplayFor(m => m.SubstanceDetail.UseForSoilScoring)</td>
                 </tr>
             </tbody>
         </table>

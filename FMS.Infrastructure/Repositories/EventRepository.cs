@@ -28,9 +28,9 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventContractor)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
-            var eventSummary = newEvent == null ? null : new EventSummaryDto(newEvent);
+            var eventSummary = newEvent == null ? null : new EventEditDto(newEvent);
 
-            return eventSummary == null ? null : new EventEditDto(eventSummary);
+            return eventSummary;
         }
 
         public async Task<EventSummaryDto> GetEventSummaryByIdAsync(Guid id)
@@ -75,7 +75,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventContractor)
                 .OrderBy(e => e.StartDate)
                 .ThenBy(e => e.CompletionDate)
-                .Where(e => e.FacilityId == facilityId && e.ParentId == parentId)
+                .Where(e => e.FacilityId == facilityId && (e.ParentId == parentId || e.Id == parentId))
                 .Select(e => new EventSummaryDto(e))
                 .ToListAsync();
 

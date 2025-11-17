@@ -18,7 +18,6 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     ScoredDate = new(2018, 2, 13),
-                    ScoredById = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     Comments = "Overriding comment",
                     UseComments = true
                 },
@@ -28,7 +27,6 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     ScoredDate = new(2018, 2, 13),
-                    ScoredById = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"),
                     Comments = "New comment to use",
                     UseComments = false
                 },
@@ -38,7 +36,6 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("7B20DE98-4726-4789-9AEA-2D995FF6839A"),
                     ScoredDate = new(2018, 2, 13),
-                    ScoredById = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"),
                     Comments = "",
                     UseComments = false
                 },
@@ -48,7 +45,6 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("E697F074-9C1C-4CEF-93F0-FCD9610ECCD3"),
                     ScoredDate = new(2018, 2, 13),
-                    ScoredById = new Guid("468F746A-270F-4584-8B04-71CD5271A40F"),
                     Comments = "Another comment",
                     UseComments = true
                 }
