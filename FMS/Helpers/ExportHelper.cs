@@ -19,7 +19,8 @@ namespace FMS
         {
             Normal,
             Pending,
-            Map
+            Map,
+            Event
         }
 
         /// <summary>
@@ -39,6 +40,12 @@ namespace FMS
             if (reportType == ReportType.Pending)
             {
                 ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+            if (reportType == ReportType.Event)
+            {
+                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
             if (reportType == ReportType.Normal)
             {

@@ -1,14 +1,16 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Threading.Tasks;
-using FMS.Platform.Extensions;
-using FMS.Helpers;
-using System.Net;
-using NUglify.Helpers;
 using Microsoft.IdentityModel.Tokens;
+using NUglify.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
@@ -22,7 +24,12 @@ namespace FMS.Pages.Facilities
         public Guid FacilityId { get; set; }
 
         private readonly IFacilityRepository _repository;
-        public DetailsModel(IFacilityRepository repository) => _repository = repository;
+        private readonly IEventRepository _eventRepository;
+        public DetailsModel(IFacilityRepository repository, IEventRepository eventRepository)
+        {
+            _repository = repository;
+            _eventRepository = eventRepository;
+        }
 
         public FacilityDetailDto FacilityDetail { get; set; }
 
@@ -136,7 +143,17 @@ namespace FMS.Pages.Facilities
 
             return RedirectToPage();
         }
-       
+
+        public async Task<IActionResult> OnPostExportButtonAsync()
+        {
+            var facility = await _repository.GetFacilityAsync(FacilityId);
+            var fileName = $"FMS_{facility.Name}_Event_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            // "EventDetailList" Detailed Event List to go to a report
+            IReadOnlyList<EventSummaryDto> eventReportList = (IReadOnlyList<EventSummaryDto>)await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);
+            var eventDetailList = from p in eventReportList select new EventSummaryDtoScalar(p, facility.Name, facility.FacilityNumber);
+            return File(eventDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Event), "application/vnd.ms-excel", fileName);
+        }
+
         public string GetMapLink()
         {
             if (FacilityDetail != null && FacilityDetail.Latitude != 0 && FacilityDetail.Longitude != 0)

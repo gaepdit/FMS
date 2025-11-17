@@ -8,20 +8,24 @@ namespace FMS.Domain.Dto
     {
         public EventEditDto() { }
 
-        public EventEditDto(EventSummaryDto eventEntity)
+        public EventEditDto(Event eventEntity)
         {
             Id = eventEntity.Id;
             Active = eventEntity.Active;
             FacilityId = eventEntity.FacilityId;
             ParentId = eventEntity.ParentId;
             EventTypeId = eventEntity.EventType?.Id;
+            EventType = eventEntity.EventType;
             ActionTakenId = eventEntity.ActionTaken?.Id;
+            ActionTaken = eventEntity.ActionTaken;
             StartDate = eventEntity.StartDate;
             DueDate = eventEntity.DueDate;
             CompletionDate = eventEntity.CompletionDate;
             ComplianceOfficerId = eventEntity.ComplianceOfficer?.Id;
+            ComplianceOfficer = eventEntity.ComplianceOfficer;
             EventAmount = eventEntity.EventAmount;
             EventContractorId = eventEntity.EventContractor?.Id;
+            EventContractor = eventEntity.EventContractor;
             Comment = eventEntity.Comment;
         }
 
