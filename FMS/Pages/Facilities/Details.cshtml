@@ -855,7 +855,10 @@
                                     @foreach (var s in Model.FacilityDetail.Substances)
                                     {
                                         <tr class="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
-                                            <td>@s.Chemical.CasNo</td>
+                                            <td>
+                                                @s.Chemical.CasNo
+                                                <a asp-page="/Maintenance/Chemical/Edit" asp-route-id="@s.Chemical.Id" class="btn btn-sm btn-outline-primary">Edit Chemical</a>
+                                                </td>
                                             <td>@s.Chemical.ChemicalName</td>
                                             <td>@s.Chemical.CommonName</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
