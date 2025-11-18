@@ -2216,9 +2216,6 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("InsertUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ScoredById")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateOnly?>("ScoredDate")
                         .HasColumnType("date");
 
@@ -2235,8 +2232,6 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasIndex("FacilityId")
                         .IsUnique();
-
-                    b.HasIndex("ScoredById");
 
                     b.ToTable("Scores");
                 });
@@ -2453,7 +2448,10 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("UpdateUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("UseForScoring")
+                    b.Property<bool>("UseForGroundwaterScoring")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("UseForSoilScoring")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -3000,12 +2998,6 @@ namespace FMS.Infrastructure.Migrations
                         .HasForeignKey("FMS.Domain.Entities.Score", "FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FMS.Domain.Entities.ComplianceOfficer", "ScoredBy")
-                        .WithMany()
-                        .HasForeignKey("ScoredById");
-
-                    b.Navigation("ScoredBy");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.Status", b =>
