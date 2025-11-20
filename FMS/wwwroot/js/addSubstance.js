@@ -1,4 +1,6 @@
-﻿$(document).ready(function (addSubstance) {
+﻿// Attempt to use Controller API to auto-fill chemical substance information based on name input
+// Tom K.
+$(document).ready(function (addSubstance) {
     //let typingTimer;
     //const doneTypingInterval = 500; // milliseconds
 
@@ -28,6 +30,8 @@
     //}
 });
 
+// Base code found online at 
+// https://stackoverflow.com/questions/29076003/editable-dropdown-in-c-sharp
 (function ($) {
     $.widget("custom.combobox", {
         _create: function () {
