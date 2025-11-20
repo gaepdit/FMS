@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Pages.Substance
 {
-    [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
+    [Authorize(Policy = UserPolicies.FileEditor)]
     public class EditModel : PageModel
     {
         private readonly ISubstanceRepository _repository;

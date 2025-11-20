@@ -504,7 +504,7 @@
                     <div class="tab-pane @(Model.ActiveTab == "Contacts" ? "active" : "")" id="Contacts" role="tabpanel" aria-labelledby="Contacts-tab">
                         <h3>
                             Contacts
-                            @if (User.IsInRole(UserRoles.FileCreator))
+                            @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
                             {
                                 <a asp-page="/Contact/Add" asp-route-Id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Contact</a>
                             }
@@ -521,7 +521,7 @@
                                         <th scope="col">Address</th>
                                         <th scope="col">Email</th>
                                         <th scope="col" class="text-center">Active</th>
-                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                        @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                         {
                                             <th scope="col" class="text-left">Actions</th>
                                         }
@@ -544,7 +544,7 @@
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
-                                                    @if (User.IsInRole(UserRoles.FileEditor))
+                                                    @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
                                                     {
                                                         <a asp-page="/Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                     }
@@ -563,7 +563,7 @@
                                                         </h3>
                                                         <div id="PhoneNumberList+@c.Id" class="accordion-collapse collapse" aria-labelledby="Phone Number List">
                                                             <div class="accordion-body">
-                                                                @if (User.IsInRole(UserRoles.FileCreator))
+                                                                @if (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.ComplianceOfficer))
                                                                 {
                                                                     <a asp-page="/Phone/Add" asp-route-Id="@c.Id" class="btn btn-sm btn-primary">Add Phone</a>
                                                                 }
@@ -575,7 +575,7 @@
                                                                                 <th scope="col">Phone Type</th>
                                                                                 <th scope="col">Number</th>
                                                                                 <th scope="col">Active</th>
-                                                                                @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                                @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                                                                 {
                                                                                     <th scope="col" class="text-center">Actions</th>
                                                                                 }
@@ -588,7 +588,7 @@
                                                                                     <td>@p.PhoneType</td>
                                                                                     <td><a href=@p.GetTelTo()>@p.Number</a></td>
                                                                                     <td>@Html.DisplayFor(m => p.Active)</td>
-                                                                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                                                    @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                                                                     {
                                                                                         <td class="justify-content-end">
                                                                                             <a asp-page="/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
@@ -828,7 +828,7 @@
                     <div class="tab-pane @(Model.ActiveTab == "Substances" ? "active" : "")" id="Substances" role="tabpanel" aria-labelledby="Substances-tab">
                         <h3>
                             Substances
-                            @if (User.IsInRole(UserRoles.FileCreator))
+                            @if (User.IsInRole(UserRoles.FileEditor))
                             {
                                 <a asp-page="/Substance/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Substance</a>
                             }
@@ -857,8 +857,11 @@
                                         <tr class="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
                                             <td>
                                                 @s.Chemical.CasNo
-                                                <a asp-page="/Maintenance/Chemical/Edit" asp-route-id="@s.Chemical.Id" class="btn btn-sm btn-outline-primary">Edit Chemical</a>
-                                                </td>
+                                                @if (User.IsInRole(UserRoles.SiteMaintenance))
+                                                {
+                                                    <a asp-page="/Maintenance/Chemical/Edit" asp-route-id="@s.Chemical.Id" class="btn btn-sm btn-outline-primary">Edit Chemical</a>
+                                                }
+                                            </td>
                                             <td>@s.Chemical.ChemicalName</td>
                                             <td>@s.Chemical.CommonName</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
@@ -868,11 +871,8 @@
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
-                                                    @if (User.IsInRole(UserRoles.FileCreator))
-                                                    {
-                                                        <a asp-page="/Substance/Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                        <a asp-page="/Substance/Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Delete</a>
-                                                    }
+                                                    <a asp-page="/Substance/Edit" asp-route-id="@s.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                    <a asp-page="/Substance/Delete" asp-route-id="@s.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                                 </td>
                                             }
                                         </tr>
@@ -885,7 +885,7 @@
                     <div class="tab-pane @(Model.ActiveTab == "Status" ? "active" : "")" id="Status" role="tabpanel" aria-labelledby="Status-tab">
                         <h3>
                             Status
-                            @if (User.IsInRole(UserRoles.FileCreator))
+                            @if (User.IsInRole(UserRoles.FileEditor))
                             {
                                 <a asp-page="/Status/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit Status</a>
                             }
@@ -919,16 +919,18 @@
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive)
                             </dt>
-                            <dd class="col-sm-3 pt-3">
+                            <dd class="col-sm-9 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.AbandonedInactive.Name, "StringOrNone")
                             </dd>
                             <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ReportComments)
                             </dt>
-                            <dd class="col-sm-4 pt-3">
+                            <dd class="col-sm-10 pt-3">
                                 <textarea readonly enabled="false" class="form-control" rows="3" id="ReportComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ReportComments)</textarea>
                             </dd>
-                            <div><hr /></div>
+                            <div>
+                                <hr />
+                            </div>
                             <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
                             </dt>
@@ -1013,12 +1015,12 @@
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimateDate)
                             </dd>
-                            <dt class="col-sm-2 pt-3">
+                            @* <dt class="col-sm-2 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
                             </dt>
                             <dd class="col-sm-10 pt-3">
                                 <textarea readonly enabled="false" class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments)</textarea>
-                            </dd>
+                            </dd> *@
                         </dl>
                         <hr />
                         <div class="row mb-3">
@@ -1058,7 +1060,7 @@
                     <h3>
                         <form method="post">
                             Events
-                            @if (User.IsInRole(UserRoles.FileEditor))
+                            @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
                             {
                                 <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary mb-1">Add Event</a>
                             }
@@ -1083,7 +1085,7 @@
                                     <th scope="col">Event Amount</th>
                                     <th scope="col">Contractor</th>
                                     <th scope="col">Comment</th>
-                                    @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                    @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
                                     }
@@ -1109,7 +1111,7 @@
                                         <td>@item.EventAmount</td>
                                         <td>@item.EventContractor?.Name</td>
                                         <td>@item.Comment</td>
-                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                        @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                         {
                                             <td>
                                                 <a asp-page="/Event/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Pages.Contact
 {
-    [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
+    [Authorize(Policy = UserPolicies.FileEditorOrComplianceOfficer)]
     public class EditModel : PageModel
     {
         private readonly IContactRepository _repository;

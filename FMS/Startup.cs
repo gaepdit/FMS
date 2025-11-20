@@ -84,6 +84,10 @@ namespace FMS
                     policy.RequireRole(UserRoles.SiteMaintenance));
                 opts.AddPolicy(UserPolicies.UserMaintenance, policy =>
                     policy.RequireRole(UserRoles.UserMaintenance));
+                opts.AddPolicy(UserPolicies.ComplianceOfficer, policy =>
+                    policy.RequireRole(UserRoles.ComplianceOfficer));
+                opts.AddPolicy(UserPolicies.FileEditorOrComplianceOfficer, policy =>
+                    policy.RequireRole(UserRoles.FileEditor, UserRoles.ComplianceOfficer));
             });
 
             // Configure dependencies

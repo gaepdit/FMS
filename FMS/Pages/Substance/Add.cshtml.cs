@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Pages.Substance
 {
-    [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
+    [Authorize(Policy = UserPolicies.FileEditor)]
     public class AddModel : PageModel
     {
         private readonly ISubstanceRepository _repository;

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Pages.Event
 {
-    [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
+    [Authorize(Policy = UserPolicies.FileEditorOrComplianceOfficer)]
     public class EditModel : PageModel
     {
         private readonly IEventRepository _repository;
