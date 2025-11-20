@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Pages.Parcel
 {
-    [Authorize(Policy = UserPolicies.FileCreator)]
+    [Authorize(Policy = UserPolicies.FileEditor)]
     public class AddModel : PageModel
     {
         private readonly IParcelRepository _repository;

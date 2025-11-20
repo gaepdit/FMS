@@ -11,5 +11,7 @@
         public const string FileEditor = "FileEditor";
         public const string SiteMaintenance = "SiteMaintenance";
         public const string UserMaintenance = "UserMaintenance";
+        public const string ComplianceOfficer = "ComplianceOfficer";
+        public const string FileEditorOrComplianceOfficer = "FileEditorOrComplianceOfficer";
     }
 }

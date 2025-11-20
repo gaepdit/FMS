@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Pages.Phone
 {
-    [Authorize(Policy = UserPolicies.FileCreatorOrEditor)]
+    [Authorize(Policy = UserPolicies.FileEditorOrComplianceOfficer)]
     public class EditModel : PageModel
     {
         private readonly IPhoneRepository _repository;

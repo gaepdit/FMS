@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Pages.GroundwaterScore
 {
-    [Authorize(Roles = UserRoles.FileEditor)]
+    [Authorize(Policy = UserPolicies.FileEditor)]
     public class EditModel : PageModel
     {
         private readonly IGroundwaterScoreRepository _repository;
