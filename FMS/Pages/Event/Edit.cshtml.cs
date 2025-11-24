@@ -115,7 +115,7 @@ namespace FMS.Pages.Event
         {
             EventTypes = await _listHelper.EventTypesSelectListAsync();
             AllowedActionsTaken = await _listHelper.AllowedActionTakenSelectListAsync(EditEvent.EventTypeId);
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(true);
             EventContractors = await _listHelper.EventContractorListAsync();
         }
     }

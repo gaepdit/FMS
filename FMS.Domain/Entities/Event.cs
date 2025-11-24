@@ -31,7 +31,7 @@ namespace FMS.Domain.Entities
         [Required]
         public Guid? EventTypeId { get; set; }
         public EventType EventType { get; set; }
-
+        
         [Required]
         public Guid? ActionTakenId { get; set; }
         public ActionTaken ActionTaken { get; set; }
