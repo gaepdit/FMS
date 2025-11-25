@@ -45,70 +45,19 @@
 </h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
-@* <form method="post">
-    <table class="table" aria-label="List of Chemicals">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col" class="col-md-2">CasNo</th>
-                <th scope="col">Chemical Name</th>
-                <th scope="col">Common Name</th>
-                <th scope="col">Tox Value</th>
-                <th scope="col">MCLs</th>
-                <th scope="col">Final Rc</th>
-                <th scope="col">RQ</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Chemicals)
-            {
-                <tr class="@(!item.Active ? "table-warning" : "")">
-                    <td class="text-nowrap">
-                        @Html.DisplayFor(m => item.CasNo, "StringOrNone")
-                        @Html.DisplayFor(m => item.Active, "BoolRemoved")
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.ChemicalName, "StringOrNone")
-                    </td>
-                    <td>@Html.DisplayFor(m => item.CommonName, "StringOrNone")</td>
-                    <td>
-                        @Html.DisplayFor(m => item.ToxValue, "StringOrNone")<br />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.MCLs, "StringOrNone")<br />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.FinalRc, "StringOrNone")<br />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(m => item.RQ, "StringOrNone")<br />
-                    </td>
-                    <td class="text-nowrap align-content-center">
-                        <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
-                        @if (item.Active)
-                        {
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
-                        }
-                        else
-                        {
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</form> *@
-
-<form class="container my-3">
-    <label class="visually-hidden" for="chemical-list-filter">Filter Chemical list</label>
-    <div class="row row-cols-sm-auto align-items-center">
-        <input id="chemical-list-filter" class="form-control col-md-12 w-auto" placeholder="Filter chemical list" />
-        <span id="filtered-chemical-list-count" class="col-12 text-body-secondary">
-            (@(Model.Chemicals.Count > 0 ? Model.Chemicals.Count.ToString() : "none") found)
-        </span>
+<div class="container-fluid">
+    <div class="container bg-light-subtle p-3 m-1 rounded-3">
+        <form class="container my-3">
+            <label class="visually-hidden" for="chemical-list-filter">Filter Chemical list</label>
+            <div class="row row-cols-sm-auto align-items-center">
+                <input id="chemical-list-filter" class="form-control col-md-12 w-auto" placeholder="Filter chemical list" />
+                <span id="filtered-chemical-list-count" class="col-12 text-body-secondary">
+                    (@(Model.Chemicals.Count > 0 ? Model.Chemicals.Count.ToString() : "none") found)
+                </span>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 <div class="container-fluid">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <ul id="chemical-list">
