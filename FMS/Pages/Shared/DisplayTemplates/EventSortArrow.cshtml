@@ -1,0 +1,10 @@
+﻿@using FMS.Domain.Dto
+@model FMS.Domain.Dto.EventSort
+@if (Model == (EventSort)ViewData["up"])
+{
+    <text>▲</text>
+}
+else if (Model == (EventSort)ViewData["down"])
+{
+    <text>▼</text>
+}

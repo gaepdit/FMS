@@ -78,7 +78,7 @@ namespace FMS.Pages.Facilities
             {
                 spec.SortBy = FacilitySort.RNDateReceived;
                 spec.FirstPass = false;
-            };
+            }
 
             // Get the list of facilities matching the "Spec" criteria.
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
