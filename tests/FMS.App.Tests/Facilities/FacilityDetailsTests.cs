@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FluentAssertions;
+using AwesomeAssertions;
 using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;
 using Microsoft.AspNetCore.Mvc;

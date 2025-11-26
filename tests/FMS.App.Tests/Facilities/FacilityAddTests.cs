@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;

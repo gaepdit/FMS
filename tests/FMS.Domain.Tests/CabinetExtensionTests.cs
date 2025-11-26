@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
+using AwesomeAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Extensions;
