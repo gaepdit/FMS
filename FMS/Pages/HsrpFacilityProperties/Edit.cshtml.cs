@@ -97,7 +97,7 @@ namespace FMS.Pages.HsrpFacilityProperties
 
         private async Task PopulateSelectsAsync()
         {
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(true);
             OrganizationalUnit = await _listHelper.OrganizationalUnitsSelectListAsync();
         }
     }
