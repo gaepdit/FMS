@@ -14,6 +14,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Parcel Number")]
+        [Required(ErrorMessage = "Parcel Number is required.")]
         public string ParcelNumber { get; set; }
 
         [Display(Name = "Acreage")]
