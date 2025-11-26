@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using FMS.Domain.Entities;
 using System;
 using System.Diagnostics.CodeAnalysis;

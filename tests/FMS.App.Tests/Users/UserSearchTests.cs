@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
+using AwesomeAssertions;
 using FMS.Domain.Services;
 using FMS.Pages.Users;
 using Microsoft.AspNetCore.Mvc.RazorPages;
