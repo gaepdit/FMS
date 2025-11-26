@@ -556,8 +556,8 @@ appsettings.*.json
 # Webpack
 **/wwwroot/dist/
 
-# SonarLint Rider plugin
-.idea/**/sonarlint-state.xml
+# JetBrains files
+.idea/
 
 # Code coverage report from ReportGenerator
 coveragereport/
