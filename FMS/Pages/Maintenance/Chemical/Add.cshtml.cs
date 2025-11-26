@@ -43,11 +43,6 @@ namespace FMS.Pages.Maintenance.Chemical
                 ModelState.AddModelError("Chemical.ChemicalName", "Chemical Name entered already exists.");
             }
 
-            if (Chemical.CommonName != null && await _repository.ChemicalCommonNameExistsAsync(Chemical.CommonName))
-            {
-                ModelState.AddModelError("Chemical.CommonName", "Common Name entered already exists.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return Page();

@@ -49,12 +49,6 @@ namespace FMS.Pages.Facilities
             _listHelper = listHelper;
         }
 
-        //[TempData]
-        //public string Lat { get; set; }
-
-        //[TempData]
-        //public string Lon { get; set; }
-
         public async Task<IActionResult> OnGet(Guid? id)
         {
             if (id != null)
