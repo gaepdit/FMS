@@ -542,7 +542,7 @@ FodyWeavers.xsd
 ########################
 ### Project-specific ###
 
-# Web deploy settings
+# Don't ignore web deploy settings
 !**/PublishProfiles/*.pubxml
 
 # Environment settings files
@@ -553,11 +553,9 @@ appsettings.*.json
 .artifacts/
 # Library Manager
 **/wwwroot/lib/
-# Webpack
-**/wwwroot/dist/
 
-# SonarLint Rider plugin
-.idea/**/sonarlint-state.xml
+# JetBrains config files
+.idea/
 
 # Code coverage report from ReportGenerator
 coveragereport/
