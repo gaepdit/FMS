@@ -35,9 +35,11 @@ namespace FMS.Domain.Dto
         public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]
+        [DisplayFormat(DataFormatString = "{0:0.000000}", ApplyFormatInEditMode = true)]
         public decimal? Latitude { get; set; }
 
         [Display(Name = "Longitude")]
+        [DisplayFormat(DataFormatString = "{0:0.000000}", ApplyFormatInEditMode = true)]
         public decimal? Longitude { get; set; }
 
         [Display(Name = "Radius")]

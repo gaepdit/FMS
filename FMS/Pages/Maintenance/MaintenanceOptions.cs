@@ -17,7 +17,7 @@
         public const string ParcelType = "Parcel Type";
         public const string SoilStatus = "Soil Status";
         public const string SourceStatus = "Source Status";
-        public const string Chemical = "Chemical";
+        public const string Chemical = "Chemical List";
         public const string AllowedActionsTaken = "Choose Event Type to Edit Allowed Actions";
         public const string AllowedActionTaken = "Allowed Actions Taken";
         public const string AbandonedInactive = "Abandoned Inactive";
