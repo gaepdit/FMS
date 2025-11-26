@@ -107,6 +107,27 @@ namespace FMS.Pages.Facilities
             return Page();
         }
 
+        //public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
+        //{
+
+        //    //// Sort by Received Date for Pending Release Notifications
+        //    //if (spec.ShowPendingOnly && spec.FirstPass)
+        //    //{
+        //    //    spec.SortBy = FacilitySort.RNDateReceived;
+        //    //    spec.FirstPass = false;
+        //    //}
+
+        //    //// Get the list of facilities matching the "Spec" criteria.
+        //    //FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
+        //    //Spec = spec;
+
+        //    //ShowPendingOnlyCheckBox = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
+
+        //    //ShowResults = true;
+        //    //await PopulateSelectsAsync();
+        //    //return Page();
+        //}
+
         public async Task<IActionResult> OnPostRetentionRecordAsync()
         {
             if (!ModelState.IsValid)
