@@ -12,7 +12,7 @@ namespace FMS.Helpers
             var sortedList = new List<EventSummaryDto>();
 
             // Get top-level parents
-            var topLevelParents = events.Where(e => e.ParentId == Guid.Empty).OrderBy(e => e.StartDate).ThenBy(e => e.CompletionDate);
+            var topLevelParents = events.Where(e => e.ParentId == Guid.Empty || e.ParentId == null).OrderBy(e => e.StartDate).ThenBy(e => e.CompletionDate);
 
             foreach (var parent in topLevelParents)
             {
