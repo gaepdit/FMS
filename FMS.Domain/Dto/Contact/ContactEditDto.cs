@@ -35,6 +35,7 @@ namespace FMS.Domain.Dto
         public string GivenName { get; set; }
 
         [Display(Name = "Last Name")]
+        [Required]
         public string FamilyName { get; set; }
 
         [Display(Name = "Title")]
@@ -59,6 +60,7 @@ namespace FMS.Domain.Dto
         public string PostalCode { get; set; }
 
         [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Display(Name = "Status")]

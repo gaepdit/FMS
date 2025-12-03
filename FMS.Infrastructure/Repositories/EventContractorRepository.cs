@@ -54,9 +54,9 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateEventContractorAsync(EventContractorEditDto contractor)
+        public async Task UpdateEventContractorAsync(Guid Id, EventContractorEditDto contractor)
         {
-            var existingContractor = await _context.EventContractors.FindAsync(contractor.Id);
+            var existingContractor = await _context.EventContractors.FindAsync(Id);
             if (existingContractor != null)
             {
                 existingContractor.Name = contractor.Name;

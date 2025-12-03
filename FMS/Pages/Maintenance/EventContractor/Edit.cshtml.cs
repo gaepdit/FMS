@@ -68,7 +68,7 @@ namespace FMS.Pages.Maintenance.EventContractor
 
             try
             {
-                await _repository.UpdateEventContractorAsync(EventContractor);
+                await _repository.UpdateEventContractorAsync(Id, EventContractor);
             }
             catch (DbUpdateConcurrencyException)
             {

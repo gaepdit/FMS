@@ -33,6 +33,8 @@ namespace FMS.Pages.Facilities
 
         public FacilityDetailDto FacilityDetail { get; set; }
 
+        public IEnumerable<EventSummaryDto> EventSummaryList { get; set; }
+
         public DisplayMessage Message { get; private set; }
 
         [TempData]
@@ -107,26 +109,22 @@ namespace FMS.Pages.Facilities
             return Page();
         }
 
-        //public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
-        //{
+        public async Task<IActionResult> OnGetEventSortAsync(EventSummaryDto eventSummary)
+        {
 
-        //    //// Sort by Received Date for Pending Release Notifications
-        //    //if (spec.ShowPendingOnly && spec.FirstPass)
-        //    //{
-        //    //    spec.SortBy = FacilitySort.RNDateReceived;
-        //    //    spec.FirstPass = false;
-        //    //}
+            // Sort by Start Date by default on the first pass
+            if (eventSummary.FirstPass)
+            {
+                eventSummary.SortBy = EventSort.StartDate;
+                eventSummary.FirstPass = false;
+            }
 
-        //    //// Get the list of facilities matching the "Spec" criteria.
-        //    //FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
-        //    //Spec = spec;
+            // Get the list of Events for this Facility
+            EventSummaryList = await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);
+            FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
 
-        //    //ShowPendingOnlyCheckBox = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
-
-        //    //ShowResults = true;
-        //    //await PopulateSelectsAsync();
-        //    //return Page();
-        //}
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostRetentionRecordAsync()
         {

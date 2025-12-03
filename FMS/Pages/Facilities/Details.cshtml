@@ -532,7 +532,7 @@
                                     {
                                         <tr class="@(!c.Active ? "text-muted table-warning" : "")">
                                             <td>@c.GivenName&nbsp;@c.FamilyName</td>
-                                            <td>@c.ContactType.Name</td>
+                                            <td>@c.ContactType?.Name</td>
                                             <td>@c.Company</td>
                                             <td>@c.ContactTitle</td>
                                             <td>
@@ -1132,8 +1132,6 @@
 @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
 {
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
-
         @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
         {
             <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>

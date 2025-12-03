@@ -50,11 +50,6 @@ namespace FMS.Pages.Maintenance.AbandonedInactive
 
             AbandonedInactive.TrimAll();
 
-            if (AbandonedInactive.Name.Length > 20)
-            {
-                ModelState.AddModelError("AbandonedInactive.Name", "Name cannot exceed 20 characters.");
-            }
-
             // If editing Code, make sure the new Code doesn't already exist before trying to save.
             if (await _repository.AbandonedInactiveNameExistsAsync(AbandonedInactive.Name, Id))
             {
