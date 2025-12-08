@@ -145,9 +145,10 @@ namespace FMS.Pages.Facilities
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostExportButtonAsync()
+        public async Task<IActionResult> OnPostExportButtonAsync(EventSort sortBy)
         {
             var facility = await _repository.GetFacilityAsync(FacilityId);
+            facility.Events = EventSortHelper.SortEvents(facility.Events, sortBy);
             var fileName = $"FMS_{facility.Name}_Event_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "EventDetailList" Detailed Event List to go to a report
             IReadOnlyList<EventSummaryDto> eventReportList = (IReadOnlyList<EventSummaryDto>)await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);

@@ -1063,7 +1063,9 @@
                                 class="btn btn-sm btn-primary mb-1">Add Event</a>
                             }
                             <input type="hidden" asp-for="@Model.FacilityId" />
-                            <button id="ExportButton" asp-page-handler="ExportButton"
+                            <button id="ExportButton" 
+                                asp-page-handler="ExportButton"
+                                asp-route-sortBy="@Model.SortBy"
                                     class="btn btn-sm btn-outline-primary mb-1">
                                 Excel Export
                             </button>
