@@ -9,6 +9,8 @@ namespace FMS.Domain.Repositories
     {
         Task<bool> ParcelExistsAsync(Guid id);
 
+        Task<bool> ParcelNameExistsAsync(string parcelNumber);
+
         Task<ParcelEditDto> GetParcelByIdAsync(Guid id);
 
         Task<IReadOnlyList<ParcelSummaryDto>> GetParcelListAsync(Guid facilityId);

@@ -57,6 +57,7 @@ namespace FMS.Domain.Dto
         public string State { get; set; }
 
         [Display(Name = "ZIP Code")]
+        [DataType(DataType.PostalCode)]
         public string PostalCode { get; set; }
 
         [Display(Name = "Email")]

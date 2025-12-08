@@ -541,7 +541,7 @@
                                             </td>
                                             <td><a href=@c.GetMailTo()>@c.Email</a></td>
                                             <td class="text-center">@Html.DisplayFor(m => c.Active)</td>
-                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                            @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                             {
                                                 <td>
                                                     @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
@@ -1001,7 +1001,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Description)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.DisplayName)
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
@@ -1015,12 +1015,6 @@
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimateDate)
                             </dd>
-                            @* <dt class="col-sm-2 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
-                            </dt>
-                            <dd class="col-sm-10 pt-3">
-                                <textarea readonly enabled="false" class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments)</textarea>
-                            </dd> *@
                         </dl>
                         <hr />
                         <div class="row mb-3">

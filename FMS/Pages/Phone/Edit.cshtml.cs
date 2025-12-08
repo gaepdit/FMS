@@ -29,7 +29,6 @@ namespace FMS.Pages.Phone
         [BindProperty]
         public PhoneEditDto EditPhone { get; set; }
 
-        [BindProperty]
         public ContactEditDto Contact { get; set; }
 
         public SelectList PhoneTypes => new(Data.PhoneTypes);
@@ -59,7 +58,6 @@ namespace FMS.Pages.Phone
         {
             if (!ModelState.IsValid)
             {
-                Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
                 return Page();
             }
             try
@@ -72,7 +70,6 @@ namespace FMS.Pages.Phone
                 ModelState.AddModelError(string.Empty, "Unable to save changes. " +
                     "Try again, and if the problem persists, " +
                     "see your system administrator.");
-                Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
                 return Page();
             }
             Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);

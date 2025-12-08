@@ -67,6 +67,12 @@ namespace FMS.Pages.Parcel
 
             NewParcel.TrimAll();
 
+            if (await _repository.ParcelNameExistsAsync(NewParcel.ParcelNumber))
+            {
+                ModelState.AddModelError(string.Empty, $"Parcel with Parcel Number \"{NewParcel.ParcelNumber}\" already exists");
+                await PopulateSelectsAsync();
+                return Page();
+            }
 
             if (!ModelState.IsValid)
             {

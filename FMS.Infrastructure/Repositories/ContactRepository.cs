@@ -90,17 +90,17 @@ namespace FMS.Infrastructure.Repositories
             return newContact.Id;
         }
 
-        public async Task UpdateContactAsync(ContactEditDto contact)
+        public async Task UpdateContactAsync(Guid id, ContactEditDto contact)
         {
             Prevent.Null(contact, nameof(contact));
-            Prevent.NullOrEmpty(contact.Id, nameof(contact.Id));
+            Prevent.NullOrEmpty(id, nameof(id));
 
             var existingContact = await _context.Contacts
-                .SingleOrDefaultAsync(e => e.Id == contact.Id);
+                .SingleOrDefaultAsync(e => e.Id == id);
 
             if (existingContact == null)
             {
-                throw new InvalidOperationException($"Contact with ID {contact.Id} does not exist.");
+                throw new InvalidOperationException($"Contact with ID {id} does not exist.");
             }
             
             existingContact.FamilyName = contact.FamilyName;

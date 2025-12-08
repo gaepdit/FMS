@@ -78,7 +78,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
 
-        [Display(Name = "Cost Estimate")]
+        [Display(Name = "Cost Estimate from 5-Yr Review")]
+        [DataType(DataType.Currency)]
         public decimal? CostEstimate { get; set; }
 
         [Display(Name = "Cost Estimate Date")]

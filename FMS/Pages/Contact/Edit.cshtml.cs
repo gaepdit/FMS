@@ -63,7 +63,7 @@ namespace FMS.Pages.Contact
             }
             try
             {
-                await _repository.UpdateContactAsync(EditContact);
+                await _repository.UpdateContactAsync(Id, EditContact);
             }
             catch (Exception ex)
             {
