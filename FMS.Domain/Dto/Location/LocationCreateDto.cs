@@ -10,8 +10,7 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Class")]
-        [Required(ErrorMessage = "Class is required.")]
-        public Guid LocationClassId { get; set; }
+        public Guid? LocationClassId { get; set; }
         public LocationClass LocationClass { get; set; }
     }
 }

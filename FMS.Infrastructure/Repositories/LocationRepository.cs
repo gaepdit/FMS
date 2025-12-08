@@ -74,7 +74,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Location for Facility '{location.FacilityId}' already exists.");
             }
 
-            var newLocation = new Location(Guid.NewGuid(), location);
+            Location newLocation = new Location(Guid.NewGuid(), location);
 
             await _context.Locations.AddAsync(newLocation);
             await _context.SaveChangesAsync();
