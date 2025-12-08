@@ -25,9 +25,6 @@ namespace FMS.Domain.Dto
             EventContractor = eventEntity.EventContractor;
             Comment = eventEntity.Comment;
         }
-        public EventSort SortBy { get; set; } = EventSort.StartDate;
-
-        public bool FirstPass { get; set; } = true;
 
         public Guid Id { get; set; }
 
@@ -67,25 +64,6 @@ namespace FMS.Domain.Dto
 
         [DisplayName("Comment")]
         public string Comment { get; set; }
-
-        public IDictionary<string, string> AsRouteValues =>
-           new Dictionary<string, string>
-           {
-                {nameof(Active), Active.ToString()},
-                {nameof(FacilityId), FacilityId.ToString()},
-                {nameof(ParentId), ParentId?.ToString()},
-                {nameof(EventType), EventType.ToString()},
-                {nameof(ActionTaken), ActionTaken.ToString()},
-                {nameof(StartDate), StartDate?.ToString()},
-                {nameof(DueDate), DueDate?.ToString()},
-                {nameof(CompletionDate), CompletionDate?.ToString()},
-                {nameof(ComplianceOfficer), ComplianceOfficer.ToString()},
-                {nameof(EventAmount), EventAmount?.ToString()},
-                {nameof(EventContractor), EventContractor.ToString()},
-                {nameof(Comment), Comment},
-                {nameof(SortBy), SortBy.ToString()},
-                {nameof(FirstPass), FirstPass.ToString()},
-           };
     }
 }
 

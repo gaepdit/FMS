@@ -56,7 +56,7 @@ namespace FMS.Pages.Event
         [TempData]
         public string ActiveTab { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id, EventSort sortBy)
         {
             if (id == null || id == Guid.Empty)
             {
@@ -70,7 +70,7 @@ namespace FMS.Pages.Event
 
             ParentEventId ??= Guid.Empty;
 
-            Events = EventSortHelper.SortEvents(Events);
+            Events = EventSortHelper.SortEvents(Events, sortBy);
 
             NewEvent = new EventCreateDto
             {

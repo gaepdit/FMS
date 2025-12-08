@@ -60,7 +60,9 @@ namespace FMS.Pages.Facilities
         [TempData]
         public string Lon { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
+        public EventSort SortBy { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, EventSort sortBy, string tab = "HSIProperties")
         {
             if (id == null)
             {
@@ -96,33 +98,13 @@ namespace FMS.Pages.Facilities
                 }
                 RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
-            
-            if (string.IsNullOrEmpty(ActiveTab))
-            {
-                ActiveTab = "HSIProperties";
-            }
 
+            ActiveTab = tab;
+            SortBy = sortBy;
             MapLink = GetMapLink();
-            FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events);
+            FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events, SortBy);
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
-            return Page();
-        }
-
-        public async Task<IActionResult> OnGetEventSortAsync(EventSummaryDto eventSummary)
-        {
-
-            // Sort by Start Date by default on the first pass
-            if (eventSummary.FirstPass)
-            {
-                eventSummary.SortBy = EventSort.StartDate;
-                eventSummary.FirstPass = false;
-            }
-
-            // Get the list of Events for this Facility
-            EventSummaryList = await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);
-            FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
-
             return Page();
         }
 
