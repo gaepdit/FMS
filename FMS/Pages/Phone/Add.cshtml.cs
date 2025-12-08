@@ -71,6 +71,7 @@ namespace FMS.Pages.Phone
             }
             try
             {
+                NewPhone = PhoneCreateDto.FormatNumber(NewPhone);
                 await _repository.CreatePhoneAsync(NewPhone);
             }
             catch (Exception ex)

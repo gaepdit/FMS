@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
@@ -62,8 +63,8 @@ namespace FMS.Pages.Phone
             }
             try
             {
+                EditPhone = PhoneEditDto.FormatNumber(EditPhone);
                 await _repository.UpdatePhoneAsync(EditPhone);
-                
             }
             catch (Exception ex)
             {
