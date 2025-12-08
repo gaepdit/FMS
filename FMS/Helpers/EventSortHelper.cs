@@ -34,42 +34,41 @@ namespace FMS.Helpers
             }
         }
 
-        public static IOrderedQueryable<Event> OrderEventQuery(
-            IQueryable<Event> included, EventSort sortBy) =>
+        public static IList<EventSummaryDto> OrderEventQuery(
+            IList<EventSummaryDto> events, EventSort sortBy) =>
             sortBy switch
             {
-                EventSort.EventType => included.OrderBy(e => e.EventType)
-                   .ThenBy(e => e.StartDate),
-                EventSort.EventTypeDesc => included.OrderByDescending(e => e.EventType)
+                EventSort.EventType => events.OrderBy(e => e.EventType),
+                EventSort.EventTypeDesc => events.OrderByDescending(e => e.EventType)
                     .ThenByDescending(e => e.StartDate),
-                EventSort.ActionTaken => included.OrderBy(e => e.ActionTaken)
+                EventSort.ActionTaken => events.OrderBy(e => e.ActionTaken)
                     .ThenBy(e => e.StartDate),
-                EventSort.ActionTakenDesc => included.OrderByDescending(e => e.ActionTaken)
+                EventSort.ActionTakenDesc => events.OrderByDescending(e => e.ActionTaken)
                     .ThenByDescending(e => e.StartDate),
-                EventSort.StartDateDesc => included.OrderByDescending(e => e.StartDate)
+                EventSort.StartDateDesc => events.OrderByDescending(e => e.StartDate)
                     .ThenByDescending(e => e.EventType),
-                EventSort.DueDate => included.OrderBy(e => e.DueDate)
+                EventSort.DueDate => events.OrderBy(e => e.DueDate)
                     .ThenBy(e => e.EventType),
-                EventSort.DueDateDesc => included.OrderByDescending(e => e.DueDate)
+                EventSort.DueDateDesc => events.OrderByDescending(e => e.DueDate)
                     .ThenByDescending(e => e.EventType),
-                EventSort.CompletionDate => included.OrderBy(e => e.CompletionDate)
+                EventSort.CompletionDate => events.OrderBy(e => e.CompletionDate)
                     .ThenBy(e => e.EventType),
-                EventSort.CompletionDateDesc => included.OrderByDescending(e => e.CompletionDate)
+                EventSort.CompletionDateDesc => events.OrderByDescending(e => e.CompletionDate)
                     .ThenByDescending(e => e.EventType),
-                EventSort.ComplianceOfficer => included.OrderBy(e => e.ComplianceOfficer)
+                EventSort.ComplianceOfficer => events.OrderBy(e => e.ComplianceOfficer)
                     .ThenBy(e => e.EventType),
-                EventSort.ComplianceOfficerDesc => included.OrderByDescending(e => e.ComplianceOfficer)
+                EventSort.ComplianceOfficerDesc => events.OrderByDescending(e => e.ComplianceOfficer)
                     .ThenByDescending(e => e.EventType),
-                EventSort.EventAmount => included.OrderBy(e => e.EventAmount)
+                EventSort.EventAmount => events.OrderBy(e => e.EventAmount)
                     .ThenBy(e => e.EventType),
-                EventSort.EventAmountDesc => included.OrderByDescending(e => e.EventAmount)
+                EventSort.EventAmountDesc => events.OrderByDescending(e => e.EventAmount)
                     .ThenByDescending(e => e.EventType),
-                EventSort.EventContractor => included.OrderBy(e => e.EventContractor)
+                EventSort.EventContractor => events.OrderBy(e => e.EventContractor)
                     .ThenBy(e => e.EventType),
-                EventSort.EventContractorDesc => included.OrderByDescending(e => e.EventContractor)
+                EventSort.EventContractorDesc => events.OrderByDescending(e => e.EventContractor)
                     .ThenByDescending(e => e.EventType),
                 // EventSort.StartDate
-                _ => included.OrderBy(e => e.StartDate)
+                _ => events.OrderBy(e => e.StartDate)
                     .ThenBy(e => e.EventType)
             };
     }

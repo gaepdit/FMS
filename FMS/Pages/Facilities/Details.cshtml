@@ -1,4 +1,5 @@
 @page "{id:Guid?}"
+@using FMS.Domain.Dto
 @using FMS.Domain.Entities.Users
 @using FMS.Platform.Extensions
 @model FMS.Pages.Facilities.DetailsModel
@@ -1070,22 +1071,25 @@
                         <table class="table table-sm" aria-label="Events">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Event Type</th>
-                                    <a asp-fragment="TabPages" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="EventSort"
-                                       asp-route-SortBy="@(Model.FacilityDetail.Events.SortBy == FacilitySort.FacilityNumber ? FacilitySort.FacilityNumberDesc : FacilitySort.FacilityNumber)">
-                                        Facility
-                                        @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                        new { up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc })
-                                </a>
+                                    <th scope="col">
+                                        <a asp-fragment="TabPages"
+                                           asp-all-route-data="Model.FacilityDetail.Events.AsRouteValues"
+                                           asp-route-handler="EventSort"
+                                           asp-route-SortBy="@(Model.FacilityDetail.Events.SortBy == EventSort.EventType ? EventSort.EventTypeDesc : EventSort.EventType)">
+                                            Event Type
+                                            @Html.DisplayFor(m => m.FacilityDetail.Events.SortBy, "SortArrow",
+                                            new { up = EventSort.EventType, down = EventSort.EventTypeDesc })
+                                    </a>
+                                </th>
                                 <th scope="col">Action Taken</th>
-                                <th scope="col" class="text-nowrap">
+                                @* <th scope="col" class="text-nowrap">
                                     <a asp-fragment="TabPages" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="EventSort"
                                        asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
                                         Action Taken
                                         @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
                                                                                 new { up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc })
                                     </a>
-                                </th>
+                                </th> *@
                                 <th scope="col">Start Date</th>
                                 <th scope="col">Due Date</th>
                                 <th scope="col">Completion Date</th>
