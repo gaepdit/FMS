@@ -332,7 +332,7 @@
 
 @if (Model.FacilityDetail.FacilityType.Name == "HSI" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
 {
-    <div class="container-fluid">
+    <div class="container-fluid" id="TabPages">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <nav class="navbar navbar-expand-sm">
                 <ul class="nav nav-tabs active" id="HSINavBar">
@@ -1071,15 +1071,29 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Event Type</th>
-                                    <th scope="col">Action Taken</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">Due Date</th>
-                                    <th scope="col">Completion Date</th>
-                                    <th scope="col">Done By</th>
-                                    <th scope="col">Event Amount</th>
-                                    <th scope="col">Contractor</th>
-                                    <th scope="col">Comment</th>
-                                    @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                    <a asp-fragment="TabPages" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="EventSort"
+                                       asp-route-SortBy="@(Model.FacilityDetail.Events.SortBy == FacilitySort.FacilityNumber ? FacilitySort.FacilityNumberDesc : FacilitySort.FacilityNumber)">
+                                        Facility
+                                        @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                        new { up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc })
+                                </a>
+                                <th scope="col">Action Taken</th>
+                                <th scope="col" class="text-nowrap">
+                                    <a asp-fragment="TabPages" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="EventSort"
+                                       asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
+                                        Action Taken
+                                        @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                                                                new { up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc })
+                                    </a>
+                                </th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Completion Date</th>
+                                <th scope="col">Done By</th>
+                                <th scope="col">Event Amount</th>
+                                <th scope="col">Contractor</th>
+                                <th scope="col">Comment</th>
+                                @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
                                     }
