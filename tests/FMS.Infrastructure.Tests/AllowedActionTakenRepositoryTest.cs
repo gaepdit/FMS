@@ -19,6 +19,8 @@ namespace FMS.Infrastructure.Tests
     [TestFixture]
     public class AllowedActionTakenRepositoryTest
     {
+            results.Id.Should().Be(existingAAT.Id);
+            results.Active.Should().Be(existingAAT.Active);
         private FmsDbContext _context;
         private AllowedActionTakenRepository _repository;
         private bool _disposed = false;
