@@ -98,7 +98,7 @@ namespace FMS.Pages.Event
             return RedirectToPage("../Facilities/Details", new { id = EditEvent.FacilityId });
         }
 
-        public async Task<IActionResult> OnPostExportButtonAsync()
+        public async Task<IActionResult> OnPostExportButtonAsync(EventSort sortBy)
         {
             var facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
             var fileName = $"FMS_{facility.Name}_Event_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
@@ -106,11 +106,17 @@ namespace FMS.Pages.Event
             var parentId = eventEdit.EventType.Name == "HWTF Master Project" ? eventEdit.Id : eventEdit.ParentId;
 
             // "EventDetailList" Detailed Event List to go to a report
-            IReadOnlyList<EventSummaryDto> eventReportList = 
-                eventEdit.EventType.Name == "HWTF Master Project" ? (IReadOnlyList<EventSummaryDto>)await _repository.GetEventsByFacilityIdAndParentIdAsync(facility.Id, (Guid)parentId) : (IReadOnlyList<EventSummaryDto>)await _repository.GetEventsByFacilityIdAsync(facility.Id);
+            IList<EventSummaryDto> eventReportList = 
+                eventEdit.EventType.Name == "HWTF Master Project" ? await _repository.GetEventsByFacilityIdAndParentIdAsync(facility.Id, (Guid)parentId) : await _repository.GetEventsByFacilityIdAsync(facility.Id);
 
+            //Sort Event List
+            eventReportList = EventSortHelper.SortEvents(eventReportList, sortBy);
+
+            // prepare list for export to Excel
             var eventDetailList = from p in eventReportList select new EventSummaryDtoScalar(p, facility.Name, facility.FacilityNumber);
             ActiveTab = "Events";
+
+            // send file to Excel
             return File(eventDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Event), "application/vnd.ms-excel", fileName);
         }
 
