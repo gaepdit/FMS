@@ -19,158 +19,139 @@ namespace FMS.Infrastructure.Tests
     [TestFixture]
     public class EventRepositoryTest
     {
-        //    private FmsDbContext _context;
-        //    private EventRepository _repository;
-        //    private bool _disposed = false;
+        private FmsDbContext _context;
+        private EventRepository _repository;
+        private bool _disposed = false;
 
-        //    [SetUp]
-        //    public void SetUp()
-        //    {
-        //        var options = new DbContextOptionsBuilder<FmsDbContext>()
-        //            .UseInMemoryDatabase(databaseName: $"TestDatabase_{Guid.NewGuid()}")
-        //            .Options;
-        //        var httpContextAccessor = Substitute.For<HttpContextAccessor>();
-        //        _context = new FmsDbContext(options, httpContextAccessor);
-        //        _repository = new EventRepository(_context);
+        [SetUp]
+        public void SetUp()
+        {
+            var options = new DbContextOptionsBuilder<FmsDbContext>()
+                .UseInMemoryDatabase(databaseName: $"TestDatabase_{Guid.NewGuid()}")
+                .Options;
+            var httpContextAccessor = Substitute.For<HttpContextAccessor>();
+            _context = new FmsDbContext(options, httpContextAccessor);
+            _repository = new EventRepository(_context);
 
-            _context.Events.Add (new Event
+            _context.Events.Add(new Event
             {
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
-                ComplianceOfficerId = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
                 Comment = "VALID_COMMENT",
                 Active = true,
-                
+
             });
             _context.SaveChanges();
         }
 
-        //        });
-        //        _context.SaveChanges();
-        //    }
+        [TearDown]
+        public void TearDown()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _context.Database.EnsureCreated();
+                _context.Dispose();
+                _repository.Dispose();
+                _disposed = true;
+            }
+        }
 
-        //    [TearDown]
-        //    public void TearDown()
-        //    {
-        //        Dispose();
-        //    }
-        //    public void Dispose()
-        //    {
-        //        if (!_disposed)
-        //        {
-        //            _context.Database.EnsureCreated();
-        //            _context.Dispose();
-        //            _repository.Dispose();
-        //            _disposed = true;
-        //        }
-        //    }
+        // EventExistAsync
+        [Test]
+        public async Task EventExistAsync_ReturnsTrue_WhenEventExist()
+        {
+            var existingEvent = await _context.Events.Select(ft => ft.Id).FirstAsync();
+            var results = await _repository.EventExistsAsync(existingEvent);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task EventExistAsync_ReturnsFalse_WhenDataIsInvalid()
+        {
+            var nonExistingEvent = Guid.NewGuid();
+            var results = await _repository.EventExistsAsync(nonExistingEvent);
+            results.Should().BeFalse();
+        }
 
-        //    // EventExistAsync
-        //    [Test]
-        //    public async Task EventExistAsync_ReturnsTrue_WhenEventExist()
-        //    {
-        //        var existingEvent = await _context.Events.Select(ft => ft.Id).FirstAsync();
-        //        var results = await _repository.EventExistsAsync(existingEvent);
-        //        results.Should().BeTrue();
-        //    }
-        //    [Test]
-        //    public async Task EventExistAsync_ReturnsFalse_WhenDataIsInvalid()
-        //    {
-        //        var nonExistingEvent = Guid.NewGuid();
-        //        var results = await _repository.EventExistsAsync(nonExistingEvent);
-        //        results.Should().BeFalse();
-        //    }
+        // GetEventByIdAsync
+        [Test]
+        public async Task GetEventByIdAsync_ReturnsEventEditDto_WhenIdExist()
+        {
+            var existingEvent = await _context.Events.FirstAsync();
+            var results = await _repository.GetEventByIdAsync(existingEvent.Id);
 
-        //    // GetEventByIdAsync
-        //    [Test]
-        //    public async Task GetEventByIdAsync_ReturnsEventEditDto_WhenIdExist()
-        //    {
-        //        var existingEvent = await _context.Events.FirstAsync();
-        //        var results = await _repository.GetEventByIdAsync(existingEvent.Id);
+            results.Should().NotBeNull();
+            results.Should().BeOfType<EventEditDto>();
+            results.Id.Should().Be(existingEvent.Id);
+            results.Active.Should().Be(existingEvent.Active);
+        }
+        [Test]
+        public async Task GetEventByIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonexistingEvent = Guid.NewGuid();
+            var results = await _repository.GetEventByIdAsync(nonexistingEvent);
+            results.Should().BeNull();
+        }
 
-        //        results.Should().NotBeNull();
-        //        results.Should().BeOfType<EventEditDto>();
-        //        results.Id.Should().Be(existingEvent.Id);
-        //        results.Active.Should().Be(existingEvent.Active);
-        //    }
-        //    [Test]
-        //    public async Task GetEventByIdAsync_ReturnsNull_WhenIdDoesNotExist()
-        //    {
-        //        var nonexistingEvent = Guid.NewGuid();
-        //        var results = await _repository.GetEventByIdAsync(nonexistingEvent);
-        //        results.Should().BeNull();
-        //    }
+        // GetEventSummaryByIdAsync
+        [Test]
+        public async Task GetEventSummaryByIdAsync_ReturnsEventSummaryDto_WhenIdExist()
+        {
+            var existingEvent = await _context.Events.FirstAsync();
+            var results = await _repository.GetEventSummaryByIdAsync(existingEvent.Id);
 
-        //    // GetEventSummaryByIdAsync
-        //    [Test]
-        //    public async Task GetEventSummaryByIdAsync_ReturnsEventSummaryDto_WhenIdExist()
-        //    {
-        //        var existingEvent = await _context.Events.FirstAsync();
-        //        var results = await _repository.GetEventSummaryByIdAsync(existingEvent.Id);
+            results.Should().NotBeNull();
+            results.Should().BeOfType<EventSummaryDto>();
 
-        //        results.Should().NotBeNull();
-        //        results.Should().BeOfType<EventSummaryDto>();
+        }
+        [Test]
+        public async Task GetEventSummaryByIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingEvent = Guid.NewGuid();
+            var results = await _repository.GetEventSummaryByIdAsync(nonExistingEvent);
 
-        //    }
-        //    [Test]
-        //    public async Task GetEventSummaryByIdAsync_ReturnsNull_WhenIdDoesNotExist()
-        //    {
-        //        var nonExistingEvent = Guid.NewGuid();
-        //        var results = await _repository.GetEventSummaryByIdAsync(nonExistingEvent);
-
-        //        results.Should().BeNull();
-        //    }
+            results.Should().BeNull();
+        }
 
 
-        //    // GetEventsByFacilityIdAsync
-        //    [Test]
-        //    public async Task GetEventsByFacilityIdAsync_ReturnsEventSummaryDtoList_WhenFacilityIdExist()
-        //    {
-        //        var existingEvent = await _context.Events.Select(ft => ft.FacilityId).FirstAsync();
-        //        var results = await _repository.GetEventsByFacilityIdAsync(existingEvent);
+        // GetEventsByFacilityIdAsync
+        [Test]
+        public async Task GetEventsByFacilityIdAsync_ReturnsEventSummaryDtoList_WhenFacilityIdExist()
+        {
+            var existingEvent = await _context.Events.Select(ft => ft.FacilityId).FirstAsync();
+            var results = await _repository.GetEventsByFacilityIdAsync(existingEvent);
 
-        //        results.Should().NotBeNull();
-        //        results.Should().BeOfType<List<EventSummaryDto>>();
-        //    }
-        //    [Test]
-        //    public async Task GetEventsByFacilityIdAsync_ReturnsEmpty_WhenFacilityIdDoesNotExist()
-        //    {
-        //        var nonExistingFacilityId = Guid.NewGuid();
-        //        var results = await _repository.GetEventsByFacilityIdAsync(nonExistingFacilityId);
+            results.Should().NotBeNull();
+            results.Should().BeOfType<List<EventSummaryDto>>();
+        }
+        [Test]
+        public async Task GetEventsByFacilityIdAsync_ReturnsEmpty_WhenFacilityIdDoesNotExist()
+        {
+            var nonExistingFacilityId = Guid.NewGuid();
+            var results = await _repository.GetEventsByFacilityIdAsync(nonExistingFacilityId);
+
+            results.Should().BeEmpty();
+        }
 
         // GetEventsByFacilityIdAndParentIdAsync
         [Test]
         public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEventSummaryDtoList_WhenBothIdExist()
         {
-            var existingEvent = new Event 
-            { 
+            var existingEvent = new Event
+            {
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
-                ComplianceOfficerId = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
             _context.ChangeTracker.Clear();
 
-        //    // GetEventsByFacilityIdAndParentIdAsync
-        //    [Test]
-        //    public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEventSummaryDtoList_WhenBothIdExist()
-        //    {
-        //        var existingEvent = new Event 
-        //        { 
-        //            Id = Guid.NewGuid(),
-        //            FacilityId = Guid.NewGuid(),
-        //            ParentId = Guid.NewGuid(),
-        //        };
-        //        _context.Events.Add(existingEvent);
-        //        await _context.SaveChangesAsync();
-        //        _context.ChangeTracker.Clear();
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(existingEvent.FacilityId, (Guid)existingEvent.ParentId);
 
             results.Should().NotBeNull();
             results.Should().BeOfType<List<EventSummaryDto>>();
@@ -183,29 +164,12 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
-                ComplianceOfficerId = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
             _context.ChangeTracker.Clear();
 
-        //        results.Should().NotBeNull();
-        //        results.Should().BeOfType<List<EventSummaryDto>>();
-        //    }
-        //    [Test]
-        //    public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenFacilityIdDoesNotExist()
-        //    {
-        //        var nonExistingFacilityId = Guid.NewGuid();
-        //        var existingEvent = new Event
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            ParentId = Guid.NewGuid(),
-        //        };
-        //        _context.Events.Add(existingEvent);
-        //        await _context.SaveChangesAsync();
-        //        _context.ChangeTracker.Clear();
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(nonExistingFacilityId, (Guid)existingEvent.ParentId);
 
             results.Should().BeEmpty();
         }
@@ -217,144 +181,127 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
-                ComplianceOfficerId = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
             _context.ChangeTracker.Clear();
 
-        //        results.Should().BeEmpty();
-        //    }
-        //    [Test]
-        //    public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenParentIdDoesNotExist()
-        //    {
-        //        var nonExistingParentId = Guid.NewGuid();
-        //        var existingEvent = new Event
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            FacilityId = Guid.NewGuid(),
-        //        };
-        //        _context.Events.Add(existingEvent);
-        //        await _context.SaveChangesAsync();
-        //        _context.ChangeTracker.Clear();
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(existingEvent.FacilityId, nonExistingParentId);
 
-        //        var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(existingEvent.FacilityId, nonExistingParentId);
+            results.Should().BeEmpty();
+        }
+        public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenBothIdsDoesNotExist()
+        {
+            var nonExistingFacilityId = Guid.NewGuid();
+            var nonExistingParentId = Guid.NewGuid();
 
-        //        results.Should().BeEmpty();
-        //    }
-        //    public async Task GetEventsByFacilityIdAndParentIdAsync_ReturnsEmpty_WhenBothIdsDoesNotExist()
-        //    {
-        //        var nonExistingFacilityId = Guid.NewGuid();
-        //        var nonExistingParentId = Guid.NewGuid();
+            var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(nonExistingFacilityId, nonExistingParentId);
 
-        //        var results = await _repository.GetEventsByFacilityIdAndParentIdAsync(nonExistingFacilityId, nonExistingParentId);
+            results.Should().BeEmpty();
+        }
 
-        //        results.Should().BeEmpty();
-        //    }
+        // CreateEventAsync
+        [Test]
+        public async Task CreateEventAsync_CreatesEvent_WhenDataIsValid()
+        {
+            var dto = new EventCreateDto
+            {
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                StartDate = new DateOnly(2025, 1, 1),
+                DueDate = new DateOnly(2025, 1, 2),
+                CompletionDate = new DateOnly(2025, 1, 3),
+                Comment = "VALID_COMMENT"
+            };
 
-        //    // CreateEventAsync
-        //    [Test]
-        //    public async Task CreateEventAsync_CreatesEvent_WhenDataIsValid()
-        //    {
-        //        var dto = new EventCreateDto
-        //        {
-        //            FacilityId = Guid.NewGuid(),
-        //            ParentId = Guid.NewGuid(),
-        //            EventTypeId = Guid.NewGuid(),
-        //            ActionTakenId = Guid.NewGuid(),
-        //            StartDate = new DateOnly(2025, 1, 1),
-        //            DueDate = new DateOnly(2025, 1, 2),
-        //            CompletionDate = new DateOnly(2025, 1, 3),
-        //            Comment = "VALID_COMMENT"
-        //        };
+            var results = await _repository.CreateEventAsync(dto);
 
-        //        var results = await _repository.CreateEventAsync(dto);
-
-        //        results.Should().NotBeEmpty();
-        //    }
+            results.Should().NotBeEmpty();
+        }
 
 
-        //    // UpdateEventAsync
-        //    [Test]
-        //    public async Task UpdateEventAsync_UpdatesExistingEvent_WhenDataIsValid()
-        //    {
-        //        var existingEvent = new Event
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            FacilityId = Guid.NewGuid(),
-        //            ParentId = Guid.NewGuid(),
-        //            EventTypeId = Guid.NewGuid(),
-        //            ActionTakenId = Guid.NewGuid(),
-        //            StartDate = new DateOnly(1, 1, 1),
-        //            DueDate = new DateOnly(2, 2, 2),
-        //            CompletionDate = new DateOnly(3, 3, 3),
-        //            ComplianceOfficerId = Guid.NewGuid(),
-        //            EventAmount = 0,
-        //            EventContractorId = Guid.NewGuid(),
-        //            Comment = "VALID_COMMENT",
-        //        };
-        //        _context.Events.Add(existingEvent);
-        //        await _context.SaveChangesAsync();
-        //        _context.ChangeTracker.Clear();
+        // UpdateEventAsync
+        [Test]
+        public async Task UpdateEventAsync_UpdatesExistingEvent_WhenDataIsValid()
+        {
+            var existingEvent = new Event
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                StartDate = new DateOnly(1, 1, 1),
+                DueDate = new DateOnly(2, 2, 2),
+                CompletionDate = new DateOnly(3, 3, 3),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventAmount = 0,
+                EventContractorId = Guid.NewGuid(),
+                Comment = "VALID_COMMENT",
+            };
+            _context.Events.Add(existingEvent);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
-        //        var updateDto = new EventEditDto
-        //        {
-        //            Id = existingEvent.Id,
-        //            FacilityId = Guid.NewGuid(),
-        //            ParentId = Guid.NewGuid(),
-        //            EventTypeId = Guid.NewGuid(),
-        //            ActionTakenId = Guid.NewGuid(),
-        //            StartDate = new DateOnly(10, 1, 10),
-        //            DueDate = new DateOnly(20, 2, 20),
-        //            CompletionDate = new DateOnly(30, 3, 30),
-        //            ComplianceOfficerId = Guid.NewGuid(),
-        //            EventAmount = 1,
-        //            EventContractorId = Guid.NewGuid(),
-        //            Comment = "NEW_COMMENT",
-        //        };
-        //        await _repository.UpdateEventAsync(updateDto);
-        //        _context.ChangeTracker.Clear();
+            var updateDto = new EventEditDto
+            {
+                Id = existingEvent.Id,
+                FacilityId = Guid.NewGuid(),
+                ParentId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                StartDate = new DateOnly(10, 1, 10),
+                DueDate = new DateOnly(20, 2, 20),
+                CompletionDate = new DateOnly(30, 3, 30),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventAmount = 1,
+                EventContractorId = Guid.NewGuid(),
+                Comment = "NEW_COMMENT",
+            };
+            await _repository.UpdateEventAsync(updateDto);
+            _context.ChangeTracker.Clear();
 
-        //        var updatedEvent = await _context.Events.FindAsync(existingEvent.Id);
+            var updatedEvent = await _context.Events.FindAsync(existingEvent.Id);
 
-        //        updatedEvent.Should().BeEquivalentTo(updateDto, options => options
-        //            .Excluding(e=> e.Parent));
-        //    }
-        //    [Test]
-        //    public async Task UpdateEventAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
-        //    {
-        //        var invalidId = Guid.NewGuid();
-        //        var updateDto = new EventEditDto { Id = invalidId, FacilityId = Guid.NewGuid() };
+            updatedEvent.Should().BeEquivalentTo(updateDto, options => options
+                .Excluding(e => e.Parent));
+        }
+        [Test]
+        public async Task UpdateEventAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new EventEditDto { Id = invalidId, FacilityId = Guid.NewGuid() };
 
-        //        var action = async () => await _repository.UpdateEventAsync(updateDto);
+            var action = async () => await _repository.UpdateEventAsync(updateDto);
 
-        //        await action.Should().ThrowAsync<InvalidOperationException>();
-        //    }
+            await action.Should().ThrowAsync<InvalidOperationException>();
+        }
 
 
-        //    // UpdateEventStatusAsync
-        //    [Test]
-        //    public async Task UpdateEventStatusAsync_UpdatesStatusCorrectly_WhenIdExist()
-        //    {
-        //        var existingEvent = await _context.Events.FirstAsync(c => c.Active);
-        //        await _repository.UpdateEventStatusAsync(existingEvent.Id, false);
-        //        _context.ChangeTracker.Clear();
+        // UpdateEventStatusAsync
+        [Test]
+        public async Task UpdateEventStatusAsync_UpdatesStatusCorrectly_WhenIdExist()
+        {
+            var existingEvent = await _context.Events.FirstAsync(c => c.Active);
+            await _repository.UpdateEventStatusAsync(existingEvent.Id, false);
+            _context.ChangeTracker.Clear();
 
-        //        var updatedEvent = await _context.Events.FindAsync(existingEvent.Id);
+            var updatedEvent = await _context.Events.FindAsync(existingEvent.Id);
 
-        //        updatedEvent.Should().NotBeNull();
-        //        updatedEvent!.Active.Should().BeFalse();
-        //    }
+            updatedEvent.Should().NotBeNull();
+            updatedEvent!.Active.Should().BeFalse();
+        }
 
-        //    [Test]
-        //    public async Task UpdateEventStatusAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
-        //    {
-        //        var invalidId = Guid.NewGuid();
-        //        var action = async () => await _repository.UpdateEventStatusAsync(invalidId, false);
-        //        await action.Should().ThrowAsync<InvalidOperationException>();
-        //    }
+        [Test]
+        public async Task UpdateEventStatusAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.UpdateEventStatusAsync(invalidId, false);
+            await action.Should().ThrowAsync<InvalidOperationException>();
+        }
+
 
         // DeleteEventByIdAsync
         [Test]
@@ -365,39 +312,22 @@ namespace FMS.Infrastructure.Tests
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
-                ComplianceOfficerId = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
             _context.ChangeTracker.Clear();
 
-        //    // DeleteEventByIdAsync
-        //    [Test]
-        //    public async Task DeleteEventByIdAsync_DeletesEvent_WhenIdExist()
-        //    {
-        //        var existingEvent = new Event
-        //        {
-        //            Id = Guid.NewGuid(),
-        //            FacilityId = Guid.NewGuid(),
-        //            ParentId = Guid.NewGuid(),
-        //        };
-        //        _context.Events.Add(existingEvent);
-        //        await _context.SaveChangesAsync();
-        //        _context.ChangeTracker.Clear();
+            await _repository.DeleteEventByIdAsync(existingEvent.Id);
+            var results = await _repository.EventExistsAsync(existingEvent.Id);
 
-        //        await _repository.DeleteEventByIdAsync(existingEvent.Id);
-        //        var results = await _repository.EventExistsAsync(existingEvent.Id);
-
-        //        results.Should().BeFalse();
-        //    }
-        //    [Test]
-        //    public async Task DeleteEventByIdAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
-        //    {
-        //        var invalidId = Guid.NewGuid();
-        //        var action = async () => await _repository.DeleteEventByIdAsync(invalidId);
-        //        await action.Should().ThrowAsync<InvalidOperationException>();
-        //    }
+            results.Should().BeFalse();
+        }
+        [Test]
+        public async Task DeleteEventByIdAsync_ThrowsInvalidOperationException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.DeleteEventByIdAsync(invalidId);
+            await action.Should().ThrowAsync<InvalidOperationException>();
+        }
     }
 }
