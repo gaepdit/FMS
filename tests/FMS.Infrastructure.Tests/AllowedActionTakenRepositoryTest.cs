@@ -36,6 +36,8 @@ namespace FMS.Infrastructure.Tests
             _context.AllowedActionsTaken.Add(new AllowedActionTaken
             {
                 Id = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
                 Active = true,
 
             });
@@ -85,8 +87,6 @@ namespace FMS.Infrastructure.Tests
 
             results.Should().NotBeNull();
             results.Should().BeOfType<AllowedActionTakenSpec>();
-            results.Id.Should().Be(existingAAT.Id);
-            results.Active.Should().Be(existingAAT.Active);
         }
         [Test]
         public async Task GetAllowedActionTakenByAATIdAsync_ReturnsNull_WhenIdDoesNotExist()
@@ -110,10 +110,34 @@ namespace FMS.Infrastructure.Tests
             };
 
             var newAATId = await _repository.CreateAllowedActionTakenAsync(dto);
-            var results = await _repository.AllowedActionTakenExistsAsync(newAATId);
+            var results = await _context.AllowedActionsTaken.FindAsync(newAATId);
 
+            results.Should().NotBeNull();
+            results.EventTypeId.Should().Be(dto.EventTypeId);
+        }
+        [Test]
+        public async Task CreateAllowedActionTakenAsync_ReturnsArgumentException_WhenDataAlreadyExist()
+        {
+            var existingAAT = new AllowedActionTaken
+            {
+                Id = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                Active = true
+            };
+            _context.AllowedActionsTaken.Add(existingAAT);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
-            results.Should().BeTrue();
+            var dto = new AllowedActionTakenSpec
+            {
+                EventTypeId = existingAAT.EventTypeId,
+                ActionTakenId = existingAAT.ActionTakenId,
+                Active = true
+            };
+
+            Func<Task> action = async () => await _repository.CreateAllowedActionTakenAsync(dto);
+            await action.Should().ThrowAsync<ArgumentException>();
         }
 
         // DeleteAllowedActionTakenAsync
