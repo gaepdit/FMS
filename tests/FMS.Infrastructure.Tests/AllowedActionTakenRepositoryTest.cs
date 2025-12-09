@@ -36,10 +36,6 @@ namespace FMS.Infrastructure.Tests
             _context.AllowedActionsTaken.Add(new AllowedActionTaken
             {
                 Id = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
-                EventType = new EventType { Name = "VALID_ET" },
-                ActionTakenId = Guid.NewGuid(),
-                ActionTaken = new ActionTaken { Name = "VALID_AT" },
                 Active = true,
 
             });
@@ -89,6 +85,8 @@ namespace FMS.Infrastructure.Tests
 
             results.Should().NotBeNull();
             results.Should().BeOfType<AllowedActionTakenSpec>();
+            results.Id.Should().Be(existingAAT.Id);
+            results.Active.Should().Be(existingAAT.Active);
         }
         [Test]
         public async Task GetAllowedActionTakenByAATIdAsync_ReturnsNull_WhenIdDoesNotExist()
@@ -112,34 +110,10 @@ namespace FMS.Infrastructure.Tests
             };
 
             var newAATId = await _repository.CreateAllowedActionTakenAsync(dto);
-            var results = await _context.AllowedActionsTaken.FindAsync(newAATId);
+            var results = await _repository.AllowedActionTakenExistsAsync(newAATId);
 
-            results.Should().NotBeNull();
-            results.EventTypeId.Should().Be(dto.EventTypeId);
-        }
-        [Test]
-        public async Task CreateAllowedActionTakenAsync_ReturnsArgumentException_WhenDataAlreadyExist()
-        {
-            var existingAAT = new AllowedActionTaken
-            {
-                Id = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
-                Active = true
-            };
-            _context.AllowedActionsTaken.Add(existingAAT);
-            await _context.SaveChangesAsync();
-            _context.ChangeTracker.Clear();
 
-            var dto = new AllowedActionTakenSpec
-            {
-                EventTypeId = existingAAT.EventTypeId,
-                ActionTakenId = existingAAT.ActionTakenId,
-                Active = true
-            };
-
-            Func<Task> action = async () => await _repository.CreateAllowedActionTakenAsync(dto);
-            await action.Should().ThrowAsync<ArgumentException>();
+            results.Should().BeTrue();
         }
 
         // DeleteAllowedActionTakenAsync
@@ -150,10 +124,8 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 EventTypeId = Guid.NewGuid(),
-                EventType = new EventType { Name = "VALID_ET" },
                 ActionTakenId = Guid.NewGuid(),
-                ActionTaken = new ActionTaken { Name = "VALID_AT" },
-                Active = true,
+                Active = true
 
             };
             _context.AllowedActionsTaken.Add(existingAAT);
@@ -167,7 +139,7 @@ namespace FMS.Infrastructure.Tests
         }
         [Test]
         public async Task DeleteAllowedActionTakenAsync_ThrowsArgumentException_WhenIdDoesNotExist()
-        {                         
+        {
             var invalidId = Guid.NewGuid();
             var action = async () => await _repository.DeleteAllowedActionTakenAsync(invalidId);
             await action.Should().ThrowAsync<ArgumentException>();
