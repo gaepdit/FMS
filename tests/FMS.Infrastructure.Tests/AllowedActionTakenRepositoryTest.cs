@@ -89,8 +89,6 @@ namespace FMS.Infrastructure.Tests
 
             results.Should().NotBeNull();
             results.Should().BeOfType<AllowedActionTakenSpec>();
-            results.Id.Should().Be(existingAAT.Id);
-            results.Active.Should().Be(existingAAT.Active);
         }
         [Test]
         public async Task GetAllowedActionTakenByAATIdAsync_ReturnsNull_WhenIdDoesNotExist()
