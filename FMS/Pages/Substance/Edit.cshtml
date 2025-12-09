@@ -1,6 +1,4 @@
 ﻿@page "{id:Guid?}"
-@using FMS.Pages.Substance
-@using FMS.Domain.Entities.Users
 @model FMS.Pages.Substance.EditModel
 @section Scripts
 {
@@ -54,6 +52,7 @@
             <div class="col">
                 <input asp-for="EditSubstance.UseForSoilScoring" class="form-check-input" type="checkbox" />
                 <label asp-for="EditSubstance.UseForSoilScoring" class="form-check-label"></label>
+            </div>
         </div>
         <div class="row mt-3">
             <div class="col">
