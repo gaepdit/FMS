@@ -38,6 +38,9 @@ namespace FMS.Infrastructure.Tests
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
                 Comment = "VALID_COMMENT",
                 Active = true,
 
@@ -146,6 +149,9 @@ namespace FMS.Infrastructure.Tests
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
@@ -164,6 +170,9 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
@@ -181,6 +190,9 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
@@ -312,6 +324,9 @@ namespace FMS.Infrastructure.Tests
                 Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
                 ParentId = Guid.NewGuid(),
+                ActionTakenId = Guid.NewGuid(),
+                ComplianceOfficerId = Guid.NewGuid(),
+                EventTypeId = Guid.NewGuid(),
             };
             _context.Events.Add(existingEvent);
             await _context.SaveChangesAsync();
