@@ -29,12 +29,5 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
-      - name: Configure Datadog Test Optimization
-        uses: datadog/test-visibility-github-action@f4b026bb8b8b53f323960cf86a849a0231ff93b9
-        with:
-          languages: dotnet
-          api_key: ${{secrets.DD_API_KEY}}
-          site: us3.datadoghq.com
-
       - name: Test
         run: dotnet test --no-build --verbosity normal
