@@ -35,6 +35,8 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.FacilityId == facilityId)
                 .SingleOrDefaultAsync();
 
+            if (onsiteScore == null) return null;
+
             onsiteScore.Substance = await _substanceRepository.GetSubstanceForSoilByFacilityIdAsync(facilityId);
             onsiteScore.SubstanceId = onsiteScore.Substance?.Id;
 
