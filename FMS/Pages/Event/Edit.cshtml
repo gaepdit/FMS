@@ -161,8 +161,10 @@
                     <input type="hidden" asp-for="EditEvent.ParentId" />
                     <input type="hidden" asp-for="EditEvent.Id" />
                     <input type="hidden" asp-for="EditEvent.Active" />
-                    <button id="ExportButton" asp-page-handler="ExportButton"
-                            class="btn btn-sm btn-outline-primary mb-1">
+                    <button id="ExportButton" 
+                        asp-page-handler="ExportButton"
+                        asp-route-sortBy="@Model.SortBy" 
+                        class="btn btn-sm btn-outline-primary mb-1">
                         Excel Export
                     </button>
                 </form>

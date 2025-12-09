@@ -148,10 +148,10 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnPostExportButtonAsync(EventSort sortBy)
         {
             var facility = await _repository.GetFacilityAsync(FacilityId);
-            facility.Events = EventSortHelper.SortEvents(facility.Events, sortBy);
             var fileName = $"FMS_{facility.Name}_Event_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "EventDetailList" Detailed Event List to go to a report
-            IReadOnlyList<EventSummaryDto> eventReportList = (IReadOnlyList<EventSummaryDto>)await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);
+            IList<EventSummaryDto> eventReportList = await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);
+            eventReportList = EventSortHelper.SortEvents(eventReportList, sortBy);
             var eventDetailList = from p in eventReportList select new EventSummaryDtoScalar(p, facility.Name, facility.FacilityNumber);
             return File(eventDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Event), "application/vnd.ms-excel", fileName);
         }
