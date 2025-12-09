@@ -53,17 +53,20 @@ namespace FMS.Pages.Event
         [BindProperty]
         public string ActiveTab { get; set; } = "Events";
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
+        public EventSort SortBy { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid id, EventSort sortBy)
         {
             Id = id;
+            SortBy = sortBy;
             EditEvent = await _repository.GetEventByIdAsync(id);
             if (EditEvent == null)
             {
                 return NotFound();
             }
             Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
-           
-            Events = EventSortHelper.SortEvents(Facility.Events);
+
+            Events = EventSortHelper.SortEvents(Facility.Events, sortBy);
 
             await PopulateSelectsAsync();
             ActiveTab = "Events";

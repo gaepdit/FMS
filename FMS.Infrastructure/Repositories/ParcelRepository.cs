@@ -19,6 +19,9 @@ namespace FMS.Infrastructure.Repositories
         public Task<bool> ParcelExistsAsync(Guid id) =>
             _context.Parcels.AnyAsync(e => e.Id == id);
 
+        public Task<bool> ParcelNameExistsAsync(string parcelNumber) =>
+            _context.Parcels.AnyAsync(e => e.ParcelNumber == parcelNumber);
+
         public async Task<ParcelEditDto> GetParcelByIdAsync(Guid id)
             {
             var parcel = await _context.Parcels.AsNoTracking()
@@ -55,6 +58,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<Guid> CreateParcelInternalAsync(ParcelCreateDto parcelCreate)
         {
+            
             var newParcel = new Parcel
             {
                 Id = Guid.NewGuid(),

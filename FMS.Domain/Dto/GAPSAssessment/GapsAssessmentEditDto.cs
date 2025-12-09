@@ -28,7 +28,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Gaps Assessment")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Description is required.")]
         [Display(Name = "Description")]
         public string Description { get; set; }
 

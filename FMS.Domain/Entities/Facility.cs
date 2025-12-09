@@ -105,7 +105,6 @@ namespace FMS.Domain.Entities
 
         public bool HasERecord { get; set; } = false;
 
-        [StringLength(1000)]
         public string Comments { get; set; }
 
         // The following properties only apply to Release Notifications

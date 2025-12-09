@@ -33,6 +33,8 @@ namespace FMS.Pages.Facilities
 
         public FacilityDetailDto FacilityDetail { get; set; }
 
+        public IEnumerable<EventSummaryDto> EventSummaryList { get; set; }
+
         public DisplayMessage Message { get; private set; }
 
         [TempData]
@@ -58,7 +60,9 @@ namespace FMS.Pages.Facilities
         [TempData]
         public string Lon { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
+        public EventSort SortBy { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, EventSort sortBy, string tab = "HSIProperties")
         {
             if (id == null)
             {
@@ -94,14 +98,11 @@ namespace FMS.Pages.Facilities
                 }
                 RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
-            
-            if (string.IsNullOrEmpty(ActiveTab))
-            {
-                ActiveTab = "HSIProperties";
-            }
 
+            ActiveTab = tab;
+            SortBy = sortBy;
             MapLink = GetMapLink();
-            FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events);
+            FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events, SortBy);
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
             return Page();
@@ -144,9 +145,10 @@ namespace FMS.Pages.Facilities
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostExportButtonAsync()
+        public async Task<IActionResult> OnPostExportButtonAsync(EventSort sortBy)
         {
             var facility = await _repository.GetFacilityAsync(FacilityId);
+            facility.Events = EventSortHelper.SortEvents(facility.Events, sortBy);
             var fileName = $"FMS_{facility.Name}_Event_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             // "EventDetailList" Detailed Event List to go to a report
             IReadOnlyList<EventSummaryDto> eventReportList = (IReadOnlyList<EventSummaryDto>)await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);

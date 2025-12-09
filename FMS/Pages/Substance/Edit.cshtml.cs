@@ -53,6 +53,8 @@ namespace FMS.Pages.Substance
 
         public async Task<IActionResult> OnPostAsync()
         {
+            ActiveTab = "Substances";
+
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();

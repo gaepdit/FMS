@@ -56,13 +56,16 @@ namespace FMS.Pages.Event
         [TempData]
         public string ActiveTab { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public EventSort SortBy { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id, EventSort sortBy)
         {
             if (id == null || id == Guid.Empty)
             {
                 return NotFound();
             }
             Id = id.Value;
+            SortBy = sortBy;
 
             Facility = await _facilityRepository.GetFacilityAsync(Id);
 
@@ -70,7 +73,7 @@ namespace FMS.Pages.Event
 
             ParentEventId ??= Guid.Empty;
 
-            Events = EventSortHelper.SortEvents(Events);
+            Events = EventSortHelper.SortEvents(Events, sortBy);
 
             NewEvent = new EventCreateDto
             {
@@ -114,7 +117,7 @@ namespace FMS.Pages.Event
         {
             EventTypes = await _listHelper.EventTypesSelectListAsync();
             AllowedActionsTaken = await _listHelper.ActionTakenSelectListAsync();
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(true);
             EventContractors = await _listHelper.EventContractorListAsync();
         }
     }

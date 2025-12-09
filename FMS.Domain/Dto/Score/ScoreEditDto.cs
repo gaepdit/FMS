@@ -31,7 +31,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Comments")]
         public string Comments { get; set; }
 
-        [Display(Name = "Use alternate language from comments field")]
+        [Display(Name = "Use language from comments field in Site Summary")]
         public bool UseComments { get; set; }
     }
 }

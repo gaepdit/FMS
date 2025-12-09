@@ -22,11 +22,6 @@ namespace FMS.Infrastructure.Repositories
             _context = context;
         }
 
-        //public ItemsListRepository(FmsDbContext fmsDbContext)
-        //{
-        //    FmsDbContext = fmsDbContext;
-        //}
-
         #region "Get All List Items Lists"
         /// <summary>
         /// Generic method for retrieving a list of the given Entity as key/value pairs of the <see cref="ListItem"/> type.
@@ -50,7 +45,8 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetComplianceOfficersItemListAsync(bool includeInactive = false) =>
             await _context.ComplianceOfficers.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
-                .OrderBy(e => e.FamilyName)
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.FamilyName)
                 .ThenBy(e => e.GivenName)
                 .Select(e => new ListItem() {Id = e.Id, Name = e.FamilyName + ", " + e.GivenName})
                 .ToListAsync();

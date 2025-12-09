@@ -169,7 +169,6 @@ namespace FMS.Infrastructure.Tests
                 Active = true,
                 FacilityId = Guid.NewGuid(),
                 ScoredDate = new DateOnly(2025, 1, 1),
-                ScoredById = Guid.NewGuid(),
                 Comments = "VALID_COMMENTS",
                 UseComments = true
             };
@@ -182,7 +181,6 @@ namespace FMS.Infrastructure.Tests
                 Active = false,
                 FacilityId = Guid.NewGuid(),
                 ScoredDate = new DateOnly(2025, 1, 30),
-                ScoredById = Guid.NewGuid(),
                 Comments = "NEW_COMMENTS",
                 UseComments = false
             };

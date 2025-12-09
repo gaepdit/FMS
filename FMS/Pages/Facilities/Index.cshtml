@@ -190,7 +190,9 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col" class="text-nowrap">
-                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                            <a asp-fragment="SearchResults"
+                               asp-all-route-data="Model.Spec.AsRouteValues"
+                               asp-route-handler="search"
                                asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FacilityNumber ? FacilitySort.FacilityNumberDesc : FacilitySort.FacilityNumber)">
                                 Facility
                                 @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",

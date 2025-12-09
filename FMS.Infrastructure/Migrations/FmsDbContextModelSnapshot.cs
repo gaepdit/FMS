@@ -1365,8 +1365,7 @@ namespace FMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Comments")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ComplianceOfficerId")
                         .HasColumnType("uniqueidentifier");

@@ -18,7 +18,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreateContactAsync(ContactCreateDto contactCreate);
 
-        Task UpdateContactAsync(ContactEditDto contact);
+        Task UpdateContactAsync(Guid id, ContactEditDto contact);
 
         Task UpdateContactActiveAsync(Guid id, bool active);
     }

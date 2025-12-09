@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
@@ -29,7 +30,6 @@ namespace FMS.Pages.Phone
         [BindProperty]
         public PhoneEditDto EditPhone { get; set; }
 
-        [BindProperty]
         public ContactEditDto Contact { get; set; }
 
         public SelectList PhoneTypes => new(Data.PhoneTypes);
@@ -59,20 +59,18 @@ namespace FMS.Pages.Phone
         {
             if (!ModelState.IsValid)
             {
-                Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
                 return Page();
             }
             try
             {
+                EditPhone = PhoneEditDto.FormatNumber(EditPhone);
                 await _repository.UpdatePhoneAsync(EditPhone);
-                
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, "Unable to save changes. " +
                     "Try again, and if the problem persists, " +
                     "see your system administrator.");
-                Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);
                 return Page();
             }
             Contact = await _contactRepository.GetContactByIdAsync(EditPhone.ContactId);

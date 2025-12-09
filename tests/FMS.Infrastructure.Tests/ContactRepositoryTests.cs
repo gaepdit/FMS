@@ -210,7 +210,7 @@ namespace FMS.Infrastructure.Tests
                 Email = "NEW_EMAIL",
                 Active = false,
             };
-            await _repository.UpdateContactAsync(updateDto);
+            await _repository.UpdateContactAsync(existingContact.Id, updateDto);
             _context.ChangeTracker.Clear();
 
             var updatedContact = await _context.Contacts.FindAsync(existingContact.Id);
@@ -226,7 +226,7 @@ namespace FMS.Infrastructure.Tests
             var invalidId = Guid.NewGuid();
             var updateDto = new ContactEditDto { Id = invalidId, FamilyName = "NEW_FN" };
 
-            var action = async () => await _repository.UpdateContactAsync(updateDto);
+            var action = async () => await _repository.UpdateContactAsync(invalidId, updateDto);
 
             await action.Should().ThrowAsync<InvalidOperationException>()
                 .WithMessage("Contact with ID " + invalidId + " does not exist.");

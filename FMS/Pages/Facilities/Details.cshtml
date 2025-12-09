@@ -1,4 +1,5 @@
 @page "{id:Guid?}"
+@using FMS.Domain.Dto
 @using FMS.Domain.Entities.Users
 @using FMS.Platform.Extensions
 @model FMS.Pages.Facilities.DetailsModel
@@ -332,7 +333,7 @@
 
 @if (Model.FacilityDetail.FacilityType.Name == "HSI" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
 {
-    <div class="container-fluid">
+    <div class="container-fluid" id="TabPages">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <nav class="navbar navbar-expand-sm">
                 <ul class="nav nav-tabs active" id="HSINavBar">
@@ -532,7 +533,7 @@
                                     {
                                         <tr class="@(!c.Active ? "text-muted table-warning" : "")">
                                             <td>@c.GivenName&nbsp;@c.FamilyName</td>
-                                            <td>@c.ContactType.Name</td>
+                                            <td>@c.ContactType?.Name</td>
                                             <td>@c.Company</td>
                                             <td>@c.ContactTitle</td>
                                             <td>
@@ -541,7 +542,7 @@
                                             </td>
                                             <td><a href=@c.GetMailTo()>@c.Email</a></td>
                                             <td class="text-center">@Html.DisplayFor(m => c.Active)</td>
-                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                            @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                             {
                                                 <td>
                                                     @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
@@ -1001,7 +1002,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Description)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.DisplayName)
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
@@ -1015,12 +1016,6 @@
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimateDate)
                             </dd>
-                            @* <dt class="col-sm-2 pt-3">
-                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Comments)
-                            </dt>
-                            <dd class="col-sm-10 pt-3">
-                                <textarea readonly enabled="false" class="form-control" rows="3" id="GAPSComments">@Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Comments)</textarea>
-                            </dd> *@
                         </dl>
                         <hr />
                         <div class="row mb-3">
@@ -1062,10 +1057,15 @@
                             Events
                             @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
                             {
-                                <a asp-page="/Event/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary mb-1">Add Event</a>
+                                <a asp-page="/Event/Add" 
+                                asp-route-id="@Model.FacilityDetail.Id"
+                                asp-route-sortBy="@Model.SortBy"
+                                class="btn btn-sm btn-primary mb-1">Add Event</a>
                             }
                             <input type="hidden" asp-for="@Model.FacilityId" />
-                            <button id="ExportButton" asp-page-handler="ExportButton"
+                            <button id="ExportButton" 
+                                asp-page-handler="ExportButton"
+                                asp-route-sortBy="@Model.SortBy"
                                     class="btn btn-sm btn-outline-primary mb-1">
                                 Excel Export
                             </button>
@@ -1076,19 +1076,76 @@
                         <table class="table table-sm" aria-label="Events">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Event Type</th>
-                                    <th scope="col">Action Taken</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">Due Date</th>
-                                    <th scope="col">Completion Date</th>
-                                    <th scope="col">Done By</th>
-                                    <th scope="col">Event Amount</th>
-                                    <th scope="col">Contractor</th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.EventType ? EventSort.EventTypeDesc : EventSort.EventType)">
+                                            Event Type
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow",
+                                            new { up = EventSort.EventType, down = EventSort.EventTypeDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.ActionTaken ? EventSort.ActionTakenDesc : EventSort.ActionTaken)">
+                                           Action Taken
+                                           @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ActionTaken, down = EventSort.ActionTakenDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                            asp-route-tab="Events"
+                                            asp-route-SortBy="@(Model.SortBy == EventSort.StartDate ? EventSort.StartDateDesc : EventSort.StartDate)">
+                                            Start Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.StartDate, down = EventSort.StartDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                            asp-route-tab="Events"
+                                            asp-route-SortBy="@(Model.SortBy == EventSort.DueDate ? EventSort.DueDateDesc : EventSort.DueDate)">
+                                            Due Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.DueDate, down = EventSort.DueDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                            asp-route-tab="Events"
+                                            asp-route-SortBy="@(Model.SortBy == EventSort.CompletionDate ? EventSort.CompletionDateDesc : EventSort.CompletionDate)">
+                                            Completion Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.CompletionDate, down = EventSort.CompletionDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                            asp-route-tab="Events"
+                                            asp-route-SortBy="@(Model.SortBy == EventSort.ComplianceOfficer ? EventSort.ComplianceOfficerDesc : EventSort.ComplianceOfficer)">
+                                            Done By
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ComplianceOfficer, down = EventSort.ComplianceOfficerDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                            asp-route-tab="Events"
+                                            asp-route-SortBy="@(Model.SortBy == EventSort.EventAmount ? EventSort.EventAmountDesc : EventSort.EventAmount)">
+                                            Event Amount
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventAmount, down = EventSort.EventAmountDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                       <a asp-fragment="TabPages"
+                                            asp-route-tab="Events"
+                                            asp-route-SortBy="@(Model.SortBy == EventSort.EventContractor ? EventSort.EventContractorDesc : EventSort.EventContractor)">
+                                            Contractor
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventContractor, down = EventSort.EventContractorDesc })
+                                        </a>
+                                    </th>
                                     <th scope="col">Comment</th>
                                     @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
-                                    {
-                                        <th scope="col" class="text-left">Actions</th>
-                                    }
+                                        {
+                                            <th scope="col" class="text-left">Actions</th>
+                                        }
                                 </tr>
                             </thead>
                             <tbody>
@@ -1114,7 +1171,12 @@
                                         @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                         {
                                             <td>
-                                                <a asp-page="/Event/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                <a asp-page="/Event/Edit" 
+                                                    asp-route-id="@item.Id"
+                                                    asp-route-sortBy="@Model.SortBy"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    Edit
+                                                </a>
                                                 <a asp-page="/Event/Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a>
                                             </td>
                                         }
@@ -1132,8 +1194,6 @@
 @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
 {
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <a class="btn btn-sm btn-primary" target="_blank" href=@GlobalConstants.TemplateFolderLink>RRP Template Folder</a>
-
         @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
         {
             <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>

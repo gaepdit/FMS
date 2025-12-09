@@ -78,7 +78,7 @@ namespace FMS.Pages.Facilities
             {
                 spec.SortBy = FacilitySort.RNDateReceived;
                 spec.FirstPass = false;
-            };
+            }
 
             // Get the list of facilities matching the "Spec" criteria.
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
@@ -132,7 +132,7 @@ namespace FMS.Pages.Facilities
         private async Task PopulateSelectsAsync()
         {
             BudgetCodes = await _listHelper.BudgetCodesSelectListAsync();
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(true);
             FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
             FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
