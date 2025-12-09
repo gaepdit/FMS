@@ -1217,7 +1217,7 @@ namespace FMS.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ActionTakenId")
+                    b.Property<Guid?>("ActionTakenId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Active")
@@ -1229,7 +1229,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<DateOnly?>("CompletionDate")
                         .HasColumnType("date");
 
-                    b.Property<Guid>("ComplianceOfficerId")
+                    b.Property<Guid?>("ComplianceOfficerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateOnly?>("DueDate")
@@ -1241,7 +1241,7 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("EventContractorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EventTypeId")
+                    b.Property<Guid?>("EventTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("FacilityId")
@@ -2803,15 +2803,11 @@ namespace FMS.Infrastructure.Migrations
                 {
                     b.HasOne("FMS.Domain.Entities.ActionTaken", "ActionTaken")
                         .WithMany()
-                        .HasForeignKey("ActionTakenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ActionTakenId");
 
                     b.HasOne("FMS.Domain.Entities.ComplianceOfficer", "ComplianceOfficer")
                         .WithMany()
-                        .HasForeignKey("ComplianceOfficerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ComplianceOfficerId");
 
                     b.HasOne("FMS.Domain.Entities.EventContractor", "EventContractor")
                         .WithMany()
@@ -2819,9 +2815,7 @@ namespace FMS.Infrastructure.Migrations
 
                     b.HasOne("FMS.Domain.Entities.EventType", "EventType")
                         .WithMany()
-                        .HasForeignKey("EventTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventTypeId");
 
                     b.HasOne("FMS.Domain.Entities.Facility", null)
                         .WithMany("Events")
