@@ -83,7 +83,7 @@ namespace FMS.Pages.Parcel
 
             TempData?.SetDisplayMessage(Context.Success, $"Parcel Number \"{NewParcel.ParcelNumber}\" successfully created.");
             ActiveTab = "Location";
-            return RedirectToPage("../Facilities/Details", new { id = NewParcel.FacilityId });
+            return RedirectToPage("../Facilities/Details", new { id = NewParcel.FacilityId, tab = ActiveTab });
         }
 
         private async Task PopulateSelectsAsync()

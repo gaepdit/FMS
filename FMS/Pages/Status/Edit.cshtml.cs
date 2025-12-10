@@ -102,7 +102,7 @@ namespace FMS.Pages.Status
             }
             TempData?.SetDisplayMessage(Context.Success, $"Status successfully Updated.");
             ActiveTab = "Status";
-            return RedirectToPage("../Facilities/Details", new { id = EditStatus.FacilityId });
+            return RedirectToPage("../Facilities/Details", new { id = EditStatus.FacilityId, tab = ActiveTab });
         }
 
         private async Task PopulateSelectsAsync()

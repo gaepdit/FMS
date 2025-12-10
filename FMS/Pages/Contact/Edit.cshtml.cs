@@ -74,7 +74,7 @@ namespace FMS.Pages.Contact
 
             TempData?.SetDisplayMessage(Context.Success, $"Contact: \"{EditContact.GivenName + " " + EditContact.FamilyName}\" successfully updated.");
             ActiveTab = "Contacts";
-            return RedirectToPage("../Facilities/Details", new { id = EditContact.FacilityId });
+            return RedirectToPage("../Facilities/Details", new { id = EditContact.FacilityId, tab = ActiveTab });
         }
 
         private async Task PopulateSelectsAsync()

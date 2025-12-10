@@ -95,7 +95,7 @@ namespace FMS.Pages.Event
 
             TempData?.SetDisplayMessage(Context.Success, $"Event successfully updated.");
 
-            return RedirectToPage("../Facilities/Details", new { id = EditEvent.FacilityId });
+            return RedirectToPage("../Facilities/Details", new { id = EditEvent.FacilityId, tab = ActiveTab });
         }
 
         public async Task<IActionResult> OnPostExportButtonAsync(EventSort sortBy)

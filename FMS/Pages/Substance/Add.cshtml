@@ -284,7 +284,12 @@
             <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">
                 Add Substance
             </button>
-            <a asp-page="../Facilities/Details" asp-route-Id="@Model.NewSubstance.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
+            <a asp-page="../Facilities/Details" 
+                asp-route-Id="@Model.NewSubstance.FacilityId"
+                asp-route-tab="Substances"
+                class="btn btn-outline-secondary col-md-2">
+                Cancel
+            </a>
         </form>
     </div>
 }

@@ -62,7 +62,7 @@ namespace FMS.Pages.Facilities
 
         public EventSort SortBy { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, EventSort sortBy, string tab = "HSIProperties")
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, EventSort sortBy, string tab)
         {
             if (id == null)
             {
@@ -99,7 +99,7 @@ namespace FMS.Pages.Facilities
                 RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
 
-            ActiveTab = tab;
+            ActiveTab = tab ?? "HSIProperties";
             SortBy = sortBy;
             MapLink = GetMapLink();
             FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events, SortBy);

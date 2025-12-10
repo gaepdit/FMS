@@ -64,9 +64,9 @@ namespace FMS.Helpers
                     .ThenBy(e => e.EventType.Name),
                 EventSort.EventAmountDesc => events.OrderByDescending(e => e.EventAmount)
                     .ThenByDescending(e => e.EventType.Name),
-                EventSort.EventContractor => events.OrderBy(e => e.EventContractor.Name)
+                EventSort.EventContractor => events.OrderBy(e => e.EventContractor?.Name)
                     .ThenBy(e => e.EventType.Name),
-                EventSort.EventContractorDesc => events.OrderByDescending(e => e.EventContractor.Name)
+                EventSort.EventContractorDesc => events.OrderByDescending(e => e.EventContractor?.Name)
                     .ThenByDescending(e => e.EventType.Name),
                 // EventSort.StartDate
                 _ => events.OrderBy(e => e.StartDate)
