@@ -24,7 +24,7 @@
                 <span asp-validation-for="EditContact.GivenName" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="EditContact.FamilyName"></label>
+                <label asp-for="EditContact.FamilyName">Last Name <span class="text-danger">*</span></label>
                 <input asp-for="EditContact.FamilyName" class="form-control" />
                 <span asp-validation-for="EditContact.FamilyName" class="text-danger"></span>
             </div>
@@ -88,6 +88,7 @@
             </div>
         </div>
         <hr />
+        <p class="text-danger">* denotes a required field</p>
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-3">Save Changes
         </button>
         <a asp-page="../Facilities/Details" 
