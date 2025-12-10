@@ -61,7 +61,7 @@ namespace FMS.Pages.Event
 
             ActiveTab = "Events";
 
-            return RedirectToPage("../Facilities/Details", new { id = FacilityId });
+            return RedirectToPage("../Facilities/Details", new { id = FacilityId, tab = ActiveTab });
         }
     }
 }

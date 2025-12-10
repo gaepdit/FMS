@@ -151,7 +151,7 @@ namespace FMS.Pages.Substance
 
             TempData?.SetDisplayMessage(Context.Success, "The substance was created successfully.");
             ActiveTab = "Substances";
-            return RedirectToPage("../Facilities/Details", new { id = NewSubstance.FacilityId });
+            return RedirectToPage("../Facilities/Details", new { id = NewSubstance.FacilityId, tab = ActiveTab });
         }
 
         private async Task PopulateSelectsAsync()

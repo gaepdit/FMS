@@ -57,7 +57,12 @@
         <div class="row mt-3">
             <div class="col">
                 <button id="submitButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Update Substance</button>
-                <a asp-page="../Facilities/Details" asp-route-id="@Model.EditSubstance.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel Update</a>
+                <a asp-page="../Facilities/Details" 
+                    asp-route-id="@Model.EditSubstance.FacilityId"
+                    asp-route-tab="Substances"
+                    class="btn btn-outline-secondary col-md-2">
+                    Cancel
+                </a>
             </div>
         </div>
     </form>

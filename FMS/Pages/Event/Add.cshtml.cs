@@ -110,7 +110,7 @@ namespace FMS.Pages.Event
             TempData?.SetDisplayMessage(Context.Success, $"Event created successfully.");
 
             ActiveTab = "Events";
-            return RedirectToPage("../Facilities/Details", new { id = NewEvent.FacilityId });
+            return RedirectToPage("../Facilities/Details", new { id = NewEvent.FacilityId, tab = ActiveTab });
         }
 
         private async Task PopulateSelectsAsync()
