@@ -148,7 +148,12 @@
         </div>
         <hr />
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Save Event</button>
-        <a asp-page="../Facilities/Details" asp-route-Id="@Model.EditEvent.FacilityId"  class="btn btn-outline-secondary col-md-2">Cancel</a>
+        <a asp-page="../Facilities/Details" 
+            asp-route-Id="@Model.EditEvent.FacilityId"
+            asp-route-tab="Events"
+            class="btn btn-outline-secondary col-md-2">
+            Cancel
+        </a>
     </div>
     @if (Model.Facility.Events.Count > 0)
     {
