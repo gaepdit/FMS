@@ -9,7 +9,10 @@ namespace FMS.Domain.Dto
 {
     public class EventContractorCreateDto
     {
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Description { get; set; }
 
         public void TrimAll()

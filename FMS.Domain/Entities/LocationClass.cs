@@ -27,6 +27,8 @@ namespace FMS.Domain.Entities
         [Display(Name = "Class Description")]
         public string Description { get; set; }
 
+        public string DisplayName => $"{Name} ({Description})";
+
         public void TrimAll()
         {
             Name = Name?.Trim();

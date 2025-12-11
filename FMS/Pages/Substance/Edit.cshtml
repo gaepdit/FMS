@@ -34,8 +34,31 @@
                 <input asp-for="EditSubstance.Chemical.CommonName" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.CommonName" class="text-danger"></span>
             </div>
-            <p><small>Edit these values in Chemical List Only</small></p>
         </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.ToxValue">Tox Value</label>
+                <input asp-for="EditSubstance.Chemical.ToxValue" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.ToxValue" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.MCLs">MCLs</label>
+                <input asp-for="EditSubstance.Chemical.MCLs" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.MCLs" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.FinalRc">Final RC</label>
+                <input asp-for="EditSubstance.Chemical.FinalRc" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.FinalRc" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.RQ">RQ</label>
+                <input asp-for="EditSubstance.Chemical.RQ" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.RQ" class="text-danger"></span>
+            </div>
+        </div>
+        <p class="text-danger"><small>Edit these values in Chemical List Only</small></p>
+        <hr />
         <div class="row mt-3">
             <div class="col">
                 <input asp-for="EditSubstance.Groundwater" class="form-check-input" type="checkbox" />
@@ -60,7 +83,7 @@
                 <a asp-page="../Facilities/Details" 
                     asp-route-id="@Model.EditSubstance.FacilityId"
                     asp-route-tab="Substances"
-                    class="btn btn-outline-secondary col-md-2">
+                    class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
                     Cancel
                 </a>
             </div>

@@ -33,10 +33,12 @@
             <textarea asp-for="Score.Comments" class="form-control" rows="3"></textarea>
             <span asp-validation-for="Score.Comments" class="text-danger"></span>
         </div>
-        <div class="row mb-3 form-check">
-            <input asp-for="Score.UseComments" class="form-check-input" />
-            <label asp-for="Score.UseComments" class="form-check-label"></label>
-            <span asp-validation-for="Score.UseComments" class="text-danger"></span>
+        <div class="row mb-3">
+            <div class="col">
+                <input asp-for="Score.UseComments" class="form-check-input" type="checkbox" />
+                <label asp-for="Score.UseComments" class="form-check-label"></label>
+                <span asp-validation-for="Score.UseComments" class="text-danger"></span>
+            </div>
         </div>
         <hr />
         <div class="row mb-3">

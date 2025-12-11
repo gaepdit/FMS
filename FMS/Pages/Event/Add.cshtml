@@ -87,14 +87,14 @@
         <input type="hidden" asp-for="NewEvent.ParentId" />
         <div class="row">
             <div class="col">
-                <label asp-for="NewEvent.EventTypeId"></label>
+                <label asp-for="NewEvent.EventTypeId">Event Type <span class="text-danger">*</span></label>
                 <select asp-for="NewEvent.EventTypeId" asp-items="Model.EventTypes" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="NewEvent.EventTypeId" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewEvent.ActionTakenId"></label>
+                <label asp-for="NewEvent.ActionTakenId">Action Taken <span class="text-danger">*</span></label>
                 <select asp-for="NewEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select">
                     <option value=""></option>
                 </select>
@@ -118,7 +118,7 @@
                 <span asp-validation-for="NewEvent.CompletionDate" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewEvent.ComplianceOfficerId"></label>
+                <label asp-for="NewEvent.ComplianceOfficerId">Done By (CO) <span class="text-danger">*</span></label>
                 <select asp-for="NewEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
                     <option value=""></option>
                 </select>
@@ -145,8 +145,14 @@
             </div>
         </div>
         <hr />
-        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Add New Event</button>
-        <a asp-page="../Facilities/Details" asp-route-Id="@Model.NewEvent.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
+        <p class="text-danger">* denotes a required field</p>
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Add Event</button>
+        <a asp-page="../Facilities/Details" 
+            asp-route-Id="@Model.NewEvent.FacilityId" 
+            asp-route-tab="Events"
+           class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
+            Cancel
+        </a>
     </div>
     @if (Model.Facility.Events.Count > 0)
     {
