@@ -15,12 +15,12 @@
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="row mb-3">
             <div class="col-md-2">
-                <label asp-for="Chemical.CasNo">@($"{MaintenanceOptions.Chemical} CasNo ")<span class="text-danger">*</span></label>
+                <label asp-for="Chemical.CasNo">@($"{MaintenanceOptions.Chemical} CasNo ") <span class="text-danger">*</span></label>
                 <input asp-for="Chemical.CasNo" class="form-control" aria-describedby="FileIdHelpBlock" />
                 <span asp-validation-for="Chemical.CasNo" class="text-danger"></span>
             </div>
             <div class="col-md-5">
-                <label asp-for="Chemical.ChemicalName">@($"{MaintenanceOptions.Chemical} Name ")<span class="text-danger">*</span></label>
+                <label asp-for="Chemical.ChemicalName">@($"{MaintenanceOptions.Chemical} Name ") <span class="text-danger">*</span></label>
                 <input asp-for="Chemical.ChemicalName" class="form-control" />
                 <span asp-validation-for="Chemical.ChemicalName" class="text-danger"></span>
             </div>

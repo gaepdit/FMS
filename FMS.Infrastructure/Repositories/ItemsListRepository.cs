@@ -119,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
             await _context.LocationClasses.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
                 .OrderBy(e => e.Name)
-                .Select(e => new ListItem() { Id = e.Id, Name = e.Name })
+                .Select(e => new ListItem() { Id = e.Id, Name = e.DisplayName })
                 .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetOverallStatusesListAsync(bool includeInactive = false) =>

@@ -260,8 +260,31 @@
                     <input asp-for="NewSubstance.Chemical.CommonName" class="form-control" readonly="true" />
                     <span asp-validation-for="NewSubstance.Chemical.CommonName" class="text-danger"></span>
                 </div>
-                <p><small>Edit these values in Chemical List Only</small></p>
             </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.ToxValue">Tox Value</label>
+                    <input asp-for="NewSubstance.Chemical.ToxValue" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.ToxValue" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.MCLs">MCLs</label>
+                    <input asp-for="NewSubstance.Chemical.MCLs" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.MCLs" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.FinalRc">Final RC</label>
+                    <input asp-for="NewSubstance.Chemical.FinalRc" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.FinalRc" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.RQ">RQ</label>
+                    <input asp-for="NewSubstance.Chemical.RQ" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.RQ" class="text-danger"></span>
+                </div>
+            </div>
+            <p class="text-danger"><small>Edit these values in Chemical List Only</small></p>
+            <hr/>
             <div class="row mt-3">
                 <div class="col">
                     <input asp-for="NewSubstance.Groundwater" class="form-check-input" type="checkbox" />
