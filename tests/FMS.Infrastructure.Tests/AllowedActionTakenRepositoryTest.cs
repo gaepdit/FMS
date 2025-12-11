@@ -37,7 +37,9 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 EventTypeId = Guid.NewGuid(),
+                EventType = new EventType { Name = "VALID_ET" },
                 ActionTakenId = Guid.NewGuid(),
+                ActionTaken = new ActionTaken { Name = "VALID_AT" },
                 Active = true,
 
             });
@@ -148,8 +150,10 @@ namespace FMS.Infrastructure.Tests
             {
                 Id = Guid.NewGuid(),
                 EventTypeId = Guid.NewGuid(),
+                EventType = new EventType { Name = "VALID_ET" },
                 ActionTakenId = Guid.NewGuid(),
-                Active = true
+                ActionTaken = new ActionTaken { Name = "VALID_AT" },
+                Active = true,
 
             };
             _context.AllowedActionsTaken.Add(existingAAT);
@@ -163,7 +167,7 @@ namespace FMS.Infrastructure.Tests
         }
         [Test]
         public async Task DeleteAllowedActionTakenAsync_ThrowsArgumentException_WhenIdDoesNotExist()
-        {
+        {                         
             var invalidId = Guid.NewGuid();
             var action = async () => await _repository.DeleteAllowedActionTakenAsync(invalidId);
             await action.Should().ThrowAsync<ArgumentException>();
