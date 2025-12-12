@@ -77,6 +77,21 @@ namespace FMS.Infrastructure.Tests
         }
 
         // AllowedActionTakenExistAsync (eventTypeId and actionTakenId)
+        public async Task AllowedActionTakenExistAsync_ReturnsTrue_WhenEventTypeIdAndActionTakenIdExist()
+        {
+            var existingAAT = await _context.AllowedActionsTaken.FirstAsync();
+            var results = await _repository.AllowedActionTakenExistsAsync(existingAAT.EventTypeId, existingAAT.ActionTakenId);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task AllowedActionTakenExistAsync_ReturnsFalse_WhenEventTypeIdAndActionTakenIdIsInvalid()
+        {
+            var nonExistingEventTypeId = Guid.NewGuid();
+            var nonExistingActionTakenId = Guid.NewGuid();
+
+            var results = await _repository.AllowedActionTakenExistsAsync(nonExistingEventTypeId, nonExistingActionTakenId);
+            results.Should().BeFalse();
+        }
 
         // GetAllowedActionTakenByAATIdAsync
         [Test]
