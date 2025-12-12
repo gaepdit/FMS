@@ -52,7 +52,7 @@ BEGIN
             LEFT JOIN [dbo].[Files] as d
             ON a.FileId = d.Id
         where (a.Active = 1 AND ( @FacilityTypeId IS NULL OR a.FacilityTypeId = @FacilityTypeId ))
-           or @Active = 0
+           or (a.Active = @Active AND ( @FacilityTypeId IS NULL OR a.FacilityTypeId = @FacilityTypeId ))
     ) AS T
     WHERE T.distance <= @Radius
     ORDER BY distance;
