@@ -62,7 +62,7 @@ namespace FMS.Pages.Facilities
 
         public EventSort SortBy { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, EventSort sortBy, string tab)
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr,  string tab, EventSort sortBy = EventSort.StartDateDesc)
         {
             if (id == null)
             {

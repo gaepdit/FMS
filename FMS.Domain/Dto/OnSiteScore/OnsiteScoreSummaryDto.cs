@@ -37,13 +37,13 @@ namespace FMS.Domain.Dto
         [Display(Name = "Onsite Score Value")]
         public decimal OnsiteScoreValue { get; set; }
 
-        [Display(Name = "A")]
+        [Display(Name = "A Access to Site")]
         public int? A { get; set; }
 
-        [Display(Name = "B")]
+        [Display(Name = "B Release Type")]
         public int? B { get; set; }
 
-        [Display(Name = "C")]
+        [Display(Name = "C Containment")]
         public int? C { get; set; }
 
         [Display(Name = "On-Site Comment")]
@@ -55,10 +55,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "Other 1D")]
         public string Other1D { get; set; }
 
-        [Display(Name = "D2")]
+        [Display(Name = "D2 Tox Val")]
         public int? D2 { get; set; }
 
-        [Display(Name = "D3")]
+        [Display(Name = "D3 Quantity")]
         public int? D3 { get; set; }
 
         [Display(Name = "Substance")]
@@ -69,10 +69,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "CasNo")]
         public string CASNO { get; set; }
 
-        [Display(Name = "E1")]
+        [Display(Name = "1E Distance to Residence")]
         public int? E1 { get; set; }
 
-        [Display(Name = "E2")]
+        [Display(Name = "2E Sensitive Environment")]
         public int? E2 { get; set; }
     }
 }
