@@ -78,22 +78,28 @@ namespace FMS.Infrastructure.Repositories
             return newPhone.Id;
         }
 
-        public Task UpdatePhoneAsync(PhoneEditDto phoneUpdates)
+        public Task UpdatePhoneAsync(Guid id, PhoneEditDto phoneUpdates)
         {
             Prevent.Null(phoneUpdates, nameof(phoneUpdates));
             Prevent.NullOrWhiteSpace(phoneUpdates.Number, nameof(phoneUpdates.Number));
+            Prevent.NullOrEmpty(id, nameof(id));
 
-            return UpdatePhoneInternalAsync(phoneUpdates);
+            return UpdatePhoneInternalAsync(id, phoneUpdates);
         }
 
-        public async Task UpdatePhoneInternalAsync(PhoneEditDto phoneUpdates)
+        public async Task UpdatePhoneInternalAsync(Guid id, PhoneEditDto phoneUpdates)
         {
-            if (!await PhoneExistsAsync(phoneUpdates.Id))
+            if (!await PhoneExistsAsync(id))
             {
-                throw new ArgumentException($"Phone Id {phoneUpdates.Id} does not exist.");
+                throw new ArgumentException($"Phone Id {id} does not exist.");
             }
 
-            var existingPhone = await _context.Phones.FindAsync(phoneUpdates.Id);
+            var existingPhone = await _context.Phones.FindAsync(id);
+
+            if (existingPhone == null)
+            {
+                throw new InvalidOperationException($"Contact with ID {id} does not exist.");
+            }
 
             existingPhone.Number = phoneUpdates.Number;
             existingPhone.PhoneType = phoneUpdates.PhoneType;

@@ -25,7 +25,7 @@ namespace FMS.Pages.Phone
         {
             _repository = repository;
             _contactRepository = contactRepository;
-        } 
+        }
 
         [BindProperty]
         public PhoneEditDto EditPhone { get; set; }
@@ -64,7 +64,7 @@ namespace FMS.Pages.Phone
             try
             {
                 EditPhone = PhoneEditDto.FormatNumber(EditPhone);
-                await _repository.UpdatePhoneAsync(EditPhone);
+                await _repository.UpdatePhoneAsync(Id, EditPhone);
             }
             catch (Exception ex)
             {

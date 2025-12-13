@@ -39,16 +39,16 @@ namespace FMS.Domain.Dto
         [Display(Name = "Groundwater Score")]
         public decimal GWScore { get; set; }
 
-        [Display(Name = "A")]
+        [Display(Name = "A Release Type")]
         public int? A { get; set; }
 
-        [Display(Name = "1B")]
+        [Display(Name = "1B Susceptibility")]
         public int? B1 { get; set; }
 
-        [Display(Name = "2B")]
+        [Display(Name = "2B Physical State")]
         public int? B2 { get; set; }
 
-        [Display(Name = "C")]
+        [Display(Name = "C Containment")]
         public int? C { get; set; }
 
         [Display(Name = "GW Comment")]
@@ -60,10 +60,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "Other")]
         public string Other { get; set; }
 
-        [Display(Name = "2D")]
+        [Display(Name = "2D Tox Val")]
         public int? D2 { get; set; }
 
-        [Display(Name = "3D")]
+        [Display(Name = "3D Quantity")]
         public int? D3 { get; set; }
 
         [Display(Name = "Substance")]
@@ -73,10 +73,10 @@ namespace FMS.Domain.Dto
         [Display(Name = "CasNo")]
         public string CASNO { get; set; }
 
-        [Display(Name = "1E")]
+        [Display(Name = "1E Exposure")]
         public int? E1 { get; set; }
 
-        [Display(Name = "2E")]
+        [Display(Name = "2E Distance to Well")]
         public int? E2 { get; set; }
     }
 }

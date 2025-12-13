@@ -53,8 +53,7 @@ namespace FMS.Pages.Contact
             return Page();
         }
 
-        public
-            async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {

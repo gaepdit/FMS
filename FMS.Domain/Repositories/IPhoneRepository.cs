@@ -19,7 +19,7 @@ namespace FMS.Domain.Repositories
 
         Task<Guid> CreatePhoneAsync(PhoneCreateDto phone);
 
-        Task UpdatePhoneAsync(PhoneEditDto phoneUpdates);
+        Task UpdatePhoneAsync(Guid id, PhoneEditDto phoneUpdates);
 
         Task UpdatePhoneStatusAsync(Guid id, bool active);
     }

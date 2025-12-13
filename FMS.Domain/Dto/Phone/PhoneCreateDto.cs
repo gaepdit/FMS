@@ -12,7 +12,8 @@ namespace FMS.Domain.Dto
 
         public Guid ContactId { get; set; }
 
-        [Display(Name = "Number")]
+        [Display(Name = "Phone Number")]
+        [RegularExpression(@"(\D*\d\D*){10}", ErrorMessage = "Invalid Phone Number format. Please enter a 3-digit area code followed by a 7-digit number.")]
         public string Number { get; set; }
 
         [Display(Name = "Phone Type")]
