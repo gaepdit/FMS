@@ -29,7 +29,7 @@ namespace FMS.Domain.Dto
 
         public string GetTelTo()
         {
-            return string.Concat("tel:", Number.Replace(" ", "").Replace("-", ""));
+            return string.Concat("tel:", Number.Replace(" ", "").Replace("-", "").Replace("(","").Replace(")",""));
         }
     }
 }
