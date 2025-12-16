@@ -112,6 +112,42 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetAllowedActionTakenListAsync
+        [Test]
+        public async Task GetAllowedActionTakenListAsync_ReturnsAllContactType_WhenEventTypeIdIsValid()
+        {
+            var existingEventType = new EventType { Name = "VALID_ET", Id = Guid.NewGuid()};
+
+            var existingAAT = new AllowedActionTaken
+            {
+                Id = Guid.NewGuid(),
+                EventType = existingEventType,
+                ActionTaken = new ActionTaken { Name = "VALID_AT" },
+                Active = true
+            };
+            var existingAAT2 = new AllowedActionTaken
+            {
+                Id = Guid.NewGuid(),
+                EventType = existingEventType,
+                ActionTaken = new ActionTaken { Name = "VALID_AT2" },
+                Active = true
+            };
+            _context.AllowedActionsTaken.Add(existingAAT);
+            _context.AllowedActionsTaken.Add(existingAAT2);
+
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            var results = await _repository.GetAllowedActionTakenListAsync(existingEventType.Id);
+            results.Should().HaveCount(2);
+            results.Should().NotBeNullOrEmpty();
+        }
+        [Test]
+        public async Task GetAllowedActionTakenListAsync_ReturnsNull_WhenEventTypeIdIsInvalid()
+        {
+            var nonExistingETID = Guid.NewGuid();
+            var results = await _repository.GetAllowedActionTakenListAsync(nonExistingETID);
+            results.Should().BeEmpty();
+        }
 
         // CreateAllowedActionTakenAsync
         [Test]
