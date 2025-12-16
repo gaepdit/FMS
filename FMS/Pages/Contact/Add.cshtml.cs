@@ -39,9 +39,6 @@ namespace FMS.Pages.Contact
 
         public static SelectList States => new(Data.States);
 
-        [BindProperty(SupportsGet = true)]
-        public Guid Id { get; set; }
-
         [TempData]
         public string ActiveTab { get; set; }
 

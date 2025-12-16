@@ -59,8 +59,8 @@ namespace FMS.Domain.Dto
         public string State { get; set; }
 
         [Required]
-        [StringLength(10)]
         [Display(Name = "ZIP Code")]
+        [RegularExpression(@"^\d{5}$", ErrorMessage = "Invalid Zip Code format. Please enter a 5-digit number.")]
         [DataType(DataType.PostalCode)]
         public string PostalCode { get; set; }
 

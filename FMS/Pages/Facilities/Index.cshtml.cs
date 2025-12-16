@@ -72,7 +72,7 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
-            
+            spec.TrimAll();
             // Sort by Received Date for Pending Release Notifications
             if (spec.ShowPendingOnly && spec.FirstPass) 
             {
