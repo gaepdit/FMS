@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using NSubstitute;
 using TestHelpers;
 using NUnit.Framework;
+using FMS.TestData.SeedData;
 
 namespace FMS.App.Tests.Files
 {
@@ -16,7 +17,7 @@ namespace FMS.App.Tests.Files
         [Test]
         public async Task OnGet_PopulatesThePageModel()
         {
-            var file = RepositoryData.Files[0];
+            var file = SeedData.GetFiles()[0];
 
             var mockRepository = Substitute.For<IFileRepository>();
             mockRepository.GetFileAsync(file.FileLabel).Returns(new FileDetailDto(file));

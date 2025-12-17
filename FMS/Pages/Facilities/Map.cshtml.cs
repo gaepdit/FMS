@@ -49,8 +49,16 @@ namespace FMS.Pages.Facilities
             _listHelper = listHelper;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(Guid? id)
         {
+            if (id != null)
+            {
+                var map = await _repository.GetFacilityAsync(id.Value);
+                Spec = new FacilityMapSpec(map);
+                Spec.Radius = 3m;
+                Spec.Output = "1";               
+            }
+           
             await PopulateSelectsAsync();
             return Page();
         }
@@ -58,6 +66,11 @@ namespace FMS.Pages.Facilities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>")]
         public async Task<IActionResult> OnGetSearchAsync(FacilityMapSpec spec)
         {
+            if (!ModelState.IsValid)
+            {
+                await PopulateSelectsAsync();
+                return Page();
+            }
             // Make sure GeoCoordinates are withing the State of Georgia or both Zero
             GeoCoordHelper.CoordinateValidation EnumVal = GeoCoordHelper.ValidateCoordinatesMap(spec.Latitude, spec.Longitude);
             string ValidationString = GeoCoordHelper.GetDescription(EnumVal);

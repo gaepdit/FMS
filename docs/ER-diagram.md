@@ -10,26 +10,31 @@ classDiagram
     Facility --> BudgetCode
     Facility --> FacilityStatus
     Facility --> EnvironmentalInterest
-    Facility --> ComplianceOfficer
     Facility --> OrganizationalUnit
-    Facility ..> Contact : implied
-    Facility ..> Score : implied
-    Facility ..> HSRPFacilityProperties : implied
-    Facility ..> Status : implied
-    Facility ..> HSRAEvent : implied
-    Facility ..> Substances : implied
+    Facility ..> HSRPFacilityProperties
+    Facility ..> Substances
+    Facility ..> Score
+    Facility ..> Status
+    Facility --> ComplianceOfficer
+    Facility ..> Event
     Facility --> Location
+    Facility ..> Contact
     Score --> Groundwater
     Score --> Onsite
     Location --> Parcel
+    Contact --> ContactType
+    Contact --> ContactTitle
     Contact --> Phone
+    Phone --> PhoneType
     Status --> FundingSource
+    Substances --> Chemicals
     Groundwater --> Chemicals
     Onsite --> Chemicals
-    MinorCode --> PermittedCode
-    MajorCode --> PermittedCode
-    HSRAEvent --> MajorCode
-    HSRAEvent --> MinorCode
+    Event --> ComplianceOfficer
+    Event --> EventType
+    Event --> ActionTaken
+    EventType --> AllowedActionTaken
+    ActionTaken --> AllowedActionTaken
 
 %% Classes
 
@@ -104,7 +109,6 @@ class RetentionRecord {
 
 class Location {
     Class
-    List~Parcel~
 }
 
 class Parcel {
@@ -144,7 +148,6 @@ class Score {
     Rank
     Comments
     UseComments
-
 }
 
 class Groundwater {
@@ -169,7 +172,7 @@ class Onsite {
     B 
     C 
     1DChemName
-    1DOther
+    1DOther 
     2D
     3D
     Description
@@ -208,7 +211,8 @@ class Status {
     FinancialAssurance
 }
 
-class HSRAEvent {
+class Event {
+    ParentId
     EventType
     ActionTaken
     StartDate
@@ -257,23 +261,29 @@ class FundingSource {
     FundingSource
 }
 
-class MajorCode {
-    MajorCodeId
-    MajorCodeText
-    MajorCodeProgram
+class ContactType {
+    Type
 }
 
-class MinorCode {
-    MinorCodeId
-    MinorCodeText
+class ContactTitle {
+    Title
 }
 
-class PermittedCode {
-    MajorCodeId
-    MinorCodeId
-    SDateHelp
-    DDateHelp
-    EDateHelp
+class PhoneType {
+    Type
+}
+
+class EventType {
+    Type
+}
+
+class ActionTaken {
+    Action
+}
+
+class AllowedActionTaken {
+    EventTypeId
+    ActionTakenId
 }
 
 ```

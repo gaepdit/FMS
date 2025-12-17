@@ -42,7 +42,8 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<BudgetCodeSummaryDto>> GetBudgetCodeListAsync() =>
             await _context.BudgetCodes.AsNoTracking()
-                .OrderBy(e => e.Code)
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.Code)
                 .Select(e => new BudgetCodeSummaryDto(e))
                 .ToListAsync();
 

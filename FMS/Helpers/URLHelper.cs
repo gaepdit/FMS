@@ -25,5 +25,11 @@ namespace FMS.Helpers
                 ? null
                 : string.Concat(GlobalConstants.PendingNotificationFolder, notificationId.Substring(2));
         }
+
+        public static string GetMapLink(decimal lat, decimal lon)
+        {
+            var link = string.Concat(GlobalConstants.MapCoordLink, lat.ToString(), ",", lon.ToString());
+            return link;
+        }
     }
 }

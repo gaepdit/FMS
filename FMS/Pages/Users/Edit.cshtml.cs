@@ -32,6 +32,9 @@ namespace FMS.Pages.Users
         [BindProperty]
         public bool HasFileEditorRole { get; set; }
 
+        [BindProperty]
+        public bool HasComplianceOfficerRole { get; set; }
+
         public string DisplayName { get; private set; }
         public string Email { get; private set; }
 
@@ -61,6 +64,7 @@ namespace FMS.Pages.Users
                 {UserRoles.SiteMaintenance, HasSiteMaintenanceRole},
                 {UserRoles.FileCreator, HasFileCreatorRole},
                 {UserRoles.FileEditor, HasFileEditorRole},
+                {UserRoles.ComplianceOfficer, HasComplianceOfficerRole}
             };
             var result = await _userService.UpdateUserRolesAsync(UserId, roleSettings);
 
@@ -101,6 +105,7 @@ namespace FMS.Pages.Users
             HasSiteMaintenanceRole = roles.Contains(UserRoles.SiteMaintenance);
             HasFileCreatorRole = roles.Contains(UserRoles.FileCreator);
             HasFileEditorRole = roles.Contains(UserRoles.FileEditor);
+            HasComplianceOfficerRole = roles.Contains(UserRoles.ComplianceOfficer);
         }
     }
 }

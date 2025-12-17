@@ -1,0 +1,50 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Phone
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Phone.EditModel
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Edit Phone";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="EditPhone.ContactId" />
+        <input type="hidden" asp-for="EditPhone.Id" />
+        @* <input type="hidden" asp-for="Contact.FamilyName" /> *@
+        <div class="row">
+            <div class="col-8">
+                <label asp-for="EditPhone.Number"></label>
+                <input asp-for="EditPhone.Number" class="form-control" />
+                <span asp-validation-for="EditPhone.Number" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditPhone.PhoneType"></label>
+                <select asp-for="EditPhone.PhoneType" asp-items="Model.PhoneTypes" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditPhone.PhoneType" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <input asp-for="EditPhone.Active" class="form-check-input" type="checkbox" />
+                <label asp-for="EditPhone.Active" class="form-check-label"></label>
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-page="../Facilities/Details"
+            asp-route-id="@Model.Contact.FacilityId"
+            asp-route-tab="Contacts"
+            class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>

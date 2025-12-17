@@ -14,9 +14,10 @@ namespace FMS.Domain.Entities.Users
         public const string SiteMaintenance = "SiteMaintenance";
         public const string FileCreator = "FileCreator";
         public const string FileEditor = "FileEditor";
+        public const string ComplianceOfficer = "ComplianceOfficer";
 
         public static readonly ImmutableArray<string> AllRoles =
-            ImmutableArray.Create(UserMaintenance, SiteMaintenance, FileCreator, FileEditor);
+            ImmutableArray.Create(UserMaintenance, SiteMaintenance, FileCreator, FileEditor, ComplianceOfficer);
 
         public static string DisplayName(string role) =>
             role switch
@@ -25,6 +26,7 @@ namespace FMS.Domain.Entities.Users
                 SiteMaintenance => "Site Maintenance",
                 FileCreator => "Facility Creator",
                 FileEditor => "Facility Editor",
+                ComplianceOfficer => "Compliance Officer",
                 _ => role,
             };
 
@@ -41,6 +43,8 @@ namespace FMS.Domain.Entities.Users
                 FileEditor =>
                     "Users with the Facility Editor role are able to add and edit facilities, files, and " +
                     "retention records, and delete files." + " Excludes edits to existing File Label and Facility Number.",
+                ComplianceOfficer => "Users with the Compliance Officer role are able to view reports and dashboards " +
+                    "and are able to add and edit Facility Contacts and Events.",
                 _ => DisplayName(role),
             };
     }

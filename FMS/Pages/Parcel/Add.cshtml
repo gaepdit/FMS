@@ -1,0 +1,67 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Parcel
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Parcel.AddModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Add Parcel";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="NewParcel.FacilityId" />
+        <input type="hidden" asp-for="NewParcel.Id" />
+        <input type="hidden" asp-for="NewParcel.Active" />
+        <div class="row">
+            <div class="col">
+                <label asp-for="NewParcel.ParcelNumber"></label>
+                <input asp-for="NewParcel.ParcelNumber" class="form-control" />
+                <span asp-validation-for="NewParcel.ParcelNumber" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewParcel.Acres"></label>
+                <input asp-for="NewParcel.Acres" class="form-control" />
+                <span asp-validation-for="NewParcel.Acres" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewParcel.ParcelTypeId"></label>
+                <select asp-for="NewParcel.ParcelTypeId" asp-items="Model.ParcelTypes" class="form-select">
+                    <option value="">-- Select Parcel Type --</option>
+                </select>
+                <span asp-validation-for="NewParcel.ParcelTypeId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="NewParcel.ListDate" class="form-label"></label>
+                <input asp-for="NewParcel.ListDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewParcel.ListDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewParcel.DeListDate" class="form-label"></label>
+                <input asp-for="NewParcel.DeListDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewParcel.DeListDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewParcel.SubListParcelName" class="form-label"></label>
+                <input asp-for="NewParcel.SubListParcelName" class="form-control" />
+                <span asp-validation-for="NewParcel.SubListParcelName" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Create New Parcel</button>
+        <a asp-page="../Facilities/Details" 
+            asp-route-Id="@Model.NewParcel.FacilityId"
+            asp-route-tab="Location"
+            class="btn btn-outline-secondary col-md-2">
+            Cancel
+        </a>
+    </form>
+</div>
+

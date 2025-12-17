@@ -19,8 +19,8 @@ jobs:
         run: echo ::set-output name=VERSION::${GITHUB_REF##*/}
 
       - name: Send to the Raygun Deployments API
-        id: send_deployment
-        uses: fjogeleit/http-request-action@v1.16.4
+        id: raygun_deployment
+        uses: fjogeleit/http-request-action@c0b95d02a088b47c1f2f4db04fd8af8bd19eee54
         with:
           url: https://app.raygun.com/deployments?authToken=${{ secrets.RAYGUN_AUTHTOKEN }}
           method: POST

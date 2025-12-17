@@ -1,0 +1,69 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Maintenance
+@model FMS.Pages.Maintenance.Chemical.EditModel
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = $"Edit {MaintenanceOptions.Chemical}: {Model.Chemical.ChemicalName}";
+}
+<h1>
+    @ViewData["Title"]
+    @if (!Model.Chemical.Active)
+    {
+        <span class="text-muted">(Removed)</span>
+    }
+</h1>
+
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="Chemical.Active" />
+        <input type="hidden" asp-for="Id" />
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <label asp-for="Chemical.CasNo">CasNo <span class="text-danger">*</span></label>
+                <input asp-for="Chemical.CasNo" class="form-control" aria-describedby="FileIdHelpBlock" />
+                <span asp-validation-for="Chemical.CasNo" class="text-danger"></span>
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Chemical.ChemicalName">@($"{MaintenanceOptions.Chemical} Name") <span class="text-danger">*</span></label>
+                <input asp-for="Chemical.ChemicalName" class="form-control" />
+                <span asp-validation-for="Chemical.ChemicalName" class="text-danger"></span>
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Chemical.CommonName">Common Name</label>
+                <input asp-for="Chemical.CommonName" class="form-control" />
+                <span asp-validation-for="Chemical.CommonName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="Chemical.ToxValue">Tox Value</label>
+                <input asp-for="Chemical.ToxValue" class="form-control" />
+                <span asp-validation-for="Chemical.ToxValue" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.MCLs">MCLs</label>
+                <input asp-for="Chemical.MCLs" class="form-control" />
+                <span asp-validation-for="Chemical.MCLs" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.FinalRc">Final RC</label>
+                <input asp-for="Chemical.FinalRc" class="form-control" />
+                <span asp-validation-for="Chemical.FinalRc" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.RQ">RQ</label>
+                <input asp-for="Chemical.RQ" class="form-control" />
+                <span asp-validation-for="Chemical.RQ" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <p class="text-danger">* denotes a required field</p>
+        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <a asp-page="Index" class="btn btn-outline-secondary col-md-2">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,47 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Phone
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Phone.AddModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Add Phone";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="NewPhone.ContactId" />
+        <input type="hidden" asp-for="NewPhone.Id" />
+        <input type="hidden" asp-for="NewPhone.Active" />
+        <div class="row">
+            <div class="col-8">
+                <label asp-for="NewPhone.Number"></label>
+                <input asp-for="NewPhone.Number" class="form-control" />
+                <span asp-validation-for="NewPhone.Number" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewPhone.PhoneType"></label>
+                <select asp-for="NewPhone.PhoneType" asp-items="Model.PhoneTypes" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewPhone.PhoneType" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Add Phone</button>
+                <a asp-page="../Facilities/Details" 
+                    asp-route-id="@Model.Contact.FacilityId"
+                    asp-route-tab="Contacts"
+                    class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

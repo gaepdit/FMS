@@ -1,0 +1,244 @@
+﻿@page "{id:Guid?}"
+@using FMS.Domain.Dto
+@using FMS.Pages.Event
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Event.AddModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ActionSelectPartial" />
+    <script>
+        setUpActionTypeDropdown(
+            "NewEvent_EventTypeId",
+            "NewEvent_ActionTakenId",
+            "None Selected");
+    </script>
+}
+
+@{
+    ViewData["Title"] = "Add Event";
+}
+<h1>@ViewData["Title"]</h1>
+<form method="post">
+    @*  @if (Model.Facility.FacilityStatus.Name == "COMPLAINT" || Model.Facility.FacilityStatus.Name == "Event Tracking On")
+    { *@
+    <div class="container bg-light-subtle py-3 rounded-3">
+        <p>Select a Master Project as the Parent for this new Event, if applicable.</p>
+        <div class="row justify-content-evenly">
+            <table class="table table-sm" aria-label="Events">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col"><em class="">Select Parent Master Project</em></th>
+                        <th scope="col">Action Taken</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Completion Date</th>
+                        <th scope="col">Done By</th>
+                        <th scope="col">Event Amount</th>
+                        <th scope="col">Contractor</th>
+                        <th scope="col">Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Facility.Events)
+                    {
+                        if (item.EventType.Name == "HWTF Master Project")
+                        {
+                            <tr class="@(!item.Active ? "text-muted table-warning" : "")">
+                                <td class="text-nowrap">
+                                    <label>
+                                        @Html.RadioButtonFor(m => m.ParentEventId, item.Id)
+                                        @Html.DisplayFor(m => item.EventType.Name)
+                                    </label>
+                                </td>
+                                <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
+                                <td>@Html.DisplayFor(m => item.StartDate)</td>
+                                <td>@Html.DisplayFor(m => item.DueDate)</td>
+                                <td>@Html.DisplayFor(m => item.CompletionDate)</td>
+                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                                <td>@Html.DisplayFor(m => item.EventAmount)</td>
+                                <td>
+                                    @if (item.EventContractor != null)
+                                    {
+                                        @Html.DisplayFor(m => item.EventContractor.Name)
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(m => item.Comment)</td>
+                            </tr>
+                        }
+                    }
+                    <tr>
+                        <td colspan="12">
+                            <label class="active">
+                                @Html.RadioButtonFor(m => m.ParentEventId, Guid.Empty)
+                                None
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @*   } *@
+    <div class="container bg-light-subtle py-3 my-3 rounded-3">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="NewEvent.FacilityId" />
+        <input type="hidden" asp-for="NewEvent.ParentId" />
+        <div class="row">
+            <div class="col">
+                <label asp-for="NewEvent.EventTypeId">Event Type <span class="text-danger">*</span></label>
+                <select asp-for="NewEvent.EventTypeId" asp-items="Model.EventTypes" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.EventTypeId" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.ActionTakenId">Action Taken <span class="text-danger">*</span></label>
+                <select asp-for="NewEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.ActionTakenId" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.StartDate" class="form-label"></label>
+                <input asp-for="NewEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewEvent.StartDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.DueDate" class="form-label"></label>
+                <input asp-for="NewEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewEvent.DueDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="NewEvent.CompletionDate" class="form-label"></label>
+                <input asp-for="NewEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="NewEvent.CompletionDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.ComplianceOfficerId">Done By (CO) <span class="text-danger">*</span></label>
+                <select asp-for="NewEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.ComplianceOfficerId" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.EventAmount"></label>
+                <input asp-for="NewEvent.EventAmount" class="form-control" />
+                <span asp-validation-for="NewEvent.EventAmount" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="NewEvent.EventContractorId"></label>
+                <select asp-for="NewEvent.EventContractorId" asp-items="Model.EventContractors" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="NewEvent.EventContractorId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <label asp-for="NewEvent.Comment" class="form-label"></label>
+                <textarea asp-for="NewEvent.Comment" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="NewEvent.Comment" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <p class="text-danger">* denotes a required field</p>
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Add Event</button>
+        <a asp-page="../Facilities/Details" 
+            asp-route-Id="@Model.NewEvent.FacilityId" 
+            asp-route-tab="Events"
+           class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
+            Cancel
+        </a>
+    </div>
+    @if (Model.Facility.Events.Count > 0)
+    {
+        <div class="container bg-light-subtle py-3 rounded-3">
+            <h3>Existing Events for @Model.Facility.FacilityNumber</h3>
+            <div class="row justify-content-evenly">
+                <table class="table table-sm" aria-label="Events">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.EventType ? EventSort.EventTypeDesc : EventSort.EventType)">
+                                    Event Type
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow",
+                                    new { up = EventSort.EventType, down = EventSort.EventTypeDesc })
+                                </a>
+                            </th>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.ActionTaken ? EventSort.ActionTakenDesc : EventSort.ActionTaken)">
+                                    Action Taken
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ActionTaken, down = EventSort.ActionTakenDesc })
+                                </a>
+                            </th>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.StartDate ? EventSort.StartDateDesc : EventSort.StartDate)">
+                                    Start Date
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.StartDate, down = EventSort.StartDateDesc })
+                                </a>
+                            </th>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.DueDate ? EventSort.DueDateDesc : EventSort.DueDate)">
+                                    Due Date
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.DueDate, down = EventSort.DueDateDesc })
+                                </a>
+                            </th>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.CompletionDate ? EventSort.CompletionDateDesc : EventSort.CompletionDate)">
+                                    Completion Date
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.CompletionDate, down = EventSort.CompletionDateDesc })
+                                </a>
+                            </th>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.ComplianceOfficer ? EventSort.ComplianceOfficerDesc : EventSort.ComplianceOfficer)">
+                                    Done By
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ComplianceOfficer, down = EventSort.ComplianceOfficerDesc })
+                                </a>
+                            </th>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.EventAmount ? EventSort.EventAmountDesc : EventSort.EventAmount)">
+                                    Event Amount
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventAmount, down = EventSort.EventAmountDesc })
+                                </a>
+                            </th>
+                            <th scope="col" class="text-nowrap">
+                                <a asp-route-SortBy="@(Model.SortBy == EventSort.EventContractor ? EventSort.EventContractorDesc : EventSort.EventContractor)">
+                                    Contractor
+                                    @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventContractor, down = EventSort.EventContractorDesc })
+                                </a>
+                            </th>
+                            <th scope="col">Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.Events.Count; i++)
+                        {
+                            var item = Model.Events[i];
+                            <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
+                                <td>
+                                    @if (item.ParentId != Guid.Empty)
+                                    {
+                                        <span class="badge text-bg-info"> ^ </span>
+                                    }
+                                    @item.EventType.Name
+                                </td>
+                                <td>@item.ActionTaken.Name</td>
+                                <td>@item.StartDate</td>
+                                <td>@item.DueDate</td>
+                                <td>@item.CompletionDate</td>
+                                <td>@item.ComplianceOfficer.Name</td>
+                                <td>@item.EventAmount</td>
+                                <td>@item.EventContractor?.Name</td>
+                                <td>@item.Comment</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</form>

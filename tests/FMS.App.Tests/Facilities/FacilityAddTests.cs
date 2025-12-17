@@ -23,6 +23,7 @@ namespace FMS.App.Tests.Facilities
         {
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
 
             // Mock user & page context
@@ -30,7 +31,7 @@ namespace FMS.App.Tests.Facilities
             var actionContext = new ActionContext(httpContext, new RouteData(), new PageActionDescriptor());
             var pageContext = new PageContext(actionContext);
 
-            var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper) { PageContext = pageContext };
+            var pageModel = new AddModel(mockRepo, mockType, mockStatus, mockSelectListHelper) { PageContext = pageContext };
 
             var result = await pageModel.OnGetAsync();
 
@@ -45,11 +46,12 @@ namespace FMS.App.Tests.Facilities
             var newId = Guid.NewGuid();
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
             mockRepo.CreateFacilityAsync(Arg.Any<FacilityCreateDto>()).Returns(newId);
             mockRepo.GetFacilityListAsync(Arg.Any<FacilityMapSpec>()).Returns(nearbyFacilities);
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
+            var pageModel = new AddModel(mockRepo, mockType, mockStatus, mockSelectListHelper)
             {
                 Facility = new FacilityCreateDto
                     { State = "Georgia", Latitude = 31, Longitude = -81, FacilityNumber = "a" },
@@ -79,10 +81,11 @@ namespace FMS.App.Tests.Facilities
 
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
             mockRepo.GetFacilityListAsync(Arg.Any<FacilityMapSpec>()).Returns(nearbyFacilities);
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
+            var pageModel = new AddModel(mockRepo, mockType, mockStatus, mockSelectListHelper)
             {
                 Facility = new FacilityCreateDto
                     { State = "Georgia", Latitude = 31, Longitude = -81, FacilityNumber = "a" },
@@ -102,11 +105,12 @@ namespace FMS.App.Tests.Facilities
             var newId = Guid.NewGuid();
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
             mockRepo.CreateFacilityAsync(Arg.Any<FacilityCreateDto>()).Returns(newId);
             mockRepo.FileLabelExists(Arg.Any<string>()).Returns(true);
 
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper)
+            var pageModel = new AddModel(mockRepo, mockType, mockStatus, mockSelectListHelper)
             {
                 Facility = new FacilityCreateDto
                     { State = "Georgia", Latitude = 31, Longitude = -81, FacilityNumber = "a" },
@@ -127,7 +131,8 @@ namespace FMS.App.Tests.Facilities
             var mockRepo = Substitute.For<IFacilityRepository>();
             var mockType = Substitute.For<IFacilityTypeRepository>();
             var mockSelectListHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new AddModel(mockRepo, mockType, mockSelectListHelper);
+            var mockStatus = Substitute.For<IFacilityStatusRepository>();
+            var pageModel = new AddModel(mockRepo, mockType, mockStatus, mockSelectListHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostConfirmAsync().ConfigureAwait(false);

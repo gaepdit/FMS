@@ -1,0 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using FMS.Domain.Dto;
+
+namespace FMS.Domain.Repositories
+{
+    public interface IFundingSourceRepository : IDisposable
+    {
+        Task<bool> FundingSourceExistsAsync(Guid id);
+
+        Task<bool> FundingSourceNameExistsAsync(string name, Guid? ignoreId = null);
+
+        Task<FundingSourceEditDto> GetFundingSourceByIdAsync(Guid id);
+
+        Task<IReadOnlyList<FundingSourceSummaryDto>> GetFundingSourceListAsync();
+
+        Task<Guid> CreateFundingSourceAsync(FundingSourceCreateDto fundingSource);
+
+        Task UpdateFundingSourceAsync(Guid id, FundingSourceEditDto fundingSourceUpdates);
+
+        Task UpdateFundingSourceStatusAsync(Guid id, bool active);
+    }
+}

@@ -1,0 +1,200 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Status
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Status.EditModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Edit Status";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+<hr />
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="EditStatus.FacilityId" />
+        <input type="hidden" asp-for="EditStatus.Id" />
+        <input type="hidden" asp-for="EditStatus.Active" />
+        <div class="row mb-3">
+            <div class="col mb-4">
+                <label asp-for="EditStatus.FundingSourceId" class="form-label"></label>
+                <select asp-for="EditStatus.FundingSourceId" asp-items="Model.FundingSources" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.FundingSourceId" class="text-danger"></span>
+            </div>
+            <div class="col-md-2 align-baseline" >
+                <input asp-for="EditStatus.ISWQS" class="form-check-input" />
+                <label asp-for="EditStatus.ISWQS" class="form-check-label"></label>
+                <span asp-validation-for="EditStatus.ISWQS" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <input asp-for="EditStatus.LandFill" class="form-check-input align-bottom" />
+                <label asp-for="EditStatus.LandFill" class="form-check-label align-bottom"></label>
+                <span asp-validation-for="EditStatus.LandFill" class="text-danger align-bottom"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="EditStatus.SolidWastePermitNumber" class="form-label"></label>
+                <input asp-for="EditStatus.SolidWastePermitNumber" class="form-control" />
+                <span asp-validation-for="EditStatus.SolidWastePermitNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-4 mb-3">
+                <label asp-for="EditStatus.AbandonedInactiveId" class="form-label"></label>
+                <select asp-for="EditStatus.AbandonedInactiveId" asp-items="Model.AbandonedInactive" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.AbandonedInactiveId" class="text-danger"></span>
+            </div>
+            <div class="col-sm-8 mb-3">
+                <label asp-for="EditStatus.ReportComments" class="form-label"></label>
+                <textarea asp-for="EditStatus.ReportComments" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="EditStatus.ReportComments" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="EditStatus.SourceStatusId" class="form-label"></label>
+                <select asp-for="EditStatus.SourceStatusId" asp-items="Model.SourceStatuses" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.SourceStatusId" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <div class="col mb-3">
+                    <label asp-for="EditStatus.SourceDate" class="form-label"></label>
+                    <input asp-for="EditStatus.SourceDate" class="form-control datepicker" type="date" placeholder="" />
+                    <span asp-validation-for="EditStatus.SourceDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditStatus.SoilStatusId" class="form-label"></label>
+                <select asp-for="EditStatus.SoilStatusId" asp-items="Model.SoilStatuses" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.SoilStatusId" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <div class="col mb-3">
+                    <label asp-for="EditStatus.SoilDate" class="form-label"></label>
+                    <input asp-for="EditStatus.SoilDate" class="form-control datepicker" type="date" placeholder="" />
+                    <span asp-validation-for="EditStatus.SoilDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="EditStatus.GroundwaterStatusId" class="form-label"></label>
+                <select asp-for="EditStatus.GroundwaterStatusId" asp-items="Model.GroundwaterStatuses" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.GroundwaterStatusId" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <div class="col mb-3">
+                    <label asp-for="EditStatus.GroundwaterDate" class="form-label"></label>
+                    <input asp-for="EditStatus.GroundwaterDate" class="form-control datepicker" type="date" placeholder="" />
+                    <span asp-validation-for="EditStatus.GroundwaterDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditStatus.OverallStatusId" class="form-label"></label>
+                <select asp-for="EditStatus.OverallStatusId" asp-items="Model.OverallStatuses" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.OverallStatusId" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <div class="col mb-3">
+                    <label asp-for="EditStatus.OverallDate" class="form-label"></label>
+                    <input asp-for="EditStatus.OverallDate" class="form-control datepicker" type="date" placeholder="" />
+                    <span asp-validation-for="EditStatus.OverallDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="EditStatus.GAPSScore" class="form-label"></label>
+                <input asp-for="EditStatus.GAPSScore" class="form-control" />
+                <span asp-validation-for="EditStatus.GAPSScore" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditStatus.GAPSModelDate" class="form-label"></label>
+                <input asp-for="EditStatus.GAPSModelDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="EditStatus.GAPSModelDate" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditStatus.GAPSNoOfUnknowns" class="form-label"></label>
+                <input asp-for="EditStatus.GAPSNoOfUnknowns" class="form-control" />
+                <span asp-validation-for="EditStatus.GAPSNoOfUnknowns" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="EditStatus.GAPSAssessmentId" class="form-label"></label>
+                <select asp-for="EditStatus.GAPSAssessmentId" asp-items="Model.GAPSAssessments" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="EditStatus.GAPSAssessmentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="EditStatus.CostEstimate" class="form-label"></label>
+                <input asp-for="EditStatus.CostEstimate" class="form-control" />
+                <span asp-validation-for="EditStatus.CostEstimate" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditStatus.CostEstimateDate" class="form-label"></label>
+                <input asp-for="EditStatus.CostEstimateDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="EditStatus.CostEstimateDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-8 mb-3">
+                <label asp-for="EditStatus.Comments" class="form-label"></label>
+                <textarea asp-for="EditStatus.Comments" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="EditStatus.Comments" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <input asp-for="EditStatus.Lien" class="form-check-input" />
+                <label asp-for="EditStatus.Lien" class="form-check-label"></label>
+                <span asp-validation-for="EditStatus.Lien" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <a href="https://gets.sharepoint.com/:f:/s/ResponseandRemediationProgram/EhLSMRi5lEZOquQ6pLKhLUwBEpMsALxr5BHdhIOp6kZYiw?e=5vWBcz" class="btn btn-sm btn-primary" target="_blank">Liens Filed with County</a>
+            </div>
+            <div class="col-md-3">
+                <a href="https://gets.sharepoint.com/:x:/r/sites/ResponseandRemediationProgram/_layouts/15/Doc.aspx?sourcedoc=%7B2E098C73-A60A-4607-8378-3723CA996DEB%7D&file=Liens%20and%20PAF%20Spending%20Tracker.xlsx&action=default&mobileredirect=true" class="btn btn-sm btn-primary" target="_blank">Liens and PAF Spending Tracker</a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <input asp-for="EditStatus.FinancialAssurance" class="form-check-input" />
+                <label asp-for="EditStatus.FinancialAssurance" class="form-check-label"></label>
+                <span asp-validation-for="EditStatus.FinancialAssurance" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <a href="https://gets.sharepoint.com/:x:/r/sites/ResponseandRemediationProgram/_layouts/15/Doc.aspx?sourcedoc=%7B3A30C17D-62E2-4F54-BB79-F60CAF3EBC98%7D&file=HSRP%20Financial%20Assurance%20List%20of%20Sites%202020.xlsx&action=default&mobileredirect=true" class="btn btn-sm btn-primary" target="_blank">HSRP Financial Assurance Tracker</a>
+            </div>
+        </div>
+        <hr />
+        <div class="row mb-3">
+            <button id="submitButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Update Status</button>
+            <a asp-page="../Facilities/Details"
+                asp-route-id="@Model.Facility.Id"
+                asp-route-tab="Status"
+                class="btn btn-outline-secondary col-md-2">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>

@@ -44,6 +44,125 @@ namespace FMS.Infrastructure.Repositories
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
 
+            if (facility.FacilityType.Name == "HSI")
+            {
+                facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
+                    .AsNoTracking()
+                    .Include(e => e.OrganizationalUnit)
+                    .Include(e => e.ComplianceOfficer)
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+                facility.HsrpFacilityProperties ??= new HsrpFacilityProperties(facility.Id);
+
+                facility.LocationDetails = await _context.Locations
+                    .AsNoTracking()
+                    .Include(e => e.LocationClass)
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+                facility.LocationDetails ??= new Location(facility.Id);
+
+                facility.Parcels = await _context.Parcels
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ParcelType)
+                    .OrderByDescending(e => e.Active)
+                    .ThenBy(e => e.ListDate)
+                    .ThenBy(e => e.DeListDate)
+                    .ToListAsync();
+
+                facility.Contacts = await _context.Contacts
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.ContactType)
+                    .Include(e => e.Phones.OrderByDescending(p => p.Active))
+                    .OrderByDescending(e => e.Active)
+                    .ThenBy(e => e.FamilyName)
+                    .ThenBy(e => e.GivenName)
+                    .ToListAsync();
+
+                facility.ScoreDetails = await _context.Scores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+                if (facility.ScoreDetails == null)
+                {
+                    facility.ScoreDetails = new Score(facility.Id);
+                    await _context.Scores.AddAsync(facility.ScoreDetails);
+                    await _context.SaveChangesAsync();
+                }
+
+                facility.Substances = await _context.Substances
+                        .AsNoTracking()
+                        .Include(e => e.Chemical)
+                        .Where(e => e.FacilityId == id)
+                        .OrderByDescending(e => e.Active)
+                        .ThenByDescending(e => e.Chemical.Active)
+                        .ThenBy(e => e.Chemical.CommonName)
+                        .ToListAsync();
+
+                facility.GroundwaterScoreDetails = await _context.GroundwaterScores
+                    .AsNoTracking()
+                    .Where(e => e.FacilityId == id)
+                    .Include(e => e.Substance)
+                    .Include(e => e.Substance.Chemical)
+                    .FirstOrDefaultAsync();
+                if (facility.GroundwaterScoreDetails == null)
+                {
+                    facility.GroundwaterScoreDetails = new GroundwaterScore(facility.Id);
+                    await _context.GroundwaterScores.AddAsync(facility.GroundwaterScoreDetails);
+                    await _context.SaveChangesAsync();
+                }
+
+                facility.OnsiteScoreDetails = await _context.OnsiteScores
+                        .AsNoTracking()
+                        .Where(e => e.FacilityId == id)
+                        .Include(e => e.Substance)
+                        .Include(e => e.Substance.Chemical)
+                        .FirstOrDefaultAsync();
+                if (facility.OnsiteScoreDetails == null)
+                {
+                    facility.OnsiteScoreDetails = new OnsiteScore(facility.Id);
+                    await _context.OnsiteScores.AddAsync(facility.OnsiteScoreDetails);
+                    await _context.SaveChangesAsync();
+                }
+
+                facility.StatusDetails = await _context.Statuses
+                    .AsNoTracking()
+                    .Include(e => e.SourceStatus)
+                    .Include(e => e.SoilStatus)
+                    .Include(e => e.GroundwaterStatus)
+                    .Include(e => e.OverallStatus)
+                    .Include(e => e.FundingSource)
+                    .Include(e => e.GAPSAssessment)
+                    .Include(e => e.AbandonedInactive)
+                    .Where(e => e.FacilityId == id)
+                    .FirstOrDefaultAsync();
+                if (facility.StatusDetails == null)
+                {
+                    facility.StatusDetails = new Status(facility.Id);
+                    await _context.Statuses.AddAsync(facility.StatusDetails);
+                }
+            }
+
+            if (facility.FacilityType.Name == "VRP" || facility.FacilityType.Name == "HSI" || facility.FacilityStatus.Name == "COMPLAINT" || facility.FacilityStatus.Name == "Event Tracking On")
+            {
+                facility.Events = await _context.Events
+                    .AsNoTracking()
+                    .Include(e => e.EventType)
+                    .Include(e => e.ActionTaken)
+                    .Include(e => e.ComplianceOfficer)
+                    .Include(e => e.EventContractor)
+                    .Where(e => e.FacilityId == id)
+                    .ToListAsync();
+
+                facility.Events = facility.Events
+                    .OrderBy(e => e.StartDate)
+                    .ThenBy(e => e.CompletionDate)
+                    .GroupBy(e => e.ParentId?.ToString() ?? string.Empty)
+                    .SelectMany(g => g)
+                    .ToList();
+            }
+
             var facilityDetail = new FacilityDetailDto(facility);
 
             if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
@@ -225,7 +344,7 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
             }
 
-            if (string.IsNullOrEmpty(newFacility.FacilityNumber) && newFacility.FacilityTypeName == "RN")
+            if (string.IsNullOrEmpty(newFacility.FacilityNumber) && newFacility.FacilityTypeName == "RN" && newFacility.FacilityStatusName != "COMPLAINT")
             {
                 newFacility.FacilityNumber = await CreateRNFacilityNumberInternalAsync();
             }
@@ -248,6 +367,17 @@ namespace FMS.Infrastructure.Repositories
             {
                 File = file
             };
+
+            if (newFacility.FacilityTypeName == "HSI")
+            {
+                // Create placeholder objects in new HSI Facility
+                newFac.HsrpFacilityProperties = new HsrpFacilityProperties(newFac.Id);
+                newFac.LocationDetails = new Location(newFac.Id);
+                newFac.ScoreDetails = new Score(newFac.Id);
+                newFac.GroundwaterScoreDetails = new GroundwaterScore(newFac.Id);
+                newFac.OnsiteScoreDetails = new OnsiteScore(newFac.Id);
+                newFac.StatusDetails = new Status(newFac.Id);
+            }
 
             await _context.Facilities.AddAsync(newFac);
             await _context.SaveChangesAsync();
@@ -396,8 +526,8 @@ namespace FMS.Infrastructure.Repositories
                 && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public Task<bool> DuplicateFacilityNumberExists(string newFacilityNumber, Guid oldFacilityId, Guid facilityTypeId) => _context.Facilities.AnyAsync(
-            e => e.FacilityNumber == newFacilityNumber 
-            && e.Id != oldFacilityId 
+            e => e.FacilityNumber == newFacilityNumber
+            && e.Id != oldFacilityId
             && e.FacilityTypeId == facilityTypeId);
 
         public Task<bool> FileLabelExists(string fileLabel) =>

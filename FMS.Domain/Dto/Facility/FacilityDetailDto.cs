@@ -50,6 +50,22 @@ namespace FMS.Domain.Dto
             RetentionRecords = facility.RetentionRecords?
                     .Select(e => new RetentionRecordDetailDto(e)).ToList()
                 ?? new List<RetentionRecordDetailDto>();
+            // Phase III additions for HSI
+            HsrpFacilityPropertyDetails = facility.HsrpFacilityProperties;
+            LocationDetails = facility.LocationDetails;
+            Parcels = facility.Parcels?
+                .Select(p => new ParcelSummaryDto(p)).ToList() ?? 
+                new List<ParcelSummaryDto>();
+            Contacts = facility.Contacts ?
+                .Select(c => new ContactSummaryDto(c)).ToList() ?? new List<ContactSummaryDto>();
+            ScoreDetails = facility.ScoreDetails;
+            GroundwaterScoreDetails = facility.GroundwaterScoreDetails;
+            OnsiteScoreDetails = facility.OnsiteScoreDetails;
+            Substances = facility.Substances ?
+                .Select(s => new SubstanceSummaryDto(s)).ToList() ?? new List<SubstanceSummaryDto>();
+            StatusDetails = facility.StatusDetails;
+            Events = facility.Events ?
+                .Select(e => new EventSummaryDto(e)).ToList() ?? new List<EventSummaryDto>();
         }
 
         public Guid Id { get; }
@@ -146,7 +162,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "General Comments for this Facility")]
         public string Comments { get; set; }
 
         [Display(Name = "Cabinets")]
@@ -161,5 +177,27 @@ namespace FMS.Domain.Dto
         public string RetentionRecordsToString => RetentionRecords.Count > 0
             ? RetentionRecords.Select(r => r.Summary).ConcatNonEmpty(Environment.NewLine)
             : "none";
+
+        // Phase III additions for HSI
+        public HsrpFacilityProperties HsrpFacilityPropertyDetails { get; set; }
+
+        [Display(Name = "Class")]
+        public Location LocationDetails { get; set; }
+
+        public List<ParcelSummaryDto> Parcels { get; }
+
+        public List<ContactSummaryDto> Contacts { get; }
+
+        public Score ScoreDetails { get; set; }
+
+        public GroundwaterScore GroundwaterScoreDetails { get; set; }
+
+        public OnsiteScore OnsiteScoreDetails { get; set; }
+
+        public List<SubstanceSummaryDto> Substances { get; }
+
+        public Status StatusDetails { get; set; }
+
+        public IList<EventSummaryDto> Events { get; set; }
     }
 }

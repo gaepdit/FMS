@@ -1,14 +1,16 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Threading.Tasks;
-using FMS.Platform.Extensions;
-using FMS.Helpers;
-using System.Net;
-using NUglify.Helpers;
 using Microsoft.IdentityModel.Tokens;
+using NUglify.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
@@ -22,9 +24,16 @@ namespace FMS.Pages.Facilities
         public Guid FacilityId { get; set; }
 
         private readonly IFacilityRepository _repository;
-        public DetailsModel(IFacilityRepository repository) => _repository = repository;
+        private readonly IEventRepository _eventRepository;
+        public DetailsModel(IFacilityRepository repository, IEventRepository eventRepository)
+        {
+            _repository = repository;
+            _eventRepository = eventRepository;
+        }
 
         public FacilityDetailDto FacilityDetail { get; set; }
+
+        public IEnumerable<EventSummaryDto> EventSummaryList { get; set; }
 
         public DisplayMessage Message { get; private set; }
 
@@ -39,7 +48,21 @@ namespace FMS.Pages.Facilities
 
         public string PendingNotificationFolderLink { get; set; } = string.Empty;
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr)
+        [BindProperty]
+        public string MapLink { get; set; }
+
+        [TempData]
+        public string ActiveTab { get; set; }
+
+        [TempData]
+        public string Lat { get; set; }
+
+        [TempData]
+        public string Lon { get; set; }
+
+        public EventSort SortBy { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr,  string tab, EventSort sortBy = EventSort.StartDateDesc)
         {
             if (id == null)
             {
@@ -75,7 +98,11 @@ namespace FMS.Pages.Facilities
                 }
                 RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
             }
-            
+
+            ActiveTab = tab ?? "HSIProperties";
+            SortBy = sortBy;
+            MapLink = GetMapLink();
+            FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events, SortBy);
             FacilityId = FacilityDetail.Id;
             Message = TempData?.GetDisplayMessage();
             return Page();
@@ -112,11 +139,32 @@ namespace FMS.Pages.Facilities
             }
 
             RecordCreate.TrimAll();
-
+            GetMapLink();
             HighlightRecord = await _repository.CreateRetentionRecordAsync(FacilityId, RecordCreate);
 
             return RedirectToPage();
         }
-       
+
+        public async Task<IActionResult> OnPostExportButtonAsync(EventSort sortBy)
+        {
+            var facility = await _repository.GetFacilityAsync(FacilityId);
+            var fileName = $"FMS_{facility.Name}_Event_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            // "EventDetailList" Detailed Event List to go to a report
+            IList<EventSummaryDto> eventReportList = await _eventRepository.GetEventsByFacilityIdAsync(FacilityId);
+            eventReportList = EventSortHelper.SortEvents(eventReportList, sortBy);
+            var eventDetailList = from p in eventReportList select new EventSummaryDtoScalar(p, facility.Name, facility.FacilityNumber);
+            return File(eventDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Event), "application/vnd.ms-excel", fileName);
+        }
+
+        public string GetMapLink()
+        {
+            if (FacilityDetail != null && FacilityDetail.Latitude != 0 && FacilityDetail.Longitude != 0)
+            {
+                Lat = FacilityDetail.Latitude.ToString();
+                Lon = FacilityDetail.Longitude.ToString();
+                return UrlHelper.GetMapLink(FacilityDetail.Latitude, FacilityDetail.Longitude);
+            }
+            return string.Empty;
+        }
     }
 }

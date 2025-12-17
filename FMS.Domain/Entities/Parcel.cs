@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
@@ -12,22 +8,29 @@ namespace FMS.Domain.Entities
     {
         public Parcel() { }
 
-        public Parcel(ParcelEditDto parcel)
+        public Parcel(Guid id, ParcelCreateDto parcel)
         {
-            LocationId = parcel.LocationId;
-            ParcelId = parcel.ParcelId;
-            ParcelDescription = parcel.ParcelDescription;
-            ParcelType = parcel.ParcelType;
+            FacilityId = id;
+            ParcelNumber = parcel.ParcelNumber;
             Acres = parcel.Acres;
-            Latitude = parcel.Latitude;
-            Longitude = parcel.Longitude;
+            ParcelTypeId = parcel.ParcelTypeId;
+            ListDate = parcel.ListDate;
+            DeListDate = parcel.DeListDate;
+            SubListParcelName = parcel.SubListParcelName;
         }
-        public Guid LocationId { get; set; }
-        public string ParcelId { get; set; }
-        public string ParcelDescription { get; set; } 
-        public string ParcelType { get; set; } 
-        public double Acres { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public Guid FacilityId { get; set; }
+
+        public string ParcelNumber { get; set; }
+
+        public double? Acres { get; set; }
+
+        public Guid? ParcelTypeId { get; set; }
+        public ParcelType ParcelType { get; set; }
+
+        public DateOnly? ListDate { get; set; }
+
+        public DateOnly? DeListDate { get; set; }
+
+        public string SubListParcelName { get; set; }
     }
 }

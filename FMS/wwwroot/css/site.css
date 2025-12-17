@@ -294,3 +294,29 @@ a[target]::after {
     -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
     filter: invert(100%);
 }
+:root,
+[data-bs-theme=light] {
+    --bs-body-bg: #c8f8d5;
+}
+[data-bs-theme=dark] {
+    --bs-body-bg: #013901;
+}
+/* Chemical select box
+-------------------------------------------------- */
+.custom-combobox {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+}
+
+.custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+}

@@ -6,6 +6,15 @@ namespace FMS.Domain.Dto
 {
     public class FacilityMapSpec
     {
+        public FacilityMapSpec() { }
+        
+        public FacilityMapSpec(FacilityDetailDto facility)
+        {
+            Latitude = facility.Latitude;
+            Longitude = facility.Longitude;
+            Radius = 3m;
+        }
+
         [Display(Name = "Include deleted records")]
         public bool ShowDeleted { get; set; }
 
@@ -22,13 +31,15 @@ namespace FMS.Domain.Dto
         public string State { get; set; } = "Georgia";
 
         [Display(Name = "ZIP Code")]
-        [StringLength(10)]
+        [RegularExpression(@"^\d{5}$", ErrorMessage = "Invalid Zip Code format. Please enter a 5-digit number.")]
         public string PostalCode { get; set; }
 
         [Display(Name = "Latitude")]
+        [DisplayFormat(DataFormatString = "{0:0.000000}", ApplyFormatInEditMode = true)]
         public decimal? Latitude { get; set; }
 
         [Display(Name = "Longitude")]
+        [DisplayFormat(DataFormatString = "{0:0.000000}", ApplyFormatInEditMode = true)]
         public decimal? Longitude { get; set; }
 
         [Display(Name = "Radius")]

@@ -58,6 +58,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Facility Status")]
         public Guid? FacilityStatusId { get; set; }
+        public string FacilityStatusName { get; set; }
 
         [Required]
         [Display(Name = "Type/Environmental Interest")]
@@ -97,8 +98,8 @@ namespace FMS.Domain.Dto
         public string State { get; set; }
 
         [Required]
-        [StringLength(10)]
         [Display(Name = "ZIP Code")]
+        [RegularExpression(@"^\d{5}$", ErrorMessage = "Invalid Zip Code format. Please enter a 5-digit number.")]
         public string PostalCode { get; set; }
 
         [Required]
@@ -121,7 +122,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Determination Letter Date")]
         public DateOnly? DeterminationLetterDate { get; set; }
 
-        [Display(Name = "Comments")]
+        [Display(Name = "General Comments for this Facility")]
         public string Comments { get; set; }
 
         [Display(Name = "Pre-RQSM Cleanup")]

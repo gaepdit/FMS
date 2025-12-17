@@ -1,0 +1,72 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Parcel
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Parcel.EditModel
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Edit Parcel";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="EditParcel.FacilityId" />
+        <input type="hidden" asp-for="EditParcel.Id" />
+        <div class="row">
+            <div class="col">
+                <label asp-for="EditParcel.ParcelNumber"></label>
+                <input asp-for="EditParcel.ParcelNumber" class="form-control" />
+                <span asp-validation-for="EditParcel.ParcelNumber" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditParcel.Acres"></label>
+                <input asp-for="EditParcel.Acres" class="form-control" />
+                <span asp-validation-for="EditParcel.Acres" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditParcel.ParcelTypeId"></label>
+                <select asp-for="EditParcel.ParcelTypeId" asp-items="Model.ParcelTypes" class="form-select">
+                    <option value="">-- Select Parcel Type --</option>
+                </select>
+                <span asp-validation-for="EditParcel.ParcelTypeId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label asp-for="EditParcel.ListDate" class="form-label"></label>
+                <input asp-for="EditParcel.ListDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="EditParcel.ListDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditParcel.DeListDate" class="form-label"></label>
+                <input asp-for="EditParcel.DeListDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="EditParcel.DeListDate" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditParcel.SubListParcelName" class="form-label
+    text-center"></label>
+                <input asp-for="EditParcel.SubListParcelName" class="form-control" />
+                <span asp-validation-for="EditParcel.SubListParcelName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <input asp-for="EditParcel.Active" class="form-check-input" type="checkbox" />
+                <label asp-for="EditParcel.Active" class="form-check-label"></label>
+            </div>
+        </div>
+        <hr />
+        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Save Changes</button>
+        <a asp-page="../Facilities/Details" 
+            asp-route-Id="@Model.EditParcel.FacilityId"
+            asp-route-tab="Location"
+            class="btn btn-outline-secondary col-md-2">
+            Cancel
+        </a>
+    </form>
+</div>

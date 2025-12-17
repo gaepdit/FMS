@@ -1,11 +1,6 @@
 ﻿using FMS.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -13,14 +8,29 @@ namespace FMS.Domain.Dto
     {
         public LocationEditDto() { }
 
+        public LocationEditDto(Guid facilityId)
+        {
+            Id = Id = Guid.NewGuid();
+            FacilityId = facilityId;
+        }
+
         public LocationEditDto(Location location)
         {
+            Id = location.Id;
+            Active = location.Active;
             FacilityId = location.FacilityId;
-            Score = location.Score;
+            LocationClassId = location.LocationClass?.Id;
         }
+
+        public Guid Id { get; set; }
+
+        public bool Active { get; set; }
+
         public Guid FacilityId { get; set; }
 
-        [Display(Name = "Score")]
-        public string Score { get; set; }
+        [Display(Name = "Class")]
+        [Required(ErrorMessage = "Class is required.")]
+        public Guid? LocationClassId { get; set; }
+        public LocationClass LocationClass { get; set; }
     }
 }

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="axios" />
     <PackageReference Include="ClosedXML" />
     <PackageReference Include="FreeSpire.PDF" />
     <PackageReference Include="JetBrains.Annotations" />
@@ -38,6 +39,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FMS.Infrastructure\FMS.Infrastructure.csproj" />
     <ProjectReference Include="..\FMS.Domain\FMS.Domain.csproj" />
+    <ProjectReference Include="..\tests\TestHelpers\TestHelpers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

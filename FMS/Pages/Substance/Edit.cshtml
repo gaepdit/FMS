@@ -1,0 +1,92 @@
+﻿@page "{id:Guid?}"
+@model FMS.Pages.Substance.EditModel
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/editSubstance.js"></script>
+}
+
+@{
+    ViewData["Title"] = "Edit Substance";
+}
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="container bg-light-subtle py-3 rounded-3">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="EditSubstance.Id" />
+        <input type="hidden" asp-for="EditSubstance.FacilityId" />
+        <input type="hidden" asp-for="EditSubstance.Active" />
+        <input type="hidden" asp-for="EditSubstance.ChemicalId" />
+        <div class="row">
+            <div class="col">
+                <label asp-for="EditSubstance.Chemical.CasNo"></label>
+                <input asp-for="EditSubstance.Chemical.CasNo" class="form-control" readonly />
+                <span asp-validation-for="EditSubstance.Chemical.CasNo" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditSubstance.Chemical.ChemicalName"></label>
+                <input asp-for="EditSubstance.Chemical.ChemicalName" class="form-control" readonly />
+                <span asp-validation-for="EditSubstance.Chemical.ChemicalName" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="EditSubstance.Chemical.CommonName"></label>
+                <input asp-for="EditSubstance.Chemical.CommonName" class="form-control" readonly />
+                <span asp-validation-for="EditSubstance.Chemical.CommonName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.ToxValue">Tox Value</label>
+                <input asp-for="EditSubstance.Chemical.ToxValue" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.ToxValue" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.MCLs">MCLs</label>
+                <input asp-for="EditSubstance.Chemical.MCLs" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.MCLs" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.FinalRc">Final RC</label>
+                <input asp-for="EditSubstance.Chemical.FinalRc" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.FinalRc" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="EditSubstance.Chemical.RQ">RQ</label>
+                <input asp-for="EditSubstance.Chemical.RQ" class="form-control" readonly="true" />
+                <span asp-validation-for="EditSubstance.Chemical.RQ" class="text-danger"></span>
+            </div>
+        </div>
+        <p class="text-danger"><small>Edit these values in Chemical List Only</small></p>
+        <hr />
+        <div class="row mt-3">
+            <div class="col">
+                <input asp-for="EditSubstance.Groundwater" class="form-check-input" type="checkbox" />
+                <label asp-for="EditSubstance.Groundwater" class="form-check-label"></label>
+            </div>
+            <div class="col">
+                <input asp-for="EditSubstance.Soil" class="form-check-input" type="checkbox" />
+                <label asp-for="EditSubstance.Soil" class="form-check-label"></label>
+            </div>
+            <div class="col">
+                <input asp-for="EditSubstance.UseForGroundwaterScoring" class="form-check-input" type="checkbox" />
+                <label asp-for="EditSubstance.UseForGroundwaterScoring" class="form-check-label"></label>
+            </div>
+            <div class="col">
+                <input asp-for="EditSubstance.UseForSoilScoring" class="form-check-input" type="checkbox" />
+                <label asp-for="EditSubstance.UseForSoilScoring" class="form-check-label"></label>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <button id="submitButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Update Substance</button>
+                <a asp-page="../Facilities/Details" 
+                    asp-route-id="@Model.EditSubstance.FacilityId"
+                    asp-route-tab="Substances"
+                    class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
+                    Cancel
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

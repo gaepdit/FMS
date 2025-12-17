@@ -1,10 +1,6 @@
 ﻿using FMS.Domain.Entities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -13,33 +9,41 @@ namespace FMS.Domain.Dto
         public ParcelEditDto() { }
         public ParcelEditDto(Parcel parcel)
         {
-            LocationId = parcel.LocationId;
-            ParcelId = parcel.ParcelId;
-            ParcelDescription = parcel.ParcelDescription;
-            ParcelType = parcel.ParcelType;
+            Id = parcel.Id;
+            Active = parcel.Active;
+            FacilityId = parcel.FacilityId;
+            ParcelNumber = parcel.ParcelNumber;
             Acres = parcel.Acres;
-            Latitude = parcel.Latitude;
-            Longitude = parcel.Longitude;
+            ParcelTypeId = parcel.ParcelType?.Id;
+            ListDate = parcel.ListDate;
+            DeListDate = parcel.DeListDate;
+            SubListParcelName = parcel.SubListParcelName;
         }
-        public Guid LocationId { get; set; }
+        public Guid Id { get; set; }
 
-        [Display(Name = "Parcel ID")]
-        public string ParcelId { get; set; }
+        public bool Active { get; set; }
 
-        [Display(Name = "Deescription")]
-        public string ParcelDescription { get; set; }
+        public Guid FacilityId { get; set; }
 
-        [Display(Name = "Type")]
-        public string ParcelType { get; set; }
+        [Display(Name = "Parcel Number")]
+        [Required(ErrorMessage = "Parcel Number is required.")]
+        public string ParcelNumber { get; set; }
 
         [Display(Name = "Acreage")]
-        public double Acres { get; set; }
+        public double? Acres { get; set; }
 
-        [Display(Name = "Latitude")]
-        public double Latitude { get; set; }
+        [Display(Name = "Type")]
+        public Guid? ParcelTypeId { get; set; }
+        public ParcelType ParcelType { get; set; }
 
-        [Display(Name = "Longitude")]
-        public double Longitude { get; set; }
+        [Display(Name = "List Date")]
+        public DateOnly? ListDate { get; set; }
+
+        [Display(Name = "De-List Date")]
+        public DateOnly? DeListDate { get; set; }
+
+        [Display(Name = "Sub-List Parcel Name")]
+        public string SubListParcelName { get; set; }
     }
 
 }

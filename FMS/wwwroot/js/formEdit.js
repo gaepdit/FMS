@@ -7,16 +7,32 @@ $(document).ready(function formEdit() {
         }
     });
 
+    $('.table-hover tbody tr').click(function () {
+        $(this).find('input[type=radio]').prop('checked', true);
+        $(this).parent().find('tr').removeClass('table-primary');
+        $(this).addClass('table-primary');
+    });
+
     $("#Facility_FacilityTypeId").on("change", function () {
-        if ($("#Facility_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)") {
+        if ($("#Facility_FacilityTypeId option:selected").text().trim() === "RN (Release Notification)" && $("#Facility_FacilityStatusId option:selected").text().trim() != "COMPLAINT") {
             $("#RNBlock").removeClass("d-none");
+            $("#FacilityNumberHelpBlock").removeClass("d-none");
+            $("#Facility_FacilityNumber").prop('value', '')
+            $("#Facility_FacilityNumber").attr('readonly', true)
         } else {
             $("#RNBlock").addClass("d-none");
+            $("#FacilityNumberHelpBlock").addClass("d-none");
+            $("#Facility_FacilityNumber").attr('readonly', false)
         };
         if ($("#Facility_FacilityNumber").text().trim() === "") {
             switch ($("#Facility_FacilityTypeId option:selected").text().trim()) {
                 case "RN (Release Notification)":
-                    $("#Facility_FacilityNumber").attr('placeholder', 'RNdddd');
+                    if ($("#Facility_FacilityStatusId option:selected").text().trim() === "COMPLAINT") {
+                        $("#Facility_FacilityNumber").attr('placeholder', 'RNdddddd')
+                    }
+                    else {
+                        $("#Facility_FacilityNumber").attr('placeholder', 'RNdddd')
+                    };
                     break;
                 case "GEN (RCRA generator)":
                     $("#Facility_FacilityNumber").attr('placeholder', 'ddddd');

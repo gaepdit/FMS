@@ -1,0 +1,104 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.OnsiteScore
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.OnsiteScore.EditModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@{
+    ViewData["Title"] = "Edit Onsite Score Properties";
+}
+<h1>
+    @ViewData["Title"]
+</h1>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+        <input type="hidden" asp-for="OnsiteScore.FacilityId" />
+        <input type="hidden" asp-for="OnsiteScore.Id" />
+        <input type="hidden" asp-for="OnsiteScore.Active" />
+        <input type="hidden" asp-for="OnsiteScore.SubstanceId" />
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.CASNO" class="form-label"></label>
+                <input readonly asp-for="OnsiteScore.CASNO" class="form-control" />
+                <span asp-validation-for="OnsiteScore.CASNO" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.ChemName1D" class="form-label"></label>
+                <input readonly asp-for="OnsiteScore.ChemName1D" class="form-control" />
+                <span asp-validation-for="OnsiteScore.ChemName1D" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.Other1D" class="form-label"></label>
+                <input readonly asp-for="OnsiteScore.Other1D" class="form-control" />
+                <span asp-validation-for="OnsiteScore.Other1D" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.OnsiteScoreValue" class="form-label"></label>
+                <input asp-for="OnsiteScore.OnsiteScoreValue" class="form-control" />
+                <span asp-validation-for="OnsiteScore.OnsiteScoreValue" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.A" class="form-label"></label>
+                <input asp-for="OnsiteScore.A" class="form-control" />
+                <span asp-validation-for="OnsiteScore.A" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.B" class="form-label"></label>
+                <input asp-for="OnsiteScore.B" class="form-control" />
+                <span asp-validation-for="OnsiteScore.B" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.C" class="form-label"></label>
+                <input asp-for="OnsiteScore.C" class="form-control" />
+                <span asp-validation-for="OnsiteScore.C" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.D2" class="form-label"></label>
+                <input asp-for="OnsiteScore.D2" class="form-control" />
+                <span asp-validation-for="OnsiteScore.D2" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.D3" class="form-label"></label>
+                <input asp-for="OnsiteScore.D3" class="form-control" />
+                <span asp-validation-for="OnsiteScore.D3" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.E1" class="form-label"></label>
+                <input asp-for="OnsiteScore.E1" class="form-control" />
+                <span asp-validation-for="OnsiteScore.E1" class="text-danger"></span>
+            </div>
+            <div class="col mb-3">
+                <label asp-for="OnsiteScore.E2" class="form-label"></label>
+                <input asp-for="OnsiteScore.E2" class="form-control" />
+                <span asp-validation-for="OnsiteScore.E2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-9 mb-3">
+                <label asp-for="OnsiteScore.Description" class="form-label"></label>
+                <input asp-for="OnsiteScore.Description" class="form-control" />
+                <span asp-validation-for="OnsiteScore.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row mb-3">
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
+            <a asp-page="../Facilities/Details" 
+                asp-route-id="@Model.Facility.Id"
+                asp-route-tab="Score"
+                class="btn btn-outline-secondary col-md-2">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>

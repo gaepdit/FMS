@@ -1,0 +1,350 @@
+﻿@page "{id:Guid?}"
+@using FMS.Pages.Substance
+@using FMS.Domain.Entities.Users
+@model FMS.Pages.Substance.AddModel
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    @* <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> *@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    @* <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" /> *@
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link href="https://jqueryui.com/resources/demos/style.css" rel="stylesheet" />
+    <script src="~/js/addSubstance.js"></script>
+    <style>
+        /* .custom-combobox {
+                                    position: relative;
+                                    display: inline-block;
+                                }
+
+                                .custom-combobox-toggle {
+                                    position: absolute;
+                                    top: 0;
+                                    bottom: 0;
+                                    margin-left: -1px;
+                                    padding: 0;
+                                }
+
+                                .custom-combobox-input {
+                                    margin: 0;
+                                    padding: 5px 10px;
+                                } */
+
+        /* .ui-state-default,
+                                        .ui-widget-content .ui-state-default,
+                                        .ui-widget-header .ui-state-default {
+                                            border: 1px solid #421D1D;
+                                            background: #ffffff url("images/ui-bg_glass_75_e6e6e6_1x400.png") 50% 50% repeat-x !important;
+                                            font-weight: normal;
+                                            color: #555555;
+                                        } */
+        /* Corner radius */
+        /*  .ui-corner-all,
+                                        .ui-corner-top,
+                                        .ui-corner-left,
+                                        .ui-corner-tl {
+                                            border-top-left-radius: 0px !important;
+                                        }
+
+                                        .ui-corner-all,
+                                        .ui-corner-top,
+                                        .ui-corner-right,
+                                        .ui-corner-tr {
+                                            border-top-right-radius: 0px !important;
+                                        }
+
+                                        .ui-corner-all,
+                                        .ui-corner-bottom,
+                                        .ui-corner-left,
+                                        .ui-corner-bl {
+                                            border-bottom-left-radius: 0px !important;
+                                        }
+
+                                        .ui-corner-all,
+                                        .ui-corner-bottom,
+                                        .ui-corner-right,
+                                        .ui-corner-br {
+                                            border-bottom-right-radius: 0px !important;
+                                        } */
+    </style>
+    <script>
+        // (function($) {
+        //   $.widget("custom.combobox", {
+        //     _create: function() {
+        //       this.wrapper = $("<span>")
+        //         .addClass("custom-combobox")
+        //         .insertAfter(this.element);
+
+        //       this.element.hide();
+        //       this._createAutocomplete();
+        //       // this._createShowAllButton();
+        //     },
+
+        //     _createAutocomplete: function() {
+        //       var selected = this.element.children(":selected"),
+        //         value = selected.val() ? selected.text() : "";
+
+        //       this.input = $("<input>")
+        //         .appendTo(this.wrapper)
+        //         .val(value)
+        //         .attr("title", "")
+        //         .addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
+        //         .autocomplete({
+        //           delay: 0,
+        //           minLength: 0,
+        //           source: $.proxy(this, "_source")
+        //         })
+        //         .tooltip({
+        //           tooltipClass: "ui-state-highlight"
+        //         });
+
+        //       this._on(this.input, {
+        //         autocompleteselect: function(event, ui) {
+        //           ui.item.option.selected = true;
+        //           this._trigger("select", event, {
+        //             item: ui.item.option
+        //           });
+        //         },
+
+        //         autocompletechange: "_removeIfInvalid"
+        //       });
+        //     },
+
+        //     // _createShowAllButton: function() {
+        //     //   var input = this.input,
+        //     //     wasOpen = false;
+
+        //     //   $("<a>")
+        //     //     .attr("tabIndex", -1)
+        //     //     .attr("title", "Show All Items")
+        //     //     .tooltip()
+        //     //     .appendTo(this.wrapper)
+        //     //     .button({
+        //     //       icons: {
+        //     //         primary: "ui-icon-triangle-1-s"
+
+        //     //       },
+        //     //       text: false
+        //     //     })
+        //     //     .removeClass("ui-corner-all")
+        //     //     .addClass("custom-combobox-toggle ui-corner-right")
+        //     //     .mousedown(function() {
+        //     //       wasOpen = input.autocomplete("widget").is(":visible");
+        //     //     })
+        //     //     .click(function() {
+        //     //       input.focus();
+
+        //     //       // Close if already visible
+        //     //       if (wasOpen) {
+        //     //         return;
+        //     //       }
+
+        //     //       // Pass empty string as value to search for, displaying all results
+        //     //       input.autocomplete("search", "");
+        //     //     });
+        //     // },
+
+        //     _source: function(request, response) {
+        //       var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+        //       response(this.element.children("option").map(function() {
+        //         var text = $(this).text();
+        //         if (this.value && (!request.term || matcher.test(text)))
+        //           return {
+        //             label: text,
+        //             value: text,
+        //             option: this
+        //           };
+        //       }));
+        //     },
+
+        //     _removeIfInvalid: function(event, ui) {
+
+        //       // Selected an item, nothing to do
+        //       if (ui.item) {
+        //         return;
+        //       }
+
+        //       // Search for a match (case-insensitive)
+        //       var value = this.input.val(),
+        //         valueLowerCase = value.toLowerCase(),
+        //         valid = false;
+        //       this.element.children("option").each(function() {
+        //         if ($(this).text().toLowerCase() === valueLowerCase) {
+        //           this.selected = valid = true;
+        //           return false;
+        //         }
+        //       });
+
+        //       // Found a match, nothing to do
+        //       if (valid) {
+        //         return;
+        //       }
+
+        //       // Remove invalid value
+        //       this.input
+        //         .val("")
+        //         .attr("title", value + " didn't match any item")
+        //         .tooltip("open");
+        //       this.element.val("");
+        //       this._delay(function() {
+        //         this.input.tooltip("close").attr("title", "");
+        //       }, 2500);
+        //       this.input.autocomplete("instance").term = "";
+        //     },
+
+        //     _destroy: function() {
+        //       this.wrapper.remove();
+        //       this.element.show();
+        //     }
+        //   });
+        // })(jQuery);
+
+        // $(function() {
+        //   $("#combobox").combobox();
+        //   $("#toggle").click(function() {
+        //     $("#combobox").toggle();
+        //   });
+        // });
+    </script>
+}
+
+@{
+    ViewData["Title"] = "Add Substance";
+}
+<h1>@ViewData["Title"]</h1>
+<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<form method="get" asp-fragment="SearchResults" runat="server">
+    <div id="Chemical" class="@(!Model.ResultsActive ? "container bg-light-subtle py-3 rounded-3" : "d-none")">
+        <input type="hidden" asp-for="NewSubstance.FacilityId" />
+        <input type="hidden" asp-for="NewSubstance.Active" />
+        <div class="row">
+            <div class="col">
+                <label asp-for="NewSubstance.Chemical.Id">Start typing CASNO or Chemical Name</label>
+                <select id="combobox" asp-for="NewSubstance.Chemical.Id" asp-items="Model.Chemicals" class="form-control ui-widget-content">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id="ChemicaLButtons" class="@(!Model.ResultsActive ? "container bg-light-subtle py-3 rounded-3" : "d-none")">
+        <input type="hidden" name="handler" value="search" />
+        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Choose Chemical</button>
+        <a asp-page="../Facilities/Details" asp-route-Id="@Model.NewSubstance.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
+    </div>
+</form>
+
+@if (Model.ResultsActive)
+{
+    <div id="SearchResults" class="container bg-light-subtle py-3 rounded-3">
+        <form method="post">
+            <input type="hidden" asp-for="NewSubstance.Id" />
+            <input type="hidden" asp-for="NewSubstance.FacilityId" />
+            <input type="hidden" asp-for="NewSubstance.ChemicalId" />
+            <input type="hidden" asp-for="NewSubstance.Active" />
+            <div class="row">
+                <div class="col">
+                    <label asp-for="NewSubstance.Chemical.CasNo"></label>
+                    <input asp-for="NewSubstance.Chemical.CasNo" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.CasNo" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewSubstance.Chemical.ChemicalName"></label>
+                    <input asp-for="NewSubstance.Chemical.ChemicalName" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.ChemicalName" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewSubstance.Chemical.CommonName"></label>
+                    <input asp-for="NewSubstance.Chemical.CommonName" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.CommonName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.ToxValue">Tox Value</label>
+                    <input asp-for="NewSubstance.Chemical.ToxValue" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.ToxValue" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.MCLs">MCLs</label>
+                    <input asp-for="NewSubstance.Chemical.MCLs" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.MCLs" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.FinalRc">Final RC</label>
+                    <input asp-for="NewSubstance.Chemical.FinalRc" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.FinalRc" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="NewSubstance.Chemical.RQ">RQ</label>
+                    <input asp-for="NewSubstance.Chemical.RQ" class="form-control" readonly="true" />
+                    <span asp-validation-for="NewSubstance.Chemical.RQ" class="text-danger"></span>
+                </div>
+            </div>
+            <p class="text-danger"><small>Edit these values in Chemical List Only</small></p>
+            <hr/>
+            <div class="row mt-3">
+                <div class="col">
+                    <input asp-for="NewSubstance.Groundwater" class="form-check-input" type="checkbox" />
+                    <label asp-for="NewSubstance.Groundwater" class="form-check-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="NewSubstance.Soil" class="form-check-input" type="checkbox" />
+                    <label asp-for="NewSubstance.Soil" class="form-check-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="NewSubstance.UseForGroundwaterScoring" class="form-check-input" type="checkbox" />
+                    <label asp-for="NewSubstance.UseForGroundwaterScoring" class="form-check-label"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="NewSubstance.UseForSoilScoring" class="form-check-input" type="checkbox" />
+                    <label asp-for="NewSubstance.UseForSoilScoring" class="form-check-label"></label>
+                </div>
+            </div>
+            <hr />
+            <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">
+                Add Substance
+            </button>
+            <a asp-page="../Facilities/Details" 
+                asp-route-Id="@Model.NewSubstance.FacilityId"
+                asp-route-tab="Substances"
+                class="btn btn-outline-secondary col-md-2">
+                Cancel
+            </a>
+        </form>
+    </div>
+}
+<div id="Substances" class="container bg-light-subtle py-3 rounded-3">
+    <h5>Existing Substances</h5>
+    <div class="row justify-content-evenly">
+        <table class="table table-sm" aria-label="Parcels">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">CAS Number</th>
+                    <th scope="col">Substance Name</th>
+                    <th scope="col">Common Name</th>
+                    <th scope="col" class="text-center">Groundwater</th>
+                    <th scope="col" class="text-center">Soil</th>
+                    <th scope="col" class="text-center">Use for GW Scoring</th>
+                    <th scope="col" class="text-center">Use for Soil Scoring</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model.Substances)
+                {
+                    <tr>
+                        <td>@s.Chemical.CasNo</td>
+                        <td>@s.Chemical.ChemicalName</td>
+                        <td>@s.Chemical.CommonName</td>
+                        <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
+                        <td class="text-center">@Html.DisplayFor(m => s.Soil)</td>
+                        <td class="text-center">@Html.DisplayFor(m => s.UseForGroundwaterScoring)</td>
+                        <td class="text-center">@Html.DisplayFor(m => s.UseForSoilScoring)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

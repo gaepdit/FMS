@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FMS.Domain.Entities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -15,18 +11,27 @@ namespace FMS.Domain.Dto
 
         [Required]
         [Display(Name = "Date Listed")]
-        public DateOnly DateListed { get; set; }
+        public DateOnly? DateListed { get; set; }
 
         [Display(Name = "Additional Org Unit")]
-        public string AdditionalOrgUnit { get; set; }
+        public OrganizationalUnit OrganizationalUnit { get; set; }
 
         [Display(Name = "Geologist")]
-        public string Geologist { get; set; }
+        public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [Display(Name = "VRP Date")]
-        public DateOnly VRPDate { get; set; }
+        public DateOnly? VRPDate { get; set; }
 
         [Display(Name = "Brownfield Date")]
-        public DateOnly BrownfieldDate { get; set; }
+        public DateOnly? BrownfieldDate { get; set; }
+
+        [Display(Name = "Date De-listed")]
+        public DateOnly? DateDeListed { get; set; }
+
+        [Display(Name = "VRP Terminated")]
+        public bool VRPTerminated { get; set; }
+
+        [Display(Name = "Brownfield Terminated")]
+        public bool BrownfieldTerminated { get; set; }
     }
 }

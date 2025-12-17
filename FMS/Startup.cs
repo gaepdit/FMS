@@ -7,7 +7,6 @@ using FMS.Infrastructure.Services;
 using FMS.Platform.Extensions.DevHelpers;
 using FMS.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +17,6 @@ using Microsoft.Identity.Web;
 using Mindscape.Raygun4Net;
 using Mindscape.Raygun4Net.AspNetCore;
 using System;
-using System.IO;
 using System.Reflection;
 
 namespace FMS
@@ -47,8 +45,7 @@ namespace FMS
             // Note: `cookieScheme: null` is mandatory. See https://github.com/AzureAD/microsoft-identity-web/issues/133#issuecomment-739550416
 
             // Persist data protection keys
-            var keysFolder = Path.Combine(Configuration["PersistedFilesBasePath"] ?? "", "DataProtectionKeys");
-            services.AddDataProtection().PersistKeysToFileSystem(Directory.CreateDirectory(keysFolder));
+            services.AddDataProtection();
 
             // Configure Razor pages 
             services.AddRazorPages();
@@ -79,6 +76,18 @@ namespace FMS
             {
                 opts.AddPolicy(UserPolicies.FileCreatorOrEditor, policy =>
                     policy.RequireRole(UserRoles.FileCreator, UserRoles.FileEditor));
+                opts.AddPolicy(UserPolicies.FileCreator, policy =>
+                    policy.RequireRole(UserRoles.FileCreator));
+                opts.AddPolicy(UserPolicies.FileEditor, policy =>
+                    policy.RequireRole(UserRoles.FileEditor));
+                opts.AddPolicy(UserPolicies.SiteMaintenance, policy =>
+                    policy.RequireRole(UserRoles.SiteMaintenance));
+                opts.AddPolicy(UserPolicies.UserMaintenance, policy =>
+                    policy.RequireRole(UserRoles.UserMaintenance));
+                opts.AddPolicy(UserPolicies.ComplianceOfficer, policy =>
+                    policy.RequireRole(UserRoles.ComplianceOfficer));
+                opts.AddPolicy(UserPolicies.FileEditorOrComplianceOfficer, policy =>
+                    policy.RequireRole(UserRoles.FileEditor, UserRoles.ComplianceOfficer));
             });
 
             // Configure dependencies
@@ -91,8 +100,35 @@ namespace FMS
             services.AddScoped<IFacilityTypeRepository, FacilityTypeRepository>();
             services.AddScoped<IOrganizationalUnitRepository, OrganizationalUnitRepository>();
             services.AddScoped<ICabinetRepository, CabinetRepository>();
+            services.AddScoped<IActionTakenRepository, ActionTakenRepository>();
+            services.AddScoped<IAllowedActionTakenRepository, AllowedActionTakenRepository>();
+            services.AddScoped<IEventTypeRepository, EventTypeRepository>();
+            services.AddScoped<IEventContractorRepository, EventContractorRepository>();
+            services.AddScoped<IFundingSourceRepository, FundingSourceRepository>();
+            services.AddScoped<IGroundwaterStatusRepository, GroundwaterStatusRepository>();
+            services.AddScoped<ILocationClassRepository, LocationClassRepository>();
+            services.AddScoped<IOverallStatusRepository, OverallStatusRepository>();
+            services.AddScoped<IParcelTypeRepository, ParcelTypeRepository>();
+            services.AddScoped<ISoilStatusRepository, SoilStatusRepository>();
+            services.AddScoped<ISourceStatusRepository, SourceStatusRepository>();
+            services.AddScoped<IChemicalRepository, ChemicalRepository>();
+            services.AddScoped<IContactTypeRepository, ContactTypeRepository>();
             services.AddScoped<IItemsListRepository, ItemsListRepository>();
             services.AddScoped<ISelectListHelper, SelectListHelper>();
+            services.AddScoped<IAllowedActionTakenHelper, AllowedActionTakenHelper>();
+            services.AddScoped<IAbandonedInactiveRepository, AbandonedInactiveRepository>();
+            services.AddScoped<IGapsAssessmentRepository, GapsAssessmentRepository>();
+            services.AddScoped<IHsrpFacilityPropertiesRepository, HsrpFacilityPropertiesRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IParcelRepository, ParcelRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IPhoneRepository, PhoneRepository>();
+            services.AddScoped<IScoreRepository, ScoreRepository>();
+            services.AddScoped<IGroundwaterScoreRepository, GroundwaterScoreRepository>();
+            services.AddScoped<IOnsiteScoreRepository, OnsiteScoreRepository>();
+            services.AddScoped<ISubstanceRepository, SubstanceRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();
@@ -102,7 +138,7 @@ namespace FMS
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsLocalEnv())
             {
@@ -134,7 +170,9 @@ namespace FMS
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => endpoints.MapRazorPages().RequireAuthorization());
+            app.UseEndpoints(endpoints => { endpoints.MapRazorPages().RequireAuthorization();
+                endpoints.MapControllers();
+            });
         }
     }
 }

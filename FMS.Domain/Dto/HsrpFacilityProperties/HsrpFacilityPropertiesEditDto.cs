@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FMS.Domain.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -11,33 +8,75 @@ namespace FMS.Domain.Dto
     {
         public HsrpFacilityPropertiesEditDto() { }
 
-        public HsrpFacilityPropertiesEditDto(Guid facilityId, HsrpFacilityPropertiesDetailDto Hfpcd)
+        public HsrpFacilityPropertiesEditDto(Guid facilityId)
         {
-            FacilityId = Hfpcd.FacilityId;
-            DateListed = (DateOnly)(Hfpcd?.DateListed);
-            AdditionalOrgUnit = Hfpcd?.AdditionalOrgUnit;
-            Geologist = Hfpcd?.Geologist;
-            VRPDate = (DateOnly)(Hfpcd?.VRPDate);
-            BrownfieldDate = (DateOnly)(Hfpcd?.BrownfieldDate);
+            Id = Guid.NewGuid();
+            FacilityId = facilityId;
         }
+
+        public HsrpFacilityPropertiesEditDto(HsrpFacilityProperties hsrpFacilityProperties)
+        {
+            if (hsrpFacilityProperties == null)
+            {
+                throw new ArgumentNullException(nameof(hsrpFacilityProperties));
+            }
+            Id = hsrpFacilityProperties.Id;
+            FacilityId = hsrpFacilityProperties.FacilityId;
+            DateListed = hsrpFacilityProperties.DateListed;
+            OrganizationalUnitId = hsrpFacilityProperties.OrganizationalUnit?.Id;
+            ComplianceOfficerId = hsrpFacilityProperties.ComplianceOfficer?.Id;
+            VRPDate = hsrpFacilityProperties.VRPDate;
+            BrownfieldDate = hsrpFacilityProperties.BrownfieldDate;
+            DateDeListed = hsrpFacilityProperties.DateDeListed;
+            VRPTerminated = hsrpFacilityProperties.VRPTerminated;
+            BrownfieldTerminated = hsrpFacilityProperties.BrownfieldTerminated;
+        }
+
+        public HsrpFacilityPropertiesEditDto(Guid facilityId, string facilityNumber, HsrpFacilityPropertiesDetailDto Hfpcd)
+        {
+            FacilityId = facilityId;
+            FacilityNumber = facilityNumber;
+            DateListed = Hfpcd.DateListed;
+            OrganizationalUnitId = Hfpcd.OrganizationalUnit?.Id;
+            ComplianceOfficerId = Hfpcd.ComplianceOfficer?.Id;
+            VRPDate = Hfpcd.VRPDate;
+            BrownfieldDate = Hfpcd.BrownfieldDate;
+            DateDeListed = Hfpcd.DateDeListed;
+            VRPTerminated = Hfpcd.VRPTerminated;
+            BrownfieldTerminated = Hfpcd.BrownfieldTerminated;
+        }
+
+        [Required]
+        public Guid Id { get; set; }
 
         [Required]
         public Guid FacilityId { get; set; }
 
+        public string FacilityNumber { get; set; }
+
         [Required]
         [Display(Name = "Date Listed")]
-        public DateOnly DateListed { get; set; }
+        public DateOnly? DateListed { get; set; }
 
         [Display(Name = "Additional Org Unit")]
-        public string AdditionalOrgUnit { get; set; }
+        public Guid? OrganizationalUnitId { get; set; }
 
         [Display(Name = "Geologist")]
-        public string Geologist { get; set; }
+        public Guid? ComplianceOfficerId { get; set; }
 
         [Display(Name = "VRP Date")]
-        public DateOnly VRPDate { get; set; }
+        public DateOnly? VRPDate { get; set; }
 
         [Display(Name = "Brownfield Date")]
-        public DateOnly BrownfieldDate { get; set; }
-    }
+        public DateOnly? BrownfieldDate { get; set; }
+
+        [Display(Name = "Date De-listed")]
+        public DateOnly? DateDeListed { get; set; }
+
+        [Display(Name = "VRP Terminated")]
+        public bool VRPTerminated { get; set; }
+
+        [Display(Name = "Brownfield Terminated")]
+        public bool BrownfieldTerminated { get; set; }
+        }
 }

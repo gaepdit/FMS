@@ -38,9 +38,10 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<OrganizationalUnitSummaryDto>> GetOrganizationalUnitListAsync() =>
             await _context.OrganizationalUnits.AsNoTracking()
-                .OrderBy(e => e.Name)
-                .Select(e => new OrganizationalUnitSummaryDto(e))
-                .ToListAsync();
+            .OrderByDescending(e => e.Active)
+            .ThenBy(e => e.Name)
+            .Select(e => new OrganizationalUnitSummaryDto(e))
+            .ToListAsync();
 
         public Task<Guid> CreateOrganizationalUnitAsync(OrganizationalUnitCreateDto organizationalUnit)
         {
