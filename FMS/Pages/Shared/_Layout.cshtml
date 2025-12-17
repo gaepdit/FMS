@@ -24,13 +24,6 @@
             <img src="~/images/epd-icon.svg" alt="Georgia EPD" class="img-logo" />
             <a href="/" aria-label="Home" class="nav-link d-inline-block">File Management System</a>
         </div>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <h2>Notice</h2>
-            <p>FMS will be down for a major upgrade starting 5&nbsp;PM Thursday, 12/18/2025 until 10&nbsp;AM Friday, 12/19/2025. Please plan accordingly.</p>
-            <p>Please refer to the <a href="https://status.gaepd.org/">EPD-IT status page</a> for updates.</p>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-            </button>
-        </div>
         @if (User.Identity?.IsAuthenticated ?? false)
         {
             <partial name="_MenuPartial" />
