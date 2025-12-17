@@ -1,5 +1,4 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -22,7 +21,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Parcel Type")]
         public Guid ParcelTypeId { get; set; }
-        public string ParcelTypeName { get; set; }
+        //public string ParcelTypeName { get; set; }
 
         [Display(Name = "List Date")]
         public DateOnly? ListDate { get; set; }

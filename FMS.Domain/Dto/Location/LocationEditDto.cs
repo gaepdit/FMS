@@ -8,11 +8,11 @@ namespace FMS.Domain.Dto
     {
         public LocationEditDto() { }
 
-        public LocationEditDto(Guid facilityId)
-        {
-            Id = Id = Guid.NewGuid();
-            FacilityId = facilityId;
-        }
+        //public LocationEditDto(Guid facilityId)
+        //{
+        //    Id = Id = Guid.NewGuid();
+        //    FacilityId = facilityId;
+        //}
 
         public LocationEditDto(Location location)
         {
@@ -31,6 +31,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Class")]
         [Required(ErrorMessage = "Class is required.")]
         public Guid? LocationClassId { get; set; }
-        public LocationClass LocationClass { get; set; }
+        //public LocationClass LocationClass { get; set; }
     }
 }

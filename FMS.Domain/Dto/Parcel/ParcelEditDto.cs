@@ -34,7 +34,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Type")]
         public Guid? ParcelTypeId { get; set; }
-        public ParcelType ParcelType { get; set; }
+        //public ParcelType ParcelType { get; set; }
 
         [Display(Name = "List Date")]
         public DateOnly? ListDate { get; set; }

@@ -24,6 +24,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Class")]
         public Guid? LocationClassId { get; set; }
-        public LocationClass LocationClass { get; set; }
+        //public LocationClass LocationClass { get; set; }
     }
 }

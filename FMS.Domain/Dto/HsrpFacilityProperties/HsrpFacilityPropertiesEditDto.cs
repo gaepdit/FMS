@@ -32,19 +32,19 @@ namespace FMS.Domain.Dto
             BrownfieldTerminated = hsrpFacilityProperties.BrownfieldTerminated;
         }
 
-        public HsrpFacilityPropertiesEditDto(Guid facilityId, string facilityNumber, HsrpFacilityPropertiesDetailDto Hfpcd)
-        {
-            FacilityId = facilityId;
-            FacilityNumber = facilityNumber;
-            DateListed = Hfpcd.DateListed;
-            OrganizationalUnitId = Hfpcd.OrganizationalUnit?.Id;
-            ComplianceOfficerId = Hfpcd.ComplianceOfficer?.Id;
-            VRPDate = Hfpcd.VRPDate;
-            BrownfieldDate = Hfpcd.BrownfieldDate;
-            DateDeListed = Hfpcd.DateDeListed;
-            VRPTerminated = Hfpcd.VRPTerminated;
-            BrownfieldTerminated = Hfpcd.BrownfieldTerminated;
-        }
+        //public HsrpFacilityPropertiesEditDto(Guid facilityId, string facilityNumber, HsrpFacilityPropertiesDetailDto Hfpcd)
+        //{
+        //    FacilityId = facilityId;
+        //    FacilityNumber = facilityNumber;
+        //    DateListed = Hfpcd.DateListed;
+        //    OrganizationalUnitId = Hfpcd.OrganizationalUnit?.Id;
+        //    ComplianceOfficerId = Hfpcd.ComplianceOfficer?.Id;
+        //    VRPDate = Hfpcd.VRPDate;
+        //    BrownfieldDate = Hfpcd.BrownfieldDate;
+        //    DateDeListed = Hfpcd.DateDeListed;
+        //    VRPTerminated = Hfpcd.VRPTerminated;
+        //    BrownfieldTerminated = Hfpcd.BrownfieldTerminated;
+        //}
 
         [Required]
         public Guid Id { get; set; }
@@ -52,7 +52,7 @@ namespace FMS.Domain.Dto
         [Required]
         public Guid FacilityId { get; set; }
 
-        public string FacilityNumber { get; set; }
+        //public string FacilityNumber { get; set; }
 
         [Required]
         [Display(Name = "Date Listed")]
