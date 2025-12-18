@@ -1,8 +1,6 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Dto.Facility;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
-using FMS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;

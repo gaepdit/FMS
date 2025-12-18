@@ -1,7 +1,5 @@
 ﻿using FMS.Domain.Dto;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Graph.Models.Security;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text.RegularExpressions;
 

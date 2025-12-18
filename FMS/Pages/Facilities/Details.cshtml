@@ -510,6 +510,7 @@
                                 <a asp-page="/Contact/Add" asp-route-Id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Contact</a>
                             }
                         </h3>
+                        <p class="text-danger" style="font-size: 1.0rem;">  * NOTE: Property Owner Contacts are listed in HSI Site Summaries</p>
                         <hr />
                         <div class="row">
                             <table class="table table-sm" aria-label="Contacts">
@@ -695,6 +696,12 @@
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description, "StringOrNone")
                                         </dd>
                                         <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName)
                                         </dt>
                                         <dd class="col-sm-8">
@@ -717,12 +724,6 @@
                                         </dt>
                                         <dd class="col-sm-8">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3, "Number")
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO)
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO, "StringOrNone")
                                         </dd>
                                         <dt class="col-sm-4">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1)
@@ -779,6 +780,12 @@
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Description, "StringOrNone")
                                         </dd>
                                         <dt class="col-sm-4">
+                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO)
+                                        </dt>
+                                        <dd class="col-sm-8">
+                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO, "StringOrNone")
+                                        </dd>
+                                        <dt class="col-sm-4">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D)
                                         </dt>
                                         <dd class="col-sm-8">
@@ -801,12 +808,6 @@
                                         </dt>
                                         <dd class="col-sm-8">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D3, "Number")
-                                        </dd>
-                                        <dt class="col-sm-4">
-                                            @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO)
-                                        </dt>
-                                        <dd class="col-sm-8">
-                                            @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO, "StringOrNone")
                                         </dd>
                                         <dt class="col-sm-4">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E1)

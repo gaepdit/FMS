@@ -1,22 +1,13 @@
-using FMS.Domain.Data;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
-using FMS.Helpers;
-using FMS.Infrastructure.Repositories;
-using FMS.Pages.Maintenance;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Substance
