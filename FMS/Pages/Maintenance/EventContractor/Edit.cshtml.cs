@@ -55,12 +55,6 @@ namespace FMS.Pages.Maintenance.EventContractor
                 ModelState.AddModelError("EventContractor.Name", "Name cannot exceed 20 characters.");
             }
 
-            // If editing Code, make sure the new Code doesn't already exist before trying to save.
-            if (await _repository.EventContractorNameExistsAsync(EventContractor.Name))
-            {
-                ModelState.AddModelError("EventContractor.Name", "Name entered already exists.");
-            }
-
             if (!ModelState.IsValid)
             {
                 return Page();

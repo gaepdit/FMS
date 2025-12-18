@@ -8,31 +8,6 @@ namespace FMS.Domain.Dto
     {
         public OnsiteScoreSummaryDto() { }
 
-        //public OnsiteScoreSummaryDto(OnsiteScore onsiteScore)
-        //{
-        //    Id = onsiteScore.Id;
-        //    Active = onsiteScore.Active;
-        //    ScoreId = onsiteScore.FacilityId;
-        //    OnsiteScoreValue = onsiteScore.OnsiteScoreValue;
-        //    A = onsiteScore.A;
-        //    B = onsiteScore.B;
-        //    C = onsiteScore.C;
-        //    Description = onsiteScore.Description;
-        //    ChemName1D = onsiteScore.ChemName1D;
-        //    Other1D = onsiteScore.Other1D;
-        //    D2 = onsiteScore.D2;
-        //    D3 = onsiteScore.D3;
-        //    SubstanceId = onsiteScore.SubstanceId;
-        //    CASNO = onsiteScore.CASNO;
-        //    E1 = onsiteScore.E1;
-        //    E2 = onsiteScore.E2;
-        //}
-
-        public Guid Id { get; set; }
-
-        public bool Active { get; set; }
-
-        public Guid ScoreId { get; set; }
 
         [Display(Name = "Onsite Score Value")]
         public decimal OnsiteScoreValue { get; set; }
