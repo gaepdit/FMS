@@ -65,7 +65,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Substance")]
         public Guid? SubstanceId { get; set; }
-        public Substance Substance { get; set; }
+        //public Substance Substance { get; set; }
 
         [Display(Name = "CasNo")]
         public string CASNO { get; set; }

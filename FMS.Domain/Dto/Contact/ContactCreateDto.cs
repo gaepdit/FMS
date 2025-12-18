@@ -44,9 +44,9 @@ namespace FMS.Domain.Dto
         [EmailAddress]
         public string Email { get; set; }
 
-        public string GetMailTo()
-        {
-            return string.Concat("mailto:", Email);
-        }
+        //public string GetMailTo()
+        //{
+        //    return string.Concat("mailto:", Email);
+        //}
     }
 }

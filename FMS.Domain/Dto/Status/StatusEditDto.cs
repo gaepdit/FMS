@@ -1,7 +1,6 @@
 ﻿using FMS.Domain.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 
 namespace FMS.Domain.Dto
 {
@@ -47,32 +46,24 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Source Status")]
         public Guid? SourceStatusId { get; set; }
-        [Display(Name = "Source Status")]
-        public SourceStatus SourceStatus { get; set; }
 
         [Display(Name = "Source Date")]
         public DateOnly? SourceDate { get; set; }
 
         [Display(Name = "Soil Status")]
         public Guid? SoilStatusId { get; set; }
-        [Display(Name = "Soil Status")]
-        public SoilStatus SoilStatus { get; set; }
 
         [Display(Name = "Soil Date")]
         public DateOnly? SoilDate { get; set; }
 
         [Display(Name = "Groundwater Status")]
         public Guid? GroundwaterStatusId { get; set; }
-        [Display(Name = "Groundwater Status")]
-        public GroundwaterStatus GroundwaterStatus { get; set; }
-
+ 
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
 
         [Display(Name = "Overall Status")]
         public Guid? OverallStatusId { get; set; }
-        [Display(Name = "Overall Status")]
-        public OverallStatus OverallStatus { get; set; }
 
         [Display(Name = "Overall Date")]
         public DateOnly? OverallDate { get; set; }
@@ -82,8 +73,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Funding Source")]
         public Guid? FundingSourceId { get; set; }
-        [Display(Name = "Funding Source")]
-        public FundingSource FundingSource { get; set; }
 
         [Display(Name = "Land Fill")]
         public bool LandFill { get; set; }
@@ -111,8 +100,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "GAPS Assessment")]
         public Guid? GAPSAssessmentId { get; set; }
-        [Display(Name = "GAPS Assessment")]
-        public GapsAssessment GAPSAssessment { get; set; }
 
         [Display(Name = "Cost Estimate from 5-Yr Review")]
         [DataType(DataType.Currency)]
@@ -123,8 +110,6 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Pertinent Information for Aban/Inac sites")]
         public Guid? AbandonedInactiveId { get; set; }
-        [Display(Name = "Abandoned/Inactive")]
-        public AbandonedInactive AbandonedInactive { get; set; }
 
         [Display(Name = "Comments for Aban/Inac Status Tracker Report")]
         public string ReportComments { get; set; }

@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\AllowedActionTaken\AllowedActionTakenCreateDto.cs" />
+    <Compile Remove="Dto\GroundwaterScore\GroundwaterScoreSummaryDto.cs" />
+    <Compile Remove="Dto\OnSiteScore\OnsiteScoreSummaryDto.cs" />
+    <Compile Remove="Dto\Status\StatusSummaryDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="axios" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" />
     <PackageReference Include="Microsoft.Graph" />

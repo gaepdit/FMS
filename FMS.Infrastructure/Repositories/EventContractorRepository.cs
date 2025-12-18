@@ -54,18 +54,24 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateEventContractorAsync(Guid Id, EventContractorEditDto contractor)
+        public async Task UpdateEventContractorAsync(Guid id, EventContractorEditDto editContractor)
         {
-            var existingContractor = await _context.EventContractors.FindAsync(Id);
-            if (existingContractor != null)
-            {
-                existingContractor.Name = contractor.Name;
-                existingContractor.Description = contractor.Description;
-                existingContractor.Active = contractor.Active;
+            Prevent.NullOrEmpty(editContractor.Name, nameof(editContractor.Name));
 
-                _context.EventContractors.Update(existingContractor);
-                await _context.SaveChangesAsync();
-            }
+            await UpdateEventContractorInternalAsync(id, editContractor);
+        }
+
+        private async Task<Guid> UpdateEventContractorInternalAsync(Guid id, EventContractorEditDto editContractor)
+        {
+            var contractor = await _context.EventContractors.FindAsync(id) ?? throw new ArgumentException("Event Contractor ID not found.", nameof(id));
+
+            contractor.Name = editContractor.Name;
+            contractor.Description = editContractor.Description;
+
+            await _context.SaveChangesAsync();
+
+            // Ensure all code paths return a value
+            return contractor.Id;
         }
 
         public async Task UpdateEventContractorStatusAsync(Guid id)

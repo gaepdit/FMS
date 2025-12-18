@@ -24,6 +24,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        public string DisplayName => $"{Name} ({Description})";
+        //public string DisplayName => $"{Name} ({Description})";
     }
 }

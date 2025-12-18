@@ -1,6 +1,5 @@
 ﻿using FMS.Domain.Entities;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -19,7 +18,6 @@ namespace FMS.Domain.Dto
             EventTypeActive = eventTypeActive;
             ActionTakenActive = actionTakenActive;
         }
-        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 
