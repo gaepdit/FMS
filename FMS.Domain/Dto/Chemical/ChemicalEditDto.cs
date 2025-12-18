@@ -55,6 +55,8 @@ namespace FMS.Domain.Dto
             CommonName = CommonName?.Trim();
             ToxValue = ToxValue?.Trim();
             MCLs = MCLs?.Trim();
+            FinalRc = FinalRc?.Trim();
+            RQ = RQ?.Trim();
         }
     }
 }

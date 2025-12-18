@@ -35,8 +35,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "On-Site Comment")]
         public string Description { get; set; }
 
-        public Guid SubstanceId { get; set; }
-
         [Display(Name = "CAS Number")]
         public string CASNO { get; set; }
 

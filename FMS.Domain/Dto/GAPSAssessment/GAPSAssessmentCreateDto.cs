@@ -1,15 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
     public class GapsAssessmentCreateDto
     {
-        public Guid Id { get; set; }
-
-        public bool Active { get; set; }
-
+        [Required(ErrorMessage = "Gaps Assessment Name is required.")]
+        [Display(Name = "Gaps Assessment")]
         public string Name { get; set; }
 
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
         public void TrimAll()

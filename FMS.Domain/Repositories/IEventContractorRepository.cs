@@ -15,7 +15,7 @@ namespace FMS.Domain.Repositories
         Task<EventContractorEditDto> GetEventContractorByIdAsync(Guid id);
         public Task<IReadOnlyList<EventContractorSummaryDto>> GetEventContractorListAsync(bool activeOnly = true);
         Task CreateEventContractorAsync(EventContractorCreateDto contractor);
-        Task UpdateEventContractorAsync(Guid Id,EventContractorEditDto contractor);
+        Task UpdateEventContractorAsync(Guid id,EventContractorEditDto editContractor);
         Task UpdateEventContractorStatusAsync(Guid id);
     }
 }

@@ -69,7 +69,7 @@ namespace FMS.Domain.Dto
 
         public string GetMailTo()
         {
-            return IsValidEmail(Email) == false ? "" : string.Concat("mailto:", Email);
+            return !IsValidEmail(Email) ? "" : string.Concat("mailto:", Email);
         }
 
         public static bool IsValidEmail(string email)

@@ -57,46 +57,8 @@ namespace FMS.Domain.Dto
         public string State { get; set; }
 
         [Display(Name = "ZIP Code")]
-        [RegularExpression(@"^\d{5}$", ErrorMessage = "Invalid Zip Code format. Please enter a 5-digit number.")]
         public string PostalCode { get; set; }
-
-        //// The following properties only apply to Release Notifications
-        //[Display(Name = "HSI Number")]
-        //public string HSInumber { get; set; }
-
-        //[Display(Name = "Determination Letter Date")]
-        //public DateOnly DeterminationLetterDate { get; set; }
-
-        //[Display(Name = "Pre-RQSM Cleanup")]
-        //public bool PreRQSMcleanup { get; set; }
-
-        //[Display(Name = "Image Checked")]
-        //public bool ImageChecked { get; set; }
-
-        //[Display(Name = "Brownfield Deferral")]
-        //public bool DeferredOnSiteScoring { get; set; }
-
-        //[Display(Name = "Additional Data Requested")]
-        //public bool AdditionalDataRequested { get; set; }
-
-        //[Display(Name = "VRP Deferral")]
-        //public bool VRPReferral { get; set; }
-
-        //[Display(Name = "Date Received")]
-        //public DateOnly RNDateReceived { get; set; }
-
-        //[Display(Name = "Historical Unit")]
-        //public string HistoricalUnit { get; set; }
-
-        //[Display(Name = "Historical C.O.")]
-        //public string HistoricalComplianceOfficer { get; set; }
-
-        //[Display(Name = "Has Electronic Records")]
-        //public bool HasERecord { get; set; }
-
-        //[Display(Name = "General Comments for this Facility")]
-        //public string Comments { get; set; }
-
+        
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>
             {
