@@ -36,10 +36,9 @@ namespace FMS.Infrastructure.Tests
             _context.AllowedActionsTaken.Add(new AllowedActionTaken
             {
                 Id = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
-                Active = true,
-
+                EventType = new EventType { Name = "VALID_ET", Id = Guid.NewGuid() },
+                ActionTaken = new ActionTaken { Name = "VALID_AT", Id = Guid.NewGuid() },
+                Active = true
             });
             _context.SaveChanges();
         }
@@ -198,8 +197,8 @@ namespace FMS.Infrastructure.Tests
             var existingAAT = new AllowedActionTaken
             {
                 Id = Guid.NewGuid(),
-                EventTypeId = Guid.NewGuid(),
-                ActionTakenId = Guid.NewGuid(),
+                EventType = new EventType { Name = "VALID_ET", Id = Guid.NewGuid() },
+                ActionTaken = new ActionTaken { Name = "VALID_AT", Id = Guid.NewGuid() },
                 Active = true
 
             };
