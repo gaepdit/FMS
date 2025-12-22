@@ -1,12 +1,17 @@
-using ClosedXML.Attributes;
+﻿using ClosedXML.Attributes;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Wordprocessing;
+using FMS.Domain.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace FMS.Domain.Dto
 {
-    public class FacilityDetailDtoScalar
+    public class FacilityDetailHSIScalarDto
     {
-        public FacilityDetailDtoScalar(FacilityDetailDto facility)
+        public FacilityDetailHSIScalarDto(FacilityDetailDto facility) 
         {
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
@@ -14,6 +19,7 @@ namespace FMS.Domain.Dto
             FacilityStatus = facility.FacilityStatus?.Name;
             FacilityType = facility.FacilityType?.Name;
             OrganizationalUnit = facility.OrganizationalUnit?.Name;
+            AddlOrgUnit = facility.HsrpFacilityPropertyDetails.OrganizationalUnit?.Name;   
             ComplianceOfficer = facility.ComplianceOfficer?.Name;
             Geologist = facility.HsrpFacilityPropertyDetails.ComplianceOfficer?.Name;
             FileLabel = facility.FileLabel;
@@ -26,6 +32,12 @@ namespace FMS.Domain.Dto
             Location = facility.Location;
             RNDateReceived = facility.RNDateReceived;
             DeterminationLetterDate = facility.DeterminationLetterDate;
+            DateListed = facility.HsrpFacilityPropertyDetails?.DateListed;
+            DateDeListed = facility.HsrpFacilityPropertyDetails?.DateDeListed;
+            VRPDate = facility.HsrpFacilityPropertyDetails?.VRPDate;
+            BrownfieldDate = facility.HsrpFacilityPropertyDetails?.BrownfieldDate;
+            VRPTerminated = facility.HsrpFacilityPropertyDetails.VRPTerminated;
+            BrownfieldTerminated = facility.HsrpFacilityPropertyDetails.BrownfieldTerminated;
             ImageChecked = facility.ImageChecked;
             Comments = facility.Comments;
             HSInumber = facility.HSInumber;
@@ -60,6 +72,9 @@ namespace FMS.Domain.Dto
 
         [XLColumn(Header = "Organizational Unit")]
         public string OrganizationalUnit { get; }
+
+        [XLColumn(Header = "Additional Org Unit")]
+        public string AddlOrgUnit { get; }
 
         [XLColumn(Header = "Compliance Officer")]
         public string ComplianceOfficer { get; }
@@ -98,6 +113,24 @@ namespace FMS.Domain.Dto
 
         [XLColumn(Header = "Determination Letter Date")]
         public DateOnly? DeterminationLetterDate { get; set; }
+
+        [XLColumn(Header = "Date Listed")]
+        public DateOnly? DateListed { get; set; }
+
+        [XLColumn(Header = "Date De-Listed")]
+        public DateOnly? DateDeListed { get; set; }
+
+        [XLColumn(Header = "VRP Date")]
+        public DateOnly? VRPDate { get; set; }
+
+        [XLColumn(Header = "Brownfield Date")]
+        public DateOnly? BrownfieldDate { get; set; }
+
+        [XLColumn(Header = "VRP Terminated")]
+        public bool VRPTerminated { get; set; }
+
+        [XLColumn(Header = "Brownfield Terminated")]
+        public bool BrownfieldTerminated { get; set; }
 
         [XLColumn(Header = "Image Checked")]
         public bool ImageChecked { get; set; }

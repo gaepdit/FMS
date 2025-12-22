@@ -262,7 +262,7 @@ namespace FMS.Infrastructure.Repositories
             return new PaginatedList<FacilitySummaryDto>(items, totalCount, pageNumber, pageSize);
         }
 
-        public async Task<IReadOnlyList<FacilityDetailDto>> GetFacilityDetailListAsync(FacilitySpec spec)
+        public async Task<IReadOnlyList<FacilityDetailDto>> GetFacilityDetailListAsync(FacilitySpec spec, bool loadHSI = false)
         {
             var queried = QueryFacilities(spec);
 
@@ -287,6 +287,11 @@ namespace FMS.Infrastructure.Repositories
                 if (!string.IsNullOrEmpty(item.FileLabel))
                 {
                     item.Cabinets = cabinets.GetCabinetsForFile(item.FileLabel);
+                }
+                if(loadHSI)
+                {
+                    var hsrpProperties = await _context.GetHsrpPropertiesAsync(item.Id);
+                    item.HsrpFacilityPropertyDetails = hsrpProperties;
                 }
             }
 

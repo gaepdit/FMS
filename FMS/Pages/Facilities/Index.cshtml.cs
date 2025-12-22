@@ -39,6 +39,10 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public bool ShowPendingOnlyCheckBox { get; private set; }
 
+        // Shows Export Button for HSIs
+        [BindProperty]
+        public bool ShowExportHSIButton { get; private set; }
+
         // Select Lists
         public SelectList Counties => new(Data.Counties, "Id", "Name");
         public SelectList States => new(Data.States);
@@ -82,8 +86,10 @@ namespace FMS.Pages.Facilities
             // Get the list of facilities matching the "Spec" criteria.
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
-            
-            ShowPendingOnlyCheckBox = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId) == "RN";
+
+            var getType = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId);
+            ShowPendingOnlyCheckBox = getType == "RN";
+            ShowExportHSIButton = getType == "HSI";
 
             ShowResults = true;  
             await PopulateSelectsAsync();
@@ -93,9 +99,24 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnPostExportButtonAsync()
         {
             var fileName = $"FMS_Facility_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+
             // "FacilityReportList" Detailed Facility List to go to a report
             IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec);
+
             var facilityDetailList = from p in facilityReportList select new FacilityDetailDtoScalar(p);
+
+            return File(facilityDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Normal), "application/vnd.ms-excel", fileName);
+        }
+
+        public async Task<IActionResult> OnPostExportHSIButtonAsync()
+        {
+            var fileName = $"FMS_Facility_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+
+            // "FacilityReportList" Detailed Facility List to go to a report
+            IReadOnlyList<FacilityDetailDto> facilityReportList = await _repository.GetFacilityDetailListAsync(Spec, true);
+
+            var facilityDetailList = from p in facilityReportList select new FacilityDetailHSIScalarDto(p);
+
             return File(facilityDetailList.ExportExcelAsByteArray(ExportHelper.ReportType.Normal), "application/vnd.ms-excel", fileName);
         }
 
