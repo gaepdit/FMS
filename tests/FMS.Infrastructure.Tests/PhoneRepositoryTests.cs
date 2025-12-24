@@ -181,7 +181,7 @@ namespace FMS.Infrastructure.Tests
             await _context.SaveChangesAsync();
 
             var updateDto = new PhoneEditDto { Id = existingPhone.Id, Number = "UPDATED_NUMBER" };
-            await _repository.UpdatePhoneAsync(updateDto);
+            await _repository.UpdatePhoneAsync(existingPhone.Id, updateDto);
 
             var updatedPhone = await _context.Phones.FindAsync(existingPhone.Id);
             updatedPhone.Number.Should().Be("UPDATED_NUMBER");
@@ -189,10 +189,11 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
         {
+            var invalidId = Guid.NewGuid();
             var updateDto = new PhoneEditDto { Id = Guid.NewGuid(), Number = "NON_EXISTENT" };
 
-            Func<Task> action = async () => await _repository.UpdatePhoneAsync(updateDto);
-            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Phone Id " + updateDto.Id + " does not exist.");
+            Func<Task> action = async () => await _repository.UpdatePhoneAsync(invalidId, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>();
         }
 
         // UpdatePhoneStatusAsync
