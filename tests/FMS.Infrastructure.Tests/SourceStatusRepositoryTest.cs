@@ -74,12 +74,14 @@ namespace FMS.Infrastructure.Tests
         }
 
         // SourceStatusNameExistAsync
+        [Test]
         public async Task SourceStatusNameExistAsync_ReturnsTrue_WhenSourceStatusNameExist()
         {
             var existingSS = await _context.SourceStatuses.Select (ft => ft.Name).FirstAsync();
             var results = await _repository.SourceStatusNameExistsAsync(existingSS);
             results.Should().BeTrue();
         }
+        [Test]
         public async Task SourceStatusNameExistAsync_ReturnsFalse_WhenSourceStatusNameDoesNotExist()
         {
             var nonExistingSS = "INVALID_NAME";
@@ -88,13 +90,62 @@ namespace FMS.Infrastructure.Tests
         }
 
         // SourceStatusDescriptionExistAsync
-
+        [Test]
+        public async Task SourceStatusDescriptionExistAsync_ReturnsTrue_WhenSourceStatusDescriptionExist()
+        {
+            var existingSS = await _context.SourceStatuses.Select(ft => ft.Description).FirstAsync();
+            var results = await _repository.SourceStatusDescriptionExistsAsync(existingSS);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task SourceStatusDescriptionExistAsync_ReturnsFalse_WhenSourceStatusDescriptionDoesNotExist()
+        {
+            var nonExistingSS = "INVALID_Description";
+            var results = await _repository.SourceStatusDescriptionExistsAsync(nonExistingSS);
+            results.Should().BeFalse();
+        }
 
         // GetSourceStatusAsync
+        [Test]
+        public async Task GetSourceStatusAsync_ReturnsSourceStatusEditDto_WhenIdExist()
+        {
+            var existingSS = await _context.SourceStatuses.FirstAsync();
+            var result = await _repository.GetSourceStatusAsync(existingSS.Id);
 
+            result.Should().NotBeNull();
+            result.Should().BeOfType<SourceStatusEditDto>();
+            result.Name.Should().Be(existingSS.Name);
+            result.Description.Should().Be(existingSS.Description);
+        }
+        [Test]
+        public async Task GetSourceStatusAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingSS = Guid.NewGuid();
+            var result = await _repository.GetSourceStatusAsync(nonExistingSS);
+
+            result.Should().BeNull();
+        }
 
         // GetSourceStatusByNameAsync
+        [Test]
+        public async Task GetSourceStatusByNameAsync_ReturnsSourceStatusEditDto_WhenNameExist()
+        {
+            var existingSS = await _context.SourceStatuses.FirstAsync();
+            var result = await _repository.GetSourceStatusByNameAsync(existingSS.Name);
 
+            result.Should().NotBeNull();
+            result.Should().BeOfType<SourceStatusEditDto>();
+            result.Id.Should().Be(existingSS.Id);
+            result.Description.Should().Be(existingSS.Description);
+        }
+        [Test]
+        public async Task GetSourceStatusByNameAsync_ReturnsNull_WhenNameDoesNotExist()
+        {
+            var nonExistingSS = "NONEXISTING_NAME";
+            var result = await _repository.GetSourceStatusByNameAsync(nonExistingSS);
+
+            result.Should().BeNull();
+        }
 
         // GetSourceStatusListAsync
 

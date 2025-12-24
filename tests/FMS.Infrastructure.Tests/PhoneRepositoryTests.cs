@@ -130,7 +130,7 @@ namespace FMS.Infrastructure.Tests
             result.Number.Should().Be(existingPhone.Number);
         }
         [Test]
-        public async Task GetPhoneByIdAndContactIdAsync_WhenBothDoNotExist_ReturnsNull()
+        public async Task GetPhoneByIdAndContactIdAsync_ReturnsNull_WhenIdDoesNotExist()
         {
             var nonExistingId = Guid.NewGuid();
             var nonExistingContactId = Guid.NewGuid();
