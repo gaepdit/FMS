@@ -50,6 +50,7 @@ namespace FMS.Pages.Event
         [BindProperty]
         public string ActiveTab { get; set; } = "Events";
 
+        [BindProperty]
         public EventSort SortBy { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid id, EventSort sortBy)
@@ -92,7 +93,7 @@ namespace FMS.Pages.Event
 
             TempData?.SetDisplayMessage(Context.Success, $"Event successfully updated.");
 
-            return RedirectToPage("../Facilities/Details", new { id = EditEvent.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", new { id = EditEvent.FacilityId, tab = ActiveTab, sortBy = SortBy });
         }
 
         public async Task<IActionResult> OnPostExportButtonAsync(EventSort sortBy)

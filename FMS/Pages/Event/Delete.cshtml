@@ -12,15 +12,15 @@
         <table class="table table-sm" aria-label="Events">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Event Type</th>
-                    <th scope="col">Action Taken</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col">Completion Date</th>
-                    <th scope="col">Done By</th>
-                    <th scope="col">Event Amount</th>
-                    <th scope="col">Entity Name or No.</th>
-                    <th scope="col">Comment</th>
+                    <th scope="col" class="text-nowrap">Event Type</th>
+                    <th scope="col" class="text-nowrap">Action Taken</th>
+                    <th scope="col" class="text-nowrap">Start Date</th>
+                    <th scope="col" class="text-nowrap">Due Date</th>
+                    <th scope="col" class="text-nowrap">Completion Date</th>
+                    <th scope="col" class="text-nowrap">Done By</th>
+                    <th scope="col" class="text-nowrap">Event Amount</th>
+                    <th scope="col" class="text-nowrap">Contractor</th>
+                    <th scope="col" class="text-nowrap">Comment</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +31,7 @@
                     <td>@Model.EventDetail.DueDate</td>
                     <td>@Model.EventDetail.CompletionDate</td>
                     <td>@Model.EventDetail.ComplianceOfficer.Name</td>
-                    <td>@Model.EventDetail.EventAmount</td>
+                    <td style="text-align:right">@Html.DisplayFor(m => Model.EventDetail.EventAmount)</td>
                     <td>@Model.EventDetail.EventContractor?.Name</td>
                     <td>@Model.EventDetail.Comment</td>
                 </tr>

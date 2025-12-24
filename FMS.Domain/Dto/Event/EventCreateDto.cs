@@ -32,6 +32,7 @@ namespace FMS.Domain.Dto
         public Guid ComplianceOfficerId { get; set; }
 
         [Display(Name = "Event Amount")]
+        [DataType(DataType.Currency)]
         public decimal? EventAmount { get; set; }
 
         [Display(Name = "Contractor")]

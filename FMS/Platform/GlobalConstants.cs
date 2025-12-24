@@ -20,6 +20,10 @@ namespace FMS.Platform.Extensions
         // Link to Pending Notifications folder
         public const string PendingNotificationFolder = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/RNs/Pending%20RNs/";
 
+        // Link to Complaint Folder
+        public const string ComplaintsFolder = "https://gets.sharepoint.com/sites/ResponseandRemediationProgram/RNs/HWTF%20Master%20Project%20Complaints/";
+
+        // Link to Google Maps API
         public const string MapCoordLink = "https://www.google.com/maps/search/?api=1&query=";
 
     }

@@ -51,6 +51,8 @@ namespace FMS.Pages.Event
         [TempData]
         public string ActiveTab { get; set; }
 
+        [TempData]
+        [BindProperty]
         public EventSort SortBy { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id, EventSort sortBy)
@@ -105,7 +107,7 @@ namespace FMS.Pages.Event
             TempData?.SetDisplayMessage(Context.Success, $"Event created successfully.");
 
             ActiveTab = "Events";
-            return RedirectToPage("../Facilities/Details", new { id = NewEvent.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", new { id = NewEvent.FacilityId, tab = ActiveTab, sortBy = SortBy });
         }
 
         private async Task PopulateSelectsAsync()

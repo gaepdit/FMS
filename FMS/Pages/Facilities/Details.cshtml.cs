@@ -46,6 +46,8 @@ namespace FMS.Pages.Facilities
 
         public string PendingNotificationFolderLink { get; set; } = string.Empty;
 
+        public string ComplaintsFolderLink { get; set; } = string.Empty;
+
         [BindProperty]
         public string MapLink { get; set; }
 
@@ -90,11 +92,18 @@ namespace FMS.Pages.Facilities
                 {
                     NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }
-                else if (string.IsNullOrEmpty(FacilityDetail.HSInumber))
+                else if (string.IsNullOrEmpty(FacilityDetail.HSInumber) && FacilityDetail.FacilityStatus.Name != "COMPLAINT")
                 {
                     PendingNotificationFolderLink = UrlHelper.GetPendingNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }
-                RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
+                if (FacilityDetail.FacilityStatus.Name == "COMPLAINT") 
+                {
+                    ComplaintsFolderLink = UrlHelper.GetComplaintsFolderLink(FacilityDetail.FacilityNumber);
+                }
+                else
+                {
+                    RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
+                }  
             }
 
             ActiveTab = tab ?? "HSIProperties";

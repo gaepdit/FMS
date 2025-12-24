@@ -24,6 +24,13 @@ $(document).ready(function formSearch() {
             $("#Spec_ShowPendingOnly").prop("checked", false)
             $("#PendingButton").addClass("d-none");
         }
+        if ($("#Spec_FacilityTypeId option:selected").text().trim() === "HSI (HSI)") {
+            $("#ExportHSIButton").removeClass("d-none");
+            $("#ExportButton").addClass("d-none");
+        } else {
+            $("#ExportHSIButton").addClass("d-none");
+            $("#ExportButton").removeClass("d-none");
+        };
     });
     $("#cbPending").click(function () {
         if ($(this).is(':checked')) {

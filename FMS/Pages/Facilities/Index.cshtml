@@ -166,8 +166,12 @@
                                 <input type="hidden" asp-for="Spec.SortBy" />
                                 <input type="hidden" asp-for="Spec.FirstPass" />
                                 <button id="ExportButton" asp-page-handler="ExportButton"
-                                        class="btn btn-sm btn-outline-primary mb-1">
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.ShowExportHSIButton ? "d-none" : "")">
                                     Excel Export
+                                </button>
+                                <button id="ExportHSIButton" asp-page-handler="ExportHSIButton"
+                                        class="btn btn-sm btn-outline-primary mb-1 @(Model.ShowExportHSIButton ? "" : "d-none")">
+                                    Excel Export HSI
                                 </button>
                                 <button id="PendingButton" asp-page-handler="PendingButton"
                                         class="btn btn-sm btn-outline-primary mb-1 @(Model.Spec.ShowPendingOnly && Model.ShowPendingOnlyCheckBox ? "" : "d-none")">

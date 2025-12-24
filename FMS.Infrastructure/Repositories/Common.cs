@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +27,17 @@ namespace FMS.Infrastructure.Repositories
             }
 
             return cabinets;
+        }
+
+        public static async Task<HsrpFacilityProperties> GetHsrpPropertiesAsync(this FmsDbContext context, Guid facilityId)
+        {
+            return  await context.HsrpFacilityProperties
+                    .AsNoTracking()
+                    .Include(e => e.OrganizationalUnit)
+                    .Include(e => e.ComplianceOfficer)
+                    .Where(e => e.FacilityId == facilityId)
+                    .FirstOrDefaultAsync();
+
         }
     }
 }
