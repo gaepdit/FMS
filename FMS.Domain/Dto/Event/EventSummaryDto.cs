@@ -55,6 +55,7 @@ namespace FMS.Domain.Dto
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [DisplayName("Event Amount")]
+        [DataType(DataType.Currency)]
         public decimal? EventAmount { get; set; }
 
         [DisplayName("Contractor")]

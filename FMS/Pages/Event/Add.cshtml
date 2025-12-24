@@ -80,7 +80,7 @@
             </table>
         </div>
     </div>
-    @*   } *@
+
     <div class="container bg-light-subtle py-3 my-3 rounded-3">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="NewEvent.FacilityId" />
@@ -150,6 +150,7 @@
         <a asp-page="../Facilities/Details" 
             asp-route-Id="@Model.NewEvent.FacilityId" 
             asp-route-tab="Events"
+            asp-route-sortBy="@Model.SortBy"
            class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
             Cancel
         </a>
@@ -224,16 +225,21 @@
                                     {
                                         <span class="badge text-bg-info"> ^ </span>
                                     }
-                                    @item.EventType.Name
+                                    @Html.DisplayFor(m => item.EventType.Name)
                                 </td>
-                                <td>@item.ActionTaken.Name</td>
-                                <td>@item.StartDate</td>
-                                <td>@item.DueDate</td>
-                                <td>@item.CompletionDate</td>
-                                <td>@item.ComplianceOfficer.Name</td>
-                                <td>@item.EventAmount</td>
-                                <td>@item.EventContractor?.Name</td>
-                                <td>@item.Comment</td>
+                                <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
+                                <td>@Html.DisplayFor(m => item.StartDate)</td>
+                                <td>@Html.DisplayFor(m => item.DueDate)</td>
+                                <td>@Html.DisplayFor(m => item.CompletionDate)</td>
+                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                                <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount)</td>
+                                <td>
+                                    @if (item.EventContractor != null)
+                                    {
+                                        @Html.DisplayFor(m => item.EventContractor.Name)
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(m => item.Comment)</td>
                             </tr>
                         }
                     </tbody>
