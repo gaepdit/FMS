@@ -1126,7 +1126,7 @@
                                         @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ComplianceOfficer, down = EventSort.ComplianceOfficerDesc })
                                     </a>
                                 </th>
-                                <th scope="col" class="text-nowrap">
+                                <th scope="col" class="text-nowrap align-content-end">
                                     <a asp-fragment="TabPages"
                                        asp-route-tab="Events"
                                        asp-route-SortBy="@(Model.SortBy == EventSort.EventAmount ? EventSort.EventAmountDesc : EventSort.EventAmount)">
@@ -1159,16 +1159,21 @@
                                             {
                                                 <span class="badge text-bg-info"> ^ </span>
                                             }
-                                            @item.EventType.Name
+                                            @Html.DisplayFor(m => item.EventType.Name)
                                         </td>
-                                        <td>@item.ActionTaken.Name</td>
-                                        <td>@item.StartDate</td>
-                                        <td>@item.DueDate</td>
-                                        <td>@item.CompletionDate</td>
-                                        <td>@item.ComplianceOfficer.Name</td>
-                                        <td>@item.EventAmount</td>
-                                        <td>@item.EventContractor?.Name</td>
-                                        <td>@item.Comment</td>
+                                        <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
+                                        <td>@Html.DisplayFor(m => item.StartDate)</td>
+                                        <td>@Html.DisplayFor(m => item.DueDate)</td>
+                                        <td>@Html.DisplayFor(m => item.CompletionDate)</td>
+                                        <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                                        <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount)</td>
+                                        <td>
+                                            @if (item.EventContractor != null)
+                                            {
+                                                @Html.DisplayFor(m => item.EventContractor.Name)
+                                            }
+                                        </td>
+                                        <td>@Html.DisplayFor(m => item.Comment)</td>
                                         @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                         {
                                             <td>
@@ -1210,6 +1215,10 @@
         @if (!string.IsNullOrEmpty(Model.RNHSIFolderLink))
         {
             <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>HSI Folder</a>
+        }
+        @if (!string.IsNullOrEmpty(Model.ComplaintsFolderLink))
+        {
+            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.ComplaintsFolderLink>Master Project Complaint Folder</a>
         }
     </div>
 }

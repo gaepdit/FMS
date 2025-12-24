@@ -152,6 +152,7 @@
         <a asp-page="../Facilities/Details" 
             asp-route-Id="@Model.EditEvent.FacilityId"
             asp-route-tab="Events"
+            asp-route-sortBy = "@Model.SortBy"
             class="btn btn-outline-secondary col-md-2">
             Cancel
         </a>
@@ -241,14 +242,14 @@
                                     {
                                         <span class="badge text-bg-info"> ^ </span>
                                     }
-                                    @item.EventType.Name
+                                    @Html.DisplayFor(m => item.EventType.Name)
                                 </td>
                                 <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
                                 <td>@Html.DisplayFor(m => item.StartDate)</td>
                                 <td>@Html.DisplayFor(m => item.DueDate)</td>
                                 <td>@Html.DisplayFor(m => item.CompletionDate)</td>
                                 <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
-                                <td>@Html.DisplayFor(m => item.EventAmount)</td>
+                                <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount)</td>
                                 <td>
                                     @if (item.EventContractor != null)
                                     {
