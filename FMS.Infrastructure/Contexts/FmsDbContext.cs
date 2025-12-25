@@ -112,6 +112,10 @@ namespace FMS.Infrastructure.Contexts
                 builder.Entity(entityType).Property<string>(AuditProperties.InsertUser);
                 builder.Entity(entityType).Property<string>(AuditProperties.UpdateUser);
             }
+            
+            // Fix missing primary key error
+            builder.Entity<IdentityPasskeyData>(e => e.HasNoKey());
+
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

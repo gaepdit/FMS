@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using FluentAssertions;
+using AwesomeAssertions;
 using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
 using Microsoft.AspNetCore.Mvc;
