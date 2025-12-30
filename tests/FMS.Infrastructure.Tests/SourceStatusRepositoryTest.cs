@@ -10,6 +10,7 @@ using FMS.Domain.Entities;
 using FMS.Domain.Dto;
 using Microsoft.AspNetCore.Http;
 using FluentAssertions;
+using System.Collections.Generic;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -148,15 +149,101 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetSourceStatusListAsync
+        [Test]
+        public async Task GetSourceStatusListByContactIdAsync_WhenSourceStatusesExist()
+        {
+            var results = await _repository.GetSourceStatusListAsync();
 
+            results.Should().NotBeNullOrEmpty();
+        }
 
         // CreateSourceStatusAsync
+        [Test]
+        public async Task CreateSourceStatusAsync_CreateNewSourceStatus_WhenDataIsValid()
+        {
+            var dto = new SourceStatusCreateDto { Name = "NEW_NAME", Description = "NEW_DESCRIPTION" };
 
+            var resultBool = await _repository.CreateSourceStatusAsync(dto);
+            var result = await _repository.GetSourceStatusByNameAsync(dto.Name);
+
+            resultBool.Should().BeTrue();
+            result.Name.Should().Be(dto.Name);
+            result.Description.Should().Be(dto.Description);
+        }
+        [Test]
+        public void CreateSounceStatusAsync_ThrowArgumentException_WhereSourceStatusAlreadyExist()
+        {
+            var existingSS = new SourceStatus { Name = "NEW_NAME", Description = "NEW_DESCRIPTION" };
+            _context.SourceStatuses.Add(existingSS);
+            _context.SaveChanges();
+
+            var dto = new SourceStatusCreateDto { Name = "NEW_NAME", Description = "NEW_DESCRIPTION" };
+
+            Func<Task> action = async () => await _repository.CreateSourceStatusAsync(dto);
+            action.Should().ThrowAsync<ArgumentException>();
+        }
 
         // UpdateSourceStatusAsync
+        [Test]
+        public async Task UpdateSourceStatusAsync_UpdateExistingSourceStatus_WhenDataIsValid()
+        {
+            var existingSS = new SourceStatus { Id = Guid.NewGuid(), Name = "ORIGINAL_NAME", Description = "ORIGINAL_DESCRIPTION" };
+            _context.SourceStatuses.Add(existingSS);
+            await _context.SaveChangesAsync();
 
+            var updateDto = new SourceStatusEditDto { Id = existingSS.Id, Name = "UPDATED_NAME", Description = "UPDATED_DESCRIPTION" };
+            await _repository.UpdateSourceStatusAsync(existingSS.Id, updateDto);
+
+            var updatedSS = await _context.SourceStatuses.FindAsync(existingSS.Id);
+            updatedSS.Name.Should().Be("UPDATED_NAME");
+            updatedSS.Description.Should().Be("UPDATED_DESCRIPTION");
+        }
+        [Test]
+        public async Task UpdateSourceStatusAsync_ThrowsKeyNotFoundException_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var updateDto = new SourceStatusEditDto { Id = Guid.NewGuid(), Name = "ORIGINAL_NAME", Description = "ORIGINAL_DESCRIPTION" };
+
+            Func<Task> action = async () => await _repository.UpdateSourceStatusAsync(nonExistingId, updateDto);
+            await action.Should().ThrowAsync<KeyNotFoundException>();
+        }
+        //[Test]
+        //public async Task UpdateSourceStatusAsync_ThrowsKeyNotFoundException_WhenNameAlreadyExist()
+        //{
+        //    var existingSS = new SourceStatus { Id = Guid.NewGuid(), Name = "DUPLICATE_NAME", Description = "ORIGINAL_DESCRIPTION" };
+        //    _context.SourceStatuses.Add(existingSS);
+        //    await _context.SaveChangesAsync();
+
+        //    var updateDto = new SourceStatusEditDto { Id = existingSS.Id, Name = "DUPLICATE_NAME", Description = "UPDATED_DESCRIPTION" };
+
+        //    Func<Task> action = async () => await _repository.UpdateSourceStatusAsync(existingSS.Id, updateDto);
+        //    await action.Should().ThrowAsync<KeyNotFoundException>();
+        //}
 
         // UpdateSourceStatusStatusAsync
+        [Test]
+        public async Task UpdateSourceStatusTypeStatusAsync_UpdatesStatusCorrectly()
+        {
+            var SourceStatus = new SourceStatus { 
+                Id = Guid.NewGuid(),
+                Name = "ORIGINAL_NAME",
+                Description = "ORIGINAL_DESCRIPTION",
+                Active = true
+            };
+            _context.SourceStatuses.Add(SourceStatus);
+            await _context.SaveChangesAsync();
+
+            await _repository.UpdateSourceStatusStatusAsync(SourceStatus.Id, false);
+
+            var updatedSourceStatus = await _context.SourceStatuses.FindAsync(SourceStatus.Id);
+            updatedSourceStatus.Active.Should().BeFalse();
+        }
+        [Test]
+        public async Task UpdateSourceStatusStatusAsync_ThrowsKeyNotFoundException_WhenIdDoesNotExist()
+        {
+            Func<Task> action = async () => await _repository.UpdateSourceStatusStatusAsync(Guid.NewGuid(), false);
+            await action.Should().ThrowAsync<KeyNotFoundException>();
+        }
 
     }
 }

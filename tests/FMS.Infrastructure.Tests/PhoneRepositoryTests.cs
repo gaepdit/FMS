@@ -150,6 +150,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         // CreatePhoneAsync
+        [Test]
         public async Task CreatePhoneAsync_CreateNewPhone_WhenDataIsValid()
         {
             var dto = new PhoneCreateDto { Number = "UNIQUE_NUMBER" };
@@ -160,6 +161,7 @@ namespace FMS.Infrastructure.Tests
             createdPhone.Should().NotBeNull();
             createdPhone.Number.Should().Be(dto.Number);
         }
+        [Test]
         public void CreatePhoneAsync_ThrowArgumentException_WhereNumberAlreadyExist()
         {
             var existingPhone = new Phone { Id = Guid.NewGuid(), Number = "DUPLICATE_NUMBER" };
@@ -187,7 +189,7 @@ namespace FMS.Infrastructure.Tests
             updatedPhone.Number.Should().Be("UPDATED_NUMBER");
         }
         [Test]
-        public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        public async Task UpdatePhoneAsync_ThrowsArgumentException_WhenIdDoesNotExist()
         {
             var nonExistingId = Guid.NewGuid();
             var updateDto = new PhoneEditDto { Id = Guid.NewGuid(), Number = "NON_EXISTENT" };
