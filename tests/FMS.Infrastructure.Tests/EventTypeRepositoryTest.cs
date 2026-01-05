@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
@@ -15,7 +15,7 @@ using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
 using FMS.Domain.Dto;
 using FMS.Infrastructure.Repositories;
-using FluentAssertions;
+using AwesomeAssertions;
 using NSubstitute;
 using Microsoft.AspNetCore.Http;
 
