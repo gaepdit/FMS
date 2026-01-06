@@ -92,14 +92,14 @@ namespace FMS.Infrastructure.Repositories
                 throw new KeyNotFoundException($"Source Status with ID {id} not found.");
             }
 
-            if (await SourceStatusNameExistsAsync(sourceStatus.Name, id))
+            if (await SourceStatusNameExistsAsync(sourceStatusUpdates.Name, id))
             {
-                throw new ArgumentException($"The Source Status Name: '{sourceStatus.Name}' already exists.");
+                throw new ArgumentException($"The Source Status Name: '{sourceStatusUpdates.Name}' already exists.");
             }
 
-            if (await SourceStatusDescriptionExistsAsync(sourceStatus.Description, id))
+            if (await SourceStatusDescriptionExistsAsync(sourceStatusUpdates.Description, id))
             {
-                throw new ArgumentException($"The Source Status Description: '{sourceStatus.Description}' already exists.");
+                throw new ArgumentException($"The Source Status Description: '{sourceStatusUpdates.Description}' already exists.");
             }
 
             sourceStatus.Name = sourceStatusUpdates.Name;
