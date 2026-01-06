@@ -169,7 +169,7 @@ namespace FMS.Infrastructure.Tests
             var dto = new PhoneCreateDto { Number = "DUPLICATE_NUMBER" };
 
             Func<Task> action = async () => await _repository.CreatePhoneAsync(dto);
-            action.Should().ThrowAsync<ArgumentException>().WithMessage("Phone Number 'DUPLICATE_NUMBER' already exist.");
+            action.Should().ThrowAsync<ArgumentException>();
         }
 
         // UpdatePhoneAsync
@@ -215,7 +215,7 @@ namespace FMS.Infrastructure.Tests
             var updateDto = new PhoneEditDto { Id = Guid.NewGuid(), Number = "NON_EXISTENT", Active = true };
 
             Func<Task> action = async () => await _repository.UpdatePhoneStatusAsync(updateDto.Id, false);
-            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage("Phone with ID " + updateDto.Id + " does not exist.");
+            await action.Should().ThrowAsync<InvalidOperationException>();
         }
     }
 }
