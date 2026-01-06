@@ -112,7 +112,7 @@ namespace FMS.Infrastructure.Tests
 
         // GetAllowedActionTakenListAsync
         [Test]
-        public async Task GetAllowedActionTakenListAsync_ReturnsAllContactType_WhenEventTypeIdIsValid()
+        public async Task GetAllowedActionTakenListAsync_ReturnsAllAllowedActionTypes_WhenEventTypeIdIsValid()
         {
             var existingEventType = new EventType { Name = "VALID_ET", Id = Guid.NewGuid()};
 
