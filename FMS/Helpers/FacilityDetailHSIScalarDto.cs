@@ -19,9 +19,9 @@ namespace FMS.Domain.Dto
             FacilityStatus = facility.FacilityStatus?.Name;
             FacilityType = facility.FacilityType?.Name;
             OrganizationalUnit = facility.OrganizationalUnit?.Name;
-            AddlOrgUnit = facility.HsrpFacilityPropertyDetails.OrganizationalUnit?.Name;   
+            AddlOrgUnit = facility.HsrpFacilityPropertyDetails?.OrganizationalUnit?.Name;   
             ComplianceOfficer = facility.ComplianceOfficer?.Name;
-            Geologist = facility.HsrpFacilityPropertyDetails.ComplianceOfficer?.Name;
+            Geologist = facility.HsrpFacilityPropertyDetails?.ComplianceOfficer?.Name;
             FileLabel = facility.FileLabel;
             Address = facility.Address;
             City = facility.City;
@@ -36,8 +36,8 @@ namespace FMS.Domain.Dto
             DateDeListed = facility.HsrpFacilityPropertyDetails?.DateDeListed;
             VRPDate = facility.HsrpFacilityPropertyDetails?.VRPDate;
             BrownfieldDate = facility.HsrpFacilityPropertyDetails?.BrownfieldDate;
-            VRPTerminated = facility.HsrpFacilityPropertyDetails.VRPTerminated;
-            BrownfieldTerminated = facility.HsrpFacilityPropertyDetails.BrownfieldTerminated;
+            VRPTerminated = facility.HsrpFacilityPropertyDetails == null ? false : facility.HsrpFacilityPropertyDetails.VRPTerminated;
+            BrownfieldTerminated = facility.HsrpFacilityPropertyDetails == null ? false : facility.HsrpFacilityPropertyDetails.BrownfieldTerminated;
             ImageChecked = facility.ImageChecked;
             Comments = facility.Comments;
             HSInumber = facility.HSInumber;

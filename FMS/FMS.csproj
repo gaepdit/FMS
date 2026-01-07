@@ -62,4 +62,11 @@
         </MsDeploySkipRules>
     </ItemGroup>
 
+<ItemGroup>
+  <Folder Include="Pages\Reporting\AssignmentList\" />
+  <Folder Include="Pages\Reporting\Delisted\" />
+  <Folder Include="Pages\Reporting\Events\" />
+  <Folder Include="Pages\Reporting\SiteSummary\" />
+</ItemGroup>
+
 </Project>

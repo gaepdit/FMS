@@ -15,7 +15,6 @@ namespace FMS.Domain.Dto
             FacilityType = facility.FacilityType?.Name;
             OrganizationalUnit = facility.OrganizationalUnit?.Name;
             ComplianceOfficer = facility.ComplianceOfficer?.Name;
-            Geologist = facility.HsrpFacilityPropertyDetails.ComplianceOfficer?.Name;
             FileLabel = facility.FileLabel;
             Address = facility.Address;
             City = facility.City;
@@ -63,9 +62,6 @@ namespace FMS.Domain.Dto
 
         [XLColumn(Header = "Compliance Officer")]
         public string ComplianceOfficer { get; }
-
-        [XLColumn(Header = "Geologist")]
-        public string Geologist { get; }
 
         [XLColumn(Header = "File Label")]
         public string FileLabel { get; }

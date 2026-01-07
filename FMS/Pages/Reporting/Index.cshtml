@@ -1,0 +1,42 @@
+﻿@page
+@using FMS.Pages.Reporting
+@model FMS.Pages.Reporting.IndexModel
+@{
+    ViewData["Title"] = $"Reports";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p class="lead">Select a Report from the list</p>
+
+<ul>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.AssignmentList</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.DelistedByPeriod</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.DelistedByDate</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.EventsPending</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.EventsCompleted</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.EventsCompliance</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.EventsCompletedOutstanding</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.EventsCompletedByCO</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.EventsNoActionTaken</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="">@ReportingOptions.SiteSummary</a>
+    </li>
+</ul>
