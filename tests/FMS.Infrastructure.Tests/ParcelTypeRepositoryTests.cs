@@ -58,14 +58,14 @@ namespace FMS.Infrastructure.Tests
 
         // ParcelTypeExistAsync
         [Test]
-        public async Task ParcelTypeExistAsync_ReturnTrue_ParcelTypeExist()
+        public async Task ParcelTypeExistAsync_ReturnTrue_WhenParcelTypeExist()
         {
             var existingPT = await _context.ParcelTypes.Select(ft => ft.Id).FirstAsync();
             var results = await _repository.ParcelTypeExistsAsync(existingPT);
             results.Should().BeTrue();
         }
         [Test]
-        public async Task ParcelTypeExistAsync_ReturnFalse_ParcelTypeDoesNotExist()
+        public async Task ParcelTypeExistAsync_ReturnFalse_WhenParcelTypeDoesNotExist()
         {
             var nonExistingPT = Guid.NewGuid();
             var results = await _repository.ParcelTypeExistsAsync(nonExistingPT);
