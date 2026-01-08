@@ -57,6 +57,77 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
+        // SoilStatusExistsAsync
+        [Test]
+        public async Task SoilStatusExistAsync_ReturnsTrue_WhenSoilStatusExist()
+        {
+            var existingSS = await _context.SoilStatuses.Select(e => e.Id).FirstAsync();
+            var results = await _repository.SoilStatusExistsAsync(existingSS);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task SoilStatusExistAsync_ReturnsFalse_WhenSoilStatusDoesNotExist()
+        {
+            var nonexistingSS = Guid.NewGuid();
+            var results = await _repository.SoilStatusExistsAsync(nonexistingSS);
+            results.Should().BeFalse();
+        }
 
+        // SoilStatusNameExistsAsync
+        [Test]
+        public async Task SoilStatusNameExistsAsync_ReturnsTrue_WhenNameExist()
+        {
+            var existingSS = new SoilStatus { Id = Guid.NewGuid(), Name = "NEW_NAME" };
+            _context.SoilStatuses.Add(existingSS);
+            await _context.SaveChangesAsync();
+
+            var results = await _repository.SoilStatusNameExistsAsync(existingSS.Name);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task SoilStatusNameExistsAsync_ReturnsFalse_WhenNameDoesNotExist()
+        {
+            var nonexistingSS = "NONEXISTING_NAME";
+
+            var results = await _repository.SoilStatusNameExistsAsync(nonexistingSS);
+            results.Should().BeFalse();
+        }
+
+        // SoilStatusDescriptionExistsAsync
+        [Test]
+        public async Task SoilStatusDescriptionExistsAsync_ReturnsTrue_WhenDescriptionExist()
+        {
+            var existingSS = new SoilStatus { Id = Guid.NewGuid(), Description = "NEW_DESCRIPTION" };
+            _context.SoilStatuses.Add(existingSS);
+            await _context.SaveChangesAsync();
+
+            var results = await _repository.SoilStatusDescriptionExistsAsync(existingSS.Description);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task SoilStatusDescriptionExistsAsync_ReturnsFalse_WhenDescriptionDoesNotExist()
+        {
+            var nonexistingSS = "NONEXISTING_DESCRIPTION";
+
+            var results = await _repository.SoilStatusDescriptionExistsAsync(nonexistingSS);
+            results.Should().BeFalse();
+        }
+
+        // GetSoilStatusAsync
+
+
+        // GetSoilStatusByNameAsync
+
+
+        // GetSoilStatusListAsync
+
+
+        // CreateSoilStatusAsync
+
+
+        // UpdateSoilStatusAsync
+
+
+        // UpdateSoilStatusStatusAsync
     }
 }
