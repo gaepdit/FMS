@@ -114,10 +114,36 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetSoilStatusAsync
-
+        [Test]
+        public async Task GetSoilStatusAsync_ReturnsSoilStatusEditDto_WhenSoilStatusExist()
+        {
+            var existingSS = await _context.SoilStatuses.Select(e => e.Id).FirstAsync();
+            var results = await _repository.GetSoilStatusAsync(existingSS);
+            results.Should().BeOfType<SoilStatusEditDto>();
+        }
+        [Test]
+        public async Task GetSoilStatusAsync_ReturnsNull_WhenSoilStatusDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var results = await _repository.GetSoilStatusAsync(invalidId);
+            results.Should().BeNull();
+        }
 
         // GetSoilStatusByNameAsync
-
+        [Test]
+        public async Task GetSoilStatusByNameAsync_ReturnsSoilStatusEditDto_WhenSoilStatusNameExist()
+        {
+            var existingSS = await _context.SoilStatuses.Select(e => e.Name).FirstAsync();
+            var results = await _repository.GetSoilStatusByNameAsync(existingSS);
+            results.Should().BeOfType<SoilStatusEditDto>();
+        }
+        [Test]
+        public async Task GetSoilStatusByNameAsync_ReturnsNull_WhenSoilStatusNameDoesNotExist()
+        {
+            var nonexistingName = "NONEXISTING_NAME";
+            var results = await _repository.GetSoilStatusByNameAsync(nonexistingName);
+            results.Should().BeNull();
+        }
 
         // GetSoilStatusListAsync
 
