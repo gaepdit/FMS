@@ -146,10 +146,26 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetSoilStatusListAsync
-
+        [Test]
+        public async Task GetSoilStatusListAsync_ReturnsAllFacilityStatuses()
+        {
+            var results = await _repository.GetSoilStatusListAsync();
+            results.Should().NotBeNullOrEmpty();
+        }
 
         // CreateSoilStatusAsync
+        [Test]
+        public async Task CreateSoilStatusAsync_CreateNewFacilityStatus_WhenDataIsValid()
+        {
+            var dto = new SoilStatusCreateDto { Name = "NEW_NAME", Description = "NEW_DESCRIPTION"};
 
+            var newId = await _repository.CreateSoilStatusAsync(dto);
+            var createdSoilStatus = await _context.SoilStatuses.FindAsync(newId);
+
+            createdSoilStatus.Should().NotBeNull();
+            createdSoilStatus.Name.Should().Be("NEW_NAME");
+            createdSoilStatus.Description.Should().Be("NEW_DESCRIPTION");
+        }
 
         // UpdateSoilStatusAsync
 
