@@ -168,7 +168,62 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateSoilStatusAsync
+        [Test]
+        public async Task UpdateSoilStatusAsync_UpdatesExistingSoilStatus_WhenDataIsValid()
+        {
+            var existingSS= new SoilStatus { Id = Guid.NewGuid(), Name = "ORIGINAL_NAME", Description = "ORIGINAL_DESCRIPTION" };
+            _context.SoilStatuses.Add(existingSS);
+            await _context.SaveChangesAsync();
 
+            var updateDto = new SoilStatusEditDto { Id = existingSS.Id, Name = "UPDATED_NAME", Description = "UPDATED_DESCRIPTION" };
+            await _repository.UpdateSoilStatusAsync(existingSS.Id, updateDto);
+
+            var updatedSS= await _context.SoilStatuses.FindAsync(existingSS.Id);
+            updatedSS.Name.Should().Be("UPDATED_NAME");
+            updatedSS.Description.Should().Be("UPDATED_DESCRIPTION");
+
+        }
+        [Test]
+        public async Task UpdateSoilStatusAsync_ThrowsKeyNotFoundException_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var updateDto = new SoilStatusEditDto { Id = Guid.NewGuid(), Name = "ORIGINAL_NAME", Description = "ORIGINAL_DESCRIPTION" };
+
+            Func<Task> action = async () => await _repository.UpdateSoilStatusAsync(nonExistingId, updateDto);
+            await action.Should().ThrowAsync<KeyNotFoundException>();
+        }
+        [Test]
+        public async Task UpdateSoilStatusAsync_ThrowsKeyNotFoundException_WhenNameAlreadyExist()
+        {
+            var existingSS = new SoilStatus { Id = Guid.NewGuid(), Name = "DUPLICATE_NAME", Description = "ORIGINAL_DESCRIPTION" };
+            var existingSS2 = new SoilStatus { Id = Guid.NewGuid(), Name = "DUPLICATE_NAME2", Description = "ORIGINAL_DESCRIPTION2" };
+
+            _context.SoilStatuses.Add(existingSS);
+            _context.SoilStatuses.Add(existingSS2);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            var updateDto = new SoilStatusEditDto { Id = existingSS2.Id, Name = "DUPLICATE_NAME", Description = "UPDATED_DESCRIPTION" };
+
+            Func<Task> action = async () => await _repository.UpdateSoilStatusAsync(existingSS2.Id, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
+        [Test]
+        public async Task UpdateSoilStatusAsync_ThrowsKeyNotFoundException_WhenDescriptionAlreadyExist()
+        {
+            var existingSS = new SoilStatus { Id = Guid.NewGuid(), Name = "ORIGINAL_NAME", Description = "DUPLICATE_DESCRIPTION" };
+            var existingSS2 = new SoilStatus { Id = Guid.NewGuid(), Name = "ORIGINAL_NAME2", Description = "DUPLICATE_DESCRIPTION2" };
+
+            _context.SoilStatuses.Add(existingSS);
+            _context.SoilStatuses.Add(existingSS2);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            var updateDto = new SoilStatusEditDto { Id = existingSS2.Id, Name = "UPDATED_NAME", Description = "DUPLICATE_DESCRIPTION" };
+
+            Func<Task> action = async () => await _repository.UpdateSoilStatusAsync(existingSS2.Id, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
 
         // UpdateSoilStatusStatusAsync
     }
