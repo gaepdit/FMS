@@ -147,7 +147,7 @@ namespace FMS.Infrastructure.Tests
 
         // GetSoilStatusListAsync
         [Test]
-        public async Task GetSoilStatusListAsync_ReturnsAllFacilityStatuses()
+        public async Task GetSoilStatusListAsync_ReturnsAllSoilStatuses()
         {
             var results = await _repository.GetSoilStatusListAsync();
             results.Should().NotBeNullOrEmpty();
@@ -155,16 +155,16 @@ namespace FMS.Infrastructure.Tests
 
         // CreateSoilStatusAsync
         [Test]
-        public async Task CreateSoilStatusAsync_CreateNewFacilityStatus_WhenDataIsValid()
+        public async Task CreateSoilStatusAsync_CreateNewSoilStatus_WhenDataIsValid()
         {
             var dto = new SoilStatusCreateDto { Name = "NEW_NAME", Description = "NEW_DESCRIPTION"};
 
             var newId = await _repository.CreateSoilStatusAsync(dto);
-            var createdSoilStatus = await _context.SoilStatuses.FindAsync(newId);
+            var result = await _repository.GetSoilStatusByNameAsync(dto.Name);
 
-            createdSoilStatus.Should().NotBeNull();
-            createdSoilStatus.Name.Should().Be("NEW_NAME");
-            createdSoilStatus.Description.Should().Be("NEW_DESCRIPTION");
+            result.Should().NotBeNull();
+            result.Name.Should().Be("NEW_NAME");
+            result.Description.Should().Be("NEW_DESCRIPTION");
         }
 
         // UpdateSoilStatusAsync
