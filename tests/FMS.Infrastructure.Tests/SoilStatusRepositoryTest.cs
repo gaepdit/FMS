@@ -226,5 +226,29 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateSoilStatusStatusAsync
+        [Test]
+        public async Task UpdateSoilStatusTypeStatusAsync_UpdatesStatusCorrectly()
+        {
+            var SoilStatus = new SoilStatus
+            {
+                Id = Guid.NewGuid(),
+                Name = "ORIGINAL_NAME",
+                Description = "ORIGINAL_DESCRIPTION",
+                Active = true
+            };
+            _context.SoilStatuses.Add(SoilStatus);
+            await _context.SaveChangesAsync();
+
+            await _repository.UpdateSoilStatusStatusAsync(SoilStatus.Id, false);
+
+            var updatedSoilStatus = await _context.SoilStatuses.FindAsync(SoilStatus.Id);
+            updatedSoilStatus.Active.Should().BeFalse();
+        }
+        [Test]
+        public async Task UpdateSoilStatusStatusAsync_ThrowsKeyNotFoundException_WhenIdDoesNotExist()
+        {
+            Func<Task> action = async () => await _repository.UpdateSoilStatusStatusAsync(Guid.NewGuid(), false);
+            await action.Should().ThrowAsync<KeyNotFoundException>();
+        }
     }
 }
