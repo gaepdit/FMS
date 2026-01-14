@@ -58,6 +58,40 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-        
+        // GroundwaterStatusExistsAsync
+        [Test]
+        public async Task GroundwaterStatusExistsAsync_ReturnsTrue_WhenGroundwaterStatusExist()
+        {
+            var existingGWS = await _context.GroundwaterStatuses.Select(e => e.Id).FirstAsync();
+            var results = await _repository.GroundwaterStatusExistsAsync(existingGWS);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task GroundwaterStatusExistAsync_ReturnsFalse_WhenGroundwaterStatusDoesNotExist()
+        {
+            var nonexistingGWS = Guid.NewGuid();
+            var results = await _repository.GroundwaterStatusExistsAsync(nonexistingGWS);
+            results.Should().BeFalse();
+        }
+
+        // GroundwaterStatusNameExistsAsync
+
+
+        // GroundwaterStatusDescriptionExistsAsync
+
+
+        // GetGroundwaterStatusListAsync
+
+
+        // GetGroundwaterStatusNameAsync
+
+
+        // CreateGroundwaterStatusAsync
+
+
+        // UpdateGroundwaterStatusAsync
+
+
+        // UpdateGroundwaterStatusStatusAsync
     }
 }
