@@ -129,6 +129,7 @@ namespace FMS
             services.AddScoped<ISubstanceRepository, SubstanceRepository>();
             services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IReportingRepository, ReportingRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();

@@ -1,0 +1,47 @@
+﻿@page
+@using FMS.Pages.Reporting.Delisted
+@model FMS.Pages.Reporting.Delisted.IndexModel
+
+@{
+    ViewData["Title"] = $"Delisted Sites Reports";
+}
+<h1>@ViewData["Title"]</h1>
+<a asp-page="../Index">← Back to Reports</a>
+<p class="lead">Select a Report from the list</p>
+
+<form method="post">
+    <button id="ByCO"
+            asp-page-handler="ByCO"
+            class="btn btn-sm btn-outline-primary mb-1">
+        Report
+    </button>
+    Delisted Sites By CO
+    <br />
+    <button id="ByDate"
+            asp-page-handler="ByDate"
+            class="btn btn-sm btn-outline-primary mb-1">
+        Report
+    </button>
+    Delisted Sites By Date
+    <br />
+    <button id="ByDateRange"
+            asp-page-handler="ByDateRange"
+            class="btn btn-sm btn-outline-primary mb-1">
+        Report
+    </button>
+    Delisted Sites By Date Range
+    <br />
+    <button id="ByHSI"
+            asp-page-handler="ByHSI"
+            class="btn btn-sm btn-outline-primary mb-1">
+        Report
+    </button>
+    Delisted Sites By HSI
+    <br />
+    <button id="ByUnit"
+            asp-page-handler="ByUnit"
+            class="btn btn-sm btn-outline-primary mb-1">
+        Report
+    </button>
+    Delisted Sites By Unit
+</form>

@@ -18,7 +18,8 @@ namespace FMS
             Normal,
             Pending,
             Map,
-            Event
+            Event,
+            Assignment
         }
 
         /// <summary>
