@@ -1,6 +1,5 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using Microsoft.Graph.Models.Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

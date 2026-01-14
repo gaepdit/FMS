@@ -4,7 +4,6 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Graph.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

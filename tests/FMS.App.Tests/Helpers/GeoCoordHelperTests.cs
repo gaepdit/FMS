@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using NUnit.Framework;
 
 namespace FMS.App.Tests.Helpers

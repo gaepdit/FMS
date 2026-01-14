@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FluentAssertions;
+using AwesomeAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;

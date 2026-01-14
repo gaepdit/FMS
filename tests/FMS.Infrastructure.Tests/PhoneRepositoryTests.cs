@@ -9,7 +9,7 @@ using FMS.Infrastructure.Repositories;
 using FMS.Domain.Entities;
 using FMS.Domain.Dto;
 using Microsoft.AspNetCore.Http;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace FMS.Infrastructure.Tests
 {
