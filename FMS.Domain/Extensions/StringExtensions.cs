@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace FMS.Domain.Extensions
+﻿namespace FMS.Domain.Extensions
 {
     public static class StringExtensions
     {

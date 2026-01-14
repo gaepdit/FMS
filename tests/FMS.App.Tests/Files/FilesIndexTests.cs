@@ -1,17 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AwesomeAssertions;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 using FMS.Domain.Repositories;
 using FMS.Pages.Files;
 using FMS.Platform.Extensions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using NSubstitute;
-using TestHelpers;
-using NUnit.Framework;
 using FMS.TestData.SeedData;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.App.Tests.Files
 {

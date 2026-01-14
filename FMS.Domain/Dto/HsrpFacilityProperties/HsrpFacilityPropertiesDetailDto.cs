@@ -1,6 +1,5 @@
 ﻿using FMS.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto

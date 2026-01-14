@@ -1,15 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using AwesomeAssertions;
-using FMS.Domain.Repositories;
-using FMS.Pages.Facilities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using NSubstitute;
-using TestHelpers;
-using NUnit.Framework;
-
-namespace FMS.App.Tests.Facilities
+﻿namespace FMS.App.Tests.Facilities
 {
     public class FacilityDetailsTests
     {

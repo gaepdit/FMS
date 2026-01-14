@@ -1,8 +1,7 @@
-﻿using System;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities.Base;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-using FMS.Domain.Dto;
-using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -12,6 +7,7 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -37,12 +33,12 @@ namespace FMS.Infrastructure.Repositories
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (facility == null) return null;
-
+
                 facility.RetentionRecords = facility.RetentionRecords
                 .OrderBy(e => e.StartYear)
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
-            
+
             if (facility.FacilityType.Name == "HSI")
             {
                 facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
@@ -95,7 +91,7 @@ namespace FMS.Infrastructure.Repositories
                         .Include(e => e.Chemical)
                         .Where(e => e.FacilityId == id)
                         .OrderByDescending(e => e.Active)
-                        .ThenBy(e => e.Chemical.ChemicalName)
+                        .ThenByDescending(e => e.Chemical.Active)
                         .ThenBy(e => e.Chemical.CommonName)
                         .ToListAsync();
 
@@ -146,13 +142,13 @@ namespace FMS.Infrastructure.Repositories
             if (facility.FacilityType.Name == "VRP" || facility.FacilityType.Name == "HSI" || facility.FacilityStatus.Name == "COMPLAINT" || facility.FacilityStatus.Name == "Event Tracking On")
             {
                 facility.Events = await _context.Events
-                .AsNoTracking()
-                .Include(e => e.EventType)
-                .Include(e => e.ActionTaken)
-                .Include(e => e.ComplianceOfficer)
-                .Include(e => e.EventContractor)
-                .Where(e => e.FacilityId == id)
-                .ToListAsync();
+                    .AsNoTracking()
+                    .Include(e => e.EventType)
+                    .Include(e => e.ActionTaken)
+                    .Include(e => e.ComplianceOfficer)
+                    .Include(e => e.EventContractor)
+                    .Where(e => e.FacilityId == id)
+                    .ToListAsync();
 
                 facility.Events = facility.Events
                     .OrderBy(e => e.StartDate)
@@ -164,11 +160,11 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-                if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
-                {
-                    facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
-                    .GetCabinetsForFile(facilityDetail.FileLabel);
-                }
+            if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
+            {
+                facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
+                .GetCabinetsForFile(facilityDetail.FileLabel);
+            }
 
             return facilityDetail;
         }

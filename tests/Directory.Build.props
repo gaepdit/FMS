@@ -1,16 +1,17 @@
 <Project>
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
 
-    <!-- Enable the NUnit runner. This is required for using the new Microsoft Testing Platform. -->
-    <EnableNUnitRunner>true</EnableNUnitRunner>
-    <OutputType>Exe</OutputType>
-  </PropertyGroup>
+        <!-- Enable the NUnit runner. This is required for using the new Microsoft Testing Platform. -->
+        <EnableNUnitRunner>true</EnableNUnitRunner>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <UseArtifactsOutput>true</UseArtifactsOutput>
-    <ArtifactsPath>$(MSBuildThisFileDirectory)..\artifacts</ArtifactsPath>
-  </PropertyGroup>
+    <PropertyGroup>
+        <UseArtifactsOutput>true</UseArtifactsOutput>
+        <ArtifactsPath>$(MSBuildThisFileDirectory)..\artifacts</ArtifactsPath>
+    </PropertyGroup>
 </Project>

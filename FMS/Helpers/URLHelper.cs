@@ -1,4 +1,4 @@
-﻿using FMS.Platform.Extensions;
+using FMS.Platform.Extensions;
 
 namespace FMS.Helpers
 {

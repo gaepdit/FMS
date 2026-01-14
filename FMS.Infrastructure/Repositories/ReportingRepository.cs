@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
 using FMS.Domain.Entities;
