@@ -550,7 +550,7 @@ appsettings.*.json
 
 ## Build artifacts
 # MSBuild
-.artifacts/
+artifacts/
 # Library Manager
 **/wwwroot/lib/
 

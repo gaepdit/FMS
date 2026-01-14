@@ -3,10 +3,6 @@
         <TargetFramework>net10.0</TargetFramework>
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <BaseOutputPath>$(MSBuildThisFileDirectory)..\artifacts\$(MSBuildProjectName)\bin\</BaseOutputPath>
-        <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)..\artifacts\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
+        <UseArtifactsOutput>true</UseArtifactsOutput>
     </PropertyGroup>
 </Project>

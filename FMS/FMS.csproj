@@ -41,6 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="../README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="appsettings.Local.json">
       <DependentUpon>appsettings.json</DependentUpon>
     </Content>
@@ -49,15 +53,15 @@
     </Content>
   </ItemGroup>
 
-<ItemGroup>
-        <MsDeploySkipRules Include="SkipAppSettings">
-            <ObjectName>filePath</ObjectName>
-            <AbsolutePath>appsettings.*.json</AbsolutePath>
-        </MsDeploySkipRules>
-        <MsDeploySkipRules Include="SkipWebConfig">
-            <ObjectName>filePath</ObjectName>
-            <AbsolutePath>web.config</AbsolutePath>
-        </MsDeploySkipRules>
-    </ItemGroup>
+  <ItemGroup>
+    <MsDeploySkipRules Include="SkipAppSettings">
+      <ObjectName>filePath</ObjectName>
+      <AbsolutePath>appsettings.*.json</AbsolutePath>
+    </MsDeploySkipRules>
+    <MsDeploySkipRules Include="SkipWebConfig">
+      <ObjectName>filePath</ObjectName>
+      <AbsolutePath>web.config</AbsolutePath>
+    </MsDeploySkipRules>
+  </ItemGroup>
 
 </Project>
