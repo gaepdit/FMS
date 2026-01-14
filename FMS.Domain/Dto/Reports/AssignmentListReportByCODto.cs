@@ -1,11 +1,5 @@
 ﻿using ClosedXML.Attributes;
 using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -15,7 +9,7 @@ namespace FMS.Domain.Dto
 
         public AssignmentListReportByCODto(Facility facility)
         {
-            ComplianceOfficer =facility.ComplianceOfficer?.Name;
+            ComplianceOfficer = facility.ComplianceOfficer?.Name;
             FacilityNumber = facility.FacilityNumber;
             FacilityName = facility.Name;
             FacilityStatusName = facility.FacilityStatus?.Name;
