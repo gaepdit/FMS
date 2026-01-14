@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Dto\AllowedActionTaken\AllowedActionTakenCreateDto.cs" />
     <Compile Remove="Dto\GroundwaterScore\GroundwaterScoreSummaryDto.cs" />

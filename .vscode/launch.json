@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/artifacts/FMS/bin/Debug/net9.0/FMS.dll",
+            "program": "${workspaceFolder}/artifacts/FMS/bin/Debug/net10.0/FMS.dll",
             "args": [],
             "cwd": "${workspaceFolder}/FMS",
             "stopAtEntry": false,
@@ -35,7 +35,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/artifacts/FMS/bin/Debug/net9.0/FMS.dll",
+            "program": "${workspaceFolder}/artifacts/FMS/bin/Debug/net10.0/FMS.dll",
             "args": [],
             "cwd": "${workspaceFolder}/FMS",
             "stopAtEntry": false,
