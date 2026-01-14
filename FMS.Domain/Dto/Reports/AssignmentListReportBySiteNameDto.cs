@@ -1,11 +1,5 @@
 ﻿using ClosedXML.Attributes;
 using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -38,7 +32,7 @@ namespace FMS.Domain.Dto
         [XLColumn(Header = "C.O.")]
         public string ComplianceOfficerName { get; set; }
 
-        [XLColumn(Header = "HSRA Buddy Unit")]
+        [XLColumn(Header = "HSRA Unit")]
         public string OrganizationalUnitName { get; set; }
     }
 }
