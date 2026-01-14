@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using AwesomeAssertions;
-using FMS.Domain.Dto;
-using TestHelpers;
-using NUnit.Framework;
-using static TestHelpers.RepositoryHelper;
+﻿using FMS.Domain.Dto;
 using FMS.TestData.SeedData;
+using TestHelpers;
+using static TestHelpers.RepositoryHelper;
 
 namespace FMS.Infrastructure.Tests
 {

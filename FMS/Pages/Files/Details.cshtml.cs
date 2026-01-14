@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;

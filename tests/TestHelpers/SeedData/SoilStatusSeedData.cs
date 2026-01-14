@@ -1,6 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
 
 namespace FMS.TestData.SeedData
 {

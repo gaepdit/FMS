@@ -1,6 +1,4 @@
-﻿using System;
-using FMS.Domain.Entities.Users;
-using System.Linq;
+﻿using FMS.Domain.Entities.Users;
 
 namespace FMS.Domain.Services
 {

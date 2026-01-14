@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
 
 namespace FMS.Domain.Repositories

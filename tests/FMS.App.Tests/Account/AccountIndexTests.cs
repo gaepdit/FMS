@@ -1,12 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using AwesomeAssertions;
-using FMS.Domain.Entities.Users;
+﻿using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
 using FMS.Pages.Account;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NSubstitute;
-using NUnit.Framework;
 
 namespace FMS.App.Tests.Account
 {

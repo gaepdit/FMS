@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace FMS.Domain.Repositories
+﻿namespace FMS.Domain.Repositories
 {
     /// <summary>
     /// Provides an interface for retrieving lists of entities as key, value pairs

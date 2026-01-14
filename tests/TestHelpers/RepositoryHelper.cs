@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using FMS.Domain.Repositories;
+﻿using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
+using FMS.TestData.SeedData;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
-using FMS.TestData.SeedData;
-using System.Threading.Tasks;
 
 namespace TestHelpers
 {

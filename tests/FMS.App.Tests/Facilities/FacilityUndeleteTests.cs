@@ -1,15 +1,10 @@
-using System;
-using System.Threading.Tasks;
-using AwesomeAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;
+using FMS.TestData.SeedData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NSubstitute;
 using TestHelpers;
-using NUnit.Framework;
-using FMS.TestData.SeedData;
 
 namespace FMS.App.Tests.Facilities
 {

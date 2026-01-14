@@ -1,5 +1,4 @@
 using ClosedXML.Attributes;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto

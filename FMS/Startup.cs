@@ -6,17 +6,11 @@ using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
 using FMS.Platform.Extensions.DevHelpers;
 using FMS.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Mindscape.Raygun4Net;
 using Mindscape.Raygun4Net.AspNetCore;
-using System;
 using System.Reflection;
 
 namespace FMS

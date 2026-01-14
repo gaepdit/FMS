@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AwesomeAssertions;
-using JetBrains.Annotations;
-using NUnit.Framework;
-using FMS.Helpers;
+﻿using JetBrains.Annotations;
 
 namespace FMS.App.Tests.Helpers
 {

@@ -1,6 +1,5 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
