@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using FMS.Domain.Entities;
 using FMS.Domain.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {

@@ -3,10 +3,6 @@ using FMS.Domain.Entities.Base;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FMS.Infrastructure.Repositories
 {

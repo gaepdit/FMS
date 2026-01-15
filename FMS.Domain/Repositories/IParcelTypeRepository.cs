@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using FMS.Domain.Dto;
 
 namespace FMS.Domain.Repositories

@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Dto\AllowedActionTaken\AllowedActionTakenCreateDto.cs" />
     <Compile Remove="Dto\GroundwaterScore\GroundwaterScoreSummaryDto.cs" />
@@ -12,10 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="axios" />
     <PackageReference Include="ClosedXML" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" />
-    <PackageReference Include="Microsoft.Graph" />
     <PackageReference Include="SonarAnalyzer.CSharp" Condition="'$(Configuration)' == 'Debug'">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

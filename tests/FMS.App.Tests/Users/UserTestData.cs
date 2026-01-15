@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FMS.Domain.Entities.Users;
+﻿using FMS.Domain.Entities.Users;
 
 namespace FMS.App.Tests.Users
 {

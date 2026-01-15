@@ -1,7 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
@@ -112,6 +108,9 @@ namespace FMS.Infrastructure.Contexts
                 builder.Entity(entityType).Property<string>(AuditProperties.InsertUser);
                 builder.Entity(entityType).Property<string>(AuditProperties.UpdateUser);
             }
+            
+            // Fix primary key error for IdentityPasskeyData
+            builder.Entity<IdentityPasskeyData>(e => e.HasNoKey());
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

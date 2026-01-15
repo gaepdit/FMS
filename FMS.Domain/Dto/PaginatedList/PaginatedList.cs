@@ -1,7 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Utils;
 using System.Collections;
-using System.Collections.Generic;
-using FMS.Domain.Utils;
 
 namespace FMS.Domain.Dto.PaginatedList
 {

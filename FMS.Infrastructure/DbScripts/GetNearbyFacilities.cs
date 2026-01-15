@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using FMS.Infrastructure.Contexts;
+﻿using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.DbScripts

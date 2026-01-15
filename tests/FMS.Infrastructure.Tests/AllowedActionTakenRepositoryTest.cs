@@ -1,18 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using NSubstitute;
-using NUnit.Framework;
-using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.Infrastructure.Tests
 {

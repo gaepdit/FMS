@@ -1,10 +1,7 @@
 using FMS.Domain.Services;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using FMS.Platform.Extensions;
 
 namespace FMS.Pages.Users
 {

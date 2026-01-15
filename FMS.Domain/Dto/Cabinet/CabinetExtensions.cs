@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FMS.Domain.Entities;
-using FMS.Domain.Utils;
+﻿using FMS.Domain.Utils;
 
 namespace FMS.Domain.Dto
 {

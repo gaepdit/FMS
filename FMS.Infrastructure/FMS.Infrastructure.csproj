@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-    </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="axios" />
         <PackageReference Include="Dapper" />
         <PackageReference Include="JetBrains.Annotations" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />

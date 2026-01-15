@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text.RegularExpressions;
 using FMS.Domain.Entities.Base;
 using FMS.Domain.Utils;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using static FMS.Domain.Data.Data;
 
 namespace FMS.Domain.Entities

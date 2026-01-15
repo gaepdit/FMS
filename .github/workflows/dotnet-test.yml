@@ -3,9 +3,6 @@ name: .NET Unit Tests
 on:
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   dotnet-test:
     # ↓ Change this to "false" to disable the workflow without any alert messages.
@@ -14,6 +11,9 @@ jobs:
     
     name: Run unit tests
     runs-on: windows-latest
+    permissions:
+      contents: read
+
     steps:
       - name: Check out repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8

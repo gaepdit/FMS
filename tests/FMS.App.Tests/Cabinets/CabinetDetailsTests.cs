@@ -1,13 +1,9 @@
-﻿using System.Threading.Tasks;
-using FluentAssertions;
-using FMS.Domain.Repositories;
+﻿using FMS.Domain.Repositories;
 using FMS.Pages.Cabinets;
+using FMS.TestData.SeedData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NSubstitute;
 using TestHelpers;
-using NUnit.Framework;
-using FMS.TestData.SeedData;
 
 namespace FMS.App.Tests.Cabinets
 {

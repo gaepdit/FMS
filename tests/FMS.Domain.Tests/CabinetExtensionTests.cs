@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Extensions;
-using NUnit.Framework;
 
 namespace FMS.Domain.Tests
 {
