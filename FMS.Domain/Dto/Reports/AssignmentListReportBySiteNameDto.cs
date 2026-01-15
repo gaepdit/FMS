@@ -32,7 +32,7 @@ namespace FMS.Domain.Dto
         [XLColumn(Header = "C.O.")]
         public string ComplianceOfficerName { get; set; }
 
-        [XLColumn(Header = "HSRA Buddy Unit")]
+        [XLColumn(Header = "HSRA Unit")]
         public string OrganizationalUnitName { get; set; }
     }
 }

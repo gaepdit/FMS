@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +10,7 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public ReportingRepository(FmsDbContext context) => _context = context;
 
+        #region Assignment Reports
         public async Task<IReadOnlyList<AssignmentListReportByCODto>> GetAsignmentListByCOAsync()
         {
             var facilityList = await _context.Facilities.AsNoTracking()
@@ -121,6 +122,15 @@ namespace FMS.Infrastructure.Repositories
 
             return reportDto;
         }
+        #endregion
+
+        #region Delisted Reports
+
+        #endregion
+
+        #region Events Reports
+
+        #endregion
 
         #region IDisposable Support
 

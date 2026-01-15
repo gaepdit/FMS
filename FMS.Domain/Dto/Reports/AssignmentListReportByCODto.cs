@@ -9,7 +9,7 @@ namespace FMS.Domain.Dto
 
         public AssignmentListReportByCODto(Facility facility)
         {
-            ComplianceOfficer =facility.ComplianceOfficer?.Name;
+            ComplianceOfficer = facility.ComplianceOfficer?.Name;
             FacilityNumber = facility.FacilityNumber;
             FacilityName = facility.Name;
             FacilityStatusName = facility.FacilityStatus?.Name;
