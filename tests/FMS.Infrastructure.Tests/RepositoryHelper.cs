@@ -5,7 +5,7 @@ using FMS.TestData.SeedData;
 using Microsoft.EntityFrameworkCore;
 using TestSupport.EfHelpers;
 
-namespace TestHelpers
+namespace FMS.Infrastructure.Tests
 {
     public class RepositoryHelper : IDisposable
     {

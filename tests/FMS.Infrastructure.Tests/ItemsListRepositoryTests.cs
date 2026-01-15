@@ -1,6 +1,6 @@
 ﻿using FMS.Domain.Repositories;
 using FMS.TestData.SeedData;
-using static TestHelpers.RepositoryHelper;
+using static FMS.Infrastructure.Tests.RepositoryHelper;
 
 namespace FMS.Infrastructure.Tests
 {
