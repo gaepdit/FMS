@@ -75,11 +75,42 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GroundwaterStatusNameExistsAsync
+        [Test]
+        public async Task GroundwaterStatusNameExistsAsync_ReturnsTrue_WhenNameExist()
+        {
+            var existingGWS = new GroundwaterStatus { Name = "EXISTING_NAME", Description = "EXISTING_DESCRIPTION" };
+            _context.GroundwaterStatuses.Add(existingGWS);
+            await _context.SaveChangesAsync();
 
+            var results = await _repository.GroundwaterStatusNameExistsAsync(existingGWS.Name);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task GroundwaterStatusNameExistsAsync_ReturnsFalse_WhenNameDoesNotExist()
+        {
+            var nonexistingGWS = "NONEXISTING_NAME";
+            var results = await _repository.GroundwaterStatusNameExistsAsync(nonexistingGWS);
+            results.Should().BeFalse();
+        }
 
         // GroundwaterStatusDescriptionExistsAsync
+        [Test]
+        public async Task GroundwaterStatusDescriptionExistsAsync_ReturnsTrue_WhenDescriptionExist()
+        {
+            var existingGWS = new GroundwaterStatus { Name = "EXISTING_NAME", Description = "EXISTING_DESCRIPTION" };
+            _context.GroundwaterStatuses.Add(existingGWS);
+            await _context.SaveChangesAsync();
 
-
+            var results = await _repository.GroundwaterStatusDescriptionExistsAsync(existingGWS.Description);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task GroundwaterStatusDescriptionExistsAsync_ReturnsFalse_WhenDescriptionDoesNotExist()
+        {
+            var nonexistingGWS = "NONEXISTING_DESCRIPTION";
+            var results = await _repository.GroundwaterStatusDescriptionExistsAsync(nonexistingGWS);
+            results.Should().BeFalse();
+        }
         // GetGroundwaterStatusListAsync
 
 
