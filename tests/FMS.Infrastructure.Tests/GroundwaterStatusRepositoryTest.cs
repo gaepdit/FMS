@@ -112,7 +112,12 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeFalse();
         }
         // GetGroundwaterStatusListAsync
-
+        [Test]
+        public async Task GetGroundwaterStatusListAsync_ReturnsAllGroundwaterStatuses()
+        {
+            var results = await _repository.GetGroundwaterStatusListAsync();
+            results.Should().NotBeNullOrEmpty();
+        }
 
         // GetGroundwaterStatusNameAsync
 
