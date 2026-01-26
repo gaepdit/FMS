@@ -120,10 +120,31 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetGroundwaterStatusNameAsync
+        [Test]
+        public async Task GetGroundwaterStatusNameAsync_ReturnsName_WhenNameExist()
+        {
+            var existingGWS = new GroundwaterStatus { Id = Guid.NewGuid(), Name = "EXISTING_NAME", Description = "EXISTING_DESCRIPTION" };
+            _context.GroundwaterStatuses.Add(existingGWS);
+            await _context.SaveChangesAsync();
 
+            var results = await _repository.GetGroundwaterStatusNameAsync(existingGWS.Id);
+            results.Should().BeEquivalentTo(existingGWS.Name);
+        }
 
         // CreateGroundwaterStatusAsync
+        [Test]
+        public async Task CreateGroundwaterStatusAsync_CreateNewGroundwaterStatus_WhenDataIsValid()
+        {
+            var dto = new GroundwaterStatusCreateDto { Name = "NEW_NAME", Description = "NEW_DESCRIPTION" };
 
+            var newId = await _repository.CreateGroundwaterStatusAsync(dto);
+            var createdGroundwaterStatus = await _context.GroundwaterStatuses.FindAsync(newId);
+
+            createdGroundwaterStatus.Should().NotBeNull();
+            createdGroundwaterStatus.Name.Should().Be("NEW_NAME");
+            createdGroundwaterStatus.Description.Should().Be("NEW_DESCRIPTION");
+
+        }
 
         // UpdateGroundwaterStatusAsync
 
