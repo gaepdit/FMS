@@ -143,10 +143,33 @@ namespace FMS.Infrastructure.Tests
             createdGroundwaterStatus.Should().NotBeNull();
             createdGroundwaterStatus.Name.Should().Be("NEW_NAME");
             createdGroundwaterStatus.Description.Should().Be("NEW_DESCRIPTION");
-
         }
 
         // UpdateGroundwaterStatusAsync
+        [Test]
+        public async Task UpdateGroundwaterStatusAsync_UpdatesExistingGroundwaterStatus_WhenDataIsValid()
+        {
+            var existingGWS= new GroundwaterStatus { Id = Guid.NewGuid(), Name = "VALID_NAME", Description = "VALID_DESCRIPTION" };
+            _context.GroundwaterStatuses.Add(existingGWS);
+            await _context.SaveChangesAsync();
+
+            var updateDto = new GroundwaterStatusEditDto { Name = "NEW_NAME", Description = "NEW_DESCRIPTION"};
+            await _repository.UpdateGroundwaterStatusAsync(existingGWS.Id, updateDto);
+
+            var updatedGWS= await _context.GroundwaterStatuses.FindAsync(existingGWS.Id);
+            updatedGWS.Name.Should().Be("NEW_NAME");
+            updatedGWS.Description.Should().Be("NEW_DESCRIPTION");
+
+        }
+        [Test]
+        public async Task UpdateGroundwaterStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new GroundwaterStatusEditDto { Name = "NON_EXISTENT" };
+
+            Func<Task> action = async () => await _repository.UpdateGroundwaterStatusAsync(invalidId, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
 
 
         // UpdateGroundwaterStatusStatusAsync
