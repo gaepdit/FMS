@@ -1,8 +1,9 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Graph.Drives.Item.Items.Item.Workbook.Functions.Today;
+using Microsoft.Kiota.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,7 +23,7 @@ namespace FMS.Pages.Reporting.Delisted
 
         [Display(Name = "End Date")]
         [BindProperty]
-        public DateOnly? EndDate { get; set; } = null;
+        public DateOnly? EndDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         public void OnGet()
         {
@@ -41,7 +42,7 @@ namespace FMS.Pages.Reporting.Delisted
 
         public async Task<IActionResult> OnPostByDateRangeAsync()
         {
-            var fileName = $"Delisted_by_Date_and_CO_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var fileName = $"Delisted_by_Date_Range_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
             // "delistedByDateRangeReportList" Detailed Facility List to go to a report
             IReadOnlyList<DelistedReportByDateRangeDto> delistedByDateRangeReportList = await _repository.GetDelistedByDateRangeAsync(StartDate, EndDate);

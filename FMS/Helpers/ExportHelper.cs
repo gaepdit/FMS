@@ -72,6 +72,10 @@ namespace FMS
                 table.ShowTotalsRow = true;
                 table.Field("Acres").TotalsRowFunction = XLTotalsRowFunction.Sum;
             }
+            if (reportType == ReportType.Event) 
+            {
+                
+            }
 
 
             wb.SaveAs(ms);
