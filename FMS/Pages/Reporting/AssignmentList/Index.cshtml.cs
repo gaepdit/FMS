@@ -28,7 +28,7 @@ namespace FMS.Pages.Reporting.AssignmentList
             // "assignmentByCOReportList" Detailed Facility List to go to a report
             IReadOnlyList<AssignmentListReportByCODto> assignmentByCOReportList = await _repository.GetAsignmentListByCOAsync();
 
-            return File(assignmentByCOReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Assignment), "application/vnd.ms-excel", fileName);
+            return File(assignmentByCOReportList.ExportExcelAsByteArray(ExportHelper.ReportType.None), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostByCountyAsync()
@@ -38,7 +38,7 @@ namespace FMS.Pages.Reporting.AssignmentList
             // "assignmentByCountyReportList" Detailed Facility List to go to a report
             IReadOnlyList<AssignmentListReportByCountyDto> assignmentByCountyReportList = await _repository.GetAsignmentListByCountyAsync();
 
-            return File(assignmentByCountyReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Assignment), "application/vnd.ms-excel", fileName);
+            return File(assignmentByCountyReportList.ExportExcelAsByteArray(ExportHelper.ReportType.None), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostByHSIAsync()
@@ -48,7 +48,7 @@ namespace FMS.Pages.Reporting.AssignmentList
             // "assignmentByHSIReportList" Detailed Facility List to go to a report
             IReadOnlyList<AssignmentListReportByHSIDto> assignmentByHSIReportList = await _repository.GetAsignmentListByHSIAsync();
 
-            return File(assignmentByHSIReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Assignment), "application/vnd.ms-excel", fileName);
+            return File(assignmentByHSIReportList.ExportExcelAsByteArray(ExportHelper.ReportType.None), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostBySiteNameAsync()
@@ -58,7 +58,7 @@ namespace FMS.Pages.Reporting.AssignmentList
             // "assignmentBySiteNameReportList" Detailed Facility List to go to a report
             IReadOnlyList<AssignmentListReportBySiteNameDto> assignmentBySiteNameReportList = await _repository.GetAsignmentListBySiteNameAsync();
 
-            return File(assignmentBySiteNameReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Assignment), "application/vnd.ms-excel", fileName);
+            return File(assignmentBySiteNameReportList.ExportExcelAsByteArray(ExportHelper.ReportType.None), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostByUnitAsync()
@@ -68,7 +68,7 @@ namespace FMS.Pages.Reporting.AssignmentList
             // "assignmentByUnitReportList" Detailed Facility List to go to a report
             IReadOnlyList<AssignmentListReportByUnitDto> assignmentByUnitReportList = await _repository.GetAsignmentListByUnitAsync();
 
-            return File(assignmentByUnitReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Assignment), "application/vnd.ms-excel", fileName);
+            return File(assignmentByUnitReportList.ExportExcelAsByteArray(ExportHelper.ReportType.None), "application/vnd.ms-excel", fileName);
         }
     }
 }

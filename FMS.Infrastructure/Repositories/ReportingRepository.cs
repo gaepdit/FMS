@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -129,6 +130,50 @@ namespace FMS.Infrastructure.Repositories
         #endregion
 
         #region Delisted Reports
+
+        public async Task<IReadOnlyList<DelistedReportByDateDto>> GetDelistedByDateAsync()
+        {             
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
+                .Where(e => e.HsrpFacilityProperties.DateDeListed != null)
+                .Select(e => new DelistedReportByDateDto(e))
+                .ToListAsync();
+            var reportDto = facilityList
+                .OrderBy(e => e.DelistedDate)
+                .ToList();
+            return reportDto;
+        }
+
+        public async Task<IReadOnlyList<DelistedReportByDateRangeDto>> GetDelistedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate)
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.Parcels)
+                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
+                .Where(e => e.HsrpFacilityProperties.DateDeListed != null && e.HsrpFacilityProperties.DateDeListed >= startDate.GetValueOrDefault() && e.HsrpFacilityProperties.DateDeListed <= endDate.GetValueOrDefault())
+                .Select(e => new DelistedReportByDateRangeDto(e))
+                .ToListAsync();
+            var reportDto = facilityList
+                .OrderBy(e => e.HSIID)
+                .GroupBy(e => e.HSRAComplianceOfficerName)
+                .SelectMany(g => g)
+                .ToList();
+            return reportDto;
+        }
+
 
         #endregion
 

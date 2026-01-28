@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Entities;
+﻿using ClosedXML.Attributes;
+using FMS.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace FMS.Domain.Dto.Reports
     {
         public DelistedReportByDateRangeDto() { }
 
-        public DelistedReportByDateRangeDto(Facility facility, DateOnly startDate, DateOnly endDate, double? totalAcres)
+        public DelistedReportByDateRangeDto(Facility facility)
         {
             HSIID = facility.FacilityNumber;
             Acres = facility.Parcels != null ? facility.Parcels.Sum(p => p.Acres) : null;
@@ -22,23 +23,34 @@ namespace FMS.Domain.Dto.Reports
             CountyName = facility.County != null ? facility.County.Name : string.Empty;
             ComplianceOfficerName = facility.ComplianceOfficer != null ? facility.ComplianceOfficer.Name : string.Empty;
             HSRAComplianceOfficerName = facility.HsrpFacilityProperties != null && facility.HsrpFacilityProperties.ComplianceOfficer != null ? facility.HsrpFacilityProperties.ComplianceOfficer.Name : string.Empty;
-            StartDate = startDate;
-            EndDate = endDate;
-            TotalAcres = totalAcres;
         }
 
+        [XLColumn(Header = "HSI ID")]
         public string HSIID { get; set; }
+
+        [XLColumn(Header = "Acres")]
         public double? Acres { get; set; }
+
+        [XLColumn(Header = "Facility Name")]
         public string FacilityName { get; set; }
+
+        [XLColumn(Header = "Facility Type")]
         public string FacilityTypeName { get; set; }
+
+        [XLColumn(Header = "Listed Date")]
         public DateOnly? ListedDate { get; set; }
+
+        [XLColumn(Header = "Delisted Date")]
         public DateOnly? DelistedDate { get; set; }
+
+        [XLColumn(Header = "County")]
         public string CountyName { get; set; }
+
+        [XLColumn(Header = "Compliance Officer")]
         public string ComplianceOfficerName { get; set; }
+
+        [XLColumn(Header = "HSRA Compliance Officer")]
         public string HSRAComplianceOfficerName { get; set; }
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
-        public double? TotalAcres { get; set; }
     }
 }
 

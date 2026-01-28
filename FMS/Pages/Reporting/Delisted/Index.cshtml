@@ -10,17 +10,35 @@
 <p class="lead">Select a Report from the list</p>
 
 <form method="post">
-    <button id="ByDate"
-            asp-page-handler="ByDate"
-            class="btn btn-sm btn-outline-primary mb-1">
-        Report
-    </button>
-    Delisted Sites By Date
-    <br />
-    <button id="ByDateRange"
-            asp-page-handler="ByDateRange"
-            class="btn btn-sm btn-outline-primary mb-1">
-        Report
-    </button>
-    Delisted Sites By Date Range
+    <div class="row">
+        <div class="col-md-4">
+            <button id="ByDate"
+                    asp-page-handler="ByDate"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            Delisted Sites By Date
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+            <button id="ByDateRange"
+                    asp-page-handler="ByDateRange"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            Delisted Sites By Date Range
+        </div>
+        <div class="col-md-2">
+            <label asp-for="StartDate" class="form-label"></label>
+            <input asp-for="StartDate" class="form-control datepicker" type="date" placeholder="" />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+        <div class="col-md-2">
+            <label asp-for="EndDate" class="form-label"></label>
+            <input asp-for="EndDate" class="form-control datepicker" type="date" placeholder="" />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+    </div>
 </form>
