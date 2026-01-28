@@ -42,7 +42,7 @@ namespace FMS.Pages.Reporting.Delisted
 
         public async Task<IActionResult> OnPostByDateRangeAsync()
         {
-            var fileName = $"Delisted_by_Date_and_CO_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var fileName = $"Delisted_by_Date_Range_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
             // "delistedByDateRangeReportList" Detailed Facility List to go to a report
             IReadOnlyList<DelistedReportByDateRangeDto> delistedByDateRangeReportList = await _repository.GetDelistedByDateRangeAsync(StartDate, EndDate);
