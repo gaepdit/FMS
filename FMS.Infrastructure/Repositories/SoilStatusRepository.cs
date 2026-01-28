@@ -92,14 +92,14 @@ namespace FMS.Infrastructure.Repositories
                 throw new KeyNotFoundException($"Soil Status with ID {id} not found.");
             }
 
-            if (await SoilStatusNameExistsAsync(soilStatus.Name, id))
+            if (await SoilStatusNameExistsAsync(soilStatusUpdates.Name, id))
             {
-                throw new ArgumentException($"The Soil Status Name: '{soilStatus.Name}' already exists.");
+                throw new ArgumentException($"The Soil Status Name: '{soilStatusUpdates.Name}' already exists.");
             }
 
-            if (await SoilStatusDescriptionExistsAsync(soilStatus.Description, id))
+            if (await SoilStatusDescriptionExistsAsync(soilStatusUpdates.Description, id))
             {
-                throw new ArgumentException($"The Soil Status Description: '{soilStatus.Description}' already exists.");
+                throw new ArgumentException($"The Soil Status Description: '{soilStatusUpdates.Description}' already exists.");
             }
 
             soilStatus.Name = soilStatusUpdates.Name;
