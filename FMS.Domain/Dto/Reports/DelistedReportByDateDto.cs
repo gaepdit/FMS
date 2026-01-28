@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FMS.Domain.Dto.Reports
+namespace FMS.Domain.Dto
 {
     public class DelistedReportByDateDto
     {
