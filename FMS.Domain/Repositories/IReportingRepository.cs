@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,6 +21,10 @@ namespace FMS.Domain.Repositories
         #endregion
 
         #region Delisted Reports
+
+        Task<IReadOnlyList<DelistedReportByDateDto>> GetDelistedByDateAsync();
+
+        Task<IReadOnlyList<DelistedReportByDateRangeDto>> GetDelistedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate);
 
         #endregion
 
