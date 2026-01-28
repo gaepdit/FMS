@@ -171,7 +171,30 @@ namespace FMS.Infrastructure.Tests
             await action.Should().ThrowAsync<ArgumentException>();
         }
 
-
         // UpdateGroundwaterStatusStatusAsync
+        [Test]
+        public async Task UpdateGroundwaterStatusStatusAsync_UpdatesStatusCorrectly()
+        {
+            var GroundwaterStatus = new GroundwaterStatus
+            {
+                Id = Guid.NewGuid(),
+                Name = "VALID_NAME",
+                Description = "VALID_DESCRIPTION",
+                Active = true,
+            };
+            _context.GroundwaterStatuses.Add(GroundwaterStatus);
+            await _context.SaveChangesAsync();
+
+            await _repository.UpdateGroundwaterStatusStatusAsync(GroundwaterStatus.Id, false);
+
+            var updatedGroundwaterStatus = await _context.GroundwaterStatuses.FindAsync(GroundwaterStatus.Id);
+            updatedGroundwaterStatus.Active.Should().BeFalse();
+        }
+        [Test]
+        public async Task UpdateGroundwaterStatusStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            Func<Task> action = async () => await _repository.UpdateGroundwaterStatusStatusAsync(Guid.NewGuid(), false);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }
