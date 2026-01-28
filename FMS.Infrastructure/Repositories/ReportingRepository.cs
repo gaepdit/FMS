@@ -1,10 +1,12 @@
-﻿using FMS.Domain.Dto;
-using FMS.Domain.Dto.Reports;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -174,10 +176,22 @@ namespace FMS.Infrastructure.Repositories
             return reportDto;
         }
 
-
         #endregion
 
         #region Events Reports
+
+        public async Task<IReadOnlyList<EventSummaryDto>> GetEventsPendingAsync()
+        {
+            return await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.Events)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .OrderBy(e => e.ComplianceOfficer)
+                .Where(e => (e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP"))
+                .SelectMany(e => e.Events.Where(ev => ev.Active && ev.CompletionDate == null).Select(ev => new EventSummaryDto(ev)))
+                .ToListAsync();
+        }
 
         #endregion
 
