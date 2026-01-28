@@ -2,6 +2,8 @@ using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Graph.Drives.Item.Items.Item.Workbook.Functions.Today;
+using Microsoft.Kiota.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,7 +23,7 @@ namespace FMS.Pages.Reporting.Delisted
 
         [Display(Name = "End Date")]
         [BindProperty]
-        public DateOnly? EndDate { get; set; } = null;
+        public DateOnly? EndDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
         public void OnGet()
         {
