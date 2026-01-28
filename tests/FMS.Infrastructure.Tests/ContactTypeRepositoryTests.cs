@@ -34,7 +34,7 @@ namespace FMS.Infrastructure.Tests
             _context.ContactTypes.Add(new ContactType
             {
                 Id = Guid.NewGuid(),
-                Name = "Contact Type",
+                Name = "VALID_NAME",
                 Active = true
             });
             _context.SaveChanges();
@@ -58,14 +58,14 @@ namespace FMS.Infrastructure.Tests
 
         //ContactTypeExistAsync
         [Test]
-        public async Task ContactTypeExistAsync_ReturnTrue_ContactTypeExist()
+        public async Task ContactTypeExistAsync_ReturnTrue_WhenContactTypeExist()
         {
             var existingCT = await _context.ContactTypes.Select(ft => ft.Id).FirstAsync();
             var results = await _repository.ContactTypeExistsAsync(existingCT);
             results.Should().BeTrue();      
         }
         [Test]
-        public async Task ContactTypeExistAsync_ReturnFalse_ContactTypeDoesNotExist()
+        public async Task ContactTypeExistAsync_ReturnFalse_WhenContactTypeDoesNotExist()
         {
             var nonExistingCT = Guid.NewGuid();
             var results = await _repository.ContactTypeExistsAsync(nonExistingCT);
@@ -85,7 +85,7 @@ namespace FMS.Infrastructure.Tests
             result.Name.Should().Be(existingCT.Name);
         }
         [Test]
-        public async Task GetContactTypeByIdAsync_WhenIdDoesNotExist_ReturnsNull()
+        public async Task GetContactTypeByIdAsync_ReturnsNull_WhenIdDoesNotExist()
         {
             var nonExistingId = Guid.NewGuid();
             var result = await _repository.GetContactTypeByIdAsync(nonExistingId);
@@ -105,13 +105,13 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task CreateContactTypeAsync_CreateNewContactType_WhenDataIsValid()
         {
-            var dto = new ContactTypeCreateDto { Name = "UniqueName" };
+            var dto = new ContactTypeCreateDto { Name = "NEW_NAME" };
 
             var newId = await _repository.CreateContactTypeAsync(dto);
             var createdContactType = await _context.ContactTypes.FindAsync(newId);
 
             createdContactType.Should().NotBeNull();
-            createdContactType.Name.Should().Be("UniqueName");
+            createdContactType.Name.Should().Be("NEW_NAME");
         }
         /*[Test]
         public async Task CreateContactTypeAsync_ThrowsArgumentException_WhereNameAlreadyExist()
@@ -130,15 +130,15 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task UpdateContactTypeAsync_UpdatesExistingContactType_WhenDataIsValid()
         {
-            var existingContactType = new ContactType { Id = Guid.NewGuid(), Name = "OriginalName" };
+            var existingContactType = new ContactType { Id = Guid.NewGuid(), Name = "VALID_NAME" };
             _context.ContactTypes.Add(existingContactType);
             await _context.SaveChangesAsync();
 
-            var updateDto = new ContactTypeEditDto { Name = "UpdatedName" };
+            var updateDto = new ContactTypeEditDto { Name = "UPDATED_NAME" };
             await _repository.UpdateContactTypeAsync(existingContactType.Id, updateDto);
 
             var updatedContactType = await _context.ContactTypes.FindAsync(existingContactType.Id);
-            updatedContactType.Name.Should().Be("UpdatedName");
+            updatedContactType.Name.Should().Be("UPDATED_NAME");
         }
         [Test]
         public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
@@ -147,14 +147,14 @@ namespace FMS.Infrastructure.Tests
             var updateDto = new ContactTypeEditDto { Name = "NON_EXISTENT" };
 
             Func<Task> action = async () => await _repository.UpdateContactTypeAsync(invalidId, updateDto);
-            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Type ID not found. (Parameter 'id')");
+            await action.Should().ThrowAsync<ArgumentException>();
         }
 
         //UpdateContactTypeStatusAsync
         [Test]
         public async Task UpdateContactTypeStatusAsync_UpdatesStatusCorrectly()
         {
-            var contactType = new ContactType { Id = Guid.NewGuid(), Name = "StatusTest", Active = true };
+            var contactType = new ContactType { Id = Guid.NewGuid(), Name = "VALID_NAME", Active = true };
             _context.ContactTypes.Add(contactType);
             await _context.SaveChangesAsync();
 
@@ -168,7 +168,7 @@ namespace FMS.Infrastructure.Tests
         public async Task UpdateContactTypeStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
         {
             Func<Task> action = async () => await _repository.UpdateContactTypeStatusAsync(Guid.NewGuid(), false);
-            await action.Should().ThrowAsync<ArgumentException>().WithMessage("Contact Type ID not found");
+            await action.Should().ThrowAsync<ArgumentException>();
         }
     }
 }

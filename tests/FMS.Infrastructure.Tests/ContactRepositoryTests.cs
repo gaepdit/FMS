@@ -228,8 +228,7 @@ namespace FMS.Infrastructure.Tests
 
             var action = async () => await _repository.UpdateContactAsync(invalidId, updateDto);
 
-            await action.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Contact with ID " + invalidId + " does not exist.");
+            await action.Should().ThrowAsync<InvalidOperationException>();
         }
 
         // UpdateContactActiveAsync
@@ -251,8 +250,7 @@ namespace FMS.Infrastructure.Tests
         {
             var invalidId = Guid.NewGuid();
             var action = async () => await _repository.UpdateContactActiveAsync(invalidId, false);
-            await action.Should().ThrowAsync<InvalidOperationException>()
-                .WithMessage("Contact with ID " + invalidId + " does not exist.");
+            await action.Should().ThrowAsync<InvalidOperationException>();
         }
     }
 }

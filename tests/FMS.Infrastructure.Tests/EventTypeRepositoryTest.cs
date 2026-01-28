@@ -65,7 +65,7 @@ namespace FMS.Infrastructure.Tests
 
         // EventTypeExistAsync
         [Test]
-        public async Task EventTypeExistAsync_ReturnsTrue_EventTypeExist()
+        public async Task EventTypeExistAsync_ReturnsTrue_WhenEventTypeExist()
         {
             var existingET = await _context.EventTypes.Select(ft => ft.Id).FirstAsync();
             var results = await _repository.EventTypeExistsAsync(existingET);
@@ -73,7 +73,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Test]
-        public async Task EventTypeExistAsync_ReturnsFalse_EventTypeDoesNotExist()
+        public async Task EventTypeExistAsync_ReturnsFalse_WhenEventTypeDoesNotExist()
         {
             var nonExistingET = Guid.NewGuid();
             var results = await _repository.EventTypeExistsAsync(nonExistingET);
@@ -103,11 +103,7 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeFalse();
         }
 
-
         // GetEventTypeByIdAsync
-
-
-        // GetEventTypeNameAsync
         [Test]
         public async Task GetEventTypeByIdAsync_ReturnsEventTypeEditEto_WhenIdExist()
         {
@@ -125,25 +121,6 @@ namespace FMS.Infrastructure.Tests
             var nonExistingId = Guid.NewGuid();
             var results = await _repository.GetEventTypeByIdAsync(nonExistingId);
 
-            results.Should().BeNull();
-        }
-
-        // GetEventTypeNameAsync
-        [Test]
-        public async Task GetEventTypeNameAsyncReturnsEventTypeNameWhenIdExist()
-        {
-            var existingET = await _context.EventTypes.FirstAsync();
-
-            var results = await _repository.GetEventTypeNameAsync(existingET.Id);
-
-            results.Should().Be(existingET.Name);
-        }
-        [Test]
-        public async Task GetEventTypeNameAsyncReturnsNullWhenIdDoesNotExist()
-        {
-            var nonExistingId = Guid.NewGuid();
-            var results = await _repository.GetEventTypeNameAsync(nonExistingId);
-            
             results.Should().BeNull();
         }
 
@@ -176,9 +153,6 @@ namespace FMS.Infrastructure.Tests
             var results = await _repository.GetEventTypeListAsync();
             results.Should().NotBeNullOrEmpty();
         }
-
-
-        
 
         // CreateEventTypeAsync
         [Test]

@@ -59,7 +59,7 @@ namespace FMS.Infrastructure.Tests
 
         // ScoreExistAsync
         [Test]
-        public async Task ScoreExistAsync_ReturnsTrue_ScoreExist()
+        public async Task ScoreExistAsync_ReturnsTrue_WhenScoreExist()
         {
             var existingScore = await _context.Scores.Select(ft => ft.Id).FirstAsync();
             var results = await _repository.ScoreExistsAsync(existingScore);
@@ -67,7 +67,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         [Test]
-        public async Task ScoreExistAsync_ReturnsFalse_ScoreDoesNotExist()
+        public async Task ScoreExistAsync_ReturnsFalse_WhenScoreDoesNotExist()
         {
             var nonExistingScore = Guid.NewGuid();
             var results = await _repository.ScoreExistsAsync(nonExistingScore);
