@@ -36,9 +36,10 @@
             <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
         <div class="col-md-2">
-            <label asp-for="EndDate" class="form-label"></label>
+            <label asp-for="EndDate" class="form-label">End Date <span class="text-danger">*</span></label>
             <input asp-for="EndDate" class="form-control datepicker" type="date" placeholder="" />
             <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
     </div>
+    <p><span class="text-danger">* denotes required field</span></p>
 </form>
