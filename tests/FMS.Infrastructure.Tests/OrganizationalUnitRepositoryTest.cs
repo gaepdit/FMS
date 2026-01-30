@@ -55,6 +55,24 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-        // 
+        // OrganizationalUnitExistsAsync
+
+
+        // OrganizationalUnitNameExistsAsync
+
+
+        // GetOrganizationalUnitAsync
+
+
+        // GetOrganizationalUnitListAsync
+
+
+        // CreateOrganizationalUnitAsync
+
+
+        // UpdateOrganizationalUnitAsync
+
+
+        // UpdateOrganizationalUnitStatusAsync
     }
 }
