@@ -56,6 +56,20 @@ namespace FMS.Infrastructure.Tests
         }
 
         // OrganizationalUnitExistsAsync
+        [Test]
+        public async Task OrganizationalUnitExistsAsync_ReturnsTrue_WhenOrganizationalUnitExist()
+        {
+            var existingOU = await _context.OrganizationalUnits.Select(ft => ft.Id).FirstAsync();
+            var results = await _repository.OrganizationalUnitExistsAsync(existingOU);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task OrganizationalUnitExistsAsync_ReturnsFalse_WhenIdDoesNotExist()
+        {
+            var nonexistingOU = Guid.NewGuid();
+            var results = await _repository.OrganizationalUnitExistsAsync(nonexistingOU);
+            results.Should().BeFalse();
+        }
 
 
         // OrganizationalUnitNameExistsAsync
