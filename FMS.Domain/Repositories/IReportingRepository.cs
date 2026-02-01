@@ -29,7 +29,7 @@ namespace FMS.Domain.Repositories
 
         #region Events Reports
 
-        Task<IReadOnlyList<EventSummaryDto>> GetEventsPendingAsync();
+        Task<IReadOnlyList<EventReportDto>> GetEventsReportsAsync(EventReportType eventReportType);
 
         #endregion
     }

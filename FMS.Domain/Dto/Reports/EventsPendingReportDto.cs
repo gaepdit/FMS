@@ -10,17 +10,17 @@ namespace FMS.Domain.Dto
 {
     public class EventsPendingReportDto
     {
-        public EventsPendingReportDto() { }
+        public EventsPendingReportDto() {}
 
-        public EventsPendingReportDto(EventSummaryDto reportEvent, string hsiid, string facilityName, string unitName)
+        public EventsPendingReportDto(EventReportDto reportEvent)
         {
-            HSIID = hsiid;
-            FacilityName = facilityName;
-            EventTypeName = reportEvent.EventType.Name;
+            HSIID = reportEvent.FacilityNumber;
+            FacilityName = reportEvent.FacilityName;
+            EventTypeName = reportEvent.EventType?.Name;
             EventStartDate = reportEvent.StartDate;
             EventDueDate = reportEvent.DueDate;
-            ComplianceOfficerName = reportEvent.ComplianceOfficer.Name;
-            UnitName = unitName;
+            ComplianceOfficerName = reportEvent.ComplianceOfficer?.Name;
+            UnitName = reportEvent.OrganizationalUnit?.Name;
             ActivityComment = reportEvent.Comment;
         }
 

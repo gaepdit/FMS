@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
-    public class EventsOverdueReportDto
+    public class EventsActivityCompletedByCOReportDto
     {
     }
 }

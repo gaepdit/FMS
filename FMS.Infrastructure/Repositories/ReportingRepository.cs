@@ -180,17 +180,47 @@ namespace FMS.Infrastructure.Repositories
 
         #region Events Reports
 
-        public async Task<IReadOnlyList<EventSummaryDto>> GetEventsPendingAsync()
+        public async Task<IReadOnlyList<EventReportDto>> GetEventsReportsAsync(EventReportType eventReportType)
         {
-            return await _context.Facilities.AsNoTracking()
+            List<EventReportDto> facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
                 .Include(e => e.FacilityType)
                 .Include(e => e.Events)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
-                .OrderBy(e => e.ComplianceOfficer)
                 .Where(e => (e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP"))
-                .SelectMany(e => e.Events.Where(ev => ev.Active && ev.CompletionDate == null).Select(ev => new EventSummaryDto(ev)))
+                .SelectMany(e => e.Events.Where(ev => ev.Active)
+                .Select(ev => new EventReportDto(ev)))
                 .ToListAsync();
+
+            List<EventReportDto> reportDto;
+              
+            switch (eventReportType)
+            {
+                case EventReportType.Pending:
+                    reportDto = facilityList.Where(e => e.Status == "Pending").ToList();
+                    break;
+                case EventReportType.Compliance:
+                    reportDto = facilityList.Where(e => e.Status == "Compliance").ToList();
+                    break;
+                case EventReportType.Completed:
+                    reportDto = facilityList.Where(e => e.Status == "Completed").ToList();
+                    break;
+                case EventReportType.CompletedOutstanding:
+                    reportDto = facilityList.Where(e => e.Status == "CompletedOutstanding").ToList();
+                    break;
+                case EventReportType.CompletedByCO:
+                    reportDto = facilityList.Where(e => e.Status == "CompletedByCO").ToList();
+                    break;
+                default:
+                    reportDto = facilityList;
+                    break;
+            }
+
+            return reportDto;
         }
 
         #endregion
