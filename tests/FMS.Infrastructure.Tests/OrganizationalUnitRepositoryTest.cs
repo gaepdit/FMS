@@ -71,9 +71,24 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeFalse();
         }
 
-
         // OrganizationalUnitNameExistsAsync
+        [Test]
+        public async Task OrganizationalUnitNameExistsAsync_ReturnsTrue_WhenOrganizationalUnitNameExist()
+        {
+            var existingOU = new OrganizationalUnit { Id = Guid.NewGuid(), Name = "NEW_NAME" };
+            _context.OrganizationalUnits.Add(existingOU);
+            await _context.SaveChangesAsync();
 
+            var results = await _repository.OrganizationalUnitNameExistsAsync(existingOU.Name);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task OrganizationalUnitNameExistsAsync_ReturnsFalse_WhenOrganizationalUnitNameDoesNotExist()
+        {
+            var nonExistingOU= "NONEXISTING_NAME";
+            var results = await _repository.OrganizationalUnitNameExistsAsync(nonExistingOU);
+            results.Should().BeFalse();
+        }
 
         // GetOrganizationalUnitAsync
 
