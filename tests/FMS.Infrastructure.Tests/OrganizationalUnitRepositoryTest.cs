@@ -91,7 +91,25 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetOrganizationalUnitAsync
+        [Test]
+        public async Task GetOrganizationalUnitAsync_ReturnsOrganizationalUnitEditDto_WhenIdIsValid()
+        {
+            var existingOU = new OrganizationalUnit { Id = Guid.NewGuid(), Name = "NEW_NAME" };
+            _context.OrganizationalUnits.Add(existingOU);
+            await _context.SaveChangesAsync();
 
+            var results = await _repository.GetOrganizationalUnitAsync(existingOU.Id);
+            results.Should().NotBeNull();
+            results.Should().BeOfType<OrganizationalUnitEditDto>();
+        }
+        [Test]
+        public async Task GetOrganizationalUnitAsync_ReturnsNull_WhenIdIsInvalid()
+        {
+            var invalidId = Guid.NewGuid();
+
+            var results = await _repository.GetOrganizationalUnitAsync(invalidId);
+            results.Should().BeNull();
+        }
 
         // GetOrganizationalUnitListAsync
 
