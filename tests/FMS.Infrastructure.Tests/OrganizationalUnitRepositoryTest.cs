@@ -112,7 +112,12 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetOrganizationalUnitListAsync
-
+        [Test]
+        public async Task GetOrganizationalUnitListAsync_ReturnsAllOrganizationalUnits()
+        {
+            var results = await _repository.GetOrganizationalUnitListAsync();
+            results.Should().NotBeNullOrEmpty();
+        }
 
         // CreateOrganizationalUnitAsync
 
