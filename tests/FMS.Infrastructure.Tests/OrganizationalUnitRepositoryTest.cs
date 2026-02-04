@@ -120,7 +120,17 @@ namespace FMS.Infrastructure.Tests
         }
 
         // CreateOrganizationalUnitAsync
+        [Test]
+        public async Task CreateOrganizationalUnitAsync_CreateNewOrganizationalUnit_WhenDataIsValid()
+        {
+            var dto = new OrganizationalUnitCreateDto { Name = "NEW_NAME" };
 
+            var newId = await _repository.CreateOrganizationalUnitAsync(dto);
+            var createdOU= await _context.OrganizationalUnits.FindAsync(newId);
+
+            createdOU.Should().NotBeNull();
+            createdOU.Name.Should().Be("NEW_NAME");
+        }
 
         // UpdateOrganizationalUnitAsync
 
