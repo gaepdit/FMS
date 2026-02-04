@@ -133,7 +133,28 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateOrganizationalUnitAsync
+        [Test]
+        public async Task UpdateOrganizationalUnitAsync_UpdatesExistingOrganizationalUnit_WhenDataIsValid()
+        {
+            var existingOU= new OrganizationalUnit { Id = Guid.NewGuid(), Name = "VALID_NAME" };
+            _context.OrganizationalUnits.Add(existingOU);
+            await _context.SaveChangesAsync();
 
+            var updateDto = new OrganizationalUnitEditDto { Name = "NEW_NAME" };
+            await _repository.UpdateOrganizationalUnitAsync(existingOU.Id, updateDto);
+
+            var updatedOU= await _context.OrganizationalUnits.FindAsync(existingOU.Id);
+            updatedOU.Name.Should().Be("NEW_NAME");
+        }
+        [Test]
+        public async Task UpdateOrganizationalUnitAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new OrganizationalUnitEditDto { Name = "NON_EXISTENT" };
+
+            Func<Task> action = async () => await _repository.UpdateOrganizationalUnitAsync(invalidId, updateDto);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
 
         // UpdateOrganizationalUnitStatusAsync
     }
