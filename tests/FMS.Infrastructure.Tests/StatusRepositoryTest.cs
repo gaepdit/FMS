@@ -73,5 +73,19 @@ namespace FMS.Infrastructure.Tests
                 _disposed = true;
             }
         }
+
+        // StatusExistsAsync
+
+
+        // GetStatusAsync
+
+
+        // CreateStatusAsync
+
+
+        // UpdateStatusAsync
+
+
+        // UpdateStatusStatusAsync
     }
 }
