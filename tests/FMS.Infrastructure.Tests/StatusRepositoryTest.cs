@@ -28,6 +28,8 @@ namespace FMS.Infrastructure.Tests
                 .Options;
             var httpContextAccessor = Substitute.For<HttpContextAccessor>();
             _context = new FmsDbContext(options, httpContextAccessor);
+            _repository = new StatusRepository(_context);
+
 
             _context.Statuses.Add(new Status
             {
@@ -58,8 +60,6 @@ namespace FMS.Infrastructure.Tests
                 ReportComments = "VALID_RCOMMENTS"
             });
             _context.SaveChanges();
-
-            _repository = new StatusRepository(_context);
         }
 
         [TearDown]
@@ -94,7 +94,23 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetStatusAsync
+        [Test]
+        public async Task GetStatusAsync_ReturnsStatusEditDto_WhenStatusExist()
+        {
+            var existingStatus = await _context.Statuses.Select(ft => ft.FacilityId).FirstAsync();
+            var results = await _repository.GetStatusAsync(existingStatus);
 
+            results.Should().NotBeNull();
+            results.Should().BeOfType<StatusEditDto>();
+            results.FacilityId.Should().Be(existingStatus);
+        }
+        [Test]
+        public async Task GetStatusAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingId = Guid.NewGuid();
+            var results = await _repository.GetStatusAsync(nonExistingId);
+            results.Should().BeNull();
+        }
 
         // CreateStatusAsync
 
