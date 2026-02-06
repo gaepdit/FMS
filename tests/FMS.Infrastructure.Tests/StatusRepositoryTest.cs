@@ -31,6 +31,7 @@ namespace FMS.Infrastructure.Tests
 
             _context.Statuses.Add(new Status
             {
+                Id = Guid.NewGuid(),
                 FacilityId = Guid.NewGuid(),
                 SourceStatusId = Guid.NewGuid(),
                 SourceDate = new DateOnly(2026, 1, 1),
@@ -40,7 +41,7 @@ namespace FMS.Infrastructure.Tests
                 GroundwaterDate = new DateOnly(2026, 1, 1),
                 OverallStatusId = Guid.NewGuid(),
                 OverallDate = new DateOnly(2026, 1, 1),
-                ISWQS = true, 
+                ISWQS = true,
                 FundingSourceId = Guid.NewGuid(),
                 LandFill = true,
                 SolidWastePermitNumber = "VALID_SWPN",
@@ -57,6 +58,8 @@ namespace FMS.Infrastructure.Tests
                 ReportComments = "VALID_RCOMMENTS"
             });
             _context.SaveChanges();
+
+            _repository = new StatusRepository(_context);
         }
 
         [TearDown]
@@ -75,7 +78,20 @@ namespace FMS.Infrastructure.Tests
         }
 
         // StatusExistsAsync
-
+        [Test]
+        public async Task StatusExistsAsync_ReturnsTrue_WhenStatusExist()
+        {
+            var existingStatus = await _context.Statuses.Select(ft => ft.Id).FirstAsync();
+            var results = await _repository.StatusExistsAsync(existingStatus);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task StatusExistsAsync_ReturnsFalse_WhenStatusDoesNotExist()
+        {
+            var nonExistingStatus = Guid.NewGuid();
+            var results = await _repository.StatusExistsAsync(nonExistingStatus);
+            results.Should().BeFalse();
+        }
 
         // GetStatusAsync
 
