@@ -113,6 +113,41 @@ namespace FMS.Infrastructure.Tests
         }
 
         // CreateStatusAsync
+        [Test]
+        public async Task CreateStatusAsync_CreatesStatus_WithValidData()
+        {
+            var dto = new StatusCreateDto
+            {
+                FacilityId = Guid.NewGuid(),
+                SourceDate = new DateOnly(2026, 1, 1),
+                SoilDate = new DateOnly(2026, 1, 1),
+                GroundwaterDate = new DateOnly(2026, 1, 1),
+                OverallDate = new DateOnly(2026, 1, 1),
+                ISWQS = true,
+                LandFill = true,
+                SolidWastePermitNumber = "VALID_SWPN",
+                GAPSScore = 1,
+                GAPSModelDate = new DateOnly(2026, 1, 1),
+                GAPSNoOfUnknowns = 1,
+                Comments = "VALID_COMMENTS",
+                Lien = true,
+                FinancialAssurance = true,
+                CostEstimate = 1,
+                CostEstimateDate = new DateOnly(2026, 1, 1),
+                ReportComments = "VALID_RCOMMENTS"
+            };
+            var newStatus = await _repository.CreateStatusAsync(dto);
+
+            _context.ChangeTracker.Clear();
+            var createdStatus = await _context.Statuses.FindAsync(newStatus);
+
+            createdStatus.Should().BeEquivalentTo(dto, o => o
+                .Excluding(e => e.SourceStatusId)
+                .Excluding(e => e.SoilStatusId)
+                .Excluding(e => e.GroundwaterStatusId)
+                .Excluding(e => e.OverallStatusId)
+                .Excluding(e => e.FundingSourceId));
+        }
 
 
         // UpdateStatusAsync
