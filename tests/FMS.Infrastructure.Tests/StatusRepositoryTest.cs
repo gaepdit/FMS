@@ -149,7 +149,6 @@ namespace FMS.Infrastructure.Tests
                 .Excluding(e => e.FundingSourceId));
         }
 
-
         // UpdateStatusAsync
         [Test]
         public async Task UpdateStatusAsync_UpdatesExistingStatus_WhenDataIsValid()
@@ -188,6 +187,7 @@ namespace FMS.Infrastructure.Tests
 
             var updateDto = new StatusEditDto
             {
+                Id = existingStatus.Id,
                 FacilityId = Guid.NewGuid(),
                 SourceStatusId = Guid.NewGuid(),
                 SourceDate = new DateOnly(2026, 2, 2),
@@ -213,8 +213,12 @@ namespace FMS.Infrastructure.Tests
                 AbandonedInactiveId = Guid.NewGuid(),
                 ReportComments = "NEW_RCOMMENTS"
             };
-        }
+            await _repository.UpdateStatusAsync(existingStatus.Id, updateDto);
+            _context.ChangeTracker.Clear();
 
+            var updatedStatus = await _context.Statuses.FindAsync(existingStatus.Id);
+            updatedStatus.Should().BeEquivalentTo(updateDto, o => o.Excluding(e => e.Active));
+        }
 
         // UpdateStatusStatusAsync
     }
