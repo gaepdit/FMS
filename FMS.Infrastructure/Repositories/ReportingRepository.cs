@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using FMS;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
@@ -180,47 +181,44 @@ namespace FMS.Infrastructure.Repositories
 
         #region Events Reports
 
-        public async Task<IReadOnlyList<EventReportDto>> GetEventsReportsAsync(EventReportType eventReportType)
+        public async Task<IList<EventReportDto>> GetEventsReportsAsync(string facilityName = null)
         {
-            List<EventReportDto> facilityList = await _context.Facilities.AsNoTracking()
-                .Include(e => e.County)
-                .Include(e => e.FacilityStatus)
-                .Include(e => e.HsrpFacilityProperties)
-                .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
+            List<EventReportDto> reportDtoList = await _context.Facilities
+                .AsNoTracking()
                 .Include(e => e.FacilityType)
-                .Include(e => e.Events)
-                .Include(e => e.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
-                .Where(e => (e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP"))
-                .SelectMany(e => e.Events.Where(ev => ev.Active)
-                .Select(ev => new EventReportDto(ev)))
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.EventType)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ActionTaken)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ComplianceOfficer)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.EventContractor)
+                .Where(e => string.IsNullOrEmpty(facilityName) || e.Name == facilityName)
+                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
+                .SelectMany(e => e.Events.Select(ev => new EventReportDto()
+                {
+                    Id = ev.Id,
+                    FacilityId = e.Id,
+                    ParentId = ev.ParentId,
+                    FacilityNumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    EventType = ev.EventType,
+                    ActionTaken = ev.ActionTaken,
+                    StartDate = ev.StartDate,
+                    DueDate = ev.DueDate,
+                    CompletionDate = ev.CompletionDate,
+                    ComplianceOfficer = e.ComplianceOfficer,
+                    OrganizationalUnit = e.OrganizationalUnit,
+                    EventAmount = ev.EventAmount,
+                    EventContractor = ev.EventContractor,
+                    Comment = ev.Comment
+                }))
                 .ToListAsync();
 
-            List<EventReportDto> reportDto;
-              
-            switch (eventReportType)
-            {
-                case EventReportType.Pending:
-                    reportDto = facilityList.Where(e => e.Status == "Pending").ToList();
-                    break;
-                case EventReportType.Compliance:
-                    reportDto = facilityList.Where(e => e.Status == "Compliance").ToList();
-                    break;
-                case EventReportType.Completed:
-                    reportDto = facilityList.Where(e => e.Status == "Completed").ToList();
-                    break;
-                case EventReportType.CompletedOutstanding:
-                    reportDto = facilityList.Where(e => e.Status == "CompletedOutstanding").ToList();
-                    break;
-                case EventReportType.CompletedByCO:
-                    reportDto = facilityList.Where(e => e.Status == "CompletedByCO").ToList();
-                    break;
-                default:
-                    reportDto = facilityList;
-                    break;
-            }
-
-            return reportDto;
+            return reportDtoList;
         }
 
         #endregion

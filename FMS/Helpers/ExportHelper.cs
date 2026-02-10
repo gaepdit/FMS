@@ -19,9 +19,15 @@ namespace FMS
             Normal,
             Pending,
             Map,
-            Event,
             Delisted,
-            DelistedByRange
+            DelistedByRange,
+            Event,
+            EventPending,
+            EventCompliance,
+            EventCompleted,
+            EventCompletedOutstanding,
+            EventCompletedByCO,
+            EventNoActionTaken
         }
 
         /// <summary>
@@ -36,32 +42,64 @@ namespace FMS
             if (reportType == ReportType.DelistedByRange){r = 3;}
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
-            var ws = wb.AddWorksheet("Results");
+            
+            IXLWorksheet ws;
             // insert the enumerable data
-            var table = ws.Cell(r, 1).InsertTable(list);
-            table.ShowHeaderRow = true;
-            ws.Columns().AdjustToContents(1, 10000);
+            IXLTable table; 
+
             if (reportType == ReportType.Pending)
             {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
                 ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
+
             if (reportType == ReportType.Event)
             {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
                 ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
+
             if (reportType == ReportType.Normal)
             {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
                 ws.Column(16).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(17).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
+
+            if (reportType == ReportType.Map)
+            {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+            }
+
             if (reportType == ReportType.Delisted)
             {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
                 ws.Column("A").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
+
             if (reportType == ReportType.DelistedByRange)
             {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
                 ws.Cell("A1").Value = "Delist Start Date";
                 ws.Cell("C1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
                 ws.Cell("A2").Value = "Delist End Date";
@@ -72,11 +110,67 @@ namespace FMS
                 table.ShowTotalsRow = true;
                 table.Field("Acres").TotalsRowFunction = XLTotalsRowFunction.Sum;
             }
-            if (reportType == ReportType.Event) 
+
+            if (reportType == ReportType.EventPending) 
             {
-                
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
+            if (reportType == ReportType.EventCompliance) 
+            {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+
+            if (reportType == ReportType.EventCompleted)
+            {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+
+            if (reportType == ReportType.EventCompletedOutstanding)
+            {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+
+            if (reportType == ReportType.EventCompletedByCO)
+            {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+
+            if (reportType == ReportType.EventNoActionTaken)
+            {
+                ws = wb.AddWorksheet("Results");
+                table = ws.Cell(r, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
 
             wb.SaveAs(ms);
             return ms.ToArray();

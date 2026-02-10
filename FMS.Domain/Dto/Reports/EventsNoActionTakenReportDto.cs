@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
-    public class EventsComplianceReportDto
+    public class EventsNoActionTakenReportDto
     {
-        EventsComplianceReportDto() { }
+        public EventsNoActionTakenReportDto() { }
 
-        public EventsComplianceReportDto(EventReportDto reportDto)
+        public EventsNoActionTakenReportDto(EventReportDto reportDto)
         {
             //EventId = reportDto.EventId;
             //FacilityId = reportDto.FacilityId;
@@ -18,8 +18,6 @@ namespace FMS.Domain.Dto
             //OrganizationalUnit = reportDto.OrganizationalUnit;
             //EventType = reportDto.EventType;
             //DueDate = reportDto.DueDate;
-            //CompletionDate = reportDto.CompletionDate;
-            //DaysLate = reportDto.DaysLate;
             //ComplianceOfficer = reportDto.ComplianceOfficer;
         }
     }

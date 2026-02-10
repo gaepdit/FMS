@@ -11,6 +11,8 @@ namespace FMS.Domain.Dto
 {
     public class EventReportDto
     {
+        public EventReportDto() { }
+
         public EventReportDto(Event eventNew)
         {
             Id = eventNew.Id;
