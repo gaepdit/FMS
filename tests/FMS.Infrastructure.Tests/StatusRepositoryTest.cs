@@ -151,6 +151,69 @@ namespace FMS.Infrastructure.Tests
 
 
         // UpdateStatusAsync
+        [Test]
+        public async Task UpdateStatusAsync_UpdatesExistingStatus_WhenDataIsValid()
+        {
+            var existingStatus = new Status
+            {
+                Id = Guid.NewGuid(),
+                FacilityId = Guid.NewGuid(),
+                SourceStatusId = Guid.NewGuid(),
+                SourceDate = new DateOnly(2026, 1, 1),
+                SoilStatusId = Guid.NewGuid(),
+                SoilDate = new DateOnly(2026, 1, 1),
+                GroundwaterStatusId = Guid.NewGuid(),
+                GroundwaterDate = new DateOnly(2026, 1, 1),
+                OverallStatusId = Guid.NewGuid(),
+                OverallDate = new DateOnly(2026, 1, 1),
+                ISWQS = true,
+                FundingSourceId = Guid.NewGuid(),
+                LandFill = true,
+                SolidWastePermitNumber = "VALID_SWPN",
+                GAPSScore = 1,
+                Comments = "VALID_COMMENTS",
+                Lien = true,
+                FinancialAssurance = true,
+                GAPSModelDate = new DateOnly(2026, 1, 1),
+                GAPSNoOfUnknowns = 1,
+                GAPSAssessmentId = Guid.NewGuid(),
+                CostEstimate = 1,
+                CostEstimateDate = new DateOnly(2026, 1, 1),
+                AbandonedInactiveId = Guid.NewGuid(),
+                ReportComments = "VALID_RCOMMENTS"
+            };
+            _context.Statuses.Add(existingStatus);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+
+            var updateDto = new StatusEditDto
+            {
+                FacilityId = Guid.NewGuid(),
+                SourceStatusId = Guid.NewGuid(),
+                SourceDate = new DateOnly(2026, 2, 2),
+                SoilStatusId = Guid.NewGuid(),
+                SoilDate = new DateOnly(2026, 2, 2),
+                GroundwaterStatusId = Guid.NewGuid(),
+                GroundwaterDate = new DateOnly(2026, 2, 2),
+                OverallStatusId = Guid.NewGuid(),
+                OverallDate = new DateOnly(2026, 2, 2),
+                ISWQS = false,
+                FundingSourceId = Guid.NewGuid(),
+                LandFill = false,
+                SolidWastePermitNumber = "NEW_SWPN",
+                GAPSScore = 1,
+                Comments = "NEW_COMMENTS",
+                Lien = false,
+                FinancialAssurance = false,
+                GAPSModelDate = new DateOnly(2026, 2, 2),
+                GAPSNoOfUnknowns = 2,
+                GAPSAssessmentId = Guid.NewGuid(),
+                CostEstimate = 2,
+                CostEstimateDate = new DateOnly(2026, 2, 2),
+                AbandonedInactiveId = Guid.NewGuid(),
+                ReportComments = "NEW_RCOMMENTS"
+            };
+        }
 
 
         // UpdateStatusStatusAsync
