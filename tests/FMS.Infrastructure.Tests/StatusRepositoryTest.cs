@@ -219,6 +219,16 @@ namespace FMS.Infrastructure.Tests
             var updatedStatus = await _context.Statuses.FindAsync(existingStatus.Id);
             updatedStatus.Should().BeEquivalentTo(updateDto, o => o.Excluding(e => e.Active));
         }
+        [Test]
+        public async Task UpdateStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new StatusEditDto { Id = invalidId, FacilityId = Guid.NewGuid() };
+
+            var action = async () => await _repository.UpdateStatusAsync(invalidId, updateDto);
+
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
 
         // UpdateStatusStatusAsync
     }
