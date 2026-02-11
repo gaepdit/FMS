@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClosedXML.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,13 +13,22 @@ namespace FMS.Domain.Dto
 
         public EventsNoActionTakenReportDto(EventReportDto reportDto)
         {
-            //EventId = reportDto.EventId;
-            //FacilityId = reportDto.FacilityId;
-            //FacilityName = reportDto.FacilityName;
-            //OrganizationalUnit = reportDto.OrganizationalUnit;
-            //EventType = reportDto.EventType;
-            //DueDate = reportDto.DueDate;
-            //ComplianceOfficer = reportDto.ComplianceOfficer;
+            HSIID = reportDto.FacilityNumber;
+            FacilityName = reportDto.FacilityName;
+            ListDate = reportDto.ListDate;
+            ComplianceOfficerName = reportDto.ComplianceOfficer?.Name;
         }
+
+        [XLColumn(Header = "HSI ID")]
+        public string HSIID { get; set; }
+
+        [XLColumn(Header = "Facility Name")]
+        public string FacilityName { get; set; }
+
+        [XLColumn(Header = "List Date")]
+        public DateOnly? ListDate { get; set; }
+
+        [XLColumn(Header = "HSRA CO")]
+        public string ComplianceOfficerName { get; set; }
     }
 }

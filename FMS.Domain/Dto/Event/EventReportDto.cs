@@ -39,6 +39,8 @@ namespace FMS.Domain.Dto
 
         public string FacilityName { get; set; } 
 
+        public FacilityType FacilityType { get; set; }
+
         public EventType EventType { get; set; }
 
         public ActionTaken ActionTaken { get; set; }
@@ -51,6 +53,8 @@ namespace FMS.Domain.Dto
 
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
+        public ComplianceOfficer DoneBy { get; set; }
+
         public OrganizationalUnit OrganizationalUnit { get; set; }
 
         [DataType(DataType.Currency)]
@@ -59,5 +63,9 @@ namespace FMS.Domain.Dto
         public EventContractor EventContractor { get; set; }
 
         public string Comment { get; set; }
+
+        public OverallStatus OverallStatus { get; set; }
+
+        public DateOnly? ListDate { get; set; }
     }
 }

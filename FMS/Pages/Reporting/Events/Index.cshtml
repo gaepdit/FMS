@@ -11,25 +11,6 @@
 
 <form method="post">
     <div class="row">
-        <div class="col-md-4">
-            <button id="Pending"
-                    asp-page-handler="Pending"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            Pending Report
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-4">
-            <button id="Completed"
-                    asp-page-handler="Completed"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            Completed Report
-        </div>
         <div class="col-md-2">
             <label asp-for="StartDate" class="form-label"></label>
             <input asp-for="StartDate" class="form-control datepicker" type="date" placeholder="" />
@@ -41,38 +22,72 @@
             <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
     </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <button id="Pending"
+                    asp-page-handler="Pending"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            Pending Report
+        </div>
+    </div>
     <br />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
+            <button id="Completed"
+                    asp-page-handler="Completed"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            Completed Report <span class="text-danger">*</span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-8">
             <button id="Compliance"
                     asp-page-handler="Compliance"
                     class="btn btn-sm btn-outline-primary mb-1">
                 Report
             </button>
-            Compliance Report
+            Compliance Report <span class="text-danger">*</span>
         </div>
     </div>
     <br />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-8">
             <button id="CompletedOutstanding"
                     asp-page-handler="CompletedOutstanding"
                     class="btn btn-sm btn-outline-primary mb-1">
                 Report
             </button>
-            Completed Outstanding Report
+            Completed Outstanding Report <span class="text-danger">*</span><i> Under Construction</i>
         </div>
     </div>
     <br />
     <div class="row">
-        <div class="col-md-4">
-            <button id="Overdue"
-                    asp-page-handler="Overdue"
+        <div class="col-md-8">
+            <button id="ActivityCompleted"
+                    asp-page-handler="ActivityCompleted"
                     class="btn btn-sm btn-outline-primary mb-1">
                 Report
             </button>
-            Overdue Report
+            Activity Completed Report <span class="text-danger">*</span>
         </div>
     </div>
-    <p><span class="text-danger">* denotes required field</span></p>
+    <br />
+    <div class="row">
+        <div class="col-md-8">
+            <button id="NoActionTaken"
+                    asp-page-handler="NoActionTaken"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            No Action Taken Report
+        </div>
+    </div>
+    <br />
+    <p><span class="text-danger">* must choose end date</span></p>
 </form>

@@ -7,6 +7,7 @@
         public const string Events = "Events Reports";
         public const string SiteSummary = "Site Summary Report";
         public const string PAF = "PAF Report";
+        public const string AbndInac = "Abandoned/Inactive Report";
     }
 }
 

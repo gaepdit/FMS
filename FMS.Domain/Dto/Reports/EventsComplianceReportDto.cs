@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ClosedXML.Attributes;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +14,35 @@ namespace FMS.Domain.Dto
 
         public EventsComplianceReportDto(EventReportDto reportDto)
         {
-            //EventId = reportDto.EventId;
-            //FacilityId = reportDto.FacilityId;
-            //FacilityName = reportDto.FacilityName;
-            //OrganizationalUnit = reportDto.OrganizationalUnit;
-            //EventType = reportDto.EventType;
-            //DueDate = reportDto.DueDate;
-            //CompletionDate = reportDto.CompletionDate;
-            //DaysLate = reportDto.DaysLate;
-            //ComplianceOfficer = reportDto.ComplianceOfficer;
+            HSIID = reportDto.FacilityNumber;
+            FacilityName = reportDto.FacilityName;
+            EventTypeName = reportDto.EventType?.Name;
+            ActionTakenName = reportDto.ActionTaken?.Name;
+            EventStartDate = reportDto.StartDate;
+            EventCompletionDate = reportDto.CompletionDate;
+            EventAmount = reportDto.EventAmount;
         }
+
+        [XLColumn(Header = "HSI ID")]
+        public string HSIID { get; set; }
+
+        [XLColumn(Header = "Facility Name")]
+        public string FacilityName { get; set; }
+
+        [XLColumn(Header = "Document Type")]
+        public string EventTypeName { get; set; }
+
+        [XLColumn(Header = "Event")]
+        public string ActionTakenName { get; set; }
+
+        [XLColumn(Header = "Start Date")]
+        public DateOnly? EventStartDate { get; set; }
+
+        [XLColumn(Header = "End Date")]
+        public DateOnly? EventCompletionDate { get; set; }
+
+        [XLColumn(Header = "Event Amount")]
+        [DataType(DataType.Currency)]
+        public decimal? EventAmount { get; set; }
     }
 }

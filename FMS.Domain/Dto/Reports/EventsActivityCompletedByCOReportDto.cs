@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ClosedXML.Attributes;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,14 +14,38 @@ namespace FMS.Domain.Dto
 
         public EventsActivityCompletedByCOReportDto(EventReportDto reportDto)
         {
-            //EventId = reportDto.EventId;
-            //FacilityId = reportDto.FacilityId;
-            //FacilityName = reportDto.FacilityName;
-            //OrganizationalUnit = reportDto.OrganizationalUnit;
-            //EventType = reportDto.EventType;
-            //DueDate = reportDto.DueDate;
-            //CompletionDate = reportDto.CompletionDate;
-            //ComplianceOfficer = reportDto.ComplianceOfficer;
+            ComplianceOfficerName = reportDto.ComplianceOfficer?.Name;
+            HSIID = reportDto.FacilityNumber;
+            FacilityName = reportDto.FacilityName;
+            EventTypeName = reportDto.EventType?.Name;
+            ActionTakenName = reportDto.ActionTaken?.Name;
+            EventStartDate = reportDto.StartDate;
+            EventCompletionDate = reportDto.CompletionDate;
+            ActivityComment = reportDto.Comment;
         }
+
+        [XLColumn(Header = "Compliance Officer")]
+        public string ComplianceOfficerName { get; set; }
+
+        [XLColumn(Header = "HSI ID")]
+        public string HSIID { get; set; }
+
+        [XLColumn(Header = "Facility Name")]
+        public string FacilityName { get; set; }
+
+        [XLColumn(Header = "Document Type")]
+        public string EventTypeName { get; set; }
+
+        [XLColumn(Header = "Event")]
+        public string ActionTakenName { get; set; }
+
+        [XLColumn(Header = "Start Date")]
+        public DateOnly? EventStartDate { get; set; }
+
+        [XLColumn(Header = "End Date")]
+        public DateOnly? EventCompletionDate { get; set; }
+
+        [XLColumn(Header = "Comment")]
+        public string ActivityComment { get; set; }
     }
 }

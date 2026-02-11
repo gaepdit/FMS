@@ -29,7 +29,7 @@ namespace FMS.Domain.Repositories
 
         #region Events Reports
 
-        Task<IList<EventReportDto>> GetEventsReportsAsync(string facilityName = null);
+        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> selectedFacilityTypes = null, List<string> eventTypes = null);
 
         #endregion
     }

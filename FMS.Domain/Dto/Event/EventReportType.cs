@@ -13,5 +13,6 @@ namespace FMS.Domain.Dto
         Completed,
         CompletedOutstanding,
         CompletedByCO,
+        NoActionTaken
     }
 }

@@ -34,14 +34,13 @@ namespace FMS.Pages.Reporting.Events
         public async Task<IActionResult> OnPostPendingAsync()
         {
             var fileName = $"Events_Pending_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var selectedFacilityTypes = new List<string> { "HSI", "VRP" };
 
             // "eventsPendingList" List to go to a report
-            IList<EventReportDto> eventsPendingList = await _repository.GetEventsReportsAsync();
+            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
 
-            // Sort list by Organizational Unit and filter only pending events
-            eventsPendingList = eventsPendingList 
-                .Where(e => e.CompletionDate == null).ToList();
-            //eventsPendingList = EventSortHelper.SortReportEvents(eventsPendingList, EventReportSort.OrgUnitDesc);
+            // Filter and sort list for Events Pending Report
+            var eventsPendingList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventPending);
 
             // Map to EventsPendingReportDto
             var eventsPendingReportList = from p in eventsPendingList
@@ -53,15 +52,14 @@ namespace FMS.Pages.Reporting.Events
 
         public async Task<IActionResult> OnPostCompletedAsync()
         {
-            var fileName = $"Events_Completed_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var fileName = $"Activity_Completed_By_CO_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var selectedFacilityTypes = new List<string> { "HSI", "VRP" };
 
             // "eventsCompletedList" List to go to a report
-            IList<EventReportDto> eventsCompletedList = await _repository.GetEventsReportsAsync();
+            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
 
             // Sort list by Organizational Unit and filter only pending events
-            eventsCompletedList = eventsCompletedList
-                .Where(e => e.CompletionDate != null).ToList();
-            eventsCompletedList = EventSortHelper.SortReportEvents(eventsCompletedList, EventReportSort.OrgUnitDesc);
+            var eventsCompletedList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompleted, StartDate, EndDate);
 
             // Map to EventsCompletedReportDto
             var eventsCompletedReportList = from p in eventsCompletedList
@@ -74,21 +72,88 @@ namespace FMS.Pages.Reporting.Events
         public async Task<IActionResult> OnPostComplianceAsync()
         {
             var fileName = $"Events_Compliance_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var selectedFacilityTypes = new List<string> { "HSI", "VRP" };
+            var selectedEventTypes = new List<string> { "Notice of Violation", "Consent Order",  "Administrative Order" };  
 
             // "eventsComplianceList" List to go to a report
-            IList<EventReportDto> eventsComplianceList = await _repository.GetEventsReportsAsync();
+            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, selectedEventTypes);
 
             // Sort list by Organizational Unit and filter only pending events
-            eventsComplianceList = eventsComplianceList
-                .Where(e => e.CompletionDate != null).ToList();
-            eventsComplianceList = EventSortHelper.SortReportEvents(eventsComplianceList, EventReportSort.OrgUnitDesc);
+            var eventsComplianceList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompliance, StartDate, EndDate);
 
             // Map to EventsComplianceReportDto
             var eventsComplianceReportList = from p in eventsComplianceList
                                             select new EventsComplianceReportDto(p);
 
             // Export to Excel
-            return File(eventsComplianceReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompliance), "application/vnd.ms-excel", fileName);
+            return File(eventsComplianceReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompliance, StartDate, EndDate), "application/vnd.ms-excel", fileName);
+        }
+
+        public async Task<IActionResult> OnPostCompletedOutstandingAsync()
+        {
+            var fileName = $"Events_Completed_Outstanding_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
+            var selectedEventTypes = new List<string> 
+            { 
+                "Compliance Status Report", 
+                "Corrective Action Plan",
+                "Groundwater Monitoring Report",
+                "Progress Report / Misc. Report",
+                "Prospective Purchaser Compliance Status Report",
+                "VRP Compliance Status Report",
+                "VRP Corrective Action Plan",
+                "VRP Progress Report / Misc. Report"
+            };
+
+            // "eventsComplianceList" List to go to a report
+            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, selectedEventTypes);
+
+            // Sort list by Organizational Unit and filter only pending events
+            var eventsCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+
+            // Map to EventsCompletedOutstandingReportDto
+            var eventsCompletedOutstandingReportList = from p in eventsCompletedOutstandingList
+                                             select new EventsCompletedOutstandingReportDto(p);
+
+            // Export to Excel
+            return File(eventsCompletedOutstandingReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompletedOutstanding, StartDate, EndDate), "application/vnd.ms-excel", fileName);
+        }
+
+        public async Task<IActionResult> OnPostActivityCompletedAsync()
+        {
+            var fileName = $"Events_Activity_Completed_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
+
+            // "eventsActivityCompletedList" List to go to a report
+            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
+
+            // Sort list by CO and filter only date range
+            var eventsActivityCompletedList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventActivityCompleted, StartDate, EndDate);
+            // Map to EventsActivityCompletedByCOReportDto
+            var eventsActivityCompletedReportList = from p in eventsActivityCompletedList
+                                             select new EventsActivityCompletedByCOReportDto(p);
+
+            // Export to Excel
+            return File(eventsActivityCompletedReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventActivityCompleted, StartDate, EndDate), "application/vnd.ms-excel", fileName);
+        }
+
+        public async Task<IActionResult> OnPostNoActionTakenAsync()
+        {
+            var fileName = $"Events_NoActionTaken_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+            var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
+
+            // "eventsNoActionTakenList" List to go to a report
+            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
+
+            // Filter and sort list for Events NoActionTaken Report
+            var eventsNoActionTakenList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventNoActionTaken);
+
+            // Map to EventsNoActionTakenReportDto
+            var eventsNoActionTakenReportList = from p in eventsNoActionTakenList
+                                          select new EventsNoActionTakenReportDto(p);
+
+            // Export to Excel
+            return File(eventsNoActionTakenReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventNoActionTaken), "application/vnd.ms-excel", fileName);
         }
     }
 }
