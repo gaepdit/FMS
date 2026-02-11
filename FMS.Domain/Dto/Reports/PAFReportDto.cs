@@ -20,7 +20,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "PAF Issue Date")]
         [XLColumn(Header = "PAF Issue Date")]
-        public DateTime PAFIssueDate { get; set; }
+        public string PAFIssueDate { get; set; }
 
         [Display(Name = "PAF Amount")]
         [XLColumn(Header = "PAF Amount")]
