@@ -231,5 +231,25 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateStatusStatusAsync
+        [Test]
+        public async Task UpdateStatusActiveAsync_UpdatesStatusCorrectly()
+        {
+            var existingStatus = await _context.Statuses.FirstAsync(c => c.Active);
+
+            await _repository.UpdateStatusStatusAsync(existingStatus.Id, false);
+            _context.ChangeTracker.Clear();
+
+            var updatedStatus = await _context.Statuses.FindAsync(existingStatus.Id);
+            updatedStatus.Should().NotBeNull();
+            updatedStatus!.Active.Should().BeFalse();
+        }
+
+        [Test]
+        public async Task UpdateStatusActiveAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.UpdateStatusStatusAsync(invalidId, false);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }
