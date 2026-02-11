@@ -238,13 +238,11 @@ namespace FMS.Infrastructure.Repositories
 
         #region PAF Report
 
-        public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
+        public async Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync()
         {
             var conn = _context.Database.GetDbConnection();
 
-            return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
-                commandType: CommandType.StoredProcedure)).ToList();
+            return (await conn.QueryAsync<PAFReportDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
         }
 
         #endregion
