@@ -96,7 +96,7 @@ namespace FMS.Infrastructure.Repositories
                         .Include(e => e.Chemical)
                         .Where(e => e.FacilityId == id)
                         .OrderByDescending(e => e.Active)
-                        .ThenByDescending(e => e.Chemical.Active)
+                        .ThenBy(e => e.Chemical.ChemicalName)
                         .ThenBy(e => e.Chemical.CommonName)
                         .ToListAsync();
 

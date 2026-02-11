@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Dto;
-using FMS.Domain.Dto.Reports;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,6 +28,8 @@ namespace FMS.Domain.Repositories
         #endregion
 
         #region Events Reports
+
+        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> selectedFacilityTypes = null, List<string> eventTypes = null);
 
         #endregion
     }

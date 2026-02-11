@@ -1,10 +1,16 @@
-﻿using FMS.Domain.Dto;
-using FMS.Domain.Dto.Reports;
+﻿using Dapper;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using FMS;
+using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -174,10 +180,72 @@ namespace FMS.Infrastructure.Repositories
             return reportDto;
         }
 
-
         #endregion
 
         #region Events Reports
+
+        public async Task<IList<EventReportDto>> GetEventsReportsAsync(
+            List<string> selectedFacilityTypes = null,
+            List<string> eventTypes = null
+            )
+        {
+            List<EventReportDto> reportDtoList = await _context.Facilities
+                .AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.StatusDetails)
+                .Include(sd => sd.StatusDetails.OverallStatus)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.EventType)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ActionTaken)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ComplianceOfficer)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.EventContractor)
+                .Where(e => selectedFacilityTypes.Contains(e.FacilityType.Name))
+                .SelectMany(e => e.Events.Select(ev => new EventReportDto()
+                {
+                    Id = ev.Id,
+                    FacilityId = e.Id,
+                    ParentId = ev.ParentId,
+                    FacilityNumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    FacilityType = e.FacilityType,
+                    EventType = ev.EventType,
+                    ActionTaken = ev.ActionTaken,
+                    StartDate = ev.StartDate,
+                    DueDate = ev.DueDate,
+                    CompletionDate = ev.CompletionDate,
+                    ComplianceOfficer = e.ComplianceOfficer,
+                    DoneBy = ev.ComplianceOfficer,
+                    OrganizationalUnit = e.OrganizationalUnit,
+                    EventAmount = ev.EventAmount,
+                    EventContractor = ev.EventContractor,
+                    Comment = ev.Comment,
+                    OverallStatus = e.StatusDetails.OverallStatus,
+                    ListDate = e.HsrpFacilityProperties.DateListed
+                })
+                .Where(ev => eventTypes == null || eventTypes.Contains(ev.EventType.Name)))
+                .ToListAsync();
+
+            return reportDtoList;
+        }
+
+        #endregion
+
+        #region PAF Report
+
+        public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
+        {
+            var conn = _context.Database.GetDbConnection();
+
+            return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
+                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
+                commandType: CommandType.StoredProcedure)).ToList();
+        }
 
         #endregion
 
