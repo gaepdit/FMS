@@ -244,6 +244,12 @@ namespace FMS.Infrastructure.Tests
             updatedStatus!.Active.Should().BeFalse();
         }
 
-        
+        [Test]
+        public async Task UpdateStatusActiveAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.UpdateStatusStatusAsync(invalidId, false);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }
