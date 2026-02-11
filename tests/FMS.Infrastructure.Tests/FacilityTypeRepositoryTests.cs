@@ -58,7 +58,7 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-        // Test for FacilityTypeExistsAsync
+        // FacilityTypeExistsAsync
         [Test]
         public async Task FacilityTypeExistsAsync_ReturnsTrue_WhenFacilityTypeExists()
         {
@@ -75,7 +75,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeFalse();
         }
 
-        // Test for FacilityTypeNameExistsAsync
+        // FacilityTypeNameExistsAsync
         [Test]
         public async Task FacilityTypeNameExistsAsync_ReturnsTrue_WhenNameExists()
         {
@@ -98,7 +98,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeFalse();
         }
 
-        // Test for FacilityTypeDescriptionExistsAsync
+        // FacilityTypeDescriptionExistsAsync
         [Test]
         public async Task FacilityTypeDescriptionExistsAsync_ReturnsTrue_WhenDescriptionExists()
         {
@@ -121,7 +121,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeFalse();
         }
 
-        // Test for GetFacilityTypeAsync
+        // GetFacilityTypeAsync
         [Test]
         public async Task GetFacilityTypeAsync_ReturnsCorrectFacilityType_WhenIdIsValid()
         {
@@ -140,7 +140,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeNull();
         }
 
-        // Test for GetFacilityTypeNameAsync
+        // GetFacilityTypeNameAsync
         [Test]
         public async Task GetFacilityTypeNameAsync_ReturnsName_WhenIdIsValid()
         {
@@ -156,7 +156,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().BeNull();
         }
 
-        // Test for GetFacilityTypeListAsync
+        // GetFacilityTypeListAsync
         [Test]
         public async Task GetFacilityTypeListAsync_ReturnsAllFacilityTypes()
         {
@@ -164,7 +164,7 @@ namespace FMS.Infrastructure.Tests
             result.Should().NotBeNullOrEmpty();
         }
 
-        // Tests for CreateFacilityTypeAsync
+        // CreateFacilityTypeAsync
         [Test]
         public async Task CreateFacilityTypeAsync_CreatesNewFacilityType_WhenDataIsValid()
         {
@@ -204,7 +204,7 @@ namespace FMS.Infrastructure.Tests
             action.Should().ThrowAsync<ArgumentException>().WithMessage("Facility Type description 'Duplicate Description' already exists.");
         }
 
-        // Tests for UpdateFacilityTypeAsync
+        // UpdateFacilityTypeAsync
         [Test]
         public async Task UpdateFacilityTypeAsync_UpdatesExistingFacilityType_WhenDataIsValid()
         {
@@ -243,7 +243,7 @@ namespace FMS.Infrastructure.Tests
             action.Should().ThrowAsync<ArgumentException>().WithMessage("Facility Type 'Name2' already exists.");
         }
 
-        // Tests for UpdateFacilityTypeStatusAsync
+        // UpdateFacilityTypeStatusAsync
         [Test]
         public async Task UpdateFacilityTypeStatusAsync_UpdatesStatusCorrectly()
         {

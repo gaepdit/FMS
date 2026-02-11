@@ -19,4 +19,14 @@
         EventContractor,
         EventContractorDesc
     }
+
+    public enum EventReportSort
+    {
+        EventPending,
+        EventActivityCompleted,
+        EventCompletedOutstanding,
+        EventCompleted,
+        EventCompliance,
+        EventNoActionTaken
+    }
 }

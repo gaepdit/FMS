@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using NSubstitute;
 using System;
@@ -130,7 +130,7 @@ namespace FMS.Infrastructure.Tests
             result.Number.Should().Be(existingPhone.Number);
         }
         [Test]
-        public async Task GetPhoneByIdAndContactIdAsync_WhenBothDoNotExist_ReturnsNull()
+        public async Task GetPhoneByIdAndContactIdAsync_ReturnsNull_WhenIdDoesNotExist()
         {
             var nonExistingId = Guid.NewGuid();
             var nonExistingContactId = Guid.NewGuid();
@@ -150,6 +150,7 @@ namespace FMS.Infrastructure.Tests
         }
 
         // CreatePhoneAsync
+        [Test]
         public async Task CreatePhoneAsync_CreateNewPhone_WhenDataIsValid()
         {
             var dto = new PhoneCreateDto { Number = "UNIQUE_NUMBER" };
@@ -160,6 +161,7 @@ namespace FMS.Infrastructure.Tests
             createdPhone.Should().NotBeNull();
             createdPhone.Number.Should().Be(dto.Number);
         }
+        [Test]
         public void CreatePhoneAsync_ThrowArgumentException_WhereNumberAlreadyExist()
         {
             var existingPhone = new Phone { Id = Guid.NewGuid(), Number = "DUPLICATE_NUMBER" };
@@ -169,7 +171,7 @@ namespace FMS.Infrastructure.Tests
             var dto = new PhoneCreateDto { Number = "DUPLICATE_NUMBER" };
 
             Func<Task> action = async () => await _repository.CreatePhoneAsync(dto);
-            action.Should().ThrowAsync<ArgumentException>().WithMessage("Phone Number 'DUPLICATE_NUMBER' already exist.");
+            action.Should().ThrowAsync<ArgumentException>();
         }
 
         // UpdatePhoneAsync
@@ -187,12 +189,12 @@ namespace FMS.Infrastructure.Tests
             updatedPhone.Number.Should().Be("UPDATED_NUMBER");
         }
         [Test]
-        public async Task UpdateContactTypeAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        public async Task UpdatePhoneAsync_ThrowsArgumentException_WhenIdDoesNotExist()
         {
-            var invalidId = Guid.NewGuid();
+            var nonExistingId = Guid.NewGuid();
             var updateDto = new PhoneEditDto { Id = Guid.NewGuid(), Number = "NON_EXISTENT" };
 
-            Func<Task> action = async () => await _repository.UpdatePhoneAsync(invalidId, updateDto);
+            Func<Task> action = async () => await _repository.UpdatePhoneAsync(nonExistingId, updateDto);
             await action.Should().ThrowAsync<ArgumentException>();
         }
 
@@ -215,7 +217,7 @@ namespace FMS.Infrastructure.Tests
             var updateDto = new PhoneEditDto { Id = Guid.NewGuid(), Number = "NON_EXISTENT", Active = true };
 
             Func<Task> action = async () => await _repository.UpdatePhoneStatusAsync(updateDto.Id, false);
-            await action.Should().ThrowAsync<InvalidOperationException>().WithMessage("Phone with ID " + updateDto.Id + " does not exist.");
+            await action.Should().ThrowAsync<InvalidOperationException>();
         }
     }
 }

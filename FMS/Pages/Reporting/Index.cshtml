@@ -1,0 +1,30 @@
+﻿@page
+@using FMS.Pages.Reporting
+@model FMS.Pages.Reporting.IndexModel
+@{
+    ViewData["Title"] = $"Reports";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p class="lead">Select a Report from the list</p>
+
+<ul>
+    <li>
+        <a class="nav-link" asp-page="AssignmentList/Index">@ReportingOptions.AssignmentList</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="Delisted/Index">@ReportingOptions.Delisted</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="Events/Index">@ReportingOptions.Events</a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="SiteSummary/Index">@ReportingOptions.SiteSummary <span class="text-danger">*<i> Under Construction</i></span></a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="PAF/Index">@ReportingOptions.PAF <span class="text-danger">*<i> Under Construction</i></span></a>
+    </li>
+    <li>
+        <a class="nav-link" asp-page="AbndInac/Index">@ReportingOptions.AbndInac <span class="text-danger">*<i> Under Construction</i></span></a>
+    </li>
+</ul>
