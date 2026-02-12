@@ -58,6 +58,34 @@ namespace FMS.Infrastructure.Tests
             }
         }
 
-        
+        // ComplianceOfficerIdExistsAsync
+        [Test]
+        public async Task ComplianceOfficerIdExistsAsync_ReturnsTrue_WhenIdExist()
+        {
+            var existingCO = await _context.ComplianceOfficers.Select(e => e.Id).FirstAsync();
+            var results = await _repository.ComplianceOfficerIdExistsAsync(existingCO);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task ComplianceOfficerIdExistsAsync_ReturnsFalse_WhenIdDoesNotExist()
+        {
+            var nonExistingCO = Guid.NewGuid();
+            var results = await _repository.ComplianceOfficerIdExistsAsync(nonExistingCO);
+            results.Should().BeFalse();
+        }
+
+        // GetComplianceOfficerAsync
+
+
+        // GetComplianceOfficerListAsync
+
+
+        // TryCreateComplianceOfficerAsync
+
+
+        // UpdateComplianceOfficerStatusAsync
+
+
+        // 
     }
 }
