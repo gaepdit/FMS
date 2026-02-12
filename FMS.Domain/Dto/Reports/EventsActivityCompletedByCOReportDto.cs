@@ -14,7 +14,7 @@ namespace FMS.Domain.Dto
 
         public EventsActivityCompletedByCOReportDto(EventReportDto reportDto)
         {
-            ComplianceOfficerName = reportDto.ComplianceOfficer?.Name;
+            DoneBy = reportDto.DoneBy?.Name;
             HSIID = reportDto.FacilityNumber;
             FacilityName = reportDto.FacilityName;
             EventTypeName = reportDto.EventType?.Name;
@@ -25,7 +25,7 @@ namespace FMS.Domain.Dto
         }
 
         [XLColumn(Header = "Compliance Officer")]
-        public string ComplianceOfficerName { get; set; }
+        public string DoneBy { get; set; }
 
         [XLColumn(Header = "HSI ID")]
         public string HSIID { get; set; }
