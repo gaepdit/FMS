@@ -72,7 +72,7 @@ namespace FMS.Pages.Score
             
             await _repository.UpdateScoreAsync(Score.FacilityId, Score);
             ActiveTab = "Score";
-            return RedirectToPage("../Facilities/Details", new { id = Score.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", null, new { id = Score.FacilityId, tab = ActiveTab }, fragment: "TabPages");
         }
 
     }

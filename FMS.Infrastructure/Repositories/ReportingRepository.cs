@@ -193,7 +193,6 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.FacilityType)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.ComplianceOfficer)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.StatusDetails)
                 .Include(sd => sd.StatusDetails.OverallStatus)
@@ -219,7 +218,6 @@ namespace FMS.Infrastructure.Repositories
                     StartDate = ev.StartDate,
                     DueDate = ev.DueDate,
                     CompletionDate = ev.CompletionDate,
-                    ComplianceOfficer = e.ComplianceOfficer,
                     DoneBy = ev.ComplianceOfficer,
                     OrganizationalUnit = e.OrganizationalUnit,
                     EventAmount = ev.EventAmount,
@@ -238,13 +236,11 @@ namespace FMS.Infrastructure.Repositories
 
         #region PAF Report
 
-        public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
+        public async Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync()
         {
             var conn = _context.Database.GetDbConnection();
 
-            return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
-                commandType: CommandType.StoredProcedure)).ToList();
+            return (await conn.QueryAsync<PAFReportDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
         }
 
         #endregion

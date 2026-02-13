@@ -43,7 +43,8 @@
         <hr />
         <div class="row mb-3">
             <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
-            <a asp-page="../Facilities/Details" 
+            <a asp-page="../Facilities/Details"
+               asp-fragment="TabPages"
                 asp-route-id="@Model.Facility.Id"
                 asp-route-tab="Score"
                 class="btn btn-outline-secondary col-md-2">

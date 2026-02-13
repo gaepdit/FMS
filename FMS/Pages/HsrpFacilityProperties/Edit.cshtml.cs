@@ -91,7 +91,7 @@ namespace FMS.Pages.HsrpFacilityProperties
 
             ActiveTab = "HSIProperties";
 
-            return RedirectToPage("../Facilities/Details", new { id = HsrpFacilityProperties.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", null, new { id = HsrpFacilityProperties.FacilityId, tab = ActiveTab }, fragment: "TabPages");
         }
 
         private async Task PopulateSelectsAsync()

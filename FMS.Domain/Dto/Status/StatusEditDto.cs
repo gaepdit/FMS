@@ -101,7 +101,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "GAPS Assessment")]
         public Guid? GAPSAssessmentId { get; set; }
 
-        [Display(Name = "Cost Estimate from 5-Yr Review")]
+        [Display(Name = "Cost Estimate")]
         [DataType(DataType.Currency)]
         public decimal? CostEstimate { get; set; }
 
