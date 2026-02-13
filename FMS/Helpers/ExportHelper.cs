@@ -19,6 +19,7 @@ namespace FMS
             Normal,
             Pending,
             Map,
+            Assignment,
             Delisted,
             DelistedByRange,
             Event,
@@ -81,6 +82,14 @@ namespace FMS
             if (reportType == ReportType.Map)
             {
                 ws = wb.AddWorksheet("Map Results");
+                table = ws.Cell(1, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+            }
+
+            if (reportType == ReportType.Assignment)
+            {
+                ws = wb.AddWorksheet("HSI Assignment List");
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
