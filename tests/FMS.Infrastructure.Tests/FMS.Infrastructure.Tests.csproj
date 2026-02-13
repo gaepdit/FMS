@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="ComplianceOfficerRepositoryTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="AwesomeAssertions.Analyzers">
       <PrivateAssets>all</PrivateAssets>
