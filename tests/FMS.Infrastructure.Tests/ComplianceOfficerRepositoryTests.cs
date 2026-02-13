@@ -75,6 +75,16 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetComplianceOfficerAsync
+        [Test]
+        public async Task GetComplianceOfficerAsync_ReturnsComplianceOfficerDetailDto_WhenIdExist()
+        {
+            var existingCO = await _context.ComplianceOfficers.FirstAsync();
+            var results = await _repository.GetComplianceOfficerAsync(existingCO.Id);
+
+            results.Should().NotBeNull();
+            results.Should().BeOfType<ComplianceOfficerDetailDto>();
+            results.GivenName.Should().Be(existingCO.GivenName);
+        }
 
 
         // GetComplianceOfficerListAsync
