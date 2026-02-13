@@ -95,6 +95,12 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetComplianceOfficerListAsync
+        [Test]
+        public async Task GetComplianceOfficerListAsync_ReturnsAllComplianceOfficers()
+        {
+            var results = await _repository.GetComplianceOfficerListAsync();
+            results.Should().NotBeNullOrEmpty();
+        }
 
 
         // TryCreateComplianceOfficerAsync
