@@ -17,7 +17,11 @@ namespace FMS.Domain.Dto
             EventStartDate = reportDto.StartDate;
             EventCompletionDate = reportDto.CompletionDate;
             EventAmount = reportDto.EventAmount;
+            Unit = reportDto.OrganizationalUnit?.Name;
         }
+
+        [XLColumn(Header = "Unit")]
+        public string Unit { get; set; }
 
         [XLColumn(Header = "HSI ID")]
         public string HSIID { get; set; }

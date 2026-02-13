@@ -75,7 +75,7 @@ namespace FMS.Pages.Phone
 
             TempData?.SetDisplayMessage(Context.Success, $"Phone Number for \"{Contact.GivenName + " " + Contact.FamilyName}\" successfully updated.");
             ActiveTab = "Contacts";
-            return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId, tab = "Contacts" });
+            return RedirectToPage("../Facilities/Details", null, new { id = Contact.FacilityId, tab = "Contacts" }, fragment: "TabPages");
         }
     }
 }

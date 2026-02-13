@@ -100,7 +100,7 @@ namespace FMS.Pages.GroundwaterScore
 
             TempData?.SetDisplayMessage(Context.Success, $"Groundwater Score successfully updated.");
             ActiveTab = "Score";
-            return RedirectToPage("../Facilities/Details", new { id = GroundwaterScore.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", null, new { id = GroundwaterScore.FacilityId, tab = ActiveTab}, fragment: "TabPages");
         }
     }
 }

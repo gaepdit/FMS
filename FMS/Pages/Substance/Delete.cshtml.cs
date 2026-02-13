@@ -68,7 +68,7 @@ namespace FMS.Pages.Substance
 
             TempData?.SetDisplayMessage(Context.Success, "Substance deleted.");
             ActiveTab = "Substances";
-            return RedirectToPage("/Facilities/Details", new { id = FacilityId, hr = Guid.Empty, tab = ActiveTab });
+            return RedirectToPage("/Facilities/Details", null, new { id = FacilityId, hr = Guid.Empty, tab = ActiveTab }, fragment: "TabPages");
         }
     }
 }

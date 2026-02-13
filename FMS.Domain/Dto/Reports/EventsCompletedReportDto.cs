@@ -17,7 +17,11 @@ namespace FMS.Domain.Dto
             EventCompletionDate = reportDto.CompletionDate;
             DoneBy = reportDto.DoneBy?.Name;
             ActivityComment = reportDto.Comment;
+            Unit = reportDto.OrganizationalUnit?.Name;
         }
+
+        [XLColumn(Header = "Unit")]
+        public string Unit { get; set; }
 
         [XLColumn(Header = "Done By")]
         public string DoneBy { get; set; }

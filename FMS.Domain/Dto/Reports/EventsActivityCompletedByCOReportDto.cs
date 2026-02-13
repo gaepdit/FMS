@@ -22,7 +22,11 @@ namespace FMS.Domain.Dto
             EventStartDate = reportDto.StartDate;
             EventCompletionDate = reportDto.CompletionDate;
             ActivityComment = reportDto.Comment;
+            Unit = reportDto.OrganizationalUnit?.Name;
         }
+
+        [XLColumn(Header = "Unit")]
+        public string Unit { get; set; }
 
         [XLColumn(Header = "Compliance Officer")]
         public string DoneBy { get; set; }
