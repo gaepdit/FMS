@@ -85,7 +85,14 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeOfType<ComplianceOfficerDetailDto>();
             results.GivenName.Should().Be(existingCO.GivenName);
         }
+        [Test]
+        public async Task GetComplianceOfficerAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingCO = Guid.NewGuid() ;
+            var results = await _repository.GetComplianceOfficerAsync(nonExistingCO);
 
+            results?.Should().BeNull();
+        }
 
         // GetComplianceOfficerListAsync
 
