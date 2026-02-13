@@ -1,10 +1,5 @@
 ﻿using ClosedXML.Attributes;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -14,7 +9,6 @@ namespace FMS.Domain.Dto
 
         public EventsCompletedOutstandingReportDto(EventReportDto reportDto)
         {
-           
             HSIID = reportDto.FacilityNumber;
             FacilityName = reportDto.FacilityName;
             FacilityTypeName = reportDto.FacilityType?.Name;
@@ -27,7 +21,11 @@ namespace FMS.Domain.Dto
                 : 0;
             DoneBy = reportDto.DoneBy?.Name;
             ActivityComment = reportDto.Comment;
+            Unit = reportDto.OrganizationalUnit?.Name;
         }
+
+        [XLColumn(Header = "Unit")]
+        public string Unit { get; set; }
 
         [XLColumn(Header = "Facility Type")]
         public string FacilityTypeName { get; set; }

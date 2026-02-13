@@ -1,9 +1,5 @@
 ﻿using ClosedXML.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -19,12 +15,16 @@ namespace FMS.Domain.Dto
             ActionTakenName = reportDto.ActionTaken?.Name;
             EventStartDate = reportDto.StartDate;
             EventCompletionDate = reportDto.CompletionDate;
-            ComplianceOfficerName = reportDto.ComplianceOfficer?.Name;
+            DoneBy = reportDto.DoneBy?.Name;
             ActivityComment = reportDto.Comment;
+            Unit = reportDto.OrganizationalUnit?.Name;
         }
 
-        [XLColumn(Header = "Compliance Officer")]
-        public string ComplianceOfficerName { get; set; }
+        [XLColumn(Header = "Unit")]
+        public string Unit { get; set; }
+
+        [XLColumn(Header = "Done By")]
+        public string DoneBy { get; set; }
 
         [XLColumn(Header = "HSI ID")]
         public string HSIID { get; set; }

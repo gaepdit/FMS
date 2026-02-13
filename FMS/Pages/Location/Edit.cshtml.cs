@@ -91,7 +91,7 @@ namespace FMS.Pages.Location
 
             TempData?.SetDisplayMessage(Context.Success, $"Location successfully updated.");
             ActiveTab = "Location";
-            return RedirectToPage("../Facilities/Details", new { id = Location.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", null, new { id = Location.FacilityId, tab = ActiveTab }, fragment: "TabPages");
         }
 
         private async Task PopulateSelectsAsync()

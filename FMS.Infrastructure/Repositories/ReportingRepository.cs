@@ -193,7 +193,6 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.FacilityType)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.ComplianceOfficer)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.StatusDetails)
                 .Include(sd => sd.StatusDetails.OverallStatus)
@@ -219,7 +218,6 @@ namespace FMS.Infrastructure.Repositories
                     StartDate = ev.StartDate,
                     DueDate = ev.DueDate,
                     CompletionDate = ev.CompletionDate,
-                    ComplianceOfficer = e.ComplianceOfficer,
                     DoneBy = ev.ComplianceOfficer,
                     OrganizationalUnit = e.OrganizationalUnit,
                     EventAmount = ev.EventAmount,

@@ -6,10 +6,6 @@ using System.Linq;
 
 namespace FMS.Helpers
 {
-    //var results = dbContext.YourTable
-    //.Where(x => selectedValues.Contains(x.SomeColumn))
-    //.ToList();
-
     public static class EventSortHelper
     {
         public static IList<EventSummaryDto> SortEvents(IList<EventSummaryDto> events, EventSort sortBy)
@@ -89,33 +85,38 @@ namespace FMS.Helpers
                     .ToList(),
                 EventReportSort.EventCompleted => events
                     .Where(e => e.CompletionDate != null
-                        && e.CompletionDate >= startDate.GetValueOrDefault()
-                        && e.CompletionDate <= endDate.GetValueOrDefault())
-                    .OrderBy(e => e.ComplianceOfficer?.Name)
+                        && e.StartDate >= startDate.GetValueOrDefault()
+                        && e.StartDate <= endDate.GetValueOrDefault())
+                    .OrderBy(e => e.OrganizationalUnit?.Name)
+                    .ThenBy(e => e.ComplianceOfficer?.Name)
                     .ThenBy(e => e.FacilityNumber)
                     .ToList(),
                 EventReportSort.EventCompliance => events
                     .Where(e => e.CompletionDate != null
-                        && e.CompletionDate >= startDate.GetValueOrDefault()
-                        && e.CompletionDate <= endDate.GetValueOrDefault())
-                    .OrderBy(e => e.CompletionDate)
+                        && e.StartDate >= startDate.GetValueOrDefault()
+                        && e.StartDate <= endDate.GetValueOrDefault())
+                    .OrderBy(e => e.OrganizationalUnit?.Name)
+                    .ThenBy(e => e.CompletionDate)
                     .ToList(),
                 EventReportSort.EventCompletedOutstanding => events
                     .Where(e => e.CompletionDate == null
                         || (e.StartDate >= startDate.GetValueOrDefault()
                         && e.StartDate <= endDate.GetValueOrDefault()))
-                    .OrderBy(e => e.FacilityType?.Name)
+                    .OrderBy(e => e.OrganizationalUnit?.Name)
+                    .ThenBy(e => e.FacilityType?.Name)
                     .ThenBy(e => e.StartDate)
                     .ToList(),
                 EventReportSort.EventActivityCompleted => events
                     .Where(e => e.CompletionDate != null
-                        && e.CompletionDate >= startDate.GetValueOrDefault()
-                        && e.CompletionDate <= endDate.GetValueOrDefault())
-                    .OrderBy(e => e.ComplianceOfficer?.Name)
+                        && e.StartDate >= startDate.GetValueOrDefault()
+                        && e.StartDate <= endDate.GetValueOrDefault())
+                    .OrderBy(e => e.OrganizationalUnit?.Name)
+                    .ThenBy(e => e.ComplianceOfficer?.Name)
                     .ToList(),
                 EventReportSort.EventNoActionTaken => events
                     .Where(e => e.OverallStatus?.Name == "NAT")  
-                    .OrderBy(e => e.FacilityNumber)
+                    .OrderBy(e => e.OrganizationalUnit?.Name)
+                    .ThenBy(e => e.FacilityNumber)
                     .ToList(),
                 _ => events
                     .OrderBy(e => e.StartDate)

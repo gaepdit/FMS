@@ -101,7 +101,7 @@ namespace FMS.Pages.OnsiteScore
 
             TempData?.SetDisplayMessage(Context.Success, $"Onsite Score successfully Updated.");
             ActiveTab = "Score";
-            return RedirectToPage("../Facilities/Details", new { id = OnsiteScore.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", null, new { id = OnsiteScore.FacilityId, tab = ActiveTab }, fragment: "TabPages");
         }
     }
 }

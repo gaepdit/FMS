@@ -79,7 +79,7 @@ namespace FMS.Pages.Phone
 
             TempData?.SetDisplayMessage(Context.Success, $"Phone Number for \"{Contact.GivenName + " " + Contact.FamilyName}\" successfully Added.");
             ActiveTab = "Contacts";
-            return RedirectToPage("../Facilities/Details", new { id = Contact.FacilityId, tab = ActiveTab });
+            return RedirectToPage("../Facilities/Details", null, new { id = Contact.FacilityId, tab = ActiveTab }, fragment: "TabPages");
         }
     }
 }
