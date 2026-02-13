@@ -35,7 +35,13 @@
     <div id="ChemicaLButtons" class="@(!Model.ResultsActive ? "container bg-light-subtle py-3 rounded-3" : "d-none")">
         <input type="hidden" name="handler" value="search" />
         <button id="SearchButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Choose Chemical</button>
-        <a asp-page="../Facilities/Details" asp-route-Id="@Model.NewSubstance.FacilityId" class="btn btn-outline-secondary col-md-2">Cancel</a>
+        <a asp-page="../Facilities/Details"
+           asp-route-tab="Substances"
+            asp-route-Id="@Model.NewSubstance.FacilityId" 
+            asp-fragment="TabPages"
+            class="btn btn-outline-secondary col-md-2">
+            Cancel
+        </a>
     </div>
 </form>
 
