@@ -125,8 +125,25 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateComplianceOfficerStatusAsync
+        [Test]
+        public async Task UpdateComplianceOfficerStatusAsync_UpdatesStatusCorrectly()
+        {
+            var ComplianceOfficer = new ComplianceOfficer { Id = Guid.NewGuid(), GivenName = "VALID_GIVENNAME", Active = true };
+            _context.ComplianceOfficers.Add(ComplianceOfficer);
+            await _context.SaveChangesAsync();
 
+            await _repository.UpdateComplianceOfficerStatusAsync(ComplianceOfficer.Id, false);
 
-        // 
+            var updatedCO= await _context.ComplianceOfficers.FindAsync(ComplianceOfficer.Id);
+            updatedCO.Active.Should().BeFalse();
+        }
+
+        [Test]
+        public async Task UpdateComplianceOfficerStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            Func<Task> action = async () => await _repository.UpdateComplianceOfficerStatusAsync(Guid.NewGuid(), false);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
+
     }
 }
