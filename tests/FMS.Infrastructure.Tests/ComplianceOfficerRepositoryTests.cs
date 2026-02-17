@@ -104,7 +104,25 @@ namespace FMS.Infrastructure.Tests
 
 
         // TryCreateComplianceOfficerAsync
+        [Test]
+        public async Task TryCreateComplianceOfficerAsync_CreatesComplianceOfficer_WithValidData()
+        {
+            var dto = new ComplianceOfficerCreateDto
+            {
+                GivenName = "VALID_GIVENNAME",
+                FamilyName = "VALID_FAMILYNAME",
+                Email = "VALID_EMAIL"
+            };
 
+            var newId = await _repository.TryCreateComplianceOfficerAsync(dto);
+
+            _context.ChangeTracker.Clear();
+            var createdCO = await _context.ComplianceOfficers.FindAsync(newId);
+
+            createdCO.Should().NotBeNull();
+            createdCO.GivenName.Should().Be(dto.GivenName);
+            createdCO.FamilyName.Should().Be(dto.FamilyName);
+        }
 
         // UpdateComplianceOfficerStatusAsync
 
