@@ -109,9 +109,9 @@ namespace FMS.Infrastructure.Tests
         {
             var dto = new ComplianceOfficerCreateDto
             {
-                GivenName = "VALID_GIVENNAME",
-                FamilyName = "VALID_FAMILYNAME",
-                Email = "VALID_EMAIL"
+                GivenName = "NEW_GIVENNAME",
+                FamilyName = "NEW_FAMILYNAME",
+                Email = "NEW_EMAIL"
             };
 
             var newId = await _repository.TryCreateComplianceOfficerAsync(dto);
