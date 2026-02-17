@@ -220,6 +220,7 @@ namespace FMS.Infrastructure.Repositories
                     CompletionDate = ev.CompletionDate,
                     DoneBy = ev.ComplianceOfficer,
                     OrganizationalUnit = e.OrganizationalUnit,
+                    ComplianceOfficer = e.ComplianceOfficer,
                     EventAmount = ev.EventAmount,
                     EventContractor = ev.EventContractor,
                     Comment = ev.Comment,
@@ -230,6 +231,27 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
 
             return reportDtoList;
+        }
+
+        public async Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Include(e => e.ComplianceOfficer)
+                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
+                .Where(e => e.StatusDetails.OverallStatus.Name == "NAT")
+                .Select(e => new EventsNoActionTakenReportDto()
+                {
+                    HSIID = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    ListDate = e.HsrpFacilityProperties.DateListed,
+                    ComplianceOfficerName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned"
+                })
+                .OrderBy(e => e.HSIID)
+                .ToListAsync();
+            
+            return facilityList;
         }
 
         #endregion

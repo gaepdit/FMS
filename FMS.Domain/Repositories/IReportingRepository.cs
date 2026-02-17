@@ -31,6 +31,8 @@ namespace FMS.Domain.Repositories
 
         Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> selectedFacilityTypes = null, List<string> eventTypes = null);
 
+        Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync();
+
         #endregion
 
         #region PAF Report

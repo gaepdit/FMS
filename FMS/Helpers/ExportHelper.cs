@@ -181,7 +181,8 @@ namespace FMS
             if (reportType == ReportType.EventActivityCompleted)
             {
                 ws = wb.AddWorksheet("Events Completed By CO");
-                table = ws.Cell(1, 1).InsertTable(list);
+                table = ws.Cell(3, 1).InsertTable(list);
+
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
                 ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
@@ -194,8 +195,7 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(3).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             wb.SaveAs(ms);

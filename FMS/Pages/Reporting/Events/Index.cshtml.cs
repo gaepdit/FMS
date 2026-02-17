@@ -119,38 +119,38 @@ namespace FMS.Pages.Reporting.Events
             return File(eventsCompletedOutstandingReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompletedOutstanding, StartDate, EndDate), "application/vnd.ms-excel", fileName);
         }
 
-        public async Task<IActionResult> OnPostActivityCompletedAsync()
-        {
-            var fileName = $"Events_Activity_Completed_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
-            var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
+        /// <summary>
+        /// / Remove this one
+        /// </summary>
+        /// <returns></returns>
+        //public async Task<IActionResult> OnPostActivityCompletedAsync()
+        //{
+        //    var fileName = $"Events_Activity_Completed_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+        //    var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
 
-            // "eventsActivityCompletedList" List to go to a report
-            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
+        //    // "eventsActivityCompletedList" List to go to a report
+        //    IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
 
-            // Sort list by CO and filter only date range
-            var eventsActivityCompletedList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventActivityCompleted, StartDate, EndDate);
-            // Map to EventsActivityCompletedByCOReportDto
-            var eventsActivityCompletedReportList = from p in eventsActivityCompletedList
-                                             select new EventsActivityCompletedByCOReportDto(p);
+        //    // Sort list by CO and filter only date range
+        //    var eventsActivityCompletedList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventActivityCompleted, StartDate, EndDate);
+        //    // Map to EventsActivityCompletedByCOReportDto
+        //    var eventsActivityCompletedReportList = from p in eventsActivityCompletedList
+        //                                     select new EventsActivityCompletedByCOReportDto(p);
 
-            // Export to Excel
-            return File(eventsActivityCompletedReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventActivityCompleted, StartDate, EndDate), "application/vnd.ms-excel", fileName);
-        }
+        //    // Export to Excel
+        //    return File(eventsActivityCompletedReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventActivityCompleted, StartDate, EndDate), "application/vnd.ms-excel", fileName);
+        //}
 
         public async Task<IActionResult> OnPostNoActionTakenAsync()
         {
             var fileName = $"Events_NoActionTaken_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
-            var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
 
             // "eventsNoActionTakenList" List to go to a report
-            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
-
-            // Filter and sort list for Events NoActionTaken Report
-            var eventsNoActionTakenList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventNoActionTaken);
+            IList<EventsNoActionTakenReportDto> eventsList = await _repository.GetEventsNoActionTakenReportAsync();
 
             // Map to EventsNoActionTakenReportDto
-            var eventsNoActionTakenReportList = from p in eventsNoActionTakenList
-                                          select new EventsNoActionTakenReportDto(p);
+            var eventsNoActionTakenReportList = from p in eventsList
+                                                select new EventsNoActionTakenReportDto(p);
 
             // Export to Excel
             return File(eventsNoActionTakenReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventNoActionTaken), "application/vnd.ms-excel", fileName);
