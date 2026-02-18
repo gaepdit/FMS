@@ -185,7 +185,7 @@ namespace FMS.Infrastructure.Repositories
         #region Events Reports
 
         public async Task<IList<EventReportDto>> GetEventsReportsAsync(
-            List<string> selectedFacilityTypes = null,
+            List<string> facilityTypes = null,
             List<string> eventTypes = null
             )
         {
@@ -204,7 +204,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenInclude(ev => ev.ComplianceOfficer)
                 .Include(e => e.Events)
                 .ThenInclude(ev => ev.EventContractor)
-                .Where(e => selectedFacilityTypes.Contains(e.FacilityType.Name))
+                .Where(e => facilityTypes.Contains(e.FacilityType.Name))
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
                 {
                     Id = ev.Id,
@@ -239,7 +239,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.StatusDetails.OverallStatus)
                 .Include(e => e.ComplianceOfficer)
-                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
+                .Where(e => e.FacilityType.Name == "HSI")
                 .Where(e => e.StatusDetails.OverallStatus.Name == "NAT")
                 .Select(e => new EventsNoActionTakenReportDto()
                 {

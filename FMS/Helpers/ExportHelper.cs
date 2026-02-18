@@ -40,7 +40,9 @@ namespace FMS
         public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list, 
             ReportType reportType, 
             DateOnly? startDate = null, 
-            DateOnly? endDate = null)
+            DateOnly? endDate = null,
+            IEnumerable<T> vrpList = null,
+            IEnumerable<T> brnList = null)
         {
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
@@ -161,23 +163,6 @@ namespace FMS
                 ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
             }
 
-            if (reportType == ReportType.EventCompletedOutstanding)
-            {
-                ws = wb.AddWorksheet("Events Completed Outstanding");
-                table = ws.Cell(3, 1).InsertTable(list);
-                table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("A1").Value = "Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-
-                table.ShowTotalsRow = true;
-                table.Field("Days").TotalsRowFunction = XLTotalsRowFunction.Average;
-            }
-
             if (reportType == ReportType.EventActivityCompleted)
             {
                 ws = wb.AddWorksheet("Events Completed By CO");
@@ -198,10 +183,65 @@ namespace FMS
                 ws.Column(3).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
+            if (reportType == ReportType.EventCompletedOutstanding)
+            {
+                
+                var hsiCount = list.Count();
+                var vrpCount = vrpList.Count();
+                var brnCount = brnList.Count();
+                var hsiAvg = 0;
+                var vrpAvg = 0;
+                var brnAvg = 0;
+
+                //foreach (var item in list)
+                //{
+                //    EventReportDto eventReportDto = new EventReportDto(item)
+                //}
+
+
+
+                ws = wb.AddWorksheet("HSI");
+                table = ws.Cell(3, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("A1").Value = "Start Date";
+                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("A2").Value = "End Date";
+                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+
+                ws = wb.AddWorksheet("VRP");
+                table = ws.Cell(3, 1).InsertTable(vrpList);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("A1").Value = "Start Date";
+                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("A2").Value = "End Date";
+                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+
+                ws = wb.AddWorksheet("Brownfield");
+                table = ws.Cell(3, 1).InsertTable(brnList);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("A1").Value = "Start Date";
+                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("A2").Value = "End Date";
+                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+
+
+            }
+
             wb.SaveAs(ms);
             return ms.ToArray();
         }
+
         
+
         /// <summary>
         /// Takes in a list of RetentionRecordDetailDto, fill the information into the blank pdf form
         /// accordingly, and convert it to a byte array.

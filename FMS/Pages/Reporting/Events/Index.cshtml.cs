@@ -1,13 +1,16 @@
+using DocumentFormat.OpenXml.Presentation;
 using DocumentFormat.OpenXml.Wordprocessing;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Graph.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Reporting.Events
@@ -92,54 +95,51 @@ namespace FMS.Pages.Reporting.Events
         public async Task<IActionResult> OnPostCompletedOutstandingAsync()
         {
             var fileName = $"Events_Completed_Outstanding_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
-            var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
-            var selectedEventTypes = new List<string> 
-            { 
-                "Compliance Status Report", 
+            var selectedFacilityTypes = new List<string> { "HSI" }; //, "VRP", "BROWN" 
+            var hsiEventTypes = new List<string> 
+            {
+                "Compliance Status Report",
                 "Corrective Action Plan",
                 "Groundwater Monitoring Report",
-                "Progress Report / Misc. Report",
-                "Prospective Purchaser Compliance Status Report",
+                "Progress Report / Misc. Report" 
+            };
+
+            IList<EventReportDto> hsiEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, hsiEventTypes);
+
+            var hsiCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(hsiEventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+
+            var hsiCompletedOutstandingReportList = from p in hsiCompletedOutstandingList    select new EventsCompletedOutstandingReportDto(p);
+
+            selectedFacilityTypes = ["VRP"];
+            var vrpEventTypes = new List<string>
+            {
                 "VRP Compliance Status Report",
                 "VRP Corrective Action Plan",
                 "VRP Progress Report / Misc. Report"
             };
 
-            // "eventsComplianceList" List to go to a report
-            IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, selectedEventTypes);
+            IList<EventReportDto> vrpEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, vrpEventTypes);
 
-            // Sort list by Organizational Unit and filter only pending events
-            var eventsCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+            var vrpCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(vrpEventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
 
-            // Map to EventsCompletedOutstandingReportDto
-            var eventsCompletedOutstandingReportList = from p in eventsCompletedOutstandingList
-                                             select new EventsCompletedOutstandingReportDto(p);
+            var vrpCompletedOutstandingReportList = from p in vrpCompletedOutstandingList select new EventsCompletedOutstandingReportDto(p);
+
+            selectedFacilityTypes = ["BROWN"];
+            var brownEventTypes = new List<string>
+            {
+                "Prospective Purchaser Compliance Status Report",
+                "Prospective Purchaser Corrective Action Plan"
+            };
+
+            IList<EventReportDto> brownEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, brownEventTypes);
+
+            var brownCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(brownEventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+
+            var brownCompletedOutstandingReportList = from p in brownCompletedOutstandingList select new EventsCompletedOutstandingReportDto(p);
 
             // Export to Excel
-            return File(eventsCompletedOutstandingReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompletedOutstanding, StartDate, EndDate), "application/vnd.ms-excel", fileName);
+            return File(hsiCompletedOutstandingReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompletedOutstanding, StartDate, EndDate, vrpCompletedOutstandingReportList, brownCompletedOutstandingReportList), "application/vnd.ms-excel", fileName);
         }
-
-        /// <summary>
-        /// / Remove this one
-        /// </summary>
-        /// <returns></returns>
-        //public async Task<IActionResult> OnPostActivityCompletedAsync()
-        //{
-        //    var fileName = $"Events_Activity_Completed_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
-        //    var selectedFacilityTypes = new List<string> { "HSI", "VRP", "BROWN" };
-
-        //    // "eventsActivityCompletedList" List to go to a report
-        //    IList<EventReportDto> eventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes);
-
-        //    // Sort list by CO and filter only date range
-        //    var eventsActivityCompletedList = EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventActivityCompleted, StartDate, EndDate);
-        //    // Map to EventsActivityCompletedByCOReportDto
-        //    var eventsActivityCompletedReportList = from p in eventsActivityCompletedList
-        //                                     select new EventsActivityCompletedByCOReportDto(p);
-
-        //    // Export to Excel
-        //    return File(eventsActivityCompletedReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventActivityCompleted, StartDate, EndDate), "application/vnd.ms-excel", fileName);
-        //}
 
         public async Task<IActionResult> OnPostNoActionTakenAsync()
         {

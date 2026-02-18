@@ -13,6 +13,22 @@ namespace FMS.Domain.Dto
     {
         public EventReportDto() { }
 
+        //public EventReportDto(EventReportDto eventNew)
+        //{
+        //    Id = eventNew.Id;
+        //    FacilityId = eventNew.FacilityId;
+        //    ParentId = eventNew.ParentId;
+        //    EventType = eventNew.EventType;
+        //    ActionTaken = eventNew.ActionTaken;
+        //    StartDate = eventNew.StartDate;
+        //    DueDate = eventNew.DueDate;
+        //    CompletionDate = eventNew.CompletionDate;
+        //    ComplianceOfficer = eventNew.ComplianceOfficer;
+        //    EventAmount = eventNew.EventAmount;
+        //    EventContractor = eventNew.EventContractor;
+        //    Comment = eventNew.Comment;
+        //}
+
         public Guid Id { get; set; }
 
         public Guid FacilityId { get; set; }
