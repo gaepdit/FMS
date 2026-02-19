@@ -1,4 +1,9 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
@@ -7,9 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NSubstitute;
 using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using Xunit.Extensions.AssertExtensions;
 
 namespace FMS.Infrastructure.Tests
 {
@@ -33,7 +36,7 @@ namespace FMS.Infrastructure.Tests
 
             _context.Chemicals.Add(new Chemical
             {
-                Id = Guid.Empty,
+                Id = Guid.NewGuid(),
                 CasNo = "VALID_CASNO",
                 ChemicalName = "VALID_CHEMNAME",
                 CommonName = "VALID_COMNAME",
@@ -64,7 +67,20 @@ namespace FMS.Infrastructure.Tests
         }
 
         // ChemicalExistAsync
-
+        [Test]
+        public async Task ChemicalExistAsync_ReturnsTrue_WhenChemicalExist()
+        {
+            var existingChemical = await _context.Chemicals.Select(e => e.Id).FirstAsync();
+            var results = await _repository.ChemicalExistsAsync(existingChemical);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task ChemicalExistAsync_ReturnsFalse_ContactDoesNotExist()
+        {
+            var nonExistingChemical = Guid.NewGuid();
+            var results = await _repository.ChemicalExistsAsync(nonExistingChemical);
+            results.Should().BeFalse();
+        }
 
         // ChemicalCasNoExistAsync
 
@@ -95,4 +111,4 @@ namespace FMS.Infrastructure.Tests
 
         // UpdateChemicalStatusAsync
     }
-}
+}2
