@@ -154,6 +154,7 @@ namespace FMS
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
+
                 ws.Cell("A1").Value = "Start Date";
                 ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
                 ws.Cell("A2").Value = "End Date";
