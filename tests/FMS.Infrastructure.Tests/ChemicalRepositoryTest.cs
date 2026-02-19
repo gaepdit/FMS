@@ -62,5 +62,37 @@ namespace FMS.Infrastructure.Tests
                 _disposed = true;
             }
         }
+
+        // ChemicalExistAsync
+
+
+        // ChemicalCasNoExistAsync
+
+
+        // ChemicalChemicalNameExistAsync
+
+
+        // ChemicalCommonNAmeExistAsync
+
+
+        // GetChemicalByIdAsync
+
+
+        // GetChemicalByNameAsync
+
+
+        // GetChemicalByChemIdAsync
+
+
+        // GetChemicalListAsync
+
+
+        // CreateChemicalAsync
+
+
+        // UpdateChemicalAsync
+
+
+        // UpdateChemicalStatusAsync
     }
 }
