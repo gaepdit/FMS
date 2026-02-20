@@ -131,13 +131,44 @@ namespace FMS.Infrastructure.Tests
         }
 
         // GetChemicalByIdAsync
+        [Test]
+        public async Task GetChemicalByIdAsync_ReturnsChemicalEditDto_WhenIdExist()
+        {
+            var existingChemical = await _context.Chemicals.FirstAsync();
+            var results = await _repository.GetChemicalByIdAsync(existingChemical.Id);
+
+            results.Should().NotBeNull();
+            results.Should().BeOfType<ChemicalEditDto>();
+        }
+        [Test]
+        public async Task GetChemicalByIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingChemical = Guid.NewGuid();
+            var results = await _repository.GetChemicalByIdAsync(nonExistingChemical);
+            results.Should().BeNull();
+        }
 
 
         // GetChemicalByNameAsync
 
 
         // GetChemicalByChemIdAsync
+        [Test]
+        public async Task GetChemicalByChemIdAsync_ReturnsChemical_WhenIdExist()
+        {
+            var existingChemical = await _context.Chemicals.FirstAsync();
+            var results = await _repository.GetChemicalByChemIdAsync(existingChemical.Id);
 
+            results.Should().NotBeNull();
+            results.Should().BeOfType<Chemical>();
+        }
+        [Test]
+        public async Task GetChemicalByChemIdAsync_ReturnsNull_WhenIdDoesNotExist()
+        {
+            var nonExistingChemical = Guid.NewGuid();
+            var results = await _repository.GetChemicalByChemIdAsync(nonExistingChemical);
+            results.Should().BeNull();
+        }
 
         // GetChemicalListAsync
 
