@@ -37,7 +37,7 @@ namespace FMS.Domain.Repositories
 
         #region PAF Report
 
-        Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync();
+        Task<IReadOnlyList<PAFReportRawDto>> GetPAFReportAsync();
 
         #endregion
     }
