@@ -114,8 +114,21 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeFalse();
         }
 
-        // ChemicalCommonNAmeExistAsync
-
+        // ChemicalCommonNameExistsAsync
+        [Test]
+        public async Task ChemicalCommonNameExistsAsync_ReturnsTrue_WhenCommonNameExist()
+        {
+            var existingChemical = await _context.Chemicals.Select(e => e.CommonName).FirstAsync();
+            var results = await _repository.ChemicalCommonNameExistsAsync(existingChemical);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task ChemicalCommonNameExistsAsync_ReturnsFalse_CommonNameDoesNotExist()
+        {
+            var nonExistingChemical = "NONEXISTING_COMMONNAME";
+            var results = await _repository.ChemicalCommonNameExistsAsync(nonExistingChemical);
+            results.Should().BeFalse();
+        }
 
         // GetChemicalByIdAsync
 
