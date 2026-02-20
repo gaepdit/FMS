@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -15,7 +16,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "PAF Issue Date")]
         [XLColumn(Header = "PAF Issue Date")]
-        public string PAFIssueDate { get; set; }
+        public DateTime? PAFIssueDate { get; set; }
 
         [Display(Name = "PAF Amount")]
         [XLColumn(Header = "PAF Amount")]

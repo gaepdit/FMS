@@ -13,7 +13,51 @@
 <a asp-page="../Index">← Back to Reports</a>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 <div class="p-3 rounded-3 bg-light-subtle">
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-2">
+            <label asp-for="SiteName" class="form-label">Site Name</label>
+            <input asp-for="SiteName" class="form-control" placeholder="Site Name" />
+        </div>
+        <div class="col-md-2">
+            <label asp-for="ProjectOfficer" class="form-label">Project Officer</label>
+            <input asp-for="ProjectOfficer" class="form-control" placeholder="Project Officer" />
+        </div>
+        <div class="col-md-2">
+            <label asp-for="Contractor" class="form-label">Contractor</label>
+            <input asp-for="Contractor" class="form-control" placeholder="Contractor" />
+        </div>
+        <div class="col-md-2">
+            <label asp-for="PAFIssueYear" class="form-label">PAF Issue Year</label>
+            <select asp-for="PAFIssueYear" class="form-control">
+                <option value="">-- Select Year --</option>
+                @foreach (var year in Model.PAFIssueYearList)
+                {
+                    <option value="@year" selected="@(Model.PAFIssueYear == year ? "selected" : null)">
+                        @year
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label asp-for="PAFIssueDateFrom" class="form-label">PAF Issue Date From</label>
+            <input asp-for="PAFIssueDateFrom" type="date" class="form-control" placeholder="PAF Issue Date From" />
+        </div>
+        <div class="col-md-2">
+            <label asp-for="PAFIssueDateTo" class="form-label">PAF Issue Date To</label>
+            <input asp-for="PAFIssueDateTo" type="date" class="form-control" placeholder="PAF Issue Date To" />
+        </div>
+        <div class="col-12 mt-2">
+            <button type="submit" class="btn btn-primary me-2">Search</button>
+            <a asp-page="./Index" class="btn btn-secondary">Reset</a>
+        </div>
+    </form>
     <form method="post">
+        <input type="hidden" asp-for="ProjectOfficer" />
+        <input type="hidden" asp-for="SiteName" />
+        <input type="hidden" asp-for="Contractor" />
+        <input type="hidden" asp-for="PAFIssueYear" />
+        <input type="hidden" asp-for="PAFIssueDateFrom" />
+        <input type="hidden" asp-for="PAFIssueDateTo" />
         <div class="form-group row">
             <div class="col-md-2">
                 <button id="ExportButton"
@@ -45,24 +89,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var p in Model.PAFReport)
+                    @if (Model.PAFReport?.Any() == true)
+                    {
+                        @foreach (var p in Model.PAFReport)
+                        {
+                            <tr>
+                                <td>@p.HSIId</td>
+                                <td>@p.SiteName</td>
+                                <td>
+                                    @(p.PAFIssueDate.HasValue? p.PAFIssueDate.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>@p.PAFAmount</td>
+                                <td>@p.ProjectOfficer</td>
+                                <td>@p.Contractor</td>
+                                <td>@p.RAWReceived</td>
+                                <td>@p.RAWDue</td>
+                                <td>@p.RAWApproved</td>
+                                <td>@p.RARReceived</td>
+                                <td>@p.RARDue</td>
+                                <td>@p.RARApproved</td>
+                                <td>@p.ProjectCompleteDue</td>
+                                <td>@p.ProjectCompleteActual</td>
+                                <td>@p.ProjectComments</td>
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td>@p.HSIId</td>
-                            <td>@p.SiteName</td>
-                            <td>@p.PAFIssueDate</td>
-                            <td>@p.PAFAmount</td>
-                            <td>@p.ProjectOfficer</td>
-                            <td>@p.Contractor</td>
-                            <td>@p.RAWReceived</td>
-                            <td>@p.RAWDue</td>
-                            <td>@p.RAWApproved</td>
-                            <td>@p.RARReceived</td>
-                            <td>@p.RARDue</td>
-                            <td>@p.RARApproved</td>
-                            <td>@p.ProjectCompleteDue</td>
-                            <td>@p.ProjectCompleteActual</td>
-                            <td>@p.ProjectComments</td>
+                            <td colspan="15" class="text-center">No records found</td>
                         </tr>
                     }
                 </tbody>
