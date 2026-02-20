@@ -91,15 +91,28 @@ namespace FMS.Infrastructure.Tests
             results.Should().BeTrue();
         }
         [Test]
-        public async Task ChemicalCasNoExistAsync_ReturnsFalse_ContactDoesNotExist()
+        public async Task ChemicalCasNoExistAsync_ReturnsFalse_CasNoDoesNotExist()
         {
             var nonExistingChemical = "NONEXISTING_CASNO";
             var results = await _repository.ChemicalCasNoExistsAsync(nonExistingChemical);
             results.Should().BeFalse();
         }
 
-        // ChemicalChemicalNameExistAsync
-
+        // ChemicalChemicalNameExistsAsync
+        [Test]
+        public async Task ChemicalChemicalNameExistAsync_ReturnsTrue_WhenChemicalNameExist()
+        {
+            var existingChemical = await _context.Chemicals.Select(e => e.ChemicalName).FirstAsync();
+            var results = await _repository.ChemicalChemicalNameExistsAsync(existingChemical);
+            results.Should().BeTrue();
+        }
+        [Test]
+        public async Task ChemicalChemicalNameExistsAsync_ReturnsFalse_ChemicalNameDoesNotExist()
+        {
+            var nonExistingChemical = "NONEXISTING_CHEMNAME";
+            var results = await _repository.ChemicalChemicalNameExistsAsync(nonExistingChemical);
+            results.Should().BeFalse();
+        }
 
         // ChemicalCommonNAmeExistAsync
 
@@ -124,4 +137,4 @@ namespace FMS.Infrastructure.Tests
 
         // UpdateChemicalStatusAsync
     }
-}2
+}
