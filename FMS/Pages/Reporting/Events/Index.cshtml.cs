@@ -95,7 +95,8 @@ namespace FMS.Pages.Reporting.Events
         public async Task<IActionResult> OnPostCompletedOutstandingAsync()
         {
             var fileName = $"Events_Completed_Outstanding_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
-            var selectedFacilityTypes = new List<string> { "HSI" }; //, "VRP", "BROWN" 
+
+            var selectedFacilityTypes = new List<string> { "HSI" };
             var hsiEventTypes = new List<string> 
             {
                 "Compliance Status Report",
@@ -107,6 +108,8 @@ namespace FMS.Pages.Reporting.Events
             IList<EventReportDto> hsiEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, hsiEventTypes);
 
             var hsiCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(hsiEventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+
+
 
             var hsiCompletedOutstandingReportList = from p in hsiCompletedOutstandingList    select new EventsCompletedOutstandingReportDto(p);
 
@@ -122,6 +125,8 @@ namespace FMS.Pages.Reporting.Events
 
             var vrpCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(vrpEventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
 
+
+
             var vrpCompletedOutstandingReportList = from p in vrpCompletedOutstandingList select new EventsCompletedOutstandingReportDto(p);
 
             selectedFacilityTypes = ["BROWN"];
@@ -134,6 +139,8 @@ namespace FMS.Pages.Reporting.Events
             IList<EventReportDto> brownEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, brownEventTypes);
 
             var brownCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(brownEventsList, EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+
+
 
             var brownCompletedOutstandingReportList = from p in brownCompletedOutstandingList select new EventsCompletedOutstandingReportDto(p);
 

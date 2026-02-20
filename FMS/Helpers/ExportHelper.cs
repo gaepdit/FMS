@@ -43,7 +43,16 @@ namespace FMS
             DateOnly? startDate = null, 
             DateOnly? endDate = null,
             IEnumerable<T> vrpList = null,
-            IEnumerable<T> brnList = null)
+            IEnumerable<T> brnList = null,
+            int hsiCompCount = 0,
+            int hsiRecCount = 0,
+            int hsiCompAvg = 0,
+            int vrpCompCount = 0,
+            int vrpRecCount = 0,
+            int vrpCompAvg = 0,
+            int brnCompCount = 0,
+            int brnRecCount = 0,
+            int brnCompAvg = 0)
         {
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
@@ -190,51 +199,7 @@ namespace FMS
 
             if (reportType == ReportType.EventCompletedOutstanding)
             {
-                var hsiCompCount = 0;
-                var hsiRecCount = 0;
-                var hsiCompTotal = 0;
-                var vrpCompCount = 0;
-                var vrpRecCount = 0;
-                var vrpCompTotal = 0;
-                var brnCompCount = 0;
-                var brnRecCount = 0;
-                var brnCompTotal = 0;
-
-                foreach (var item in list)
-                {
-                    EventsCompletedOutstandingReportDto eventReportDto = Convert.ChangeType(item, typeof(EventsCompletedOutstandingReportDto)) as EventsCompletedOutstandingReportDto;
-
-                    if (eventReportDto.Unit == "HSI")
-                    {
-                        hsiRecCount++;
-                        if ((int)eventReportDto.Days != 0)
-                        {
-                            hsiCompCount++;
-                            hsiCompTotal += (int)eventReportDto.Days;
-                        }
-                    }
-                    if (eventReportDto.Unit == "VRP")
-                    {
-                        vrpRecCount++;
-                        if ((int)eventReportDto.Days != 0)
-                        {
-                            vrpCompCount++;
-                            vrpCompTotal += (int)eventReportDto.Days;
-                        }
-                    }
-                    if (eventReportDto.Unit == "BROWN")
-                    {
-                        brnRecCount++;
-                        if ((int)eventReportDto.Days != 0)
-                        {
-                            brnCompCount++;
-                            brnCompTotal += (int)eventReportDto.Days;
-                        }
-                    }
-                }
-                int hsiAvg = hsiCompCount == 0 ? 0 : hsiCompTotal / hsiCompCount;
-                int vrpAvg = vrpCompCount == 0 ? 0 : vrpCompTotal / vrpCompCount;
-                int brnAvg = brnCompCount == 0 ? 0 : brnCompTotal / brnCompCount;
+                
 
                 // ******************** HSI Worksheet ******************
                 ws = wb.AddWorksheet("HSI");
@@ -280,7 +245,7 @@ namespace FMS
                 ws.Cell("E2").Value = "Average Days to Complete";
                 ws.Cell("F2").Style.Font.Bold = true;
                 ws.Cell("F2").Style.Font.FontSize = 12;
-                ws.Cell("F2").SetValue(hsiAvg);
+                ws.Cell("F2").SetValue(hsiCompAvg);
 
                 ws.Columns().AdjustToContents(1, 10000);
 
@@ -331,7 +296,7 @@ namespace FMS
                 ws.Cell("E2").Value = "Average Days to Complete";
                 ws.Cell("F2").Style.Font.Bold = true;
                 ws.Cell("F2").Style.Font.FontSize = 12;
-                ws.Cell("F2").SetValue(vrpAvg);
+                ws.Cell("F2").SetValue(vrpCompAvg);
 
                 ws.Columns().AdjustToContents(1, 10000);
 
@@ -382,13 +347,11 @@ namespace FMS
                 ws.Cell("E2").Value = "Average Days to Complete";
                 ws.Cell("F2").Style.Font.Bold = true;
                 ws.Cell("F2").Style.Font.FontSize = 12;
-                ws.Cell("F2").SetValue(brnAvg);
+                ws.Cell("F2").SetValue(brnCompAvg);
 
                 ws.Columns().AdjustToContents(1, 10000);
                 ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-
-
             }
 
             if(reportType == ReportType.PAF)
