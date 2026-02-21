@@ -26,7 +26,6 @@
         EventActivityCompleted,
         EventCompletedOutstanding,
         EventCompleted,
-        EventCompliance,
-        EventNoActionTaken
+        EventCompliance
     }
 }

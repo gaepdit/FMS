@@ -185,7 +185,7 @@ namespace FMS.Infrastructure.Repositories
         #region Events Reports
 
         public async Task<IList<EventReportDto>> GetEventsReportsAsync(
-            List<string> selectedFacilityTypes = null,
+            List<string> facilityTypes = null,
             List<string> eventTypes = null
             )
         {
@@ -204,7 +204,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenInclude(ev => ev.ComplianceOfficer)
                 .Include(e => e.Events)
                 .ThenInclude(ev => ev.EventContractor)
-                .Where(e => selectedFacilityTypes.Contains(e.FacilityType.Name))
+                .Where(e => facilityTypes.Contains(e.FacilityType.Name))
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
                 {
                     Id = ev.Id,
@@ -220,6 +220,7 @@ namespace FMS.Infrastructure.Repositories
                     CompletionDate = ev.CompletionDate,
                     DoneBy = ev.ComplianceOfficer,
                     OrganizationalUnit = e.OrganizationalUnit,
+                    ComplianceOfficer = e.ComplianceOfficer,
                     EventAmount = ev.EventAmount,
                     EventContractor = ev.EventContractor,
                     Comment = ev.Comment,
@@ -232,15 +233,36 @@ namespace FMS.Infrastructure.Repositories
             return reportDtoList;
         }
 
+        public async Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Include(e => e.ComplianceOfficer)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.StatusDetails.OverallStatus.Name == "NAT")
+                .Select(e => new EventsNoActionTakenReportDto()
+                {
+                    HSIID = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    ListDate = e.HsrpFacilityProperties.DateListed,
+                    ComplianceOfficerName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned"
+                })
+                .OrderBy(e => e.HSIID)
+                .ToListAsync();
+            
+            return facilityList;
+        }
+
         #endregion
 
         #region PAF Report
 
-        public async Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync()
+        public async Task<IReadOnlyList<PAFReportRawDto>> GetPAFReportAsync()
         {
             var conn = _context.Database.GetDbConnection();
 
-            return (await conn.QueryAsync<PAFReportDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
+            return (await conn.QueryAsync<PAFReportRawDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
         }
 
         #endregion

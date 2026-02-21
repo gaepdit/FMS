@@ -1,14 +1,8 @@
-using Dapper;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
-using FMS.Helpers;
-using FMS.Infrastructure.Contexts;
-using FMS.Pages.Maintenance;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +16,9 @@ namespace FMS.Pages.Reporting.PAF
         private readonly IReportingRepository _repository;
         public IndexModel(IReportingRepository repository) => _repository = repository;
 
-        public IReadOnlyList<PAFReportDto> PAFReport { get; set; }
+        public IReadOnlyList<PAFReportRawDto> PAFReportRaw { get; set; }
+
+        public IList<PAFReportDto> PAFReport { get; set; }
 
         public DisplayMessage DisplayMessage { get; private set; }
 
@@ -30,7 +26,10 @@ namespace FMS.Pages.Reporting.PAF
         {
             try
             {
-                PAFReport = await _repository.GetPAFReportAsync();
+                PAFReportRaw = await _repository.GetPAFReportAsync();
+                // Map to PAFReportDto
+                PAFReport = PAFReportRaw.Select(raw => new PAFReportDto(raw)).ToList();
+
                 TempData?.SetDisplayMessage(Context.Success, "Successfully Loaded PAF Report");
                 DisplayMessage = TempData?.GetDisplayMessage();
                 return Page();
@@ -50,10 +49,13 @@ namespace FMS.Pages.Reporting.PAF
             {
                 var fileName = $"PAF_Report_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
-                PAFReport = await _repository.GetPAFReportAsync();
+                PAFReportRaw = await _repository.GetPAFReportAsync();
+
+                // Map to PAFReportDto
+                PAFReport = PAFReportRaw.Select(raw => new PAFReportDto(raw)).ToList();
 
                 // Export to Excel
-                return File(PAFReport.ExportExcelAsByteArray(ExportHelper.ReportType.EventPending), "application/vnd.ms-excel", fileName);
+                return File(PAFReport.ExportExcelAsByteArray(ExportHelper.ReportType.PAF), "application/vnd.ms-excel", fileName);
             }
             catch (Exception ex)
             {

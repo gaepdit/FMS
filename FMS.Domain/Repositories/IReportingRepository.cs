@@ -29,13 +29,15 @@ namespace FMS.Domain.Repositories
 
         #region Events Reports
 
-        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> selectedFacilityTypes = null, List<string> eventTypes = null);
+        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> facilityTypes = null, List<string> eventTypes = null);
+
+        Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync();
 
         #endregion
 
         #region PAF Report
 
-        Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync();
+        Task<IReadOnlyList<PAFReportRawDto>> GetPAFReportAsync();
 
         #endregion
     }
