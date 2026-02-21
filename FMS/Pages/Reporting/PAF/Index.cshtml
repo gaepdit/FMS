@@ -15,16 +15,34 @@
 <div class="p-3 rounded-3 bg-light-subtle">
     <form method="get" class="row g-3 mb-4">
         <div class="col-md-2">
-            <label asp-for="SiteName" class="form-label">Site Name</label>
-            <input asp-for="SiteName" class="form-control" placeholder="Site Name" />
+            <label asp-for="SiteName">Site Name</label>
+            <select asp-for="SiteName" class="form-control">
+                <option value="">-- Select Site Name --</option>
+                @foreach (var site in Model.SiteNameList)
+                {
+                    <option value="@site">@site</option>
+                }
+            </select>
         </div>
         <div class="col-md-2">
-            <label asp-for="ProjectOfficer" class="form-label">Project Officer</label>
-            <input asp-for="ProjectOfficer" class="form-control" placeholder="Project Officer" />
+            <label asp-for="ProjectOfficer">Project Officer</label>
+            <select asp-for="ProjectOfficer" class="form-control">
+                <option value="">-- Select Project Officer --</option>
+                @foreach (var officer in Model.ProjectOfficerList)
+                {
+                    <option value="@officer">@officer</option>
+                }
+            </select>
         </div>
         <div class="col-md-2">
-            <label asp-for="Contractor" class="form-label">Contractor</label>
-            <input asp-for="Contractor" class="form-control" placeholder="Contractor" />
+            <label asp-for="Contractor">Contractor</label>
+            <select asp-for="Contractor" class="form-control">
+                <option value="">-- Select Contractor --</option>
+                @foreach (var officer in Model.ContractorList)
+                {
+                    <option value="@officer">@officer</option>
+                }
+            </select>
         </div>
         <div class="col-md-2">
             <label asp-for="PAFIssueYear" class="form-label">PAF Issue Year</label>
@@ -32,9 +50,7 @@
                 <option value="">-- Select Year --</option>
                 @foreach (var year in Model.PAFIssueYearList)
                 {
-                    <option value="@year" selected="@(Model.PAFIssueYear == year ? "selected" : null)">
-                        @year
-                    </option>
+                    <option value="@year">@year</option>
                 }
             </select>
         </div>
@@ -68,24 +84,24 @@
             </div>
         </div>
         <div class="row justify-content-evenly">
-            <table class="table" aria-label="PAF Report">
+            <table class="thick-grid" aria-label="PAF Report">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col" class="col">HSI ID</th>
-                        <th scope="col" class="col">Site Name</th>
-                        <th scope="col" class="col">PAF Issue Date</th>
-                        <th scope="col" class="col">PAF Amount</th>
-                        <th scope="col" class="col">Project Officer</th>
-                        <th scope="col" class="col">Contractor</th>
-                        <th scope="col" class="col">RAW Received</th>
-                        <th scope="col" class="col">RAW Due</th>
-                        <th scope="col" class="col">RAW Approved</th>
-                        <th scope="col" class="col">RAR Received</th>
-                        <th scope="col" class="col">RAR Due</th>
-                        <th scope="col" class="col">RAR Approved</th>
-                        <th scope="col" class="col">Project Complete Due</th>
-                        <th scope="col" class="col">Project Complete Actual</th>
-                        <th scope="col" class="col">Project Comments</th>
+                        <th>HSI ID</th>
+                        <th>Site Name</th>
+                        <th>PAF Issue Date</th>
+                        <th>PAF Amount</th>
+                        <th>Project Officer</th>
+                        <th>Contractor</th>
+                        <th>RAW Received</th>
+                        <th>RAW Due</th>
+                        <th>RAW Approved</th>
+                        <th>RAR Received</th>
+                        <th>RAR Due</th>
+                        <th>RAR Approved</th>
+                        <th>Project Complete Due</th>
+                        <th>Project Complete Actual</th>
+                        <th>Project Comments</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,14 +118,30 @@
                                 <td>@p.PAFAmount</td>
                                 <td>@p.ProjectOfficer</td>
                                 <td>@p.Contractor</td>
-                                <td>@p.RAWReceived</td>
-                                <td>@p.RAWDue</td>
-                                <td>@p.RAWApproved</td>
-                                <td>@p.RARReceived</td>
-                                <td>@p.RARDue</td>
-                                <td>@p.RARApproved</td>
-                                <td>@p.ProjectCompleteDue</td>
-                                <td>@p.ProjectCompleteActual</td>
+                                <td>
+                                    @(p.RAWReceived.HasValue? p.RAWReceived.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>
+                                    @(p.RAWDue.HasValue? p.RAWDue.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>
+                                    @(p.RAWApproved.HasValue? p.RAWApproved.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>
+                                    @(p.RARReceived.HasValue? p.RARReceived.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>
+                                    @(p.RARDue.HasValue? p.RARDue.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>
+                                    @(p.RARApproved.HasValue? p.RARApproved.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>
+                                    @(p.ProjectCompleteDue.HasValue? p.ProjectCompleteDue.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
+                                <td>
+                                    @(p.ProjectCompleteActual.HasValue? p.ProjectCompleteActual.Value.ToString("yyyy-MM-dd") : string.Empty)
+                                </td>
                                 <td>@p.ProjectComments</td>
                             </tr>
                         }
@@ -125,3 +157,21 @@
         </div>
     </form>
 </div>
+<style>
+    table.thick-grid {
+        border-collapse: collapse !important;
+        width: 100%;
+        border: 3px solid black !important; /* outer border */
+    }
+
+        table.thick-grid th,
+        table.thick-grid td {
+            border: 3px solid black !important; /* thick vertical + horizontal */
+            padding: 6px;
+        }
+
+        table.thick-grid thead th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+</style>

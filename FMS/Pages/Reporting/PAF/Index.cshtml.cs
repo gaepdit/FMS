@@ -43,6 +43,9 @@ namespace FMS.Pages.Reporting.PAF
         public DateTime? PAFIssueDateTo { get; set; }
 
         public List<int> PAFIssueYearList { get; set; }
+        public List<string> SiteNameList { get; set; }
+        public List<string> ProjectOfficerList { get; set; }
+        public List<string> ContractorList { get; set; }
         public DisplayMessage DisplayMessage { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -50,7 +53,14 @@ namespace FMS.Pages.Reporting.PAF
             try
             {
                 PAFIssueYearList = Enumerable.Range(2000, DateTime.Now.Year - 2000 + 1).Reverse().ToList();
+
                 var data = await _repository.GetPAFReportAsync();
+
+                SiteNameList = data.Select(p => p.SiteName).Where(s => !string.IsNullOrEmpty(s)).Distinct().OrderBy(s => s).ToList();
+
+                ProjectOfficerList = data.Select(p => p.ProjectOfficer).Where(s => !string.IsNullOrEmpty(s)).Distinct().OrderBy(s => s).ToList();
+
+                ContractorList = data.Select(p => p.Contractor).Where(s => !string.IsNullOrEmpty(s)).Distinct().OrderBy(s => s).ToList();
 
                 await LoadDataAsync(data);
 
@@ -98,6 +108,7 @@ namespace FMS.Pages.Reporting.PAF
             PAFReport = data.Where(p => (string.IsNullOrEmpty(ProjectOfficer) || (!string.IsNullOrEmpty(p.ProjectOfficer) && p.ProjectOfficer.Contains(ProjectOfficer, StringComparison.OrdinalIgnoreCase))) &&
                                             (string.IsNullOrEmpty(SiteName) || (!string.IsNullOrEmpty(p.SiteName) && p.SiteName.Contains(SiteName, StringComparison.OrdinalIgnoreCase))) &&
                                             (string.IsNullOrEmpty(Contractor) || (!string.IsNullOrEmpty(p.Contractor) && p.Contractor.Contains(Contractor, StringComparison.OrdinalIgnoreCase))) &&
+                                            //(Contractor == null || Contractor.Count == 0 || Contractor.Contains(p.Contractor)) && // multi-select filter
                                             (!PAFIssueDateFrom.HasValue || (p.PAFIssueDate.HasValue && p.PAFIssueDate.Value.Date >= PAFIssueDateFrom.Value.Date)) &&
                                             (!PAFIssueDateTo.HasValue || (p.PAFIssueDate.HasValue && p.PAFIssueDate.Value.Date <= PAFIssueDateTo.Value.Date)) &&
                                             (!PAFIssueYear.HasValue || (p.PAFIssueDate.HasValue && p.PAFIssueDate.Value.Year == PAFIssueYear.Value))

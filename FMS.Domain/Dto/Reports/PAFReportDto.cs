@@ -32,35 +32,35 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "RAW Received")]
         [XLColumn(Header = "RAW Received")]
-        public string RAWReceived { get; set; }
+        public DateTime? RAWReceived { get; set; }
 
         [Display(Name = "RAW Due")]
         [XLColumn(Header = "RAW Due")]
-        public string RAWDue { get; set; }
+        public DateTime? RAWDue { get; set; }
 
         [Display(Name = "RAW Approved")]
         [XLColumn(Header = "RAW Approved")]
-        public string RAWApproved { get; set; }
+        public DateTime? RAWApproved { get; set; }
 
         [Display(Name = "RAR Received")]
         [XLColumn(Header = "RAR Received")]
-        public string RARReceived { get; set; }
+        public DateTime? RARReceived { get; set; }
 
         [Display(Name = "RAR Due")]
         [XLColumn(Header = "RAR Due")]
-        public string RARDue { get; set; }
+        public DateTime? RARDue { get; set; }
 
         [Display(Name = "RAR Approved")]        
         [XLColumn(Header = "RAR Approved")]
-        public string RARApproved { get; set; }
+        public DateTime? RARApproved { get; set; }
 
         [Display(Name = "Project Complete Due")]
         [XLColumn(Header = "Project Complete Due")]
-        public string ProjectCompleteDue { get; set; }
+        public DateTime? ProjectCompleteDue { get; set; }
 
         [Display(Name = "Project Complete Actual")]
         [XLColumn(Header = "Project Complete Actual")]
-        public string ProjectCompleteActual { get; set; }
+        public DateTime? ProjectCompleteActual { get; set; }
 
         [Display(Name = "Project Comments")]
         [XLColumn(Header = "Project Comments")]
