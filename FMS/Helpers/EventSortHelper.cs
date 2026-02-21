@@ -92,7 +92,7 @@ namespace FMS.Helpers
                         && e.CompletionDate >= startDate.GetValueOrDefault()
                         && e.CompletionDate <= endDate.GetValueOrDefault())
                     .OrderBy(e => e.OrganizationalUnit?.Name)
-                    .ThenBy(e => e.ComplianceOfficer?.Name)
+                    .ThenBy(e => e.DoneBy?.Name)
                     .ThenBy(e => e.FacilityNumber)
                     .ThenBy(e => e.CompletionDate)
                     .ToList(),

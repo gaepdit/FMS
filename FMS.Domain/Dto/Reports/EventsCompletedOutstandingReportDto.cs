@@ -12,7 +12,6 @@ namespace FMS.Domain.Dto
             Unit = reportDto.OrganizationalUnit?.Name;
             HSIID = reportDto.FacilityNumber;
             FacilityName = reportDto.FacilityName;
-            //FacilityTypeName = reportDto.FacilityType?.Name;
             EventTypeName = reportDto.EventType?.Name;
             ActionTakenName = reportDto.ActionTaken?.Name;
             EventStartDate = reportDto.StartDate;
@@ -21,14 +20,10 @@ namespace FMS.Domain.Dto
                 ? (reportDto.CompletionDate.Value.ToDateTime(TimeOnly.MinValue) - reportDto.StartDate.Value.ToDateTime(TimeOnly.MinValue)).TotalDays 
                 : 0;
             DoneBy = reportDto.DoneBy?.Name;
-            //ActivityComment = reportDto.Comment;
         }
 
         [XLColumn(Header = "Unit")]
         public string Unit { get; set; }
-
-        //[XLColumn(Header = "Facility Type")]
-        //public string FacilityTypeName { get; set; }
 
         [XLColumn(Header = "HSI ID")]
         public string HSIID { get; set; }
@@ -53,8 +48,5 @@ namespace FMS.Domain.Dto
 
         [XLColumn(Header = "Done By")]
         public string DoneBy { get; set; }
-
-        //[XLColumn(Header = "Comment")]
-        //public string ActivityComment { get; set; }
     }
 }

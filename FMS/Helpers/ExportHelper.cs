@@ -27,7 +27,6 @@ namespace FMS
             EventCompliance,
             EventCompleted,
             EventCompletedOutstanding,
-            EventActivityCompleted,
             EventNoActionTaken,
             PAF
         }
@@ -46,13 +45,13 @@ namespace FMS
             IEnumerable<T> brnList = null,
             int hsiCompCount = 0,
             int hsiRecCount = 0,
-            int hsiCompAvg = 0,
+            decimal hsiCompAvg = 0.0m,
             int vrpCompCount = 0,
             int vrpRecCount = 0,
-            int vrpCompAvg = 0,
+            decimal vrpCompAvg = 0.0m,
             int brnCompCount = 0,
             int brnRecCount = 0,
-            int brnCompAvg = 0)
+            decimal brnCompAvg = 0.0m)
         {
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
@@ -121,14 +120,24 @@ namespace FMS
                 ws = wb.AddWorksheet("Delisted By Date Range");
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("A1").Value = "Delist Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "Delist End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Delisted By Date Range";
+
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 14;
+                ws.Cell("A2").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 14;
+                ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
 
+                ws.Columns().AdjustToContents(1, 10000);
                 table.ShowTotalsRow = true;
                 table.Field("Acres").TotalsRowFunction = XLTotalsRowFunction.Sum;
             }
@@ -137,12 +146,13 @@ namespace FMS
             {
                 ws = wb.AddWorksheet("Events Pending");
 
-                table = ws.Cell(3, 1).InsertTable(list);
+                table = ws.Cell(2, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("D1").Style.Font.Bold = true;
-                ws.Cell("D1").Style.Font.FontSize = 14;
-                ws.Cell("D1").Value = "Events Pending";
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Events Pending";
+
                 ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(9).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
@@ -152,13 +162,24 @@ namespace FMS
                 ws = wb.AddWorksheet("Events Completed");
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("A1").Value = "Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Completed Events";
+
+                // Second Row Formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 14;
+                ws.Cell("A2").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 14;
+                ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(9).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+
+                ws.Columns().AdjustToContents(1, 10000);
             }
 
             if (reportType == ReportType.EventCompliance) 
@@ -166,26 +187,25 @@ namespace FMS
                 ws = wb.AddWorksheet("Event Compliance");
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
 
-                ws.Cell("A1").Value = "Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Compliance Orders";
+
+                // Second Row Formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 14;
+                ws.Cell("A2").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 14;
+                ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Column(5).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
-            }
 
-            if (reportType == ReportType.EventActivityCompleted)
-            {
-                ws = wb.AddWorksheet("Events Completed By CO");
-                table = ws.Cell(3, 1).InsertTable(list);
-
-                table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.EventNoActionTaken)
@@ -199,8 +219,6 @@ namespace FMS
 
             if (reportType == ReportType.EventCompletedOutstanding)
             {
-                
-
                 // ******************** HSI Worksheet ******************
                 ws = wb.AddWorksheet("HSI");
                 table = ws.Cell(3, 1).InsertTable(list);
@@ -211,46 +229,28 @@ namespace FMS
                 ws.Cell("A1").Style.Font.FontSize = 14;
                 ws.Cell("A1").Value = "HSI";
 
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Cell("C1").Style.Font.Bold = true;
                 ws.Cell("C1").Style.Font.FontSize = 14;
-                ws.Cell("C1").Value = "Start Date";
-                ws.Cell("D1").Style.Font.Bold = true;
-                ws.Cell("D1").Style.Font.FontSize = 14;
-                ws.Cell("D1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-
-                ws.Cell("F1").Style.Font.Bold = true;
-                ws.Cell("F1").Style.Font.FontSize = 14;
-                ws.Cell("F1").Value = "End Date";
-                ws.Cell("G1").Style.Font.Bold = true;
-                ws.Cell("G1").Style.Font.FontSize = 14;
-                ws.Cell("G1").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("C1").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
 
                 //Second Row formatting
                 ws.Cell("A2").Style.Font.Bold = true;
                 ws.Cell("A2").Style.Font.FontSize = 12;
-                ws.Cell("A2").Value = "Reports Received";
+                ws.Cell("A2").SetValue("Reports Received: " + hsiRecCount);
+
                 ws.Cell("B2").Style.Font.Bold = true;
                 ws.Cell("B2").Style.Font.FontSize = 12;
-                ws.Cell("B2").SetValue(hsiRecCount);
+                ws.Cell("B2").SetValue("Reports Completed: " + hsiCompCount);
 
                 ws.Cell("C2").Style.Font.Bold = true;
                 ws.Cell("C2").Style.Font.FontSize = 12;
-                ws.Cell("C2").Value = "Reports Completed";
-                ws.Cell("D2").Style.Font.Bold = true;
-                ws.Cell("D2").Style.Font.FontSize = 12;
-                ws.Cell("D2").SetValue(hsiCompCount);
-
-                ws.Cell("E2").Style.Font.Bold = true;
-                ws.Cell("E2").Style.Font.FontSize = 12;
-                ws.Cell("E2").Value = "Average Days to Complete";
-                ws.Cell("F2").Style.Font.Bold = true;
-                ws.Cell("F2").Style.Font.FontSize = 12;
-                ws.Cell("F2").SetValue(hsiCompAvg);
+                ws.Cell("C2").SetValue("Average Days to Complete: " + hsiCompAvg);
 
                 ws.Columns().AdjustToContents(1, 10000);
-
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
 
                 // ******************** VRP Worksheet ******************
                 ws = wb.AddWorksheet("VRP");
@@ -262,46 +262,28 @@ namespace FMS
                 ws.Cell("A1").Style.Font.FontSize = 14;
                 ws.Cell("A1").Value = "VRP";
 
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Cell("C1").Style.Font.Bold = true;
                 ws.Cell("C1").Style.Font.FontSize = 14;
-                ws.Cell("C1").Value = "Start Date";
-                ws.Cell("D1").Style.Font.Bold = true;
-                ws.Cell("D1").Style.Font.FontSize = 14;
-                ws.Cell("D1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-
-                ws.Cell("F1").Style.Font.Bold = true;
-                ws.Cell("F1").Style.Font.FontSize = 14;
-                ws.Cell("F1").Value = "End Date";
-                ws.Cell("G1").Style.Font.Bold = true;
-                ws.Cell("G1").Style.Font.FontSize = 14;
-                ws.Cell("G1").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("C1").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
 
                 //Second Row formatting
                 ws.Cell("A2").Style.Font.Bold = true;
                 ws.Cell("A2").Style.Font.FontSize = 12;
-                ws.Cell("A2").Value = "Reports Received";
+                ws.Cell("A2").SetValue("Reports Received: " + vrpRecCount);
+
                 ws.Cell("B2").Style.Font.Bold = true;
                 ws.Cell("B2").Style.Font.FontSize = 12;
-                ws.Cell("B2").SetValue(vrpRecCount);
+                ws.Cell("B2").SetValue("Reports Completed: " + vrpCompCount);
 
                 ws.Cell("C2").Style.Font.Bold = true;
                 ws.Cell("C2").Style.Font.FontSize = 12;
-                ws.Cell("C2").Value = "Reports Completed";
-                ws.Cell("D2").Style.Font.Bold = true;
-                ws.Cell("D2").Style.Font.FontSize = 12;
-                ws.Cell("D2").SetValue(vrpCompCount);
-
-                ws.Cell("E2").Style.Font.Bold = true;
-                ws.Cell("E2").Style.Font.FontSize = 12;
-                ws.Cell("E2").Value = "Average Days to Complete";
-                ws.Cell("F2").Style.Font.Bold = true;
-                ws.Cell("F2").Style.Font.FontSize = 12;
-                ws.Cell("F2").SetValue(vrpCompAvg);
+                ws.Cell("C2").SetValue("Average Days to Complete: " + vrpCompAvg);
 
                 ws.Columns().AdjustToContents(1, 10000);
-
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
 
                 // ******************** Brownfield Worksheet ******************
                 ws = wb.AddWorksheet("Brownfield");
@@ -313,45 +295,28 @@ namespace FMS
                 ws.Cell("A1").Style.Font.FontSize = 14;
                 ws.Cell("A1").Value = "BROWN";
 
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Cell("C1").Style.Font.Bold = true;
                 ws.Cell("C1").Style.Font.FontSize = 14;
-                ws.Cell("C1").Value = "Start Date";
-                ws.Cell("D1").Style.Font.Bold = true;
-                ws.Cell("D1").Style.Font.FontSize = 14;
-                ws.Cell("D1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-
-                ws.Cell("F1").Style.Font.Bold = true;
-                ws.Cell("F1").Style.Font.FontSize = 14;
-                ws.Cell("F1").Value = "End Date";
-                ws.Cell("G1").Style.Font.Bold = true;
-                ws.Cell("G1").Style.Font.FontSize = 14;
-                ws.Cell("G1").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("C1").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
 
                 //Second Row formatting
                 ws.Cell("A2").Style.Font.Bold = true;
                 ws.Cell("A2").Style.Font.FontSize = 12;
-                ws.Cell("A2").Value = "Reports Received";
+                ws.Cell("A2").SetValue("Reports Received: " + brnRecCount);
+
                 ws.Cell("B2").Style.Font.Bold = true;
                 ws.Cell("B2").Style.Font.FontSize = 12;
-                ws.Cell("B2").SetValue(brnRecCount);
+                ws.Cell("B2").SetValue("Reports Completed: " + brnCompCount);
 
                 ws.Cell("C2").Style.Font.Bold = true;
                 ws.Cell("C2").Style.Font.FontSize = 12;
-                ws.Cell("C2").Value = "Reports Completed";
-                ws.Cell("D2").Style.Font.Bold = true;
-                ws.Cell("D2").Style.Font.FontSize = 12;
-                ws.Cell("D2").SetValue(brnCompCount);
-
-                ws.Cell("E2").Style.Font.Bold = true;
-                ws.Cell("E2").Style.Font.FontSize = 12;
-                ws.Cell("E2").Value = "Average Days to Complete";
-                ws.Cell("F2").Style.Font.Bold = true;
-                ws.Cell("F2").Style.Font.FontSize = 12;
-                ws.Cell("F2").SetValue(brnCompAvg);
+                ws.Cell("C2").SetValue("Average Days to Complete: " + brnCompAvg);
 
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if(reportType == ReportType.PAF)
