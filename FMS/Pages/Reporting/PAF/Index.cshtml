@@ -2,9 +2,6 @@
 @using FMS.Pages.Reporting.PAF
 @model FMS.Pages.Reporting.PAF.IndexModel
 
-@section Scripts {
-    <script src="~/js/formIndex.js"></script>
-}
 
 @{
     ViewData["Title"] = $"PAF Report";
@@ -36,11 +33,10 @@
         </div>
         <div class="col-md-2">
             <label asp-for="Contractor">Contractor</label>
-            <select asp-for="Contractor" class="form-control">
-                <option value="">-- Select Contractor --</option>
-                @foreach (var officer in Model.ContractorList)
+            <select asp-for="Contractor" class="form-control" multiple="multiple">
+                @foreach (var contractor in Model.ContractorList)
                 {
-                    <option value="@officer">@officer</option>
+                    <option value="@contractor">@contractor</option>
                 }
             </select>
         </div>
@@ -56,11 +52,11 @@
         </div>
         <div class="col-md-2">
             <label asp-for="PAFIssueDateFrom" class="form-label">PAF Issue Date From</label>
-            <input asp-for="PAFIssueDateFrom" type="date" class="form-control" placeholder="PAF Issue Date From" />
+            <input asp-for="PAFIssueDateFrom" type="date" class="form-control" />
         </div>
         <div class="col-md-2">
             <label asp-for="PAFIssueDateTo" class="form-label">PAF Issue Date To</label>
-            <input asp-for="PAFIssueDateTo" type="date" class="form-control" placeholder="PAF Issue Date To" />
+            <input asp-for="PAFIssueDateTo" type="date" class="form-control" />
         </div>
         <div class="col-12 mt-2">
             <button type="submit" class="btn btn-primary me-2">Search</button>
@@ -70,7 +66,11 @@
     <form method="post">
         <input type="hidden" asp-for="ProjectOfficer" />
         <input type="hidden" asp-for="SiteName" />
-        <input type="hidden" asp-for="Contractor" />
+        @* <input type="hidden" asp-for="Contractor" /> *@
+        @foreach (var contractor in Model.Contractor ?? new List<string>())
+        {
+            <input type="hidden" name="Contractor" value="@contractor" />
+        }
         <input type="hidden" asp-for="PAFIssueYear" />
         <input type="hidden" asp-for="PAFIssueDateFrom" />
         <input type="hidden" asp-for="PAFIssueDateTo" />
@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="row justify-content-evenly">
-            <table class="thick-grid" aria-label="PAF Report">
+            <table class="table" aria-label="PAF Report">
                 <thead class="thead-light">
                     <tr>
                         <th>HSI ID</th>
@@ -157,21 +157,89 @@
         </div>
     </form>
 </div>
-<style>
-    table.thick-grid {
-        border-collapse: collapse !important;
-        width: 100%;
-        border: 3px solid black !important; /* outer border */
-    }
+@section Scripts {
+    <script src="~/lib/select2/js/select2.min.js"></script>
 
-        table.thick-grid th,
-        table.thick-grid td {
-            border: 3px solid black !important; /* thick vertical + horizontal */
-            padding: 6px;
+    <script>
+        $(function () {
+            $('#Contractor').select2({
+                placeholder: "-- Select Contractor --",
+                closeOnSelect: false,
+                width: '100%',
+                    templateResult: function(state) {
+                if (!state.id) return state.text;
+                     return $('<span style="display:flex; align-items:center;"><input type="checkbox" class="me-2"/> ' + state.text + '</span>');
+                    },
+                templateSelection: function (state) {
+                    return state.text;
+                },
+                escapeMarkup: function (markup) { return markup; }
+            });
+
+            $('#Contractor').on('select2:select select2:unselect', function () {
+                var selected = $(this).val() || [];
+                $('#Contractor option').each(function () {
+                    $(this).prop('selected', selected.includes($(this).val()));
+                });
+            });
+        });
+    </script>
+}
+@section Styles {
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        /* Dropdown container height & background */
+        .select2-container--default .select2-selection--single,
+        .select2-container--default .select2-selection--multiple {
+            min-height: calc(1.5em + 0.75rem + 2px);
+            padding: 0.375rem 0.75rem;
+            line-height: 1.5;
+            font-size: 1rem;
+            font-weight: 400;
+            background-color: var(--bs-body-bg);
+            border: var(--bs-border-width) solid var(--bs-border-color);
+            border-radius: var(--bs-border-radius);
         }
 
-        table.thick-grid thead th {
-            background-color: #f2f2f2;
-            font-weight: bold;
+            /* Single select placeholder */
+            .select2-container--default .select2-selection--single .select2-selection__placeholder {
+                color: var(--bs-body-color) !important; /* black like other fields */
+                opacity: 1 !important;
+            }
+
+            /* Multi-select placeholder */
+            .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
+                color: var(--bs-body-color) !important;
+                opacity: 1 !important;
+            }
+
+        /* Ensure text after selection is black too */
+        .select2-container--default .select2-selection__rendered {
+            color: var(--bs-body-color) !important;
+            opacity: 1 !important;
         }
-</style>
+
+        /* Dropdown options */
+        .select2-container--default .select2-results__option {
+            background-color: var(--bs-body-bg);
+            color: var(--bs-body-color);
+        }
+
+        .select2-container--default .select2-results__option--highlighted {
+            background-color: #e9ecef;
+            color: var(--bs-body-color);
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--single,
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #86b7fe; /* same as .form-control:focus border */
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Bootstrap focus glow */
+        }
+    </style>
+}
