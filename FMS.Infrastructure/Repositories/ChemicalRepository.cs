@@ -43,7 +43,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<Chemical> GetChemicalByNameAsync(string name)
         {
             var chemical = await _context.Chemicals.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Name== name);
+                .SingleOrDefaultAsync(e => e.Name == name);
 
             return chemical;
         }
