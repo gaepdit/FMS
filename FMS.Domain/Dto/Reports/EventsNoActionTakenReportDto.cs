@@ -7,12 +7,12 @@ namespace FMS.Domain.Dto
     {
         public EventsNoActionTakenReportDto() { }
 
-        public EventsNoActionTakenReportDto(EventReportDto reportDto)
+        public EventsNoActionTakenReportDto(EventsNoActionTakenReportDto reportDto)
         {
-            HSIID = reportDto.FacilityNumber;
+            HSIID = reportDto.HSIID;
             FacilityName = reportDto.FacilityName;
             ListDate = reportDto.ListDate;
-            ComplianceOfficerName = reportDto.ComplianceOfficer?.Name;
+            ComplianceOfficerName = reportDto.ComplianceOfficerName;
         }
 
         [XLColumn(Header = "HSI ID")]

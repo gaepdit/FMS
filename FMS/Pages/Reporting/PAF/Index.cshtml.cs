@@ -1,10 +1,5 @@
-using Dapper;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
-using FMS.Helpers;
-using FMS.Infrastructure.Contexts;
-using FMS.Pages.Maintenance;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -24,8 +19,10 @@ namespace FMS.Pages.Reporting.PAF
         public IndexModel(IReportingRepository repository) => _repository = repository;
 
         public IReadOnlyList<PAFReportDto> PAFReport { get; set; }
+
         [BindProperty(SupportsGet = true)]
         public string SiteName { get; set; }
+
 
         [BindProperty(SupportsGet = true)]
         public string ProjectOfficer { get; set; }
@@ -52,6 +49,7 @@ namespace FMS.Pages.Reporting.PAF
         {
             try
             {
+
                 PAFIssueYearList = Enumerable.Range(2000, DateTime.Now.Year - 2000 + 1).Reverse().ToList();
 
                 var data = await _repository.GetPAFReportAsync();
@@ -87,7 +85,7 @@ namespace FMS.Pages.Reporting.PAF
                 await LoadDataAsync(data);
 
                 // Export to Excel
-                return File(PAFReport.ExportExcelAsByteArray(ExportHelper.ReportType.EventPending), "application/vnd.ms-excel", fileName);
+                return File(PAFReport.ExportExcelAsByteArray(ExportHelper.ReportType.PAF), "application/vnd.ms-excel", fileName);
             }
             catch (Exception ex)
             {

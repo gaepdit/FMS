@@ -70,7 +70,8 @@ END;
 ";
 
         public const string CreateSpPAFReportProcedure = @"
-    CREATE OR ALTER    PROCEDURE [dbo].[PAF_Report]
+CREATE OR ALTER          
+PROCEDURE [dbo].[PAF_Report]
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -191,18 +192,18 @@ BEGIN
     SELECT
         [HSI ID] AS [HSIId],
         [Site Name] AS [SiteName],
-        COALESCE(CONVERT(VARCHAR(10), [PAF Issue Date], 23), '') AS [PAFIssueDate],
-        COALESCE(CONVERT(VARCHAR(20), [PAF Amount]), '') AS [PAFAmount],
+        CAST([PAF Issue Date] AS DATE) AS [PAFIssueDate],
+        [PAF Amount] AS [PAFAmount],
         COALESCE([Project Officer], '') AS [ProjectOfficer],
         COALESCE([Contractor], '') AS [Contractor],
-        COALESCE(CONVERT(VARCHAR(10), [RAW Received], 23), '') AS [RAWReceived],
-        COALESCE(CONVERT(VARCHAR(10), [RAW Due], 23), '') AS [RAWDue],
-        COALESCE(CONVERT(VARCHAR(10), [RAW Approved], 23), '') AS [RAWApproved],
-        COALESCE(CONVERT(VARCHAR(10), [RAR Received], 23), '') AS [RARReceived],
-        COALESCE(CONVERT(VARCHAR(10), [RAR Due], 23), '') AS [RARDue],
-        COALESCE(CONVERT(VARCHAR(10), [RAR Approved], 23), '') AS [RARApproved],
-        COALESCE(CONVERT(VARCHAR(10), [Project Complete Due], 23), '') AS [ProjectCompleteDue],
-        COALESCE(CONVERT(VARCHAR(10), [Project Complete Actual], 23), '') AS [ProjectCompleteActual],
+        CAST([RAW Received] AS DATE) AS [RAWReceived],
+        CAST([RAW Due] AS DATE) AS [RAWDue],
+        CAST([RAW Approved] AS DATE) AS [RAWApproved],
+        CAST([RAR Received] AS DATE) AS [RARReceived],
+        CAST([RAR Due] AS DATE) AS [RARDue],
+		CAST([RAR Approved] AS DATE) AS [RARApproved],
+        CAST([Project Complete Due] AS DATE) AS [ProjectCompleteDue],
+        CAST([Project Complete Actual] AS DATE) AS [ProjectCompleteActual],
         COALESCE([Project Comments], '') AS [ProjectComments]
     FROM #PAF_TEMP
     ORDER BY [PAF Issue Date];

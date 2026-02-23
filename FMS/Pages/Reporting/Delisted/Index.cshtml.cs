@@ -2,8 +2,6 @@ using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Graph.Drives.Item.Items.Item.Workbook.Functions.Today;
-using Microsoft.Kiota.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
