@@ -28,7 +28,11 @@ namespace FMS
             EventCompleted,
             EventCompletedOutstanding,
             EventNoActionTaken,
-            PAF
+            PAF,
+            HSIListByNumber,
+            HSIListByName,
+            HSIListByCounty,
+            HSIListByClass
         }
 
         /// <summary>
@@ -342,6 +346,54 @@ namespace FMS
                 table.ShowAutoFilter = true;
                 // Must enable the filter
                 table.AutoFilter.IsEnabled = true;
+            }
+
+            if(reportType == ReportType.HSIListByNumber)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By Facility Number";
+            }
+
+            if (reportType == ReportType.HSIListByName)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By Facility Name";
+            }
+
+            if (reportType == ReportType.HSIListByCounty)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By County";
+            }
+
+            if (reportType == ReportType.HSIListByClass)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By Class";
             }
 
             wb.SaveAs(ms);

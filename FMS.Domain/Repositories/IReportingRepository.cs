@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,6 +39,12 @@ namespace FMS.Domain.Repositories
         #region PAF Report
 
         Task<IReadOnlyList<PAFReportRawDto>> GetPAFReportAsync();
+
+        #endregion
+
+        #region HSI ListReports
+
+        Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy);
 
         #endregion
     }
