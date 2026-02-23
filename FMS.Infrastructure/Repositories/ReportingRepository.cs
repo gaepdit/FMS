@@ -258,11 +258,11 @@ namespace FMS.Infrastructure.Repositories
 
         #region PAF Report
 
-        public async Task<IReadOnlyList<PAFReportRawDto>> GetPAFReportAsync()
+        public async Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync()
         {
             var conn = _context.Database.GetDbConnection();
 
-            return (await conn.QueryAsync<PAFReportRawDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
+            return (await conn.QueryAsync<PAFReportDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
         }
 
         #endregion

@@ -115,7 +115,10 @@
                                 <td>
                                     @(p.PAFIssueDate.HasValue? p.PAFIssueDate.Value.ToString("yyyy-MM-dd") : string.Empty)
                                 </td>
-                                <td>@p.PAFAmount</td>
+                                @* <td>@p.PAFAmount</td> *@
+                                <td>
+                                    @(p.PAFAmount?.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US")) ?? "")
+                                </td>
                                 <td>@p.ProjectOfficer</td>
                                 <td>@p.Contractor</td>
                                 <td>

@@ -6,26 +6,6 @@ namespace FMS.Domain.Dto
 {
     public class PAFReportDto
     {
-        public PAFReportDto() { }
-
-        public PAFReportDto(PAFReportRawDto raw)
-        {
-            HSIId = raw.HSIId;
-            SiteName = raw.SiteName;
-            PAFIssueDate = raw.PAFIssueDate.HasValue ? DateOnly.FromDateTime(raw.PAFIssueDate.Value) : null;
-            PAFAmount = raw.PAFAmount;
-            ProjectOfficer = raw.ProjectOfficer;
-            Contractor = raw.Contractor;
-            RAWReceived = raw.RAWReceived.HasValue ? DateOnly.FromDateTime(raw.RAWReceived.Value) : null;
-            RAWDue = raw.RAWDue.HasValue ? DateOnly.FromDateTime(raw.RAWDue.Value) : null;
-            RAWApproved = raw.RAWApproved.HasValue ? DateOnly.FromDateTime(raw.RAWApproved.Value) : null;
-            RARReceived = raw.RARReceived.HasValue ? DateOnly.FromDateTime(raw.RARReceived.Value) : null;
-            RARDue = raw.RARDue.HasValue ? DateOnly.FromDateTime(raw.RARDue.Value) : null;
-            RARApproved = raw.RARApproved.HasValue ? DateOnly.FromDateTime(raw.RARApproved.Value) : null;
-            ProjectCompleteDue = raw.ProjectCompleteDue.HasValue ? DateOnly.FromDateTime(raw.ProjectCompleteDue.Value) : null;
-            ProjectCompleteActual = raw.ProjectCompleteActual.HasValue ? DateOnly.FromDateTime(raw.ProjectCompleteActual.Value) : null;
-            ProjectComments = raw.ProjectComments;
-        }
 
         [Display(Name = "HSI ID")]
         [XLColumn(Header = "HSI ID")]
