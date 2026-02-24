@@ -47,5 +47,13 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy);
 
         #endregion
+
+        #region Abandonment/Inactivity Reports
+
+        Task<IReadOnlyList<AbndInacStatusTrackerDto>> GetAbndInacStatusTrackerReportAsync();
+
+        Task<IReadOnlyList<AbndCostEstimateReportDto>> GetAbndCostEstimateReportAsync();
+
+        #endregion
     }
 }

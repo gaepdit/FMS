@@ -27,12 +27,15 @@ namespace FMS
             EventCompliance,
             EventCompleted,
             EventCompletedOutstanding,
+            EventOutstanding,
             EventNoActionTaken,
             PAF,
             HSIListByNumber,
             HSIListByName,
             HSIListByCounty,
-            HSIListByClass
+            HSIListByClass,
+            AbndInacStatusTracker,
+            AbndCostEstimateReport
         }
 
         /// <summary>
@@ -323,7 +326,61 @@ namespace FMS
                 ws.Columns().AdjustToContents(1, 10000);
             }
 
-            if(reportType == ReportType.PAF)
+            if (reportType == ReportType.EventOutstanding)
+            {
+                // ******************** HSI Worksheet ******************
+                ws = wb.AddWorksheet("HSI");
+                table = ws.Cell(3, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "HSI";
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + hsiRecCount);
+
+                ws.Columns().AdjustToContents(1, 10000);
+
+                // ******************** VRP Worksheet ******************
+                ws = wb.AddWorksheet("VRP");
+                table = ws.Cell(3, 1).InsertTable(vrpList);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "VRP";
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + vrpRecCount);
+
+                ws.Columns().AdjustToContents(1, 10000);
+
+                // ******************** Brownfield Worksheet ******************
+                ws = wb.AddWorksheet("Brownfield");
+                table = ws.Cell(3, 1).InsertTable(brnList);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "BROWN";
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + brnRecCount);
+
+                ws.Columns().AdjustToContents(1, 10000);
+            }
+
+            if (reportType == ReportType.PAF)
             {
                 ws = wb.AddWorksheet("PAF");
                 table = ws.Cell(2, 1).InsertTable(list);
@@ -333,16 +390,15 @@ namespace FMS
                 ws.Cell("D1").Style.Font.Bold = true;
                 ws.Cell("D1").Style.Font.FontSize = 14;
                 ws.Cell("D1").Value = "PAF Report";
-                ws.Column("C").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("C").Style.DateFormat.Format = "MM/dd/yyyy";
                 ws.Column("D").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
-                ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("H").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("I").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("J").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("K").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("L").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("M").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-
+                ws.Column("G").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("H").Style.DateFormat.SetFormat(ClosedXML.Excel.XLDateTimeGrouping.Month.ToString());
+                ws.Column("I").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("J").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("K").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("L").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("M").Style.DateFormat.Format = "MM/dd/yyyy";
                 table.ShowAutoFilter = true;
                 // Must enable the filter
                 table.AutoFilter.IsEnabled = true;
@@ -394,6 +450,38 @@ namespace FMS
                 ws.Cell("B1").Style.Font.Bold = true;
                 ws.Cell("B1").Style.Font.FontSize = 14;
                 ws.Cell("B1").Value = "HSI List By Class";
+            }
+
+            if (reportType == ReportType.AbndInacStatusTracker)
+            {
+                ws = wb.AddWorksheet("Abnd Inac Status Tracker");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "Abandoned Inactive Status Tracker";
+            }
+
+            if (reportType == ReportType.AbndCostEstimateReport)
+            {
+                ws = wb.AddWorksheet("Abnd Inac Cost Estimate");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "Abandoned Sites Cost Estimate Report";
+                ws.Column("A").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Integer;
+                ws.Column("F").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("G").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("H").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Integer;
+                ws.Column("H").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("J").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
             }
 
             wb.SaveAs(ms);

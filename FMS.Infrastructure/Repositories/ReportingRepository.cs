@@ -315,6 +315,52 @@ namespace FMS.Infrastructure.Repositories
 
         #endregion
 
+        #region Abnd/Inac Status Tracker Report
+
+        public async Task<IReadOnlyList<AbndInacStatusTrackerDto>> GetAbndInacStatusTrackerReportAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.LocationDetails)
+                .Include(e => e.LocationDetails.LocationClass)
+                .Include(e => e.County)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Select(e => new AbndInacStatusTrackerDto())
+                .ToListAsync();
+            return facilityList;
+        }
+
+        public async Task<IReadOnlyList<AbndCostEstimateReportDto>> GetAbndCostEstimateReportAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.LocationDetails)
+                .Include(e => e.LocationDetails.LocationClass)
+                .Include(e => e.County)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.StatusDetails)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where (e => e.StatusDetails.OverallStatus.Name == "ABND" || e.StatusDetails.OverallStatus.Name == "INAC")
+                .Select(e => new AbndCostEstimateReportDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    County = e.County.Name,
+                    ClassName = e.LocationDetails.LocationClass.Name,
+                    COName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned",
+                    GAPSScore = e.StatusDetails.GAPSScore,
+                    GAPSModelDate = e.StatusDetails.GAPSModelDate,
+                    GAPSNoOfUnknowns = e.StatusDetails.GAPSNoOfUnknowns,
+                    GAPSAssessment = e.StatusDetails.GAPSAssessment != null ? e.StatusDetails.GAPSAssessment.Name : "None",
+                    CostEstimate = e.StatusDetails.CostEstimate
+                })
+                .OrderByDescending(e => e.GAPSScore)
+                .ToListAsync();
+            return facilityList;
+        }
+
+        #endregion
+
         #region IDisposable Support
 
         private bool _disposedValue;

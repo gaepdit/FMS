@@ -34,7 +34,7 @@ namespace FMS.Domain.Dto.Reports
 
         [XLColumn(Header = "GAPS Score")]
         [Display(Name = "GAPS Score")]
-        public string GAPSScore { get; set; }
+        public int? GAPSScore { get; set; }
 
         [XLColumn(Header = "GAPS Model Date")]
         [Display(Name = "GAPS Model Date")]
@@ -42,7 +42,7 @@ namespace FMS.Domain.Dto.Reports
 
         [XLColumn(Header = "GAPS No Of Unknowns")]
         [Display(Name = "GAPS No Of Unknowns")]
-        public string GAPSNoOfUnknowns { get; set; }
+        public int? GAPSNoOfUnknowns { get; set; }
 
         [XLColumn(Header = "GAPS Assessment")]
         [Display(Name = "GAPS Assessment")]

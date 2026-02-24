@@ -1,4 +1,5 @@
 using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -204,6 +205,84 @@ namespace FMS.Pages.Reporting.Events
                 brnCompCount,
                 brnRecCount,
                 brnAvg),
+                "application/vnd.ms-excel",
+                fileName);
+        }
+
+        public async Task<IActionResult> OnPostOutstandingAsync()
+        {
+            var fileName = $"Events_Outstanding_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+           
+            var hsiRecCount = 0;
+            var vrpRecCount = 0;           
+            var brnRecCount = 0;           
+
+            //******************* HSI ********************
+            var selectedFacilityTypes = new List<string> { "HSI" };
+            var hsiEventTypes = new List<string>
+            {
+                "Compliance Status Report",
+                "Corrective Action Plan",
+                "Groundwater Monitoring Report",
+                "Progress Report / Misc. Report"
+            };
+
+            IList<EventReportDto> hsiEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, hsiEventTypes);
+
+            var hsiOutstandingList = EventSortHelper.OrderReportEventQuery(hsiEventsList, EventReportSort.EventOutstanding);
+
+            hsiRecCount += hsiOutstandingList.Count();
+
+            var hsiOutstandingReportList = from p in hsiOutstandingList select new EventsOutstandingReportDto(p);
+
+            //*************************** VRP ******************************
+            selectedFacilityTypes = ["VRP"];
+            var vrpEventTypes = new List<string>
+            {
+                "VRP Compliance Status Report",
+                "VRP Corrective Action Plan",
+                "VRP Progress Report / Misc. Report"
+            };
+
+            IList<EventReportDto> vrpEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, vrpEventTypes);
+
+            var vrpOutstandingList = EventSortHelper.OrderReportEventQuery(vrpEventsList, EventReportSort.EventOutstanding);
+
+            vrpRecCount += vrpOutstandingList.Count();
+
+            var vrpOutstandingReportList = from p in vrpOutstandingList select new EventsOutstandingReportDto(p);
+
+            //********************** Brownfields *********************
+            selectedFacilityTypes = ["BROWN"];
+            var brownEventTypes = new List<string>
+            {
+                "Prospective Purchaser Compliance Status Report",
+                "Prospective Purchaser Corrective Action Plan"
+            };
+
+            IList<EventReportDto> brownEventsList = await _repository.GetEventsReportsAsync(selectedFacilityTypes, brownEventTypes);
+
+            var brownOutstandingList = EventSortHelper.OrderReportEventQuery(brownEventsList, EventReportSort.EventOutstanding);
+
+            brnRecCount += brownOutstandingList.Count();
+
+            var brownOutstandingReportList = from p in brownOutstandingList select new EventsOutstandingReportDto(p);
+
+            // Export to Excel
+            return File(hsiOutstandingReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventOutstanding,
+                null, 
+                null,
+                vrpOutstandingReportList,
+                brownOutstandingReportList,
+                0,
+                hsiRecCount,
+                0,
+                0,
+                vrpRecCount,
+                0,
+                0,
+                brnRecCount
+            ),
                 "application/vnd.ms-excel",
                 fileName);
         }

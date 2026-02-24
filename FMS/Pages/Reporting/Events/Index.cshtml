@@ -12,7 +12,7 @@
 <form method="post">
     <div class="row">
         <div class="col-md-2">
-            <label asp-for="StartDate" class="form-label"></label>
+            <label asp-for="StartDate" class="form-label">Start Date <span class="text-danger">*</span></label>
             <input asp-for="StartDate" class="form-control datepicker" type="date" placeholder="" />
             <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
@@ -42,7 +42,7 @@
                     class="btn btn-sm btn-outline-primary mb-1">
                 Report
             </button>
-            Completed Report <span class="text-danger">*</span>
+            Completed Report <span class="text-danger">*Please choose a Start and End Date</span>
         </div>
     </div>
     <br />
@@ -53,7 +53,7 @@
                     class="btn btn-sm btn-outline-primary mb-1">
                 Report
             </button>
-            Compliance Report <span class="text-danger">*</span>
+            Compliance Report <span class="text-danger">*Please choose a Start and End Date</span>
         </div>
     </div>
     <br />
@@ -64,7 +64,18 @@
                     class="btn btn-sm btn-outline-primary mb-1">
                 Report
             </button>
-            Completed Outstanding Report <span class="text-danger">*</span>
+            Completed Outstanding Report <span class="text-danger">*Please choose a Start and End Date</span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-8">
+            <button id="Outstanding"
+                    asp-page-handler="Outstanding"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            Outstanding Report
         </div>
     </div>
     <br />
@@ -78,6 +89,4 @@
             No Action Taken Report
         </div>
     </div>
-    <br />
-    <p><span class="text-danger">* must choose end date</span></p>
 </form>

@@ -25,6 +25,7 @@
         EventPending,
         EventActivityCompleted,
         EventCompletedOutstanding,
+        EventOutstanding,
         EventCompleted,
         EventCompliance
     }
