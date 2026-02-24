@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using FMS;
 using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
@@ -264,6 +265,53 @@ namespace FMS.Infrastructure.Repositories
 
             return (await conn.QueryAsync<PAFReportRawDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
         }
+
+        #endregion
+
+        #region HSI List Reports
+
+        public async Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy)
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.LocationDetails)
+                .Include(e => e.LocationDetails.LocationClass)
+                .Include(e => e.County)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Select(e => new HSIListReportDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    Name = e.Name,
+                    County = e.County.Name,
+                    ClassName = e.LocationDetails.LocationClass.Name
+                })
+                .ToListAsync();
+
+            return OrderHSIReportQuery(facilityList, sortBy);
+        }
+
+        private static IReadOnlyList<HSIListReportDto> OrderHSIReportQuery(
+            IList<HSIListReportDto> facilityList, HSISortBy sortBy) =>
+            sortBy switch
+            {
+                HSISortBy.HSINumber => facilityList
+                    .OrderBy(e => e.HSINumber)
+                    .ToList(),
+                HSISortBy.Name => facilityList
+                    .OrderBy(e => e.Name)
+                    .ToList(),
+                HSISortBy.County => facilityList
+                    .OrderBy(e => e.County)
+                    .ThenBy(e => e.HSINumber)
+                    .ToList(),
+                HSISortBy.ClassName => facilityList
+                    .OrderBy(e => e.ClassName)
+                    .ThenBy(e => e.HSINumber)
+                    .ToList(),
+                _ => facilityList
+                    .OrderBy(e => e.Name)
+                    .ToList()
+            };
 
         #endregion
 
