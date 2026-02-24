@@ -40,7 +40,7 @@ namespace FMS.Infrastructure.Tests
                 CasNo = "VALID_CASNO",
                 ChemicalName = "VALID_CHEMNAME",
                 CommonName = "VALID_COMNAME",
-                ToxValue = "VALID_TOVALUE",
+                ToxValue = "VALID_TOXVALUE",
                 MCLs = "VALID_MCLS",
                 FinalRc = "VALID_FINALRC",
                 RQ = "VALID_RQ"
@@ -202,7 +202,7 @@ namespace FMS.Infrastructure.Tests
                 CasNo = "NEW_CASNO",
                 ChemicalName = "NEW_CHEMNAME",
                 CommonName = "NEW_COMNAME",
-                ToxValue = "NEW_TOVALUE",
+                ToxValue = "NEW_TOXVALUE",
                 MCLs = "NEW_MCLS",
                 FinalRc = "NEW_FINALRC",
                 RQ = "NEW_RQ"
@@ -214,7 +214,7 @@ namespace FMS.Infrastructure.Tests
             var createdChemical= await _context.Chemicals.FindAsync(newId);
 
             createdChemical.Should().NotBeNull();
-            createdChemical.Should().BeEquivalentTo(dto, options => options);
+            createdChemical.Should().BeEquivalentTo(dto);
         }
         [Test]
         public async Task CreateChemicalAsync_ThrowsArgumentNullException_WhenCasNoNotAssigned()
@@ -223,7 +223,7 @@ namespace FMS.Infrastructure.Tests
             {
                 ChemicalName = "NEW_CHEMNAME",
                 CommonName = "NEW_COMNAME",
-                ToxValue = "NEW_TOVALUE",
+                ToxValue = "NEW_TOXVALUE",
                 MCLs = "NEW_MCLS",
                 FinalRc = "NEW_FINALRC",
                 RQ = "NEW_RQ"
@@ -239,7 +239,7 @@ namespace FMS.Infrastructure.Tests
             {
                 CasNo = "NEW_CASNO",
                 CommonName = "NEW_COMNAME",
-                ToxValue = "NEW_TOVALUE",
+                ToxValue = "NEW_TOXVALUE",
                 MCLs = "NEW_MCLS",
                 FinalRc = "NEW_FINALRC",
                 RQ = "NEW_RQ"
@@ -250,7 +250,54 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateChemicalAsync
+        [Test]
+        public async Task UpdateChemicalAsync_UpdatesExistingChemical_WhenDataIsValid()
+        {
+            var existingChemical = new Chemical
+            {
+                Id = Guid.NewGuid(),
+                CasNo = "VALID_CASNO",
+                ChemicalName = "VALID_CHEMNAME",
+                CommonName = "VALID_COMNAME",
+                ToxValue = "VALID_TOXVALUE",
+                MCLs = "VALID_MCLS",
+                FinalRc = "VALID_FINALRC",
+                RQ = "VALID_RQ",
+            };
+            _context.Chemicals.Add(existingChemical);
+            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
 
+            var updateDto = new ChemicalEditDto
+            {
+                Id = existingChemical.Id,
+                CasNo = "NEW_CASNO",
+                ChemicalName = "NEW_CHEMNAME",
+                CommonName = "NEW_COMNAME",
+                ToxValue = "NEW_TOXVALUE",
+                MCLs = "NEW_MCLS",
+                FinalRc = "NEW_FINALRC",
+                RQ = "NEW_RQ",
+            };
+            await _repository.UpdateChemicalAsync(existingChemical.Id, updateDto);
+            _context.ChangeTracker.Clear();
+
+            var updatedChemical = await _context.Chemicals.FindAsync(existingChemical.Id);
+
+            updatedChemical.Should().BeEquivalentTo(updateDto, options => options
+                .Excluding(e=> e.Active));
+        }
+
+        [Test]
+        public async Task UpdateChemicalAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var updateDto = new ChemicalEditDto { Id = invalidId, ToxValue = "NEW_TOVALUE" };
+
+            var action = async () => await _repository.UpdateChemicalAsync(invalidId, updateDto);
+
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
 
         // UpdateChemicalStatusAsync
     }
