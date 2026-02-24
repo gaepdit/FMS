@@ -3,9 +3,31 @@
 @model FMS.Pages.Reporting.AbndInac.IndexModel
 
 @{
-    ViewData["Title"] = $"Abandoned/Inactive Report";
+    ViewData["Title"] = $"Abandoned/Inactive Reports";
 }
 <h1>@ViewData["Title"]</h1>
 <a asp-page="../Index">← Back to Reports</a>
 <hr />
-<h2><i>Under Construction</i></h2>
+<form method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <button id="Tracker"
+                    asp-page-handler="Tracker"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            Abandoned/Inactive Status Tracker
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <button id="Cost"
+                    asp-page-handler="Cost"
+                    class="btn btn-sm btn-outline-primary mb-1">
+                Report
+            </button>
+            Abandoned Sites Cost Estimate Report
+        </div>
+    </div>
+</form>
