@@ -339,33 +339,35 @@
 
 @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
 {
-    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
-        }
-        @if (!string.IsNullOrEmpty(Model.NotificationFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.NotificationFolderLink>Release Notification(s)</a>
-        }
-        @if (!string.IsNullOrEmpty(Model.PendingNotificationFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.PendingNotificationFolderLink>Pending Release Notification</a>
-        }
-        @if (!string.IsNullOrEmpty(Model.RNHSIFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>HSI Folder</a>
-        }
-        @if (!string.IsNullOrEmpty(Model.ComplaintsFolderLink))
-        {
-            <a class="btn btn-sm btn-primary" target="_blank" href=@Model.ComplaintsFolderLink>Master Project Complaint Folder</a>
-        }
+    <div class="container-fluid parent-container d-lg-inline-flex">
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.NotificationFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.NotificationFolderLink>Release Notification(s)</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.PendingNotificationFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.PendingNotificationFolderLink>Pending Release Notification</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.RNHSIFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.RNHSIFolderLink>HSI Folder</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.ComplaintsFolderLink))
+            {
+                <a class="btn btn-sm btn-primary" target="_blank" href=@Model.ComplaintsFolderLink>Master Project Complaint Folder</a>
+            }
+        </div>
     </div>
 }
 
 @if (Model.FacilityDetail.FacilityType.Name == "HSI" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
 {
-    <div class="container-fluid" id="TabPages">
+    <div class="container-fluid parent-container d-lg-inline-flex" id="TabPages">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <nav class="navbar navbar-expand-sm">
                 <ul class="nav nav-tabs active" id="HSINavBar">
@@ -1223,129 +1225,129 @@
     </div>
 }
 
-
-
 @if (Model.FacilityDetail.FacilityType.Name != "RN")
 {
-    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <div class="accordion accordion-flush" id="retention-records">
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="RetentionRecordList">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r-records" aria-expanded="true" aria-controls="r-records">
-                        View Retention Records
-                    </button>
-                </h3>
-                <div id="r-records" class="accordion-collapse collapse" aria-labelledby="Retention Record List">
-                    <div class="accordion-body">
-                        @if (Model.FacilityDetail.RetentionRecords.Count > 0)
-                        {
-                            <table class="table table-sm" aria-label="Retention Records">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">Years</th>
-                                        <th scope="col">Box Number</th>
-                                        <th scope="col">Consignment Number</th>
-                                        <th scope="col">Shelf Number</th>
-                                        <th scope="col">Retention Schedule Number</th>
-                                        <th scope="col" class="text-center">Retained</th>
-                                        @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                        {
-                                            <th scope="col" class="text-center">Actions</th>
-                                        }
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var r in Model.FacilityDetail.RetentionRecords)
-                                    {
-                                        <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
-                                            <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
-                                            <td>@r.BoxNumber</td>
-                                            <td>@r.ConsignmentNumber</td>
-                                            <td>@r.ShelfNumber</td>
-                                            <td>@r.RetentionSchedule</td>
-                                            <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
-                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
-                                            {
-                                                <td>
-                                                    <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                </td>
-                                            }
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        }
-                        else
-                        {
-                            <span class="text-muted">none</span>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            @if (Model.FacilityDetail.Active &&
-                    (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.SiteMaintenance)))
-            {
+    <div class="container-fluid parent-container d-lg-inline-flex">
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <div class="accordion accordion-flush" id="retention-records">
                 <div class="accordion-item">
-                    <h3 class="accordion-header" id="CreateRetentionRecord">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#create-r-records" aria-expanded="true" aria-controls="create-r-records">
-                            Add Retention Records
+                    <h3 class="accordion-header" id="RetentionRecordList">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#r-records" aria-expanded="true" aria-controls="r-records">
+                            View Retention Records
                         </button>
                     </h3>
-                    <div id="create-r-records" class="accordion-collapse collapse" aria-labelledby="CreateRetentionRecord">
+                    <div id="r-records" class="accordion-collapse collapse" aria-labelledby="Retention Record List">
                         <div class="accordion-body">
-                            <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
-                                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-
-                                <div class="mb-3 row">
-                                    <div class="col-sm-4">
-                                        <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
-                                        <input asp-for="RecordCreate.StartYear" class="form-control" />
-                                        <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
-                                        <input asp-for="RecordCreate.EndYear" class="form-control" />
-                                        <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
-                                        <input asp-for="RecordCreate.BoxNumber" class="form-control" />
-                                        <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 row">
-                                    <div class="col-sm-4">
-                                        <label asp-for="RecordCreate.ConsignmentNumber"></label>
-                                        <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
-                                        <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label asp-for="RecordCreate.ShelfNumber"></label>
-                                        <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
-                                        <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <label asp-for="RecordCreate.RetentionSchedule"></label>
-                                        <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
-                                        <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-                                <input asp-for="FacilityId" />
-                                <hr />
-                                <p class="text-danger">* denotes a required field</p>
-                                <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
-                            </form>
+                            @if (Model.FacilityDetail.RetentionRecords.Count > 0)
+                            {
+                                <table class="table table-sm" aria-label="Retention Records">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Years</th>
+                                            <th scope="col">Box Number</th>
+                                            <th scope="col">Consignment Number</th>
+                                            <th scope="col">Shelf Number</th>
+                                            <th scope="col">Retention Schedule Number</th>
+                                            <th scope="col" class="text-center">Retained</th>
+                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                            {
+                                                <th scope="col" class="text-center">Actions</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var r in Model.FacilityDetail.RetentionRecords)
+                                        {
+                                            <tr class="@(r.Id == Model.HighlightRecord ? "table-warning" : "") @(!r.Active ? "text-muted" : "") ">
+                                                <td>@r.StartYear&nbsp;&ndash;&nbsp;@r.EndYear</td>
+                                                <td>@r.BoxNumber</td>
+                                                <td>@r.ConsignmentNumber</td>
+                                                <td>@r.ShelfNumber</td>
+                                                <td>@r.RetentionSchedule</td>
+                                                <td class="text-center">@Html.DisplayFor(m => r.Active)</td>
+                                                @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
+                                                {
+                                                    <td>
+                                                        <a asp-page="./EditRetentionRecord" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <span class="text-muted">none</span>
+                            }
                         </div>
                     </div>
                 </div>
-            }
+
+                @if (Model.FacilityDetail.Active &&
+                            (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.SiteMaintenance)))
+                {
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="CreateRetentionRecord">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#create-r-records" aria-expanded="true" aria-controls="create-r-records">
+                                Add Retention Records
+                            </button>
+                        </h3>
+                        <div id="create-r-records" class="accordion-collapse collapse" aria-labelledby="CreateRetentionRecord">
+                            <div class="accordion-body">
+                                <form method="post" asp-page-handler="RetentionRecord" asp-fragment="retention-records">
+                                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                                    <div class="mb-3 row">
+                                        <div class="col-sm-4">
+                                            <label asp-for="RecordCreate.StartYear">Start Year <span class="text-danger">*</span></label>
+                                            <input asp-for="RecordCreate.StartYear" class="form-control" />
+                                            <span asp-validation-for="RecordCreate.StartYear" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label asp-for="RecordCreate.EndYear">End Year <span class="text-danger">*</span></label>
+                                            <input asp-for="RecordCreate.EndYear" class="form-control" />
+                                            <span asp-validation-for="RecordCreate.EndYear" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label asp-for="RecordCreate.BoxNumber">Box Number <span class="text-danger">*</span></label>
+                                            <input asp-for="RecordCreate.BoxNumber" class="form-control" />
+                                            <span asp-validation-for="RecordCreate.BoxNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <div class="col-sm-4">
+                                            <label asp-for="RecordCreate.ConsignmentNumber"></label>
+                                            <input asp-for="RecordCreate.ConsignmentNumber" class="form-control" />
+                                            <span asp-validation-for="RecordCreate.ConsignmentNumber" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label asp-for="RecordCreate.ShelfNumber"></label>
+                                            <input asp-for="RecordCreate.ShelfNumber" class="form-control" />
+                                            <span asp-validation-for="RecordCreate.ShelfNumber" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label asp-for="RecordCreate.RetentionSchedule"></label>
+                                            <input asp-for="RecordCreate.RetentionSchedule" class="form-control" />
+                                            <span asp-validation-for="RecordCreate.RetentionSchedule" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <input asp-for="FacilityId" />
+                                    <hr />
+                                    <p class="text-danger">* denotes a required field</p>
+                                    <button type="submit" class="btn btn-primary mb-2">Add Retention Record</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 }
