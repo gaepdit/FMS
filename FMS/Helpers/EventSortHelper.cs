@@ -112,6 +112,13 @@ namespace FMS.Helpers
                     .ThenBy(e => e.FacilityNumber)
                     .ThenBy(e => e.CompletionDate)
                     .ToList(),
+                EventReportSort.EventOutstanding => events
+                    .Where(e => e.CompletionDate == null)
+                    .OrderBy(e => e.OrganizationalUnit?.Name)
+                    .ThenBy(e => e.DoneBy?.Name)
+                    .ThenBy(e => e.FacilityNumber)
+                    .ThenBy(e => e.DueDate)
+                    .ToList(),
                 _ => events
                     .OrderBy(e => e.StartDate)
                     .ThenByDescending(e => e.DueDate)
