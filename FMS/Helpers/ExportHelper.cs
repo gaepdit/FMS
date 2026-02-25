@@ -409,23 +409,11 @@ namespace FMS
                 // PAF Amount Sum
                 table.Field("PAF Amount").TotalsRowFunction = XLTotalsRowFunction.Sum;
 
-                // Number of Unique Compliance Officers
-                IXLColumn columnPO = ws.Column("E");
-                // Extract the non-empty cell values and convert them to a list of strings
-                var cellValues = columnPO.CellsUsed().Select(cell => cell.GetString()).ToList();
-                // Use LINQ to count the unique items
-                int uniqueCount = cellValues.Distinct().Count();
-                table.Field("Project Officer").TotalsCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                table.Field("Project Officer").TotalsCell.Value = "Count " + uniqueCount.ToString();
+                //// Number of Unique Compliance Officer Rows
+                table.Field("Project Officer").TotalsRowFunction = XLTotalsRowFunction.Count;
 
-                // Number of Unique Contractors
-                IXLColumn columnCont = ws.Column("F");
-                // Extract the non-empty cell values and convert them to a list of strings
-                var cellValuesCont = columnCont.CellsUsed().Select(cell => cell.GetString()).ToList();
-                // Use LINQ to count the unique items
-                int uniqueCountCont = cellValuesCont.Distinct().Count();
-                table.Field("Contractor").TotalsCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                table.Field("Contractor").TotalsCell.Value = "Count " + uniqueCountCont.ToString();
+                //// Number of Unique Contractor Rows
+                table.Field("Contractor").TotalsRowFunction = XLTotalsRowFunction.Count;
 
                 ws.Columns().AdjustToContents(1, 10000);
             }
