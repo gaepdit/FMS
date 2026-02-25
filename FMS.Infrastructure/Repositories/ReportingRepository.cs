@@ -194,6 +194,7 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.FacilityType)
                 .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.StatusDetails)
                 .Include(sd => sd.StatusDetails.OverallStatus)
@@ -321,11 +322,36 @@ namespace FMS.Infrastructure.Repositories
         {
             var facilityList = await _context.Facilities.AsNoTracking()
                 .Include(e => e.FacilityType)
-                .Include(e => e.LocationDetails)
-                .Include(e => e.LocationDetails.LocationClass)
+                .Include(e => e.GroundwaterScoreDetails)
+                .Include(e => e.OnsiteScoreDetails)
+                .Include(e => e.ComplianceOfficer)
                 .Include(e => e.County)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.StatusDetails)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Include(e => e.StatusDetails.AbandonedInactive)
+                .Include(e => e.StatusDetails.GAPSAssessment)
                 .Where(e => e.FacilityType.Name == "HSI")
-                .Select(e => new AbndInacStatusTrackerDto())
+                .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" || e.StatusDetails.OverallStatus.Name == "INAC")
+                .Select(e => new AbndInacStatusTrackerDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    City = e.City,
+                    County = e.County.Name,
+                    AbndInac = e.StatusDetails.AbandonedInactive != null ? e.StatusDetails.AbandonedInactive.Name : "None",
+                    GAPSModelDate = e.StatusDetails.GAPSModelDate,
+                    GAPSScore = e.StatusDetails.GAPSScore,
+                    GAPSNoOfUnknowns = e.StatusDetails.GAPSNoOfUnknowns,
+                    GAPSAssessment = e.StatusDetails.GAPSAssessment != null ? e.StatusDetails.GAPSAssessment.Name : "None",
+                    CostEstimate = e.StatusDetails.CostEstimate,
+                    AbndInacInfo = e.StatusDetails.AbandonedInactive != null ? e.StatusDetails.AbandonedInactive.Name : "None",
+                    UnitName = e.OrganizationalUnit != null ? e.OrganizationalUnit.Name : "None",
+                    EventComments = e.StatusDetails.ReportComments,
+                    COName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned",
+                    GWScore = e.GroundwaterScoreDetails != null ? e.GroundwaterScoreDetails.GWScore : null,
+                    OnSiteScore = e.OnsiteScoreDetails != null ? e.OnsiteScoreDetails.OnsiteScoreValue : null
+                })
                 .ToListAsync();
             return facilityList;
         }
