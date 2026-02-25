@@ -62,9 +62,27 @@
                             <td>@p.RARApproved</td>
                             <td>@p.ProjectCompleteDue</td>
                             <td>@p.ProjectCompleteActual</td>
-                            <td>@p.ProjectComments</td>
+                            <td>@(p.ProjectComments.Length > 50 ? p.ProjectComments.Substring(0, 50) : p.ProjectComments)</td>
                         </tr>
                     }
+                    <hr />
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total Amt&#8681;<br />$@Model.PAFAmtTotal</td>
+                        <td class="text-center">P.O.s&#8681;<br />@Model.UniqueCO</td>
+                        <td class="text-center">Contractors&#8681;<br />@Model.UniqueContractor</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

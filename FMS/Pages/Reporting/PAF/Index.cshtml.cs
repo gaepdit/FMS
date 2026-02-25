@@ -1,3 +1,4 @@
+using ClosedXML.Excel;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
@@ -20,6 +21,12 @@ namespace FMS.Pages.Reporting.PAF
 
         public IList<PAFReportDto> PAFReport { get; set; }
 
+        public decimal? PAFAmtTotal { get; set; } = 0;
+
+        public int UniqueCO { get; set; }
+
+        public int UniqueContractor { get; set; }
+
         public DisplayMessage DisplayMessage { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -29,6 +36,24 @@ namespace FMS.Pages.Reporting.PAF
                 PAFReportRaw = await _repository.GetPAFReportAsync();
                 // Map to PAFReportDto
                 PAFReport = PAFReportRaw.Select(raw => new PAFReportDto(raw)).ToList();
+
+                // Get Column Totals
+                IList<string> COList = [];
+                IList<string> ContractorList = [];
+                foreach (var p in PAFReport)
+                {
+                    PAFAmtTotal = PAFAmtTotal + p.PAFAmount;
+                    if(!COList.Contains(p.ProjectOfficer))
+                    {
+                        COList.Add(p.ProjectOfficer);
+                    }
+                    if(!ContractorList.Contains(p.Contractor))
+                    {
+                        ContractorList.Add(p.Contractor);
+                    }
+                }
+                UniqueCO = COList.Distinct().Count();
+                UniqueContractor = ContractorList.Distinct().Count();
 
                 TempData?.SetDisplayMessage(Context.Success, "Successfully Loaded PAF Report");
                 DisplayMessage = TempData?.GetDisplayMessage();
