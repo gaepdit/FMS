@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using FMS.Domain.Dto;
 using FMS.Domain.Services;
 using Spire.Pdf;
 using Spire.Pdf.Fields;
 using Spire.Pdf.Widget;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace FMS
 {
@@ -386,14 +387,13 @@ namespace FMS
                 table = ws.Cell(2, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
 
-                ws.Columns().AdjustToContents(1, 10000);
                 ws.Cell("D1").Style.Font.Bold = true;
                 ws.Cell("D1").Style.Font.FontSize = 14;
                 ws.Cell("D1").Value = "PAF Report";
                 ws.Column("C").Style.DateFormat.Format = "MM/dd/yyyy";
                 ws.Column("D").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
                 ws.Column("G").Style.DateFormat.Format = "MM/dd/yyyy";
-                ws.Column("H").Style.DateFormat.SetFormat(ClosedXML.Excel.XLDateTimeGrouping.Month.ToString());
+                ws.Column("H").Style.DateFormat.Format = "MM/dd/yyyy";
                 ws.Column("I").Style.DateFormat.Format = "MM/dd/yyyy";
                 ws.Column("J").Style.DateFormat.Format = "MM/dd/yyyy";
                 ws.Column("K").Style.DateFormat.Format = "MM/dd/yyyy";
@@ -402,6 +402,32 @@ namespace FMS
                 table.ShowAutoFilter = true;
                 // Must enable the filter
                 table.AutoFilter.IsEnabled = true;
+                table.ShowTotalsRow = true;
+
+                // *************** Report Totals ***************
+                table.Field("PAF Issue Date").TotalsCell.Value = "Total PAF Amt -->";
+                // PAF Amount Sum
+                table.Field("PAF Amount").TotalsRowFunction = XLTotalsRowFunction.Sum;
+
+                // Number of Unique Compliance Officers
+                IXLColumn columnPO = ws.Column("E");
+                // Extract the non-empty cell values and convert them to a list of strings
+                var cellValues = columnPO.CellsUsed().Select(cell => cell.GetString()).ToList();
+                // Use LINQ to count the unique items
+                int uniqueCount = cellValues.Distinct().Count();
+                table.Field("Project Officer").TotalsCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                table.Field("Project Officer").TotalsCell.Value = "Count " + uniqueCount.ToString();
+
+                // Number of Unique Contractors
+                IXLColumn columnCont = ws.Column("F");
+                // Extract the non-empty cell values and convert them to a list of strings
+                var cellValuesCont = columnCont.CellsUsed().Select(cell => cell.GetString()).ToList();
+                // Use LINQ to count the unique items
+                int uniqueCountCont = cellValuesCont.Distinct().Count();
+                table.Field("Contractor").TotalsCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                table.Field("Contractor").TotalsCell.Value = "Count " + uniqueCountCont.ToString();
+
+                ws.Columns().AdjustToContents(1, 10000);
             }
 
             if(reportType == ReportType.HSIListByNumber)
