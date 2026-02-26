@@ -300,5 +300,25 @@ namespace FMS.Infrastructure.Tests
         }
 
         // UpdateChemicalStatusAsync
+        [Test]
+        public async Task UpdateChemicalStatusAsync_UpdatesStatusCorrectly()
+        {
+            var existingChemical = await _context.Chemicals.FirstAsync(c => c.Active);
+
+            await _repository.UpdateChemicalStatusAsync(existingChemical.Id, false);
+            _context.ChangeTracker.Clear();
+
+            var updatedChemical = await _context.Chemicals.FindAsync(existingChemical.Id);
+            updatedChemical.Should().NotBeNull();
+            updatedChemical!.Active.Should().BeFalse();
+        }
+
+        [Test]
+        public async Task UpdateChemicalStatusAsync_ThrowsArgumentException_WhenIdDoesNotExist()
+        {
+            var invalidId = Guid.NewGuid();
+            var action = async () => await _repository.UpdateChemicalStatusAsync(invalidId, false);
+            await action.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }
