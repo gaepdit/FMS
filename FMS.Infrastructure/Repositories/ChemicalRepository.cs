@@ -40,10 +40,10 @@ namespace FMS.Infrastructure.Repositories
             return chemical == null ? null : new ChemicalEditDto(chemical);
         }
 
-        public async Task<Chemical> GetChemicalByNameAsync(string name)
+        public async Task<Chemical> GetChemicalByCasNoAsync(string casno)
         {
             var chemical = await _context.Chemicals.AsNoTracking()
-                .SingleOrDefaultAsync(e => e.Name == name);
+                .SingleOrDefaultAsync(e => e.CasNo == casno);
 
             return chemical;
         }

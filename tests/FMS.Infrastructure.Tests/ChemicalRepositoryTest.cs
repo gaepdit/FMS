@@ -149,12 +149,12 @@ namespace FMS.Infrastructure.Tests
         }
 
 
-        // GetChemicalByNameAsync not working
+        // GetChemicalByCasNoAsync
         [Test]
         public async Task GetChemicalByNameAsync_ReturnsChemical_WhenNameExist()
         {
             var existingChemical = await _context.Chemicals.FirstAsync();
-            var results = await _repository.GetChemicalByNameAsync(existingChemical.Name);
+            var results = await _repository.GetChemicalByCasNoAsync(existingChemical.CasNo);
 
             results.Should().NotBeNull();
             results.Should().BeOfType<Chemical>();
@@ -162,8 +162,8 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task GetChemicalByNameAsync_ReturnsNull_WhenNameDoesNotExist()
         {
-            var nonExistingChemical = "NONEXISTING_NAME";
-            var results = await _repository.GetChemicalByNameAsync(nonExistingChemical);
+            var nonExistingChemical = "NONEXISTING_CASNO";
+            var results = await _repository.GetChemicalByCasNoAsync(nonExistingChemical);
             results.Should().BeNull();
         }
 
