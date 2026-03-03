@@ -5,6 +5,8 @@ using FMS.Infrastructure.Repositories;
 using Microsoft.Graph.Models;
 using Microsoft.VisualBasic;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 //using Microsoft.VisualBasic; // Install-Package Microsoft.VisualBasic
 //using Microsoft.VisualBasic.CompilerServices; // Install-Package Microsoft.VisualBasic
 
@@ -12,7 +14,30 @@ namespace FMS.Helpers
 {
     public class SiteSummaryHelper
     {
+        public enum reportBatchType
+        {
+            Single,
+            ComplianceOfficer,
+            County,
+            All
+        }
 
+        public IList<SiteSummaryReportDto> GetSiteSummaryReports(reportBatchType batchType)
+        {
+            var ssReport = new List<SiteSummaryReportDto>();
+
+
+
+            return ssReport;
+        }
+
+        public static object GenerateReport()
+        {
+            var report = new object();
+
+
+            return report;
+        }
 
         public static object GetMapImage(decimal lat, decimal lon)
         {

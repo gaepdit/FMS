@@ -387,6 +387,12 @@ namespace FMS.Infrastructure.Repositories
 
         #endregion
 
+        #region Site Summary Report
+
+
+
+        #endregion
+
         #region IDisposable Support
 
         private bool _disposedValue;
