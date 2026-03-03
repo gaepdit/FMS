@@ -82,8 +82,8 @@ namespace FMS.Domain.Dto.Reports
         [Display(Name = "Unit Name")]
         public string UnitName { get; set; }
 
-        [XLColumn(Header = "Event Comments")]
-        [Display(Name = "Event Comments")]
+        [XLColumn(Header = "Abnd/Inac Comment from Status tab")]
+        [Display(Name = "Abnd/Inac Comment from Status tab")]
         public string EventComments { get; set; }
 
         [XLColumn(Header = "RQSM 1:C.O.")]

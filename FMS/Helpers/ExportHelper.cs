@@ -502,8 +502,6 @@ namespace FMS
             return ms.ToArray();
         }
 
-        
-
         /// <summary>
         /// Takes in a list of RetentionRecordDetailDto, fill the information into the blank pdf form
         /// accordingly, and convert it to a byte array.
