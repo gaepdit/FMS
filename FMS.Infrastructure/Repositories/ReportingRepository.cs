@@ -384,7 +384,7 @@ namespace FMS.Infrastructure.Repositories
                 }))
                 .Where(ev => ev.EventType.Name == "Abandoned/Inactive Site Review")
                 .OrderBy(ev => ev.HSINumber)
-                .ThenBy(ev => ev.ActionTaken.Name)
+                .ThenBy(ev => ev.CompletionDate)
                 .ToListAsync();
 
             return eventList;
