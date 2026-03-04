@@ -51,6 +51,7 @@ namespace FMS
             DateOnly? endDate = null,
             IEnumerable<T> vrpList = null,
             IEnumerable<T> brnList = null,
+            IEnumerable<AbndInacChecklistReviewReportDto> checkListAIReportList = null,
             int hsiCompCount = 0,
             int hsiRecCount = 0,
             decimal hsiCompAvg = 0.0m,
@@ -476,6 +477,16 @@ namespace FMS
                 ws.Cell("B1").Style.Font.Bold = true;
                 ws.Cell("B1").Style.Font.FontSize = 14;
                 ws.Cell("B1").Value = "Abandoned Inactive Status Tracker";
+
+                // New Tab to be called Checklist reviews
+                ws = wb.AddWorksheet("Checklist Reviews");
+                table = ws.Cell(2,1).InsertTable(checkListAIReportList);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "Abandoned Inactive Checklist Reviews";
             }
 
             if (reportType == ReportType.AbndCostEstimateReport)

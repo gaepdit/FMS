@@ -3,55 +3,56 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
-    public class SiteSummaryReportDto
+    public class FacilitySiteSummaryDto
     {
-        public SiteSummaryReportDto() { }
+        public FacilitySiteSummaryDto() { }
 
-        public SiteSummaryReportDto(FacilitySiteSummaryDto facilitySiteSummary)
+        public FacilitySiteSummaryDto(FacilityDetailDto facility)
         {
-            Id = facilitySiteSummary.Id;
-            facilitySiteSummaryNumber = facilitySiteSummary.FacilityNumber;
-            Name = facilitySiteSummary.Name;
-            Active = facilitySiteSummary.Active;
-            County = facilitySiteSummary.County;
-            facilitySiteSummaryStatus = facilitySiteSummary.FacilityStatus;
-            facilitySiteSummaryType = facilitySiteSummary.FacilityType;
-            BudgetCode = facilitySiteSummary.BudgetCode;
-            OrganizationalUnit = facilitySiteSummary.OrganizationalUnit;
-            ComplianceOfficer = facilitySiteSummary.ComplianceOfficer;
-            Location = facilitySiteSummary.Location;
-            Address = facilitySiteSummary.Address;
-            City = facilitySiteSummary.City;
-            State = facilitySiteSummary.State;
-            PostalCode = facilitySiteSummary.PostalCode;
-            Latitude = facilitySiteSummary.Latitude;
-            Longitude = facilitySiteSummary.Longitude;
-            HsrpFacilityPropertyDetails = facilitySiteSummary.HsrpFacilityPropertyDetails;
-            LocationDetails = facilitySiteSummary.LocationDetails;
-            Parcels = facilitySiteSummary.Parcels?
+            Id = facility.Id;
+            FacilityNumber = facility.FacilityNumber;
+            Name = facility.Name;
+            Active = facility.Active;
+            County = facility.County;
+            FacilityStatus = facility.FacilityStatus;
+            FacilityType = facility.FacilityType;
+            BudgetCode = facility.BudgetCode;
+            OrganizationalUnit = facility.OrganizationalUnit;
+            ComplianceOfficer = facility.ComplianceOfficer;
+            Location = facility.Location;
+            Address = facility.Address;
+            City = facility.City;
+            State = facility.State;
+            PostalCode = facility.PostalCode;
+            Latitude = facility.Latitude;
+            Longitude = facility.Longitude;
+            HsrpFacilityPropertyDetails = facility.HsrpFacilityPropertyDetails;
+            LocationDetails = facility.LocationDetails;
+            Parcels = facility.Parcels?
                 .Select(static p => new ParcelSummaryDto(p)).ToList() ??
                 new List<ParcelSummaryDto>();
-            Contacts = facilitySiteSummary.Contacts?
+            Contacts = facility.Contacts?
                 .Select(c => new ContactSummaryDto(c)).ToList() ?? new List<ContactSummaryDto>();
-            ScoreDetails = facilitySiteSummary.ScoreDetails;
-            GroundwaterScoreDetails = facilitySiteSummary.GroundwaterScoreDetails;
-            OnsiteScoreDetails = facilitySiteSummary.OnsiteScoreDetails;
-            Substances = facilitySiteSummary.Substances?
+            ScoreDetails = facility.ScoreDetails;
+            GroundwaterScoreDetails = facility.GroundwaterScoreDetails;
+            OnsiteScoreDetails = facility.OnsiteScoreDetails;
+            Substances = facility.Substances?
                 .Select(s => new SubstanceSummaryDto(s)).ToList() ?? new List<SubstanceSummaryDto>();
-            StatusDetails = facilitySiteSummary.StatusDetails;
+            StatusDetails = facility.StatusDetails;
         }
 
         public Guid Id { get; }
 
-        [Display(Name = "facilitySiteSummary Number")]
-        public string facilitySiteSummaryNumber { get; }
+        [Display(Name = "Facility Number")]
+        public string FacilityNumber { get; }
 
-        [Display(Name = "facilitySiteSummary Name")]
+        [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
         [Display(Name = "Active Site")]
@@ -60,11 +61,11 @@ namespace FMS.Domain.Dto
         [Display(Name = "County")]
         public County County { get; set; }
 
-        [Display(Name = "facilitySiteSummary Status")]
-        public FacilityStatus facilitySiteSummaryStatus { get; }
+        [Display(Name = "Facility Status")]
+        public FacilityStatus FacilityStatus { get; }
 
         [Display(Name = "Type/Env. Interest")]
-        public FacilityType facilitySiteSummaryType { get; }
+        public FacilityType FacilityType { get; }
 
         [Display(Name = "Budget Code")]
         public BudgetCode BudgetCode { get; }
@@ -116,5 +117,6 @@ namespace FMS.Domain.Dto
         public List<SubstanceSummaryDto> Substances { get; }
 
         public Status StatusDetails { get; set; }
+
     }
 }

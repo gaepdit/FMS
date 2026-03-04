@@ -1,12 +1,15 @@
 ﻿using FMS;
 using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using FMS.Domain.Entities;
+using FMS.Domain.Repositories;
 using FMS.Infrastructure.Repositories;
 using Microsoft.Graph.Models;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 //using Microsoft.VisualBasic; // Install-Package Microsoft.VisualBasic
 //using Microsoft.VisualBasic.CompilerServices; // Install-Package Microsoft.VisualBasic
 
@@ -14,6 +17,9 @@ namespace FMS.Helpers
 {
     public class SiteSummaryHelper
     {
+        private readonly IReportingRepository _repository;
+        public SiteSummaryHelper(IReportingRepository repository) => _repository = repository;
+
         public enum reportBatchType
         {
             Single,
@@ -22,18 +28,38 @@ namespace FMS.Helpers
             All
         }
 
-        public IList<SiteSummaryReportDto> GetSiteSummaryReports(reportBatchType batchType)
+        public async Task<IList<SiteSummaryReportDto>> GetSiteSummaryReports(reportBatchType batchType, Guid? facilityId = null, County county = null, ComplianceOfficer co = null)
         {
             var ssReport = new List<SiteSummaryReportDto>();
 
+            switch (batchType)
+            {
+                case reportBatchType.Single:
+                    {
+                        //ssReport.Add(new SiteSummaryReportDto(await _repository.GetFacilitySiteSummaryDtoAsync(facilityId)));
+                        break;
+                    }
+                case reportBatchType.ComplianceOfficer:
+                    {
 
+                        break;
+                    }
+                case reportBatchType.County:
+                    {
+                        break;
+                    }
+                case reportBatchType.All:
+                    {
+                        break;
+                    }
+            }
 
             return ssReport;
         }
 
-        public static object GenerateReport()
+        public async Task<SiteSummaryReportDto> GenerateReport(Facility facility)
         {
-            var report = new object();
+            var report = new SiteSummaryReportDto();
 
 
             return report;
@@ -43,323 +69,6 @@ namespace FMS.Helpers
         {
             return new object();
         }
-
-        public static string GetLanguageForExceptions(string hsi_id)
-        {
-            string exLang = "";
-
-            // This is to handle the exceptions for soil and gw scores
-
-            if (hsi_id == "10459" | hsi_id == "10498" | hsi_id == "10689" | hsi_id == "10829")
-            {
-
-                switch (hsi_id)
-                {
-                    case "10498":
-                        {
-                            exLang = "The Director has determined that a release of regulated substances from groundwater has posed a threat to a water of the state.";
-                            break;
-                        }
-                    case "10459":
-                    case "10829":
-                    case "10689":
-                        {
-                            exLang = "The Director has determined that a release of regulated substances from groundwater to a water of the state has resulted in an exceedance of state water quality standards.";
-                            break;
-                        }
-                }
-            }
-            // except2message = hsi10144
-            else
-            {
-
-                // Added new case to handle sources with a valid grand water score that need exception language - BGregory 12/4/2013
-
-                if (hsi_id == "10144" | hsi_id == "10747" | hsi_id == "10826" | hsi_id == "10926")
-                {
-
-                    switch (hsi_id)
-                    {
-
-                        case "10144":
-                            {
-                                exLang = "Releases of Mercury and PCBs at this site have caused bioaccumulation in fish and shellfish that has resulted in the need to recommend that human consumption be limited.  A cleanup and investigation have been initiated at this site, pursuant to a CERCLA 106 removal order issued by USEPA.  The site is listed on the National Priority List. ";
-                                break;
-                            }
-                        case "10747":
-                            {
-                                exLang = "The Director has determined that a release of regulated substances has occurred due to the abandonment of solid waste containing chromium, silver, zinc, and hydrochloric acid in containers, process units, and tanks at the site.";
-                                break;
-                            }
-                        case "10826":
-                            {
-                                exLang = "The Director has determined that a release of regulated substances from groundwater has posed a threat to a water of the state.";
-                                break;
-                            }
-                        case "10926":
-                            {
-                                exLang = "The Director has determined that a release of regulated substances from groundwater to a water of the state has resulted in an exceedance of state water quality standards.";
-                                break;
-                            }
-
-                    }
-                }
-            }
-            return exLang;
-        }
-
-        public static string GetLanguageForGWScore(Facility facility, string exLang)
-        {
-            var gwLang = "";
-            var gw_score = facility.GroundwaterScoreDetails.GWScore;
-            var gw_a = facility.GroundwaterScoreDetails.A;
-            var gwa = "";
-            var gw_1d = facility.GroundwaterScoreDetails.ChemName;
-            
-
-            if (gw_score > 10)
-            {
-
-                switch (gw_a)
-                {
-                    case 45:
-                        {
-                            gwa = "This site has a known release of " + gw_1d + " in groundwater at levels exceeding the reportable quantity.  ";
-                            break;
-                        }
-                    case 10:
-                        {
-                            gwa = "This site has a suspected release of " + gw_1d + " in groundwater at levels exceeding the reportable quantity.  ";
-                            break;
-                        }
-                    case 5:
-                        {
-                            gwa = "This site has a release of " + gw_1d + " that exceeds a reportable quantity because it has the potential to contaminate groundwater. ";
-                            break;
-                        }
-
-                    default:
-                        {
-                            gwa = "!!!!! INVALID VALUE FOR GW_A !!!!!";
-                            break;
-                        }
-                }
-
-                var gw_1e = facility.GroundwaterScoreDetails.E1;
-                var gw1e = "";
-
-                switch (gw_1e)
-                {
-                    case 25:
-                        {
-                            gw1e = "This release has resulted in known human exposure greater than or equal to the MCL for " + gw_1d + ".  ";
-                            break;
-                        }
-                    case 20:
-                        {
-                            gw1e = "This release has resulted in suspected human exposure.  ";
-                            break;
-                        }
-                    case 18:
-                        {
-                            gw1e = "This release has resulted in known human exposure, with no MCL having been established for " + gw_1d + ".  ";
-                            break;
-                        }
-                    case 15:
-                        {
-                            gw1e = "This release has resulted in known human exposure less than the MCL for " + gw_1d + ".  ";
-                            break;
-                        }
-                    case 12:
-                        {
-                            gw1e = "This release has resulted in suspected human exposure.  ";
-                            break;
-                        }
-                    case 8:
-                        {
-                            gw1e = "This release has resulted in suspected human exposure.  ";
-                            break;
-                        }
-                    case 4:
-                    case 3:
-                    case 2:
-                        {
-                            gw1e = "No human exposure via drinking water is suspected from this release.  ";
-                            break;
-                        }
-                    case 1:
-                    case 0:
-                        {
-                            gw1e = "";
-                            break;
-                        }
-
-                    default:
-                        {
-                            gw1e = "!!!!! INVALID VALUE FOR GW_1E !!!!!";
-                            break;
-                        }
-                }
-                
-                var gw_2e = facility.GroundwaterScoreDetails.E2;
-                var gw2em = "";
-                string gw2estrt = "The nearest drinking water well is ";
-                string gw2eend = " from the area affected by the release.  ";
-
-                if (gw_1e < 8)
-                {
-                    switch (gw_2e)
-                    {
-                        case 16:
-                            {
-                                gw2em = "less than 0.5 miles";
-                                break;
-                            }
-                        case 9:
-                            {
-                                gw2em = "between 0.5 and 1 miles";
-                                break;
-                            }
-                        case 4:
-                            {
-                                gw2em = "between 1 and 2 miles";
-                                break;
-                            }
-                        case 1:
-                            {
-                                gw2em = "between 2 and 3 miles";
-                                break;
-                            }
-                        case 0:
-                            {
-                                gw2em = "greater than 3 miles";
-                                break;
-                            }
-
-                        default:
-                            {
-                                gw2em = "!!!!! INVALID VALUE FOR GW_2E !!!!!";
-                                break;
-                            }
-                    }
-                }
-
-                // Added for HSI Exemption with valid GW score. BGregory 12/4/2013
-
-                if (exLang == "")
-                {
-                    gwLang = gwa + gw1e + gw2estrt + gw2em + gw2eend;
-                }
-                else
-                {
-                    gwLang = gwa + gw1e + gw2estrt + gw2em + gw2eend;
-                    //except2message = hsiexception;
-                }
-            }
-            return gwLang;
-        }
-
-        public static string GetLanguageForOSScore(Facility facility)
-        {
-            var osLang = "";
-            var osa = "";
-            var osb = "";
-            var os1em = "";
-            var os_score = facility.OnsiteScoreDetails.OnsiteScoreValue;
-            var os_a = facility.OnsiteScoreDetails.A;
-            var os_b = facility.OnsiteScoreDetails.B;
-            var os_1d = facility.OnsiteScoreDetails.ChemName1D;
-            var os_1e = facility.OnsiteScoreDetails.E1;
-
-            if (os_score <= 20)
-            {
-                osLang = "";
-            }
-            else
-            {
-                switch (os_b)
-                {
-                    case 25:
-                        {
-                            osb = "This site has a known release of " + os_1d + " in soil at levels exceeding the reportable quantity.  ";
-                            break;
-                        }
-                    case 15:
-                        {
-                            osb = "This site has a suspected release of " + os_1d + " in soil at levels exceeding the reportable quantity.  ";
-                            break;
-                        }
-
-                    default:
-                        {
-                            osb = "!!!!! INVALID VALUE FOR OS_B !!!!!";
-                            break;
-                        }
-
-                }
-
-                switch (os_a)
-                {
-                    case 2:
-                        {
-                            osa = "This site has limited access.  ";
-                            break;
-                        }
-                    case 4:
-                        {
-                            osa = "This site has unlimited access.  ";
-                            break;
-                        }
-
-                    default:
-                        {
-                            osa = "!!!!! INVALID VALUE FOR OS_A !!!!!";
-                            break;
-                        }
-
-                }
-
-                switch (os_1e)
-                {
-                    case 8:
-                        {
-                            os1em = "less than 300 feet";
-                            break;
-                        }
-                    case 6:
-                        {
-                            os1em = "between 301 and 1000 feet";
-                            break;
-                        }
-                    case 4:
-                        {
-                            os1em = "between 1001 and 3000 feet";
-                            break;
-                        }
-                    case 2:
-                        {
-                            os1em = "between 3001 and 5280 feet";
-                            break;
-                        }
-
-                    default:
-                        {
-                            os1em = "!!!!! INVALID VALUE FOR OS-1E !!!!!";
-                            break;
-                        }
-                }
-
-                osLang = osb + osa + "The nearest resident individual is " + os1em + " from the area affected by the release.  ";
-            }
-            return osLang;
-        }
-
-        public static string GetClassLanguage(Facility facility)
-        {
-            var classLang = facility.LocationDetails.LocationClass.Description;
-            return classLang;
-        }
-
         public static string GetCleanupStatusParameter(Facility facility)
         {
             var cleanupStatusParam = "";
@@ -1094,6 +803,323 @@ namespace FMS.Helpers
 
             }
             return clup;
+        }
+
+        public static string GetClassLanguage(Facility facility)
+        {
+            var classLang = facility.LocationDetails.LocationClass.Description;
+            return classLang;
+        }
+
+        public static string GetLanguageForGWScore(Facility facility, string exLang)
+        {
+            var gwLang = "";
+            var gw_score = facility.GroundwaterScoreDetails.GWScore;
+            var gw_a = facility.GroundwaterScoreDetails.A;
+            var gwa = "";
+            var gw_1d = facility.GroundwaterScoreDetails.ChemName;
+
+
+            if (gw_score > 10)
+            {
+
+                switch (gw_a)
+                {
+                    case 45:
+                        {
+                            gwa = "This site has a known release of " + gw_1d + " in groundwater at levels exceeding the reportable quantity.  ";
+                            break;
+                        }
+                    case 10:
+                        {
+                            gwa = "This site has a suspected release of " + gw_1d + " in groundwater at levels exceeding the reportable quantity.  ";
+                            break;
+                        }
+                    case 5:
+                        {
+                            gwa = "This site has a release of " + gw_1d + " that exceeds a reportable quantity because it has the potential to contaminate groundwater. ";
+                            break;
+                        }
+
+                    default:
+                        {
+                            gwa = "!!!!! INVALID VALUE FOR GW_A !!!!!";
+                            break;
+                        }
+                }
+
+                var gw_1e = facility.GroundwaterScoreDetails.E1;
+                var gw1e = "";
+
+                switch (gw_1e)
+                {
+                    case 25:
+                        {
+                            gw1e = "This release has resulted in known human exposure greater than or equal to the MCL for " + gw_1d + ".  ";
+                            break;
+                        }
+                    case 20:
+                        {
+                            gw1e = "This release has resulted in suspected human exposure.  ";
+                            break;
+                        }
+                    case 18:
+                        {
+                            gw1e = "This release has resulted in known human exposure, with no MCL having been established for " + gw_1d + ".  ";
+                            break;
+                        }
+                    case 15:
+                        {
+                            gw1e = "This release has resulted in known human exposure less than the MCL for " + gw_1d + ".  ";
+                            break;
+                        }
+                    case 12:
+                        {
+                            gw1e = "This release has resulted in suspected human exposure.  ";
+                            break;
+                        }
+                    case 8:
+                        {
+                            gw1e = "This release has resulted in suspected human exposure.  ";
+                            break;
+                        }
+                    case 4:
+                    case 3:
+                    case 2:
+                        {
+                            gw1e = "No human exposure via drinking water is suspected from this release.  ";
+                            break;
+                        }
+                    case 1:
+                    case 0:
+                        {
+                            gw1e = "";
+                            break;
+                        }
+
+                    default:
+                        {
+                            gw1e = "!!!!! INVALID VALUE FOR GW_1E !!!!!";
+                            break;
+                        }
+                }
+
+                var gw_2e = facility.GroundwaterScoreDetails.E2;
+                var gw2em = "";
+                string gw2estrt = "The nearest drinking water well is ";
+                string gw2eend = " from the area affected by the release.  ";
+
+                if (gw_1e < 8)
+                {
+                    switch (gw_2e)
+                    {
+                        case 16:
+                            {
+                                gw2em = "less than 0.5 miles";
+                                break;
+                            }
+                        case 9:
+                            {
+                                gw2em = "between 0.5 and 1 miles";
+                                break;
+                            }
+                        case 4:
+                            {
+                                gw2em = "between 1 and 2 miles";
+                                break;
+                            }
+                        case 1:
+                            {
+                                gw2em = "between 2 and 3 miles";
+                                break;
+                            }
+                        case 0:
+                            {
+                                gw2em = "greater than 3 miles";
+                                break;
+                            }
+
+                        default:
+                            {
+                                gw2em = "!!!!! INVALID VALUE FOR GW_2E !!!!!";
+                                break;
+                            }
+                    }
+                }
+
+                // Added for HSI Exemption with valid GW score. BGregory 12/4/2013
+
+                if (exLang == "")
+                {
+                    gwLang = gwa + gw1e + gw2estrt + gw2em + gw2eend;
+                }
+                else
+                {
+                    gwLang = gwa + gw1e + gw2estrt + gw2em + gw2eend;
+                }
+            }
+            return gwLang;
+        }
+
+        public static string GetLanguageForOSScore(Facility facility)
+        {
+            var osLang = "";
+            var osa = "";
+            var osb = "";
+            var os1em = "";
+            var os_score = facility.OnsiteScoreDetails.OnsiteScoreValue;
+            var os_a = facility.OnsiteScoreDetails.A;
+            var os_b = facility.OnsiteScoreDetails.B;
+            var os_1d = facility.OnsiteScoreDetails.ChemName1D;
+            var os_1e = facility.OnsiteScoreDetails.E1;
+
+            if (os_score <= 20)
+            {
+                osLang = "";
+            }
+            else
+            {
+                switch (os_b)
+                {
+                    case 25:
+                        {
+                            osb = "This site has a known release of " + os_1d + " in soil at levels exceeding the reportable quantity.  ";
+                            break;
+                        }
+                    case 15:
+                        {
+                            osb = "This site has a suspected release of " + os_1d + " in soil at levels exceeding the reportable quantity.  ";
+                            break;
+                        }
+
+                    default:
+                        {
+                            osb = "!!!!! INVALID VALUE FOR OS_B !!!!!";
+                            break;
+                        }
+
+                }
+
+                switch (os_a)
+                {
+                    case 2:
+                        {
+                            osa = "This site has limited access.  ";
+                            break;
+                        }
+                    case 4:
+                        {
+                            osa = "This site has unlimited access.  ";
+                            break;
+                        }
+
+                    default:
+                        {
+                            osa = "!!!!! INVALID VALUE FOR OS_A !!!!!";
+                            break;
+                        }
+
+                }
+
+                switch (os_1e)
+                {
+                    case 8:
+                        {
+                            os1em = "less than 300 feet";
+                            break;
+                        }
+                    case 6:
+                        {
+                            os1em = "between 301 and 1000 feet";
+                            break;
+                        }
+                    case 4:
+                        {
+                            os1em = "between 1001 and 3000 feet";
+                            break;
+                        }
+                    case 2:
+                        {
+                            os1em = "between 3001 and 5280 feet";
+                            break;
+                        }
+
+                    default:
+                        {
+                            os1em = "!!!!! INVALID VALUE FOR OS-1E !!!!!";
+                            break;
+                        }
+                }
+
+                osLang = osb + osa + "The nearest resident individual is " + os1em + " from the area affected by the release.  ";
+            }
+            return osLang;
+        }
+
+        public static string GetLanguageForExceptions(string hsi_id)
+        {
+            string exLang = "";
+
+            // This is to handle the exceptions for soil and gw scores
+
+            //if (hsi_id == "10459" | hsi_id == "10498" | hsi_id == "10689" | hsi_id == "10829")
+            //{
+
+            //    switch (hsi_id)
+            //    {
+            //        case "10498":
+            //            {
+            //                exLang = "The Director has determined that a release of regulated substances from groundwater has posed a threat to a water of the state.";
+            //                break;
+            //            }
+            //        case "10459":
+            //        case "10829":
+            //        case "10689":
+            //            {
+            //                exLang = "The Director has determined that a release of regulated substances from groundwater to a water of the state has resulted in an exceedance of state water quality standards.";
+            //                break;
+            //            }
+            //    }
+            //}
+            //// except2message = hsi10144
+            //else
+            //{
+
+            //    // Added new case to handle sources with a valid grand water score that need exception language - BGregory 12/4/2013
+
+            //    if (hsi_id == "10144" | hsi_id == "10747" | hsi_id == "10826" | hsi_id == "10926")
+            //    {
+
+            //        switch (hsi_id)
+            //        {
+
+            //            case "10144":
+            //                {
+            //                    exLang = "Releases of Mercury and PCBs at this site have caused bioaccumulation in fish and shellfish that has resulted in the need to recommend that human consumption be limited.  A cleanup and investigation have been initiated at this site, pursuant to a CERCLA 106 removal order issued by USEPA.  The site is listed on the National Priority List. ";
+            //                    break;
+            //                }
+            //            case "10747":
+            //                {
+            //                    exLang = "The Director has determined that a release of regulated substances has occurred due to the abandonment of solid waste containing chromium, silver, zinc, and hydrochloric acid in containers, process units, and tanks at the site.";
+            //                    break;
+            //                }
+            //            case "10826":
+            //                {
+            //                    exLang = "The Director has determined that a release of regulated substances from groundwater has posed a threat to a water of the state.";
+            //                    break;
+            //                }
+            //            case "10926":
+            //                {
+            //                    exLang = "The Director has determined that a release of regulated substances from groundwater to a water of the state has resulted in an exceedance of state water quality standards.";
+            //                    break;
+            //                }
+
+            //        }
+            //    }
+            //}
+
+
+            return exLang;
         }
     }
 }

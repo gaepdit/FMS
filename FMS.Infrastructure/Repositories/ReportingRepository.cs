@@ -352,8 +352,47 @@ namespace FMS.Infrastructure.Repositories
                     GWScore = e.GroundwaterScoreDetails != null ? e.GroundwaterScoreDetails.GWScore : null,
                     OnSiteScore = e.OnsiteScoreDetails != null ? e.OnsiteScoreDetails.OnsiteScoreValue : null
                 })
+                .OrderBy(e => e.HSINumber)
                 .ToListAsync();
             return facilityList;
+        }
+
+        public async Task<IReadOnlyList<AbndInacChecklistReviewDto>> GetAbndInacChecklistReviewAsync()
+        {
+            var eventList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.County)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.EventType)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ActionTaken)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ComplianceOfficer)
+                .Include(e => e.StatusDetails)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" || e.StatusDetails.OverallStatus.Name == "INAC")
+                .SelectMany(e => e.Events.Select(ev => new AbndInacChecklistReviewDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    City = e.City,
+                    County = e.County.Name,
+                    AbndInac = e.StatusDetails.OverallStatus.Name,
+                    EventType = ev.EventType,
+                    ActionTaken = ev.ActionTaken,
+                    StartDate = ev.StartDate,
+                    DueDate = ev.DueDate,
+                    CompletionDate = ev.CompletionDate,
+                    ComplianceOfficer = ev.ComplianceOfficer,
+                    Comment = ev.Comment
+                }))
+                .Where(ev => ev.EventType.Name == "Abandoned/Inactive Site Review")
+                .OrderBy(ev => ev.HSINumber)
+                .ThenBy(ev => ev.ActionTaken.Name)
+                .ToListAsync();
+
+            return eventList;
         }
 
         public async Task<IReadOnlyList<AbndCostEstimateReportDto>> GetAbndCostEstimateReportAsync()
@@ -389,7 +428,12 @@ namespace FMS.Infrastructure.Repositories
 
         #region Site Summary Report
 
+        //public async Task<FacilitySiteSummaryDto> GetFacilitySiteSummaryDtoAsync(Guid? id)
+        //{
+        //    var facilityDetail = await _facilityRepository.GetFacilityAsync((Guid)id);
 
+        //    return new FacilitySiteSummaryDto(facilityDetail);
+        //}
 
         #endregion
 

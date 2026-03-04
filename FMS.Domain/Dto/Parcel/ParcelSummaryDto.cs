@@ -5,6 +5,21 @@ namespace FMS.Domain.Dto
 {
     public class ParcelSummaryDto
     {
+        public ParcelSummaryDto() { }
+
+        public ParcelSummaryDto(ParcelSummaryDto parcelSummary)
+        {
+            Id = parcelSummary.Id;
+            Active = parcelSummary.Active;
+            FacilityId = parcelSummary.FacilityId;
+            ParcelNumber = parcelSummary.ParcelNumber;
+            Acres = parcelSummary.Acres;
+            ParcelType = parcelSummary.ParcelType;
+            ListDate = parcelSummary.ListDate;
+            DeListDate = parcelSummary.DeListDate;
+            SubListParcelName = parcelSummary.SubListParcelName;
+        }
+
         public ParcelSummaryDto(Parcel parcel)
         {
             Id = parcel.Id;
