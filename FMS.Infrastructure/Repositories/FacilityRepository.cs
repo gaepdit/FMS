@@ -12,7 +12,6 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Infrastructure.Repositories
 {

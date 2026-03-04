@@ -9,12 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using FMS.Domain.Services;
-using Spire.Pdf;
-using Spire.Pdf.Fields;
-using Spire.Pdf.Widget;
 
 namespace FMS.Pages.Reporting.Events
 {

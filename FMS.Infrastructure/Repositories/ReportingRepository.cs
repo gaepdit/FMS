@@ -1,17 +1,12 @@
 ﻿using Dapper;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using FMS;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
