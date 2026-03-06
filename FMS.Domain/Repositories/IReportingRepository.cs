@@ -60,7 +60,8 @@ namespace FMS.Domain.Repositories
 
         #region Site Summary Report
 
-        //Task<FacilitySiteSummaryDto> GetFacilitySiteSummaryDtoAsync(Guid? id);
+        Task<IReadOnlyList<SiteSummaryDto>> GetFacilitySiteSummaryDtoAsync
+            (SiteSummaryQuerySpec spec);
 
         #endregion
     }
