@@ -8,4 +8,87 @@
 <h1>@ViewData["Title"]</h1>
 <a asp-page="../Index">← Back to Reports</a>
 <hr />
-<h2><i>Under Construction</i></h2>
+<div class="container-fluid parent-container d-lg-inline-flex">
+    <form method="get">
+        <div class="row">
+            <p>
+                Choose from the following lists to narrow report list, or leave blank for all reports.
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Spec.OrganizationalUnitId"></label>
+                <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Spec.ComplianceOfficerId"></label>
+                <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Spec.AdditionalOrganizationalUnitId"></label>
+                <select asp-for="Spec.AdditionalOrganizationalUnitId" asp-items="Model.AddlOrgUnits" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Spec.CountyId"></label>
+                <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Spec.LocationClassId"></label>
+                <select asp-for="Spec.LocationClassId" asp-items="Model.LocationClasses" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <p>
+                Choose from the following Checkboxes to narrow report list, or leave blank for all reports.
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-check">
+                    <input asp-for="Spec.AllClassIVs" />
+                    <label asp-for="Spec.AllClassIVs" class="form-check-label"></label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-check">
+                    <input asp-for="Spec.AllCOs" />
+                    <label asp-for="Spec.AllCOs" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-check">
+                    <input asp-for="Spec.AllCounties" />
+                    <label asp-for="Spec.AllCounties" class="form-check-label"></label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-check">
+                    <input asp-for="Spec.AllOrgUnits" />
+                    <label asp-for="Spec.AllOrgUnits" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <input type="hidden" name="handler" value="Report" />
+                <button id="ReportButton" type="submit" class="btn btn-primary me-2">Generate Report(s)</button>
+            </div>
+        </div>
+    </form>
+</div>

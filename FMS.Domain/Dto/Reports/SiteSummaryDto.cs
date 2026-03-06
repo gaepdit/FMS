@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
-    public class FacilitySiteSummaryDto
+    public class SiteSummaryDto
     {
-        public FacilitySiteSummaryDto() { }
+        public SiteSummaryDto() { }
 
-        public FacilitySiteSummaryDto(FacilityDetailDto facility)
+        public SiteSummaryDto(Facility facility)
         {
             Id = facility.Id;
             FacilityNumber = facility.FacilityNumber;
@@ -32,7 +32,7 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
-            HsrpFacilityPropertyDetails = facility.HsrpFacilityPropertyDetails;
+            HsrpFacilityPropertyDetails = facility.HsrpFacilityProperties;
             LocationDetails = facility.LocationDetails;
             Parcels = facility.Parcels?
                 .Select(static p => new ParcelSummaryDto(p)).ToList() ??

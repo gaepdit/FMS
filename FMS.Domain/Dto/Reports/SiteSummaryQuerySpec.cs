@@ -1,0 +1,43 @@
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace FMS.Domain.Dto
+{
+    public class SiteSummaryQuerySpec
+    {
+        public SiteSummaryQuerySpec() { }
+
+        [Display(Name = "Facility Number")]
+        public string FacilityNumber { get; set; }
+
+        [Display(Name = "County")]
+        public int? CountyId { get; set; }
+
+        [Display(Name = "Compliance Officer")]
+        public Guid? ComplianceOfficerId { get; set; }
+
+        [Display(Name = "Class")]
+        public Guid? LocationClassId { get; set; }
+
+        [Display(Name = "Organizational Unit")]
+        public Guid? OrganizationalUnitId { get; set; }
+
+        [Display(Name = "Add'l Organizational Unit")]
+        public Guid? AdditionalOrganizationalUnitId { get; set; }
+
+        [Display(Name = "Print All Landfills?")]
+        public bool IsLandFill { get; set; } = false;
+
+        [Display(Name = "Print all Counties in Batches?")]
+        public bool AllCounties { get; set; } = false;
+
+        [Display(Name = "Print All COs in Batches?")]
+        public bool AllCOs { get; set; } = false;
+
+        [Display(Name = "Print All Class IV Sites?")]
+        public bool AllClassIVs { get; set; } = false;
+
+        [Display(Name = "Print All Org Units in Batches?")]
+        public bool AllOrgUnits { get; set; } = false;
+    }
+}

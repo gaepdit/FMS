@@ -17,7 +17,7 @@ namespace FMS.Domain.Repositories
         Task<IEnumerable<ListItem>> GetComplianceOfficersItemListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetFacilityStatusesItemListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetFacilityTypesItemListAsync(bool includeInactive = false);
-        Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false, List<string> list = null);
         Task<IEnumerable<ListItem>> GetCabinetsItemListAsync(bool includeInactive = false);
 
         // Phase III updates

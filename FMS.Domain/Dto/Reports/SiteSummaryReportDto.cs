@@ -12,15 +12,15 @@ namespace FMS.Domain.Dto
     {
         public SiteSummaryReportDto() { }
 
-        public SiteSummaryReportDto(FacilitySiteSummaryDto facilitySiteSummary)
+        public SiteSummaryReportDto(SiteSummaryDto facilitySiteSummary)
         {
             Id = facilitySiteSummary.Id;
-            facilitySiteSummaryNumber = facilitySiteSummary.FacilityNumber;
+            FacilityNumber = facilitySiteSummary.FacilityNumber;
             Name = facilitySiteSummary.Name;
             Active = facilitySiteSummary.Active;
             County = facilitySiteSummary.County;
-            facilitySiteSummaryStatus = facilitySiteSummary.FacilityStatus;
-            facilitySiteSummaryType = facilitySiteSummary.FacilityType;
+            FacilityStatus = facilitySiteSummary.FacilityStatus;
+            FacilityType = facilitySiteSummary.FacilityType;
             BudgetCode = facilitySiteSummary.BudgetCode;
             OrganizationalUnit = facilitySiteSummary.OrganizationalUnit;
             ComplianceOfficer = facilitySiteSummary.ComplianceOfficer;
@@ -48,10 +48,10 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; }
 
-        [Display(Name = "facilitySiteSummary Number")]
-        public string facilitySiteSummaryNumber { get; }
+        [Display(Name = "Facility Number")]
+        public string FacilityNumber { get; }
 
-        [Display(Name = "facilitySiteSummary Name")]
+        [Display(Name = "Facility Name")]
         public string Name { get; set; }
 
         [Display(Name = "Active Site")]
@@ -60,11 +60,11 @@ namespace FMS.Domain.Dto
         [Display(Name = "County")]
         public County County { get; set; }
 
-        [Display(Name = "facilitySiteSummary Status")]
-        public FacilityStatus facilitySiteSummaryStatus { get; }
+        [Display(Name = "Facility Status")]
+        public FacilityStatus FacilityStatus { get; }
 
         [Display(Name = "Type/Env. Interest")]
-        public FacilityType facilitySiteSummaryType { get; }
+        public FacilityType FacilityType { get; }
 
         [Display(Name = "Budget Code")]
         public BudgetCode BudgetCode { get; }
