@@ -36,7 +36,7 @@ namespace FMS.Helpers
             {
                 case reportBatchType.Single:
                     {
-                        //ssReport.Add(new SiteSummaryReportDto(await _repository.GetFacilitySiteSummaryDtoAsync(facilityId)));
+
                         break;
                     }
                 case reportBatchType.ComplianceOfficer:

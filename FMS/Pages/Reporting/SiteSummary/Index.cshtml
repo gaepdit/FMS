@@ -60,25 +60,32 @@
             </p>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-check">
                     <input asp-for="Spec.AllCOs" />
                     <label asp-for="Spec.AllCOs" class="form-check-label"></label>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-check">
                     <input asp-for="Spec.AllCounties" />
                     <label asp-for="Spec.AllCounties" class="form-check-label"></label>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-check">
                     <input asp-for="Spec.AllOrgUnits" />
                     <label asp-for="Spec.AllOrgUnits" class="form-check-label"></label>
                 </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Spec.MapType"></label>
+                <select asp-for="Spec.MapType" asp-items="Model.MapTypes" class="form-select">
+                    <option value="@Model.MapTypes.SelectedValue"></option>
+                </select>
             </div>
         </div>
         <hr />
@@ -90,6 +97,8 @@
             </div>
         </div>
     </form>
+    <br />
+    <br />
 </div>
 
 @if (Model.ShowResults)

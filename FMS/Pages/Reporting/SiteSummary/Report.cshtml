@@ -25,6 +25,10 @@ else
                 <p><strong>Organizational Unit:</strong> @report.OrganizationalUnit.Name</p>
                 <p><strong>Compliance Officer:</strong> @report.ComplianceOfficer.Name</p>
                 <hr />
+                <h3>Site Map:</h3>
+                <img src="@Model.GetGoogleMapsUrl(report)" alt="Site Map for @report.Name"  height="250" width="250" />
+                
+                <hr />
                 <h3>Address:</h3>
                 <p><strong>Street:</strong> @report.Address</p>
                 <p><strong>City:</strong> @report.City</p>
@@ -53,51 +57,51 @@ else
                 {
                     <p><strong>Parcel Number:</strong> @parcel.ParcelNumber</p>
                     <p><strong>Sublist Parcel Name:</strong> @parcel.SubListParcelName</p>
-                    <p><strong>Size (acres):</strong> @parcel.Acres</p>
-                    <p><strong>Listed Date:</strong> @parcel.ListDate</p>
+                    <p><strong>Size (acres):</strong> @Html.DisplayFor(Model => parcel.Acres, "DoubleOrNone")</p>
+                    <p><strong>Listed Date:</strong> @Html.DisplayFor(Model => parcel.ListDate, "DateOrNone")</p>
                     <hr />
                 }
                 <h3>Class</h3>
                 <p><strong>Class:</strong> @report.LocationDetails.LocationClass.DisplayName</p>
                 <hr />
                 <h3>Score Details</h3>
-                <p><strong>Score Comments:</strong> @report.ScoreDetails.Comments</p>
-                <p><strong>Score Date:</strong> @report.ScoreDetails.ScoredDate</p>
+                <p><strong>Score Comments:</strong> @Html.DisplayFor(Model => report.ScoreDetails.Comments, "StringOrNone")</p>
+                <p><strong>Score Date:</strong> @Html.DisplayFor(Model => report.ScoreDetails.ScoredDate, "DateOrNone")</p>
                 <h3>Onsite Score Details</h3>
                 <p><strong>A:</strong> @report.OnsiteScoreDetails.A</p>
                 <p><strong>B:</strong> @report.OnsiteScoreDetails.B</p>
                 <p><strong>C:</strong> @report.OnsiteScoreDetails.C</p>
-                <p><strong>CASNO:</strong> @report.OnsiteScoreDetails.CASNO</p>
-                <p><strong>ChemName1D:</strong> @report.OnsiteScoreDetails.ChemName1D</p>
-                <p><strong>Other1D:</strong> @report.OnsiteScoreDetails.Other1D</p>
+                <p><strong>CASNO:</strong> @Html.DisplayFor(Model => report.OnsiteScoreDetails.CASNO, "StringOrNone")</p>
+                <p><strong>ChemName1D:</strong> @Html.DisplayFor(Model => report.OnsiteScoreDetails.ChemName1D, "StringOrNone")</p>
+                <p><strong>Other1D:</strong> @Html.DisplayFor(Model => report.OnsiteScoreDetails.Other1D, "StringOrNone")</p>
                 <p><strong>D2:</strong> @report.OnsiteScoreDetails.D2</p>
                 <p><strong>D3:</strong> @report.OnsiteScoreDetails.D3</p>
                 <p><strong>E1:</strong> @report.OnsiteScoreDetails.E1</p>
                 <p><strong>E2:</strong> @report.OnsiteScoreDetails.E2</p>
-                <p><strong>Description:</strong> @report.OnsiteScoreDetails.Description</p>
-                <p><strong>Onsite Score:</strong> @report.OnsiteScoreDetails.OnsiteScoreValue</p>
+                <p><strong>Description:</strong> @Html.DisplayFor(Model => report.OnsiteScoreDetails.Description, "StringOrNone")</p>
+                <p><strong>Onsite Score:</strong> @Html.DisplayFor(Model => report.OnsiteScoreDetails.OnsiteScoreValue, "DecimalOrNone")</p>
                 <h3>Groundwater Score Details</h3>
                 <p><strong>A:</strong> @report.GroundwaterScoreDetails.A</p>
                 <p><strong>B1:</strong> @report.GroundwaterScoreDetails.B1</p>
                 <p><strong>B2:</strong> @report.GroundwaterScoreDetails.B2</p>
                 <p><strong>C:</strong> @report.GroundwaterScoreDetails.C</p>
-                <p><strong>CASNO:</strong> @report.GroundwaterScoreDetails.CASNO</p>
-                <p><strong>ChemName:</strong> @report.GroundwaterScoreDetails.ChemName</p>
-                <p><strong>Other:</strong> @report.GroundwaterScoreDetails.Other</p>
+                <p><strong>CASNO:</strong> @Html.DisplayFor(Model => report.GroundwaterScoreDetails.CASNO, "StringOrNone")</p>
+                <p><strong>ChemName:</strong> @Html.DisplayFor(Model => report.GroundwaterScoreDetails.ChemName, "StringOrNone")</p>
+                <p><strong>Other:</strong> @Html.DisplayFor(Model => report.GroundwaterScoreDetails.Other, "StringOrNone")</p>
                 <p><strong>D2:</strong> @report.GroundwaterScoreDetails.D2</p>
                 <p><strong>D3:</strong> @report.GroundwaterScoreDetails.D3</p>
                 <p><strong>E1:</strong> @report.GroundwaterScoreDetails.E1</p>
                 <p><strong>E2:</strong> @report.GroundwaterScoreDetails.E2</p>
-                <p><strong>Description:</strong> @report.GroundwaterScoreDetails.Description</p>
-                <p><strong>Groundwater Score:</strong> @report.GroundwaterScoreDetails.GWScore</p>
+                <p><strong>Description:</strong> @Html.DisplayFor(Model => report.GroundwaterScoreDetails.Description, "StringOrNone")</p>
+                <p><strong>Groundwater Score:</strong> @Html.DisplayFor(Model => report.GroundwaterScoreDetails.GWScore, "DecimalOrNone")</p>
                 <hr />
                 <h3>Status</h3>
-                <p><strong>Overall Status:</strong> @report.StatusDetails.OverallStatus.Name</p>
-                <p><strong>Status Comments:</strong> @report.StatusDetails.Comments</p>
-                <p><strong>Onsite Status:</strong> @report.StatusDetails.SoilStatus.Name</p>
-                <p><strong>Groundwater Status:</strong> @report.StatusDetails.GroundwaterStatus.Name</p>
+                <p><strong>Overall Status:</strong> @Html.DisplayFor(Model => report.StatusDetails.OverallStatus.Name, "StringOrNone")</p>
+                <p><strong>Status Comments:</strong> @Html.DisplayFor(Model => report.StatusDetails.Comments, "StringOrNone")</p>
+                <p><strong>Onsite Status:</strong> @Html.DisplayFor(Model => report.StatusDetails.SoilStatus.Name, "StringOrNone")</p>
+                <p><strong>Groundwater Status:</strong> @Html.DisplayFor(Model => report.StatusDetails.GroundwaterStatus.Name, "StringOrNone")</p>
                 <p><strong>GAPS Score:</strong> @report.StatusDetails.GAPSScore</p>
-                <p><strong>GAPS Score Date:</strong> @report.StatusDetails.GAPSModelDate</p>
+                <p><strong>GAPS Score Date:</strong> @Html.DisplayFor(Model => report.StatusDetails.GAPSModelDate, "DateOrNone")</p>
                 <p><strong>GAPS Assessment:</strong> @Html.DisplayFor(Model => report.StatusDetails.GAPSAssessment.Name, "StringOrNone")</p>
                 <hr />
                 <h3>Substances</h3>

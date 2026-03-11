@@ -1,4 +1,5 @@
 using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,11 +11,15 @@ namespace FMS.Pages.Reporting.SiteSummary
     public class ReportModel : PageModel
     {
         private readonly IReportingRepository _repository;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
-        public ReportModel(IReportingRepository repository)
+        public ReportModel(IReportingRepository repository, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _repository = repository;
+            _configuration = configuration;
         }
+
+        public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
 
         [BindProperty]
         public SiteSummaryQuerySpec Spec { get; set; }
@@ -29,6 +34,15 @@ namespace FMS.Pages.Reporting.SiteSummary
             ReportList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
 
             return Page();
+        }
+
+        public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
+        {
+            if (facility.Latitude != 0 && facility.Longitude != 0)
+            {
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom=16&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={Spec.MapType}&key={GoogleMapsApiKey}";
+            }
+            return null;
         }
     }
 }
