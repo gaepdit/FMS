@@ -59,6 +59,15 @@
             "provider": "cdnjs",
             "library": "OverlappingMarkerSpiderfier@1.0.3",
             "destination": "wwwroot/lib/OverlappingMarkerSpiderfier/"
+        },
+        {
+            "provider": "jsdelivr",
+            "library": "sanitize.css@13.0.0",
+            "destination": "wwwroot/lib/sanitize.css",
+            "files": [
+                "sanitize.min.css",
+                "sanitize.css"
+            ]
         }
     ]
 }

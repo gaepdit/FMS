@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -39,5 +40,20 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Print All Org Units in Batches?")]
         public bool AllOrgUnits { get; set; } = false;
+
+        public IDictionary<string, string?> AsRouteValues() => new Dictionary<string, string?>
+        {
+            { nameof(FacilityNumber), FacilityNumber },
+            { nameof(CountyId), CountyId?.ToString() },
+            { nameof(ComplianceOfficerId), ComplianceOfficerId?.ToString() },
+            { nameof(LocationClassId), LocationClassId?.ToString() },
+            { nameof(OrganizationalUnitId), OrganizationalUnitId?.ToString() },
+            { nameof(AdditionalOrganizationalUnitId), AdditionalOrganizationalUnitId?.ToString() },
+            { nameof(IsLandFill), IsLandFill.ToString() },
+            { nameof(AllCounties), AllCounties.ToString() },
+            { nameof(AllCOs), AllCOs.ToString() },
+            { nameof(AllClassIVs), AllClassIVs.ToString() },
+            { nameof(AllOrgUnits), AllOrgUnits.ToString() },
+        };
     }
 }

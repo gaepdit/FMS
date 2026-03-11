@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Dto
 {
@@ -12,7 +10,7 @@ namespace FMS.Domain.Dto
     {
         public SiteSummaryReportDto() { }
 
-        public SiteSummaryReportDto(SiteSummaryDto facilitySiteSummary)
+        public SiteSummaryReportDto(Facility facilitySiteSummary)
         {
             Id = facilitySiteSummary.Id;
             FacilityNumber = facilitySiteSummary.FacilityNumber;
@@ -31,7 +29,7 @@ namespace FMS.Domain.Dto
             PostalCode = facilitySiteSummary.PostalCode;
             Latitude = facilitySiteSummary.Latitude;
             Longitude = facilitySiteSummary.Longitude;
-            HsrpFacilityPropertyDetails = facilitySiteSummary.HsrpFacilityPropertyDetails;
+            HsrpFacilityPropertyDetails = facilitySiteSummary.HsrpFacilityProperties;
             LocationDetails = facilitySiteSummary.LocationDetails;
             Parcels = facilitySiteSummary.Parcels?
                 .Select(static p => new ParcelSummaryDto(p)).ToList() ??

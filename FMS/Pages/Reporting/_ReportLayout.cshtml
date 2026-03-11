@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <partial name="_FaviconPartial" />
+    <link rel="stylesheet" href="~/lib/sanitize.css/sanitize.min.css" />
+    <link rel="stylesheet" href="~/css/report.css" asp-append-version="true" />
+    <partial name="_RaygunScriptsPartial" />
+</head>
+<body class="@ViewBag.BodyCssClass">
+    @* <partial name="_TestSiteBannerPartial" /> *@
+    <partial name="_PrintToolbarPartial" />
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <script asp-add-content-to-csp>
+        document.getElementById('print-button').addEventListener('click', function () {
+            window.print();
+            return false;
+        }, false);
+    </script>
+
+    @await RenderSectionAsync("Scripts", false)
+</body>
+</html>

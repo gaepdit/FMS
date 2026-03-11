@@ -9,13 +9,17 @@
 <a asp-page="../Index">← Back to Reports</a>
 <hr />
 <div class="container-fluid parent-container d-lg-inline-flex">
-    <form method="get">
+    <form method="get" asp-fragment="SearchResults">
         <div class="row">
             <p>
                 Choose from the following lists to narrow report list, or leave blank for all reports.
             </p>
         </div>
         <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Spec.FacilityNumber"></label>
+                <input asp-for="Spec.FacilityNumber" class="form-control" />
+            </div>
             <div class="col-md-4">
                 <label asp-for="Spec.OrganizationalUnitId"></label>
                 <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-select">
@@ -28,14 +32,14 @@
                     <option value=""></option>
                 </select>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <label asp-for="Spec.AdditionalOrganizationalUnitId"></label>
                 <select asp-for="Spec.AdditionalOrganizationalUnitId" asp-items="Model.AddlOrgUnits" class="form-select">
                     <option value=""></option>
                 </select>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-4">
                 <label asp-for="Spec.CountyId"></label>
                 <select asp-for="Spec.CountyId" asp-items="Model.Counties" class="form-select">
@@ -52,16 +56,10 @@
         <hr />
         <div class="row">
             <p>
-                Choose from the following Checkboxes to narrow report list, or leave blank for all reports.
+                Choose from the following Checkboxes to Print in Batches, or leave blank for all searched forreports.
             </p>
         </div>
         <div class="row">
-            <div class="col-md-5">
-                <div class="form-check">
-                    <input asp-for="Spec.AllClassIVs" />
-                    <label asp-for="Spec.AllClassIVs" class="form-check-label"></label>
-                </div>
-            </div>
             <div class="col-md-5">
                 <div class="form-check">
                     <input asp-for="Spec.AllCOs" />
@@ -85,10 +83,68 @@
         </div>
         <hr />
         <div class="row">
-            <div class="col-md-3">
-                <input type="hidden" name="handler" value="Report" />
-                <button id="ReportButton" type="submit" class="btn btn-primary me-2">Generate Report(s)</button>
+            <div class="col-md-6">
+                <input type="hidden" name="handler" value="Preview" />
+                <button id="PreviewButton" type="submit" class="btn btn-primary me-2">Preview Report List</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear</a>
             </div>
         </div>
     </form>
 </div>
+
+@if (Model.ShowResults)
+{
+    <hr />
+    <div id="SearchResults" class="container-fluid parent-container d-lg-inline-flex">
+        <div class="row">
+            <div class="col">
+                <h3>Results</h3>
+            </div>
+            @if (Model.SummaryList.Count > 0)
+            {
+                <div class="col-auto d-print-none ms-2">
+                    <a asp-page="Report" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
+                       class="btn btn-sm btn-primary icon-link">
+                        <svg class="bi">
+                            <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
+                        </svg>
+                        Export/Print Reports
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="container-fluid parent-container d-lg-inline-flex">
+        @if (Model.SummaryList.Count == 0)
+        {
+            <p class="lead text-info">No matching results found.</p>
+        }
+        else
+        {
+            <table class="table" aria-label="Facility search results">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" class="text-center">HSI Number</th>
+                        <th scope="col">Facility Name</th>
+                        <th scope="col">Organizational Unit</th>
+                        <th scope="col">Compliance Officer</th>
+                        <th scope="col">County</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SummaryList)
+                    {
+                        <tr class="@(!item.Active ? "table-warning" : "")">
+                            <td>@Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")</td>
+                            <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
+                            <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")</td>
+                            <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
+                            <td>@Html.DisplayFor(m => item.County.Name, "StringOrNone")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+}

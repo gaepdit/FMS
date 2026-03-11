@@ -3,7 +3,6 @@ using FMS.Domain.Entities.Base;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Graph.Drives.Item.Items.Item.GetActivitiesByIntervalWithStartDateTimeWithEndDateTimeWithInterval;
 using System;
 using System.Collections.Generic;
 using System.Linq;

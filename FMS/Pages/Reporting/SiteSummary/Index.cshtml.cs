@@ -1,16 +1,10 @@
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
-using FMS.Infrastructure.Repositories;
-using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Graph.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Reporting.SiteSummary
@@ -30,6 +24,11 @@ namespace FMS.Pages.Reporting.SiteSummary
         [BindProperty]
         public SiteSummaryQuerySpec Spec { get; set; }
 
+        [BindProperty]
+        public IReadOnlyList<FacilityBasicDto> SummaryList { get; set; } = new List<FacilityBasicDto>();
+
+        public bool ShowResults { get; private set; }
+
         // Select Lists
         public SelectList Counties => new(Data.Counties, "Id", "Name");
         public SelectList LocationClasses { get; private set; }
@@ -44,18 +43,13 @@ namespace FMS.Pages.Reporting.SiteSummary
             return Page();
         }
 
-        public async Task<IActionResult> OnGetReportAsync(SiteSummaryQuerySpec spec)
+        public async Task<IActionResult> OnGetPreviewAsync(SiteSummaryQuerySpec spec)
         {
             Spec = spec;
 
-            var fileName = $"FMS_Retention_Records_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.pdf";
-            // "FacilityReportList" Detailed Retention Record List to export
-            IEnumerable<SiteSummaryDto> siteSummaryList =
-                await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
-            
-            //var generatedFile =  File(ExportHelper.ExportPdfAsByteArray(siteSummaryList),
-            //    "application/pdf", fileName);
+            SummaryList = await _repository.GetHsiFacilitiesAsync(Spec);
 
+            ShowResults = true;
             await PopulateSelectsAsync();
             return Page();
         }

@@ -12,6 +12,9 @@ namespace FMS.Domain.Dto
             Active = facility.Active;
             FacilityNumber = facility.FacilityNumber;
             Name = facility.Name;
+            OrganizationalUnit = facility.OrganizationalUnit;
+            ComplianceOfficer = facility.ComplianceOfficer;
+            County = facility.County;
         }
 
         public Guid Id { get; }
@@ -22,5 +25,14 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Facility Name")]
         public string Name { get; }
+
+        [Display(Name = "Organizational Unit")]
+        public OrganizationalUnit OrganizationalUnit { get; set; }
+
+        [Display(Name = "Compliance Officer")]
+        public ComplianceOfficer ComplianceOfficer { get; set; }
+
+        [Display(Name = "County")]
+        public County County { get; set; }
     }
 }
