@@ -139,6 +139,7 @@
                         <th scope="col">Organizational Unit</th>
                         <th scope="col">Compliance Officer</th>
                         <th scope="col">County</th>
+                        <th scope="col">Latitude/Longitude</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -150,6 +151,9 @@
                             <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.County.Name, "StringOrNone")</td>
+                            <td>
+                                @Html.DisplayFor(m => item.Latitude, "DecimalOrNone")/@Html.DisplayFor(m => item.Longitude, "DecimalOrNone")
+                            </td>
                         </tr>
                     }
                 </tbody>
