@@ -6,6 +6,7 @@ namespace FMS.Domain.Data
     {
         public static List<string> States => new List<string>
         {
+            "",
             "Alabama",
             "Alaska",
             "Arizona",

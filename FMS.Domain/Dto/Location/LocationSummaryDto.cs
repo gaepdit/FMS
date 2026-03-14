@@ -14,6 +14,8 @@ namespace FMS.Domain.Dto
             Active = location.Active;
             FacilityId = location.FacilityId;
             LocationClassId = location.LocationClassId;
+            MapType = location.MapType;
+            MapZoom = location.MapZoom;
         }
 
         public Guid Id { get; set; }
@@ -24,5 +26,11 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Class")]
         public Guid? LocationClassId { get; set; }
+
+        [Display(Name = "Map Type")]
+        public string MapType { get; set; } = "hybrid";
+
+        [Display(Name = "Map Zoom")]
+        public string MapZoom { get; set; } = "13";
     }
 }

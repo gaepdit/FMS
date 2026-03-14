@@ -81,15 +81,6 @@
         </div>
         <hr />
         <div class="row">
-            <div class="col-md-4">
-                <label asp-for="Spec.MapType"></label>
-                <select asp-for="Spec.MapType" asp-items="Model.MapTypes" class="form-select">
-                    <option value="@Model.MapTypes.SelectedValue"></option>
-                </select>
-            </div>
-        </div>
-        <hr />
-        <div class="row">
             <div class="col-md-6">
                 <input type="hidden" name="handler" value="Preview" />
                 <button id="PreviewButton" type="submit" class="btn btn-primary me-2">Preview Report List</button>

@@ -27,7 +27,6 @@ else
                 <hr />
                 <h3>Site Map:</h3>
                 <img src="@Model.GetGoogleMapsUrl(report)" alt="Site Map for @report.Name"  height="250" width="250" />
-                
                 <hr />
                 <h3>Address:</h3>
                 <p><strong>Street:</strong> @report.Address</p>
@@ -39,7 +38,7 @@ else
                 <h3>Contact Information:</h3>
                 @foreach (var contact in report.Contacts)
                 {
-                    @if (contact.ContactType.Name == "Property Owner")
+                    @if (contact.ContactType?.Name == "Property Owner")
                     {
                         <p><strong>Name:</strong> @contact.GivenName @contact.FamilyName</p>
                         <p><strong>Title:</strong> @contact.ContactTitle</p>

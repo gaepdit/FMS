@@ -18,6 +18,8 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("3A7457EC-E4A4-47D2-B47C-35078C3F5BF7"),
                     LocationClassId = new Guid("1b33027b-261f-4639-bd10-c3e9b29b5d90"),
+                    MapType = "hybrid",
+                    MapZoom = "15"
                 },
                 new()
                 {
@@ -25,6 +27,8 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     FacilityId = new Guid("50AEC751-D2FA-42D1-BE02-3EDF721787CA"),
                     LocationClassId = new Guid("ec4ab203-8c3e-4ffb-a849-94365b87c2ab"),
+                    MapType = "terrain",
+                    MapZoom = "13"
                 }
             };
         }

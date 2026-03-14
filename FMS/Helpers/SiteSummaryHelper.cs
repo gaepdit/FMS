@@ -65,10 +65,6 @@ namespace FMS.Helpers
             return report;
         }
 
-        public static object GetMapImage(decimal lat, decimal lon)
-        {
-            return new object();
-        }
         public static string GetCleanupStatusParameter(Facility facility)
         {
             var cleanupStatusParam = "";

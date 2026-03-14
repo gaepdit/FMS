@@ -14,6 +14,12 @@ namespace FMS.TestData.SeedData
             {
                 new()
                 {
+                    Id = new Guid("E386BE90-0418-48DE-8BA5-D3901A5F3EF2"),
+                    Active = true,
+                    Name = "Abandoned Sites",
+                },
+                new()
+                {
                     Id = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"),
                     Active = true,
                     Name = "Brownfields Management",
@@ -116,6 +122,18 @@ namespace FMS.TestData.SeedData
                 },
                 new()
                 {
+                    Id = new Guid("AF79D460-A1EB-4ABA-91C6-EACEE76CA5F7"),
+                    Active = true,
+                    Name = "Response Development 1",
+                },
+                new()
+                {
+                    Id = new Guid("CDB8F7CE-D671-4507-8471-1DE26FC4963C"),
+                    Active = true,
+                    Name = "Response Development 2",
+                },
+                new()
+                {
                     Id = new Guid("B37FBE15-DC40-47E5-9AB1-953B46F20498"),
                     Active = true,
                     Name = "PIRT",
@@ -144,6 +162,12 @@ namespace FMS.TestData.SeedData
                     Active = true,
                     Name = "Treatment & Storage",
                 },
+                new()
+                {
+                    Id = new Guid("F6581845-3709-424B-A967-C202ACC6AE85"),
+                    Active = true,
+                    Name = "Voluntary Remediation",
+                }
             };
         }
     }

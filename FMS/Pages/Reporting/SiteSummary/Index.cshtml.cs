@@ -31,7 +31,6 @@ namespace FMS.Pages.Reporting.SiteSummary
 
         // Select Lists
         public SelectList Counties => new(Data.Counties, "Id", "Name");
-        public SelectList MapTypes => new(Data.MapTypes);
         public SelectList LocationClasses { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }

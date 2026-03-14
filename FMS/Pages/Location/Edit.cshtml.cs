@@ -1,3 +1,4 @@
+using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
@@ -17,15 +18,20 @@ namespace FMS.Pages.Location
         private readonly ILocationRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
         public EditModel(
             ILocationRepository repository, 
             IFacilityRepository facilityRepository,
-            ISelectListHelper selectListHelper)
+            ISelectListHelper selectListHelper,
+            Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
             _listHelper = selectListHelper;
+            _configuration = configuration;
         }
+
+        public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
 
         [BindProperty]
         public LocationEditDto Location { get; set; }
@@ -36,6 +42,10 @@ namespace FMS.Pages.Location
         public Guid Id { get; set; }
 
         public SelectList Classes { get; set; }
+        public SelectList MapTypes => new(Data.MapTypes);
+        public SelectList MapZooms => new(Data.MapZooms);
+
+        //public bool ShowResults { get; private set; }
 
         [TempData]
         public string ActiveTab { get; set; }
@@ -70,7 +80,22 @@ namespace FMS.Pages.Location
             return Page();
         }
 
-       
+        public async Task<IActionResult> OnGetPreviewAsync(LocationEditDto location)
+        {
+            Location = location;
+
+            Facility = await _facilityRepository.GetFacilityAsync(Location.FacilityId);
+            if (Facility == null)
+            {
+                return NotFound();
+            }
+
+            ActiveTab = "Location";
+            //ShowResults = true;
+            await PopulateSelectsAsync();
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -97,6 +122,14 @@ namespace FMS.Pages.Location
         private async Task PopulateSelectsAsync()
         {
             Classes = await _listHelper.LocationClassesSelectListAsync();
+        }
+        public string GetGoogleMapsUrl(FacilityDetailDto facility)
+        {
+            if (facility.Latitude != 0 && facility.Longitude != 0)
+            {
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}";
+            }
+            return null;
         }
     }
 }

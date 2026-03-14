@@ -41,9 +41,6 @@ namespace FMS.Domain.Dto
         [Display(Name = "Print All Org Units in Batches?")]
         public bool AllOrgUnits { get; set; } = false;
 
-        [Display(Name = "Map Type")]
-        public string MapType { get; set; } = "hybrid";
-
         public IDictionary<string, string?> AsRouteValues() => new Dictionary<string, string?>
         {
             { nameof(FacilityNumber), FacilityNumber },
@@ -56,8 +53,7 @@ namespace FMS.Domain.Dto
             { nameof(AllCounties), AllCounties.ToString() },
             { nameof(AllCOs), AllCOs.ToString() },
             { nameof(AllClassIVs), AllClassIVs.ToString() },
-            { nameof(AllOrgUnits), AllOrgUnits.ToString() },
-            { nameof(MapType), MapType },
+            { nameof(AllOrgUnits), AllOrgUnits.ToString() }
         };
     }
 }

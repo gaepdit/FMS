@@ -1,5 +1,4 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -40,7 +39,7 @@ namespace FMS.Pages.Reporting.SiteSummary
         {
             if (facility.Latitude != 0 && facility.Longitude != 0)
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom=16&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={Spec.MapType}&key={GoogleMapsApiKey}";
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}";
             }
             return null;
         }

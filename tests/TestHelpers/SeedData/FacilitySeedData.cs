@@ -63,11 +63,11 @@ namespace FMS.TestData.SeedData
                     FacilityNumber = "10789",
                     FileId = new Guid("5019EBBC-8F99-469A-BCDC-256823EDD9A2"), //243-0085
                     FacilityTypeId = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"), // HSI
-                    OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
+                    OrganizationalUnitId = new Guid("CDB8F7CE-D671-4507-8471-1DE26FC4963C"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "WOODSTOCK SHOPPING CENTER",
                     ComplianceOfficerId = new Guid("B87CADC7-AD43-40CD-A1B6-C906883E386B"), //00945102
-                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
+                    FacilityStatusId = new Guid("A3B22F16-B136-4DD6-870E-829413843D62"),
                     Location = "Description of Location in Woodstock",
                     Address = "9980, 10010 AND 10020 HIGHWAY 92 AND 1906 PROFESSIONAL WAY",
                     City = "WOODSTOCK",
@@ -107,11 +107,11 @@ namespace FMS.TestData.SeedData
                     FacilityNumber = "10987",
                     FileId = new Guid("47B44DDE-D9D0-4799-AB32-20E829F9D53C"), //243-0069
                     FacilityTypeId = new Guid("83E3005C-BD7C-4E52-918E-E1166F9483CC"), //HSI
-                    OrganizationalUnitId = new Guid("1845DB88-B57C-42B7-B954-7EAD37A499AC"), //Org Unit
+                    OrganizationalUnitId = new Guid("AF79D460-A1EB-4ABA-91C6-EACEE76CA5F7"), //Org Unit
                     BudgetCodeId = new Guid("0B1B88EB-9957-4BBA-87A7-F599FA88D725"), //HWBRVRP
                     Name = "WOODSTOCK CROSSING",
                     ComplianceOfficerId = new Guid("C505460A-1AFF-4A9C-9637-3FF5CC09878D"), //01080246
-                    FacilityStatusId = new Guid("0FF0A063-2D11-4305-BADA-E9A4414EDDF1"),
+                    FacilityStatusId = new Guid("A3B22F16-B136-4DD6-870E-829413843D62"),
                     Location = "Some place in Woodstock",
                     Address = "12050 HWY 92",
                     City = "WOODSTOCK",
