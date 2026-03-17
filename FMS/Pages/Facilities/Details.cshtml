@@ -136,8 +136,6 @@
                 <dd class="col-sm-3">
                     @Html.DisplayFor(model => model.FacilityDetail.Latitude),
                     @Html.DisplayFor(model => model.FacilityDetail.Longitude)
-                   @*  <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
-                    <a asp-page="/Facilities/Map" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary" target="_blank">Location Search</a> *@
                 </dd>
             </dl>
             <div>
@@ -341,9 +339,8 @@
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
             <a asp-page="/Facilities/Map" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary" target="_blank">Location Search</a>
-@if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
-{
-
+       @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
+            {
             @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
             {
                 <a class="btn btn-sm btn-primary" target="_blank" href=@Model.HSIFolderLink>HSI Folder</a>

@@ -45,8 +45,6 @@ namespace FMS.Pages.Location
         public SelectList MapTypes => new(Data.MapTypes);
         public SelectList MapZooms => new(Data.MapZooms);
 
-        //public bool ShowResults { get; private set; }
-
         [TempData]
         public string ActiveTab { get; set; }
 
@@ -91,7 +89,6 @@ namespace FMS.Pages.Location
             }
 
             ActiveTab = "Location";
-            //ShowResults = true;
             await PopulateSelectsAsync();
             return Page();
         }
@@ -127,7 +124,7 @@ namespace FMS.Pages.Location
         {
             if (facility.Latitude != 0 && facility.Longitude != 0)
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}";
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
             return null;
         }

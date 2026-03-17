@@ -170,7 +170,7 @@ header {
     padding: 10px;
 }
 
-#masthead {
+.masthead {
     display: grid;
     grid-template-columns: auto auto;
     font-size: larger;
@@ -178,20 +178,25 @@ header {
     border-bottom: 4px solid;
 }
 
-#siteinfo {
+.siteinfo {
     display: grid;
     grid-template-columns: auto 250px;
     padding-top: 3px;
     padding-bottom: 3px;
-    border-bottom: 3px solid;
 }
 
-#sitename {
+.sitename {
     display: grid;
     grid-template-columns: 80px auto;
 }
 
-#latlong {
+.sitemap {
+    border: thin;
+    height: 250px;
+    width: 250px;
+}
+
+.latlong {
     display: grid;
     grid-template-columns: auto auto;
     padding-top: 5px;
@@ -202,17 +207,39 @@ header {
     grid-template-columns: 80px auto 110px;
 }
 
-#substances {
+.subparcelhead {
+    border-top: 3px solid;
+    padding: 0px;
+    border-bottom: thin;
+}
+
+.subparceltablehead {
+    border-bottom: 3px solid;
+    display: grid;
+    grid-template-columns: auto 80px 150px 100px;
+    font-weight: bold;
+}
+
+.subparcel {
+    display: grid;
+    grid-template-columns: auto 80px 150px 100px;
+}
+
+.status {
+    border-top: 3px solid;
+}
+
+.substances {
     padding-top: 5px;
 }
 
-#substancehead {
+.substancehead {
     display: grid;
     grid-template-columns: 320px 30px 30px auto 30px 40px;
     font-weight: bold;
 }
 
-#substancebox {
+.substancebox {
     display: grid;
     grid-template-columns: 380px auto;
     border: 2px solid;
@@ -224,10 +251,9 @@ header {
     grid-template-columns: auto 30px 30px;
 }
 
-.my-check-box {
-    font-weight: bolder;
+.mycheckbox {
+    font-weight: bold;
 }
-
 
 /* Footer */
 

@@ -55,39 +55,33 @@
         </div>
     </form>
 </div>
-@* @if (Model.ShowResults)
-{ *@
-    <hr />
-    <div id="MapResults" class="container-fluid parent-container d-lg-inline-flex">
-        <div class="row">
-            @* <div class="col">
-                <h3>Preview Results</h3>
-            </div> *@
-            <form method="post">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-                <input type="hidden" asp-for="Location.FacilityId" />
-                <input type="hidden" asp-for="Location.Id" />
-                <div class="row mb-3">
-                    <div class="col-9 mb-3">
-                        <label asp-for="Location.LocationClassId" class="form-label">Class</label>
-                        <select asp-for="Location.LocationClassId" asp-items="Model.Classes" class="form-select">
-                        </select>
-                        <span asp-validation-for="Location.LocationClassId" class="text-danger"></span>
-                    </div>
+<hr />
+<div id="MapResults" class="container-fluid parent-container d-lg-inline-flex">
+    <div class="row">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <input type="hidden" asp-for="Location.FacilityId" />
+            <input type="hidden" asp-for="Location.Id" />
+            <div class="row mb-3">
+                <div class="col-10 mb-3">
+                    <label asp-for="Location.LocationClassId" class="form-label">Class</label>
+                    <select asp-for="Location.LocationClassId" asp-items="Model.Classes" class="form-select">
+                    </select>
+                    <span asp-validation-for="Location.LocationClassId" class="text-danger"></span>
                 </div>
-                <input type="hidden" asp-for="Location.MapZoom" />
-                <input type="hidden" asp-for="Location.MapType" />
-                <div class="row mb-3">
-                    <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
-                    <a asp-page="../Facilities/Details"
-                       asp-route-id="@Model.Facility.Id"
-                       asp-route-tab="Location"
-                       asp-fragment="TabPages"
-                       class="btn btn-outline-secondary col-md-2">
-                        Cancel
-                    </a>
-                </div>
-            </form>
-        </div>
+            </div>
+            <input type="hidden" asp-for="Location.MapZoom" />
+            <input type="hidden" asp-for="Location.MapType" />
+            <div class="row mb-3">
+                <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
+                <a asp-page="../Facilities/Details"
+                   asp-route-id="@Model.Facility.Id"
+                   asp-route-tab="Location"
+                   asp-fragment="TabPages"
+                   class="btn btn-outline-secondary col-md-2">
+                    Cancel
+                </a>
+            </div>
+        </form>
     </div>
-@* } *@
+</div>

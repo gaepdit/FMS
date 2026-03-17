@@ -3,8 +3,16 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Helpers
 {
-    public static class UrlHelper
+    public class UrlHelper
     {
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+
+        public UrlHelper(Microsoft.Extensions.Configuration.IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
+
         public static string GetHSIFolderLink(string hsiNumber)
         {
             return string.IsNullOrEmpty(hsiNumber)
