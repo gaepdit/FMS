@@ -56,7 +56,7 @@
         <hr />
         <div class="row">
             <p>
-                Choose from the following Checkboxes to Print in Batches, or leave blank for all searched forreports.
+                Choose from the following Checkboxes to Print in Batches, or leave blank for all searched for reports.
             </p>
         </div>
         <div class="row">
@@ -80,6 +80,15 @@
             </div>
         </div>
         <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input asp-for="Spec.ShowHeader" />
+                    <label asp-for="Spec.ShowHeader" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <br/>
         <div class="row">
             <div class="col-md-6">
                 <input type="hidden" name="handler" value="Preview" />

@@ -14,35 +14,35 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("013E4ABB-F6A5-4B95-BA5A-438BEDD0BECA"),
                     Active = true,
-                    Name = "Soil Status 1",
+                    Name = "ABND",
                     Description = "Initial soil status for testing purposes."
                 },
                 new() 
                 {
                     Id = new Guid("C0AB6B37-F700-4DAE-8801-D9DC8E03453E"),
                     Active = true,
-                    Name = "Soil Status 2",
+                    Name = "INAC",
                     Description = "Secondary soil status for testing purposes."
                 },
                 new() 
                 {
                     Id = new Guid("A1B2C3D4-E5F6-7890-ABCD-EF1234567890"),
                     Active = true,
-                    Name = "Soil Status 3",
+                    Name = "INV",
                     Description = "Tertiary soil status for testing purposes."
                 },
                 new() 
                 {
                     Id = new Guid("12345678-90AB-CDEF-1234-567890ABCDEF"),
                     Active = true,
-                    Name = "Soil Status 4",
+                    Name = "RRS1",
                     Description = "Quaternary soil status for testing purposes."
                 },
                 new() 
                 {
                     Id = new Guid("FEDCBA98-7654-3210-FEDC-BA9876543210"),
                     Active = true,
-                    Name = "Soil Status 5",
+                    Name = "RRS5",
                     Description = "Quinary soil status for testing purposes."
                 }
             };

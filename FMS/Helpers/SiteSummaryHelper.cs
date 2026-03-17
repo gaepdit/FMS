@@ -65,15 +65,15 @@ namespace FMS.Helpers
             return report;
         }
 
-        public static string GetCleanupStatusParameter(Facility facility)
+        public static string GetCleanupStatusParameter(SiteSummaryReportDto facility)
         {
             var cleanupStatusParam = "";
             var SESTAT = "";
             var SLSTAT = "";
             var GWSTAT = "";
-            var Source_Stat = facility.StatusDetails.SourceStatus.Description;
-            var Soil_stat = facility.StatusDetails.SoilStatus.Description;
-            var GW_Stat = facility.StatusDetails.GroundwaterStatus.Description;
+            var Source_Stat = facility.StatusDetails.SourceStatus.Name;
+            var Soil_stat = facility.StatusDetails.SoilStatus.Name;
+            var GW_Stat = facility.StatusDetails.GroundwaterStatus.Name;
 
             if (Source_Stat == "RRS5")
             {
@@ -106,7 +106,7 @@ namespace FMS.Helpers
             return cleanupStatusParam;
         }
 
-        public static string GetCleanupStatusLanguage(Facility facility, string cleanupstat)
+        public static string GetCleanupStatusLanguage(SiteSummaryReportDto facility, string cleanupstat)
         {
             var clup = string.Empty;
             var landFill = facility.StatusDetails.LandFill;
@@ -801,13 +801,13 @@ namespace FMS.Helpers
             return clup;
         }
 
-        public static string GetClassLanguage(Facility facility)
+        public static string GetClassLanguage(SiteSummaryReportDto facility)
         {
             var classLang = facility.LocationDetails.LocationClass.Description;
             return classLang;
         }
 
-        public static string GetLanguageForGWScore(Facility facility, string exLang)
+        public static string GetLanguageForGWScore(SiteSummaryReportDto facility, string exLang = "")
         {
             var gwLang = "";
             var gw_score = facility.GroundwaterScoreDetails.GWScore;
@@ -957,7 +957,7 @@ namespace FMS.Helpers
             return gwLang;
         }
 
-        public static string GetLanguageForOSScore(Facility facility)
+        public static string GetLanguageForOSScore(SiteSummaryReportDto facility)
         {
             var osLang = "";
             var osa = "";

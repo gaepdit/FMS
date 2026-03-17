@@ -41,6 +41,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Print All Org Units in Batches?")]
         public bool AllOrgUnits { get; set; } = false;
 
+        [Display(Name = "Show Header at top of reports")]
+        public bool ShowHeader { get; set; } = false;
+
         public IDictionary<string, string?> AsRouteValues() => new Dictionary<string, string?>
         {
             { nameof(FacilityNumber), FacilityNumber },
@@ -53,7 +56,8 @@ namespace FMS.Domain.Dto
             { nameof(AllCounties), AllCounties.ToString() },
             { nameof(AllCOs), AllCOs.ToString() },
             { nameof(AllClassIVs), AllClassIVs.ToString() },
-            { nameof(AllOrgUnits), AllOrgUnits.ToString() }
+            { nameof(AllOrgUnits), AllOrgUnits.ToString() },
+            { nameof(ShowHeader), ShowHeader.ToString() }
         };
     }
 }
