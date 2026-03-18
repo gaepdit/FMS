@@ -30,9 +30,10 @@ namespace FMS.Pages.Reporting.SiteSummary
         public async Task<PageResult> OnGetAsync(SiteSummaryQuerySpec spec)
         {
             Spec = spec;
+            Spec.TrimAll();
 
             ReportList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
-
+            
             return Page();
         }
 
@@ -52,7 +53,7 @@ namespace FMS.Pages.Reporting.SiteSummary
             var groundWaterLang = SiteSummaryHelper.GetLanguageForGWScore(facility);
             var onsiteScoreLang = SiteSummaryHelper.GetLanguageForOSScore(facility);
             var exLang = "";
-            if (facility.ScoreDetails.UseComments)
+            if (facility.ScoreDetails != null && facility.ScoreDetails.UseComments)
             {
                 exLang = SiteSummaryHelper.GetLanguageForExceptions(facility);
             }

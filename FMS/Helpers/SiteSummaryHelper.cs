@@ -980,20 +980,7 @@ namespace FMS.Helpers
                             }
                     }
                 }
-
-                if (facility.ScoreDetails.UseComments)
-                {
-                    exLang = GetLanguageForExceptions(facility);
-                }
-
-                if (exLang == "")
-                {
-                    gwLang = gwa + gw1e + gw2estrt + gw2em + gw2eend;
-                }
-                else
-                {
-                    gwLang = gwa + gw1e + gw2estrt + gw2em + gw2eend + exLang;
-                }
+                gwLang = gwa + gw1e + gw2estrt + gw2em + gw2eend;
             }
             return gwLang;
         }

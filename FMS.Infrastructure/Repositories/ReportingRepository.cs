@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
+using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;

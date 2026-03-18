@@ -146,10 +146,10 @@ else
                     <div>Soil</div>
                 </div>
                 <div class="substancebox">
-                    @foreach (var substance in report.Substances)
+                    @foreach (var substance in report.Substances.OrderBy(s => s.Chemical.ChemicalName))
                     {
                         <div class="substance">
-                            <div>@substance.Chemical.DisplayName</div>
+                            <div>@substance.Chemical.ChemicalName</div>
                             <div class="mycheckbox">@Html.DisplayFor(model => substance.Soil, "BoolCheckbox")</div>
                             <div class="mycheckbox">@Html.DisplayFor(model => substance.Groundwater, "BoolCheckbox")</div>
                         </div>
