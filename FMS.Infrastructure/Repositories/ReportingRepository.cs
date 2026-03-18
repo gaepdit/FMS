@@ -466,6 +466,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
                 .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue || e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
                 .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
+                .OrderBy(e => e.FacilityNumber)
                 .Select(e => new SiteSummaryReportDto(e))
                 .AsSplitQuery()
                 .ToListAsync();
@@ -489,6 +490,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
                 .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue || e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
                 .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
+                .OrderBy(e => e.FacilityNumber)
                 .Select(e => new FacilityBasicDto(e))
                 .ToListAsync();
 
