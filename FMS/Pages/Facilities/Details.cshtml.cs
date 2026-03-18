@@ -24,7 +24,9 @@ namespace FMS.Pages.Facilities
         private readonly IFacilityRepository _repository;
         private readonly IEventRepository _eventRepository;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
-        public DetailsModel(IFacilityRepository repository, IEventRepository eventRepository, Microsoft.Extensions.Configuration.IConfiguration configuration)
+        public DetailsModel(IFacilityRepository repository, 
+            IEventRepository eventRepository, 
+            Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _repository = repository;
             _eventRepository = eventRepository;
@@ -32,6 +34,9 @@ namespace FMS.Pages.Facilities
         }
 
         public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
+
+        [BindProperty]
+        public SiteSummaryQuerySpec Spec { get; set; }
 
         public FacilityDetailDto FacilityDetail { get; set; }
 
@@ -79,6 +84,11 @@ namespace FMS.Pages.Facilities
             {
                 return NotFound();
             }
+
+            Spec = new SiteSummaryQuerySpec
+            {
+                FacilityNumber = FacilityDetail.FacilityNumber
+            };
 
             if (hr.HasValue)
             {

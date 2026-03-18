@@ -339,6 +339,16 @@
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
             <a asp-page="/Facilities/Map" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary" target="_blank">Location Search</a>
+        @if (Model.FacilityDetail.FacilityType.Name == "HSI" && Model.FacilityDetail.FacilityStatus.Name == "Active")
+        {
+            <a asp-page="/Reporting/SiteSummary/Report" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
+               class="btn btn-sm btn-primary icon-link">
+                <svg class="bi">
+                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
+                </svg>
+                Site Summary
+            </a>
+        }
        @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
             {
             @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
@@ -452,13 +462,13 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPTerminated)
                             </dt>
                             <dd class="col-sm-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPTerminated)
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.VRPTerminated, "BoolYesNo")
                             </dd>
                             <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldTerminated)
                             </dt>
                             <dd class="col-sm-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldTerminated)
+                                @Html.DisplayFor(model => model.FacilityDetail.HsrpFacilityPropertyDetails.BrownfieldTerminated, "BoolYesNo")
                             </dd>
                         </dl>
                     </div>
@@ -546,7 +556,7 @@
                                             <td>@p.ListDate</td>
                                             <td>@p.DeListDate</td>
                                             <td>@p.SubListParcelName</td>
-                                            <td class="text-center">@Html.DisplayFor(m => p.Active)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => p.Active, "BoolYesNo")</td>
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
@@ -600,7 +610,7 @@
                                                 @c.City, @c.State&nbsp;@c.PostalCode
                                             </td>
                                             <td><a href=@c.GetMailTo()>@c.Email</a></td>
-                                            <td class="text-center">@Html.DisplayFor(m => c.Active)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => c.Active, "BoolYesNo")</td>
                                             @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                             {
                                                 <td>
@@ -647,7 +657,7 @@
                                                                                 <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
                                                                                     <td>@p.PhoneType</td>
                                                                                     <td><a href=@p.GetTelTo()>@p.Number</a></td>
-                                                                                    <td>@Html.DisplayFor(m => p.Active)</td>
+                                                                                    <td>@Html.DisplayFor(m => p.Active, "BoolYesNo")</td>
                                                                                     @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                                                                     {
                                                                                         <td class="justify-content-end">
@@ -693,7 +703,7 @@
                                         @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.UseComments)
                                     </dt>
                                     <dd class="col-sm-3">
-                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.UseComments, "YesNo")
+                                        @Html.DisplayFor(model => model.FacilityDetail.ScoreDetails.UseComments, "BoolYesNo")
                                     </dd>
                                     <dt class="col-sm-2 pt-3">
                                         @Html.DisplayNameFor(model => model.FacilityDetail.ScoreDetails.Comments)
@@ -918,10 +928,10 @@
                                             <td>@s.Chemical.CasNo</td>
                                             <td>@s.Chemical.ChemicalName</td>
                                             <td>@s.Chemical.CommonName</td>
-                                            <td class="text-center">@Html.DisplayFor(m => s.Groundwater)</td>
-                                            <td class="text-center">@Html.DisplayFor(m => s.Soil)</td>
-                                            <td class="text-center">@Html.DisplayFor(m => s.UseForGroundwaterScoring)</td>
-                                            <td class="text-center">@Html.DisplayFor(m => s.UseForSoilScoring)</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.Groundwater, "BoolCheckbox")</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.Soil, "BoolCheckbox")</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.UseForGroundwaterScoring, "BoolCheckbox")</td>
+                                            <td class="text-center">@Html.DisplayFor(m => s.UseForSoilScoring, "BoolCheckbox")</td>
                                             @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.FileEditor))
                                             {
                                                 <td>
@@ -950,7 +960,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS, "BoolYesNo")
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
@@ -962,7 +972,7 @@
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.LandFill)
                             </dt>
                             <dd class="col-sm-3 pt-3">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.LandFill, "BoolYesNo")
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SolidWastePermitNumber)
@@ -1073,7 +1083,7 @@
                         <hr />
                         <div class="row mb-3">
                             <div class="col-md-1">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien, "BoolCheckbox")
                             </div>
                             <div class="col-md-2">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Lien)
@@ -1090,7 +1100,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-1">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance, "BoolCheckbox")
                             </div>
                             <div class="col-md-2">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
