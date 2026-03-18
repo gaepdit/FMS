@@ -122,7 +122,6 @@ namespace FMS.Helpers
             var mabnd1 = "Identified responsible parties are unable or unwilling to conduct the required investigation and/or cleanup under the Hazardous Site Response Act for ";
             var mabnd2 = ". EPD may perform these actions using state funding from the Hazardous Waste Trust Fund and may lien the property or pursue cost recovery.";
 
-
             string clup;
             switch (cleanupstat)
             {
@@ -152,7 +151,6 @@ namespace FMS.Helpers
                         clup = mnat + (landFill ? msgw : mssgall) + mper;
                         break;
                     }
-
                 case "55RRS":
                     {
                         clup = mrrs5_1 + (landFill ? msource : mssl) + mrrs5_2 + "  " + mrrs + mgwater + mper;
@@ -213,7 +211,6 @@ namespace FMS.Helpers
                         clup = mrrs5_1 + (landFill ? msource : mslgw) + mrrs5_2 + "  " + mnat + msource + mper;
                         break;
                     }
-
                 case "RRSRRS5":
                     {
                         clup = mrrs + (landFill ? msource : mssl) + mper + "  " + mrrs5_1 + mgwater + mrrs5_2;
@@ -229,7 +226,6 @@ namespace FMS.Helpers
                         clup = mrrs + (landFill ? msource : mslgw) + mper + "  " + mrrs5_1 + msource + mrrs5_2;
                         break;
                     }
-
                 case "RRSRRSCIP":
                     {
                         clup = mrrs + (landFill ? msource : mssl) + mper + "  " + mcip + mgwater + mper;
@@ -245,7 +241,6 @@ namespace FMS.Helpers
                         clup = mrrs + (landFill ? msource : mslgw) + mper + "  " + mcip + msource + mper;
                         break;
                     }
-
                 case "RRSRRSINV":
                     {
                         clup = mrrs + (landFill ? msource : mssl) + mper + "  " + minv + mgwater + mper;
@@ -261,7 +256,6 @@ namespace FMS.Helpers
                         clup = mrrs + (landFill ? mgwater : mslgw) + mper + "  " + minv + msource + mper;
                         break;
                     }
-
                 case "RRSRRSNAT":
                     {
                         clup = mrrs + (landFill ? msource : mssl) + mper + "  " + mnat + mgwater + mper;
@@ -277,8 +271,6 @@ namespace FMS.Helpers
                         clup = mrrs + (landFill ? mgwater : mslgw) + mper + "  " + mnat + msource + mper;
                         break;
                     }
-
-
                 case "CIPCIP5":
                     {
                         clup = mcip + (landFill ? msource : mssl) + mper + "  " + mrrs5_1 + mgwater + mrrs5_2;
@@ -294,7 +286,6 @@ namespace FMS.Helpers
                         clup = mcip + (landFill ? mgwater : mslgw) + mper + "  " + mrrs5_1 + msource + mrrs5_2;
                         break;
                     }
-
                 case "CIPCIPRRS":
                     {
                         clup = mcip + (landFill ? msource : mssl) + mper + "  " + mrrs + mgwater + mper;
@@ -310,7 +301,6 @@ namespace FMS.Helpers
                         clup = mcip + (landFill ? mgwater : mslgw) + mper + "  " + mrrs + msource + mper;
                         break;
                     }
-
                 case "CIPCIPINV":
                     {
                         clup = mcip + (landFill ? msource : mssl) + mper + "  " + minv + mgwater + mper;
@@ -326,7 +316,6 @@ namespace FMS.Helpers
                         clup = mcip + (landFill ? mgwater : mslgw) + mper + "  " + minv + msource + mper;
                         break;
                     }
-
                 case "CIPCIPNAT":
                     {
                         clup = mcip + (landFill ? msource : mssl) + mper + "  " + mnat + mgwater + mper;
@@ -342,7 +331,6 @@ namespace FMS.Helpers
                         clup = mcip + (landFill ? mgwater : mslgw) + mper + "  " + mnat + msource + mper;
                         break;
                     }
-
                 case "INVINV5":
                     {
                         clup = minv + (landFill ? msource : mssl) + mper + "  " + mrrs5_1 + mgwater + mrrs5_2;
@@ -358,7 +346,6 @@ namespace FMS.Helpers
                         clup = minv + (landFill ? mgwater : mslgw) + mper + "  " + mrrs5_1 + msource + mrrs5_2;
                         break;
                     }
-
                 case "INVINVRRS":
                     {
                         clup = minv + (landFill ? msource : mssl) + mper + "  " + mrrs + mgwater + mper;
@@ -374,7 +361,6 @@ namespace FMS.Helpers
                         clup = minv + (landFill ? mgwater : mslgw) + mper + "  " + mrrs + msource + mper;
                         break;
                     }
-
                 case "INVINVCIP":
                     {
                         clup = minv + (landFill ? msource : mssl) + mper + "  " + mcip + mgwater + mper;
@@ -390,7 +376,6 @@ namespace FMS.Helpers
                         clup = minv + (landFill ? mgwater : mslgw) + mper + "  " + mcip + msource + mper;
                         break;
                     }
-
                 case "INVINVNAT":
                     {
                         clup = minv + (landFill ? msource : mssl) + mper + "  " + mnat + mgwater + mper;
@@ -406,7 +391,6 @@ namespace FMS.Helpers
                         clup = minv + (landFill ? mgwater : mslgw) + mper + "  " + mnat + msource + mper;
                         break;
                     }
-
                 case "NATNAT5":
                     {
                         clup = mnat + (landFill ? msource : mssl) + mper + "  " + mrrs5_1 + mgwater + mrrs5_2;
@@ -422,7 +406,6 @@ namespace FMS.Helpers
                         clup = mnat + (landFill ? mgwater : mslgw) + mper + "  " + mrrs5_1 + msource + mrrs5_2;
                         break;
                     }
-
                 case "NATNATRRS":
                     {
                         clup = mnat + (landFill ? msource : mssl) + mper + "  " + mrrs + mgwater + mper;
@@ -438,7 +421,6 @@ namespace FMS.Helpers
                         clup = mnat + (landFill ? mgwater : mslgw) + mper + "  " + mrrs + msource + mper;
                         break;
                     }
-
                 case "NATNATCIP":
                     {
                         clup = mnat + (landFill ? msource : mssl) + mper + "  " + mcip + mgwater + mper;
@@ -595,7 +577,6 @@ namespace FMS.Helpers
                         clup = mrrs5_1 + msource + mrrs5_2 + "  " + (landFill ? "" : mnat + msoil + mper) + "  " + minv + mgwater + mper;
                         break;
                     }
-
                 case "CIPRRS5":
                     {
                         clup = mcip + msource + mper + "  " + (landFill ? "" : mrrs + msoil + mper) + "  " + mrrs5_1 + mgwater + mrrs5_2;
@@ -776,69 +757,69 @@ namespace FMS.Helpers
                         clup = mnat + msource + mper + "  " + (landFill ? "" : minv + msoil + mper) + "  " + mcip + mgwater + mper;
                         break;
                     }
-                case "rrs5abn":
+                case "RRS5ABN":
                     {
                         clup = mrrs + msource + mper + "  " + (landFill ? "" : mrrs5_1 + msoil + mrrs5_2) + "  " + mabnd1 + mgwater + mabnd2;
                         break;
                     }
-                case "rrsabn5":
+                case "RRSABN5":
                     {
                         clup = mrrs + msource + mper + "  " + (landFill ? "" : mabnd1 + msoil + mabnd2) + "  " + mrrs5_1 + mgwater + mrrs5_2;
                         break;
                     }
-                case "5rrsabn":
+                case "5RRSABN":
                     {
                         clup = mrrs5_1 + msource + mrrs5_2 + "  " + (landFill ? "" : mrrs + msoil + mper) + "  " + mabnd1 + mgwater + mabnd2;
                         break;
                     }
-                case "5abnrrs":
+                case "5ABNRRS":
                     {
                         clup = mrrs5_1 + msource + mrrs5_2 + "  " + (landFill ? "" : mabnd1 + msoil + mabnd2) + "  " + mrrs + mgwater + mper;
                         break;
                     }
-                case "abn5rrs":
+                case "ABN5RRS":
                     {
                         clup = mabnd1 + msource + mabnd2 + "  " + (landFill ? "" : mrrs5_1 + msoil + mrrs5_2) + "  " + mrrs + mgwater + mper;
                         break;
                     }
-                case "abnrrs5":
+                case "ABNRRS5":
                     {
                         clup = mabnd1 + msource + mabnd2 + "  " + (landFill ? "" : mrrs + msoil + mper) + "  " + mrrs5_1 + mgwater + mrrs5_2;
                         break;
                     }
-                case "rrs5ina":
+                case "RRS5INA":
                     {
                         clup = mrrs + msource + mper + "  " + (landFill ? "" : mrrs5_1 + msoil + mrrs5_2) + "  " + minac1 + mgwater + minac2;
                         break;
                     }
-                case "rrsina5":
+                case "RRSINA5":
                     {
                         clup = mrrs + msource + mper + "  " + (landFill ? "" : minac1 + msoil + minac2) + "  " + mrrs5_1 + mgwater + mrrs5_2;
                         break;
                     }
-                case "5rrsina":
+                case "5RRSINA":
                     {
                         clup = mrrs5_1 + msource + mrrs5_2 + "  " + (landFill ? "" : mrrs + msoil + mper) + "  " + minac1 + mgwater + minac2;
                         break;
                     }
-                case "5inarrs":
+                case "5INARRS":
                     {
                         clup = mrrs5_1 + msource + mrrs5_2 + "  " + (landFill ? "" : minac1 + msoil + minac2) + "  " + mrrs + mgwater + mper;
                         break;
                     }
-                case "ina5rrs":
+                case "INA5RRS":
                     {
                         clup = minac1 + msource + minac2 + "  " + (landFill ? "" : mrrs5_1 + msoil + mrrs5_2) + "  " + mrrs + mgwater + mper;
                         break;
                     }
-                case "inarrs5":
+                case "INARRS5":
                     {
                         clup = minac1 + msource + minac2 + "  " + (landFill ? "" : mrrs + msoil + mper) + "  " + mrrs5_1 + mgwater + mrrs5_2;
                         break;
                     }
                 default:
                     {
-                        clup = "DATA IS INCOMPLETE - PLEASE CHECK!!!!!!!!!";
+                        clup = cleanupstat + "  DATA IS INCOMPLETE - PLEASE CHECK!!!!!!!!!";
                         break;
                     }
             }
