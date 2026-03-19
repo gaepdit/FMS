@@ -127,6 +127,12 @@
                     </a>
                 </div>
             }
+            @if (Model.SummaryList.Count > 0)
+            {
+                <div class="col-auto text-md-end text-sm-right align-text-bottom mb-1">
+                    Total results: @Html.DisplayFor(m => Model.SummaryList.Count)
+                </div>
+            }
         </div>
     </div>
     <hr />

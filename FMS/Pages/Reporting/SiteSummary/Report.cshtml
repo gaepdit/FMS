@@ -86,7 +86,11 @@ else
                         {
                             @if (contact.ContactType?.Name == "Property Owner")
                             {
-                                <strong>@contact.GivenName @contact.FamilyName</strong><br /> 
+                                <strong>@contact.GivenName @contact.FamilyName</strong><br />
+                                if(!string.IsNullOrEmpty(contact.Company) && !contact.GivenName.Equals(contact.Company))
+                                {
+                                    <span>@contact.Company</span><br />
+                                }
                                 @contact.Address <br/>
                                 @contact.City<span>,</span> @contact.State<span>  </span>  @contact.PostalCode
                                 <br />

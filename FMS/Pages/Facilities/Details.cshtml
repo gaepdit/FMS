@@ -644,7 +644,7 @@
                                                                             <tr>
                                                                                 <th scope="col">Phone Type</th>
                                                                                 <th scope="col">Number</th>
-                                                                                <th scope="col">Active</th>
+                                                                                <th class="text-center" scope="col">Active</th>
                                                                                 @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                                                                 {
                                                                                     <th scope="col" class="text-center">Actions</th>
@@ -657,10 +657,10 @@
                                                                                 <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
                                                                                     <td>@p.PhoneType</td>
                                                                                     <td><a href=@p.GetTelTo()>@p.Number</a></td>
-                                                                                    <td>@Html.DisplayFor(m => p.Active, "BoolYesNo")</td>
+                                                                                    <td class="text-center">@Html.DisplayFor(m => p.Active, "BoolYesNo")</td>
                                                                                     @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                                                                     {
-                                                                                        <td class="justify-content-end">
+                                                                                        <td class="text-center">
                                                                                             <a asp-page="/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                                                         </td>
                                                                                     }
@@ -1215,7 +1215,7 @@
                                 @for (var i = 0; i < Model.FacilityDetail.Events.Count; i++)
                                 {
                                     var item = Model.FacilityDetail.Events[i];
-                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
+                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
                                         <td>
                                             @if (item.ParentId != Guid.Empty)
                                             {
