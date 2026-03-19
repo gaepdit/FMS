@@ -1,18 +1,8 @@
-﻿using FMS;
-using FMS.Domain.Dto;
-using FMS.Domain.Dto.Reports;
-using FMS.Domain.Entities;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
-using FMS.Infrastructure.Repositories;
-using Microsoft.Graph.Models;
-using Microsoft.Graph.Models.Security;
 using Microsoft.VisualBasic;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-//using Microsoft.VisualBasic; // Install-Package Microsoft.VisualBasic
-//using Microsoft.VisualBasic.CompilerServices; // Install-Package Microsoft.VisualBasic
 
 namespace FMS.Helpers
 {
@@ -1062,6 +1052,5 @@ namespace FMS.Helpers
         }
 
         public static string GetLanguageForExceptions(SiteSummaryReportDto facility) => facility.ScoreDetails.Comments.ToString();
-
     }
 }
