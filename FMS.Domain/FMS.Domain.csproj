@@ -8,6 +8,8 @@
     <Compile Remove="Dto\AllowedActionTaken\AllowedActionTakenCreateDto.cs" />
     <Compile Remove="Dto\GroundwaterScore\GroundwaterScoreSummaryDto.cs" />
     <Compile Remove="Dto\OnSiteScore\OnsiteScoreSummaryDto.cs" />
+    <Compile Remove="Dto\Reports\Site summary-VS26-VB.cs" />
+    <Compile Remove="Dto\Reports\SiteSummaryDto.cs" />
     <Compile Remove="Dto\Status\StatusSummaryDto.cs" />
   </ItemGroup>
 

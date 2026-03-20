@@ -12,10 +12,10 @@ namespace FMS.Domain.Dto
         public Guid FacilityId { get; set; }
 
         [Display(Name = "First Name")]
+        [Required]
         public string GivenName { get; set; }
 
         [Display(Name = "Last Name")]
-        [Required]
         public string FamilyName { get; set; }
 
         [Display(Name = "Contact Title")]
@@ -36,8 +36,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "State")]
         public string State { get; set; }
 
-        [Display(Name = "ZIP Code")]
-        [RegularExpression(@"^\d{5}$", ErrorMessage = "Invalid Zip Code format. Please enter a 5-digit number.")]
+        [RegularExpression(@"(^\\d{5}(-\\d{4})?$)|([ABCEGHJ-NPRSTVXY][0-9][ABCEGHJ-NPRSTV-Z] ?[0-9][ABCEGHJ-NPRSTV-Z][0-9]$)", ErrorMessage = "Invalid format. Please enter a valid US or Canadian Postal Code.")]
+        [Display(Name = "Postal(ZIP) Code")]
         public string PostalCode { get; set; }
 
         [Display(Name = "Email")]

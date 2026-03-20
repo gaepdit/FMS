@@ -9,48 +9,50 @@
 <a asp-page="../Index">← Back to Reports</a>
 <hr />
 <p class="lead">Select a Report from the list</p>
-<form method="post">
-    <div class="row">
-        <div class="col-md-4">
-            <button id="ByNumber"
-                    asp-page-handler="ByNumber"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            HSI List By Number
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <button id="ByNumber"
+                        asp-page-handler="ByNumber"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                HSI List By Number
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-4">
-            <button id="ByName"
-                    asp-page-handler="ByName"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            HSI List By Name
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <button id="ByName"
+                        asp-page-handler="ByName"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                HSI List By Name
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-4">
-            <button id="ByCounty"
-                    asp-page-handler="ByCounty"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            HSI List By County
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <button id="ByCounty"
+                        asp-page-handler="ByCounty"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                HSI List By County
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-4">
-            <button id="ByClass"
-                    asp-page-handler="ByClass"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            HSI List By Class
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <button id="ByClass"
+                        asp-page-handler="ByClass"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                HSI List By Class
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

@@ -1,13 +1,8 @@
 ﻿using ClosedXML.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FMS.Domain.Dto.Reports
+namespace FMS.Domain.Dto
 {
     public class AbndInacStatusTrackerDto
     {
@@ -53,6 +48,10 @@ namespace FMS.Domain.Dto.Reports
         [Display(Name = "Abnd/Inac")]
         public string AbndInac { get; set; }
 
+        [XLColumn(Header = "Site CO")]
+        [Display(Name = "Site CO")]
+        public string COName { get; set; }
+
         [XLColumn(Header = "GAPS Model Date")]
         [Display(Name = "GAPS Model Date")]
         public DateOnly? GAPSModelDate { get; set; }
@@ -82,13 +81,9 @@ namespace FMS.Domain.Dto.Reports
         [Display(Name = "Unit Name")]
         public string UnitName { get; set; }
 
-        [XLColumn(Header = "Event Comments")]
-        [Display(Name = "Event Comments")]
+        [XLColumn(Header = "Abnd/Inac Comment from Status tab")]
+        [Display(Name = "Abnd/Inac Comment from Status tab")]
         public string EventComments { get; set; }
-
-        [XLColumn(Header = "RQSM 1:C.O.")]
-        [Display(Name = "RQSM 1: C.O.")]
-        public string COName { get; set; }
 
         [XLColumn(Header = "RQSM 2: GW")]
         [Display(Name = "RQSM 2: GW")]

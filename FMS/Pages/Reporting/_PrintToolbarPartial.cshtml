@@ -1,0 +1,35 @@
+﻿<div class="print-toolbar">
+    <button id="print-button" type="button" class="icon-link">
+        <svg class="bi" role="img" aria-label="Print">
+            <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
+        </svg>
+        Print
+    </button>
+    <button id="print-help-button" type="button" aria-details="tooltip-text">
+        <svg class="bi" role="img" aria-label="Print help">
+            <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+        </svg>
+    </button>
+    <div id="tooltip-text">
+        <ul>
+            <li>
+                <strong>To save the file as PDF:</strong> Select the
+                <kbd>
+                    <svg class="bi" role="img" aria-label="Print">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
+                    </svg>
+                    Print</kbd>
+                button and change the Printer/Destination option to “Save as PDF.”
+            </li>
+            <li>
+                <strong>To hide the date/url headers and footers on the printout:</strong> Select the
+                <kbd>
+                    <svg class="bi" role="img" aria-label="Print">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
+                    </svg>
+                    Print</kbd>
+                button, then select “More Settings.” Scroll to the bottom and <em>uncheck</em> “Headers and footers.”
+            </li>
+        </ul>
+    </div>
+</div>

@@ -52,7 +52,18 @@ namespace FMS.Domain.Repositories
 
         Task<IReadOnlyList<AbndInacStatusTrackerDto>> GetAbndInacStatusTrackerReportAsync();
 
+        Task<IReadOnlyList<AbndInacChecklistReviewDto>> GetAbndInacChecklistReviewAsync();
+
         Task<IReadOnlyList<AbndCostEstimateReportDto>> GetAbndCostEstimateReportAsync();
+
+        #endregion
+
+        #region Site Summary Report
+
+        Task<IReadOnlyList<SiteSummaryReportDto>> GetFacilitySiteSummaryDtoAsync
+            (SiteSummaryQuerySpec spec);
+
+        Task<IReadOnlyList<FacilityBasicDto>> GetHsiFacilitiesAsync(SiteSummaryQuerySpec spec);
 
         #endregion
     }

@@ -1,7 +1,6 @@
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
-using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -26,11 +25,28 @@ namespace FMS.Pages.Reporting.AbndInac
         {
             var fileName = $"AbndInacStatusTracker_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
-            // "eventsPendingList" List to go to a report
+            // First Worksheet "ABND/INAC" List to go to report
             IReadOnlyList<AbndInacStatusTrackerDto> abndInacReportList = await _repository.GetAbndInacStatusTrackerReportAsync();
 
+            // Second Worksheet "Checklist" List to go to report
+            IReadOnlyList<AbndInacChecklistReviewDto> checkList = await _repository.GetAbndInacChecklistReviewAsync();
+
+            var checkListReportList = from p in checkList select new AbndInacChecklistReviewReportDto(p);
+
+            DateOnly? StartDate = null;
+            DateOnly? EndDate = null;
+            IEnumerable<AbndInacStatusTrackerDto> vrpCompletedOutstandingReportList = null;
+            IEnumerable<AbndInacStatusTrackerDto> brownCompletedOutstandingReportList = null;
+
             // Export to Excel
-            return File(abndInacReportList.ExportExcelAsByteArray(ExportHelper.ReportType.AbndInacStatusTracker), "application/vnd.ms-excel", fileName);
+            return File(abndInacReportList.ExportExcelAsByteArray(ExportHelper.ReportType.AbndInacStatusTracker,
+                StartDate,
+                EndDate,
+                vrpCompletedOutstandingReportList,
+                brownCompletedOutstandingReportList,
+                checkListReportList), 
+                "application/vnd.ms-excel", 
+                fileName);
         }
 
         public async Task<IActionResult> OnPostCostAsync()

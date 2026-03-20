@@ -19,12 +19,12 @@
         <input type="hidden" asp-for="EditContact.Id" />
         <div class="row">
             <div class="col">
-                <label asp-for="EditContact.GivenName"></label>
+                <label asp-for="EditContact.GivenName">First Name <span class="text-danger">*</span></label>
                 <input asp-for="EditContact.GivenName" class="form-control" />
                 <span asp-validation-for="EditContact.GivenName" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="EditContact.FamilyName">Last Name <span class="text-danger">*</span></label>
+                <label asp-for="EditContact.FamilyName">Last Name</label>
                 <input asp-for="EditContact.FamilyName" class="form-control" />
                 <span asp-validation-for="EditContact.FamilyName" class="text-danger"></span>
             </div>

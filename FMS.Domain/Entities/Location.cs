@@ -20,11 +20,18 @@ namespace FMS.Domain.Entities
             Id = id;
             FacilityId = location.FacilityId;
             LocationClassId = location.LocationClassId;
+            MapType = location.MapType;
+            MapZoom = location.MapZoom;
         }
 
         public Guid FacilityId { get; set; }
-
         public Guid? LocationClassId { get; set; }
         public LocationClass LocationClass { get; set; }
+
+        [Display(Name = "Map Type")]
+        public string MapType { get; set; } 
+
+        [Display(Name = "Map Zoom")]
+        public string MapZoom { get; set; } 
     }
 }

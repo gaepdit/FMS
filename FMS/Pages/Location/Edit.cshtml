@@ -15,28 +15,73 @@
     @ViewData["Title"]
 </h1>
 <hr />
-<div class="p-3 rounded-3 bg-light-subtle">
-    <form method="post">
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <input type="hidden" asp-for="Location.FacilityId" />
-        <div class="row mb-3">
-            <div class="col-8 mb-3">
-                <label asp-for="Location.LocationClassId" class="form-label">Class</label>
-                <select asp-for="Location.LocationClassId" asp-items="Model.Classes" class="form-select">
-                </select>
-                <span asp-validation-for="Location.LocationClassId" class="text-danger"></span>
+<div class="container-fluid parent-container d-lg-inline-flex bg-light-subtle p-3 rounded-3">
+    <form method="get">
+        <div class="row">
+            <p>
+                The following properties are used to generate the Google Map for this Facility. Click "Preview Map" to see how the map will look with the current settings.
+            </p>
+            <div class="col-9">
+                <div class="row mb-3">
+                    <div class="col-4 mb-3">
+                        <label asp-for="Location.MapType" class="form-label">Map Type</label>
+                        <select asp-for="Location.MapType" asp-items="Model.MapTypes" class="form-select">
+                        </select>
+                        <span asp-validation-for="Location.MapType" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mb-3">
+                        <label asp-for="Location.MapZoom" class="form-label">Map Zoom</label>
+                        <select asp-for="Location.MapZoom" asp-items="Model.MapZooms" class="form-select">
+                        </select>
+                        <span asp-validation-for="Location.MapZoom" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <img src="@Model.GetGoogleMapsUrl(Model.Facility)" alt="Site Map for @Model.Facility.Name" height="250" width="250" />
             </div>
         </div>
-        <hr />
-        <div class="row mb-3">
-            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
-            <a asp-page="../Facilities/Details" 
-                asp-route-id="@Model.Facility.Id"
-                asp-route-tab="Location"
-                asp-fragment="TabPages"
-                class="btn btn-outline-secondary col-md-2">
-                Cancel
-            </a>
+        <input type="hidden" asp-for="Location.Id" />
+        <input type="hidden" asp-for="Location.FacilityId" />
+        <input type="hidden" asp-for="Location.LocationClassId" />
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" name="handler" value="Preview" />
+                <button id="PreviewButton" type="submit" class="btn btn-primary me-2">Preview Map</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Reset</a>
+            </div>
         </div>
     </form>
+</div>
+<hr />
+<div id="MapResults" class="container-fluid parent-container d-lg-inline-flex bg-light-subtle p-3 rounded-3">
+    <div class="row">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <input type="hidden" asp-for="Location.FacilityId" />
+            <input type="hidden" asp-for="Location.Id" />
+            <div class="row mb-3">
+                <div class="col mb-3">
+                    <label asp-for="Location.LocationClassId" class="form-label">Class</label>
+                    <select asp-for="Location.LocationClassId" asp-items="Model.Classes" class="form-select">
+                    </select>
+                    <span asp-validation-for="Location.LocationClassId" class="text-danger"></span>
+                </div>
+            </div>
+            <input type="hidden" asp-for="Location.MapZoom" />
+            <input type="hidden" asp-for="Location.MapType" />
+            <div class="row mb-3">
+                <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
+                <a asp-page="../Facilities/Details"
+                   asp-route-id="@Model.Facility.Id"
+                   asp-route-tab="Location"
+                   asp-fragment="TabPages"
+                   class="btn btn-outline-secondary col-md-2">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
 </div>

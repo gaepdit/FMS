@@ -12,7 +12,6 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -39,11 +38,11 @@ namespace FMS.Infrastructure.Repositories
 
             if (facility == null) return null;
 
-            facility.RetentionRecords = facility.RetentionRecords
+                facility.RetentionRecords = facility.RetentionRecords
                 .OrderBy(e => e.StartYear)
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
-
+            
             if (facility.FacilityType.Name == "HSI")
             {
                 facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
@@ -147,13 +146,13 @@ namespace FMS.Infrastructure.Repositories
             if (facility.FacilityType.Name == "VRP" || facility.FacilityType.Name == "HSI" || facility.FacilityStatus.Name == "COMPLAINT" || facility.FacilityStatus.Name == "Event Tracking On")
             {
                 facility.Events = await _context.Events
-                    .AsNoTracking()
-                    .Include(e => e.EventType)
-                    .Include(e => e.ActionTaken)
-                    .Include(e => e.ComplianceOfficer)
-                    .Include(e => e.EventContractor)
-                    .Where(e => e.FacilityId == id)
-                    .ToListAsync();
+                .AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.EventContractor)
+                .Where(e => e.FacilityId == id)
+                .ToListAsync();
 
                 facility.Events = facility.Events
                     .OrderBy(e => e.StartDate)
@@ -165,11 +164,11 @@ namespace FMS.Infrastructure.Repositories
 
             var facilityDetail = new FacilityDetailDto(facility);
 
-            if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
-            {
-                facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
-                .GetCabinetsForFile(facilityDetail.FileLabel);
-            }
+                if (!string.IsNullOrEmpty(facilityDetail.FileLabel))
+                {
+                    facilityDetail.Cabinets = (await _context.GetCabinetListAsync(false))
+                    .GetCabinetsForFile(facilityDetail.FileLabel);
+                }
 
             return facilityDetail;
         }
@@ -587,6 +586,9 @@ namespace FMS.Infrastructure.Repositories
             }
 
             var facility = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
                 .Include(e => e.File)
                 .SingleOrDefaultAsync(e => e.Id == record.FacilityId);
 

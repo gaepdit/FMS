@@ -9,26 +9,28 @@
 <a asp-page="../Index">← Back to Reports</a>
 <hr />
 <p class="lead">Select a Report from the list</p>
-<form method="post">
-    <div class="row">
-        <div class="col-md-6">
-            <button id="Tracker"
-                    asp-page-handler="Tracker"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            Abandoned/Inactive Status Tracker <span class="text-danger">*<i> Under Construction</i></span>
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <button id="Tracker"
+                        asp-page-handler="Tracker"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                Abandoned/Inactive Status Tracker
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-md-6">
-            <button id="Cost"
-                    asp-page-handler="Cost"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Report
-            </button>
-            Abandoned Sites Cost Estimate Report
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <button id="Cost"
+                        asp-page-handler="Cost"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                Abandoned Sites Cost Estimate Report
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

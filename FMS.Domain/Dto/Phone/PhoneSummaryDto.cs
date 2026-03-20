@@ -6,6 +6,17 @@ namespace FMS.Domain.Dto
 {
     public class PhoneSummaryDto
     {
+        public PhoneSummaryDto() { }
+
+        public PhoneSummaryDto(PhoneSummaryDto phone)
+        {
+            Id = phone.Id;
+            Active = phone.Active;
+            ContactId = phone.ContactId;
+            Number = phone.Number;
+            PhoneType = phone.PhoneType;
+        }
+
         public PhoneSummaryDto(Phone phone)
         {
             Id = phone.Id;

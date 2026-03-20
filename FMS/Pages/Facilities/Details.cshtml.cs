@@ -23,11 +23,20 @@ namespace FMS.Pages.Facilities
 
         private readonly IFacilityRepository _repository;
         private readonly IEventRepository _eventRepository;
-        public DetailsModel(IFacilityRepository repository, IEventRepository eventRepository)
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        public DetailsModel(IFacilityRepository repository, 
+            IEventRepository eventRepository, 
+            Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _repository = repository;
             _eventRepository = eventRepository;
+            _configuration = configuration;
         }
+
+        public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
+
+        [BindProperty]
+        public SiteSummaryQuerySpec Spec { get; set; }
 
         public FacilityDetailDto FacilityDetail { get; set; }
 
@@ -75,6 +84,11 @@ namespace FMS.Pages.Facilities
             {
                 return NotFound();
             }
+
+            Spec = new SiteSummaryQuerySpec
+            {
+                FacilityNumber = FacilityDetail.FacilityNumber
+            };
 
             if (hr.HasValue)
             {
@@ -172,6 +186,15 @@ namespace FMS.Pages.Facilities
                 return UrlHelper.GetMapLink(FacilityDetail.Latitude, FacilityDetail.Longitude);
             }
             return string.Empty;
+        }
+
+        public string GetGoogleMapsUrl(FacilityDetailDto facility)
+        {
+            if (facility.Latitude != 0 && facility.Longitude != 0)
+            {
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+            }
+            return null;
         }
     }
 }

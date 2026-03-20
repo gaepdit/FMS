@@ -1,5 +1,4 @@
-﻿using FMS.Domain.Entities;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -11,5 +10,11 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Class")]
         public Guid? LocationClassId { get; set; }
+
+        [Display(Name = "Map Type")]
+        public string MapType { get; set; }
+
+        [Display(Name = "Map Zoom")]
+        public string MapZoom { get; set; }
     }
 }

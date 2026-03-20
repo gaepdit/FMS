@@ -102,6 +102,7 @@ namespace FMS.Pages.Reporting.Events
             var brnRecCount = 0;
             var brnCompTotal = 0.0m;
             var days = 0.0m;
+            IEnumerable<AbndInacChecklistReviewReportDto> checkListAIReportList = null;
 
             //******************* HSI ********************
             var selectedFacilityTypes = new List<string> { "HSI" };
@@ -196,6 +197,7 @@ namespace FMS.Pages.Reporting.Events
                 EndDate,
                 vrpCompletedOutstandingReportList,
                 brownCompletedOutstandingReportList,
+                checkListAIReportList,
                 hsiCompCount,
                 hsiRecCount,
                 hsiAvg,
@@ -215,7 +217,8 @@ namespace FMS.Pages.Reporting.Events
            
             var hsiRecCount = 0;
             var vrpRecCount = 0;           
-            var brnRecCount = 0;           
+            var brnRecCount = 0;
+            IEnumerable<AbndInacChecklistReviewReportDto> checkListAIReportList = null;
 
             //******************* HSI ********************
             var selectedFacilityTypes = new List<string> { "HSI" };
@@ -274,6 +277,7 @@ namespace FMS.Pages.Reporting.Events
                 null,
                 vrpOutstandingReportList,
                 brownOutstandingReportList,
+                checkListAIReportList,
                 0,
                 hsiRecCount,
                 0,
@@ -281,8 +285,7 @@ namespace FMS.Pages.Reporting.Events
                 vrpRecCount,
                 0,
                 0,
-                brnRecCount
-            ),
+                brnRecCount),
                 "application/vnd.ms-excel",
                 fileName);
         }

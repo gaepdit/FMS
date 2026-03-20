@@ -98,6 +98,8 @@ namespace FMS.Infrastructure.Repositories
             location.FacilityId = locationUpdates.FacilityId;
             location.LocationClassId = locationUpdates.LocationClassId;
             location.Active = locationUpdates.Active;
+            location.MapType = locationUpdates.MapType;
+            location.MapZoom = locationUpdates.MapZoom;
 
             _context.Locations.Update(location);
             await _context.SaveChangesAsync();
