@@ -39,11 +39,7 @@ namespace FMS.Pages.Reporting.SiteSummary
 
         public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0)
-            {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
-            }
-            return null;
+            return new UrlHelper(_configuration).GetGoogleMapsUrlLink(facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
         }
 
         public string GetStatusLanguage(SiteSummaryReportDto facility) => SiteSummaryHelper.GetCleanupStatusLanguage(facility);
