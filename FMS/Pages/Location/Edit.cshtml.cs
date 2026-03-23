@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
+using FMS.Helpers;
 
 namespace FMS.Pages.Location
 {
@@ -122,11 +123,7 @@ namespace FMS.Pages.Location
         }
         public string GetGoogleMapsUrl(FacilityDetailDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0)
-            {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
-            }
-            return null;
+            return new UrlHelper(_configuration).GetGoogleMapsUrlLink(facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
         }
     }
 }
