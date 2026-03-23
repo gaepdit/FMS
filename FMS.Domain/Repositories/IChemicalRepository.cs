@@ -18,7 +18,7 @@ namespace FMS.Domain.Repositories
 
         Task<ChemicalEditDto> GetChemicalByIdAsync(Guid? id);
 
-        Task<Chemical> GetChemicalByCasNoAsync(string name);
+        Task<Chemical> GetChemicalByCasNoAsync(string casno);
 
         Task<Chemical> GetChemicalByChemIdAsync(Guid id);
 
