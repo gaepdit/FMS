@@ -65,8 +65,13 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new ListItem() {Id = e.Id, Name = e.DisplayName})
                 .ToListAsync();
 
-        public async Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false) =>
-            await GetItemListAsync<OrganizationalUnit>(includeInactive);
+        public async Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false, List<string> list = null) =>
+            await _context.OrganizationalUnits.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .Where(e => list == null || list.Contains(e.Name))
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.Name })
+                .ToListAsync();
 
         public async Task<IEnumerable<ListItem>> GetCabinetsItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<Cabinet>(includeInactive);

@@ -1839,6 +1839,12 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("LocationClassId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("MapType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MapZoom")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
 

@@ -1,3 +1,4 @@
+using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;

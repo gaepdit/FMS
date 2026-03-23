@@ -1,8 +1,6 @@
 ﻿using Dapper;
-using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using FMS;
 using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
@@ -10,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -138,7 +135,7 @@ namespace FMS.Infrastructure.Repositories
         #region Delisted Reports
 
         public async Task<IReadOnlyList<DelistedReportByDateDto>> GetDelistedByDateAsync()
-        {             
+        {
             var facilityList = await _context.Facilities.AsNoTracking()
                 .Include(e => e.County)
                 .Include(e => e.FacilityStatus)
@@ -185,7 +182,7 @@ namespace FMS.Infrastructure.Repositories
         #region Events Reports
 
         public async Task<IList<EventReportDto>> GetEventsReportsAsync(
-            List<string> selectedFacilityTypes = null,
+            List<string> facilityTypes = null,
             List<string> eventTypes = null
             )
         {
@@ -193,6 +190,7 @@ namespace FMS.Infrastructure.Repositories
                 .AsNoTracking()
                 .Include(e => e.FacilityType)
                 .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.StatusDetails)
                 .Include(sd => sd.StatusDetails.OverallStatus)
@@ -204,7 +202,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenInclude(ev => ev.ComplianceOfficer)
                 .Include(e => e.Events)
                 .ThenInclude(ev => ev.EventContractor)
-                .Where(e => selectedFacilityTypes.Contains(e.FacilityType.Name))
+                .Where(e => facilityTypes.Contains(e.FacilityType.Name))
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
                 {
                     Id = ev.Id,
@@ -220,6 +218,7 @@ namespace FMS.Infrastructure.Repositories
                     CompletionDate = ev.CompletionDate,
                     DoneBy = ev.ComplianceOfficer,
                     OrganizationalUnit = e.OrganizationalUnit,
+                    ComplianceOfficer = e.ComplianceOfficer,
                     EventAmount = ev.EventAmount,
                     EventContractor = ev.EventContractor,
                     Comment = ev.Comment,
@@ -232,16 +231,268 @@ namespace FMS.Infrastructure.Repositories
             return reportDtoList;
         }
 
+        public async Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Include(e => e.ComplianceOfficer)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.StatusDetails.OverallStatus.Name == "NAT")
+                .Select(e => new EventsNoActionTakenReportDto()
+                {
+                    HSIID = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    ListDate = e.HsrpFacilityProperties.DateListed,
+                    ComplianceOfficerName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned"
+                })
+                .OrderBy(e => e.HSIID)
+                .ToListAsync();
+
+            return facilityList;
+        }
+
         #endregion
 
         #region PAF Report
 
-        public async Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync()
+        public async Task<IReadOnlyList<PAFReportRawDto>> GetPAFReportAsync()
         {
             var conn = _context.Database.GetDbConnection();
 
-            return (await conn.QueryAsync<PAFReportDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
+            return (await conn.QueryAsync<PAFReportRawDto>("dbo.PAF_Report", commandType: CommandType.StoredProcedure)).ToList();
         }
+
+        #endregion
+
+        #region HSI List Reports
+
+        public async Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy)
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.LocationDetails)
+                .Include(e => e.LocationDetails.LocationClass)
+                .Include(e => e.County)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Select(e => new HSIListReportDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    Name = e.Name,
+                    County = e.County.Name,
+                    ClassName = e.LocationDetails.LocationClass.Name
+                })
+                .ToListAsync();
+
+            return OrderHSIReportQuery(facilityList, sortBy);
+        }
+
+        private static IReadOnlyList<HSIListReportDto> OrderHSIReportQuery(
+            IList<HSIListReportDto> facilityList, HSISortBy sortBy) =>
+            sortBy switch
+            {
+                HSISortBy.HSINumber => facilityList
+                    .OrderBy(e => e.HSINumber)
+                    .ToList(),
+                HSISortBy.Name => facilityList
+                    .OrderBy(e => e.Name)
+                    .ToList(),
+                HSISortBy.County => facilityList
+                    .OrderBy(e => e.County)
+                    .ThenBy(e => e.HSINumber)
+                    .ToList(),
+                HSISortBy.ClassName => facilityList
+                    .OrderBy(e => e.ClassName)
+                    .ThenBy(e => e.HSINumber)
+                    .ToList(),
+                _ => facilityList
+                    .OrderBy(e => e.Name)
+                    .ToList()
+            };
+
+        #endregion
+
+        #region Abnd/Inac Status Tracker Report
+
+        public async Task<IReadOnlyList<AbndInacStatusTrackerDto>> GetAbndInacStatusTrackerReportAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.GroundwaterScoreDetails)
+                .Include(e => e.OnsiteScoreDetails)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.County)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.StatusDetails)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Include(e => e.StatusDetails.AbandonedInactive)
+                .Include(e => e.StatusDetails.GAPSAssessment)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" || e.StatusDetails.OverallStatus.Name == "INAC")
+                .Select(e => new AbndInacStatusTrackerDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    City = e.City,
+                    County = e.County.Name,
+                    AbndInac = e.StatusDetails.AbandonedInactive != null ? e.StatusDetails.AbandonedInactive.Name : "None",
+                    GAPSModelDate = e.StatusDetails.GAPSModelDate,
+                    GAPSScore = e.StatusDetails.GAPSScore,
+                    GAPSNoOfUnknowns = e.StatusDetails.GAPSNoOfUnknowns,
+                    GAPSAssessment = e.StatusDetails.GAPSAssessment != null ? e.StatusDetails.GAPSAssessment.Name : "None",
+                    CostEstimate = e.StatusDetails.CostEstimate,
+                    AbndInacInfo = e.StatusDetails.AbandonedInactive != null ? e.StatusDetails.AbandonedInactive.Name : "None",
+                    UnitName = e.OrganizationalUnit != null ? e.OrganizationalUnit.Name : "None",
+                    EventComments = e.StatusDetails.ReportComments,
+                    COName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned",
+                    GWScore = e.GroundwaterScoreDetails != null ? e.GroundwaterScoreDetails.GWScore : null,
+                    OnSiteScore = e.OnsiteScoreDetails != null ? e.OnsiteScoreDetails.OnsiteScoreValue : null
+                })
+                .OrderBy(e => e.HSINumber)
+                .ToListAsync();
+            return facilityList;
+        }
+
+        public async Task<IReadOnlyList<AbndInacChecklistReviewDto>> GetAbndInacChecklistReviewAsync()
+        {
+            var eventList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.County)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.EventType)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ActionTaken)
+                .Include(e => e.Events)
+                .ThenInclude(ev => ev.ComplianceOfficer)
+                .Include(e => e.StatusDetails)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" || e.StatusDetails.OverallStatus.Name == "INAC")
+                .SelectMany(e => e.Events.Select(ev => new AbndInacChecklistReviewDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    City = e.City,
+                    County = e.County.Name,
+                    AbndInac = e.StatusDetails.OverallStatus.Name,
+                    EventType = ev.EventType,
+                    ActionTaken = ev.ActionTaken,
+                    StartDate = ev.StartDate,
+                    DueDate = ev.DueDate,
+                    CompletionDate = ev.CompletionDate,
+                    ComplianceOfficer = ev.ComplianceOfficer,
+                    Comment = ev.Comment
+                }))
+                .Where(ev => ev.EventType.Name == "Abandoned/Inactive Site Review")
+                .OrderBy(ev => ev.HSINumber)
+                .ThenBy(ev => ev.CompletionDate)
+                .ToListAsync();
+
+            return eventList;
+        }
+
+        public async Task<IReadOnlyList<AbndCostEstimateReportDto>> GetAbndCostEstimateReportAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.FacilityType)
+                .Include(e => e.LocationDetails)
+                .Include(e => e.LocationDetails.LocationClass)
+                .Include(e => e.County)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.StatusDetails)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" || e.StatusDetails.OverallStatus.Name == "INAC")
+                .Select(e => new AbndCostEstimateReportDto()
+                {
+                    HSINumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    County = e.County.Name,
+                    ClassName = e.LocationDetails.LocationClass.Name,
+                    COName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned",
+                    GAPSScore = e.StatusDetails.GAPSScore,
+                    GAPSModelDate = e.StatusDetails.GAPSModelDate,
+                    GAPSNoOfUnknowns = e.StatusDetails.GAPSNoOfUnknowns,
+                    GAPSAssessment = e.StatusDetails.GAPSAssessment != null ? e.StatusDetails.GAPSAssessment.Name : "None",
+                    CostEstimate = e.StatusDetails.CostEstimate
+                })
+                .OrderByDescending(e => e.GAPSScore)
+                .ToListAsync();
+            return facilityList;
+        }
+
+        #endregion
+
+        #region Site Summary Report
+
+        public async Task<IReadOnlyList<SiteSummaryReportDto>> GetFacilitySiteSummaryDtoAsync
+            (SiteSummaryQuerySpec spec)
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.BudgetCode)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.OrganizationalUnit)
+                .Include(e => e.LocationDetails)
+                .ThenInclude(e => e.LocationClass)
+                .Include(e => e.Parcels)
+                .ThenInclude(e => e.ParcelType)
+                .Include(e => e.Contacts)
+                .ThenInclude(e => e.ContactType)
+                .Include(e => e.ScoreDetails)
+                .Include(e => e.GroundwaterScoreDetails)
+                .ThenInclude(e => e.Substance)
+                .ThenInclude(e => e.Chemical)
+                .Include(e => e.OnsiteScoreDetails)
+                .ThenInclude(e => e.Substance)
+                .ThenInclude(e => e.Chemical)
+                .Include(e => e.Substances)
+                .ThenInclude(e => e.Chemical)
+                .Include(e => e.StatusDetails)
+                .Include(e => e.StatusDetails.SourceStatus)
+                .Include(e => e.StatusDetails.SoilStatus)
+                .Include(e => e.StatusDetails.GroundwaterStatus)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Include(e => e.StatusDetails.GAPSAssessment)
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.FacilityStatus.Status == "Active")
+                .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber == spec.FacilityNumber)
+                .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
+                .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.LocationClassId.HasValue || e.LocationDetails.LocationClass.Id.Equals(spec.LocationClassId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue || e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
+                .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
+                .OrderBy(e => e.FacilityNumber)
+                .Select(e => new SiteSummaryReportDto(e))
+                .AsSplitQuery()
+                .ToListAsync();
+
+            return facilityList;
+        }
+
+        public async Task<IReadOnlyList<FacilityBasicDto>> GetHsiFacilitiesAsync(SiteSummaryQuerySpec spec) => await _context.Facilities
+                .Include(e => e.County)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.OrganizationalUnit)
+                .Where(e => e.Active)
+                .Where(e => e.FacilityStatus.Status == "Active")
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber == spec.FacilityNumber)
+                .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
+                .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.LocationClassId.HasValue || e.LocationDetails.LocationClass.Id.Equals(spec.LocationClassId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue || e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
+                .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
+                .OrderBy(e => e.FacilityNumber)
+                .Select(e => new FacilityBasicDto(e))
+                .ToListAsync();
 
         #endregion
 

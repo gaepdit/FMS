@@ -9,13 +9,13 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+    color: #5BAFD1;
 }
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    background-color: #5BAFD1; /*#1b6ec2;*/
+    border-color: #507033; /*#1861ac;*/
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -131,7 +131,12 @@ a:focus:not(.btn) {
 
 .btn-outline-secondary:focus {
     color: #fff;
-    background-color: #6c757d;
+    background-color: /*#6c757d;*/ /*#5BAFD1;*/ /*#0069d9;*/ #507033;
+}
+
+.btn-outline-secondary {
+    color: #fff;
+    background-color: #6c757d; /*#5BAFD1;*/ /*#0069d9;*/ /*#507033;*/
 }
 
 .btn-outline-success:focus {
@@ -139,9 +144,9 @@ a:focus:not(.btn) {
     background-color: #28a745;
 }
 
-.btn-outline-info:focus {
+.btn-outline-info {
     color: #fff;
-    background-color: #17a2b8;
+    background-color: /* #17a2b8;*/ #5BAFD1; /*#507033;*/
 }
 
 .btn-outline-warning:focus {
@@ -167,7 +172,7 @@ a:focus:not(.btn) {
 /* Branding
 -------------------------------------------------- */
 .bg-brand {
-    background-color: #106717;
+    background-color: /*#212529;*/ #5BAFD1;
 }
 
 /* Header logo */
@@ -296,10 +301,10 @@ a[target]::after {
 }
 :root,
 [data-bs-theme=light] {
-    --bs-body-bg: #c8f8d5;
+    --bs-body-bg: #C8E3E8; /*#c8f8d5;*/
 }
 [data-bs-theme=dark] {
-    --bs-body-bg: #013901;
+    --bs-body-bg: /*#507033;*/ #013901;
 }
 /* Chemical select box
 -------------------------------------------------- */

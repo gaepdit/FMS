@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using ClosedXML.Excel;
 using FMS.Domain.Dto;
 using FMS.Domain.Services;
 using Spire.Pdf;
 using Spire.Pdf.Fields;
 using Spire.Pdf.Widget;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace FMS
 {
@@ -27,8 +27,15 @@ namespace FMS
             EventCompliance,
             EventCompleted,
             EventCompletedOutstanding,
-            EventActivityCompleted,
-            EventNoActionTaken
+            EventOutstanding,
+            EventNoActionTaken,
+            PAF,
+            HSIListByNumber,
+            HSIListByName,
+            HSIListByCounty,
+            HSIListByClass,
+            AbndInacStatusTracker,
+            AbndCostEstimateReport
         }
 
         /// <summary>
@@ -40,7 +47,19 @@ namespace FMS
         public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list, 
             ReportType reportType, 
             DateOnly? startDate = null, 
-            DateOnly? endDate = null)
+            DateOnly? endDate = null,
+            IEnumerable<T> vrpList = null,
+            IEnumerable<T> brnList = null,
+            IEnumerable<AbndInacChecklistReviewReportDto> checkListAIReportList = null,
+            int hsiCompCount = 0,
+            int hsiRecCount = 0,
+            decimal hsiCompAvg = 0.0m,
+            int vrpCompCount = 0,
+            int vrpRecCount = 0,
+            decimal vrpCompAvg = 0.0m,
+            int brnCompCount = 0,
+            int brnRecCount = 0,
+            decimal brnCompAvg = 0.0m)
         {
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
@@ -109,14 +128,24 @@ namespace FMS
                 ws = wb.AddWorksheet("Delisted By Date Range");
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("A1").Value = "Delist Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "Delist End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Delisted By Date Range";
+
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 14;
+                ws.Cell("A2").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 14;
+                ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
 
+                ws.Columns().AdjustToContents(1, 10000);
                 table.ShowTotalsRow = true;
                 table.Field("Acres").TotalsRowFunction = XLTotalsRowFunction.Sum;
             }
@@ -124,9 +153,13 @@ namespace FMS
             if (reportType == ReportType.EventPending) 
             {
                 ws = wb.AddWorksheet("Events Pending");
-                table = ws.Cell(1, 1).InsertTable(list);
+
+                table = ws.Cell(2, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Events Pending";
 
                 ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(9).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
@@ -137,13 +170,24 @@ namespace FMS
                 ws = wb.AddWorksheet("Events Completed");
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("A1").Value = "Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Completed Events";
+
+                // Second Row Formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 14;
+                ws.Cell("A2").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 14;
+                ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(9).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+
+                ws.Columns().AdjustToContents(1, 10000);
             }
 
             if (reportType == ReportType.EventCompliance) 
@@ -151,41 +195,25 @@ namespace FMS
                 ws = wb.AddWorksheet("Event Compliance");
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("A1").Value = "Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Compliance Orders";
+
+                // Second Row Formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 14;
+                ws.Cell("A2").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 14;
+                ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
                 ws.Column(5).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
-            }
 
-            if (reportType == ReportType.EventCompletedOutstanding)
-            {
-                ws = wb.AddWorksheet("Events Completed Outstanding");
-                table = ws.Cell(3, 1).InsertTable(list);
-                table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Cell("A1").Value = "Start Date";
-                ws.Cell("B1").SetValue(startDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Cell("A2").Value = "End Date";
-                ws.Cell("B2").SetValue(endDate?.ToString("MM/dd/yyyy") ?? "");
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-
-                table.ShowTotalsRow = true;
-                table.Field("Days").TotalsRowFunction = XLTotalsRowFunction.Average;
-            }
-
-            if (reportType == ReportType.EventActivityCompleted)
-            {
-                ws = wb.AddWorksheet("Events Completed By CO");
-                table = ws.Cell(1, 1).InsertTable(list);
-                table.ShowHeaderRow = true;
-                ws.Columns().AdjustToContents(1, 10000);
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.EventNoActionTaken)
@@ -194,14 +222,296 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(3).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+
+            if (reportType == ReportType.EventCompletedOutstanding)
+            {
+                // ******************** HSI Worksheet ******************
+                ws = wb.AddWorksheet("HSI");
+                table = ws.Cell(3, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "HSI";
+
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
+                ws.Cell("C1").Style.Font.Bold = true;
+                ws.Cell("C1").Style.Font.FontSize = 14;
+                ws.Cell("C1").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + hsiRecCount);
+
+                ws.Cell("B2").Style.Font.Bold = true;
+                ws.Cell("B2").Style.Font.FontSize = 12;
+                ws.Cell("B2").SetValue("Reports Completed: " + hsiCompCount);
+
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 12;
+                ws.Cell("C2").SetValue("Average Days to Complete: " + hsiCompAvg);
+
+                ws.Columns().AdjustToContents(1, 10000);
+
+                // ******************** VRP Worksheet ******************
+                ws = wb.AddWorksheet("VRP");
+                table = ws.Cell(3, 1).InsertTable(vrpList);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "VRP";
+
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
+                ws.Cell("C1").Style.Font.Bold = true;
+                ws.Cell("C1").Style.Font.FontSize = 14;
+                ws.Cell("C1").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + vrpRecCount);
+
+                ws.Cell("B2").Style.Font.Bold = true;
+                ws.Cell("B2").Style.Font.FontSize = 12;
+                ws.Cell("B2").SetValue("Reports Completed: " + vrpCompCount);
+
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 12;
+                ws.Cell("C2").SetValue("Average Days to Complete: " + vrpCompAvg);
+
+                ws.Columns().AdjustToContents(1, 10000);
+
+                // ******************** Brownfield Worksheet ******************
+                ws = wb.AddWorksheet("Brownfield");
+                table = ws.Cell(3, 1).InsertTable(brnList);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "BROWN";
+
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
+                ws.Cell("C1").Style.Font.Bold = true;
+                ws.Cell("C1").Style.Font.FontSize = 14;
+                ws.Cell("C1").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + brnRecCount);
+
+                ws.Cell("B2").Style.Font.Bold = true;
+                ws.Cell("B2").Style.Font.FontSize = 12;
+                ws.Cell("B2").SetValue("Reports Completed: " + brnCompCount);
+
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 12;
+                ws.Cell("C2").SetValue("Average Days to Complete: " + brnCompAvg);
+
+                ws.Columns().AdjustToContents(1, 10000);
+            }
+
+            if (reportType == ReportType.EventOutstanding)
+            {
+                // ******************** HSI Worksheet ******************
+                ws = wb.AddWorksheet("HSI");
+                table = ws.Cell(3, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "HSI";
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + hsiRecCount);
+
+                ws.Columns().AdjustToContents(1, 10000);
+
+                // ******************** VRP Worksheet ******************
+                ws = wb.AddWorksheet("VRP");
+                table = ws.Cell(3, 1).InsertTable(vrpList);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "VRP";
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + vrpRecCount);
+
+                ws.Columns().AdjustToContents(1, 10000);
+
+                // ******************** Brownfield Worksheet ******************
+                ws = wb.AddWorksheet("Brownfield");
+                table = ws.Cell(3, 1).InsertTable(brnList);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "BROWN";
+
+                //Second Row formatting
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 12;
+                ws.Cell("A2").SetValue("Reports Received: " + brnRecCount);
+
+                ws.Columns().AdjustToContents(1, 10000);
+            }
+
+            if (reportType == ReportType.PAF)
+            {
+                ws = wb.AddWorksheet("PAF");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Cell("D1").Style.Font.Bold = true;
+                ws.Cell("D1").Style.Font.FontSize = 14;
+                ws.Cell("D1").Value = "PAF Report";
+                ws.Column("C").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("D").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
+                ws.Column("G").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("H").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("I").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("J").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("K").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("L").Style.DateFormat.Format = "MM/dd/yyyy";
+                ws.Column("M").Style.DateFormat.Format = "MM/dd/yyyy";
+                table.ShowAutoFilter = true;
+                // Must enable the filter
+                table.AutoFilter.IsEnabled = true;
+                table.ShowTotalsRow = true;
+
+                // *************** Report Totals ***************
+                table.Field("PAF Issue Date").TotalsCell.Value = "Total PAF Amt -->";
+                // PAF Amount Sum
+                table.Field("PAF Amount").TotalsRowFunction = XLTotalsRowFunction.Sum;
+
+                //// Number of Unique Compliance Officer Rows
+                table.Field("Project Officer").TotalsRowFunction = XLTotalsRowFunction.Count;
+
+                //// Number of Unique Contractor Rows
+                table.Field("Contractor").TotalsRowFunction = XLTotalsRowFunction.Count;
+
+                ws.Columns().AdjustToContents(1, 10000);
+            }
+
+            if(reportType == ReportType.HSIListByNumber)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By Facility Number";
+            }
+
+            if (reportType == ReportType.HSIListByName)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By Facility Name";
+            }
+
+            if (reportType == ReportType.HSIListByCounty)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By County";
+            }
+
+            if (reportType == ReportType.HSIListByClass)
+            {
+                ws = wb.AddWorksheet("HSI List");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "HSI List By Class";
+            }
+
+            if (reportType == ReportType.AbndInacStatusTracker)
+            {
+                ws = wb.AddWorksheet("Abnd Inac Status Tracker");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "Abandoned Inactive Status Tracker";
+
+                // New Tab to be called Checklist reviews
+                ws = wb.AddWorksheet("Checklist Reviews");
+                table = ws.Cell(2,1).InsertTable(checkListAIReportList);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "Abandoned Inactive Checklist Reviews";
+            }
+
+            if (reportType == ReportType.AbndCostEstimateReport)
+            {
+                ws = wb.AddWorksheet("Abnd Inac Cost Estimate");
+                table = ws.Cell(2, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Cell("B1").Style.Font.Bold = true;
+                ws.Cell("B1").Style.Font.FontSize = 14;
+                ws.Cell("B1").Value = "Abandoned Sites Cost Estimate Report";
+                ws.Column("A").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Integer;
+                ws.Column("F").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("G").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("H").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Integer;
+                ws.Column("H").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                ws.Column("J").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
             }
 
             wb.SaveAs(ms);
             return ms.ToArray();
         }
-        
+
         /// <summary>
         /// Takes in a list of RetentionRecordDetailDto, fill the information into the blank pdf form
         /// accordingly, and convert it to a byte array.

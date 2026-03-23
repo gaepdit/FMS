@@ -12,7 +12,7 @@ namespace FMS
         Task<SelectList> ComplianceOfficersSelectListAsync(bool includeInactive = false);
         Task<SelectList> FacilityStatusesSelectListAsync(bool includeInactive = false);
         Task<SelectList> FacilityTypesSelectListAsync(bool includeInactive = false);
-        Task<SelectList> OrganizationalUnitsSelectListAsync(bool includeInactive = false);
+        Task<SelectList> OrganizationalUnitsSelectListAsync(bool includeInactive = false, List<string> list = null);
         Task<SelectList> CabinetsSelectListAsync(bool includeInactive = false);
 
         // Phase III updates
@@ -47,8 +47,8 @@ namespace FMS
             (await _listRepository.GetFacilityStatusesItemListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> FacilityTypesSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetFacilityTypesItemListAsync(includeInactive)).ToSelectList();
-        public async Task<SelectList> OrganizationalUnitsSelectListAsync(bool includeInactive = false) =>
-            (await _listRepository.GetOrganizationalUnitsItemListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> OrganizationalUnitsSelectListAsync(bool includeInactive = false, List<string> list = null) =>
+            (await _listRepository.GetOrganizationalUnitsItemListAsync(includeInactive, list)).ToSelectList();
         public async Task<SelectList> CabinetsSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetCabinetsItemListAsync(includeInactive)).ToSelectList();
 

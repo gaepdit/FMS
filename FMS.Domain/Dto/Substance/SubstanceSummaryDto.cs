@@ -6,6 +6,20 @@ namespace FMS.Domain.Dto
 {
     public class SubstanceSummaryDto
     {
+        public SubstanceSummaryDto() { }
+
+        public SubstanceSummaryDto(SubstanceSummaryDto substanceSummary)
+        {
+            Id = substanceSummary.Id;
+            Active = substanceSummary.Active;
+            FacilityId = substanceSummary.FacilityId;
+            Chemical = substanceSummary.Chemical;
+            Groundwater = substanceSummary.Groundwater;
+            Soil = substanceSummary.Soil;
+            UseForGroundwaterScoring = substanceSummary.UseForGroundwaterScoring;
+            UseForSoilScoring = substanceSummary.UseForSoilScoring;
+        }
+
         public SubstanceSummaryDto(Substance substance)
         {
             Id = substance.Id;

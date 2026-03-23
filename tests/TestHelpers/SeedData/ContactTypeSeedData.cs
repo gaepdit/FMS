@@ -22,7 +22,7 @@ namespace FMS.TestData.SeedData
                 {
                     Id = new Guid("A5498528-773C-42ED-BDB5-D0F5F67CDE34"),
                     Active = true,
-                    Name = "Owner",
+                    Name = "Property Owner",
                 },
                 new()
                 {

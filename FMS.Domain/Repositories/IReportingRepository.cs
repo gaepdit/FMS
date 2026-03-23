@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,13 +30,40 @@ namespace FMS.Domain.Repositories
 
         #region Events Reports
 
-        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> selectedFacilityTypes = null, List<string> eventTypes = null);
+        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> facilityTypes = null, List<string> eventTypes = null);
+
+        Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync();
 
         #endregion
 
         #region PAF Report
 
-        Task<IReadOnlyList<PAFReportDto>> GetPAFReportAsync();
+        Task<IReadOnlyList<PAFReportRawDto>> GetPAFReportAsync();
+
+        #endregion
+
+        #region HSI ListReports
+
+        Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy);
+
+        #endregion
+
+        #region Abandonment/Inactivity Reports
+
+        Task<IReadOnlyList<AbndInacStatusTrackerDto>> GetAbndInacStatusTrackerReportAsync();
+
+        Task<IReadOnlyList<AbndInacChecklistReviewDto>> GetAbndInacChecklistReviewAsync();
+
+        Task<IReadOnlyList<AbndCostEstimateReportDto>> GetAbndCostEstimateReportAsync();
+
+        #endregion
+
+        #region Site Summary Report
+
+        Task<IReadOnlyList<SiteSummaryReportDto>> GetFacilitySiteSummaryDtoAsync
+            (SiteSummaryQuerySpec spec);
+
+        Task<IReadOnlyList<FacilityBasicDto>> GetHsiFacilitiesAsync(SiteSummaryQuerySpec spec);
 
         #endregion
     }

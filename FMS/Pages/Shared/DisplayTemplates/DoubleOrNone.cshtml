@@ -1,0 +1,9 @@
+﻿@model double?
+@if (!Model.HasValue)
+{
+    <span class="text-muted">none</span>
+}
+else
+{
+    @Model.ToString()
+}

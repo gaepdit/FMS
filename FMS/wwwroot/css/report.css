@@ -1,0 +1,637 @@
+/* Document */
+
+body {
+    margin: 0;
+    font-family: 'Times New Roman', Times, serif;
+    color: #333;
+    background: #fff;
+}
+
+body.sans-serif {
+    font-family: 'Arial', sans-serif;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+html, body {
+    font-size: 14px;
+}
+
+/* Text utilities */
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.align-right {
+    text-align: right;
+}
+
+/* Tables */
+
+.table-values-list {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.table-values-list tr + tr {
+    border-top: 1px solid #777;
+}
+
+.table-values-list th {
+    font-weight: normal;
+    text-align: left;
+    padding: .25rem 0;
+}
+
+.table-values-list td {
+    text-align: center;
+    padding: .25rem 1rem .25rem 2rem;
+}
+
+th.minimize-col-width {
+    width: 1%;
+    white-space: nowrap;
+}
+
+th.minimize-col-width:first-child {
+    padding-right: 3rem;
+}
+
+/* Left/right split (halves positioned on left and right margins) */
+
+.split-lr {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-bottom: 1rem;  
+}
+
+.split-lr > div {
+    flex: 0 1 auto;
+}
+
+footer.split-lr > div:last-child {
+    text-align: right;
+}
+
+/* Half & half grid */
+
+.grid-half {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* EPD nameplate */
+
+.nameplate .logo {
+    width: 100%;
+    max-width: 300px;
+    min-width: 50px;
+    padding-right: 10px;
+}
+
+.nameplate address {
+    display: inline-block;
+    text-align: left;
+    margin-top: .5rem;
+    font-style: normal;
+}
+
+.nameplate .director {
+    font-weight: bold;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid;
+    margin-bottom: .5rem;
+}
+
+.nameplate .branch {
+    font-weight: bold;
+}
+
+.nameplate .address {
+    font-size: smaller;
+}
+
+/* Report layout */
+
+.print-toolbar + main {
+    margin-top: 1.5rem;
+}
+
+main {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.page-wrapper {
+    max-width: 62rem;
+    margin: 1rem auto;
+    padding: 4rem;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.12), 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.12), 0 6px 8px rgba(0, 0, 0, 0.12)
+}
+
+/* Memorandum header layout */
+
+.memorandum + section {
+    border-top: 1px solid;
+}
+
+.memorandum dt {
+    text-transform: uppercase;
+    font-weight: bold;
+    float: left;
+    clear: left;
+    width: 6rem;
+}
+
+.memorandum dd {
+    margin-left: 7rem;
+}
+
+.memorandum h1 {
+    font-size: inherit;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+/* Site Summary layout */
+
+header {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 10px;
+}
+
+.masthead {
+    display: grid;
+    grid-template-columns: auto auto;
+    font-size: larger;
+    font-weight: bold;
+    border-bottom: 4px solid;
+}
+
+.siteinfo {
+    display: grid;
+    grid-template-columns: auto 250px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.sitename {
+    display: grid;
+    grid-template-columns: 80px auto;
+}
+
+.sitemap {
+    border: thin;
+    height: 250px;
+    width: 250px;
+}
+
+.latlong {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding-top: 5px;
+}
+
+.parcels {
+    display: grid;
+    grid-template-columns: 80px auto 110px;
+}
+
+.subparcelhead {
+    border-top: 3px solid;
+    padding: 0px;
+    border-bottom: thin;
+}
+
+.subparceltablehead {
+    border-bottom: 3px solid;
+    display: grid;
+    grid-template-columns: auto 80px 150px 100px;
+    font-weight: bold;
+}
+
+.subparcel {
+    display: grid;
+    grid-template-columns: auto 80px 150px 100px;
+}
+
+.status {
+    border-top: 3px solid;
+}
+
+.substances {
+    padding-top: 5px;
+}
+
+.substancehead {
+    display: grid;
+    grid-template-columns: 320px 30px 30px auto 30px 40px;
+    font-weight: bold;
+}
+
+.substancebox {
+    display: grid;
+    grid-template-columns: 380px auto;
+    border: 2px solid;
+    padding-left: 5px;
+}
+
+.substance {
+    display: grid;
+    grid-template-columns: auto 30px 30px;
+}
+
+.mycheckbox {
+    font-weight: bold;
+}
+
+/* Footer */
+
+footer {
+    border-top: 2px solid;
+    margin-top: 2rem;
+}
+
+/* Inline Definition List layout */
+
+dl.dl-inline {
+    display: grid;
+    grid-template-columns: max-content auto;
+    gap: 0 1rem;
+    margin: 0.5rem 0;
+}
+
+dl.dl-inline dt {
+    grid-column-start: 1;
+    font-style: italic;
+}
+
+dl.dl-inline dt::after {
+    content: ":";
+}
+
+dl.dl-inline dd {
+    grid-column-start: 2;
+    margin-left: 0;
+}
+
+.stack-test dl.dl-inline {
+    gap: 0 0.5rem;
+}
+
+.stack-test dl.dl-inline dt {
+    font-style: normal;
+    font-weight: bold;
+}
+
+/* ACC layout */
+
+.acc h2 {
+    font-size: inherit;
+    text-transform: uppercase;
+}
+
+/* Stack Test Report layout */
+
+.stack-test-body {
+    font-size: 12px;
+}
+
+.stack-test table {
+    width: 100%;
+}
+
+.stack-test tr.table-section {
+    border-top: 2px solid;
+}
+
+.stack-test th,
+.stack-test td {
+    vertical-align: text-top;
+    border: 1px solid;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.stack-test th {
+    width: 15rem;
+    text-align: left;
+    text-transform: uppercase;
+    border-left: none;
+    padding-left: 0;
+}
+
+.stack-test th[rowspan="2"] {
+    width: 9.5rem;
+}
+
+.stack-test th[rowspan="2"] + th,
+.stack-test th.split-table-header {
+    width: 5rem;
+    padding-left: 0.5rem;
+}
+
+.stack-test th[scope=col] {
+    text-align: center;
+    width: auto;
+}
+
+.stack-test th:last-child,
+.stack-test td:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+.stack-test .table-subtable {
+    border: none;
+    padding: 0;
+}
+
+.stack-test .table-subtable tbody tr:first-child th,
+.stack-test .table-subtable tbody tr:first-child td {
+    border-top: none;
+}
+
+.stack-test .table-subtable-vertical td {
+    text-align: center;
+}
+
+.stack-test .table-subtable-vertical th:last-child,
+.stack-test .table-subtable-vertical td:last-child {
+    border-right: none;
+    padding-right: 1rem;
+}
+
+.stack-test .table-subtable-vertical th[scope=col] {
+    padding-left: 1rem;
+}
+
+.stack-test .table-subtable-vertical thead th[scope=col]:first-child {
+    text-align: left;
+    padding-left: 0;
+}
+
+.stack-test .table-subtable-indent tr :first-child {
+    text-align: left;
+    border-left: none;
+    padding-left: 2rem;
+}
+
+.stack-test .table-subtable-horizontal th {
+    padding-left: 1rem;
+    width: 3rem;
+}
+
+.stack-test tbody > tr:last-child th,
+.stack-test tbody > tr:last-child td {
+    border-bottom: none;
+}
+
+.stack-test tfoot td {
+    border: none;
+    padding: 0;
+}
+
+.stack-test th .units {
+    text-transform: initial;
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+/* FCE layout */
+
+.fce h1 {
+    font-size: inherit;
+    font-weight: inherit;
+    border-bottom: 1px solid;
+    margin-bottom: 2rem;
+}
+
+.fce div + h1 {
+    margin-top: 2rem;
+}
+
+.fce header .title {
+    font-size: larger;
+    font-weight: bold;
+    border-bottom: none;
+}
+
+.fce h2 {
+    font-size: inherit;
+    margin-top: 1.5rem;
+}
+
+.fce-content {
+    font-size: smaller;
+}
+
+.fce table {
+    width: 100%;
+    font-size: smaller;
+}
+
+.fce table th {
+    font-weight: normal;
+    text-decoration: underline;
+    text-align: left;
+}
+
+.fce table th.align-right {
+    text-align: right;
+}
+
+.fce table tbody th {
+    text-decoration: none;
+}
+
+.fce table th, .fce table td {
+    padding-right: .5rem;
+    vertical-align: baseline;
+}
+
+.banner-test-site {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    opacity: .9;
+    color: #333;
+    font-weight: 700;
+    font-size: 16px;
+    font-family: system-ui;
+    text-transform: uppercase;
+    text-align: center;
+    text-shadow: 0 0 4px white;
+    background: repeating-linear-gradient(135deg, #f6da52bb, #f6da52bb 10px, #ffef80bb 10px, #ffef80bb 20px);
+    box-shadow: 0 4px 8px rgba(130, 106, 15, 0.37);
+}
+
+/* Print styles */
+@media print {
+    @page {
+        margin: .5in;
+    }
+
+    html, body {
+        font-size: 12px;
+        color: #000;
+        background: #fff;
+    }
+
+    .stack-test-body {
+        font-size: 10px;
+    }
+
+    .page-wrapper {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .logo {
+        max-width: 250px;
+    }
+
+    .banner-test-site {
+        position: static;
+        box-shadow: none;
+        text-shadow: none;
+        border: 1px solid;
+    }
+
+    .banner-test-site::after {
+        content: "— Not for public distribution";
+    }
+}
+
+/* Print toolbar
+-------------------------------------------------- */
+.print-toolbar {
+    background: #eeed;
+    text-align: right;
+    padding: .5rem 1.5rem;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.12), 0 12px 16px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(1px);
+    font-family: system-ui;
+}
+
+.print-toolbar button {
+    vertical-align: middle;
+    padding: 5px 16px;
+    margin-left: .5rem;
+    line-height: 1;
+}
+
+/* styling of the tooltip display */
+#tooltip-text {
+    position: absolute;
+    transition: opacity .3s ease-in-out;
+
+    /* Visually hide */
+    opacity: 0;
+    top: -100rem;
+
+    /* Shape */
+    height: auto;
+    padding: 8px;
+    margin: 1rem 0 0 0;
+    right: 0.9rem;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    width: 31rem;
+
+    /* Style */
+    background: #004D1D;
+    font-size: 1rem;
+    color: #fff;
+    border-radius: 4px;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+#tooltip-text ul {
+    padding-left: 2rem;
+    margin-right: 8px;
+}
+
+#tooltip-text li {
+    margin-bottom: 1rem;
+}
+
+#tooltip-text kbd {
+    padding: 2px 3px;
+    border-radius: 3px;
+    border: 1px solid hsla(0 0% 100% / .25);
+    background: hsla(0 0% 100% / .1);
+}
+
+#tooltip-text kbd svg {
+    margin-top: -1px;
+}
+
+/* optional styling to add a "wedge" to the tooltip */
+/* Source: https://stackdiary.com/hover-tooltip-javascript/ */
+#tooltip-text:before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: .85rem;
+    margin-left: -8px;
+    border: 8px solid transparent;
+    border-bottom: 8px solid #004D1D;
+}
+
+#print-help-button:hover + #tooltip-text, #print-help-button:focus + #tooltip-text {
+    /* Un-hide */
+    opacity: 100%;
+    top: auto;
+}
+
+#print-help-button {
+    border: none;
+    padding: 5px;
+    background: none;
+    border-radius: 5px;
+}
+
+#print-help-button:hover, #print-help-button:focus {
+    background: rgb(208, 208, 215);
+}
+
+/* Print styles */
+@media print {
+    .print-toolbar {
+        display: none !important;
+    }
+}
+
+/* Bootstrap Icons
+-------------------------------------------------- */
+.bi {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    overflow: visible !important;
+    vertical-align: middle;
+}
+
+.icon-link {
+    display: inline-flex;
+    gap: 0.375rem;
+    align-items: center;
+}
