@@ -1,5 +1,6 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using Microsoft.Graph.Models.Security;
 using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -139,6 +140,16 @@ namespace FMS.Helpers
                 case "NATNATNAT":
                     {
                         clup = mnat + (landFill ? msgw : mssgall) + mper;
+                        break;
+                    }
+                case "INAINAINA":
+                    {
+                        clup = minac1 + (landFill ? msgw : mssgall) + minac2;
+                        break;
+                    }
+                case "ABNABNABN":
+                    {
+                        clup = mabnd1 + (landFill ? msgw : mssgall) + mabnd2;
                         break;
                     }
                 case "55RRS":
@@ -507,11 +518,11 @@ namespace FMS.Helpers
                         break;
                     }
                 // northside
-                case var @case when @case == "5RRSRRS":
-                    {
-                        clup = mrrs + msource + mrrs5_2 + "  " + (landFill ? "" : mrrs) + mslgw + mper;
-                        break;
-                    }
+                //case "5RRSRRS":
+                //    {
+                //        clup = mrrs + msource + mrrs5_2 + "  " + (landFill ? "" : mrrs) + mslgw + mper;
+                //        break;
+                //    }
                 case "5CIPRRS":
                     {
                         clup = mrrs5_1 + msource + mrrs5_2 + "  " + (landFill ? "" : mcip + msoil + mper) + "  " + mrrs + mgwater + mper;
@@ -805,6 +816,128 @@ namespace FMS.Helpers
                 case "INARRS5":
                     {
                         clup = minac1 + msource + minac2 + "  " + (landFill ? "" : mrrs + msoil + mper) + "  " + mrrs5_1 + mgwater + mrrs5_2;
+                        break;
+                    }
+                //Abandon sites
+                case "RRSRRSABN":
+                    {
+                        clup = mrrs + (landFill ? msource : mssl) + mper + "  " + mabnd1 + mgwater + mabnd2;
+                        break;
+                    }
+                case "RRSABNRRS":
+                    {
+                        clup = mrrs + mssl + mper + "  " + (landFill ? "" : mabnd1 + msoil + mabnd2);
+                        break;
+                    }
+                case "ABNRRSRRS":
+                    {
+                        clup = mrrs + (landFill ? mgwater : mslgw) + mper + "  " + mabnd1 + msource + mabnd2;
+                        break;
+                    }
+                case "RRSABNABN":
+                    {
+                        clup = mrrs + msource + mper + "  " + mabnd1 + (landFill ? mgwater : mslgw) + mabnd2;
+                        break;
+                    }
+                case "ABNABNRRS":
+                    {
+                        clup = mrrs + mgwater + mper + "  " + mabnd1 + (landFill ? msource : mssl) + mabnd2;
+                        break;
+                    }
+                case "ABNRRSABN":
+                    {
+                        clup = (landFill ? "" : mrrs + msoil + mper) + "  " + mabnd1 + msgw + mabnd2;
+                        break;
+                    }
+                case "55ABN":
+                    {
+                        clup = mrrs5_1 + (landFill ? msource : mssl) + mrrs5_2 + "  " + mabnd1 + mgwater + mabnd2;
+                        break;
+                    }
+                case "5ABN5":
+                    {
+                        clup = mrrs5_1 + msgw + mrrs5_2 + "  " + (landFill ? "" : mabnd1 + msoil + mabnd2);
+                        break;
+                    }
+                case "ABN55":
+                    {
+                        clup = mrrs5_1 + (landFill ? mgwater : mslgw) + mrrs5_2 + "  " + mabnd1 + msource + mabnd2;
+                        break;
+                    }
+                case "5ABNABN":
+                    {
+                        clup = mrrs5_1 + msource + mrrs5_2 + "  " + mabnd1 + (landFill ? mgwater : mslgw) + mabnd2;
+                        break;
+                    }
+                case "ABNABN5":
+                    {
+                        clup = mrrs5_1 + mgwater + mrrs5_2 + "  " + mabnd1 + (landFill ? msource : mssl) + mabnd2;
+                        break;
+                    }
+                case "ABN5ABN":
+                    {
+                        clup = (landFill ? "" : mrrs5_1 + msoil + mrrs5_2) + "  " + mabnd1 + msgw + mabnd2;
+                        break;
+                    }
+                //'Inactive sites
+                case "RRSRRSINA":
+                    {
+                        clup = mrrs + (landFill ? msource : mssl) + mper + "  " + minac1 + mgwater + minac2;
+                        break;
+                    }
+                case "RRSINARRS":
+                    {
+                        clup = mrrs + msgw + mper + "  " + minac1 + (landFill ? "" : msoil) + minac2;
+                        break;
+                    }
+                case "RRSINAINA":
+                    {
+                        clup = mrrs + msource + mper + "  " + minac1 + (landFill ? mgwater : mslgw) + minac2;
+                        break;
+                    }
+                case "INARRSRRS":
+                    {
+                        clup = mrrs + (landFill ? mgwater : mslgw) + mper + "  " + minac1 + msource + minac2;
+                        break;
+                    }
+                case "INAINARRS":
+                    {
+                        clup = mrrs + mgwater + mper + "  " + minac1 + (landFill ? msource : mssl) + minac2;
+                        break;
+                    }
+                case "INARRSINA":
+                    {
+                        clup = (landFill ? "" : mrrs + msoil + mper) + "  " + minac1 + msgw + minac2;
+                        break;
+                    }
+                case "55INA":
+                    {
+                        clup = mrrs5_1 + (landFill ? msource : mssl) + mrrs5_2 + "  " + minac1 + mgwater + minac2;
+                        break;
+                    }
+                case "5INA5":
+                    {
+                        clup = mrrs5_1 + msgw + mrrs5_2 + "  " + (landFill ? "" : minac1 + msoil + minac2);
+                        break;
+                    }
+                case "INA55":
+                    {
+                        clup = mrrs5_1 + (landFill ? mgwater : mslgw) + mrrs5_2 + "  " + minac1 + msource + minac2;
+                        break;
+                    }
+                case "5INAINA":
+                    {
+                        clup = mrrs5_1 + msource + mrrs5_2 + "  " + minac1 + (landFill ? mgwater : mslgw) + minac2;
+                        break;
+                    }
+                case "INAINA5":
+                    {
+                        clup = mrrs5_1 + mgwater + mrrs5_2 + "  " + minac1 + (landFill ? msource : mssl) + minac2;
+                        break;
+                    }
+                case "INA5INA":
+                    {
+                        clup = (landFill ? "" : mrrs5_1 + msoil + mrrs5_2) + "  " + minac1 + msgw + minac2;
                         break;
                     }
                 default:
