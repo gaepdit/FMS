@@ -518,11 +518,11 @@ namespace FMS.Helpers
                         break;
                     }
                 // northside
-                case var @case when @case == "5RRSRRS":
-                    {
-                        clup = mrrs + msource + mrrs5_2 + "  " + (landFill ? "" : mrrs) + mslgw + mper;
-                        break;
-                    }
+                //case "5RRSRRS":
+                //    {
+                //        clup = mrrs + msource + mrrs5_2 + "  " + (landFill ? "" : mrrs) + mslgw + mper;
+                //        break;
+                //    }
                 case "5CIPRRS":
                     {
                         clup = mrrs5_1 + msource + mrrs5_2 + "  " + (landFill ? "" : mcip + msoil + mper) + "  " + mrrs + mgwater + mper;
