@@ -52,7 +52,7 @@ namespace FMS.Helpers
         {
             if (lat != 0 && lon != 0)
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={lat},{lon}&zoom={mapZoom}&size=250x250&markers=size:small|color:red|{lat},{lon}&maptype={mapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={lat},{lon}&zoom={mapZoom}&size=250x250&markers=size:mid|color:red|{lat},{lon}&maptype={mapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
             return null;
         }

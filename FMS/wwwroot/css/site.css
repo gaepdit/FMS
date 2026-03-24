@@ -14,8 +14,8 @@ a {
 
 .btn-primary {
     color: #fff;
-    background-color: #5BAFD1; /*#1b6ec2;*/
-    border-color: #507033; /*#1861ac;*/
+    background-color: /*#5BAFD1;*/ #1b6ec2;
+    border-color: /*#507033;*/ #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -131,7 +131,7 @@ a:focus:not(.btn) {
 
 .btn-outline-secondary:focus {
     color: #fff;
-    background-color: /*#6c757d;*/ /*#5BAFD1;*/ /*#0069d9;*/ #507033;
+    background-color: #6c757d; /*#5BAFD1;*/ /*#0069d9;*/ /*#507033;*/
 }
 
 .btn-outline-secondary {
@@ -146,7 +146,7 @@ a:focus:not(.btn) {
 
 .btn-outline-info {
     color: #fff;
-    background-color: /* #17a2b8;*/ #5BAFD1; /*#507033;*/
+    background-color:  #17a2b8; /*#5BAFD1;*/ /*#507033;*/
 }
 
 .btn-outline-warning:focus {
@@ -172,7 +172,7 @@ a:focus:not(.btn) {
 /* Branding
 -------------------------------------------------- */
 .bg-brand {
-    background-color: /*#212529;*/ #5BAFD1;
+    background-color: #04691a; /*#5BAFD1;*/
 }
 
 /* Header logo */
@@ -301,7 +301,7 @@ a[target]::after {
 }
 :root,
 [data-bs-theme=light] {
-    --bs-body-bg: #C8E3E8; /*#c8f8d5;*/
+    --bs-body-bg: /*#C8E3E8;*/ #c8f8d5;
 }
 [data-bs-theme=dark] {
     --bs-body-bg: /*#507033;*/ #013901;
