@@ -121,9 +121,14 @@ namespace FMS.Pages.Location
         {
             Classes = await _listHelper.LocationClassesSelectListAsync();
         }
+
         public string GetGoogleMapsUrl(FacilityDetailDto facility)
         {
-            return new UrlHelper(_configuration).GetGoogleMapsUrlLink(facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+            if (facility.Latitude != 0 && facility.Longitude != 0)
+            {
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+            }
+            return null;
         }
     }
 }
