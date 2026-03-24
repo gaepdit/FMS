@@ -1,7 +1,5 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
-using Microsoft.Graph.Models.Security;
-using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -65,7 +63,7 @@ namespace FMS.Helpers
             }
             else
             {
-                SESTAT = Strings.Left(Source_Stat, 3);
+                SESTAT = Source_Stat.Substring(0, 3);
             }
             if (Soil_stat == "RRS5")
             {
@@ -73,7 +71,7 @@ namespace FMS.Helpers
             }
             else
             {
-                SLSTAT = Strings.Left(Soil_stat, 3);
+                SLSTAT = Soil_stat.Substring(0, 3);
             }
 
             if (GW_Stat == "RRS5")
@@ -82,7 +80,7 @@ namespace FMS.Helpers
             }
             else
             {
-                GWSTAT = Strings.Left(GW_Stat, 3);
+                GWSTAT = GW_Stat.Substring(0, 3);
             }
 
             cleanupStatusParam = string.Concat(SESTAT, SLSTAT, GWSTAT);
