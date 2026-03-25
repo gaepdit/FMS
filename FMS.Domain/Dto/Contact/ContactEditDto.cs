@@ -56,7 +56,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "State")]
         public string State { get; set; }
 
-        [RegularExpression(@"(^\\d{5}(-\\d{4})?$)|([ABCEGHJ-NPRSTVXY][0-9][ABCEGHJ-NPRSTV-Z] ?[0-9][ABCEGHJ-NPRSTV-Z][0-9]$)", ErrorMessage = "Invalid format. Please enter a valid US or Canadian Postal Code.")]
+        [RegularExpression(@"^(\d{5}(-\d{4})?|[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d)$", ErrorMessage = "Invalid format. Please enter a valid US or Canadian Postal Code.")]
         [Display(Name = "Postal(ZIP) Code")]
         public string PostalCode { get; set; }
 
