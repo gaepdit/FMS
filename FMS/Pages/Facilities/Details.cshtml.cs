@@ -88,7 +88,8 @@ namespace FMS.Pages.Facilities
 
             Spec = new SiteSummaryQuerySpec
             {
-                FacilityNumber = FacilityDetail.FacilityNumber
+                FacilityNumber = FacilityDetail.FacilityNumber,
+                ShowHeader = true
             };
 
             if (hr.HasValue)
