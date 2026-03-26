@@ -8,6 +8,7 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NUglify.JavaScript.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -145,8 +146,15 @@ namespace FMS.Pages.Facilities
                 await PopulateSelectsAsync();
                 return Page();
             }
-            return File(ExportHelper.ExportPdfAsByteArray(retentionRecordDetailList, currentUser),
-                "application/pdf", fileName);
+            else if(!retentionRecordDetailList.Any())
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "You have requested " + retentionRecordDetailList.Count() + " Retention Records.");
+                Message = TempData?.GetDisplayMessage();
+                await PopulateSelectsAsync();
+                return Page();
+            }
+                return File(ExportHelper.ExportPdfAsByteArray(retentionRecordDetailList, currentUser),
+                    "application/pdf", fileName);
         }
 
         private async Task PopulateSelectsAsync()
