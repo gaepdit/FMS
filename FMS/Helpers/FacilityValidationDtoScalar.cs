@@ -18,6 +18,7 @@ namespace FMS.Helpers
             Longitude = (decimal)facility.Longitude;
             HSInumber = facility.HSInumber;
             RNDateReceived = facility.RNDateReceived;
+            DeterminationLetterDate = facility.DeterminationLetterDate;
         }
 
         public FacilityValidationDtoScalar(FacilityEditDto facility) 
@@ -31,6 +32,7 @@ namespace FMS.Helpers
             Longitude = facility.Longitude;
             HSInumber = facility.HSInumber;
             RNDateReceived = facility.RNDateReceived;
+            DeterminationLetterDate = facility.DeterminationLetterDate;
         }
 
         public string FacilityNumber { get; set; }
@@ -54,5 +56,6 @@ namespace FMS.Helpers
 
         public DateOnly? RNDateReceived { get; set; }
 
+        public DateOnly? DeterminationLetterDate { get; set; }
     }
 }
