@@ -367,12 +367,12 @@ namespace FMS.Infrastructure.Repositories
                 if (file == null) throw new ArgumentException($"File Label {newFacility.FileLabel} does not exist.");
             }
 
-            var newFac = new Facility(newFacility)
+            Facility newFac = new Facility(newFacility)
             {
                 File = file
             };
 
-            if (newFacility.FacilityTypeName == "HSI")
+            if (newFac.FacilityType?.Name == "HSI")
             {
                 // Create placeholder objects in new HSI Facility
                 newFac.HsrpFacilityProperties = new HsrpFacilityProperties(newFac.Id);

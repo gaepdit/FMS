@@ -68,9 +68,6 @@ namespace FMS.Pages.Facilities
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Facility.FacilityTypeName = await _repositoryType.GetFacilityTypeNameAsync(Facility.FacilityTypeId);
-            Facility.FacilityStatusName = await _repositoryStatus.GetFacilityStatusNameAsync(Facility.FacilityStatusId);
-
             if (!ModelState.IsValid)
             {
                 await PopulateSelectsAsync();
