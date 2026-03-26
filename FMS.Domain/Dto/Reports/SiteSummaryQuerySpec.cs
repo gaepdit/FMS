@@ -26,7 +26,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Add'l Organizational Unit")]
         public Guid? AdditionalOrganizationalUnitId { get; set; }
 
-        [Display(Name = "Print All Landfills?")]
+        [Display(Name = "Print Only Landfills?")]
         public bool IsLandFill { get; set; } = false;
 
         [Display(Name = "Print all Counties in Batches?")]
