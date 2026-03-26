@@ -72,7 +72,7 @@ else
                     <div class="parcels">
                         @foreach (var parcel in report.Parcels)
                         {
-                            if (parcel.ParcelType?.Name != "SubList")
+                            if (parcel.ParcelType?.Name != "SubList" && parcel.DeListDate is null)
                             {
                                 <div>@Html.DisplayFor(Model => parcel.Acres, "DoubleOrNone")</div>
                                 <div>@parcel.ParcelNumber</div>
@@ -84,13 +84,16 @@ else
                         <strong>LAST KNOWN PROPERTY OWNER(S):</strong><br />
                         @foreach (var contact in report.Contacts)
                         {
-                            @if (contact.ContactType?.Name == "Property Owner")
+                            @if (contact.ContactType?.Name == "Property Owner" && contact.Active)
                             {
                                 <hr />
-                                <strong>@contact.GivenName @contact.FamilyName</strong><br />
-                                if(!string.IsNullOrEmpty(contact.Company) && !contact.GivenName.Equals(contact.Company))
+                                if(!string.IsNullOrEmpty(contact.Company))
                                 {
-                                    <span>@contact.Company</span><br />
+                                    <span><strong>@contact.Company</strong></span><br />
+                                }
+                                else
+                                {
+                                    <span><strong>@contact.GetFullName()</strong></span><br />
                                 }
                                 @contact.Address <br/>
                                 @contact.City<span>,</span> @contact.State<span>  </span>  @contact.PostalCode
