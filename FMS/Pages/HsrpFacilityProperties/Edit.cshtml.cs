@@ -1,4 +1,5 @@
 using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
@@ -77,14 +78,26 @@ namespace FMS.Pages.HsrpFacilityProperties
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(Guid id)
         {
+            if (!HsrpFacilityProperties.BrownfieldDate.HasValue && HsrpFacilityProperties.BrownfieldTerminated)
+            {
+                ModelState.AddModelError("HsrpFacilityProperties.BrownfieldTerminated", "Date of Brownfield determination must be chosen.");
+            }
+            
+            if (!HsrpFacilityProperties.VRPDate.HasValue && HsrpFacilityProperties.VRPTerminated)
+            {
+                ModelState.AddModelError("HsrpFacilityProperties.VRPTerminated", "Date of VRP determination must be chosen.");
+            }
+
             if (!ModelState.IsValid)
             {
+                HsrpFacilityProperties = await _repository.GetHsrpFacilityPropertiesEditByFacilityIdAsync(id);
+                Facility = await _facilityRepository.GetFacilityAsync(HsrpFacilityProperties.FacilityId);
                 await PopulateSelectsAsync();
                 return Page();
             }
-           
+
             await _repository.UpdateHsrpFacilityPropertiesAsync(HsrpFacilityProperties.FacilityId, HsrpFacilityProperties);
 
             TempData?.SetDisplayMessage(Context.Success, $"HSI Properties successfully Updated.");
