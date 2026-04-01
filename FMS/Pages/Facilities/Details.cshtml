@@ -1215,7 +1215,7 @@
                                 @for (var i = 0; i < Model.FacilityDetail.Events.Count; i++)
                                 {
                                     var item = Model.FacilityDetail.Events[i];
-                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
+                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
                                         <td>
                                             @if (item.ParentId != Guid.Empty)
                                             {

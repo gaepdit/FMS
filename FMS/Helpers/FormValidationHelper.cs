@@ -103,7 +103,7 @@ namespace FMS.Helpers
                 errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.facilityNumberHSIInvalid)));
             }
 
-            if (string.IsNullOrEmpty(facility.FacilityNumber))
+            if (string.IsNullOrEmpty(facility.FacilityNumber) && facility.FacilityTypeName != "RN")
             {
                 errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.facilityNumberMissing)));
             }
