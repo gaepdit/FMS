@@ -132,7 +132,7 @@ namespace FMS.Infrastructure.Repositories
         }
         #endregion
 
-        #region Delisted Reports
+        #region Listed and Delisted Reports
 
         public async Task<IReadOnlyList<DelistedReportByDateDto>> GetDelistedByDateAsync()
         {
@@ -176,6 +176,8 @@ namespace FMS.Infrastructure.Repositories
                 .ToList();
             return reportDto;
         }
+
+
 
         #endregion
 
