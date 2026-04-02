@@ -15,8 +15,8 @@ namespace FMS.Domain.Dto
             Acres = facility.Parcels != null ? facility.Parcels.Sum(p => p.Acres) : null;
             FacilityName = facility.Name;
             FacilityTypeName = facility.FacilityType != null ? facility.FacilityType.Name : string.Empty;
-            ListedDate = facility.HsrpFacilityProperties.DateListed ?? DateOnly.MinValue;
-            DelistedDate = facility.HsrpFacilityProperties.DateDeListed ?? DateOnly.MinValue;
+            ListedDate = facility.HsrpFacilityProperties.DateListed;
+            DelistedDate = facility.HsrpFacilityProperties.DateDeListed;
             CountyName = facility.County != null ? facility.County.Name : string.Empty;
             ComplianceOfficerName = facility.ComplianceOfficer != null ? facility.ComplianceOfficer.Name : string.Empty;
             HSRAComplianceOfficerName = facility.HsrpFacilityProperties != null && facility.HsrpFacilityProperties.ComplianceOfficer != null ? facility.HsrpFacilityProperties.ComplianceOfficer.Name : string.Empty;

@@ -26,6 +26,10 @@ namespace FMS.Domain.Repositories
 
         Task<IReadOnlyList<DelistedReportByDateRangeDto>> GetDelistedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate);
 
+        Task<IReadOnlyList<ListedReportByDateDto>> GetListedByDateAsync();
+
+        Task<IReadOnlyList<ListedReportByDateRangeDto>> GetListedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate);
+
         #endregion
 
         #region Events Reports
