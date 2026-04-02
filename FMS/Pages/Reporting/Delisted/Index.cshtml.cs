@@ -23,6 +23,14 @@ namespace FMS.Pages.Reporting.Delisted
         [BindProperty]
         public DateOnly? EndDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
+        [Display(Name = "Start Date")]
+        [BindProperty]
+        public DateOnly? ListedStartDate { get; set; } = null;
+
+        [Display(Name = "End Date")]
+        [BindProperty]
+        public DateOnly? ListedEndDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
         public void OnGet()
         {
             // Method intentionally left empty.
@@ -46,6 +54,26 @@ namespace FMS.Pages.Reporting.Delisted
             IReadOnlyList<DelistedReportByDateRangeDto> delistedByDateRangeReportList = await _repository.GetDelistedByDateRangeAsync(StartDate, EndDate);
 
             return File(delistedByDateRangeReportList.ExportExcelAsByteArray(ExportHelper.ReportType.DelistedByRange, StartDate, EndDate), "application/vnd.ms-excel", fileName);
+        }
+
+        public async Task<IActionResult> OnPostListedByDateAsync()
+        {
+            var fileName = $"Listed_by_Date_and_CO_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+
+            // "listedByDateReportList" Detailed Facility List to go to a report
+            IReadOnlyList<ListedReportByDateDto> listedByDateReportList = await _repository.GetListedByDateAsync();
+
+            return File(listedByDateReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Listed), "application/vnd.ms-excel", fileName);
+        }
+
+        public async Task<IActionResult> OnPostListedByDateRangeAsync()
+        {
+            var fileName = $"Listed_by_Date_Range_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+
+            // "listedByDateRangeReportList" Detailed Facility List to go to a report
+            IReadOnlyList<ListedReportByDateRangeDto> listedByDateRangeReportList = await _repository.GetListedByDateRangeAsync(ListedStartDate, ListedEndDate);
+
+            return File(listedByDateRangeReportList.ExportExcelAsByteArray(ExportHelper.ReportType.ListedByRange, ListedStartDate, ListedEndDate), "application/vnd.ms-excel", fileName);
         }
     }
 }

@@ -22,6 +22,8 @@ namespace FMS
             Assignment,
             Delisted,
             DelistedByRange,
+            Listed,
+            ListedByRange,
             Event,
             EventPending,
             EventCompliance,
@@ -133,6 +135,42 @@ namespace FMS
                 ws.Cell("A1").Style.Font.Bold = true;
                 ws.Cell("A1").Style.Font.FontSize = 14;
                 ws.Cell("A1").Value = "Delisted By Date Range";
+
+                ws.Cell("A2").Style.Font.Bold = true;
+                ws.Cell("A2").Style.Font.FontSize = 14;
+                ws.Cell("A2").SetValue("Start Date: " + startDate?.ToString("MM/dd/yyyy") ?? "");
+
+                ws.Cell("C2").Style.Font.Bold = true;
+                ws.Cell("C2").Style.Font.FontSize = 14;
+                ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
+
+                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+
+                ws.Columns().AdjustToContents(1, 10000);
+                table.ShowTotalsRow = true;
+                table.Field("Acres").TotalsRowFunction = XLTotalsRowFunction.Sum;
+            }
+
+            if (reportType == ReportType.Listed)
+            {
+                ws = wb.AddWorksheet("Listed");
+                table = ws.Cell(1, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+                ws.Column("A").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+            }
+
+            if (reportType == ReportType.ListedByRange)
+            {
+                ws = wb.AddWorksheet("Listed By Date Range");
+                table = ws.Cell(3, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+
+                // First Row formatting
+                ws.Cell("A1").Style.Font.Bold = true;
+                ws.Cell("A1").Style.Font.FontSize = 14;
+                ws.Cell("A1").Value = "Listed By Date Range";
 
                 ws.Cell("A2").Style.Font.Bold = true;
                 ws.Cell("A2").Style.Font.FontSize = 14;
