@@ -1083,9 +1083,9 @@
                         <hr />
                         <div class="row mb-3">
                             <div class="col-md-1">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien, "BoolCheckbox")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien, "BoolYesNo")
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Lien)
                             </div>
                             @if (Model.FacilityDetail.StatusDetails.Lien)
@@ -1100,15 +1100,29 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-1">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance, "BoolCheckbox")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance, "BoolYesNo")
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
                             </div>
                             @if (Model.FacilityDetail.StatusDetails.FinancialAssurance)
                             {
                                 <div class="col-md-3">
                                     <a href="https://gets.sharepoint.com/:x:/r/sites/ResponseandRemediationProgram/_layouts/15/Doc.aspx?sourcedoc=%7B3A30C17D-62E2-4F54-BB79-F60CAF3EBC98%7D&file=HSRP%20Financial%20Assurance%20List%20of%20Sites%202020.xlsx&action=default&mobileredirect=true" class="btn btn-sm btn-primary" target="_blank">HSRP Financial Assurance Tracker</a>
+                                </div>
+                            }
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-1">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.UEC, "BoolYesNo")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.UEC)
+                            </div>
+                            @if (Model.FacilityDetail.StatusDetails.UEC)
+                            {
+                                <div class="col-md-3">
+                                    <a href="https://epd.georgia.gov/properties-subject-uniform-environmental-covenants" class="btn btn-sm btn-primary" target="_blank">UEC Online Knack Table</a>
                                 </div>
                             }
                         </div>
