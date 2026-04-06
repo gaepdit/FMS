@@ -2,7 +2,6 @@ using System;
 using FMS.Domain.Entities.Base;
 using FMS.Domain.Dto;
 using System.ComponentModel.DataAnnotations;
-using System.Data.SqlTypes;
 
 namespace FMS.Domain.Entities
 {
@@ -38,6 +37,7 @@ namespace FMS.Domain.Entities
             Comments = status.Comments;
             Lien = status.Lien;
             FinancialAssurance = status.FinancialAssurance;
+            UEC = status.UEC;
             CostEstimate = status.CostEstimate;
             CostEstimateDate = status.CostEstimateDate;
             AbandonedInactiveId = status.AbandonedInactiveId;
@@ -108,6 +108,9 @@ namespace FMS.Domain.Entities
 
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
+
+        [Display(Name = "UEC (Uniform Environmental Covenant")]
+        public bool UEC { get; set; }
 
         [Display(Name = "Cost Estimate")]
         [DataType(DataType.Currency)]
