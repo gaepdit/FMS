@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Dto;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
 using FMS.Platform.Extensions;
@@ -87,7 +88,8 @@ namespace FMS.Pages.Facilities
 
             Spec = new SiteSummaryQuerySpec
             {
-                FacilityNumber = FacilityDetail.FacilityNumber
+                FacilityNumber = FacilityDetail.FacilityNumber,
+                ShowHeader = true
             };
 
             if (hr.HasValue)
@@ -192,7 +194,7 @@ namespace FMS.Pages.Facilities
         {
             if (facility.Latitude != 0 && facility.Longitude != 0)
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red%7C{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
             return null;
         }

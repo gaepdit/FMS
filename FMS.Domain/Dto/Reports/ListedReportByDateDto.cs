@@ -1,47 +1,37 @@
 ﻿using ClosedXML.Attributes;
 using FMS.Domain.Entities;
 using System;
-using System.Linq;
 
 namespace FMS.Domain.Dto
 {
-    public class DelistedReportByDateRangeDto
+    public class ListedReportByDateDto
     {
-        public DelistedReportByDateRangeDto() { }
+        public ListedReportByDateDto() { }
 
-        public DelistedReportByDateRangeDto(Facility facility)
+        public ListedReportByDateDto(Facility facility)
         {
+            ListedDate = facility.HsrpFacilityProperties.DateListed.Value;
             HSIID = facility.FacilityNumber;
-            Acres = facility.Parcels != null ? facility.Parcels.Sum(p => p.Acres) : null;
             FacilityName = facility.Name;
-            FacilityTypeName = facility.FacilityType != null ? facility.FacilityType.Name : string.Empty;
-            ListedDate = facility.HsrpFacilityProperties.DateListed;
-            DelistedDate = facility.HsrpFacilityProperties.DateDeListed;
             CountyName = facility.County != null ? facility.County.Name : string.Empty;
+            OrgUnitName = facility.OrganizationalUnit != null ? facility.OrganizationalUnit.Name : string.Empty;
             ComplianceOfficerName = facility.ComplianceOfficer != null ? facility.ComplianceOfficer.Name : string.Empty;
             HSRAComplianceOfficerName = facility.HsrpFacilityProperties != null && facility.HsrpFacilityProperties.ComplianceOfficer != null ? facility.HsrpFacilityProperties.ComplianceOfficer.Name : string.Empty;
         }
+        [XLColumn(Header = "Listed Date")]
+        public DateOnly? ListedDate { get; set; }
 
         [XLColumn(Header = "HSI ID")]
         public string HSIID { get; set; }
 
-        [XLColumn(Header = "Acres")]
-        public double? Acres { get; set; }
-
         [XLColumn(Header = "Facility Name")]
         public string FacilityName { get; set; }
 
-        [XLColumn(Header = "Facility Type")]
-        public string FacilityTypeName { get; set; }
-
-        [XLColumn(Header = "Listed Date")]
-        public DateOnly? ListedDate { get; set; }
-
-        [XLColumn(Header = "Delisted Date")]
-        public DateOnly? DelistedDate { get; set; }
-
         [XLColumn(Header = "County")]
         public string CountyName { get; set; }
+
+        [XLColumn(Header = "Org Unit")]
+        public string OrgUnitName { get; set; }
 
         [XLColumn(Header = "Compliance Officer")]
         public string ComplianceOfficerName { get; set; }
@@ -50,4 +40,3 @@ namespace FMS.Domain.Dto
         public string HSRAComplianceOfficerName { get; set; }
     }
 }
-
