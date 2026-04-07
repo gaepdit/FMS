@@ -18,6 +18,16 @@ namespace FMS.Pages
         {
             if (_signInManager.IsSignedIn(User))
             {
+                if(User.Identity.IsAuthenticated)
+                {
+                    foreach(var role in UserRoles.AllRoles)
+                    {
+                        if(User.IsInRole(role))
+                        {
+                            return LocalRedirect("~/Dashboard");
+                        }
+                    }
+                }
                 return LocalRedirect("~/Facilities");
             }
 
