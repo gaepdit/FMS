@@ -22,6 +22,13 @@ namespace FMS.Domain.Dto
             PostalCode = facility.PostalCode;
             IsRetained = facility.IsRetained;
             HasERecord = facility.HasERecord;
+            LocationClassId = facility.LocationDetails?.LocationClassId;
+            AdditionalOrgUnitId = facility.HsrpFacilityProperties?.OrganizationalUnitId;
+            UEC = facility.StatusDetails?.UEC?? false;
+            Liens = facility.StatusDetails?.Lien ?? false;
+            FinancialAssurance = facility.StatusDetails?.FinancialAssurance ?? false;
+            Landfills = facility.StatusDetails?.LandFill ?? false;
+            ISWQS = facility.StatusDetails?.ISWQS ?? false;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
                     .Select(e => new RetentionRecordSummaryDto(e)).ToList()
@@ -59,6 +66,28 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Is Retained Onsite")]
         public bool IsRetained { get; }
+
+        //Advanced Properties for search
+        [Display(Name = "Class")]
+        public Guid? LocationClassId { get; set; }
+
+        [Display(Name = "Add'l Org. Unit")]
+        public Guid? AdditionalOrgUnitId { get; set; }
+
+        [Display(Name = "UEC")]
+        public bool UEC { get; set; }
+
+        [Display(Name = "Liens")]
+        public bool Liens { get; set; }
+
+        [Display(Name = "Financial Assurance")]
+        public bool FinancialAssurance { get; set; }
+
+        [Display(Name = "Landfills")]
+        public bool Landfills { get; set; }
+
+        [Display(Name = "ISWQS")]
+        public bool ISWQS { get; set; }
 
         // Defines if electronic records are availble on Sharepoint
         [Display(Name = "Has E-Records")]

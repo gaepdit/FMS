@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FMS.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -58,6 +59,28 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
+
+        //Advanced Properties for search
+        [Display(Name = "Class")]
+        public Guid? LocationClassId { get; set; }
+
+        [Display(Name = "Add'l Org. Unit")]
+        public Guid? AdditionalOrgUnitId { get; set; }
+
+        [Display(Name = "UEC")]
+        public bool UEC { get; set; }
+
+        [Display(Name = "Liens")]
+        public bool Liens { get; set; }
+
+        [Display(Name = "Financial Assurance")]
+        public bool FinancialAssurance { get; set; }
+
+        [Display(Name = "Landfills")]
+        public bool Landfills { get; set; }
+
+        [Display(Name = "ISWQS")]
+        public bool ISWQS { get; set; }
         
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>
@@ -80,6 +103,12 @@ namespace FMS.Domain.Dto
                 {nameof(State), State},
                 {nameof(ShowPendingOnly), ShowPendingOnly.ToString()},
                 {nameof(FirstPass), FirstPass.ToString()},
+                {nameof(LocationClassId), LocationClassId?.ToString()},
+                {nameof(AdditionalOrgUnitId), AdditionalOrgUnitId?.ToString()},
+                {nameof(Liens), Liens.ToString()},
+                {nameof(FinancialAssurance), FinancialAssurance.ToString()},
+                {nameof(Landfills), Landfills.ToString()},
+                {nameof(ISWQS), ISWQS.ToString()}
             };
 
         public void TrimAll()

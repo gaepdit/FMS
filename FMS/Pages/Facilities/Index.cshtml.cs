@@ -52,6 +52,9 @@ namespace FMS.Pages.Facilities
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
+        public SelectList AddlOrgUnit { get; private set; }
+        public SelectList LocationClass { get; private set; }
+
 
         public IndexModel(
             IFacilityRepository repository,
@@ -164,6 +167,8 @@ namespace FMS.Pages.Facilities
             FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
             FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
+            AddlOrgUnit = await _listHelper.OrganizationalUnitsSelectListAsync(true, ["Remedial Sites 1", "Remedial Sites 2", "Remedial Sites 3", "DOD Facilities", "NPL Unit", "Treatment & Storage", "SW Env. Monitoring Compliance", "Voluntary Remediation"]);
+            LocationClass = await _listHelper.LocationClassesSelectListAsync();
         }
 
     }
