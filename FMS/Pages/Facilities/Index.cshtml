@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid parent-container d-lg-inline-flex">
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <div class="accordion accordion-flush" id="Advanced-Search-Criteria">
                 <div class="accordion-item">
                     <h3 class="accordion-header" id="AdvancedSearch">
@@ -140,7 +140,7 @@
                                             <option value=""></option>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-8">
                                         <label asp-for="Spec.LocationClassId"></label>
                                         <select asp-for="Spec.LocationClassId" asp-items="Model.LocationClass" class="form-select">
                                             <option value=""></option>
@@ -148,36 +148,34 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <div class="col-md-3">
-                                        <div class="form-check">
-                                            <input asp-for="Spec.FinancialAssurance" />
-                                            <label asp-for="Spec.FinancialAssurance" class="form-check-label"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-check">
                                             <input asp-for="Spec.UEC" />
                                             <label asp-for="Spec.UEC" class="form-check-label"></label>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
+                                        <div class="form-check">
+                                            <input asp-for="Spec.ISWQS" />
+                                            <label asp-for="Spec.ISWQS" class="form-check-label"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
                                         <div class="form-check">
                                             <input asp-for="Spec.Landfills" />
                                             <label asp-for="Spec.Landfills" class="form-check-label"></label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-check">
                                             <input asp-for="Spec.Liens" />
                                             <label asp-for="Spec.Liens" class="form-check-label"></label>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-check">
-                                            <input asp-for="Spec.ISWQS" />
-                                            <label asp-for="Spec.ISWQS" class="form-check-label"></label>
+                                            <input asp-for="Spec.FinancialAssurance" />
+                                            <label asp-for="Spec.FinancialAssurance" class="form-check-label"></label>
                                         </div>
                                     </div>
                                 </div>
