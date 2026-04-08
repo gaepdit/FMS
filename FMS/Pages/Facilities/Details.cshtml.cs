@@ -97,7 +97,7 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
-            if(FacilityDetail.FacilityType.Name == "HSI")
+            if(FacilityDetail.FacilityType.Name == "HSI" || (FacilityDetail.FacilityType.Name == "NPL" && FacilityDetail.FacilityStatus.Name == "EPA Referred"))
             {
                 HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
             }
