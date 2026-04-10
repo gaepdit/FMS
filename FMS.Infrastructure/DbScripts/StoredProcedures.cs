@@ -25,11 +25,10 @@ ALTER PROCEDURE [dbo].[getNearbyFacilities]
     @Latitude  decimal(8, 6) = NULL,
     @Longitude decimal(9, 6) = NULL,
     @Radius    decimal(3, 2) = NULL,
-    @FacilityTypeId UNIQUEIDENTIFIER = null 
+	@TypeList NVARCHAR(MAX)
 AS
 BEGIN
     SET NOCOUNT ON;
-
     SELECT *
     FROM (
         SELECT a.Id,
@@ -60,13 +59,13 @@ BEGIN
             ON a.FacilityTypeId = c.Id
             LEFT JOIN [dbo].[Files] as d
             ON a.FileId = d.Id
-        where (a.Active = 1 AND ( @FacilityTypeId IS NULL OR a.FacilityTypeId = @FacilityTypeId ))
-           or (a.Active = @Active AND ( @FacilityTypeId IS NULL OR a.FacilityTypeId = @FacilityTypeId ))
+        where (a.Active = 1 AND ( @TypeList = '[]' OR a.FacilityTypeId IN (SELECT value FROM OPENJSON(@TypeList ))))
+           or @Active = 0
     ) AS T
     WHERE T.distance <= @Radius
     ORDER BY distance;
-
 END;
+
 ";
 
         public const string CreateSpPAFReportProcedure = @"

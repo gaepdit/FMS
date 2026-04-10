@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Dapper;
 using FMS.Domain.Data;
@@ -307,9 +310,14 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
             var conn = _context.Database.GetDbConnection();
+            var TypeList = "[]";
+            if(spec.FacilityTypeId != null)
+            {
+                TypeList = JsonSerializer.Serialize(spec.FacilityTypeId);
+            }
 
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
+                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, TypeList },
                 commandType: CommandType.StoredProcedure)).ToList();
         }
 
