@@ -35,7 +35,7 @@ namespace FMS.Domain.Dto
         public Guid? BudgetCodeId { get; set; }
 
         [Display(Name = "Organizational Unit")]
-        public Guid? OrganizationalUnitId { get; set; }
+        public List<Guid> OrganizationalUnitId { get; set; }
 
         [Display(Name = "Compliance Officer")]
         public Guid? ComplianceOfficerId { get; set; }
