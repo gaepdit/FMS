@@ -86,6 +86,7 @@
 
 <div class="p-3 rounded-3 bg-light-subtle">
     <form method="get" asp-fragment="SearchResults">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="mb-3 row">
             <div class="col-md-8">
                 <label asp-for="Spec.Address"></label>

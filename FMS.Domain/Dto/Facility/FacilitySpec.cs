@@ -29,13 +29,13 @@ namespace FMS.Domain.Dto
         public Guid? FacilityStatusId { get; set; }
 
         [Display(Name = "Type/Environmental Interest")]
-        public Guid? FacilityTypeId { get; set; }
+        public List<Guid> FacilityTypeId { get; set; }
 
         [Display(Name = "Budget Code")]
         public Guid? BudgetCodeId { get; set; }
 
         [Display(Name = "Organizational Unit")]
-        public List<Guid> OrganizationalUnitId { get; set; }
+        public Guid? OrganizationalUnitId { get; set; }
 
         [Display(Name = "Compliance Officer")]
         public Guid? ComplianceOfficerId { get; set; }

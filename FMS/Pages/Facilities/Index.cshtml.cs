@@ -90,9 +90,18 @@ namespace FMS.Pages.Facilities
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
 
-            var getType = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId);
-            ShowPendingOnlyCheckBox = getType == "RN";
-            ShowExportHSIButton = getType == "HSI";
+            var getTypes = await _repositoryType.GetFacilityTypeNameListAsync(Spec.FacilityTypeId);
+            if(getTypes.Count > 0)
+            {
+                if(getTypes.Contains("HSI"))
+                {
+                    ShowExportHSIButton = true;
+                }
+                if(getTypes.Contains("RN"))
+                {
+                    ShowPendingOnlyCheckBox = true;
+                }
+            }
 
             ShowResults = true;  
             await PopulateSelectsAsync();

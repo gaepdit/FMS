@@ -50,6 +50,11 @@ namespace FMS.Infrastructure.Repositories
             .Select(e => new FacilityTypeSummaryDto(e))
             .ToListAsync();
 
+        public async Task<List<string>> GetFacilityTypeNameListAsync(List<Guid> ids) => await _context.FacilityTypes.AsNoTracking()
+            .Where(e => ids.Count == 0 || ids.Contains(e.Id))
+            .Select(e => e.Name)
+            .ToListAsync();
+
         public Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType)
         {
             Prevent.Null(facilityType, nameof(facilityType));
