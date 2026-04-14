@@ -11,6 +11,11 @@
     <script src="~/js/formSearch.js"></script>
     <script src="~/js/formIndex.js"></script>
     <script src="~/lib/select2/js/select2.min.js"></script>
+    <script>
+        $( '#select-field' ).select2( {
+            theme: 'bootstrap-5'
+        } );
+    </script>
 }
 @section Styles
 {
@@ -44,7 +49,7 @@
 
         /* Ensure text after selection is black too */
         .select2-container--default .select2-selection__rendered {
-            color: #000 /* var(--bs-body-color) */ !important;
+            color: black /* var(--bs-body-color) */ !important;
             opacity: 1 !important;
         }
 
