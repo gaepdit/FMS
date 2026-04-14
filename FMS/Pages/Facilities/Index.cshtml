@@ -8,7 +8,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    @* <script src="~/js/formSearch.js"></script> *@
+    <script src="~/js/formSearch.js"></script>
     <script src="~/js/formIndex.js"></script>
     <script src="~/lib/select2/js/select2.min.js"></script>
 }
@@ -38,13 +38,13 @@
 
             /* Multi-select placeholder */
             .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
-                color: var(--bs-body-color) !important;
+                color: black /* var(--bs-body-color) */ !important;
                 opacity: 1 !important;
             }
 
         /* Ensure text after selection is black too */
         .select2-container--default .select2-selection__rendered {
-            color: var(--bs-body-color) !important;
+            color: #000 /* var(--bs-body-color) */ !important;
             opacity: 1 !important;
         }
 

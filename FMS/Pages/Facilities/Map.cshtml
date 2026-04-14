@@ -18,6 +18,11 @@
     <script src="~/lib/OverlappingMarkerSpiderfier/oms.min.js"></script>
     <script src="~/lib/select2/js/select2.min.js"></script>
     <script src="~/js/mapSearch.js"></script>
+    <script>
+        $( '#select-field' ).select2( {
+            theme: 'bootstrap-5'
+        } );
+    </script>
 }
 @section Styles
 {
@@ -45,13 +50,13 @@
 
             /* Multi-select placeholder */
             .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
-                color: var(--bs-body-color) !important;
+                color: black /* var(--bs-body-color) */ !important;
                 opacity: 1 !important;
             }
 
         /* Ensure text after selection is black too */
         .select2-container--default .select2-selection__rendered {
-            color: var(--bs-body-color) !important;
+            color: black /* var(--bs-body-color) */ !important;
             opacity: 1 !important;
         }
 
