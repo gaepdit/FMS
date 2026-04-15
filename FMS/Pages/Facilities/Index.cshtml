@@ -11,10 +11,15 @@
     <script src="~/lib/select2/js/select2.min.js"></script>
     <script src="~/js/formSearch.js"></script>
     <script src="~/js/formIndex.js"></script>
+    <script>
+        $( '#select-field' ).select2( {
+            theme: 'bootstrap-5'
+        } );
+    </script>
 }
 @section Styles
 {
-    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />  
 
     <style>
         /* Dropdown container height & background */
