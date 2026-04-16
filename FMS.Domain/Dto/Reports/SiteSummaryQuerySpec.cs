@@ -44,7 +44,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Show Header at top of reports")]
         public bool ShowHeader { get; set; } = false;
 
-        public IDictionary<string, string?> AsRouteValues() => new Dictionary<string, string?>
+        public IDictionary<string, string> AsRouteValues() => new Dictionary<string, string?>
         {
             { nameof(FacilityNumber), FacilityNumber },
             { nameof(CountyId), CountyId?.ToString() },

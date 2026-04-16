@@ -1,10 +1,7 @@
-using FMS.Domain.Entities;
-using Microsoft.Graph.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using FMS.Domain.Entities;
 using Contact = FMS.Domain.Entities.Contact;
 
 namespace FMS.Domain.Dto
