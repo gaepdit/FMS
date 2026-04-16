@@ -184,7 +184,7 @@ namespace FMS.Infrastructure.Repositories
             .Where(e => !spec.ShowPendingOnly || !e.DeterminationLetterDate.HasValue)
             .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-            .Where(e => spec.FacilityTypeId.Count == 0 || spec.FacilityTypeId.Contains(e.FacilityType.Id))
+            .Where(e => spec.FacilityTypeId == null || spec.FacilityTypeId.Contains(e.FacilityType.Id))
             .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
             .Where(e =>
                 !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
