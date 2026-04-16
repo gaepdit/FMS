@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FMS.Domain.Dto
 {
@@ -39,12 +38,12 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Latitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
-        [Column(TypeName="decimal(8, 6)")]
+        [Column(TypeName = "decimal(8, 6)")]
         public decimal Latitude { get; set; }
 
         [Display(Name = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
-        [Column(TypeName="decimal(9, 6)")]
+        [Column(TypeName = "decimal(9, 6)")]
         public decimal Longitude { get; set; }
 
         [Display(Name = "Distance")]

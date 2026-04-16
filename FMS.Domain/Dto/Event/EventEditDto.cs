@@ -1,6 +1,5 @@
-﻿using FMS.Domain.Entities;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -42,11 +41,13 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Event Type")]
         public Guid? EventTypeId { get; set; }
+
         public EventType EventType { get; set; }
 
         [Required]
         [Display(Name = "Action Taken")]
         public Guid? ActionTakenId { get; set; }
+
         public ActionTaken ActionTaken { get; set; }
 
         [Display(Name = "Start Date")]
@@ -61,6 +62,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Done By (CO)")]
         public Guid? ComplianceOfficerId { get; set; }
+
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
         [DisplayName("Event Amount")]
@@ -69,6 +71,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Contractor")]
         public Guid? EventContractorId { get; set; }
+
         public EventContractor EventContractor { get; set; }
 
         [Display(Name = "Comment")]

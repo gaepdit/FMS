@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -28,4 +27,3 @@ namespace FMS.Domain.Dto
         //public string DisplayName => $"{Name} ({Description})";
     }
 }
-  

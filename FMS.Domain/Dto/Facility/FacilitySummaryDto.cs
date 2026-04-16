@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -8,7 +7,7 @@ namespace FMS.Domain.Dto
         public FacilitySummaryDto(Facility facility)
         {
             Id = facility.Id;
-            FileLabel = facility.File == null ? string.Empty : facility.File.FileLabel; 
+            FileLabel = facility.File == null ? string.Empty : facility.File.FileLabel;
             FacilityNumber = facility.FacilityNumber;
             FacilityType = facility.FacilityType;
             Name = facility.Name;
@@ -21,15 +20,15 @@ namespace FMS.Domain.Dto
             HasERecord = facility.HasERecord;
             LocationClassId = facility.LocationDetails?.LocationClassId;
             AdditionalOrgUnitId = facility.HsrpFacilityProperties?.OrganizationalUnitId;
-            UEC = facility.StatusDetails?.UEC?? false;
+            UEC = facility.StatusDetails?.UEC ?? false;
             Liens = facility.StatusDetails?.Lien ?? false;
             FinancialAssurance = facility.StatusDetails?.FinancialAssurance ?? false;
             Landfills = facility.StatusDetails?.LandFill ?? false;
             ISWQS = facility.StatusDetails?.ISWQS ?? false;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
-                    .Select(e => new RetentionRecordSummaryDto(e)).ToList()
-                ?? new List<RetentionRecordSummaryDto>();
+                                   .Select(e => new RetentionRecordSummaryDto(e)).ToList()
+                               ?? new List<RetentionRecordSummaryDto>();
         }
 
         public Guid Id { get; }

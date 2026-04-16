@@ -1,12 +1,11 @@
 ﻿using ClosedXML.Attributes;
-using System;
 
 namespace FMS.Domain.Dto
 {
     public class EventsCompletedReportDto
     {
         public EventsCompletedReportDto() { }
-        
+
         public EventsCompletedReportDto(EventReportDto reportDto)
         {
             HSIID = reportDto.FacilityNumber;

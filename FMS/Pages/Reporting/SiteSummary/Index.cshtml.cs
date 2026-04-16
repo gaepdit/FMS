@@ -4,8 +4,6 @@ using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Reporting.SiteSummary
 {
@@ -15,7 +13,7 @@ namespace FMS.Pages.Reporting.SiteSummary
         private readonly ISelectListHelper _listHelper;
 
         public IndexModel(IReportingRepository repository,
-            ISelectListHelper listHelper) 
+            ISelectListHelper listHelper)
         {
             _repository = repository;
             _listHelper = listHelper;
@@ -57,9 +55,14 @@ namespace FMS.Pages.Reporting.SiteSummary
         private async Task PopulateSelectsAsync()
         {
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
-            OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync(true, ["Abandoned Sites", "Voluntary Remediation", "Response Development 1", "Response Development 2"]);
+            OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync(true,
+                ["Abandoned Sites", "Voluntary Remediation", "Response Development 1", "Response Development 2"]);
             LocationClasses = await _listHelper.LocationClassesSelectListAsync();
-            AddlOrgUnits = await _listHelper.OrganizationalUnitsSelectListAsync(true, ["Remedial Sites 1", "Remedial Sites 2", "Remedial Sites 3", "DOD Facilities", "NPL Unit", "Treatment & Storage", "SW Env. Monitoring Compliance", "Voluntary Remediation"]);
+            AddlOrgUnits = await _listHelper.OrganizationalUnitsSelectListAsync(true,
+            [
+                "Remedial Sites 1", "Remedial Sites 2", "Remedial Sites 3", "DOD Facilities", "NPL Unit",
+                "Treatment & Storage", "SW Env. Monitoring Compliance", "Voluntary Remediation"
+            ]);
         }
     }
 }

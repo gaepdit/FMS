@@ -1,6 +1,5 @@
 using FMS.Domain.Entities;
 using FMS.Domain.Extensions;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -44,23 +43,23 @@ namespace FMS.Domain.Dto
             Comments = facility.Comments;
             Cabinets = new List<string>();
             RetentionRecords = facility.RetentionRecords?
-                    .Select(e => new RetentionRecordDetailDto(e)).ToList()
-                ?? new List<RetentionRecordDetailDto>();
+                                   .Select(e => new RetentionRecordDetailDto(e)).ToList()
+                               ?? new List<RetentionRecordDetailDto>();
             // Phase III additions for HSI
             HsrpFacilityPropertyDetails = facility.HsrpFacilityProperties;
             LocationDetails = facility.LocationDetails;
             Parcels = facility.Parcels?
-                .Select(p => new ParcelSummaryDto(p)).ToList() ?? 
-                new List<ParcelSummaryDto>();
-            Contacts = facility.Contacts ?
+                          .Select(p => new ParcelSummaryDto(p)).ToList() ??
+                      new List<ParcelSummaryDto>();
+            Contacts = facility.Contacts?
                 .Select(c => new ContactSummaryDto(c)).ToList() ?? new List<ContactSummaryDto>();
             ScoreDetails = facility.ScoreDetails;
             GroundwaterScoreDetails = facility.GroundwaterScoreDetails;
             OnsiteScoreDetails = facility.OnsiteScoreDetails;
-            Substances = facility.Substances ?
+            Substances = facility.Substances?
                 .Select(s => new SubstanceSummaryDto(s)).ToList() ?? new List<SubstanceSummaryDto>();
             StatusDetails = facility.StatusDetails;
-            Events = facility.Events ?
+            Events = facility.Events?
                 .Select(e => new EventSummaryDto(e)).ToList() ?? new List<EventSummaryDto>();
         }
 

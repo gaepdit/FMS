@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
 
@@ -28,9 +27,9 @@ namespace FMS.Domain.Entities
         public LocationClass LocationClass { get; set; }
 
         [Display(Name = "Map Type")]
-        public string MapType { get; set; } 
+        public string MapType { get; set; }
 
         [Display(Name = "Map Zoom")]
-        public string MapZoom { get; set; } 
+        public string MapZoom { get; set; }
     }
 }

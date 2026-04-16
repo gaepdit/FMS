@@ -1,7 +1,5 @@
 ﻿using ClosedXML.Attributes;
 using FMS.Domain.Entities;
-using System;
-using System.Linq;
 
 namespace FMS.Domain.Dto
 {
@@ -19,7 +17,10 @@ namespace FMS.Domain.Dto
             DelistedDate = facility.HsrpFacilityProperties.DateDeListed;
             CountyName = facility.County != null ? facility.County.Name : string.Empty;
             ComplianceOfficerName = facility.ComplianceOfficer != null ? facility.ComplianceOfficer.Name : string.Empty;
-            HSRAComplianceOfficerName = facility.HsrpFacilityProperties != null && facility.HsrpFacilityProperties.ComplianceOfficer != null ? facility.HsrpFacilityProperties.ComplianceOfficer.Name : string.Empty;
+            HSRAComplianceOfficerName =
+                facility.HsrpFacilityProperties != null && facility.HsrpFacilityProperties.ComplianceOfficer != null
+                    ? facility.HsrpFacilityProperties.ComplianceOfficer.Name
+                    : string.Empty;
         }
 
         [XLColumn(Header = "HSI ID")]
@@ -50,4 +51,3 @@ namespace FMS.Domain.Dto
         public string HSRAComplianceOfficerName { get; set; }
     }
 }
-

@@ -1,19 +1,17 @@
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using FMS.Helpers;
 
 namespace FMS.Pages.Reporting.SiteSummary
 {
     public class ReportModel : PageModel
     {
         private readonly IReportingRepository _repository;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-        public ReportModel(IReportingRepository repository, Microsoft.Extensions.Configuration.IConfiguration configuration)
+        public ReportModel(IReportingRepository repository, IConfiguration configuration)
         {
             _repository = repository;
             _configuration = configuration;
@@ -33,7 +31,7 @@ namespace FMS.Pages.Reporting.SiteSummary
             Spec.TrimAll();
 
             ReportList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
-            
+
             return Page();
         }
 
@@ -41,12 +39,15 @@ namespace FMS.Pages.Reporting.SiteSummary
         {
             if (facility.Latitude != 0 && facility.Longitude != 0)
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+                return
+                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
+
             return null;
         }
 
-        public string GetStatusLanguage(SiteSummaryReportDto facility) => SiteSummaryHelper.GetCleanupStatusLanguage(facility);
+        public string GetStatusLanguage(SiteSummaryReportDto facility) =>
+            SiteSummaryHelper.GetCleanupStatusLanguage(facility);
 
         public string GetScoreLanguage(SiteSummaryReportDto facility)
         {
@@ -57,18 +58,20 @@ namespace FMS.Pages.Reporting.SiteSummary
             {
                 exLang = SiteSummaryHelper.GetLanguageForExceptions(facility);
             }
+
             return groundWaterLang + onsiteScoreLang + exLang;
         }
 
         public bool HasSublistedParcels(SiteSummaryReportDto facility)
         {
-            foreach(var parcel in facility.Parcels)
+            foreach (var parcel in facility.Parcels)
             {
-                if(parcel.ParcelType?.Name == "SubList")
+                if (parcel.ParcelType?.Name == "SubList")
                 {
                     return true;
                 }
             }
+
             return false;
         }
     }

@@ -1,6 +1,4 @@
 ﻿using ClosedXML.Attributes;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -8,7 +6,7 @@ namespace FMS.Domain.Dto
     {
         public AbndInacChecklistReviewReportDto() { }
 
-        public AbndInacChecklistReviewReportDto(AbndInacChecklistReviewDto aiclrtDto) 
+        public AbndInacChecklistReviewReportDto(AbndInacChecklistReviewDto aiclrtDto)
         {
             HSINumber = aiclrtDto.HSINumber;
             FacilityName = aiclrtDto.FacilityName;

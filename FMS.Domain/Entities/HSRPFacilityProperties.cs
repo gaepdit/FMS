@@ -1,6 +1,5 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -8,13 +7,13 @@ namespace FMS.Domain.Entities
     {
         public HsrpFacilityProperties() { }
 
-        public HsrpFacilityProperties(Guid facilityId) 
+        public HsrpFacilityProperties(Guid facilityId)
         {
             Id = Guid.NewGuid();
             FacilityId = facilityId;
         }
 
-        public HsrpFacilityProperties(Guid id, HsrpFacilityPropertiesCreateDto hsrpFacilityProperties) 
+        public HsrpFacilityProperties(Guid id, HsrpFacilityPropertiesCreateDto hsrpFacilityProperties)
         {
             Id = id;
             FacilityId = hsrpFacilityProperties.FacilityId;
@@ -27,16 +26,19 @@ namespace FMS.Domain.Entities
             VRPTerminated = hsrpFacilityProperties.VRPTerminated;
             BrownfieldTerminated = hsrpFacilityProperties.BrownfieldTerminated;
         }
+
         public Guid FacilityId { get; set; }
 
         [Display(Name = "Date Listed")]
-        public DateOnly? DateListed {  get; set; }
+        public DateOnly? DateListed { get; set; }
 
         public Guid? OrganizationalUnitId { get; set; }
+
         [Display(Name = "Additional Org Unit")]
         public OrganizationalUnit OrganizationalUnit { get; set; }
 
         public Guid? ComplianceOfficerId { get; set; }
+
         [Display(Name = "Geologist")]
         public ComplianceOfficer ComplianceOfficer { get; set; }
 

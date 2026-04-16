@@ -3,11 +3,6 @@ using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Reporting.PAF
 {
@@ -42,15 +37,17 @@ namespace FMS.Pages.Reporting.PAF
                 foreach (var p in PAFReport)
                 {
                     PAFAmtTotal = PAFAmtTotal + p.PAFAmount;
-                    if(!COList.Contains(p.ProjectOfficer))
+                    if (!COList.Contains(p.ProjectOfficer))
                     {
                         COList.Add(p.ProjectOfficer);
                     }
-                    if(!ContractorList.Contains(p.Contractor))
+
+                    if (!ContractorList.Contains(p.Contractor))
                     {
                         ContractorList.Add(p.Contractor);
                     }
                 }
+
                 UniqueCO = COList.Distinct().Count();
                 UniqueContractor = ContractorList.Distinct().Count();
 
@@ -64,7 +61,6 @@ namespace FMS.Pages.Reporting.PAF
                 DisplayMessage = TempData?.GetDisplayMessage();
                 return Page();
             }
-            
         }
 
         public async Task<IActionResult> OnPostExportButtonAsync()
@@ -79,7 +75,8 @@ namespace FMS.Pages.Reporting.PAF
                 PAFReport = PAFReportRaw.Select(raw => new PAFReportDto(raw)).ToList();
 
                 // Export to Excel
-                return File(PAFReport.ExportExcelAsByteArray(ExportHelper.ReportType.PAF), "application/vnd.ms-excel", fileName);
+                return File(PAFReport.ExportExcelAsByteArray(ExportHelper.ReportType.PAF), "application/vnd.ms-excel",
+                    fileName);
             }
             catch (Exception ex)
             {
@@ -90,7 +87,6 @@ namespace FMS.Pages.Reporting.PAF
             {
                 // Clear the PAFReport data to free up memory
                 PAFReport = null;
-                
             }
         }
     }

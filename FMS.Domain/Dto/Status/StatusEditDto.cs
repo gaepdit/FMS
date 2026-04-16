@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -58,7 +57,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Groundwater Status")]
         public Guid? GroundwaterStatusId { get; set; }
- 
+
         [Display(Name = "Groundwater Date")]
         public DateOnly? GroundwaterDate { get; set; }
 

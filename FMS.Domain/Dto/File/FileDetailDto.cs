@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class FileDetailDto
     {
@@ -10,9 +8,9 @@ namespace FMS.Domain.Dto
             Active = file.Active;
             FileLabel = file.FileLabel;
             Facilities = file.Facilities?
-                    .Where(e => e.Active)
-                    .Select(e => new FacilitySummaryDto(e)).ToList()
-                ?? new List<FacilitySummaryDto>();
+                             .Where(e => e.Active)
+                             .Select(e => new FacilitySummaryDto(e)).ToList()
+                         ?? new List<FacilitySummaryDto>();
             Cabinets = new List<string>();
         }
 

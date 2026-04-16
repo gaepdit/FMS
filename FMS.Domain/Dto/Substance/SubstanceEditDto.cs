@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -28,6 +27,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Chemical")]
         public Guid ChemicalId { get; set; }
+
         public Chemical Chemical { get; set; }
 
         [Display(Name = "Present in GW")]

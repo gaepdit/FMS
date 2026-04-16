@@ -1,4 +1,4 @@
-using FMS.Domain.Entities;
+using System.Reflection;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using Mindscape.Raygun4Net;
 using Mindscape.Raygun4Net.AspNetCore;
-using System.Reflection;
 
 namespace FMS
 {
@@ -166,7 +165,9 @@ namespace FMS
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapRazorPages().RequireAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages().RequireAuthorization();
                 endpoints.MapControllers();
             });
         }

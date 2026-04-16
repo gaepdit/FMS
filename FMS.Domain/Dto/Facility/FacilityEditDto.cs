@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class FacilityEditDto
     {
         public FacilityEditDto() { }
+
         public FacilityEditDto(FacilityDetailDto facility)
         {
             FileLabel = facility.FileLabel;
@@ -56,11 +55,13 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Facility Status")]
         public Guid? FacilityStatusId { get; set; }
+
         public string FacilityStatusName { get; set; }
 
         [Required]
         [Display(Name = "Type/Environmental Interest")]
         public Guid? FacilityTypeId { get; set; }
+
         public string FacilityTypeName { get; set; }
 
         [Required]

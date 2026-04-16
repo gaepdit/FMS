@@ -1,6 +1,5 @@
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -46,6 +45,7 @@ namespace FMS.Domain.Entities
         public Guid FacilityId { get; set; }
 
         public Guid? SourceStatusId { get; set; }
+
         [Display(Name = "Source Status")]
         public SourceStatus SourceStatus { get; set; }
 
@@ -53,6 +53,7 @@ namespace FMS.Domain.Entities
         public DateOnly? SourceDate { get; set; }
 
         public Guid? SoilStatusId { get; set; }
+
         [Display(Name = "Soil Status")]
         public SoilStatus SoilStatus { get; set; }
 
@@ -60,6 +61,7 @@ namespace FMS.Domain.Entities
         public DateOnly? SoilDate { get; set; }
 
         public Guid? GroundwaterStatusId { get; set; }
+
         [Display(Name = "Groundwater Status")]
         public GroundwaterStatus GroundwaterStatus { get; set; }
 
@@ -67,6 +69,7 @@ namespace FMS.Domain.Entities
         public DateOnly? GroundwaterDate { get; set; }
 
         public Guid? OverallStatusId { get; set; }
+
         [Display(Name = "Overall Status")]
         public OverallStatus OverallStatus { get; set; }
 
@@ -77,6 +80,7 @@ namespace FMS.Domain.Entities
         public bool ISWQS { get; set; }
 
         public Guid? FundingSourceId { get; set; }
+
         [Display(Name = "Funding Source")]
         public FundingSource FundingSource { get; set; }
 
@@ -96,6 +100,7 @@ namespace FMS.Domain.Entities
         public int? GAPSNoOfUnknowns { get; set; }
 
         public Guid? GAPSAssessmentId { get; set; }
+
         [Display(Name = "GAPS Assessment")]
         public GapsAssessment GAPSAssessment { get; set; }
 
@@ -119,10 +124,11 @@ namespace FMS.Domain.Entities
         public DateOnly? CostEstimateDate { get; set; }
 
         public Guid? AbandonedInactiveId { get; set; }
+
         [Display(Name = "Pertinent Information for Aban/Inac sites")]
         public AbandonedInactive AbandonedInactive { get; set; }
 
         [Display(Name = "Comments for Aban/Inac Status Tracker Report")]
-        public string ReportComments {  get; set; }
+        public string ReportComments { get; set; }
     }
 }

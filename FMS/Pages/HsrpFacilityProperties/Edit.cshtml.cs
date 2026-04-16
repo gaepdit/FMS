@@ -1,5 +1,4 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
@@ -18,7 +17,7 @@ namespace FMS.Pages.HsrpFacilityProperties
         private readonly ISelectListHelper _listHelper;
 
         public EditModel(
-            IHsrpFacilityPropertiesRepository repository, 
+            IHsrpFacilityPropertiesRepository repository,
             IFacilityRepository facilityRepository,
             ISelectListHelper listHelper)
         {
@@ -80,12 +79,14 @@ namespace FMS.Pages.HsrpFacilityProperties
         {
             if (!HsrpFacilityProperties.BrownfieldDate.HasValue && HsrpFacilityProperties.BrownfieldTerminated)
             {
-                ModelState.AddModelError("HsrpFacilityProperties.BrownfieldTerminated", "Date of Brownfield determination must be chosen.");
+                ModelState.AddModelError("HsrpFacilityProperties.BrownfieldTerminated",
+                    "Date of Brownfield determination must be chosen.");
             }
-            
+
             if (!HsrpFacilityProperties.VRPDate.HasValue && HsrpFacilityProperties.VRPTerminated)
             {
-                ModelState.AddModelError("HsrpFacilityProperties.VRPTerminated", "Date of VRP determination must be chosen.");
+                ModelState.AddModelError("HsrpFacilityProperties.VRPTerminated",
+                    "Date of VRP determination must be chosen.");
             }
 
             if (!ModelState.IsValid)
@@ -96,13 +97,15 @@ namespace FMS.Pages.HsrpFacilityProperties
                 return Page();
             }
 
-            await _repository.UpdateHsrpFacilityPropertiesAsync(HsrpFacilityProperties.FacilityId, HsrpFacilityProperties);
+            await _repository.UpdateHsrpFacilityPropertiesAsync(HsrpFacilityProperties.FacilityId,
+                HsrpFacilityProperties);
 
             TempData?.SetDisplayMessage(Context.Success, $"HSI Properties successfully Updated.");
 
             ActiveTab = "HSIProperties";
 
-            return RedirectToPage("../Facilities/Details", null, new { id = HsrpFacilityProperties.FacilityId, tab = ActiveTab }, fragment: "TabPages");
+            return RedirectToPage("../Facilities/Details", null,
+                new { id = HsrpFacilityProperties.FacilityId, tab = ActiveTab }, fragment: "TabPages");
         }
 
         private async Task PopulateSelectsAsync()

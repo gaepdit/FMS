@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class FileSpec
     {
@@ -17,9 +15,9 @@ namespace FMS.Domain.Dto
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>
             {
-                {nameof(ShowInactive), ShowInactive.ToString()},
-                {nameof(FileLabel), FileLabel},
-                {nameof(CountyId), CountyId?.ToString()},
+                { nameof(ShowInactive), ShowInactive.ToString() },
+                { nameof(FileLabel), FileLabel },
+                { nameof(CountyId), CountyId?.ToString() },
             };
     }
 }

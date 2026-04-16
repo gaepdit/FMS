@@ -1,6 +1,5 @@
 ﻿using ClosedXML.Attributes;
 using FMS.Domain.Entities;
-using System;
 
 namespace FMS.Domain.Dto
 {
@@ -16,8 +15,12 @@ namespace FMS.Domain.Dto
             CountyName = facility.County != null ? facility.County.Name : string.Empty;
             OrgUnitName = facility.OrganizationalUnit != null ? facility.OrganizationalUnit.Name : string.Empty;
             ComplianceOfficerName = facility.ComplianceOfficer != null ? facility.ComplianceOfficer.Name : string.Empty;
-            HSRAComplianceOfficerName = facility.HsrpFacilityProperties != null && facility.HsrpFacilityProperties.ComplianceOfficer != null ? facility.HsrpFacilityProperties.ComplianceOfficer.Name : string.Empty;
+            HSRAComplianceOfficerName =
+                facility.HsrpFacilityProperties != null && facility.HsrpFacilityProperties.ComplianceOfficer != null
+                    ? facility.HsrpFacilityProperties.ComplianceOfficer.Name
+                    : string.Empty;
         }
+
         [XLColumn(Header = "Delisted Date")]
         public DateOnly? DelistedDate { get; set; }
 
@@ -38,5 +41,5 @@ namespace FMS.Domain.Dto
 
         [XLColumn(Header = "HSRA Compliance Officer")]
         public string HSRAComplianceOfficerName { get; set; }
-        }
+    }
 }

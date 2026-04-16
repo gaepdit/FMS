@@ -1,11 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Reporting.Delisted
 {
@@ -41,9 +38,11 @@ namespace FMS.Pages.Reporting.Delisted
             var fileName = $"Delisted_by_Date_and_CO_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
             // "delistedByDateReportList" Detailed Facility List to go to a report
-            IReadOnlyList<DelistedReportByDateDto> delistedByDateReportList = await _repository.GetDelistedByDateAsync();
+            IReadOnlyList<DelistedReportByDateDto>
+                delistedByDateReportList = await _repository.GetDelistedByDateAsync();
 
-            return File(delistedByDateReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Delisted), "application/vnd.ms-excel", fileName);
+            return File(delistedByDateReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Delisted),
+                "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostByDateRangeAsync()
@@ -51,9 +50,12 @@ namespace FMS.Pages.Reporting.Delisted
             var fileName = $"Delisted_by_Date_Range_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
             // "delistedByDateRangeReportList" Detailed Facility List to go to a report
-            IReadOnlyList<DelistedReportByDateRangeDto> delistedByDateRangeReportList = await _repository.GetDelistedByDateRangeAsync(StartDate, EndDate);
+            IReadOnlyList<DelistedReportByDateRangeDto> delistedByDateRangeReportList =
+                await _repository.GetDelistedByDateRangeAsync(StartDate, EndDate);
 
-            return File(delistedByDateRangeReportList.ExportExcelAsByteArray(ExportHelper.ReportType.DelistedByRange, StartDate, EndDate), "application/vnd.ms-excel", fileName);
+            return File(
+                delistedByDateRangeReportList.ExportExcelAsByteArray(ExportHelper.ReportType.DelistedByRange, StartDate,
+                    EndDate), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostListedByDateAsync()
@@ -63,7 +65,8 @@ namespace FMS.Pages.Reporting.Delisted
             // "listedByDateReportList" Detailed Facility List to go to a report
             IReadOnlyList<ListedReportByDateDto> listedByDateReportList = await _repository.GetListedByDateAsync();
 
-            return File(listedByDateReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Listed), "application/vnd.ms-excel", fileName);
+            return File(listedByDateReportList.ExportExcelAsByteArray(ExportHelper.ReportType.Listed),
+                "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostListedByDateRangeAsync()
@@ -71,9 +74,12 @@ namespace FMS.Pages.Reporting.Delisted
             var fileName = $"Listed_by_Date_Range_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
             // "listedByDateRangeReportList" Detailed Facility List to go to a report
-            IReadOnlyList<ListedReportByDateRangeDto> listedByDateRangeReportList = await _repository.GetListedByDateRangeAsync(ListedStartDate, ListedEndDate);
+            IReadOnlyList<ListedReportByDateRangeDto> listedByDateRangeReportList =
+                await _repository.GetListedByDateRangeAsync(ListedStartDate, ListedEndDate);
 
-            return File(listedByDateRangeReportList.ExportExcelAsByteArray(ExportHelper.ReportType.ListedByRange, ListedStartDate, ListedEndDate), "application/vnd.ms-excel", fileName);
+            return File(
+                listedByDateRangeReportList.ExportExcelAsByteArray(ExportHelper.ReportType.ListedByRange,
+                    ListedStartDate, ListedEndDate), "application/vnd.ms-excel", fileName);
         }
     }
 }
