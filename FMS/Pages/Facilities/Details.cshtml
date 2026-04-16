@@ -349,7 +349,7 @@
                 Site Summary
             </a>
         }
-        @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI")
+        @if (Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "HSI" || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred"))
         {
             @if (!string.IsNullOrEmpty(Model.HSIFolderLink))
             {
@@ -376,7 +376,7 @@
 </div>
 
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")))
 {
     <div class="container-fluid parent-container d-lg-inline-flex" id="TabPages">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
@@ -404,7 +404,7 @@
                         </li>
                     }
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link @(Model.ActiveTab == "Events" || (Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@((Model.FacilityDetail.FacilityType.Name == "RN" || (Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "true" : "false")" href="#Events">Events</a>
+                        <a class="nav-link @(Model.ActiveTab == "Events" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@((((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "true" : "false")" href="#Events">Events</a>
                     </li>
                 </ul>
             </nav>
@@ -1083,9 +1083,9 @@
                         <hr />
                         <div class="row mb-3">
                             <div class="col-md-1">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien, "BoolCheckbox")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.Lien, "BoolYesNo")
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.Lien)
                             </div>
                             @if (Model.FacilityDetail.StatusDetails.Lien)
@@ -1100,9 +1100,9 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-1">
-                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance, "BoolCheckbox")
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance, "BoolYesNo")
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FinancialAssurance)
                             </div>
                             @if (Model.FacilityDetail.StatusDetails.FinancialAssurance)
@@ -1112,9 +1112,23 @@
                                 </div>
                             }
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-md-1">
+                                @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.UEC, "BoolYesNo")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.UEC)
+                            </div>
+                            @if (Model.FacilityDetail.StatusDetails.UEC)
+                            {
+                                <div class="col-md-3">
+                                    <a href="https://epd.georgia.gov/properties-subject-uniform-environmental-covenants" class="btn btn-sm btn-primary" target="_blank">UEC Online Knack Table</a>
+                                </div>
+                            }
+                        </div>
                     </div>
                 }
-                <div class="tab-pane @(Model.ActiveTab == "Events" || ((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
+                <div class="tab-pane @(Model.ActiveTab == "Events" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "active" : "")" id="Events" role="tabpanel" aria-labelledby="Events-tab">
                     <h3>
                         <form method="post">
                             Events

@@ -65,6 +65,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
 
+        [Display(Name = "UEC (Uniform Environmental Covenant)")]
+        public bool UEC { get; set; }
+
         [Display(Name = "Cost Estimate")]
         [DataType(DataType.Currency)]
         public decimal? CostEstimate { get; set; }

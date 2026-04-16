@@ -8,10 +8,10 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NUglify.JavaScript.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
@@ -52,6 +52,9 @@ namespace FMS.Pages.Facilities
         public SelectList BudgetCodes { get; private set; }
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
+        public SelectList AddlOrgUnit { get; private set; }
+        public SelectList LocationClass { get; private set; }
+
 
         public IndexModel(
             IFacilityRepository repository,
@@ -77,20 +80,33 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
             spec.TrimAll();
+            if (!spec.FirstPass)
+            {
+                spec.FacilityTypeId = JsonSerializer.Deserialize<List<Guid>>(Request.Query["FacilityTypeId"].ToString());
+            }
             // Sort by Received Date for Pending Release Notifications
-            if (spec.ShowPendingOnly && spec.FirstPass) 
+            if (spec.ShowPendingOnly) 
             {
                 spec.SortBy = FacilitySort.RNDateReceived;
-                spec.FirstPass = false;
             }
+            spec.FirstPass = false;
 
             // Get the list of facilities matching the "Spec" criteria.
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
 
-            var getType = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId);
-            ShowPendingOnlyCheckBox = getType == "RN";
-            ShowExportHSIButton = getType == "HSI";
+            if(Spec.FacilityTypeId != null && Spec.FacilityTypeId.Count > 0)
+            {
+                var getTypes = await _repositoryType.GetFacilityTypeNameListAsync(Spec.FacilityTypeId);
+                if (getTypes.Contains("HSI"))
+                {
+                    ShowExportHSIButton = true;
+                }
+                if (getTypes.Contains("RN"))
+                {
+                    ShowPendingOnlyCheckBox = true;
+                }
+            }
 
             ShowResults = true;  
             await PopulateSelectsAsync();
@@ -164,6 +180,8 @@ namespace FMS.Pages.Facilities
             FacilityStatuses = await _listHelper.FacilityStatusesSelectListAsync();
             FacilityTypes = await _listHelper.FacilityTypesSelectListAsync();
             OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
+            AddlOrgUnit = await _listHelper.OrganizationalUnitsSelectListAsync(true, ["Remedial Sites 1", "Remedial Sites 2", "Remedial Sites 3", "DOD Facilities", "NPL Unit", "Treatment & Storage", "SW Env. Monitoring Compliance", "Voluntary Remediation"]);
+            LocationClass = await _listHelper.LocationClassesSelectListAsync();
         }
 
     }

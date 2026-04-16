@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using FMS.Domain.Dto;
+﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
 using FMS.Platform.Extensions;
@@ -97,7 +96,7 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
-            if(FacilityDetail.FacilityType.Name == "HSI")
+            if(FacilityDetail.FacilityType.Name == "HSI" || (FacilityDetail.FacilityType.Name == "NPL" && FacilityDetail.FacilityStatus.Name == "EPA Referred"))
             {
                 HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
             }

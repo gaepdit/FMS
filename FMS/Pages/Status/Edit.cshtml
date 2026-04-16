@@ -164,7 +164,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <input asp-for="EditStatus.Lien" class="form-check-input" />
                 <label asp-for="EditStatus.Lien" class="form-check-label"></label>
                 <span asp-validation-for="EditStatus.Lien" class="text-danger"></span>
@@ -177,13 +177,23 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <input asp-for="EditStatus.FinancialAssurance" class="form-check-input" />
                 <label asp-for="EditStatus.FinancialAssurance" class="form-check-label"></label>
                 <span asp-validation-for="EditStatus.FinancialAssurance" class="text-danger"></span>
             </div>
             <div class="col-md-4">
                 <a href="https://gets.sharepoint.com/:x:/r/sites/ResponseandRemediationProgram/_layouts/15/Doc.aspx?sourcedoc=%7B3A30C17D-62E2-4F54-BB79-F60CAF3EBC98%7D&file=HSRP%20Financial%20Assurance%20List%20of%20Sites%202020.xlsx&action=default&mobileredirect=true" class="btn btn-sm btn-primary" target="_blank">HSRP Financial Assurance Tracker</a>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <input asp-for="EditStatus.UEC" class="form-check-input" />
+                <label asp-for="EditStatus.UEC" class="form-check-label"></label>
+                <span asp-validation-for="EditStatus.UEC" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <a href="https://epd.georgia.gov/properties-subject-uniform-environmental-covenants" class="btn btn-sm btn-primary" target="_blank">UEC Online Knack Table</a>
             </div>
         </div>
         <hr />

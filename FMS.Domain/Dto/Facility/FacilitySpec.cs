@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace FMS.Domain.Dto
 {
@@ -30,7 +30,7 @@ namespace FMS.Domain.Dto
         public Guid? FacilityStatusId { get; set; }
 
         [Display(Name = "Type/Environmental Interest")]
-        public Guid? FacilityTypeId { get; set; }
+        public List<Guid> FacilityTypeId { get; set; }
 
         [Display(Name = "Budget Code")]
         public Guid? BudgetCodeId { get; set; }
@@ -58,6 +58,28 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "ZIP Code")]
         public string PostalCode { get; set; }
+
+        //Advanced Properties for search
+        [Display(Name = "Class")]
+        public Guid? LocationClassId { get; set; }
+
+        [Display(Name = "Add'l Org. Unit")]
+        public Guid? AdditionalOrgUnitId { get; set; }
+
+        [Display(Name = "UEC")]
+        public bool UEC { get; set; }
+
+        [Display(Name = "Liens")]
+        public bool Liens { get; set; }
+
+        [Display(Name = "Financial Assurance")]
+        public bool FinancialAssurance { get; set; }
+
+        [Display(Name = "Landfills")]
+        public bool Landfills { get; set; }
+
+        [Display(Name = "ISWQS")]
+        public bool ISWQS { get; set; }
         
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>
@@ -71,7 +93,7 @@ namespace FMS.Domain.Dto
                 {nameof(CountyId), CountyId?.ToString()},
                 {nameof(FacilityNumber), FacilityNumber},
                 {nameof(FacilityStatusId), FacilityStatusId?.ToString()},
-                {nameof(FacilityTypeId), FacilityTypeId?.ToString()},
+                {nameof(FacilityTypeId), FacilityTypeId != null ? JsonSerializer.Serialize(FacilityTypeId) : null},
                 {nameof(FileLabel), FileLabel},
                 {nameof(Location), Location},
                 {nameof(Name), Name},
@@ -80,6 +102,12 @@ namespace FMS.Domain.Dto
                 {nameof(State), State},
                 {nameof(ShowPendingOnly), ShowPendingOnly.ToString()},
                 {nameof(FirstPass), FirstPass.ToString()},
+                {nameof(LocationClassId), LocationClassId?.ToString()},
+                {nameof(AdditionalOrgUnitId), AdditionalOrgUnitId?.ToString()},
+                {nameof(Liens), Liens.ToString()},
+                {nameof(FinancialAssurance), FinancialAssurance.ToString()},
+                {nameof(Landfills), Landfills.ToString()},
+                {nameof(ISWQS), ISWQS.ToString()}
             };
 
         public void TrimAll()

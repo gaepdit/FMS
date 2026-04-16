@@ -2392,6 +2392,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<Guid?>("SourceStatusId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("UEC")
+                        .HasColumnType("bit");
+
                     b.Property<DateTimeOffset?>("UpdateDateTime")
                         .HasColumnType("datetimeoffset");
 

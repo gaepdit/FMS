@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Dapper;
 using FMS.Domain.Data;
@@ -181,12 +184,19 @@ namespace FMS.Infrastructure.Repositories
             .Where(e => !spec.ShowPendingOnly || !e.DeterminationLetterDate.HasValue)
             .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-            .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
+            .Where(e => spec.FacilityTypeId == null || spec.FacilityTypeId.Contains(e.FacilityType.Id))
             .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
             .Where(e =>
                 !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
             .Where(e => !spec.ComplianceOfficerId.HasValue || e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
             .Where(e => string.IsNullOrEmpty(spec.FileLabel) || e.File.FileLabel.Contains(spec.FileLabel))
+            .Where(e => !spec.LocationClassId.HasValue || e.LocationDetails.LocationClass.Id.Equals(spec.LocationClassId))
+            .Where(e => !spec.AdditionalOrgUnitId.HasValue || e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals (spec.AdditionalOrgUnitId))
+            .Where(e => !spec.UEC || e.StatusDetails.UEC.Equals(spec.UEC))
+            .Where(e => !spec.Liens || e.StatusDetails.Lien.Equals(spec.Liens))
+            .Where(e => !spec.FinancialAssurance || e.StatusDetails.FinancialAssurance.Equals(spec.FinancialAssurance))
+            .Where(e => !spec.Landfills || e.StatusDetails.LandFill.Equals(spec.Landfills))
+            .Where(e => !spec.ISWQS || e.StatusDetails.ISWQS.Equals(spec.ISWQS))
             .Where(e => string.IsNullOrEmpty(spec.Location) || e.Location.Contains(spec.Location))
             .Where(e => string.IsNullOrEmpty(spec.Address) || e.Address.Contains(spec.Address))
             .Where(e => string.IsNullOrEmpty(spec.City) || e.City.Contains(spec.City))
@@ -300,9 +310,14 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
             var conn = _context.Database.GetDbConnection();
+            var TypeList = "[]";
+            if(spec.FacilityTypeId != null)
+            {
+                TypeList = JsonSerializer.Serialize(spec.FacilityTypeId);
+            }
 
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
+                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, TypeList },
                 commandType: CommandType.StoredProcedure)).ToList();
         }
 
