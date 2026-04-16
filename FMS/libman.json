@@ -3,7 +3,7 @@
   "defaultProvider": "jsdelivr",
   "libraries": [
     {
-      "library": "jquery@3.6.1",
+      "library": "jquery@3.7.1",
       "destination": "wwwroot/lib/jquery/",
       "files": [
         "dist/jquery.min.js",
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "library": "bootstrap@5.3.1",
+      "library": "bootstrap@5.3.8",
       "destination": "wwwroot/lib/bootstrap/",
       "files": [
         "dist/js/bootstrap.bundle.min.js",
@@ -24,7 +24,7 @@
       ]
     },
     {
-      "library": "jquery-validation@1.19.5",
+      "library": "jquery-validation@1.21.0",
       "destination": "wwwroot/lib/jquery-validation",
       "files": [
         "dist/jquery.validate.min.js",
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "library": "axios@1.13.2",
+      "library": "axios@1.15.0",
       "destination": "wwwroot/lib/axios/",
       "files": [
         "dist/axios.min.js",
