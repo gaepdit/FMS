@@ -1,5 +1,4 @@
 ﻿$(document).ready(function FacilityTypeMultiSelect() {
-    //function () {
     $('#Spec_FacilityTypeId').select2({
         placeholder: "",
         closeOnSelect: false,
@@ -20,5 +19,4 @@
             $(this).prop('selected', selected.includes($(this).val()));
         });
     });
-    //};
 });

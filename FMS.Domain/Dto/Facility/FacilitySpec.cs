@@ -109,7 +109,7 @@ namespace FMS.Domain.Dto
                 {nameof(Landfills), Landfills.ToString()},
                 {nameof(ISWQS), ISWQS.ToString()}
             };
-        //JsonSerializer.Serialize(FacilityTypeId)
+
         public void TrimAll()
         {
             FileLabel = FileLabel?.Trim();
