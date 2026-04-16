@@ -553,6 +553,8 @@ appsettings.*.json
 artifacts/
 # Library Manager
 **/wwwroot/lib/
+# Webpack
+**/wwwroot/dist/
 
 # JetBrains config files
 .idea/
