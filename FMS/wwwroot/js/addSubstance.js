@@ -1,37 +1,9 @@
 ﻿// Attempt to use Controller API to auto-fill chemical substance information based on name input
 // Tom K.
-$(document).ready(function (addSubstance) {
-    //let typingTimer;
-    //const doneTypingInterval = 500; // milliseconds
 
-    //$('#NewSubstance_Chemical_ChemicalName').on('keyup', function () {
-    //    clearTimeout(typingTimer);
-    //    if ($('#NewSubstance_Chemical_ChemicalName').val()) {
-    //        typingTimer = setTimeout(performSearch, doneTypingInterval);
-    //    }
-    //});
-
-    //function performSearch() {
-    //    const searchTerm = $('#NewSubstance_Chemical_ChemicalName').val();
-    //    $.ajax({
-    //        url: '/api/chem',
-    //        method: 'GET',
-    //        type: 'json',
-    //        data: { query: searchTerm },
-    //        success: function (data) {
-    //            $('#NewSubstance_Chemical_ChemicalName').value = data[0].ChemicalName;
-    //            $('#NewSubstance_Chemical_CASNumber').value = data[0].CASNumber;
-    //            $('#NewSubstance_Chemical_CommonName').value = data[0].CommonName;
-    //        },
-    //        error: function (error) {
-    //            console.error('Error fetching search results:', error);
-    //        }
-    //    });
-    //}
-});
-
-// Base code found online at 
+// Base code found online at
 // https://stackoverflow.com/questions/29076003/editable-dropdown-in-c-sharp
+
 (function ($) {
     $.widget("custom.combobox", {
         _create: function () {
@@ -73,40 +45,6 @@ $(document).ready(function (addSubstance) {
                 autocompletechange: "_removeIfInvalid"
             });
         },
-
-        // _createShowAllButton: function() {
-        //   var input = this.input,
-        //     wasOpen = false;
-
-        //   $("<a>")
-        //     .attr("tabIndex", -1)
-        //     .attr("title", "Show All Items")
-        //     .tooltip()
-        //     .appendTo(this.wrapper)
-        //     .button({
-        //       icons: {
-        //         primary: "ui-icon-triangle-1-s"
-
-        //       },
-        //       text: false
-        //     })
-        //     .removeClass("ui-corner-all")
-        //     .addClass("custom-combobox-toggle ui-corner-right")
-        //     .mousedown(function() {
-        //       wasOpen = input.autocomplete("widget").is(":visible");
-        //     })
-        //     .click(function() {
-        //       input.focus();
-
-        //       // Close if already visible
-        //       if (wasOpen) {
-        //         return;
-        //       }
-
-        //       // Pass empty string as value to search for, displaying all results
-        //       input.autocomplete("search", "");
-        //     });
-        // },
 
         _source: function (request, response) {
             var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");

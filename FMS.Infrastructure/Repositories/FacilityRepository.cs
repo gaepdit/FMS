@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Dapper;
 using FMS.Domain.Data;
@@ -181,7 +184,7 @@ namespace FMS.Infrastructure.Repositories
             .Where(e => !spec.ShowPendingOnly || !e.DeterminationLetterDate.HasValue)
             .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-            .Where(e => !spec.FacilityTypeId.HasValue || e.FacilityType.Id.Equals(spec.FacilityTypeId))
+            .Where(e => spec.FacilityTypeId == null || spec.FacilityTypeId.Contains(e.FacilityType.Id))
             .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
             .Where(e =>
                 !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
@@ -307,9 +310,14 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {
             var conn = _context.Database.GetDbConnection();
+            var TypeList = "[]";
+            if(spec.FacilityTypeId != null)
+            {
+                TypeList = JsonSerializer.Serialize(spec.FacilityTypeId);
+            }
 
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
-                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, spec.FacilityTypeId },
+                new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, TypeList },
                 commandType: CommandType.StoredProcedure)).ToList();
         }
 

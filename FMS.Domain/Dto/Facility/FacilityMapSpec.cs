@@ -1,5 +1,6 @@
 ﻿using FMS.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
@@ -19,7 +20,7 @@ namespace FMS.Domain.Dto
         public bool ShowDeleted { get; set; }
 
         [Display(Name = "Type/Environmental Interest")]
-        public Guid? FacilityTypeId { get; set; }
+        public List<Guid> FacilityTypeId { get; set; }
 
         [Display(Name = "Street Address")]
         public string Address { get; set; }

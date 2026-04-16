@@ -13,6 +13,7 @@ namespace FMS.Domain.Repositories
         Task<FacilityTypeEditDto> GetFacilityTypeAsync(Guid id);
         Task<string> GetFacilityTypeNameAsync(Guid? id);
         Task<IReadOnlyList<FacilityTypeSummaryDto>> GetFacilityTypeListAsync();
+        Task<List<string>> GetFacilityTypeNameListAsync(List<Guid> ids);
         Task<Guid> CreateFacilityTypeAsync(FacilityTypeCreateDto facilityType);
         Task UpdateFacilityTypeAsync(Guid id, FacilityTypeEditDto facilityTypeUpdates);
         Task UpdateFacilityTypeStatusAsync(Guid id, bool active);

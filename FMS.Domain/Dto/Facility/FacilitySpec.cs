@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace FMS.Domain.Dto
 {
@@ -29,7 +30,7 @@ namespace FMS.Domain.Dto
         public Guid? FacilityStatusId { get; set; }
 
         [Display(Name = "Type/Environmental Interest")]
-        public Guid? FacilityTypeId { get; set; }
+        public List<Guid> FacilityTypeId { get; set; }
 
         [Display(Name = "Budget Code")]
         public Guid? BudgetCodeId { get; set; }
@@ -92,7 +93,7 @@ namespace FMS.Domain.Dto
                 {nameof(CountyId), CountyId?.ToString()},
                 {nameof(FacilityNumber), FacilityNumber},
                 {nameof(FacilityStatusId), FacilityStatusId?.ToString()},
-                {nameof(FacilityTypeId), FacilityTypeId?.ToString()},
+                {nameof(FacilityTypeId), FacilityTypeId != null ? JsonSerializer.Serialize(FacilityTypeId) : null},
                 {nameof(FileLabel), FileLabel},
                 {nameof(Location), Location},
                 {nameof(Name), Name},

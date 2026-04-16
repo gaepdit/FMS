@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
@@ -79,20 +80,33 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
             spec.TrimAll();
+            if (!spec.FirstPass)
+            {
+                spec.FacilityTypeId = JsonSerializer.Deserialize<List<Guid>>(Request.Query["FacilityTypeId"].ToString());
+            }
             // Sort by Received Date for Pending Release Notifications
-            if (spec.ShowPendingOnly && spec.FirstPass) 
+            if (spec.ShowPendingOnly) 
             {
                 spec.SortBy = FacilitySort.RNDateReceived;
-                spec.FirstPass = false;
             }
+            spec.FirstPass = false;
 
             // Get the list of facilities matching the "Spec" criteria.
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);
             Spec = spec;
 
-            var getType = await _repositoryType.GetFacilityTypeNameAsync(Spec.FacilityTypeId);
-            ShowPendingOnlyCheckBox = getType == "RN";
-            ShowExportHSIButton = getType == "HSI";
+            if(Spec.FacilityTypeId != null && Spec.FacilityTypeId.Count > 0)
+            {
+                var getTypes = await _repositoryType.GetFacilityTypeNameListAsync(Spec.FacilityTypeId);
+                if (getTypes.Contains("HSI"))
+                {
+                    ShowExportHSIButton = true;
+                }
+                if (getTypes.Contains("RN"))
+                {
+                    ShowPendingOnlyCheckBox = true;
+                }
+            }
 
             ShowResults = true;  
             await PopulateSelectsAsync();
