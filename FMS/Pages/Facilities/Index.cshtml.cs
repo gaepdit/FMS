@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
@@ -79,12 +80,16 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
             spec.TrimAll();
+            if (!spec.FirstPass)
+            {
+                spec.FacilityTypeId = JsonSerializer.Deserialize<List<Guid>>(Request.Query["FacilityTypeId"].ToString());
+            }
             // Sort by Received Date for Pending Release Notifications
-            if (spec.ShowPendingOnly && spec.FirstPass) 
+            if (spec.ShowPendingOnly) 
             {
                 spec.SortBy = FacilitySort.RNDateReceived;
-                spec.FirstPass = false;
             }
+            spec.FirstPass = false;
 
             // Get the list of facilities matching the "Spec" criteria.
             FacilityList = await _repository.GetFacilityPaginatedListAsync(spec, p, GlobalConstants.PageSize);

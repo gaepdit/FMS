@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace FMS.Domain.Dto
 {
@@ -92,7 +93,7 @@ namespace FMS.Domain.Dto
                 {nameof(CountyId), CountyId?.ToString()},
                 {nameof(FacilityNumber), FacilityNumber},
                 {nameof(FacilityStatusId), FacilityStatusId?.ToString()},
-                {nameof(FacilityTypeId), FacilityTypeId?.ToString()},
+                {nameof(FacilityTypeId), FacilityTypeId != null ? JsonSerializer.Serialize(FacilityTypeId) : null},
                 {nameof(FileLabel), FileLabel},
                 {nameof(Location), Location},
                 {nameof(Name), Name},
@@ -108,7 +109,7 @@ namespace FMS.Domain.Dto
                 {nameof(Landfills), Landfills.ToString()},
                 {nameof(ISWQS), ISWQS.ToString()}
             };
-
+        //JsonSerializer.Serialize(FacilityTypeId)
         public void TrimAll()
         {
             FileLabel = FileLabel?.Trim();
