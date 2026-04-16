@@ -20,11 +20,15 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<AssignmentListReportByUnitDto>> GetAsignmentListByUnitAsync();
         #endregion
 
-        #region Delisted Reports
+        #region Listed and Delisted Reports
 
         Task<IReadOnlyList<DelistedReportByDateDto>> GetDelistedByDateAsync();
 
         Task<IReadOnlyList<DelistedReportByDateRangeDto>> GetDelistedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate);
+
+        Task<IReadOnlyList<ListedReportByDateDto>> GetListedByDateAsync();
+
+        Task<IReadOnlyList<ListedReportByDateRangeDto>> GetListedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate);
 
         #endregion
 

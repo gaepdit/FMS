@@ -71,6 +71,7 @@
             <div class="col-md-3">
                 <label asp-for="NewContact.PostalCode"></label>
                 <input asp-for="NewContact.PostalCode" class="form-control" />
+                <span class="text-danger"><small>Canadian must be uppercase</small></span>
                 <span asp-validation-for="NewContact.PostalCode" class="text-danger"></span>
             </div>
         </div>

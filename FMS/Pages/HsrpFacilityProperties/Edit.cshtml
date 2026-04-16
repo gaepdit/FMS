@@ -40,40 +40,42 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col mb-3">
+            <div class="col-4 mb-3">
                 <label asp-for="HsrpFacilityProperties.BrownfieldDate" class="form-label"></label>
                 <input asp-for="HsrpFacilityProperties.BrownfieldDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="HsrpFacilityProperties.BrownfieldDate" class="text-danger"></span>
             </div>
-            <div class="col mb-3">
-                <input asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-input" />
-                <label asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-label"></label>
-                <span asp-validation-for="HsrpFacilityProperties.BrownfieldTerminated" class="text-danger"></span>
-            </div>
-            <div class="col mb-3">
+            <div class="col-4 mb-3">
                 <label asp-for="HsrpFacilityProperties.VRPDate" class="form-label"></label>
                 <input asp-for="HsrpFacilityProperties.VRPDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="HsrpFacilityProperties.VRPDate" class="text-danger"></span>
             </div>
-            <div class="col mb-3">
-                <input asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-input" />
-                <label asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-label"></label>
-                <span asp-validation-for="HsrpFacilityProperties.VRPTerminated" class="text-danger"></span>
-            </div>
-            <div class="col mb-3">
+            <div class="col-4 mb-3">
                 <label asp-for="HsrpFacilityProperties.DateDeListed" class="form-label"></label>
                 <input asp-for="HsrpFacilityProperties.DateDeListed" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="HsrpFacilityProperties.DateDeListed" class="text-danger"></span>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col-4 mb-3">
+                <input asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-input" />
+                <label asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-label"></label><br/>
+                <span asp-validation-for="HsrpFacilityProperties.BrownfieldTerminated" class="text-danger"></span>
+            </div>
+            <div class="col-4 mb-3">
+                <input asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-input" />
+                <label asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-label"></label><br/>
+                <span asp-validation-for="HsrpFacilityProperties.VRPTerminated" class="text-danger"></span>
+            </div>
+        </div>
         <hr />
         <div class="row mb-3">
             <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
-            <a asp-page="../Facilities/Details" 
-                asp-route-id="@Model.Facility.Id"
+            <a asp-page="../Facilities/Details"
+               asp-route-id="@Model.Facility.Id"
                asp-route-tab="HSIProperties"
                asp-fragment="TabPages"
-                class="btn btn-outline-secondary col-md-2">
+               class="btn btn-outline-secondary col-md-2">
                 Cancel
             </a>
         </div>

@@ -2,7 +2,7 @@
 @model FMS.Pages.Reporting.Delisted.IndexModel
 
 @{
-    ViewData["Title"] = $"Delisted Sites Reports";
+    ViewData["Title"] = $"Listed/Delisted Sites Reports";
 }
 <h1>@ViewData["Title"]</h1>
 <a asp-page="../Index">← Back to Reports</a>
@@ -39,6 +39,38 @@
                 <label asp-for="EndDate" class="form-label">End Date <span class="text-danger">*</span></label>
                 <input asp-for="EndDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <button id="ListedByDate"
+                        asp-page-handler="ListedByDate"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                Listed Sites By Date
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <button id="ListedByDateRange"
+                        asp-page-handler="ListedByDateRange"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Report
+                </button>
+                Listed Sites By Date Range
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ListedStartDate" class="form-label"></label>
+                <input asp-for="ListedStartDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="ListedStartDate" class="text-danger"></span>
+            </div>
+            <div class="col-md-2">
+                <label asp-for="ListedEndDate" class="form-label">End Date <span class="text-danger">*</span></label>
+                <input asp-for="ListedEndDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="ListedEndDate" class="text-danger"></span>
             </div>
         </div>
         <p><span class="text-danger">* denotes required field</span></p>

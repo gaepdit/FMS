@@ -8,7 +8,7 @@ namespace FMS.Helpers
     {
         private static readonly ModelErrorCollection errCol = [];
         private static readonly DateOnly minDate = new(1990, 1, 1);
-        private static readonly DateOnly maxDate = DateOnly.FromDateTime(DateTime.Today);
+        private static readonly DateOnly today = DateOnly.FromDateTime(DateTime.Today);
         private static readonly string rnPattern = @"^\bRN\d{4}$";
         private static readonly string rnPatternCmplt = @"^\bRN\d{6}$";
         private static readonly string hsiPattern = @"^\d{5}$";
@@ -58,13 +58,18 @@ namespace FMS.Helpers
                 {
                     errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.dateReceivedMissing)));
                 }
-                else if (facility.RNDateReceived > maxDate)
+                else if (facility.RNDateReceived > today)
                 {
                     errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.dateReceivedMax)));
                 }
                 else if (facility.RNDateReceived < minDate)
                 {
                     errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.dateReceivedMin)));
+                }
+                // Check Determination Date
+                if (facility.DeterminationLetterDate < facility.RNDateReceived)
+                {
+                    errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.determineDateMax)));
                 }
                 // Check Facility Number
                 if (facility.FacilityNumber != null
@@ -91,20 +96,15 @@ namespace FMS.Helpers
                     errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.hsiNumberInvalid)));
                 }
             }
-            else if (facility.FacilityTypeName == "HSI")
+            else if (facility.FacilityTypeName == "HSI" && !string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
             {
                 //Check Facility Number
-                if (!string.IsNullOrEmpty(facility.FacilityNumber) && !hsiRegex.IsMatch(facility.FacilityNumber))
-                {
-                    errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.facilityNumberHSIInvalid)));
-                }
+                errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.facilityNumberHSIInvalid)));
             }
-            else
+
+            if (string.IsNullOrEmpty(facility.FacilityNumber) && facility.FacilityTypeName != "RN")
             {
-                if (string.IsNullOrEmpty(facility.FacilityNumber))
-                {
-                    errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.facilityNumberMissing)));
-                }
+                errCol.Add(new ModelError(GetErrMessage(ValidationErrorMessages.facilityNumberMissing)));
             }
 
             return errCol;
@@ -114,6 +114,7 @@ namespace FMS.Helpers
         {
             dateReceivedMissing,
             dateReceivedMax,
+            determineDateMax,
             dateReceivedMin,
             facilityNumberRNInvalid,
             facilityNumberRNComplaintInvalid,
@@ -137,6 +138,9 @@ namespace FMS.Helpers
                     break;
                 case ValidationErrorMessages.dateReceivedMin:
                     msgString = string.Concat("Facility.RNDateReceived", "^", "Date must not be before 1/1/1990.");
+                    break;
+                case ValidationErrorMessages.determineDateMax:
+                    msgString = string.Concat("Facility.DeterminationLetterDate", "^", "Date must not be before Date RN Received.");
                     break;
                 case ValidationErrorMessages.facilityNumberRNInvalid:
                     msgString = string.Concat("Facility.FacilityNumber", "^", "Facility Number must be in the form 'RNdddd'");

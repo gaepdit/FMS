@@ -5,7 +5,7 @@ namespace FMS.Domain.Dto
     public class FacilityMapSpec
     {
         public FacilityMapSpec() { }
-        
+
         public FacilityMapSpec(FacilityDetailDto facility)
         {
             Latitude = facility.Latitude;
@@ -17,7 +17,7 @@ namespace FMS.Domain.Dto
         public bool ShowDeleted { get; set; }
 
         [Display(Name = "Type/Environmental Interest")]
-        public Guid? FacilityTypeId { get; set; }
+        public List<Guid> FacilityTypeId { get; set; }
 
         [Display(Name = "Street Address")]
         public string Address { get; set; }

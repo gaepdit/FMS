@@ -137,5 +137,10 @@ namespace FMS.Domain.Dto
                 return false;
             }
         }
+
+        public string GetFullName()
+        {
+            return $"{GivenName} {FamilyName}";
+        }
     }
 }

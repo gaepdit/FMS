@@ -132,7 +132,7 @@ namespace FMS.Infrastructure.Repositories
         }
         #endregion
 
-        #region Delisted Reports
+        #region Listed and Delisted Reports
 
         public async Task<IReadOnlyList<DelistedReportByDateDto>> GetDelistedByDateAsync()
         {
@@ -168,6 +168,51 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
                 .Where(e => e.HsrpFacilityProperties.DateDeListed != null && e.HsrpFacilityProperties.DateDeListed >= startDate.GetValueOrDefault() && e.HsrpFacilityProperties.DateDeListed <= endDate.GetValueOrDefault())
                 .Select(e => new DelistedReportByDateRangeDto(e))
+                .ToListAsync();
+            var reportDto = facilityList
+                .OrderBy(e => e.HSIID)
+                .GroupBy(e => e.HSRAComplianceOfficerName)
+                .SelectMany(g => g)
+                .ToList();
+            return reportDto;
+        }
+
+        public async Task<IReadOnlyList<ListedReportByDateDto>> GetListedByDateAsync()
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
+                .Where(e => e.FacilityStatus.Status == "Active")
+                .Where(e => e.HsrpFacilityProperties.DateListed != null)
+                .Select(e => new ListedReportByDateDto(e))
+                .ToListAsync();
+            var reportDto = facilityList
+                .OrderBy(e => e.ListedDate)
+                .ToList();
+            return reportDto;
+        }
+
+        public async Task<IReadOnlyList<ListedReportByDateRangeDto>> GetListedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate)
+        {
+            var facilityList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.Parcels)
+                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
+                .Where(e => e.FacilityStatus.Status == "Active")
+                .Where(e => e.HsrpFacilityProperties.DateListed != null && e.HsrpFacilityProperties.DateListed >= startDate.GetValueOrDefault() && e.HsrpFacilityProperties.DateListed <= endDate.GetValueOrDefault())
+                .Select(e => new ListedReportByDateRangeDto(e))
                 .ToListAsync();
             var reportDto = facilityList
                 .OrderBy(e => e.HSIID)

@@ -101,6 +101,7 @@ namespace FMS.Infrastructure.Repositories
             existingStatus.CostEstimateDate = statusUpdates.CostEstimateDate;
             existingStatus.AbandonedInactiveId = statusUpdates.AbandonedInactiveId;
             existingStatus.ReportComments = statusUpdates.ReportComments;
+            existingStatus.UEC = statusUpdates.UEC;
 
             _context.Statuses.Update(existingStatus);
             await _context.SaveChangesAsync();

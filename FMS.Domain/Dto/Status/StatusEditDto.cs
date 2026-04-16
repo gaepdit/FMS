@@ -27,6 +27,7 @@ namespace FMS.Domain.Dto
             Comments = status.Comments;
             Lien = status.Lien;
             FinancialAssurance = status.FinancialAssurance;
+            UEC = status.UEC;
             GAPSModelDate = status.GAPSModelDate;
             GAPSNoOfUnknowns = status.GAPSNoOfUnknowns;
             GAPSAssessmentId = status.GAPSAssessmentId;
@@ -90,6 +91,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
+
+        [Display(Name = "UEC (Uniform Environmental Covenant)")]
+        public bool UEC { get; set; }
 
         [Display(Name = "GAPS Model Date")]
         public DateOnly? GAPSModelDate { get; set; }

@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace FMS.Domain.Dto
 {
-    public class DelistedReportByDateRangeDto
+    public class ListedReportByDateRangeDto
     {
-        public DelistedReportByDateRangeDto() { }
+        public ListedReportByDateRangeDto() { }
 
-        public DelistedReportByDateRangeDto(Facility facility)
+        public ListedReportByDateRangeDto(Facility facility)
         {
             HSIID = facility.FacilityNumber;
             Acres = facility.Parcels != null ? facility.Parcels.Sum(p => p.Acres) : null;

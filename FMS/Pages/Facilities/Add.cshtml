@@ -134,7 +134,7 @@
                         <span id="GeocodeAddressWarn" class="text-danger d-none">Please enter an address.</span> &nbsp;
                     </span>
                     <button id="GeocodeButton" class="btn btn-outline-primary form-control" aria-describedby="GeocodeHelpBlock">Geocode</button>
-                    <small id="GeocodeHelpBlock" class="form-text text-muted">Street address is required for geocoding. City and ZIP Code are optional.</small>
+                    <small id="GeocodeHelpBlock" class="form-text text-danger">The Address should be as accurate as possible. Incomplete addresses will produce inaccurate geocoding.</small>
                 </div>
             }
         </div>
@@ -166,6 +166,7 @@
                 <div class="col-md-3">
                     <label asp-for="Facility.DeterminationLetterDate"></label>
                     <input asp-for="Facility.DeterminationLetterDate" class="form-control datepicker" type="date" />
+                    <span asp-validation-for="Facility.DeterminationLetterDate" class="text-danger"></span>
                 </div>
                 <div class="col-md-3 position-relative">
                     <div class="form-check position-absolute top-50">
