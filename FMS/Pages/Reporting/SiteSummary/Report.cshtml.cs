@@ -51,7 +51,7 @@ namespace FMS.Pages.Reporting.SiteSummary
 
         public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0)
+            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
             {
                 return
                     $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";

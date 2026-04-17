@@ -162,10 +162,10 @@ else
                     </div>
                     <div>CO: @report.ComplianceOfficer.Name</div>
                     <div>
-                        @if (!string.IsNullOrEmpty(@report.HsrpFacilityPropertyDetails.OrganizationalUnit?.Name))
+                        @if (!string.IsNullOrEmpty(@report.HsrpFacilityPropertyDetails?.OrganizationalUnit?.Name))
                         {
                             <span>Add'l Org Unit: </span>
-                            @report.HsrpFacilityPropertyDetails.OrganizationalUnit?.Name
+                            @report.HsrpFacilityPropertyDetails?.OrganizationalUnit?.Name
                         }
                     </div>
                     <div>Unit: @report.OrganizationalUnit.Name</div>

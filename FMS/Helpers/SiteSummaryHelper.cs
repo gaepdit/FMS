@@ -50,9 +50,9 @@ namespace FMS.Helpers
             var SESTAT = "";
             var SLSTAT = "";
             var GWSTAT = "";
-            var Source_Stat = facility.StatusDetails.SourceStatus.Name;
-            var Soil_stat = facility.StatusDetails.SoilStatus.Name;
-            var GW_Stat = facility.StatusDetails.GroundwaterStatus.Name;
+            var Source_Stat = facility.StatusDetails?.SourceStatus?.Name;
+            var Soil_stat = facility.StatusDetails?.SoilStatus?.Name;
+            var GW_Stat = facility.StatusDetails?.GroundwaterStatus?.Name;
 
             if (Source_Stat == "RRS5")
             {
@@ -60,7 +60,10 @@ namespace FMS.Helpers
             }
             else
             {
-                SESTAT = Source_Stat.Substring(0, 3);
+                if(Source_Stat != null)
+                {
+                    SESTAT = Source_Stat.Substring(0, 3);
+                }
             }
 
             if (Soil_stat == "RRS5")
@@ -69,7 +72,10 @@ namespace FMS.Helpers
             }
             else
             {
-                SLSTAT = Soil_stat.Substring(0, 3);
+                if(Soil_stat != null)
+                {
+                    SLSTAT = Soil_stat.Substring(0, 3);
+                }
             }
 
             if (GW_Stat == "RRS5")
@@ -78,7 +84,10 @@ namespace FMS.Helpers
             }
             else
             {
-                GWSTAT = GW_Stat.Substring(0, 3);
+                if(GW_Stat != null)
+                {
+                    GWSTAT = GW_Stat.Substring(0, 3);
+                }
             }
 
             cleanupStatusParam = string.Concat(SESTAT, SLSTAT, GWSTAT);
@@ -89,7 +98,11 @@ namespace FMS.Helpers
         public static string GetCleanupStatusLanguage(SiteSummaryReportDto facility)
         {
             var cleanupstat = GetCleanupStatusParameter(facility);
-            var landFill = facility.StatusDetails.LandFill;
+            var landFill = false;
+            if (facility.StatusDetails != null)
+            {
+                landFill = facility.StatusDetails.LandFill;
+            }
             var mrrs = "Hazardous Site Response Act cleanup levels have been met for ";
             var mrrs5_1 = "Hazardous Site Response Act cleanup levels have been met for ";
             var mrrs5_2 =
@@ -1026,10 +1039,10 @@ namespace FMS.Helpers
         public static string GetLanguageForGWScore(SiteSummaryReportDto facility, string exLang = "")
         {
             var gwLang = "";
-            var gw_score = facility.GroundwaterScoreDetails.GWScore;
-            var gw_a = facility.GroundwaterScoreDetails.A;
+            var gw_score = facility.GroundwaterScoreDetails?.GWScore;
+            var gw_a = facility.GroundwaterScoreDetails?.A;
             var gwa = "";
-            var gw_1d = facility.GroundwaterScoreDetails.ChemName;
+            var gw_1d = facility.GroundwaterScoreDetails?.ChemName;
 
 
             if (gw_score > 10)
@@ -1062,7 +1075,7 @@ namespace FMS.Helpers
                     }
                 }
 
-                var gw_1e = facility.GroundwaterScoreDetails.E1;
+                var gw_1e = facility.GroundwaterScoreDetails?.E1;
                 var gw1e = "";
 
                 switch (gw_1e)
@@ -1123,7 +1136,7 @@ namespace FMS.Helpers
                     }
                 }
 
-                var gw_2e = facility.GroundwaterScoreDetails.E2;
+                var gw_2e = facility.GroundwaterScoreDetails?.E2;
                 var gw2em = "";
                 string gw2estrt = "The nearest drinking water well is ";
                 string gw2eend = " from the area affected by the release.  ";
@@ -1178,12 +1191,11 @@ namespace FMS.Helpers
             var osa = "";
             var osb = "";
             var os1em = "";
-            var os_score = facility.OnsiteScoreDetails.OnsiteScoreValue;
-            var os_a = facility.OnsiteScoreDetails.A;
-            var os_b = facility.OnsiteScoreDetails.B;
-            var os_1d = facility.OnsiteScoreDetails.ChemName1D;
-            var os_1e = facility.OnsiteScoreDetails.E1;
-
+            var os_score = facility.OnsiteScoreDetails?.OnsiteScoreValue;
+            var os_a = facility.OnsiteScoreDetails?.A;
+            var os_b = facility.OnsiteScoreDetails?.B;
+            var os_1d = facility.OnsiteScoreDetails?.ChemName1D;
+            var os_1e = facility.OnsiteScoreDetails?.E1;
             if (os_score <= 20)
             {
                 osLang = "";
@@ -1270,6 +1282,6 @@ namespace FMS.Helpers
         }
 
         public static string GetLanguageForExceptions(SiteSummaryReportDto facility) =>
-            facility.ScoreDetails.Comments.ToString();
+            facility.ScoreDetails?.Comments?.ToString();
     }
 }
