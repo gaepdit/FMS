@@ -340,7 +340,7 @@
         <a asp-page="/Facilities/Map" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary" target="_blank">Location Search</a>
         @if (Model.FacilityDetail.FacilityType.Name == "HSI" && Model.FacilityDetail.FacilityStatus.Name == "Active")
         {
-            <a asp-page="/Reporting/SiteSummary/Report" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
+            <a asp-page="/Reporting/SiteSummary/Report" asp-route-hsiId="@Model.FacilityDetail.FacilityNumber" target="_blank"
                class="btn btn-sm btn-primary icon-link">
                 <svg class="bi">
                     <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>

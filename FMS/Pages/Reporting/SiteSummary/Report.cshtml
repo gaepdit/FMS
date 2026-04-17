@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "~/Reports/SiteSummary/{hsiId?}"
 @using System.Globalization
 @model FMS.Pages.Reporting.SiteSummary.ReportModel
 @{
@@ -9,9 +9,144 @@
     ViewData["Title"] = $"Site Summary(s)";
 }
 
-@if (Model.ReportList.Count == 0)
+@if (Model.ReportList.Count == 0 && Model.Report == null)
 {
     <p class="lead text-info">No matching results found.</p>
+}
+else if(Model.Report != null)
+{
+    <div class="page-wrapper">
+        <div class="masthead">
+            <div>GEORGIA ENVIRONMENTAL PROTECTION DIVISION<br />HAZARDOUS SITE INVENTORY</div>
+            <div>Site Number: @Model.Report.FacilityNumber</div>
+        </div>
+        <div class="siteinfo">
+            <div class="infoblock container">
+                <div class="sitename">
+                    <div>
+                        <strong>Site Name:</strong><br />
+                        <strong>Location:</strong>
+                    </div>
+                    <div>
+                        @Model.Report.Name <br />
+                        @Model.Report.Address <br />
+                        @Model.Report.City, @Model.Report.County.Name County, @Model.Report.State  @Model.Report.PostalCode
+                        <div class="latlong">
+                            <div>
+                                <strong>Latitude: </strong>@Model.Report.Latitude.ToString()
+                            </div>
+                            <div>
+                                <strong>Longitude: </strong>@Model.Report.Longitude.ToString()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="parcels">
+                    <div><strong>ACREAGE</strong></div>
+                    <div><strong>PARCEL NUMBER</strong></div>
+                    <div><strong>DATE LISTED</strong></div>
+                </div>
+                <div class="parcels">
+                    @foreach (var parcel in Model.Report.Parcels)
+                    {
+                        if (parcel.ParcelType?.Name != "SubList" && parcel.DeListDate is null)
+                        {
+                            <div>@Html.DisplayFor(Model => parcel.Acres, "DoubleOrNone")</div>
+                            <div>@parcel.ParcelNumber</div>
+                            <div>@Html.DisplayFor(Model => parcel.ListDate, "DateOrNone")</div>
+                        }
+                    }
+                </div>
+                <div>
+                    <strong>LAST KNOWN PROPERTY OWNER(S):</strong><br />
+                    @foreach (var contact in Model.Report.Contacts)
+                    {
+                        @if (contact.ContactType?.Name == "Property Owner" && contact.Active)
+                        {
+                            <hr />
+                            if (!string.IsNullOrEmpty(contact.Company))
+                            {
+                                <span><strong>@contact.Company</strong></span><br />
+                            }
+                            else
+                            {
+                                <span><strong>@contact.GetFullName()</strong></span><br />
+                            }
+                            @contact.Address
+                            <br />
+                            @contact.City
+                            <span>,</span> 
+                            @contact.State
+                            <span>  </span>  
+                            @contact.PostalCode
+                            <br />
+                        }
+                    }
+                </div>
+            </div>
+            <div>
+                <img class="sitemap" src="@Model.GetGoogleMapsUrl(Model.Report)" alt="Site Map for @Model.Report.Name" />
+            </div>
+        </div>
+        @if (Model.HasSublistedParcels(Model.Report))
+        {
+            <div class="subparcelhead">
+                EPD received notification of a release to the following property(s), and determined on the indicated date that the property should be subisted as part of this site.
+            </div>
+            <div class="subparceltablehead">
+                <div>PARCEL NAME</div>
+                <div>ACREAGE</div>
+                <div>PARCEL NUMBER</div>
+                <div>DATE LISTED</div>
+            </div>
+            @foreach (var parcel in Model.Report.Parcels)
+            {
+                if (parcel.ParcelType?.Name == "SubList")
+                {
+                    <div class="subparcel">
+                        <div>@parcel.SubListParcelName</div>
+                        <div>@Html.DisplayFor(Model => parcel.Acres, "DoubleOrNone")</div>
+                        <div>@parcel.ParcelNumber</div>
+                        <div>@Html.DisplayFor(Model => parcel.ListDate, "DateOrNone")</div>
+                    </div>
+                }
+            }
+        }
+        <div class="status">
+            <strong>STATUS OF CLEANUP ACTIVITIES:</strong><br />
+            @Model.GetStatusLanguage(Model.Report)
+        </div>
+        <div class="classprop">
+            <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @Model.Report.LocationDetails.LocationClass.Name<br />
+            <strong>GA EPD DIRECTOR'S DETERMINATION REGARDING CORRECTIVE ACTION:</strong><br />
+            @Model.Report.LocationDetails.LocationClass.Description
+        </div>
+        <div class="score">
+            <strong>REGULATED SUBSTANCES RELEASED, AND THREATS TO HUMAN HEALTH AND ENVIRONMENT POSED BY THE RELEASE:</strong><br />
+            @Model.GetScoreLanguage(Model.Report)
+        </div>
+        <div class="substances">
+            <strong>REGULATED SUBSTANCES:</strong><br />
+            <div class="substancehead">
+                <div>Substance Name</div>
+                <div>GW</div>
+                <div>Soil</div>
+                <div>Substance Name</div>
+                <div>GW</div>
+                <div>Soil</div>
+            </div>
+            <div class="substancebox">
+                @foreach (var substance in Model.Report.Substances.OrderBy(s => s.Chemical.ChemicalName))
+                {
+                    <div class="substance">
+                        <div>@substance.Chemical.ChemicalName</div>
+                        <div class="mycheckbox">@Html.DisplayFor(model => substance.Groundwater, "BoolCheckbox")</div>
+                        <div class="mycheckbox">@Html.DisplayFor(model => substance.Soil, "BoolCheckbox")</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 }
 else
 {
