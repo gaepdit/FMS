@@ -1,6 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -19,7 +17,7 @@ namespace FMS.Domain.Dto
         }
 
         public Guid Id { get; }
-        
+
         [Display(Name = "Retained")]
         public bool Active { get; }
 

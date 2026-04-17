@@ -1,6 +1,4 @@
 ﻿using ClosedXML.Attributes;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -22,8 +20,12 @@ namespace FMS.Domain.Dto
             RARReceived = raw.RARReceived.HasValue ? DateOnly.FromDateTime(raw.RARReceived.Value) : null;
             RARDue = raw.RARDue.HasValue ? DateOnly.FromDateTime(raw.RARDue.Value) : null;
             RARApproved = raw.RARApproved.HasValue ? DateOnly.FromDateTime(raw.RARApproved.Value) : null;
-            ProjectCompleteDue = raw.ProjectCompleteDue.HasValue ? DateOnly.FromDateTime(raw.ProjectCompleteDue.Value) : null;
-            ProjectCompleteActual = raw.ProjectCompleteActual.HasValue ? DateOnly.FromDateTime(raw.ProjectCompleteActual.Value) : null;
+            ProjectCompleteDue = raw.ProjectCompleteDue.HasValue
+                ? DateOnly.FromDateTime(raw.ProjectCompleteDue.Value)
+                : null;
+            ProjectCompleteActual = raw.ProjectCompleteActual.HasValue
+                ? DateOnly.FromDateTime(raw.ProjectCompleteActual.Value)
+                : null;
             ProjectComments = raw.ProjectComments;
         }
 
@@ -72,7 +74,7 @@ namespace FMS.Domain.Dto
         [XLColumn(Header = "RAR Due")]
         public DateOnly? RARDue { get; set; }
 
-        [Display(Name = "RAR Approved")]        
+        [Display(Name = "RAR Approved")]
         [XLColumn(Header = "RAR Approved")]
         public DateOnly? RARApproved { get; set; }
 

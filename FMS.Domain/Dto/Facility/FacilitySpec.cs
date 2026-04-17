@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace FMS.Domain.Dto
 {
@@ -80,34 +77,34 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "ISWQS")]
         public bool ISWQS { get; set; }
-        
+
         public IDictionary<string, string> AsRouteValues =>
             new Dictionary<string, string>
             {
-                {nameof(SortBy), SortBy.ToString()},
-                {nameof(ShowDeleted), ShowDeleted.ToString()},
-                {nameof(Address), Address},
-                {nameof(BudgetCodeId), BudgetCodeId?.ToString()},
-                {nameof(City), City},
-                {nameof(ComplianceOfficerId), ComplianceOfficerId?.ToString()},
-                {nameof(CountyId), CountyId?.ToString()},
-                {nameof(FacilityNumber), FacilityNumber},
-                {nameof(FacilityStatusId), FacilityStatusId?.ToString()},
-                {nameof(FacilityTypeId), FacilityTypeId != null ? JsonSerializer.Serialize(FacilityTypeId) : null},
-                {nameof(FileLabel), FileLabel},
-                {nameof(Location), Location},
-                {nameof(Name), Name},
-                {nameof(OrganizationalUnitId), OrganizationalUnitId?.ToString()},
-                {nameof(PostalCode), PostalCode},
-                {nameof(State), State},
-                {nameof(ShowPendingOnly), ShowPendingOnly.ToString()},
-                {nameof(FirstPass), FirstPass.ToString()},
-                {nameof(LocationClassId), LocationClassId?.ToString()},
-                {nameof(AdditionalOrgUnitId), AdditionalOrgUnitId?.ToString()},
-                {nameof(Liens), Liens.ToString()},
-                {nameof(FinancialAssurance), FinancialAssurance.ToString()},
-                {nameof(Landfills), Landfills.ToString()},
-                {nameof(ISWQS), ISWQS.ToString()}
+                { nameof(SortBy), SortBy.ToString() },
+                { nameof(ShowDeleted), ShowDeleted.ToString() },
+                { nameof(Address), Address },
+                { nameof(BudgetCodeId), BudgetCodeId?.ToString() },
+                { nameof(City), City },
+                { nameof(ComplianceOfficerId), ComplianceOfficerId?.ToString() },
+                { nameof(CountyId), CountyId?.ToString() },
+                { nameof(FacilityNumber), FacilityNumber },
+                { nameof(FacilityStatusId), FacilityStatusId?.ToString() },
+                { nameof(FacilityTypeId), FacilityTypeId != null ? JsonSerializer.Serialize(FacilityTypeId) : null },
+                { nameof(FileLabel), FileLabel },
+                { nameof(Location), Location },
+                { nameof(Name), Name },
+                { nameof(OrganizationalUnitId), OrganizationalUnitId?.ToString() },
+                { nameof(PostalCode), PostalCode },
+                { nameof(State), State },
+                { nameof(ShowPendingOnly), ShowPendingOnly.ToString() },
+                { nameof(FirstPass), FirstPass.ToString() },
+                { nameof(LocationClassId), LocationClassId?.ToString() },
+                { nameof(AdditionalOrgUnitId), AdditionalOrgUnitId?.ToString() },
+                { nameof(Liens), Liens.ToString() },
+                { nameof(FinancialAssurance), FinancialAssurance.ToString() },
+                { nameof(Landfills), Landfills.ToString() },
+                { nameof(ISWQS), ISWQS.ToString() }
             };
 
         public void TrimAll()

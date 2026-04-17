@@ -7,9 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Threading.Tasks;
-using FMS.Helpers;
 
 namespace FMS.Pages.Location
 {
@@ -19,12 +16,13 @@ namespace FMS.Pages.Location
         private readonly ILocationRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
+
         public EditModel(
-            ILocationRepository repository, 
+            ILocationRepository repository,
             IFacilityRepository facilityRepository,
             ISelectListHelper selectListHelper,
-            Microsoft.Extensions.Configuration.IConfiguration configuration)
+            IConfiguration configuration)
         {
             _repository = repository;
             _facilityRepository = facilityRepository;
@@ -101,6 +99,7 @@ namespace FMS.Pages.Location
                 await PopulateSelectsAsync();
                 return Page();
             }
+
             try
             {
                 await _repository.UpdateLocationAsync(Location.FacilityId, Location);
@@ -114,7 +113,8 @@ namespace FMS.Pages.Location
 
             TempData?.SetDisplayMessage(Context.Success, $"Location successfully updated.");
             ActiveTab = "Location";
-            return RedirectToPage("../Facilities/Details", null, new { id = Location.FacilityId, tab = ActiveTab }, fragment: "TabPages");
+            return RedirectToPage("../Facilities/Details", null, new { id = Location.FacilityId, tab = ActiveTab },
+                fragment: "TabPages");
         }
 
         private async Task PopulateSelectsAsync()
@@ -126,8 +126,10 @@ namespace FMS.Pages.Location
         {
             if (facility.Latitude != 0 && facility.Longitude != 0)
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+                return
+                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
+
             return null;
         }
     }

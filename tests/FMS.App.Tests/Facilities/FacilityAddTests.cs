@@ -1,4 +1,3 @@
-using FluentAssertions;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Pages.Facilities;
@@ -6,13 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
-using NSubstitute;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Threading.Tasks;
 
 namespace FMS.App.Tests.Facilities
 {

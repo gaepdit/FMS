@@ -1,8 +1,4 @@
-using FluentAssertions;
-using FMS.Domain.Entities;
-using System;
 using System.Diagnostics.CodeAnalysis;
-using NUnit.Framework;
 
 // ReSharper disable ObjectCreationAsStatement
 

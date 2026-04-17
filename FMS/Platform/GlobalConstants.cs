@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing.Matching;
-
-namespace FMS.Platform.Extensions
+﻿namespace FMS.Platform.Extensions
 {
     // App-wide global variables
     public static class GlobalConstants

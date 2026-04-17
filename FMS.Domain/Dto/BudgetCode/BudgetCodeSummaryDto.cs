@@ -1,6 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -18,7 +16,7 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; }
         public bool Active { get; }
-        
+
         [Display(Name = "Budget Code")]
         public string Code { get; }
 
@@ -27,7 +25,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Organization Number")]
         public string OrganizationNumber { get; }
-        
+
         [Display(Name = "Project Number")]
         public string ProjectNumber { get; }
     }

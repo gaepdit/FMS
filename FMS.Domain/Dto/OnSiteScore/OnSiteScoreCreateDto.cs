@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class OnsiteScoreCreateDto
     {

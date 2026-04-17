@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FMS.Domain.Entities;
+﻿using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -68,6 +66,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Substance")]
         public Guid? SubstanceId { get; set; }
+
         public Substance Substance { get; set; }
 
         [Display(Name = "CasNo")]

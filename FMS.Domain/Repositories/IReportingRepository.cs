@@ -1,14 +1,12 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FMS.Domain.Repositories
 {
     public interface IReportingRepository : IDisposable
     {
         #region Asignment Reports
+
         Task<IReadOnlyList<AssignmentListReportByCODto>> GetAsignmentListByCOAsync();
 
         Task<IReadOnlyList<AssignmentListReportByCountyDto>> GetAsignmentListByCountyAsync();
@@ -18,23 +16,27 @@ namespace FMS.Domain.Repositories
         Task<IReadOnlyList<AssignmentListReportBySiteNameDto>> GetAsignmentListBySiteNameAsync();
 
         Task<IReadOnlyList<AssignmentListReportByUnitDto>> GetAsignmentListByUnitAsync();
+
         #endregion
 
         #region Listed and Delisted Reports
 
         Task<IReadOnlyList<DelistedReportByDateDto>> GetDelistedByDateAsync();
 
-        Task<IReadOnlyList<DelistedReportByDateRangeDto>> GetDelistedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate);
+        Task<IReadOnlyList<DelistedReportByDateRangeDto>> GetDelistedByDateRangeAsync(DateOnly? startDate,
+            DateOnly? endDate);
 
         Task<IReadOnlyList<ListedReportByDateDto>> GetListedByDateAsync();
 
-        Task<IReadOnlyList<ListedReportByDateRangeDto>> GetListedByDateRangeAsync(DateOnly? startDate, DateOnly? endDate);
+        Task<IReadOnlyList<ListedReportByDateRangeDto>> GetListedByDateRangeAsync(DateOnly? startDate,
+            DateOnly? endDate);
 
         #endregion
 
         #region Events Reports
 
-        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> facilityTypes = null, List<string> eventTypes = null);
+        Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> facilityTypes = null,
+            List<string> eventTypes = null);
 
         Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync();
 

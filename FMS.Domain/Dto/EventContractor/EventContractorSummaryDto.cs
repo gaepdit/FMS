@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using FMS.Domain.Entities;
+﻿using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {

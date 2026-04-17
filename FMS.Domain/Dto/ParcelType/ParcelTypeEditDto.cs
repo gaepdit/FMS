@@ -1,18 +1,18 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FMS.Domain.Entities;
+﻿using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
     public class ParcelTypeEditDto
     {
         public ParcelTypeEditDto() { }
+
         public ParcelTypeEditDto(ParcelType parcelType)
         {
             Id = parcelType.Id;
             Name = parcelType.Name;
             Active = parcelType.Active;
         }
+
         public Guid Id { get; set; }
 
         [Display(Name = "Parcel Type")]

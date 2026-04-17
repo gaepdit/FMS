@@ -1,8 +1,5 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -40,7 +37,7 @@ namespace FMS.Domain.Entities
         public DateOnly? ScoredDate { get; set; }
 
         [Display(Name = "Comments")]
-        public string Comments { get; set; }   
+        public string Comments { get; set; }
 
         [Display(Name = "Use language from comments field in Site Summary")]
         public bool UseComments { get; set; } = false;

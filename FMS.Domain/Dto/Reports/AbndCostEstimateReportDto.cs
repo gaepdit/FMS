@@ -1,6 +1,4 @@
 ﻿using ClosedXML.Attributes;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto.Reports
 {
@@ -15,11 +13,11 @@ namespace FMS.Domain.Dto.Reports
         [XLColumn(Header = "HSI ID")]
         [Display(Name = "HSI ID")]
         public string HSINumber { get; set; }
-        
+
         [XLColumn(Header = "Facility Name")]
         [Display(Name = "Facility Name")]
         public string FacilityName { get; set; }
-        
+
         [XLColumn(Header = "County")]
         [Display(Name = "County")]
         public string County { get; set; }

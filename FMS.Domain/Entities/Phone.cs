@@ -1,13 +1,12 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
     public class Phone : BaseActiveModel
     {
         public Phone() { }
+
         public Phone(PhoneCreateDto phone)
         {
             Id = phone.Id;
@@ -15,6 +14,7 @@ namespace FMS.Domain.Entities
             Number = phone.Number;
             PhoneType = phone.PhoneType;
         }
+
         public Guid ContactId { get; set; }
 
         [Phone]
@@ -30,12 +30,15 @@ namespace FMS.Domain.Entities
             phone.Number = phone.Number.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
             if (phone.Number.Length == 10)
             {
-                phone.Number = $"({phone.Number.Substring(0, 3)}) {phone.Number.Substring(3, 3)}-{phone.Number.Substring(6)}";
+                phone.Number =
+                    $"({phone.Number.Substring(0, 3)}) {phone.Number.Substring(3, 3)}-{phone.Number.Substring(6)}";
             }
             else if (phone.Number.Length == 11 && phone.Number.StartsWith('1'))
             {
-                phone.Number = $"1 ({phone.Number.Substring(1, 3)}) {phone.Number.Substring(4, 3)}-{phone.Number.Substring(7)}";
+                phone.Number =
+                    $"1 ({phone.Number.Substring(1, 3)}) {phone.Number.Substring(4, 3)}-{phone.Number.Substring(7)}";
             }
+
             return phone;
         }
 

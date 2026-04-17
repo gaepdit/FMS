@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FMS.Domain.Data
+﻿namespace FMS.Domain.Data
 {
     public static partial class Data
     {

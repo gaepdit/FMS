@@ -1,14 +1,9 @@
-﻿using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class FacilityMapSpec
     {
         public FacilityMapSpec() { }
-        
+
         public FacilityMapSpec(FacilityDetailDto facility)
         {
             Latitude = facility.Latitude;

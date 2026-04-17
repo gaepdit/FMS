@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class ContactCreateDto
     {
@@ -36,7 +33,9 @@ namespace FMS.Domain.Dto
         [Display(Name = "State")]
         public string State { get; set; }
 
-        [RegularExpression(@"^(\d{5}(-\d{4})?|[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d)$", ErrorMessage = "Invalid format. Please enter a valid US or Canadian Postal Code.")]
+        [RegularExpression(
+            @"^(\d{5}(-\d{4})?|[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d)$",
+            ErrorMessage = "Invalid format. Please enter a valid US or Canadian Postal Code.")]
         [Display(Name = "Postal(ZIP) Code")]
         public string PostalCode { get; set; }
 

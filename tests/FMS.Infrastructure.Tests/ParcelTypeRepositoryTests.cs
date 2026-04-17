@@ -1,16 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using NSubstitute;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
-using FMS.Domain.Entities;
-using FMS.Domain.Dto;
 using Microsoft.AspNetCore.Http;
-using FluentAssertions;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace FMS.Infrastructure.Tests
 {

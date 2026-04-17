@@ -1,5 +1,4 @@
 ﻿using ClosedXML.Attributes;
-using System;
 
 namespace FMS.Domain.Dto
 {
@@ -16,8 +15,9 @@ namespace FMS.Domain.Dto
             ActionTakenName = reportDto.ActionTaken?.Name;
             EventStartDate = reportDto.StartDate;
             EventCompletionDate = reportDto.CompletionDate;
-            Days = (reportDto.CompletionDate.HasValue && reportDto.StartDate.HasValue) 
-                ? (reportDto.CompletionDate.Value.ToDateTime(TimeOnly.MinValue) - reportDto.StartDate.Value.ToDateTime(TimeOnly.MinValue)).TotalDays 
+            Days = (reportDto.CompletionDate.HasValue && reportDto.StartDate.HasValue)
+                ? (reportDto.CompletionDate.Value.ToDateTime(TimeOnly.MinValue) -
+                   reportDto.StartDate.Value.ToDateTime(TimeOnly.MinValue)).TotalDays
                 : 0;
             DoneBy = reportDto.DoneBy?.Name;
         }

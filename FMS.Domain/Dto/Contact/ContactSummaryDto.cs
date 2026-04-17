@@ -1,11 +1,6 @@
-using FMS.Domain.Entities;
-using Microsoft.Graph.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
+using FMS.Domain.Entities;
 using Contact = FMS.Domain.Entities.Contact;
 
 namespace FMS.Domain.Dto
@@ -48,9 +43,10 @@ namespace FMS.Domain.Dto
             State = contact.State;
             PostalCode = contact.PostalCode;
             Email = contact.Email;
-            Phones = contact.Phones ?
+            Phones = contact.Phones?
                 .Select(p => new PhoneSummaryDto(p)).ToList() ?? new List<PhoneSummaryDto>();
         }
+
         public Guid Id { get; set; }
 
         [Display(Name = "Active")]
@@ -104,7 +100,7 @@ namespace FMS.Domain.Dto
             {
                 // Normalize the domain
                 email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
-                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+                    RegexOptions.None, TimeSpan.FromMilliseconds(200));
 
                 // Examines the domain part of the email and normalizes it.
                 string DomainMapper(Match match)

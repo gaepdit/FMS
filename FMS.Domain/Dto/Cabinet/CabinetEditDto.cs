@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using FMS.Domain.Entities;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class CabinetEditDto
     {

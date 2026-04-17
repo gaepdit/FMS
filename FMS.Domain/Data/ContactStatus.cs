@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace FMS.Domain.Data
+﻿namespace FMS.Domain.Data
 {
     public static partial class Data
     {
