@@ -1,50 +1,45 @@
 {
-  "version": "1.0",
-  "defaultProvider": "cdnjs",
+  "version": "3.0",
+  "defaultProvider": "jsdelivr",
   "libraries": [
     {
-      "provider": "cdnjs",
       "library": "jquery@3.6.1",
       "destination": "wwwroot/lib/jquery/",
       "files": [
-        "jquery.min.js",
-        "jquery.min.map",
-        "jquery.js"
+        "dist/jquery.min.js",
+        "dist/jquery.min.map",
+        "dist/jquery.js"
       ]
     },
     {
-      "provider": "cdnjs",
       "library": "bootstrap@5.3.1",
       "destination": "wwwroot/lib/bootstrap/",
       "files": [
-        "js/bootstrap.bundle.min.js",
-        "js/bootstrap.bundle.js",
-        "js/bootstrap.bundle.min.js.map",
-        "css/bootstrap.css",
-        "css/bootstrap.min.css",
-        "css/bootstrap.min.css.map"
+        "dist/js/bootstrap.bundle.min.js",
+        "dist/js/bootstrap.bundle.js",
+        "dist/js/bootstrap.bundle.min.js.map",
+        "dist/css/bootstrap.css",
+        "dist/css/bootstrap.min.css",
+        "dist/css/bootstrap.min.css.map"
       ]
     },
     {
-      "provider": "cdnjs",
-      "library": "jquery-validate@1.19.5",
-      "destination": "wwwroot/lib/jquery-validate/",
+      "library": "jquery-validation@1.19.5",
+      "destination": "wwwroot/lib/jquery-validation",
       "files": [
-        "jquery.validate.min.js",
-        "jquery.validate.js"
+        "dist/jquery.validate.min.js",
+        "dist/jquery.validate.js"
       ]
     },
     {
-      "provider": "cdnjs",
       "library": "jquery-validation-unobtrusive@4.0.0",
-      "destination": "wwwroot/lib/jquery-validation-unobtrusive/",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive",
       "files": [
-        "jquery.validate.unobtrusive.min.js",
-        "jquery.validate.unobtrusive.js"
+        "dist/jquery.validate.unobtrusive.min.js",
+        "dist/jquery.validate.unobtrusive.js"
       ]
     },
     {
-      "provider": "jsdelivr",
       "library": "axios@1.13.2",
       "destination": "wwwroot/lib/axios/",
       "files": [
@@ -55,12 +50,13 @@
       ]
     },
     {
-      "provider": "cdnjs",
-      "library": "OverlappingMarkerSpiderfier@1.0.3",
-      "destination": "wwwroot/lib/OverlappingMarkerSpiderfier/"
+      "library": "npm-overlapping-marker-spiderfier@1.0.3",
+      "destination": "wwwroot/lib/OverlappingMarkerSpiderfier/",
+      "files": [
+        "lib/**"
+      ]
     },
     {
-      "provider": "jsdelivr",
       "library": "sanitize.css@13.0.0",
       "destination": "wwwroot/lib/sanitize.css",
       "files": [
@@ -70,10 +66,11 @@
     },
     {
       "provider": "jsdelivr",
-      "library": "select2@4.1.0-rc.0",
-      "destination": "wwwroot/lib/select2/",
+      "library": "sanitize.css@13.0.0",
+      "destination": "wwwroot/lib/sanitize.css",
       "files": [
-        "dist/**"
+        "sanitize.min.css",
+        "sanitize.css"
       ]
     }
   ]
