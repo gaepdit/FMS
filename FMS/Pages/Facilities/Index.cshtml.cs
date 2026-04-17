@@ -76,7 +76,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
             spec.TrimAll();
-            if (!spec.FirstPass)
+            if (!spec.FirstPass && !string.IsNullOrEmpty(Request.Query["FacilityTypeId"]))
             {
                 spec.FacilityTypeId = JsonSerializer.Deserialize<List<Guid>>(Request.Query["FacilityTypeId"].ToString());
             }
