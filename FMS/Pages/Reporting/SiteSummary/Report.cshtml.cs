@@ -24,6 +24,8 @@ namespace FMS.Pages.Reporting.SiteSummary
         [BindProperty]
         public SiteSummaryQuerySpec Spec { get; set; }
 
+        public bool ShowHeader { get; set; } = false;
+
         [BindProperty]
         public IReadOnlyList<SiteSummaryReportDto> ReportList { get; set; } = new List<SiteSummaryReportDto>();
 
@@ -35,6 +37,8 @@ namespace FMS.Pages.Reporting.SiteSummary
             if (!string.IsNullOrEmpty(hsiId))
             {
                 Report = await _repository.GetSingleFacilitySiteSummaryDtoAsync(hsiId);
+                ReportList = new List<SiteSummaryReportDto>() { Report };
+                ShowHeader = false;
                 return Page();
             }
 
@@ -43,6 +47,7 @@ namespace FMS.Pages.Reporting.SiteSummary
 
             Spec = spec;
             Spec.TrimAll();
+            ShowHeader = Spec.ShowHeader;
 
             ReportList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
 
@@ -54,7 +59,7 @@ namespace FMS.Pages.Reporting.SiteSummary
             if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
             {
                 return
-                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails?.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
 
             return null;

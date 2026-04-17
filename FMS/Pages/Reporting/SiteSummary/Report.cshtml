@@ -1,4 +1,4 @@
-﻿@page "~/Reports/SiteSummary/{hsiId?}"
+﻿@page "~/Reporting/SiteSummary/{hsiId?}"
 @using System.Globalization
 @model FMS.Pages.Reporting.SiteSummary.ReportModel
 @{
@@ -13,7 +13,7 @@
 {
     <p class="lead text-info">No matching results found.</p>
 }
-else if(Model.Report != null)
+@* else if(Model.Report != null)
 {
     <div class="page-wrapper">
         <div class="masthead">
@@ -117,9 +117,9 @@ else if(Model.Report != null)
             @Model.GetStatusLanguage(Model.Report)
         </div>
         <div class="classprop">
-            <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @Model.Report.LocationDetails.LocationClass.Name<br />
+            <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @Model.Report.LocationDetails?.LocationClass.Name<br />
             <strong>GA EPD DIRECTOR'S DETERMINATION REGARDING CORRECTIVE ACTION:</strong><br />
-            @Model.Report.LocationDetails.LocationClass.Description
+            @Model.Report.LocationDetails?.LocationClass.Description
         </div>
         <div class="score">
             <strong>REGULATED SUBSTANCES RELEASED, AND THREATS TO HUMAN HEALTH AND ENVIRONMENT POSED BY THE RELEASE:</strong><br />
@@ -147,13 +147,13 @@ else if(Model.Report != null)
             </div>
         </div>
     </div>
-}
+} *@
 else
 {
     @foreach (var report in Model.ReportList)
     {
         <div class="page-wrapper">
-            @if (Model.Spec.ShowHeader)
+            @if (Model.ShowHeader)
             {
                 <header>
                     <div>
@@ -267,9 +267,9 @@ else
                   @Model.GetStatusLanguage(report)
             </div>
             <div class="classprop">
-                    <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @report.LocationDetails.LocationClass.Name<br />
+                    <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @report.LocationDetails?.LocationClass.Name<br />
                     <strong>GA EPD DIRECTOR'S DETERMINATION REGARDING CORRECTIVE ACTION:</strong><br />
-                    @report.LocationDetails.LocationClass.Description
+                    @report.LocationDetails?.LocationClass.Description
             </div>
             <div class="score">
                 <strong>REGULATED SUBSTANCES RELEASED, AND THREATS TO HUMAN HEALTH AND ENVIRONMENT POSED BY THE RELEASE:</strong><br />
