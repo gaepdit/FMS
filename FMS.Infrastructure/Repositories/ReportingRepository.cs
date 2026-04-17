@@ -1,10 +1,11 @@
-﻿using System.Data;
-using Dapper;
+﻿using Dapper;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -562,6 +563,45 @@ namespace FMS.Infrastructure.Repositories
                 .OrderBy(e => e.FacilityNumber)
                 .Select(e => new FacilityBasicDto(e))
                 .ToListAsync();
+
+        public async Task<SiteSummaryReportDto> GetSingleFacilitySiteSummaryDtoAsync(String hsiId)
+        {
+            var facility = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.BudgetCode)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.OrganizationalUnit)
+                .Include(e => e.LocationDetails)
+                .ThenInclude(e => e.LocationClass)
+                .Include(e => e.Parcels)
+                .ThenInclude(e => e.ParcelType)
+                .Include(e => e.Contacts)
+                .ThenInclude(e => e.ContactType)
+                .Include(e => e.ScoreDetails)
+                .Include(e => e.GroundwaterScoreDetails)
+                .ThenInclude(e => e.Substance)
+                .ThenInclude(e => e.Chemical)
+                .Include(e => e.OnsiteScoreDetails)
+                .ThenInclude(e => e.Substance)
+                .ThenInclude(e => e.Chemical)
+                .Include(e => e.Substances)
+                .ThenInclude(e => e.Chemical)
+                .Include(e => e.StatusDetails)
+                .Include(e => e.StatusDetails.SourceStatus)
+                .Include(e => e.StatusDetails.SoilStatus)
+                .Include(e => e.StatusDetails.GroundwaterStatus)
+                .Include(e => e.StatusDetails.OverallStatus)
+                .Where(e => e.FacilityNumber == hsiId)
+                .OrderBy(e => e.FacilityNumber)
+                .Select(e => new SiteSummaryReportDto(e))
+                .AsSplitQuery()
+                .SingleOrDefaultAsync();
+            return facility;
+        }
 
         #endregion
 

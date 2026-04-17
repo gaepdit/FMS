@@ -71,6 +71,8 @@ namespace FMS.Domain.Repositories
 
         Task<IReadOnlyList<FacilityBasicDto>> GetHsiFacilitiesAsync(SiteSummaryQuerySpec spec);
 
+        Task<SiteSummaryReportDto> GetSingleFacilitySiteSummaryDtoAsync(String hsiId);
+
         #endregion
     }
 }

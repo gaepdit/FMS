@@ -11,6 +11,9 @@ namespace FMS.Domain.Entities
         {
             Id = Guid.NewGuid();
             FacilityId = facilityId;
+            LocationClassId = null;
+            MapType = "roadmap";
+            MapZoom = "15";
         }
 
         public Location(Guid id, LocationCreateDto location)

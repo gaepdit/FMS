@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "~/Reports/SiteSummary/{hsiId?}"
 @using System.Globalization
 @model FMS.Pages.Reporting.SiteSummary.ReportModel
 @{
@@ -9,7 +9,7 @@
     ViewData["Title"] = $"Site Summary(s)";
 }
 
-@if (Model.ReportList.Count == 0)
+@if (Model.ReportList.Count == 0 && Model.Report == null)
 {
     <p class="lead text-info">No matching results found.</p>
 }
@@ -18,7 +18,7 @@ else
     @foreach (var report in Model.ReportList)
     {
         <div class="page-wrapper">
-            @if (Model.Spec.ShowHeader)
+            @if (Model.ShowHeader)
             {
                 <header>
                     <div>
@@ -27,10 +27,10 @@ else
                     </div>
                     <div>CO: @report.ComplianceOfficer.Name</div>
                     <div>
-                        @if (!string.IsNullOrEmpty(@report.HsrpFacilityPropertyDetails.OrganizationalUnit?.Name))
+                        @if (!string.IsNullOrEmpty(@report.HsrpFacilityPropertyDetails?.OrganizationalUnit?.Name))
                         {
                             <span>Add'l Org Unit: </span>
-                            @report.HsrpFacilityPropertyDetails.OrganizationalUnit?.Name
+                            @report.HsrpFacilityPropertyDetails?.OrganizationalUnit?.Name
                         }
                     </div>
                     <div>Unit: @report.OrganizationalUnit.Name</div>
@@ -132,9 +132,9 @@ else
                   @Model.GetStatusLanguage(report)
             </div>
             <div class="classprop">
-                    <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @report.LocationDetails.LocationClass.Name<br />
+                    <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @report.LocationDetails?.LocationClass.Name<br />
                     <strong>GA EPD DIRECTOR'S DETERMINATION REGARDING CORRECTIVE ACTION:</strong><br />
-                    @report.LocationDetails.LocationClass.Description
+                    @report.LocationDetails?.LocationClass.Description
             </div>
             <div class="score">
                 <strong>REGULATED SUBSTANCES RELEASED, AND THREATS TO HUMAN HEALTH AND ENVIRONMENT POSED BY THE RELEASE:</strong><br />
