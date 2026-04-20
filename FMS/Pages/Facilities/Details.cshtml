@@ -338,6 +338,8 @@
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
         <a asp-page="/Facilities/Map" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary" target="_blank">Location Search</a>
+        <a asp-page="/Facilities/Index" class="btn btn-sm btn-outline-primary" target="_blank">New Search Tab</a>
+        <a asp-page="/Facilities/Map" class="btn btn-sm btn-outline-primary" target="_blank">New Map Search Tab</a>
         @if (Model.FacilityDetail.FacilityType.Name == "HSI" && Model.FacilityDetail.FacilityStatus.Name == "Active")
         {
             <a asp-page="/Reporting/SiteSummary/Report" asp-route-hsiId="@Model.FacilityDetail.FacilityNumber" target="_blank"

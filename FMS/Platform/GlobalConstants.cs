@@ -24,5 +24,7 @@
         // Link to Google Maps API
         public const string MapCoordLink = "https://www.google.com/maps/search/?api=1&query=";
 
+
+        public const string SiteSummaryReportPath = "/Reporting/SiteSummary/Report/";
     }
 }

@@ -1,6 +1,7 @@
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,6 +25,8 @@ namespace FMS.Pages.Reporting.SiteSummary
 
         [BindProperty]
         public IReadOnlyList<FacilityBasicDto> SummaryList { get; set; } = [];
+
+        public string SiteSummaryURL { get; set; } = GlobalConstants.SiteSummaryReportPath;
 
         public bool ShowResults { get; private set; }
 
