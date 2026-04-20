@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <div class="col-md-6">
                 <input type="hidden" name="handler" value="Preview" />
@@ -82,11 +82,10 @@
     <br />
     <br />
 </div>
-
+<hr/>
 @if (Model.ShowResults)
 {
-    <hr />
-    <div id="SearchResults" class="container-fluid parent-container d-lg-inline-flex">
+    <div id="SearchResults" class="container-fluid parent-container d-lg-inline-flex bg-light-subtle p-3 rounded-3">
         <div class="row">
             <div class="col">
                 <h3>Results</h3>
@@ -95,7 +94,7 @@
             {
                 <div class="col-auto d-print-none ms-2">
                     <a asp-page="Report" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
-                       class="btn btn-sm btn-primary icon-link">
+                           class="btn btn-sm btn-primary icon-link">
                         <svg class="bi">
                             <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
                         </svg>
@@ -110,6 +109,42 @@
                 </div>
             }
         </div>
+    </div>
+    <hr/>
+    <div class="container-fluid parent-container d-lg-inline-flex bg-light-subtle p-3 rounded-3">
+        @if (Model.SummaryList.Count > 0)
+        {
+            <form method="post">
+                <input type="hidden" asp-for="Spec.AdditionalOrganizationalUnitId" />
+                <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
+                <input type="hidden" asp-for="Spec.CountyId" />
+                <input type="hidden" asp-for="Spec.FacilityNumber" />
+                <input type="hidden" asp-for="Spec.IsLandFill" />
+                <input type="hidden" asp-for="Spec.LocationClassId" />
+                <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
+                <div class="row">
+                    <div class="col-auto">
+                        <h3>Site Summary URL List</h3>
+                    </div>
+                    <div class="col-auto d-print-none ms-2">
+                        <button id="ExportButton"
+                                asp-page-handler="ExportButton"
+                                class="btn btn-sm btn-primary mb-1">
+                            Export Site Summary List to Excel
+                        </button>
+                    </div>
+                    <div class="col-auto d-print-none ms-2">
+                        <a asp-page="SiteSummaryList" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
+                               class="btn btn-sm btn-primary icon-link">
+                            <svg class="bi">
+                                <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
+                            </svg>
+                            Export/Print List
+                        </a>
+                    </div>
+                </div>
+            </form>
+        }
     </div>
     <hr />
     <div class="container-fluid parent-container d-lg-inline-flex">
@@ -134,9 +169,11 @@
                     @foreach (var item in Model.SummaryList)
                     {
                         <tr class="@(!item.Active ? "table-warning" : "")">
-                            <td><a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                            <td>
+                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
                                     @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                </a></td>
+                                </a>
+                            </td>
                             <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>

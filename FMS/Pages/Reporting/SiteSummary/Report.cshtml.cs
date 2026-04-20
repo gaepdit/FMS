@@ -27,7 +27,7 @@ namespace FMS.Pages.Reporting.SiteSummary
         public bool ShowHeader { get; set; } = false;
 
         [BindProperty]
-        public IReadOnlyList<SiteSummaryReportDto> ReportList { get; set; } = new List<SiteSummaryReportDto>();
+        public IReadOnlyList<SiteSummaryReportDto> ReportList { get; set; } = [];
 
         [BindProperty]
         public SiteSummaryReportDto Report { get; set; }
@@ -37,7 +37,7 @@ namespace FMS.Pages.Reporting.SiteSummary
             if (!string.IsNullOrEmpty(hsiId))
             {
                 Report = await _repository.GetSingleFacilitySiteSummaryDtoAsync(hsiId);
-                ReportList = new List<SiteSummaryReportDto>() { Report };
+                ReportList = [Report];
                 ShowHeader = false;
                 return Page();
             }
@@ -61,7 +61,6 @@ namespace FMS.Pages.Reporting.SiteSummary
                 return
                     $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails?.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
-
             return null;
         }
 
@@ -90,7 +89,6 @@ namespace FMS.Pages.Reporting.SiteSummary
                     return true;
                 }
             }
-
             return false;
         }
     }
