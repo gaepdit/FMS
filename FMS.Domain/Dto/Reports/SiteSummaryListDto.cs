@@ -5,7 +5,7 @@ namespace FMS.Domain.Dto
 {
     public class SiteSummaryListDto
     {
-        private const string siteSummaryReportPath = "https://dev-fms.gaepd.org/Reporting/SiteSummary/Report/";
+        private const string siteSummaryReportPath = "https://fms.gaepd.org/Reporting/SiteSummary/Report/";
 
         public SiteSummaryListDto(Facility facility) 
         {

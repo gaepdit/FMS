@@ -102,19 +102,20 @@
                         Export/Print Reports
                     </a>
                 </div>
-                <div class="col-md text-md-end text-sm-right align-text-bottom mb-1">
+            }
+            @if (Model.SummaryList.Count > 0)
+            {
+                <div class="col-auto text-md-end text-sm-right align-text-bottom mb-1">
                     Total results: @Html.DisplayFor(m => Model.SummaryList.Count)
                 </div>
             }
         </div>
     </div>
-    @if (Model.SummaryList.Count > 0)
-    {
-        <div class="row">
+    <hr />
+    <div class="container-fluid parent-container d-lg-inline-flex">
+        @if (Model.SummaryList.Count > 0)
+        {
             <form method="post">
-                <div class="col">
-                    <h5>Print Spreadsheet of Site Summary URLs</h5>
-                </div>
                 <input type="hidden" asp-for="Spec.AdditionalOrganizationalUnitId" />
                 <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
                 <input type="hidden" asp-for="Spec.CountyId" />
@@ -122,16 +123,21 @@
                 <input type="hidden" asp-for="Spec.IsLandFill" />
                 <input type="hidden" asp-for="Spec.LocationClassId" />
                 <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
-                <div class="col-auto d-print-none ms-2">
-                    <button id="ExportButton"
-                            asp-page-handler="ExportButton"
-                            class="btn btn-sm btn-outline-primary mb-1">
-                        Export Site Summary List
-                    </button>
+                <div class="row">
+                    <div class="col-auto">
+                        <h5>Export Spreadsheet of Site Summary URLs</h5>
+                    </div>
+                    <div class="col-auto d-print-none ms-2">
+                        <button id="ExportButton"
+                                asp-page-handler="ExportButton"
+                                class="btn btn-sm btn-outline-primary mb-1">
+                            Export Site Summary List
+                        </button>
+                    </div>
                 </div>
             </form>
-        </div>
-    }
+        }
+    </div>
     <hr />
     <div class="container-fluid parent-container d-lg-inline-flex">
         @if (Model.SummaryList.Count == 0)
