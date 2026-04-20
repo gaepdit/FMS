@@ -1,4 +1,5 @@
 ﻿@page
+@using FMS.Platform
 @model FMS.Pages.Reporting.SiteSummary.IndexModel
 
 @{
@@ -174,7 +175,7 @@
                                     @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
                                 </a>
                             </td>
-                            <td>@Html.DisplayFor(m => item.Name, "StringOrNone")</td>
+                            <td><a href="@Model.SiteSummaryURL@item.FacilityNumber" target="_blank">@Html.DisplayFor(m => item.Name, "StringOrNone")</a></td>
                             <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.County.Name, "StringOrNone")</td>
