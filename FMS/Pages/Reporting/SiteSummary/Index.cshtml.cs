@@ -23,7 +23,7 @@ namespace FMS.Pages.Reporting.SiteSummary
         public SiteSummaryQuerySpec Spec { get; set; }
 
         [BindProperty]
-        public IReadOnlyList<FacilityBasicDto> SummaryList { get; set; } = new List<FacilityBasicDto>();
+        public IReadOnlyList<FacilityBasicDto> SummaryList { get; set; } = [];
 
         public bool ShowResults { get; private set; }
 
@@ -63,6 +63,16 @@ namespace FMS.Pages.Reporting.SiteSummary
                 "Remedial Sites 1", "Remedial Sites 2", "Remedial Sites 3", "DOD Facilities", "NPL Unit",
                 "Treatment & Storage", "SW Env. Monitoring Compliance", "Voluntary Remediation"
             ]);
+        }
+
+        public async Task<IActionResult> OnPostExportButtonAsync()
+        {
+            var fileName = $"FMS_Site_Summary_List_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+
+            // "FacilityReportList" Detailed Facility List to go to a report
+            IReadOnlyList<SiteSummaryListDto> facilityReportList = await _repository.GetSiteSummaryListAsync(Spec);
+
+            return File(facilityReportList.ExportExcelAsByteArray(ExportHelper.ReportType.SiteSummaryList), "application/vnd.ms-excel", fileName);
         }
     }
 }

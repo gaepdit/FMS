@@ -33,7 +33,8 @@ namespace FMS
             HSIListByCounty,
             HSIListByClass,
             AbndInacStatusTracker,
-            AbndCostEstimateReport
+            AbndCostEstimateReport,
+            SiteSummaryList
         }
 
         /// <summary>
@@ -560,6 +561,30 @@ namespace FMS
                 ws.Column("H").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Integer;
                 ws.Column("H").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Column("J").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
+            }
+
+            if(reportType == ReportType.SiteSummaryList)
+            {
+                ws = wb.AddWorksheet("Site Summary Facility List");
+                table = ws.Cell(1, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+
+                var urlColumn = table.DataRange.Column(3);
+
+                foreach (var cell in urlColumn.Cells())
+                {
+                    string urlValue = cell.Value.ToString();
+                    if (!string.IsNullOrWhiteSpace(urlValue))
+                    {
+                        // Apply the hyperlink
+                        cell.SetHyperlink(new XLHyperlink(urlValue));
+
+                        // Optional: Style as a link (blue and underlined)
+                        cell.Style.Font.FontColor = XLColor.Blue;
+                        cell.Style.Font.Underline = XLFontUnderlineValues.Single;
+                    }
+                }
             }
 
             wb.SaveAs(ms);
