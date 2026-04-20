@@ -255,6 +255,17 @@ header {
     font-weight: bold;
 }
 
+.summarylisthead {
+    display: grid;
+    grid-template-columns: 100px 300px 400px;
+    font-weight: bold;
+}
+
+.summarylist {
+    display: grid;
+    grid-template-columns: 100px 300px 400px;
+}
+
 /* Footer */
 
 footer {
