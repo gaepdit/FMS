@@ -2,6 +2,7 @@ using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Pages.Reporting.HSISiteLists
 {
@@ -10,6 +11,10 @@ namespace FMS.Pages.Reporting.HSISiteLists
         private readonly IReportingRepository _repository;
 
         public IndexModel(IReportingRepository repository) => _repository = repository;
+
+        [BindProperty]
+        [Display(Name = "Exclude Delisted Sites")]
+        public bool ExcludeDelisted { get; set; }
 
         public void OnGet()
         {
@@ -22,7 +27,7 @@ namespace FMS.Pages.Reporting.HSISiteLists
 
             // "eventsPendingList" List to go to a report
             IReadOnlyList<HSIListReportDto>
-                hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.HSINumber);
+                hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.HSINumber, ExcludeDelisted);
 
             // Export to Excel
             return File(hsiReportList.ExportExcelAsByteArray(ExportHelper.ReportType.HSIListByNumber),
@@ -34,7 +39,7 @@ namespace FMS.Pages.Reporting.HSISiteLists
             var fileName = $"HSI_Sites_By_Name_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
             // "eventsPendingList" List to go to a report
-            IReadOnlyList<HSIListReportDto> hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.Name);
+            IReadOnlyList<HSIListReportDto> hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.Name, ExcludeDelisted);
 
             // Export to Excel
             return File(hsiReportList.ExportExcelAsByteArray(ExportHelper.ReportType.HSIListByName),
@@ -46,7 +51,7 @@ namespace FMS.Pages.Reporting.HSISiteLists
             var fileName = $"HSI_Sites_By_County_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
 
             // "eventsPendingList" List to go to a report
-            IReadOnlyList<HSIListReportDto> hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.County);
+            IReadOnlyList<HSIListReportDto> hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.County, ExcludeDelisted);
 
             // Export to Excel
             return File(hsiReportList.ExportExcelAsByteArray(ExportHelper.ReportType.HSIListByCounty),
@@ -59,7 +64,7 @@ namespace FMS.Pages.Reporting.HSISiteLists
 
             // "eventsPendingList" List to go to a report
             IReadOnlyList<HSIListReportDto>
-                hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.ClassName);
+                hsiReportList = await _repository.GetHSIListReportAsync(HSISortBy.ClassName, ExcludeDelisted);
 
             // Export to Excel
             return File(hsiReportList.ExportExcelAsByteArray(ExportHelper.ReportType.HSIListByClass),

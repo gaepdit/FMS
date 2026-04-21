@@ -12,6 +12,14 @@
     <form method="post">
         <div class="row">
             <div class="col-md-4">
+                <input asp-for="ExcludeDelisted" class="form-check-input" checked />
+                <label asp-for="ExcludeDelisted" class="form-check-label"></label>
+                <span asp-validation-for="ExcludeDelisted" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
                 <button id="ByNumber"
                         asp-page-handler="ByNumber"
                         class="btn btn-sm btn-outline-primary mb-1">

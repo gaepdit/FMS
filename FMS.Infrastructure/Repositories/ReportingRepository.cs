@@ -317,20 +317,23 @@ namespace FMS.Infrastructure.Repositories
 
         #region HSI List Reports
 
-        public async Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy)
+        public async Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy, bool excludeDelisted)
         {
             var facilityList = await _context.Facilities.AsNoTracking()
                 .Include(e => e.FacilityType)
+                .Include(e => e.FacilityStatus)
                 .Include(e => e.LocationDetails)
                 .Include(e => e.LocationDetails.LocationClass)
                 .Include(e => e.County)
                 .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => !excludeDelisted || !string.Equals(e.FacilityStatus.Status, "DELISTED"))
                 .Select(e => new HSIListReportDto()
                 {
                     HSINumber = e.FacilityNumber,
                     Name = e.Name,
                     County = e.County.Name,
-                    ClassName = e.LocationDetails.LocationClass.Name
+                    ClassName = e.LocationDetails.LocationClass.Name,
+                    FacilityStatus = e.FacilityStatus.Status
                 })
                 .ToListAsync();
 
