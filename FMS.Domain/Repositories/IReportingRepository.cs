@@ -50,7 +50,7 @@ namespace FMS.Domain.Repositories
 
         #region HSI ListReports
 
-        Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy);
+        Task<IReadOnlyList<HSIListReportDto>> GetHSIListReportAsync(HSISortBy sortBy, bool excludeDelisted);
 
         #endregion
 
