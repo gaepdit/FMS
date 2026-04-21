@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FMS.Pages.Location
 {
-    [Authorize(Roles = UserRoles.FileEditor)]
+    [Authorize(Policy = UserPolicies.FileEditorOrComplianceOfficer)]
     public class EditModel : PageModel
     {
         private readonly ILocationRepository _repository;

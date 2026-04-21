@@ -37,6 +37,10 @@ namespace FMS.Pages.Reporting.SiteSummary
             if (!string.IsNullOrEmpty(hsiId))
             {
                 Report = await _repository.GetSingleFacilitySiteSummaryDtoAsync(hsiId);
+                if (Report == null) 
+                    {
+                        return NotFound();
+                    }
                 ReportList = [Report];
                 ShowHeader = false;
                 return Page();
