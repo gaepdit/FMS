@@ -1,4 +1,5 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Location.EditModel
 
 @section Scripts
@@ -63,9 +64,17 @@
             <div class="row mb-3">
                 <div class="col mb-3">
                     <label asp-for="Location.LocationClassId" class="form-label">Class</label>
-                    <select asp-for="Location.LocationClassId" asp-items="Model.Classes" class="form-select">
-                    </select>
-                    <span asp-validation-for="Location.LocationClassId" class="text-danger"></span>
+                    @if (User.IsInRole(UserRoles.FileEditor))
+                    {
+                        <select asp-for="Location.LocationClassId" asp-items="Model.Classes" class="form-select">
+                        </select>
+                        <span asp-validation-for="Location.LocationClassId" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        <select asp-for="Location.LocationClassId" asp-items="Model.Classes" class="form-select" disabled>
+                        </select>
+                    }
                 </div>
             </div>
             <input type="hidden" asp-for="Location.MapZoom" />
@@ -73,10 +82,10 @@
             <div class="row mb-3">
                 <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
                 <a asp-page="../Facilities/Details"
-                   asp-route-id="@Model.Facility.Id"
-                   asp-route-tab="Location"
-                   asp-fragment="TabPages"
-                   class="btn btn-outline-secondary col-md-2">
+                       asp-route-id="@Model.Facility.Id"
+                       asp-route-tab="Location"
+                       asp-fragment="TabPages"
+                       class="btn btn-outline-secondary col-md-2">
                     Cancel
                 </a>
             </div>

@@ -477,7 +477,7 @@
                     <div class="tab-pane @(Model.ActiveTab == "Location" ? "active" : "")" id="Location" role="tabpanel" aria-labelledby="Location-tab">
                         <h3>
                             Location
-                            @if (User.IsInRole(UserRoles.FileEditor))
+                            @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
                             {
                                 <a asp-page="/Location/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit</a>
                             }

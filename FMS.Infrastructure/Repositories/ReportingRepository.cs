@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
@@ -26,6 +25,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
                 .Select(e => new AssignmentListReportByCODto(e))
                 .ToListAsync();
@@ -50,6 +50,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
                 .Select(e => new AssignmentListReportByCountyDto(e))
                 .ToListAsync();
@@ -73,6 +74,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.HsrpFacilityProperties.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .Select(e => new AssignmentListReportByHSIDto(e))
                 .ToListAsync();
@@ -96,6 +98,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.HsrpFacilityProperties.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .OrderBy(e => e.Name)
                 .Select(e => new AssignmentListReportBySiteNameDto(e))
@@ -114,6 +117,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .Select(e => new AssignmentListReportByUnitDto(e))
                 .ToListAsync();
@@ -142,6 +146,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
                 .Where(e => e.HsrpFacilityProperties.DateDeListed != null)
                 .Select(e => new DelistedReportByDateDto(e))
@@ -164,6 +169,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.Parcels)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
                 .Where(e => e.HsrpFacilityProperties.DateDeListed != null &&
                             e.HsrpFacilityProperties.DateDeListed >= startDate.GetValueOrDefault() &&
@@ -188,6 +194,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.HsrpFacilityProperties.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
                 .Where(e => e.FacilityStatus.Status == "Active")
                 .Where(e => e.HsrpFacilityProperties.DateListed != null)
@@ -211,6 +218,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.Parcels)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
                 .Where(e => e.FacilityStatus.Status == "Active")
                 .Where(e => e.HsrpFacilityProperties.DateListed != null &&
@@ -252,6 +260,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.Events)
                 .ThenInclude(ev => ev.EventContractor)
                 .Where(e => facilityTypes.Contains(e.FacilityType.Name))
+                .Where(e => e.Active)
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
                     {
                         Id = ev.Id,
@@ -326,6 +335,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.LocationDetails.LocationClass)
                 .Include(e => e.County)
                 .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => e.Active)
                 .Where(e => !excludeDelisted || !string.Equals(e.FacilityStatus.Status, "DELISTED"))
                 .Select(e => new HSIListReportDto()
                 {
@@ -380,6 +390,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.StatusDetails.OverallStatus)
                 .Include(e => e.StatusDetails.AbandonedInactive)
                 .Include(e => e.StatusDetails.GAPSAssessment)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" ||
                             e.StatusDetails.OverallStatus.Name == "INAC")
@@ -426,6 +437,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenInclude(ev => ev.ComplianceOfficer)
                 .Include(e => e.StatusDetails)
                 .Include(e => e.StatusDetails.OverallStatus)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" ||
                             e.StatusDetails.OverallStatus.Name == "INAC")
@@ -461,6 +473,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.County)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.StatusDetails)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .Where(e => e.StatusDetails.OverallStatus.Name == "ABND" ||
                             e.StatusDetails.OverallStatus.Name == "INAC")
@@ -521,6 +534,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.StatusDetails.GroundwaterStatus)
                 .Include(e => e.StatusDetails.OverallStatus)
                 .Include(e => e.StatusDetails.GAPSAssessment)
+                .Where(e => e.Active)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .Where(e => e.FacilityStatus.Status == "Active")
                 .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber == spec.FacilityNumber)
