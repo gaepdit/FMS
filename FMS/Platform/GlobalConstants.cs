@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing.Matching;
-
-namespace FMS.Platform.Extensions
+﻿namespace FMS.Platform.Extensions
 {
     // App-wide global variables
     public static class GlobalConstants
@@ -26,5 +24,7 @@ namespace FMS.Platform.Extensions
         // Link to Google Maps API
         public const string MapCoordLink = "https://www.google.com/maps/search/?api=1&query=";
 
+
+        public const string SiteSummaryReportPath = "/Reporting/SiteSummary/Report/";
     }
 }

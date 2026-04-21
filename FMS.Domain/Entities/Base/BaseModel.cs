@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FMS.Domain.Entities.Base
+﻿namespace FMS.Domain.Entities.Base
 {
     public abstract class BaseModel
     {

@@ -1,6 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -40,7 +38,7 @@ namespace FMS.Domain.Dto
 
         public string GetTelTo()
         {
-            return string.Concat("tel:", Number.Replace(" ", "").Replace("-", "").Replace("(","").Replace(")",""));
+            return string.Concat("tel:", Number.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", ""));
         }
     }
 }

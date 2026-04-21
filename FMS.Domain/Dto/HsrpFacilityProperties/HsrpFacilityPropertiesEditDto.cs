@@ -1,6 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -20,6 +18,7 @@ namespace FMS.Domain.Dto
             {
                 throw new ArgumentNullException(nameof(hsrpFacilityProperties));
             }
+
             Id = hsrpFacilityProperties.Id;
             FacilityId = hsrpFacilityProperties.FacilityId;
             DateListed = hsrpFacilityProperties.DateListed;
@@ -62,5 +61,5 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Brownfield Terminated")]
         public bool BrownfieldTerminated { get; set; }
-        }
+    }
 }

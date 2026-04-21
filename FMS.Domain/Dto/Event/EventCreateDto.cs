@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace FMS.Domain.Dto
+﻿namespace FMS.Domain.Dto
 {
     public class EventCreateDto
     {
@@ -13,7 +10,7 @@ namespace FMS.Domain.Dto
         [Required]
         [Display(Name = "Event Type")]
         public Guid EventTypeId { get; set; }
-        
+
         [Required]
         [Display(Name = "Action Taken")]
         public Guid ActionTakenId { get; set; }

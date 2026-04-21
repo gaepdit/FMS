@@ -1,5 +1,4 @@
-﻿using System;
-using FMS.Domain.Entities;
+﻿using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {

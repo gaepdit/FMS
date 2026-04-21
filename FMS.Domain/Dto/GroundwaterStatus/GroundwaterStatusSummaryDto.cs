@@ -1,6 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -20,7 +18,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Groundwater Status")]
         public string Name { get; set; }
-        
+
         [Display(Name = "Description")]
         public string Description { get; set; }
 

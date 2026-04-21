@@ -1,8 +1,4 @@
 ﻿using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace FMS.Domain.Dto
 {
@@ -32,8 +28,8 @@ namespace FMS.Domain.Dto
             HsrpFacilityPropertyDetails = facilitySiteSummary.HsrpFacilityProperties;
             LocationDetails = facilitySiteSummary.LocationDetails;
             Parcels = facilitySiteSummary.Parcels?
-                .Select(static p => new ParcelSummaryDto(p)).ToList() ??
-                new List<ParcelSummaryDto>();
+                          .Select(static p => new ParcelSummaryDto(p)).ToList() ??
+                      new List<ParcelSummaryDto>();
             Contacts = facilitySiteSummary.Contacts?
                 .Select(c => new ContactSummaryDto(c)).ToList() ?? new List<ContactSummaryDto>();
             ScoreDetails = facilitySiteSummary.ScoreDetails;

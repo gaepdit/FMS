@@ -6,9 +6,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Local"
       },
-      "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:44362;http://localhost:53734",
-      "nativeDebugging": true
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:44362;http://localhost:53734"
     },
     "FMS Dev Server": {
       "commandName": "Project",
@@ -16,9 +15,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:44362;http://localhost:53734",
-      "nativeDebugging": true
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:44362;http://localhost:53734"
     }
   },
   "iisSettings": {

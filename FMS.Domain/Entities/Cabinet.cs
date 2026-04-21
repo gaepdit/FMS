@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using FMS.Domain.Entities.Base;
+﻿using FMS.Domain.Entities.Base;
 
 namespace FMS.Domain.Entities
 {

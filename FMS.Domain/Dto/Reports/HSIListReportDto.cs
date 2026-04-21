@@ -25,5 +25,8 @@ namespace FMS.Domain.Dto.Reports
 
         [XLColumn(Header ="Class")]
         public string ClassName { get; set; }
+
+        [XLColumn(Header ="Facility Status")]
+        public string FacilityStatus { get; set; }
     }
 }

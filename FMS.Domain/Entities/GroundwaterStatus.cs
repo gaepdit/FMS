@@ -1,6 +1,5 @@
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Entities
 {
@@ -16,6 +15,7 @@ namespace FMS.Domain.Entities
 
         [StringLength(20)]
         public string Name { get; set; }
+
         public string Description { get; set; }
 
         public string DisplayName => $"{Name} ({Description})";

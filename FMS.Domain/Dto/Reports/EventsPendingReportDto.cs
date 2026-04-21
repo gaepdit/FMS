@@ -1,11 +1,10 @@
 ﻿using ClosedXML.Attributes;
-using System;
 
 namespace FMS.Domain.Dto
 {
     public class EventsPendingReportDto
     {
-        public EventsPendingReportDto() {}
+        public EventsPendingReportDto() { }
 
         public EventsPendingReportDto(EventReportDto reportEvent)
         {

@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
-
-namespace FMS.App.Tests.Helpers
+﻿namespace FMS.App.Tests.Helpers
 {
     public class GeoCoordHelperTests
     {

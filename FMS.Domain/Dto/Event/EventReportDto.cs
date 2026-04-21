@@ -1,11 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office.Y2022.FeaturePropertyBag;
-using FMS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -19,9 +12,9 @@ namespace FMS.Domain.Dto
 
         public Guid? ParentId { get; set; }
 
-        public string FacilityNumber { get; set; } 
+        public string FacilityNumber { get; set; }
 
-        public string FacilityName { get; set; } 
+        public string FacilityName { get; set; }
 
         public FacilityType FacilityType { get; set; }
 

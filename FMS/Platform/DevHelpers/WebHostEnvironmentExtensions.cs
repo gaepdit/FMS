@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-
-namespace FMS.Platform.Extensions.DevHelpers
+﻿namespace FMS.Platform.Extensions.DevHelpers
 {
     public static class WebHostEnvironmentExtensions
     {

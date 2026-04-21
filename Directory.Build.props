@@ -1,6 +1,7 @@
 <Project>
     <PropertyGroup>
-        <BaseOutputPath>$(MSBuildThisFileDirectory)artifacts\$(MSBuildProjectName)\bin\</BaseOutputPath>
-        <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)artifacts\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseArtifactsOutput>true</UseArtifactsOutput>
     </PropertyGroup>
 </Project>

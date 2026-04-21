@@ -8,11 +8,7 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FMS.Pages.Facilities
 {
@@ -80,7 +76,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetSearchAsync(FacilitySpec spec, [FromQuery] int p = 1)
         {
             spec.TrimAll();
-            if (!spec.FirstPass)
+            if (!spec.FirstPass && !string.IsNullOrEmpty(Request.Query["FacilityTypeId"]))
             {
                 spec.FacilityTypeId = JsonSerializer.Deserialize<List<Guid>>(Request.Query["FacilityTypeId"].ToString());
             }

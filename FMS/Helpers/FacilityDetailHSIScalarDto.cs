@@ -1,11 +1,5 @@
 ﻿using ClosedXML.Attributes;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Wordprocessing;
-using FMS.Domain.Entities;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Numerics;
 
 namespace FMS.Domain.Dto
 {

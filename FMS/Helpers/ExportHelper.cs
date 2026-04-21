@@ -4,10 +4,6 @@ using FMS.Domain.Services;
 using Spire.Pdf;
 using Spire.Pdf.Fields;
 using Spire.Pdf.Widget;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace FMS
 {
@@ -37,7 +33,8 @@ namespace FMS
             HSIListByCounty,
             HSIListByClass,
             AbndInacStatusTracker,
-            AbndCostEstimateReport
+            AbndCostEstimateReport,
+            SiteSummaryList
         }
 
         /// <summary>
@@ -46,9 +43,9 @@ namespace FMS
         /// <param name="list">A list of FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar or EventSummaryDtoScalar or FacilityPendingDtoScalar</param>
         /// <typeparam name="T">FacilityDetailDtoScalar or FacilityMapSummaryDtoScalar or EventSummaryDtoScalar or FacilityPendingDtoScalar</typeparam>
         /// <returns>A byte array to use in File()</returns>
-        public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list, 
-            ReportType reportType, 
-            DateOnly? startDate = null, 
+        public static byte[] ExportExcelAsByteArray<T>(this IEnumerable<T> list,
+            ReportType reportType,
+            DateOnly? startDate = null,
             DateOnly? endDate = null,
             IEnumerable<T> vrpList = null,
             IEnumerable<T> brnList = null,
@@ -65,10 +62,10 @@ namespace FMS
         {
             var ms = new MemoryStream();
             var wb = new XLWorkbook();
-            
+
             IXLWorksheet ws;
             // insert the enumerable data
-            IXLTable table; 
+            IXLTable table;
 
             if (reportType == ReportType.Pending)
             {
@@ -76,7 +73,8 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("E").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.Event)
@@ -85,9 +83,12 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("E").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("F").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("G").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.Normal)
@@ -96,8 +97,10 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column(16).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(17).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(16).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(17).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.Map)
@@ -122,7 +125,8 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column("A").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("A").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.DelistedByRange)
@@ -144,8 +148,10 @@ namespace FMS
                 ws.Cell("C2").Style.Font.FontSize = 14;
                 ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
 
-                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("E").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("F").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
 
                 ws.Columns().AdjustToContents(1, 10000);
                 table.ShowTotalsRow = true;
@@ -158,7 +164,8 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column("A").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("A").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.ListedByRange)
@@ -180,15 +187,17 @@ namespace FMS
                 ws.Cell("C2").Style.Font.FontSize = 14;
                 ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
 
-                ws.Column("E").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("E").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("F").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
 
                 ws.Columns().AdjustToContents(1, 10000);
                 table.ShowTotalsRow = true;
                 table.Field("Acres").TotalsRowFunction = XLTotalsRowFunction.Sum;
             }
 
-            if (reportType == ReportType.EventPending) 
+            if (reportType == ReportType.EventPending)
             {
                 ws = wb.AddWorksheet("Events Pending");
 
@@ -199,8 +208,10 @@ namespace FMS
                 ws.Cell("A1").Style.Font.FontSize = 14;
                 ws.Cell("A1").Value = "Events Pending";
 
-                ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(9).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(8).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(9).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.EventCompleted)
@@ -222,13 +233,15 @@ namespace FMS
                 ws.Cell("C2").Style.Font.FontSize = 14;
                 ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
 
-                ws.Column(8).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(9).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(8).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(9).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
 
                 ws.Columns().AdjustToContents(1, 10000);
             }
 
-            if (reportType == ReportType.EventCompliance) 
+            if (reportType == ReportType.EventCompliance)
             {
                 ws = wb.AddWorksheet("Event Compliance");
                 table = ws.Cell(3, 1).InsertTable(list);
@@ -247,8 +260,10 @@ namespace FMS
                 ws.Cell("C2").Style.Font.FontSize = 14;
                 ws.Cell("C2").SetValue("End Date: " + endDate?.ToString("MM/dd/yyyy") ?? "");
 
-                ws.Column(5).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
-                ws.Column(6).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(5).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(6).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column(7).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
 
                 ws.Columns().AdjustToContents(1, 10000);
@@ -260,7 +275,8 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
-                ws.Column(3).Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column(3).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
             }
 
             if (reportType == ReportType.EventCompletedOutstanding)
@@ -269,7 +285,7 @@ namespace FMS
                 ws = wb.AddWorksheet("HSI");
                 table = ws.Cell(3, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
-                
+
                 // First Row formatting
                 ws.Cell("A1").Style.Font.Bold = true;
                 ws.Cell("A1").Style.Font.FontSize = 14;
@@ -456,7 +472,7 @@ namespace FMS
                 ws.Columns().AdjustToContents(1, 10000);
             }
 
-            if(reportType == ReportType.HSIListByNumber)
+            if (reportType == ReportType.HSIListByNumber)
             {
                 ws = wb.AddWorksheet("HSI List");
                 table = ws.Cell(2, 1).InsertTable(list);
@@ -517,7 +533,7 @@ namespace FMS
 
                 // New Tab to be called Checklist reviews
                 ws = wb.AddWorksheet("Checklist Reviews");
-                table = ws.Cell(2,1).InsertTable(checkListAIReportList);
+                table = ws.Cell(2, 1).InsertTable(checkListAIReportList);
                 table.ShowHeaderRow = true;
 
                 ws.Columns().AdjustToContents(1, 10000);
@@ -539,11 +555,36 @@ namespace FMS
                 ws.Column("A").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Column("F").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Integer;
                 ws.Column("F").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-                ws.Column("G").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
+                ws.Column("G").Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthYear4WithSlashes;
                 ws.Column("G").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Column("H").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Integer;
                 ws.Column("H").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 ws.Column("J").Style.NumberFormat.NumberFormatId = (int)XLPredefinedFormat.Number.Precision2;
+            }
+
+            if(reportType == ReportType.SiteSummaryList)
+            {
+                ws = wb.AddWorksheet("Site Summary Facility List");
+                table = ws.Cell(1, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+
+                var urlColumn = table.DataRange.Column(3);
+
+                foreach (var cell in urlColumn.Cells())
+                {
+                    string urlValue = cell.Value.ToString();
+                    if (!string.IsNullOrWhiteSpace(urlValue))
+                    {
+                        // Apply the hyperlink
+                        cell.SetHyperlink(new XLHyperlink(urlValue));
+
+                        // Optional: Style as a link (blue and underlined)
+                        cell.Style.Font.FontColor = XLColor.Blue;
+                        cell.Style.Font.Underline = XLFontUnderlineValues.Single;
+                    }
+                }
             }
 
             wb.SaveAs(ms);
@@ -561,8 +602,8 @@ namespace FMS
         /// <param name="freeTierLimit">The max number of pages the program can generate</param>
         /// <returns>A byte array to use in File()</returns>
         public static byte[] ExportPdfAsByteArray(
-            IEnumerable<RetentionRecordDetailDto> list, UserView currentUser, int maxCol=18,
-            string blankFilePath="./Helpers/BlankRequestForm.pdf")
+            IEnumerable<RetentionRecordDetailDto> list, UserView currentUser, int maxCol = 18,
+            string blankFilePath = "./Helpers/BlankRequestForm.pdf")
         {
             PdfDocument mainDoc = new();
             // break the list into chunks of 18 elements
@@ -575,10 +616,11 @@ namespace FMS
                 PdfDocument currDocument = GeneratePdfPage(smallerList, currentUser, maxCol, blankFilePath);
                 pdfDocuments.Add(currDocument);
             }
+
             // add all of the pages to the main document
             foreach (var pdfDocument in pdfDocuments)
                 mainDoc.AppendPage(pdfDocument);
-            
+
             // Creates a new Memory stream
             MemoryStream stream = new();
             // Saves the document as stream
@@ -590,7 +632,7 @@ namespace FMS
             // Converts the PdfDocument object to byte form.
             return stream.ToArray();
         }
-        
+
         /// <summary>
         /// Takes in a chunked list of RetentionRecordDetailDto and blank form path, fill the
         /// information from the list into the Pdf page and returns it.
@@ -617,9 +659,10 @@ namespace FMS
                 if (field is PdfTextBoxFieldWidget textBoxField && dictionaryTextbox.ContainsKey(textBoxField.Name))
                     textBoxField.Text = dictionaryTextbox[textBoxField.Name];
             }
+
             return currDocument;
         }
-        
+
         /// <summary>
         /// A helper method to convert a list of RetentionRecordDetailDto to a dictionary.
         /// The key of the dictionary represents the cell name in the pdf, and the value represents the value
@@ -641,6 +684,7 @@ namespace FMS
                 dictionaryTextbox.Add("Location number from transmittal" + i, retentionRecord.ShelfNumber ?? "");
                 i++;
             }
+
             // add key-value pair for the date
             dictionaryTextbox.Add("Date of Request", DateTime.Now.ToString("MM/dd/yyyy"));
             // add key-value pair for the user information

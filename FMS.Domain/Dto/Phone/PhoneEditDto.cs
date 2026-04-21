@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FMS.Domain.Entities;
+﻿using FMS.Domain.Entities;
 
 namespace FMS.Domain.Dto
 {
@@ -16,6 +14,7 @@ namespace FMS.Domain.Dto
             Number = phone.Number;
             PhoneType = phone.PhoneType;
         }
+
         public Guid Id { get; set; }
 
         public bool Active { get; set; }
@@ -24,7 +23,9 @@ namespace FMS.Domain.Dto
 
         [Required]
         [Display(Name = "Phone Number")]
-        [RegularExpression(@"(\D*\d\D*){10}", ErrorMessage = "Invalid Phone Number format. Please enter a 3-digit area code followed by a 7-digit number.")]
+        [RegularExpression(@"(\D*\d\D*){10}",
+            ErrorMessage =
+                "Invalid Phone Number format. Please enter a 3-digit area code followed by a 7-digit number.")]
         public string Number { get; set; }
 
         [Display(Name = "Phone Type")]
@@ -38,12 +39,15 @@ namespace FMS.Domain.Dto
             phone.Number = phone.Number.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "");
             if (phone.Number.Length == 10)
             {
-                phone.Number = $"({phone.Number.Substring(0, 3)}) {phone.Number.Substring(3, 3)}-{phone.Number.Substring(6)}";
+                phone.Number =
+                    $"({phone.Number.Substring(0, 3)}) {phone.Number.Substring(3, 3)}-{phone.Number.Substring(6)}";
             }
             else if (phone.Number.Length == 11 && phone.Number.StartsWith('1'))
             {
-                phone.Number = $"1 ({phone.Number.Substring(1, 3)}) {phone.Number.Substring(4, 3)}-{phone.Number.Substring(7)}";
+                phone.Number =
+                    $"1 ({phone.Number.Substring(1, 3)}) {phone.Number.Substring(4, 3)}-{phone.Number.Substring(7)}";
             }
+
             return phone;
         }
     }

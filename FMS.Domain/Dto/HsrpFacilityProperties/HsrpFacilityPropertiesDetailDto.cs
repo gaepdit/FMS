@@ -1,7 +1,5 @@
 ﻿using FMS.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Domain.Dto
 {
@@ -20,6 +18,7 @@ namespace FMS.Domain.Dto
             VRPTerminated = hsrpFacilityProperties.VRPTerminated;
             BrownfieldTerminated = hsrpFacilityProperties.BrownfieldTerminated;
         }
+
         [Required]
         public Guid Id { get; set; }
 

@@ -1,0 +1,26 @@
+﻿@page
+@model FMS.Pages.Reporting.SiteSummary.SiteSummaryListModel
+@{
+    Layout = "_ReportLayout";
+}
+
+@{
+    ViewData["Title"] = $"Site Summary List";
+}
+<div class="page-wrapper">
+    <h3>@ViewData["Title"]</h3>
+    <hr />
+    <div class="summarylisthead">
+        <div><strong>HSI Number</strong></div>
+        <div><strong>Site Name</strong></div>
+        <div><strong>Site Summary Report</strong></div>
+    </div>
+    <div class="summarylist">
+        @foreach (var report in Model.ReportList)
+        {
+            <div>@Html.DisplayFor(Model => report.FacilityNumber)</div>
+            <div>@Html.DisplayFor(Model => report.FacilityName)</div>
+            <div><a href="@report.SiteSummaryUrl">@Html.DisplayFor(Model => report.SiteSummaryUrl)</a></div>
+        }
+    </div>
+</div>
