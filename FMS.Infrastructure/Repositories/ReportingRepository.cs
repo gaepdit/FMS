@@ -577,7 +577,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue ||
                             e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
                 .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
-                .OrderBy(e => e.FacilityNumber)
+                .OrderBy(e => spec.SortBy.ToString())
                 .Select(e => new FacilityBasicDto(e))
                 .ToListAsync();
 

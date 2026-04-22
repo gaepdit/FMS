@@ -4,6 +4,9 @@
     {
         public SiteSummaryQuerySpec() { }
 
+        [Display(Name = "Sort By")]
+        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.FacilityNumber;   
+
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
@@ -59,6 +62,13 @@
         public void TrimAll()
         {
             FacilityNumber = FacilityNumber?.Trim();
+        }
+
+        public enum SiteSummarySortBy
+        {
+            FacilityNumber,
+            County,
+            LocationClass
         }
     }
 }

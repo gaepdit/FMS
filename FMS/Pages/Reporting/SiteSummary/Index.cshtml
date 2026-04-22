@@ -1,4 +1,5 @@
 ﻿@page
+@using FMS.Domain.Dto
 @using FMS.Platform
 @model FMS.Pages.Reporting.SiteSummary.IndexModel
 
@@ -55,11 +56,29 @@
         </div>
         <hr />
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-check">
                     <input asp-for="Spec.IsLandFill" />
                     <label asp-for="Spec.IsLandFill" class="form-check-label" disabled="true"></label>
                 </div>
+            </div>
+            <div class="col-md-3">
+                <label>
+                    @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.FacilityNumber)
+                    Sort By Facility Number
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label>
+                    @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.County)
+                    Sort By County
+                </label>
+            </div>
+            <div class="col-md-3">
+                <label>
+                    @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.LocationClass)
+                    Sort By Class
+                </label>
             </div>
         </div>
         <hr />
