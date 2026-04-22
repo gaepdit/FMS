@@ -15,6 +15,7 @@ namespace FMS.Domain.Dto
             County = facility.County;
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
+            LocationClass = facility.LocationDetails?.LocationClass;
         }
 
         public Guid Id { get; }
@@ -42,5 +43,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Longitude")]
         [DisplayFormat(DataFormatString = "{0:F6}")]
         public decimal Longitude { get; set; }
+
+        [Display(Name = "Location Class")]
+        public LocationClass LocationClass { get; set; }
     }
 }

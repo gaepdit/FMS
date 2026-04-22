@@ -56,7 +56,8 @@
             { nameof(AllCOs), AllCOs.ToString() },
             { nameof(AllClassIVs), AllClassIVs.ToString() },
             { nameof(AllOrgUnits), AllOrgUnits.ToString() },
-            { nameof(ShowHeader), ShowHeader.ToString() }
+            { nameof(ShowHeader), ShowHeader.ToString() },
+            { nameof(SortBy), SortBy.ToString() }
         };
 
         public void TrimAll()
