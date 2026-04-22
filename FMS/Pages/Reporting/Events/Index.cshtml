@@ -1,9 +1,16 @@
 ﻿@page
 @model FMS.Pages.Reporting.Events.IndexModel
 
+@section Scripts {
+    <script src="~/js/MultiSelectEventType.js"></script>
+    <script src="~/js/MultiSelectOrgUnit.js"></script>
+    <script src="~/js/MultiSelectCO.js"></script>
+    <script src="~/lib/select2/dist/js/select2.min.js"></script>
+}
 @{
     ViewData["Title"] = $"Events Reports";
 }
+
 <h1>@ViewData["Title"]</h1>
 <a asp-page="../Index">← Back to Reports</a>
 <hr />

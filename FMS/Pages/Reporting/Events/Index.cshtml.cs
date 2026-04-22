@@ -1,18 +1,26 @@
-using System.ComponentModel.DataAnnotations;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
+using FMS.Domain.Services;
 using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Pages.Reporting.Events
 {
     public class IndexModel : PageModel
     {
         private readonly IReportingRepository _repository;
-
-        public IndexModel(IReportingRepository repository) => _repository = repository;
+        private readonly ISelectListHelper _listHelper;
+        public IndexModel(
+            IReportingRepository repository,
+            ISelectListHelper listHelper)   
+        {
+            _repository = repository;
+            _listHelper = listHelper;
+        }
 
         [Display(Name = "Start Date")]
         [BindProperty]
@@ -23,9 +31,14 @@ namespace FMS.Pages.Reporting.Events
         public DateOnly? EndDate { get; set; } =
             DateOnly.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
 
-        public void OnGet()
+        public SelectList OrganizationalUnits { get; private set; }
+        public SelectList ComplianceOfficers { get; private set; }
+        public SelectList EventTypes { get; private set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            // Method intentionally left empty.
+            await PopulateSelectsAsync();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostPendingAsync()
@@ -333,6 +346,12 @@ namespace FMS.Pages.Reporting.Events
             return File(
                 eventsNoActionTakenReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventNoActionTaken),
                 "application/vnd.ms-excel", fileName);
+        }
+        private async Task PopulateSelectsAsync()
+        {
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            OrganizationalUnits = await _listHelper.OrganizationalUnitsSelectListAsync();
+            EventTypes = await _listHelper.EventTypesSelectListAsync();
         }
     }
 }

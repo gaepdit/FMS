@@ -242,8 +242,7 @@ namespace FMS.Infrastructure.Repositories
             List<string> facilityTypes = null,
             List<string> eventTypes = null
         )
-        {
-            List<EventReportDto> reportDtoList = await _context.Facilities
+        {   List<EventReportDto> reportDtoList = await _context.Facilities
                 .AsNoTracking()
                 .Include(e => e.FacilityType)
                 .Include(e => e.OrganizationalUnit)
@@ -629,7 +628,6 @@ namespace FMS.Infrastructure.Repositories
             return siteSummarySorted;
         }
             
-
         public async Task<SiteSummaryReportDto> GetSingleFacilitySiteSummaryDtoAsync(string hsiId)
         {
             var facility = await _context.Facilities.AsNoTracking()
