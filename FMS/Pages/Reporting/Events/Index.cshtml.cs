@@ -22,14 +22,17 @@ namespace FMS.Pages.Reporting.Events
             _listHelper = listHelper;
         }
 
-        [Display(Name = "Start Date")]
-        [BindProperty]
-        public DateOnly? StartDate { get; set; }
+        //[Display(Name = "Start Date")]
+        //[BindProperty]
+        //public DateOnly? StartDate { get; set; }
 
-        [Display(Name = "End Date")]
+        //[Display(Name = "End Date")]
+        //[BindProperty]
+        //public DateOnly? EndDate { get; set; } =
+        //    DateOnly.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
+
         [BindProperty]
-        public DateOnly? EndDate { get; set; } =
-            DateOnly.FromDateTime(DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc));
+        public EventReportSpecDto Spec { get; set; }
 
         public SelectList OrganizationalUnits { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
@@ -37,6 +40,7 @@ namespace FMS.Pages.Reporting.Events
 
         public async Task<IActionResult> OnGetAsync()
         {
+            Spec = new EventReportSpecDto();
             await PopulateSelectsAsync();
             return Page();
         }
@@ -71,7 +75,7 @@ namespace FMS.Pages.Reporting.Events
 
             // Sort list by Organizational Unit and filter only pending events
             var eventsCompletedList =
-                EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompleted, StartDate, EndDate);
+                EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompleted, Spec.StartDate, Spec.EndDate);
 
             // Map to EventsCompletedReportDto
             var eventsCompletedReportList = from p in eventsCompletedList
@@ -79,8 +83,8 @@ namespace FMS.Pages.Reporting.Events
 
             // Export to Excel
             return File(
-                eventsCompletedReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompleted, StartDate,
-                    EndDate), "application/vnd.ms-excel", fileName);
+                eventsCompletedReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompleted, Spec.StartDate,
+                    Spec.EndDate), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostComplianceAsync()
@@ -96,7 +100,7 @@ namespace FMS.Pages.Reporting.Events
 
             // Sort list by Organizational Unit and filter only pending events
             var eventsComplianceList =
-                EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompliance, StartDate, EndDate);
+                EventSortHelper.OrderReportEventQuery(eventsList, EventReportSort.EventCompliance, Spec.StartDate, Spec.EndDate);
 
             // Map to EventsComplianceReportDto
             var eventsComplianceReportList = from p in eventsComplianceList
@@ -104,8 +108,8 @@ namespace FMS.Pages.Reporting.Events
 
             // Export to Excel
             return File(
-                eventsComplianceReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompliance, StartDate,
-                    EndDate), "application/vnd.ms-excel", fileName);
+                eventsComplianceReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventCompliance, Spec.StartDate,
+                    Spec.EndDate), "application/vnd.ms-excel", fileName);
         }
 
         public async Task<IActionResult> OnPostCompletedOutstandingAsync()
@@ -137,7 +141,7 @@ namespace FMS.Pages.Reporting.Events
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, hsiEventTypes);
 
             var hsiCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(hsiEventsList,
-                EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+                EventReportSort.EventCompletedOutstanding, Spec.StartDate, Spec.EndDate);
 
             foreach (EventReportDto item in hsiCompletedOutstandingList)
             {
@@ -171,7 +175,7 @@ namespace FMS.Pages.Reporting.Events
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, vrpEventTypes);
 
             var vrpCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(vrpEventsList,
-                EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+                EventReportSort.EventCompletedOutstanding, Spec.StartDate, Spec.EndDate);
 
             foreach (var item in vrpCompletedOutstandingList)
             {
@@ -204,7 +208,7 @@ namespace FMS.Pages.Reporting.Events
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, brownEventTypes);
 
             var brownCompletedOutstandingList = EventSortHelper.OrderReportEventQuery(brownEventsList,
-                EventReportSort.EventCompletedOutstanding, StartDate, EndDate);
+                EventReportSort.EventCompletedOutstanding, Spec.StartDate, Spec.EndDate);
 
             foreach (var item in brownCompletedOutstandingList)
             {
@@ -228,8 +232,8 @@ namespace FMS.Pages.Reporting.Events
             // Export to Excel
             return File(hsiCompletedOutstandingReportList.ExportExcelAsByteArray(
                     ExportHelper.ReportType.EventCompletedOutstanding,
-                    StartDate,
-                    EndDate,
+                    Spec.StartDate,
+                    Spec.EndDate,
                     vrpCompletedOutstandingReportList,
                     brownCompletedOutstandingReportList,
                     checkListAIReportList,
