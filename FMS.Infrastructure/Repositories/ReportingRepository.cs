@@ -240,9 +240,9 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IList<EventReportDto>> GetEventsReportsAsync(
             List<string> facilityTypes = null,
-            List<string> eventTypes = null
-        )
-        {   List<EventReportDto> reportDtoList = await _context.Facilities
+            EventReportSpecDto eventReportSpec = null)
+        {   
+            List<EventReportDto> reportDtoList = await _context.Facilities
                 .AsNoTracking()
                 .Include(e => e.FacilityType)
                 .Include(e => e.OrganizationalUnit)
@@ -259,6 +259,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.Events)
                 .ThenInclude(ev => ev.EventContractor)
                 .Where(e => facilityTypes.Contains(e.FacilityType.Name))
+                .Where(e => eventReportSpec.OrganizationalUnitId == null || eventReportSpec.OrganizationalUnitId.Contains(e.OrganizationalUnit.Id))
                 .Where(e => e.Active)
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
                     {
@@ -282,7 +283,8 @@ namespace FMS.Infrastructure.Repositories
                         OverallStatus = e.StatusDetails.OverallStatus,
                         ListDate = e.HsrpFacilityProperties.DateListed
                     })
-                    .Where(ev => eventTypes == null || eventTypes.Contains(ev.EventType.Name)))
+                    .Where(ev => eventReportSpec.EventTypeId == null || eventReportSpec.EventTypeId.Contains(ev.EventType.Id))
+                    .Where(ev => eventReportSpec.ComplianceOfficerId == null || eventReportSpec.ComplianceOfficerId.Contains(ev.ComplianceOfficer.Id)))
                 .ToListAsync();
 
             return reportDtoList;

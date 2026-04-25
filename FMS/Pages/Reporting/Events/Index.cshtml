@@ -86,15 +86,17 @@
             </div>
             <div class="col-md-2">
                 <label asp-for="Spec.EndDate" class="form-label">End Date <span class="text-danger">*</span></label>
-                <input asp-for="Spec.EndDate" class="form-control datepicker" type="date" />
+                <input asp-for="Spec.EndDate" class="form-control datepicker" type="date" placeholder="Spec.EndDate" />
                 <span asp-validation-for="Spec.EndDate" class="text-danger"></span>
             </div>
         </div>
+        <br />
         <div class="mb-3 row">
             <div class="col-md-4">
                 <label asp-for="Spec.EventTypeId"></label>
                 <select asp-for="Spec.EventTypeId" asp-items="Model.EventTypes" class="form-control" multiple="multiple">
                 </select>
+                <span class="text-danger">*Only for Pending and Completed Reports</span>
             </div>
             <div class="col-md-4">
                 <label asp-for="Spec.OrganizationalUnitId"></label>
@@ -113,6 +115,7 @@
             <div class="col-md-8">
                 <button id="Pending"
                         asp-page-handler="Pending"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
@@ -124,6 +127,7 @@
             <div class="col-md-8">
                 <button id="Completed"
                         asp-page-handler="Completed"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
@@ -135,6 +139,7 @@
             <div class="col-md-8">
                 <button id="Compliance"
                         asp-page-handler="Compliance"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
@@ -146,6 +151,7 @@
             <div class="col-md-8">
                 <button id="CompletedOutstanding"
                         asp-page-handler="CompletedOutstanding"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
@@ -157,6 +163,7 @@
             <div class="col-md-8">
                 <button id="Outstanding"
                         asp-page-handler="Outstanding"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>

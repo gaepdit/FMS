@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FMS.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace FMS.Domain.Dto
@@ -24,5 +26,18 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Event Types")]
         public List<Guid> EventTypeId { get; set; }
+
+        [Display(Name = "Facility Types")]
+        public List<Guid> FacilityTypeId { get; set; }
+
+        public IDictionary<string, string> AsRouteValues() => new Dictionary<string, string?>
+        {
+            { nameof(StartDate), StartDate?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
+            { nameof(EndDate), EndDate?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) },
+            { nameof(ComplianceOfficerId), ComplianceOfficerId != null ? string.Join(",", ComplianceOfficerId) : null },
+            { nameof(OrganizationalUnitId), OrganizationalUnitId != null ? string.Join(",", OrganizationalUnitId) : null },
+            { nameof(EventTypeId), EventTypeId != null ? string.Join(",", EventTypeId) : null },
+            { nameof(FacilityTypeId), FacilityTypeId != null ? string.Join(",", FacilityTypeId) : null }
+        };
     }
 }
