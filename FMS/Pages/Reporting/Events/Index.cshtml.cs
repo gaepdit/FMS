@@ -1,12 +1,10 @@
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
-using FMS.Domain.Services;
 using FMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
 
 namespace FMS.Pages.Reporting.Events
 {
@@ -87,12 +85,12 @@ namespace FMS.Pages.Reporting.Events
             Spec = spec;
             var fileName = $"Events_Compliance_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
             var selectedFacilityTypes = new List<string> { "HSI", "VRP" };
-            Spec.EventTypeId = new List<Guid>
+            Spec.EventTypeId = await _eventTypeRepository.GetEventTypeIdsByNamesAsync(new List<string>
             {
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Notice of Violation"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Consent Order"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Administrative Order")
-            };
+                "Notice of Violation",
+                "Consent Order",
+                "Administrative Order"
+            });
 
             // "eventsComplianceList" List to go to a report
             IList<EventReportDto> eventsList =
@@ -129,13 +127,13 @@ namespace FMS.Pages.Reporting.Events
 
             //******************* HSI ********************
             var selectedFacilityTypes = new List<string> { "HSI" };
-            Spec.EventTypeId = new List<Guid>
+            Spec.EventTypeId = await _eventTypeRepository.GetEventTypeIdsByNamesAsync(new List<string>
             {
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Compliance Status Report"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Corrective Action Plan"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Groundwater Monitoring Report"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Progress Report / Misc. Report")
-            };
+                "Compliance Status Report",
+                "Corrective Action Plan",
+                "Groundwater Monitoring Report",
+                "Progress Report / Misc. Report"
+            });
 
             IList<EventReportDto> hsiEventsList =
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, Spec);
@@ -164,12 +162,12 @@ namespace FMS.Pages.Reporting.Events
 
             //*************************** VRP ******************************
             selectedFacilityTypes = ["VRP"];
-            Spec.EventTypeId = new List<Guid>
+            Spec.EventTypeId = await _eventTypeRepository.GetEventTypeIdsByNamesAsync(new List<string>
             {
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("VRP Compliance Status Report"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("VRP Corrective Action Plan"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("VRP Progress Report / Misc. Report")
-            };
+                "VRP Compliance Status Report",
+                "VRP Corrective Action Plan",
+                "VRP Progress Report / Misc. Report"
+            });
 
             IList<EventReportDto> vrpEventsList =
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, Spec);
@@ -198,11 +196,11 @@ namespace FMS.Pages.Reporting.Events
 
             //********************** Brownfields *********************
             selectedFacilityTypes = ["BROWN"];
-            Spec.EventTypeId = new List<Guid>
+            Spec.EventTypeId = await _eventTypeRepository.GetEventTypeIdsByNamesAsync(new List<string>
             {
-               await _eventTypeRepository.GetEventTypeIdByNameAsync("Prospective Purchaser Compliance Status Report"),
-               await _eventTypeRepository.GetEventTypeIdByNameAsync("Prospective Purchaser Corrective Action Plan")
-            };
+                "Prospective Purchaser Compliance Status Report",
+                "Prospective Purchaser Corrective Action Plan"
+            });
 
             IList<EventReportDto> brownEventsList =
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, Spec);
@@ -262,13 +260,13 @@ namespace FMS.Pages.Reporting.Events
 
             //******************* HSI ********************
             var selectedFacilityTypes = new List<string> { "HSI" };
-            Spec.EventTypeId = new List<Guid>
+            Spec.EventTypeId = await _eventTypeRepository.GetEventTypeIdsByNamesAsync(new List<string>
             {
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Compliance Status Report"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Corrective Action Plan"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Groundwater Monitoring Report"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Progress Report / Misc. Report")
-            };
+                "Compliance Status Report",
+                "Corrective Action Plan",
+                "Groundwater Monitoring Report",
+                "Progress Report / Misc. Report"
+            });
 
             IList<EventReportDto> hsiEventsList =
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, Spec);
@@ -282,12 +280,12 @@ namespace FMS.Pages.Reporting.Events
 
             //*************************** VRP ******************************
             selectedFacilityTypes = ["VRP"];
-            Spec.EventTypeId = new List<Guid>
+            Spec.EventTypeId = await _eventTypeRepository.GetEventTypeIdsByNamesAsync(new List<string>
             {
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("VRP Compliance Status Report"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("VRP Corrective Action Plan"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("VRP Progress Report / Misc. Report")
-            };
+                "VRP Compliance Status Report",
+                "VRP Corrective Action Plan",
+                "VRP Progress Report / Misc. Report"
+            });
 
             IList<EventReportDto> vrpEventsList =
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, Spec);
@@ -301,11 +299,11 @@ namespace FMS.Pages.Reporting.Events
 
             //********************** Brownfields *********************
             selectedFacilityTypes = ["BROWN"];
-            Spec.EventTypeId = new List<Guid>
+            Spec.EventTypeId = await _eventTypeRepository.GetEventTypeIdsByNamesAsync(new List<string>
             {
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Prospective Purchaser Compliance Status Report"),
-                await _eventTypeRepository.GetEventTypeIdByNameAsync("Prospective Purchaser Corrective Action Plan")
-            };
+                "Prospective Purchaser Compliance Status Report",
+                "Prospective Purchaser Corrective Action Plan"
+            });
 
             IList<EventReportDto> brownEventsList =
                 await _repository.GetEventsReportsAsync(selectedFacilityTypes, Spec);

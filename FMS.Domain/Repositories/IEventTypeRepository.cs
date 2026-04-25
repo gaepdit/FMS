@@ -12,7 +12,7 @@ namespace FMS.Domain.Repositories
 
         Task<string> GetEventTypeNameAsync(Guid? id);
 
-        Task<Guid> GetEventTypeIdByNameAsync(string name);
+        Task<List<Guid>> GetEventTypeIdsByNamesAsync(List<string> names);
 
         Task<IReadOnlyList<EventTypeSummaryDto>> GetEventTypeListAsync();
 
