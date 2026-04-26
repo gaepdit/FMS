@@ -284,7 +284,7 @@ namespace FMS.Infrastructure.Repositories
                         ListDate = e.HsrpFacilityProperties.DateListed
                     })
                     .Where(ev => eventReportSpec.EventTypeId == null || eventReportSpec.EventTypeId.Contains(ev.EventType.Id))
-                    .Where(ev => eventReportSpec.ComplianceOfficerId == null || eventReportSpec.ComplianceOfficerId.Contains(ev.ComplianceOfficer.Id)))
+                    .Where(ev => eventReportSpec.ComplianceOfficerId == null || eventReportSpec.ComplianceOfficerId.Contains(ev.DoneBy.Id)))
                 .ToListAsync();
 
             return reportDtoList;
