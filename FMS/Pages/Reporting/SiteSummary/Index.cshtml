@@ -128,10 +128,10 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <input type="hidden" name="handler" value="Preview" />
-                <button id="PreviewButton" type="submit" class="btn btn-primary me-2">Preview Report List</button>
-                <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear</a>
+                <button id="PreviewButton" type="submit" class="btn btn-primary col-sm-3 col-md-3">Preview Report List</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-3">Clear</a>
             </div>
         </div>
     </form>
@@ -148,9 +148,9 @@
             </div>
             @if (Model.SummaryList.Count > 0)
             {
-                <div class="col-auto d-print-none ms-2">
+                <div class="col-auto">
                     <a asp-page="Report" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
-                           class="btn btn-sm btn-primary icon-link">
+                           class="btn btn-primary icon-link">
                         <svg class="bi">
                             <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
                         </svg>
@@ -179,23 +179,26 @@
                 <input type="hidden" asp-for="Spec.LocationClassId" />
                 <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
                 <div class="row">
-                    <div class="col-auto">
-                        <h3>Site Summary URL List</h3>
+                    <div class="col-auto d-print-none ms-2">
+                        <a asp-page="IndexPdf" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
+                               class="btn btn-primary">
+                            Generate Site Summary PDFs
+                        </a>
                     </div>
                     <div class="col-auto d-print-none ms-2">
                         <button id="ExportButton"
                                 asp-page-handler="ExportButton"
-                                class="btn btn-sm btn-primary mb-1">
+                                class="btn btn-outline-primary">
                             Export Site Summary List to Excel
                         </button>
                     </div>
                     <div class="col-auto d-print-none ms-2">
                         <a asp-page="SiteSummaryList" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
-                               class="btn btn-sm btn-primary icon-link">
+                               class="btn btn-outline-primary icon-link">
                             <svg class="bi">
                                 <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
                             </svg>
-                            Export/Print List
+                            Export/Print Site Summary List
                         </a>
                     </div>
                 </div>

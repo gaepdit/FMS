@@ -8,7 +8,10 @@
         public SiteSummaryAddlOrgUnitInclusion Include { get; set; } = SiteSummaryAddlOrgUnitInclusion.All;
 
         [Display(Name = "Sort By")]
-        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.FacilityNumber;   
+        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.FacilityNumber;
+
+        [Display(Name = "Export To")]
+        public SiteSummaryExportTo ExportTo { get; set; } = SiteSummaryExportTo.Storage;
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
@@ -61,7 +64,8 @@
             { nameof(AllOrgUnits), AllOrgUnits.ToString() },
             { nameof(ShowHeader), ShowHeader.ToString() },
             { nameof(SortBy), SortBy.ToString() },
-            { nameof(Include), Include.ToString() }
+            { nameof(Include), Include.ToString() },
+            { nameof(ExportTo), ExportTo.ToString()  }
         };
 
         public void TrimAll()
@@ -81,6 +85,13 @@
             All,
             Include,
             Exclude
+        }
+
+        public enum SiteSummaryExportTo
+        {
+            Local,
+            Storage,
+            SharePoint
         }
     }
 }
