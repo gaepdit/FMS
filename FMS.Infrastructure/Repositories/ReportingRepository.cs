@@ -260,6 +260,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenInclude(ev => ev.EventContractor)
                 .Where(e => facilityTypes.Contains(e.FacilityType.Name))
                 .Where(e => eventReportSpec.OrganizationalUnitId == null || eventReportSpec.OrganizationalUnitId.Contains(e.OrganizationalUnit.Id))
+                .Where(ev => eventReportSpec.ComplianceOfficerId == null || eventReportSpec.ComplianceOfficerId.Contains(ev.ComplianceOfficer.Id))
                 .Where(e => e.Active)
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
                     {
@@ -283,8 +284,7 @@ namespace FMS.Infrastructure.Repositories
                         OverallStatus = e.StatusDetails.OverallStatus,
                         ListDate = e.HsrpFacilityProperties.DateListed
                     })
-                    .Where(ev => eventReportSpec.EventTypeId == null || eventReportSpec.EventTypeId.Contains(ev.EventType.Id))
-                    .Where(ev => eventReportSpec.ComplianceOfficerId == null || eventReportSpec.ComplianceOfficerId.Contains(ev.DoneBy.Id)))
+                    .Where(ev => eventReportSpec.EventTypeId == null || eventReportSpec.EventTypeId.Contains(ev.EventType.Id)))
                 .ToListAsync();
 
             return reportDtoList;
