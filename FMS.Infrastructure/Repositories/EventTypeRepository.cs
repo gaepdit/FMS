@@ -37,6 +37,19 @@ namespace FMS.Infrastructure.Repositories
             return new EventTypeEditDto(eventType);
         }
 
+        public async Task<List<Guid>> GetEventTypeIdsByNamesAsync(List<string> names)
+        {
+            if (names == null)
+            {
+                return new List<Guid>();
+            }
+            List<Guid> eventTypeIds = await _context.EventTypes.AsNoTracking()
+                .Where(e => names.Contains(e.Name))
+                .Select(e => e.Id)
+                .ToListAsync();
+            return eventTypeIds;
+        }
+
         public async Task<string> GetEventTypeNameAsync(Guid? id)
         {
             if (!id.HasValue)

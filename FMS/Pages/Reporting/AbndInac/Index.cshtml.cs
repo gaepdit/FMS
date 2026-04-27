@@ -28,12 +28,12 @@ namespace FMS.Pages.Reporting.AbndInac
             // Second Worksheet "Checklist" List to go to report
             IReadOnlyList<AbndInacChecklistReviewDto> checkList = await _repository.GetAbndInacChecklistReviewAsync();
 
-            var checkListReportList = from p in checkList select new AbndInacChecklistReviewReportDto(p);
+            IReadOnlyList<AbndInacChecklistReviewReportDto> checkListReportList = (from p in checkList select new AbndInacChecklistReviewReportDto(p)).ToList();
 
             DateOnly? StartDate = null;
             DateOnly? EndDate = null;
-            IEnumerable<AbndInacStatusTrackerDto> vrpCompletedOutstandingReportList = null;
-            IEnumerable<AbndInacStatusTrackerDto> brownCompletedOutstandingReportList = null;
+            IReadOnlyList<AbndInacStatusTrackerDto> vrpCompletedOutstandingReportList = null;
+            IReadOnlyList<AbndInacStatusTrackerDto> brownCompletedOutstandingReportList = null;
 
             // Export to Excel
             return File(abndInacReportList.ExportExcelAsByteArray(ExportHelper.ReportType.AbndInacStatusTracker,

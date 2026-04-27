@@ -240,9 +240,8 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IList<EventReportDto>> GetEventsReportsAsync(
             List<string> facilityTypes = null,
-            List<string> eventTypes = null
-        )
-        {
+            EventReportSpecDto eventReportSpec = null)
+        {   
             List<EventReportDto> reportDtoList = await _context.Facilities
                 .AsNoTracking()
                 .Include(e => e.FacilityType)
@@ -260,6 +259,8 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.Events)
                 .ThenInclude(ev => ev.EventContractor)
                 .Where(e => facilityTypes.Contains(e.FacilityType.Name))
+                .Where(e => eventReportSpec.OrganizationalUnitId == null || eventReportSpec.OrganizationalUnitId.Contains(e.OrganizationalUnit.Id))
+                .Where(ev => eventReportSpec.ComplianceOfficerId == null || eventReportSpec.ComplianceOfficerId.Contains(ev.ComplianceOfficer.Id))
                 .Where(e => e.Active)
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
                     {
@@ -283,7 +284,7 @@ namespace FMS.Infrastructure.Repositories
                         OverallStatus = e.StatusDetails.OverallStatus,
                         ListDate = e.HsrpFacilityProperties.DateListed
                     })
-                    .Where(ev => eventTypes == null || eventTypes.Contains(ev.EventType.Name)))
+                    .Where(ev => eventReportSpec.EventTypeId == null || eventReportSpec.EventTypeId.Contains(ev.EventType.Id)))
                 .ToListAsync();
 
             return reportDtoList;
@@ -629,7 +630,6 @@ namespace FMS.Infrastructure.Repositories
             return siteSummarySorted;
         }
             
-
         public async Task<SiteSummaryReportDto> GetSingleFacilitySiteSummaryDtoAsync(string hsiId)
         {
             var facility = await _context.Facilities.AsNoTracking()

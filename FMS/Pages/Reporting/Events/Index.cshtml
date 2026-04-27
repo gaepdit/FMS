@@ -1,9 +1,20 @@
 ﻿@page
 @model FMS.Pages.Reporting.Events.IndexModel
 
+@section Scripts {
+    <script src="~/js/multiSelect.js"></script>
+    <script src="~/lib/select2/dist/js/select2.min.js"></script>
+}
+@section Styles
+{
+    <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/multiSelect.css" asp-append-version="true" />
+}
+
 @{
     ViewData["Title"] = $"Events Reports";
 }
+
 <h1>@ViewData["Title"]</h1>
 <a asp-page="../Index">← Back to Reports</a>
 <hr />
@@ -12,15 +23,37 @@
     <form method="post">
         <div class="row">
             <div class="col-md-2">
-                <label asp-for="StartDate" class="form-label">Start Date <span class="text-danger">*</span></label>
-                <input asp-for="StartDate" class="form-control datepicker" type="date" placeholder="" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
+                <label asp-for="Spec.StartDate" class="form-label">Start Date <span class="text-danger">*</span></label>
+                <input asp-for="Spec.StartDate" class="form-control datepicker" type="date" placeholder="" />
+                <span asp-validation-for="Spec.StartDate" class="text-danger"></span>
             </div>
             <div class="col-md-2">
-                <label asp-for="EndDate" class="form-label">End Date <span class="text-danger">*</span></label>
-                <input asp-for="EndDate" class="form-control datepicker" type="date" placeholder="" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
+                <label asp-for="Spec.EndDate" class="form-label">End Date <span class="text-danger">*</span></label>
+                <input asp-for="Spec.EndDate" class="form-control datepicker" type="date" placeholder="Spec.EndDate" />
+                <span asp-validation-for="Spec.EndDate" class="text-danger"></span>
             </div>
+        </div>
+        <br />
+        <div class="mb-3 row">
+            <div class="col-md-4">
+                <span class="text-info-emphasis">* </span><label asp-for="Spec.EventTypeId"></label>
+                <select asp-for="Spec.EventTypeId" asp-items="Model.EventTypes" class="form-control multiselect" multiple="multiple">
+                </select>
+                <span class="text-info-emphasis">* Only for Pending and Completed Reports</span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Spec.OrganizationalUnitId"></label>
+                <select asp-for="Spec.OrganizationalUnitId" asp-items="Model.OrganizationalUnits" class="form-control multiselect" multiple="multiple">
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Spec.ComplianceOfficerId"></label>
+                <select asp-for="Spec.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-control multiselect" multiple="multiple">
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear</a>
         </div>
         <hr />
         <p class="lead">Select a Report from the list</p>
@@ -28,10 +61,11 @@
             <div class="col-md-8">
                 <button id="Pending"
                         asp-page-handler="Pending"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
-                Pending Report
+                Pending Report  <span class="text-info-emphasis">* Event Types Used Here</span>
             </div>
         </div>
         <br />
@@ -39,10 +73,11 @@
             <div class="col-md-8">
                 <button id="Completed"
                         asp-page-handler="Completed"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
-                Completed Report <span class="text-danger">*Please choose a Start and End Date</span>
+                Completed Report <span class="text-danger">* Please choose a Start and End Date</span>   <span class="text-info-emphasis">* Event Types Used Here</span>
             </div>
         </div>
         <br />
@@ -50,10 +85,11 @@
             <div class="col-md-8">
                 <button id="Compliance"
                         asp-page-handler="Compliance"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
-                Compliance Report <span class="text-danger">*Please choose a Start and End Date</span>
+                Compliance Report <span class="text-danger">* Please choose a Start and End Date</span>
             </div>
         </div>
         <br />
@@ -61,10 +97,11 @@
             <div class="col-md-8">
                 <button id="CompletedOutstanding"
                         asp-page-handler="CompletedOutstanding"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
-                Completed Outstanding Report <span class="text-danger">*Please choose a Start and End Date</span>
+                Completed Outstanding Report <span class="text-danger">* Please choose a Start and End Date</span>
             </div>
         </div>
         <br />
@@ -72,6 +109,7 @@
             <div class="col-md-8">
                 <button id="Outstanding"
                         asp-page-handler="Outstanding"
+                        asp-all-route-data="Model.Spec.AsRouteValues()"
                         class="btn btn-sm btn-outline-primary mb-1">
                     Report
                 </button>
