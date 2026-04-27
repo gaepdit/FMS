@@ -16,6 +16,7 @@ namespace FMS.Domain.Dto
             Latitude = facility.Latitude;
             Longitude = facility.Longitude;
             LocationClass = facility.LocationDetails?.LocationClass;
+            AddlOrgUnit = facility.HsrpFacilityProperties?.OrganizationalUnit;
         }
 
         public Guid Id { get; }
@@ -46,5 +47,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Location Class")]
         public LocationClass LocationClass { get; set; }
+
+        [Display(Name = "Add'l Org Unit")]
+        public OrganizationalUnit AddlOrgUnit { get; set; }
     }
 }
