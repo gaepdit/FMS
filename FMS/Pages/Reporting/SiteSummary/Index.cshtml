@@ -1,4 +1,5 @@
 ﻿@page
+@using FMS.Domain.Dto
 @using FMS.Platform
 @model FMS.Pages.Reporting.SiteSummary.IndexModel
 
@@ -54,11 +55,59 @@
             </div>
         </div>
         <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-check">
-                    <input asp-for="Spec.IsLandFill" />
-                    <label asp-for="Spec.IsLandFill" class="form-check-label" disabled="true"></label>
+        <div class="row text-center">
+            <div class="col-md-6">
+                <div class="row">
+                    <p>
+                        Choose Sorting Order
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.FacilityNumber)
+                            Facility Number
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.County)
+                            County
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.LocationClass)
+                            Class
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <p>
+                        Choose Additional Org. Unit Inclusions/Exclusions
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.Include, SiteSummaryQuerySpec.SiteSummaryAddlOrgUnitInclusion.All)
+                            Include All
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.Include, SiteSummaryQuerySpec.SiteSummaryAddlOrgUnitInclusion.Exclude)
+                            Exclude w/ Add'l
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.Include, SiteSummaryQuerySpec.SiteSummaryAddlOrgUnitInclusion.Include)
+                            Only w/ Add'l
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,6 +117,12 @@
                 <div class="form-check">
                     <input asp-for="Spec.ShowHeader" />
                     <label asp-for="Spec.ShowHeader" class="form-check-label"></label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input asp-for="Spec.IsLandFill" />
+                    <label asp-for="Spec.IsLandFill" class="form-check-label" disabled="true"></label>
                 </div>
             </div>
         </div>

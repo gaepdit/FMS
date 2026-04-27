@@ -1,5 +1,5 @@
-﻿$(document).ready(function FacilityTypeMultiSelect() {
-    $('#Spec_FacilityTypeId').select2({
+﻿$(document).ready(function MultiSelect() {
+    $('.multiselect').select2({
         placeholder: "",
         closeOnSelect: false,
         width: '100%',
@@ -13,10 +13,14 @@
         escapeMarkup: function (markup) { return markup; }
     });
 
-    $('#Spec_FacilityTypeId').on('select2:select select2:unselect', function () {
+    $('.multiselect').on('select2:select select2:unselect', function () {
         var selected = $(this).val() || [];
-        $('#Spec_FacilityTypeId option').each(function () {
+        $('.multiselect option').each(function () {
             $(this).prop('selected', selected.includes($(this).val()));
         });
     });
+
+    //$('.multiselect').select2({
+    //    theme: 'bootstrap-5'
+    //});
 });

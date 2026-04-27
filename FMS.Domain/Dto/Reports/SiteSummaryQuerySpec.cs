@@ -4,6 +4,12 @@
     {
         public SiteSummaryQuerySpec() { }
 
+        [Display(Name = "Include")]
+        public SiteSummaryAddlOrgUnitInclusion Include { get; set; } = SiteSummaryAddlOrgUnitInclusion.All;
+
+        [Display(Name = "Sort By")]
+        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.FacilityNumber;   
+
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
 
@@ -53,12 +59,28 @@
             { nameof(AllCOs), AllCOs.ToString() },
             { nameof(AllClassIVs), AllClassIVs.ToString() },
             { nameof(AllOrgUnits), AllOrgUnits.ToString() },
-            { nameof(ShowHeader), ShowHeader.ToString() }
+            { nameof(ShowHeader), ShowHeader.ToString() },
+            { nameof(SortBy), SortBy.ToString() },
+            { nameof(Include), Include.ToString() }
         };
 
         public void TrimAll()
         {
             FacilityNumber = FacilityNumber?.Trim();
+        }
+
+        public enum SiteSummarySortBy
+        {
+            FacilityNumber,
+            County,
+            LocationClass
+        }
+
+        public enum SiteSummaryAddlOrgUnitInclusion
+        {
+            All,
+            Include,
+            Exclude
         }
     }
 }

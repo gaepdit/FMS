@@ -240,8 +240,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IList<EventReportDto>> GetEventsReportsAsync(
             List<string> facilityTypes = null,
-            List<string> eventTypes = null
-        )
+            EventReportSpecDto eventReportSpec = null)
         {
             List<EventReportDto> reportDtoList = await _context.Facilities
                 .AsNoTracking()
@@ -260,30 +259,32 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.Events)
                 .ThenInclude(ev => ev.EventContractor)
                 .Where(e => facilityTypes.Contains(e.FacilityType.Name))
+                .Where(e => eventReportSpec.OrganizationalUnitId == null || eventReportSpec.OrganizationalUnitId.Contains(e.OrganizationalUnit.Id))
                 .Where(e => e.Active)
                 .SelectMany(e => e.Events.Select(ev => new EventReportDto()
-                    {
-                        Id = ev.Id,
-                        FacilityId = e.Id,
-                        ParentId = ev.ParentId,
-                        FacilityNumber = e.FacilityNumber,
-                        FacilityName = e.Name,
-                        FacilityType = e.FacilityType,
-                        EventType = ev.EventType,
-                        ActionTaken = ev.ActionTaken,
-                        StartDate = ev.StartDate,
-                        DueDate = ev.DueDate,
-                        CompletionDate = ev.CompletionDate,
-                        DoneBy = ev.ComplianceOfficer,
-                        OrganizationalUnit = e.OrganizationalUnit,
-                        ComplianceOfficer = e.ComplianceOfficer,
-                        EventAmount = ev.EventAmount,
-                        EventContractor = ev.EventContractor,
-                        Comment = ev.Comment,
-                        OverallStatus = e.StatusDetails.OverallStatus,
-                        ListDate = e.HsrpFacilityProperties.DateListed
-                    })
-                    .Where(ev => eventTypes == null || eventTypes.Contains(ev.EventType.Name)))
+                {
+                    Id = ev.Id,
+                    FacilityId = e.Id,
+                    ParentId = ev.ParentId,
+                    FacilityNumber = e.FacilityNumber,
+                    FacilityName = e.Name,
+                    FacilityType = e.FacilityType,
+                    EventType = ev.EventType,
+                    ActionTaken = ev.ActionTaken,
+                    StartDate = ev.StartDate,
+                    DueDate = ev.DueDate,
+                    CompletionDate = ev.CompletionDate,
+                    DoneBy = ev.ComplianceOfficer,
+                    OrganizationalUnit = e.OrganizationalUnit,
+                    ComplianceOfficer = e.ComplianceOfficer,
+                    EventAmount = ev.EventAmount,
+                    EventContractor = ev.EventContractor,
+                    Comment = ev.Comment,
+                    OverallStatus = e.StatusDetails.OverallStatus,
+                    ListDate = e.HsrpFacilityProperties.DateListed
+                })
+                    .Where(ev => eventReportSpec.EventTypeId == null || eventReportSpec.EventTypeId.Contains(ev.EventType.Id))
+                    .Where(ev => eventReportSpec.ComplianceOfficerId == null || eventReportSpec.ComplianceOfficerId.Contains(ev.DoneBy.Id)))
                 .ToListAsync();
 
             return reportDtoList;
@@ -548,21 +549,63 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue ||
                             e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
                 .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
-                .OrderBy(e => e.FacilityNumber)
                 .Select(e => new SiteSummaryReportDto(e))
                 .AsSplitQuery()
                 .ToListAsync();
 
-            return facilityList;
+            List<SiteSummaryReportDto> siteSummarySorted;
+            switch (spec.SortBy)
+            {
+                case SiteSummaryQuerySpec.SiteSummarySortBy.County:
+                    siteSummarySorted = facilityList
+                        .OrderBy(e => e.County.Name)
+                        .ThenBy(e => e.FacilityNumber)
+                        .ToList();
+                    break;
+                case SiteSummaryQuerySpec.SiteSummarySortBy.LocationClass:
+                    siteSummarySorted = facilityList
+                        .OrderBy(e => e.LocationDetails.LocationClass.Name)
+                        .ThenBy(e => e.FacilityNumber)
+                        .ToList();
+                    break;
+                default:
+                    siteSummarySorted = facilityList
+                        .OrderBy(e => e.FacilityNumber)
+                        .ToList();
+                    break;
+            }
+
+            List<SiteSummaryReportDto> AdditionalFiltered;
+            switch (spec.Include)
+            {
+                case SiteSummaryQuerySpec.SiteSummaryAddlOrgUnitInclusion.Include:
+                    AdditionalFiltered = siteSummarySorted
+                        .Where(e => e.HsrpFacilityPropertyDetails.OrganizationalUnit != null)
+                        .ToList();
+                    break;
+                case SiteSummaryQuerySpec.SiteSummaryAddlOrgUnitInclusion.Exclude:
+                    AdditionalFiltered = siteSummarySorted
+                        .Where(e => e.HsrpFacilityPropertyDetails.OrganizationalUnit == null)
+                        .ToList();
+                    break;
+                default:
+                    AdditionalFiltered = siteSummarySorted;
+                    break;
+            }
+
+            return AdditionalFiltered;
         }
 
-        public async Task<IReadOnlyList<FacilityBasicDto>> GetHsiFacilitiesAsync(SiteSummaryQuerySpec spec) =>
-            await _context.Facilities
+        public async Task<IReadOnlyList<FacilityBasicDto>> GetHsiFacilitiesAsync(SiteSummaryQuerySpec spec)
+        {
+            var siteSummaryUnsorted = await _context.Facilities
                 .Include(e => e.County)
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.OrganizationalUnit)
                 .Include(e => e.HsrpFacilityProperties)
                 .ThenInclude(e => e.OrganizationalUnit)
+                .Include(e => e.LocationDetails)
+                .ThenInclude(e => e.LocationClass)
                 .Where(e => e.Active)
                 .Where(e => e.FacilityStatus.Status == "Active")
                 .Where(e => e.FacilityType.Name == "HSI")
@@ -577,9 +620,51 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue ||
                             e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
                 .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
-                .OrderBy(e => e.FacilityNumber)
                 .Select(e => new FacilityBasicDto(e))
                 .ToListAsync();
+
+            List<FacilityBasicDto> siteSummarySorted;
+            switch (spec.SortBy)
+            {
+                case SiteSummaryQuerySpec.SiteSummarySortBy.County:
+                    siteSummarySorted = siteSummaryUnsorted
+                        .OrderBy(e => e.County.Name)
+                        .ThenBy(e => e.FacilityNumber)
+                        .ToList();
+                    break;
+                case SiteSummaryQuerySpec.SiteSummarySortBy.LocationClass:
+                    siteSummarySorted = siteSummaryUnsorted
+                        .OrderBy(e => e.LocationClass.Name)
+                        .ThenBy(e => e.FacilityNumber)
+                        .ToList();
+                    break;
+                default:
+                    siteSummarySorted = siteSummaryUnsorted
+                        .OrderBy(e => e.FacilityNumber)
+                        .ToList();
+                    break;
+            }
+
+            List<FacilityBasicDto> AdditionalFiltered;
+            switch (spec.Include)
+            {
+                case SiteSummaryQuerySpec.SiteSummaryAddlOrgUnitInclusion.Include:
+                    AdditionalFiltered = siteSummarySorted
+                        .Where(e => e.AddlOrgUnit != null)
+                        .ToList();
+                    break;
+                case SiteSummaryQuerySpec.SiteSummaryAddlOrgUnitInclusion.Exclude:
+                    AdditionalFiltered = siteSummarySorted
+                        .Where(e => e.AddlOrgUnit == null)
+                        .ToList();
+                    break;
+                default:
+                    AdditionalFiltered = siteSummarySorted;
+                    break;
+            }
+
+            return AdditionalFiltered;
+        }
 
         public async Task<SiteSummaryReportDto> GetSingleFacilitySiteSummaryDtoAsync(string hsiId)
         {
@@ -613,6 +698,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.StatusDetails.GroundwaterStatus)
                 .Include(e => e.StatusDetails.OverallStatus)
                 .Where(e => e.FacilityNumber == hsiId)
+                .Where(e => e.FacilityType.Name == "HSI")
                 .OrderBy(e => e.FacilityNumber)
                 .Select(e => new SiteSummaryReportDto(e))
                 .AsSplitQuery()
@@ -639,6 +725,7 @@ namespace FMS.Infrastructure.Repositories
                 .OrderBy(e => e.FacilityNumber)
                 .Select(e => new SiteSummaryListDto(e))
                 .ToListAsync();
+
 
         #endregion
 

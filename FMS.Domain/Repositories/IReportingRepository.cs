@@ -36,7 +36,7 @@ namespace FMS.Domain.Repositories
         #region Events Reports
 
         Task<IList<EventReportDto>> GetEventsReportsAsync(List<string> facilityTypes = null,
-            List<string> eventTypes = null);
+            EventReportSpecDto eventReportSpec = null);
 
         Task<IList<EventsNoActionTakenReportDto>> GetEventsNoActionTakenReportAsync();
 
