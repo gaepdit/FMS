@@ -1,0 +1,184 @@
+﻿@page "{hsiId?}" 
+@using System.Globalization
+@using FMS.Domain.Dto
+@model FMS.Pages.Reporting.SiteSummary.IndexPdfModel
+@{
+    ViewData["Title"] = $"Site Summary(s)";
+}
+<h1>@ViewData["Title"]</h1>
+<a asp-page="../Index">← Back to Reports</a>
+<hr />
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="get">
+        <input type="hidden" asp-for="Spec.AdditionalOrganizationalUnitId" />
+        <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
+        <input type="hidden" asp-for="Spec.CountyId" />
+        <input type="hidden" asp-for="Spec.FacilityNumber" />
+        <input type="hidden" asp-for="Spec.IsLandFill" />
+        <input type="hidden" asp-for="Spec.LocationClassId" />
+        <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
+        <input type="hidden" asp-for="Spec.Include" />
+        <input type="hidden" asp-for="Spec.SortBy" />
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <p>
+                        <b>Choose Where to Export PDF Files:</b>
+                    </p>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.ExportTo,
+                                SiteSummaryQuerySpec.SiteSummaryExportTo.Storage)
+                            Online storage
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.ExportTo,
+                                SiteSummaryQuerySpec.SiteSummaryExportTo.SharePoint)
+                            SharePoint
+                        </label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.ExportTo, 
+                                SiteSummaryQuerySpec.SiteSummaryExportTo.Local)
+                            Download
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <input type="hidden" name="handler" value="Export" />
+                <button id="Export" type="submit" class="btn btn-primary col-sm-3 col-md-3">Export Reports</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-3">Clear</a>
+            </div>
+        </div>
+    </form>
+</div>
+<hr/>
+<div class="container-fluid parent-container d-lg-inline-flex">
+    @if (Model.SummaryList.Count == 0)
+    {
+        <p class="lead text-info">No matching results found.</p>
+    }
+    else
+    {
+        <table class="table" aria-label="Facility search results">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Facility Info</th>
+                    <th scope="col">Cleanup Status</th>
+                    <th scope="col">Cleanup Priority</th>
+                    <th scope="col">Score Info</th>
+                    <th scope="col">Substances</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SummaryList)
+                {
+                    <tr class="@(!item.Active ? "table-warning" : "")">
+                        <td>
+                            @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")<br />
+                            @Html.DisplayFor(m => item.Name, "StringOrNone")<br />
+                            @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")<br />
+                            @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")<br />
+                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")<br />
+                            @Html.DisplayFor(m => item.Latitude, "DecimalOrNone")/@Html.DisplayFor(m => item.Longitude, "DecimalOrNone")<br />
+                            <hr />
+                            <strong>Parcels:</strong><br />
+                            @foreach (var parcel in item.Parcels)
+                            {
+                                if (parcel.ParcelType?.Name != "SubList" && parcel.DeListDate is null)
+                                {
+                                    <div>
+                                        <b>PARCEL NUMBER</b><br />
+                                        @parcel.ParcelNumber<br />
+                                        ACREAGE<br />
+                                        @Html.DisplayFor(Model => parcel.Acres, "DoubleOrNone")<br />
+                                        DATE LISTED<br />
+                                        @Html.DisplayFor(Model => parcel.ListDate, "DateOrNone")<br />
+                                    </div>
+                                }
+                            }
+                            <hr/>
+                            <strong>LAST KNOWN PROPERTY OWNER(S):</strong><br />
+                            @foreach (var contact in item.Contacts)
+                            {
+                                @if (contact.ContactType?.Name == "Property Owner" && contact.Active)
+                                {
+                                    <hr />
+                                    if (!string.IsNullOrEmpty(contact.Company))
+                                    {
+                                        <span><strong>@contact.Company</strong></span><br />
+                                    }
+                                    else
+                                    {
+                                        <span><strong>@contact.GetFullName()</strong></span><br />
+                                    }
+                                    @contact.Address
+                                    <br />
+                                    @contact.City
+                                    <span>,</span>
+                                    @contact.State
+                                    <span>  </span>
+                                    @contact.PostalCode
+                                    <br />
+                                }
+                            }
+                            @if (Model.HasSublistedParcels(item))
+                            {
+                                <hr/>
+                                <p><b>EPD received notification of a release to the following property(s), and determined on the indicated date that the property should be subisted as part of this site.</b></p>
+                                @foreach (var parcel in item.Parcels)
+                                {
+                                    if (parcel.ParcelType?.Name == "SubList")
+                                    {
+                                        <div>
+                                            <b>PARCEL NAME</b><br />
+                                            @parcel.SubListParcelName<br />
+                                            ACREAGE<br />
+                                            @Html.DisplayFor(Model => parcel.Acres, "DoubleOrNone")<br />
+                                            PARCEL NUMBER<br />
+                                            @parcel.ParcelNumber<br />
+                                            DATE LISTED<br />
+                                            @Html.DisplayFor(Model => parcel.ListDate, "DateOrNone")<br />
+                                        </div>
+                                    }
+                                }
+                            }
+                        </td>
+                        <td>
+                            <strong>STATUS OF CLEANUP ACTIVITIES:</strong><br />
+                            @Model.GetStatusLanguage(item)
+                        </td>
+                        <td>
+                            <strong>CLEANUP PRIORITY: </strong>The Director has designated this site as a Class @item.LocationDetails?.LocationClass.Name<br />
+                            <strong>GA EPD DIRECTOR'S DETERMINATION REGARDING CORRECTIVE ACTION:</strong><br />
+                            @item.LocationDetails?.LocationClass.Description
+                        </td>
+                        <td>
+                            <strong>REGULATED SUBSTANCES RELEASED, AND THREATS TO HUMAN HEALTH AND ENVIRONMENT POSED BY THE RELEASE:</strong><br />
+                            @Model.GetScoreLanguage(item)
+                        </td>
+                        <td>
+                            @foreach (var substance in item.Substances.OrderBy(s => s.Chemical.ChemicalName))
+                            {
+                                <div class="substance">
+                                    <div>@substance.Chemical.ChemicalName</div>
+                                    <div class="mycheckbox">@Html.DisplayFor(model => substance.Groundwater, "BoolCheckbox")GW</div>
+                                    <div class="mycheckbox">@Html.DisplayFor(model => substance.Soil, "BoolCheckbox")Soil</div>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
