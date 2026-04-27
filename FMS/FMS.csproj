@@ -8,6 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\Site summary-VS26-VB.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Shared\_HSIMenuPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Helpers\Site summary-VS26-VB.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Helpers\BlankRequestForm.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
