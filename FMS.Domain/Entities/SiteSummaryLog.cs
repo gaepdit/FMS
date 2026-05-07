@@ -22,5 +22,7 @@ namespace FMS.Domain.Entities
         public string PdfFilePath { get; set; }
 
         public string PdfFileType { get; set; }
+
+        public string PdfURL { get; set; }
     }
 }
