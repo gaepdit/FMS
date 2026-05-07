@@ -70,7 +70,7 @@ namespace FMS.Helpers
             /// <summary>
             /// The path to the resulting PDF file.
             /// </summary>
-            public static readonly String DEST = "results/htmlsamples/ch07/url2pdf_1.pdf";
+            public static readonly String DEST = String.Concat(Environment.GetEnvironmentVariable("PdfFilePath"), "url2pdf_1.pdf");
 
             /// <summary>
             /// The target folder for the result.
