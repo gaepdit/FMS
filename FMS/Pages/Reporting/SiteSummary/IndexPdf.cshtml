@@ -9,7 +9,7 @@
 <a asp-page="../Index">← Back to Reports</a>
 <hr />
 <div class="p-3 rounded-3 bg-light-subtle">
-    <form method="get">
+    <form method="post">
         <input type="hidden" asp-for="Spec.AdditionalOrganizationalUnitId" />
         <input type="hidden" asp-for="Spec.ComplianceOfficerId" />
         <input type="hidden" asp-for="Spec.CountyId" />
@@ -69,7 +69,7 @@
     }
     else
     {
-        <table class="table" aria-label="Facility search results">
+        @* <table class="table" aria-label="Facility search results">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Facility Info</th>
@@ -107,6 +107,9 @@
                                 }
                             }
                             <hr/>
+                            <div>
+                                <img class="sitemap" src="@Model.GetGoogleMapsUrl(item)" alt="Site Map for @item.Name" />
+                            </div>
                             <strong>LAST KNOWN PROPERTY OWNER(S):</strong><br />
                             @foreach (var contact in item.Contacts)
                             {
@@ -179,6 +182,6 @@
                     </tr>
                 }
             </tbody>
-        </table>
+        </table> *@
     }
 </div>
