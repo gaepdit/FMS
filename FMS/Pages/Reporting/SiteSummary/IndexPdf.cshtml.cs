@@ -17,7 +17,6 @@ namespace FMS.Pages.Reporting.SiteSummary
             _configuration = configuration;
         }
 
-        public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
 
         [BindProperty]
         public SiteSummaryQuerySpec Spec { get; set; }
@@ -38,53 +37,95 @@ namespace FMS.Pages.Reporting.SiteSummary
             return Page();
         }
 
-        public async Task<IActionResult> OnGetExportAsync(SiteSummaryQuerySpec spec)
+        public async Task<IActionResult> OnPostAsync(SiteSummaryQuerySpec spec)
         {
             Spec = spec;
 
             SiteSummaryExportTo = Spec.ExportTo;
 
-            SummaryList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
-
+            switch (SiteSummaryExportTo)
+            {
+                case SiteSummaryQuerySpec.SiteSummaryExportTo.Storage:
+                    if (!await ExportToStorage())
+                    {
+                        GetReturnMessage(ResponseType.Storage);
+                        return Page();
+                    }
+                    break;
+                case SiteSummaryQuerySpec.SiteSummaryExportTo.SharePoint:
+                    if (!await ExportToSharePoint())
+                    {
+                        GetReturnMessage(ResponseType.SharePoint);
+                        return Page();
+                    }
+                    break;
+                case SiteSummaryQuerySpec.SiteSummaryExportTo.Local:
+                    if (!await ExportLocal())
+                    {
+                        GetReturnMessage(ResponseType.Local);
+                        return Page();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            GetReturnMessage(ResponseType.Success);
             return Page();
         }
 
-        public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
+        public async Task<bool> ExportToStorage()
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
-            {
-                return
-                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails?.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
-            }
-            return null;
+            SummaryList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
+
+            return true;
         }
 
-        public string GetStatusLanguage(SiteSummaryReportDto facility) =>
-            SiteSummaryHelper.GetCleanupStatusLanguage(facility);
-
-        public string GetScoreLanguage(SiteSummaryReportDto facility)
+        public async Task<bool> ExportToSharePoint()
         {
-            var groundWaterLang = SiteSummaryHelper.GetLanguageForGWScore(facility);
-            var onsiteScoreLang = SiteSummaryHelper.GetLanguageForOSScore(facility);
-            var exLang = "";
-            if (facility.ScoreDetails != null && facility.ScoreDetails.UseComments)
-            {
-                exLang = SiteSummaryHelper.GetLanguageForExceptions(facility);
-            }
+            SummaryList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
 
-            return groundWaterLang + onsiteScoreLang + exLang;
+            return true;
         }
 
-        public bool HasSublistedParcels(SiteSummaryReportDto facility)
+        public async Task<bool> ExportLocal()
         {
-            foreach (var parcel in facility.Parcels)
-            {
-                if (parcel.ParcelType?.Name == "SubList")
-                {
-                    return true;
-                }
-            }
-            return false;
+            SummaryList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
+
+            return true;
+        }
+
+        public async Task<IActionResult> OnPostReportAsync()
+        {
+            var fileName = $"Events_NoActionTaken_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+
+            // "eventsNoActionTakenList" List to go to a report
+            IList<EventsNoActionTakenReportDto> eventsList = await _repository.GetEventsNoActionTakenReportAsync();
+
+            // Map to EventsNoActionTakenReportDto
+            var eventsNoActionTakenReportList = from p in eventsList
+                                                select new EventsNoActionTakenReportDto(p);
+
+            // Export to Excel
+            return File(
+                eventsNoActionTakenReportList.ExportExcelAsByteArray(ExportHelper.ReportType.EventNoActionTaken),
+                "application/vnd.ms-excel", fileName);
+        }
+
+        public string GetReturnMessage(ResponseType responseType) => responseType switch
+        {
+            ResponseType.Storage => "Writing PDF Files to Storage was unsuccessful",
+            ResponseType.SharePoint => "Writing PDF Files to SharePoint was unsuccessful",
+            ResponseType.Local => "Exporting single PDF file was unsuccessful",
+            ResponseType.Success => "Operation completed successfully",
+            _ => ""
+        };
+
+        public enum ResponseType
+        {
+            Storage,
+            SharePoint,
+            Local,
+            Success
         }
     }
 }
