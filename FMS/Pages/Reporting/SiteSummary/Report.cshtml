@@ -2,7 +2,14 @@
 @using System.Globalization
 @model FMS.Pages.Reporting.SiteSummary.ReportModel
 @{
-    Layout = "_ReportLayout";
+    @if(Model.Spec.IsPdf)
+    {
+        Layout = "_PdfReportLayout";
+    }
+    else
+    {
+        Layout = "_ReportLayout";
+    }
 }
 
 @{
