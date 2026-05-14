@@ -27,6 +27,7 @@
   <ItemGroup>
     <PackageReference Include="ClosedXML" />
     <PackageReference Include="FreeSpire.PDF" />
+    <PackageReference Include="itext.bouncy-castle-adapter" />
     <PackageReference Include="itext.pdfhtml" />
     <PackageReference Include="JetBrains.Annotations" />
     <PackageReference Include="LigerShark.WebOptimizer.Core" />

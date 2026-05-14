@@ -11,7 +11,7 @@ namespace FMS.Domain.Dto
         public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.Facility_Number;   
 
         [Display(Name = "Export To")]
-        public SiteSummaryExportTo ExportTo { get; set; } = SiteSummaryExportTo.Storage;
+        public SiteSummaryExportTo ExportTo { get; set; } = SiteSummaryExportTo.Local;
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
@@ -48,6 +48,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Show Header at top of reports")]
         public bool ShowHeader { get; set; } = false;
+
+        public bool IsPdf { get; set; } = false;
 
         public IDictionary<string, string> AsRouteValues() => new Dictionary<string, string?>
         {

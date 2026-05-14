@@ -1,8 +1,12 @@
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
+using FMS.Platform.Extensions;
+using iText.Html2pdf;
+using iText.Signatures;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IO;
 
 namespace FMS.Pages.Reporting.SiteSummary
 {
@@ -11,11 +15,15 @@ namespace FMS.Pages.Reporting.SiteSummary
         private readonly IReportingRepository _repository;
         private readonly IConfiguration _configuration;
 
+        private static readonly HttpClient client = new HttpClient();
+
         public IndexPdfModel(IReportingRepository repository, IConfiguration configuration)
         {
             _repository = repository;
             _configuration = configuration;
         }
+
+        public DisplayMessage Message { get; private set; }
 
 
         [BindProperty]
@@ -31,6 +39,7 @@ namespace FMS.Pages.Reporting.SiteSummary
         public async Task<IActionResult> OnGetAsync(SiteSummaryQuerySpec spec)
         {
             Spec = spec;
+            Spec.IsPdf = true;
 
             SummaryList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
 
@@ -60,11 +69,9 @@ namespace FMS.Pages.Reporting.SiteSummary
                     }
                     break;
                 case SiteSummaryQuerySpec.SiteSummaryExportTo.Local:
-                    if (!await ExportLocal())
-                    {
-                        GetReturnMessage(ResponseType.Local);
-                        return Page();
-                    }
+                    await ExportLocal();
+                    TempData?.SetDisplayMessage(Context.Success, GetReturnMessage(ResponseType.Local));
+                    return Page();
                     break;
                 default:
                     break;
@@ -89,7 +96,25 @@ namespace FMS.Pages.Reporting.SiteSummary
 
         public async Task<bool> ExportLocal()
         {
-            SummaryList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
+            try
+            {
+                var fileName = $"SiteSummary_{Spec.FacilityNumber}.pdf";
+
+                string htmlSrc = "https://localhost:44362/Reporting/SiteSummary/Report/" + Spec.FacilityNumber;
+
+                using Stream inputStream = await client.GetStreamAsync(htmlSrc);
+
+                using (FileStream pdfDest = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                {
+
+                    ConverterProperties properties = new ConverterProperties();
+                    HtmlConverter.ConvertToPdf(inputStream, pdfDest, properties);
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
 
             return true;
         }

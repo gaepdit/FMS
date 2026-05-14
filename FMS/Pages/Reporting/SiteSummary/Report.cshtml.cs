@@ -34,6 +34,8 @@ namespace FMS.Pages.Reporting.SiteSummary
 
         public async Task<IActionResult> OnGetAsync(SiteSummaryQuerySpec spec = null, [FromRoute] string hsiId = null)
         {
+            Spec = spec;
+            Spec.TrimAll();
             if (!string.IsNullOrEmpty(hsiId))
             {
                 Report = await _repository.GetSingleFacilitySiteSummaryDtoAsync(hsiId);
@@ -49,8 +51,7 @@ namespace FMS.Pages.Reporting.SiteSummary
             if (User.Identity is not { IsAuthenticated: true })
                 return Challenge();
 
-            Spec = spec;
-            Spec.TrimAll();
+            
             ShowHeader = Spec.ShowHeader;
 
             ReportList = await _repository.GetFacilitySiteSummaryDtoAsync(Spec);
