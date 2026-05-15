@@ -1138,11 +1138,14 @@ namespace FMS.Helpers
 
                 var gw_2e = facility.GroundwaterScoreDetails?.E2;
                 var gw2em = "";
-                string gw2estrt = "The nearest drinking water well is ";
-                string gw2eend = " from the area affected by the release.  ";
+                string gw2estrt = "";
+                string gw2eend = "";
 
                 if (gw_1e < 8)
                 {
+                    gw2estrt = "The nearest drinking water well is ";
+                    gw2eend = " from the area affected by the release.  ";
+
                     switch (gw_2e)
                     {
                         case 16:
