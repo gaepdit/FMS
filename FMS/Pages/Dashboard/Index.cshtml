@@ -3,8 +3,71 @@
 @model FMS.Pages.Dashboard.IndexModel
 
 @{
-    ViewData["Title"] = $"User Dashboard";
+    ViewData["Title"] = $"{Model.UserName}'s Dashboard";
 }
-<h1>@ViewData["Title"]</h1>
+<h3>@ViewData["Title"]</h3>
 
-<p class="lead">User Dashboard Page</p>
+<div class="container bg-light-subtle p-3 m-1 rounded-3">
+    <div class="accordion accordion-flush" id="CurrentFacilities">
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="Current_Facilities">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#CurrentFacilities" aria-expanded="true" aria-controls="CurrentFacilities">
+                    <h4>Current Project Facilities</h4>
+                </button>
+            </h3>
+            <div id="CurrentFacilities" class="accordion-collapse collapse" aria-labelledby="Current_Facilities">
+                <div class="accordion-body">
+                    <div class="container bg-light-subtle p-3 m-1 rounded-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Facility Info</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-light-subtle p-3 m-1 rounded-3">
+    <div class="accordion accordion-flush" id="CurrentEvents">
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="Current_Events">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#CurrentEvents" aria-expanded="true" aria-controls="CurrentEvents">
+                    <h4>Current Project Events</h4>
+                </button>
+            </h3>
+            <div id="CurrentEvents" class="accordion-collapse collapse" aria-labelledby="Current_Events">
+                <div class="accordion-body">
+                    <div class="container bg-light-subtle p-3 m-1 rounded-3">
+                        <div class="row">
+                            <p>Event Info</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-light-subtle p-3 m-1 rounded-3">
+    <div class="accordion accordion-flush" id="DataMaintenance">
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="Data_Maintenance">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#DataMaintenance" aria-expanded="true" aria-controls="DataMaintenance">
+                    <h4>Data Maintenance</h4>
+                </button>
+            </h3>
+            <div id="DataMaintenance" class="accordion-collapse collapse" aria-labelledby="Data_Maintenance">
+                <div class="accordion-body">
+                    <div class="container bg-light-subtle p-3 m-1 rounded-3">
+                        <div class="row">
+                            <p>Data Maintenance Info</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
