@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace FMS.Domain.Entities.Users
 {
@@ -16,5 +17,7 @@ namespace FMS.Domain.Entities.Users
         public Guid OrgUnitId { get; set; }
 
         public string Position { get; set; }
+
+        public IXmlSerializable Settings { get; set; }
     }
 }
