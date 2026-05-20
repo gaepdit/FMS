@@ -69,7 +69,7 @@ else
                     <div class="parcels">
                         @foreach (var parcel in report.Parcels)
                         {
-                            if (parcel.ParcelType?.Name != "SubList" && parcel.DeListDate is null)
+                            if (parcel.ParcelType?.Name != "SubList" && parcel.ParcelType?.Name != "VRPonly" && parcel.ParcelType?.Name != "Impacted" && parcel.DeListDate is null)
                             {
                                 <div>@Html.DisplayFor(Model => parcel.Acres, "DoubleOrNone")</div>
                                 <div>@parcel.ParcelNumber</div>
