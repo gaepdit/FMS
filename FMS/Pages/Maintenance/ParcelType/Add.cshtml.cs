@@ -15,7 +15,7 @@ namespace FMS.Pages.Maintenance.ParcelType
         public AddModel(IParcelTypeRepository repository) => _repository = repository;
 
         [BindProperty]
-        public ParcelTypeCreateDto ParcelType { get; set; }
+        public UserPositionCreateDto ParcelType { get; set; }
 
         public void OnGet()
         {
