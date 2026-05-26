@@ -12,11 +12,11 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public ParcelTypeRepository(FmsDbContext context) => _context = context;
 
-        public Task<bool> ParcelTypeExistsAsync(Guid id) =>
-            _context.ParcelTypes.AnyAsync(e => e.Id == id);
+        public async Task<bool> ParcelTypeExistsAsync(Guid id) =>
+            await _context.ParcelTypes.AnyAsync(e => e.Id == id);
 
-        public Task<bool> ParcelTypeNameExistsAsync(string name, Guid? ignoreId = null) => 
-            _context.ParcelTypes.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+        public async Task<bool> ParcelTypeNameExistsAsync(string name, Guid? ignoreId = null) => 
+            await _context.ParcelTypes.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public async Task<ParcelTypeEditDto> GetParcelTypeAsync(Guid id)
         {
