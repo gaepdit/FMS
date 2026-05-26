@@ -14,9 +14,9 @@ namespace FMS.Domain.Entities.Users
 
         public Guid UserId { get; set; }
 
-        public Guid OrgUnitId { get; set; }
+        public OrganizationalUnit OrgUnit { get; set; }
 
-        public string Position { get; set; }
+        public Guid PositionId { get; set; }
 
         public IXmlSerializable Settings { get; set; }
     }

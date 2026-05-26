@@ -55,7 +55,8 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<GroundwaterScore> GroundwaterScores { get; set; }
         public DbSet<Substance> Substances { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        
+        public DbSet<UserProgram> UserPrograms { get; set; }
+        public DbSet<UserPosition> UserPositions { get; set; }
 
 
         // The "Counties" table is only used to add County data to the database for database-side use.
