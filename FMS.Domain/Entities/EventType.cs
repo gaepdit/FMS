@@ -21,6 +21,10 @@ namespace FMS.Domain.Entities
 
         public string Name { get; set; }
 
+        public bool ReportEligible { get; set; } = false;
+
+        public int Points { get; set; } = 0;
+
         public void TrimAll()
         {
             Name = Name?.Trim();
