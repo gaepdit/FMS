@@ -16,7 +16,7 @@ namespace FMS.Pages.Maintenance.ParcelType
         public EditModel(IParcelTypeRepository repository) => _repository = repository;
 
         [BindProperty]
-        public UserPositionEditDto ParcelType { get; set; }
+        public ParcelTypeEditDto ParcelType { get; set; }
 
         [BindProperty]
         public Guid Id { get; set; }

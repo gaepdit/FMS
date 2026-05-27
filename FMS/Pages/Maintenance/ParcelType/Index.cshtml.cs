@@ -15,7 +15,7 @@ namespace FMS.Pages.Maintenance.ParcelType
         private readonly IParcelTypeRepository _repository;
         public IndexModel(IParcelTypeRepository repository) => _repository = repository;
 
-        public IReadOnlyList<UserPostionSummaryDto> ParcelTypes { get; private set; }
+        public IReadOnlyList<ParcelTypeSummaryDto> ParcelTypes { get; private set; }
         public DisplayMessage DisplayMessage { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
