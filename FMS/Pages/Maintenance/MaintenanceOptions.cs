@@ -24,5 +24,7 @@
         public const string GapsAssessment = "GAPS Assessment";
         public const string LocationClass = "Location Class";
         public const string EventContractor = "Event Contractor";
+        public const string UserProgram = "User Program";
+        public const string UserPosition = "User Position";
     }
 }

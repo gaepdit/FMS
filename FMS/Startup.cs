@@ -87,6 +87,8 @@ namespace FMS
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IReportingRepository, ReportingRepository>();
             services.AddScoped<IUserPositionRepository, UserPositionRepository>();
+            //services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IUserProgramRepository, UserProgramRepository>();
 
             // Set up database
             services.AddHostedService<MigratorHostedService>();
