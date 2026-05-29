@@ -18,6 +18,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> UserProgramNameExistsAsync(string name, Guid? ignoreId = null) =>
             await _context.UserPrograms.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
+        public async Task<bool> UserProgramDescriptionExistsAsync(string description, Guid? ignoreId = null) =>
+            await _context.UserPrograms.AnyAsync(e => e.Description == description && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<UserProgramEditDto> GetUserProgramAsync(Guid id)
         {
             var userProgram = await _context.UserPrograms.AsNoTracking()
@@ -48,6 +51,11 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"User Program Name: {userProgram.Name} Already Exists.");
             }
 
+            if (await UserProgramDescriptionExistsAsync(userProgram.Description))
+            {
+                throw new ArgumentException($"User Program Description: {userProgram.Description} Already Exists.");
+            }
+
             var newUserProgram = new UserProgram(userProgram);
 
             await _context.UserPrograms.AddAsync(newUserProgram);
@@ -72,6 +80,7 @@ namespace FMS.Infrastructure.Repositories
             var existingUserProgram = await _context.UserPrograms.FindAsync(Id);
 
             existingUserProgram.Name = userProgramUpdates.Name;
+            existingUserProgram.Description = userProgramUpdates.Description;
 
             await _context.SaveChangesAsync();
         }

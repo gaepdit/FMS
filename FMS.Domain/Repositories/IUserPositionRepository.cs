@@ -8,6 +8,8 @@ namespace FMS.Domain.Repositories
 
         Task<bool> UserPositionNameExistsAsync(string name, Guid? ignoreId = null);
 
+        Task<bool> UserPositionDescriptionExistsAsync(string description, Guid? ignoreId = null);
+
         Task<UserPositionEditDto> GetUserPositionAsync(Guid id);
 
         Task<IReadOnlyList<UserPositionSummaryDto>> GetUserPositionListAsync();
