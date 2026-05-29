@@ -21,6 +21,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Soil Status")]
         public string Name { get; set; }
 
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
         //public string DisplayName => $"{Name} ({Description})";
