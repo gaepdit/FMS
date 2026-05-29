@@ -2486,6 +2486,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");
 
@@ -2514,6 +2517,9 @@ namespace FMS.Infrastructure.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("InsertDateTime")
                         .HasColumnType("datetimeoffset");

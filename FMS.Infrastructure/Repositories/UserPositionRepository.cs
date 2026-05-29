@@ -18,6 +18,9 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> UserPositionNameExistsAsync(string name, Guid? ignoreId = null) =>
             await _context.UserPositions.AnyAsync(e => e.Name == name && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
+        public async Task<bool> UserPositionDescriptionExistsAsync(string description, Guid? ignoreId = null) =>
+            await _context.UserPositions.AnyAsync(e => e.Description == description && (!ignoreId.HasValue || e.Id != ignoreId.Value));
+
         public async Task<UserPositionEditDto> GetUserPositionAsync(Guid id){
             var userPosition = await _context.UserPositions.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
@@ -47,6 +50,11 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException($"User Position Name: {userPosition.Name} Already Exists.");
             }
 
+            if (await UserPositionDescriptionExistsAsync(userPosition.Description))
+            {
+                throw new ArgumentException($"User Position Description: {userPosition.Description} Already Exists.");
+            }
+
             var newUserPosition = new UserPosition(userPosition);
 
             await _context.UserPositions.AddAsync(newUserPosition);
@@ -71,6 +79,7 @@ namespace FMS.Infrastructure.Repositories
             var existingUserPosition = await _context.UserPositions.FindAsync(Id);
 
             existingUserPosition.Name = userPositionUpdates.Name;
+            existingUserPosition.Description = userPositionUpdates.Description;
 
             await _context.SaveChangesAsync();
         }

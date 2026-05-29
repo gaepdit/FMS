@@ -8,6 +8,8 @@ namespace FMS.Domain.Repositories
 
         Task<bool> UserProgramNameExistsAsync(string name, Guid? ignoreId = null);
 
+        Task<bool> UserProgramDescriptionExistsAsync(string description, Guid? ignoreId = null);
+
         Task<UserProgramEditDto> GetUserProgramAsync(Guid id);
 
         Task<IReadOnlyList<UserProgramSummaryDto>> GetUserProgramListAsync();
