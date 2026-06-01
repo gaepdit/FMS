@@ -2624,6 +2624,15 @@ namespace FMS.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<Guid?>("UserPositionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserProgramId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserUnitId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -2637,6 +2646,12 @@ namespace FMS.Infrastructure.Migrations
                     b.HasIndex("ObjectId")
                         .IsUnique()
                         .HasFilter("[ObjectId] IS NOT NULL");
+
+                    b.HasIndex("UserPositionId");
+
+                    b.HasIndex("UserProgramId");
+
+                    b.HasIndex("UserUnitId");
 
                     b.ToTable("AppUsers", (string)null);
                 });
@@ -3188,6 +3203,27 @@ namespace FMS.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Chemical");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.Users.ApplicationUser", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.UserPosition", "UserPosition")
+                        .WithMany()
+                        .HasForeignKey("UserPositionId");
+
+                    b.HasOne("FMS.Domain.Entities.UserProgram", "UserProgram")
+                        .WithMany()
+                        .HasForeignKey("UserProgramId");
+
+                    b.HasOne("FMS.Domain.Entities.OrganizationalUnit", "UserUnit")
+                        .WithMany()
+                        .HasForeignKey("UserUnitId");
+
+                    b.Navigation("UserPosition");
+
+                    b.Navigation("UserProgram");
+
+                    b.Navigation("UserUnit");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
