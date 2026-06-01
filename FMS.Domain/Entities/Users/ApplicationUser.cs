@@ -25,5 +25,11 @@ namespace FMS.Domain.Entities.Users
         public DateTimeOffset? AccountUpdatedAt { get; set; }
         public DateTimeOffset? ProfileUpdatedAt { get; set; }
         public DateTimeOffset? MostRecentLogin { get; set; }
+
+        public UserProgram UserProgram { get; set; }
+
+        public OrganizationalUnit UserUnit { get; set; }
+
+        public UserPosition UserPosition { get; set; }
     }
 }
