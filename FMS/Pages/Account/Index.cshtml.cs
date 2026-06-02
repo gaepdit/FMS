@@ -47,7 +47,7 @@ namespace FMS.Pages.Account
             if (id != null)
             {
                 CurrentUser = await _userService.GetUserByIdAsync(id.Value)
-                 ?? throw new Exception("Current user not found");
+                 ?? throw new Exception("User not found");
                 Id = CurrentUser.Id;
             }
             else
@@ -67,10 +67,10 @@ namespace FMS.Pages.Account
 
         public async Task<ActionResult> OnPostAsync()
         {
-            if (Id != null)
+            if (Id != Guid.Empty)
             {
                 CurrentUser = await _userService.GetUserByIdAsync(Id)
-                 ?? throw new Exception("Current user not found");
+                 ?? throw new Exception("User not found");
             }
             else
             {
