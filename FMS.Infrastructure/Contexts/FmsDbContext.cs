@@ -119,7 +119,12 @@ namespace FMS.Infrastructure.Contexts
                 builder.Entity(entityType).Property<string>(AuditProperties.InsertUser);
                 builder.Entity(entityType).Property<string>(AuditProperties.UpdateUser);
             }
-            
+
+            // Auto Include Identy Properties
+            builder.Entity<ApplicationUser>().Navigation(user => user.UserUnit).AutoInclude();
+            builder.Entity<ApplicationUser>().Navigation(user => user.UserProgram).AutoInclude();
+            builder.Entity<ApplicationUser>().Navigation(user => user.UserPosition).AutoInclude();
+
             // Fix primary key error for IdentityPasskeyData
             builder.Entity<IdentityPasskeyData>(e => e.HasNoKey());
         }
