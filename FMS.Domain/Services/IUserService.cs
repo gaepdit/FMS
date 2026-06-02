@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using FMS.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace FMS.Domain.Services
 {
@@ -15,6 +16,8 @@ namespace FMS.Domain.Services
         public Task<UserView> GetUserByIdAsync(Guid id);
         public Task<IList<string>> GetUserRolesAsync(Guid id);
         public Task<IdentityResult> UpdateUserRolesAsync(Guid id, Dictionary<string, bool> roleSettings);
+
+        public Task<IdentityResult> UpdateUserDesignationsAsync(Guid id, UserProgram userProgram, OrganizationalUnit userUnit, UserPosition userPosition);
 
         // User search
         public Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role);

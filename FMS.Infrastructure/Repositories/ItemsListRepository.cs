@@ -154,6 +154,20 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new ListItem() { Id = e.Id, Name = e.Name })
                 .ToListAsync();
 
+        public async Task<IEnumerable<ListItem>> GetUserProgramListAsync(bool includeInactive = false) =>
+            await _context.UserPrograms.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.Name })
+                .ToListAsync();
+
+        public async Task<IEnumerable<ListItem>> GetUserPositionListAsync(bool includeInactive = false) =>
+            await _context.UserPositions.AsNoTracking()
+                .Where(e => e.Active || includeInactive)
+                .OrderBy(e => e.Name)
+                .Select(e => new ListItem() { Id = e.Id, Name = e.Name })
+                .ToListAsync();
+
         #endregion
 
         #region "Get single ListItem names"
@@ -372,6 +386,28 @@ namespace FMS.Infrastructure.Repositories
             if (id.HasValue)
             {
                 var item = await _context.GapsAssessments.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetUserProgramNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.UserPrograms.AsNoTracking()
+                    .SingleOrDefaultAsync(e => e.Id == id);
+                return item?.Name;
+            }
+            return null;
+        }
+
+        public async Task<string> GetUserPositionNameAsync(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var item = await _context.UserPositions.AsNoTracking()
                     .SingleOrDefaultAsync(e => e.Id == id);
                 return item?.Name;
             }
