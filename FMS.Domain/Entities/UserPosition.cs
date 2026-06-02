@@ -1,8 +1,5 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FMS.Domain.Entities
 {
