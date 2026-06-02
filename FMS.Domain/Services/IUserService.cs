@@ -17,7 +17,7 @@ namespace FMS.Domain.Services
         public Task<IList<string>> GetUserRolesAsync(Guid id);
         public Task<IdentityResult> UpdateUserRolesAsync(Guid id, Dictionary<string, bool> roleSettings);
 
-        public Task<IdentityResult> UpdateUserDesignationsAsync(Guid id, UserProgram userProgram, OrganizationalUnit userUnit, UserPosition userPosition);
+        public Task<IdentityResult> UpdateUserDesignationsAsync(Guid id, Guid? userProgramId, Guid? userUnitId, Guid? userPositionId);
 
         // User search
         public Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role);
