@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Entities.Users;
+﻿using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Http;
@@ -87,6 +88,21 @@ namespace FMS.Infrastructure.Services
             }
 
             return IdentityResult.Success;
+        }
+
+        public async Task<IdentityResult> UpdateUserDesignationsAsync(Guid id, UserProgram userProgram, OrganizationalUnit userUnit, UserPosition userPosition)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
+            }
+
+            user.UserProgram = userProgram;
+            user.UserUnit = userUnit;
+            user.UserPosition = userPosition;
+
+            return await _userManager.UpdateAsync(user);
         }
 
         // User search
