@@ -75,6 +75,8 @@ namespace FMS.Domain.Repositories
 
         Task<IReadOnlyList<SiteSummaryListDto>> GetSiteSummaryListAsync(SiteSummaryQuerySpec spec);
 
+        Task<IReadOnlyList<SiteSummaryPdfListDto>> GetSiteSummaryPdfListAsync(SiteSummaryQuerySpec spec);
+
         #endregion
     }
 }

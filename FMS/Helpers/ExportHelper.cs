@@ -34,7 +34,8 @@ namespace FMS
             HSIListByClass,
             AbndInacStatusTracker,
             AbndCostEstimateReport,
-            SiteSummaryList
+            SiteSummaryList,
+            SiteSummaryPdfList
         }
 
         /// <summary>
@@ -570,7 +571,34 @@ namespace FMS
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
 
+                ws.Column(8).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthAbbrYear2WithDashes;
+
                 var urlColumn = table.DataRange.Column(3);
+
+                foreach (var cell in urlColumn.Cells())
+                {
+                    string urlValue = cell.Value.ToString();
+                    if (!string.IsNullOrWhiteSpace(urlValue))
+                    {
+                        // Apply the hyperlink
+                        cell.SetHyperlink(new XLHyperlink(urlValue));
+
+                        // Optional: Style as a link (blue and underlined)
+                        cell.Style.Font.FontColor = XLColor.Blue;
+                        cell.Style.Font.Underline = XLFontUnderlineValues.Single;
+                    }
+                }
+            }
+
+            if (reportType == ReportType.SiteSummaryPdfList)
+            {
+                ws = wb.AddWorksheet("Site Summary ESRI Pdf List");
+                table = ws.Cell(1, 1).InsertTable(list);
+                table.ShowHeaderRow = true;
+                ws.Columns().AdjustToContents(1, 10000);
+
+                var urlColumn = table.DataRange.Column(10);
 
                 foreach (var cell in urlColumn.Cells())
                 {

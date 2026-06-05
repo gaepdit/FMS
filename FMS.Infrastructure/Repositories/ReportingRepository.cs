@@ -726,6 +726,32 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new SiteSummaryListDto(e))
                 .ToListAsync();
 
+        public async Task<IReadOnlyList<SiteSummaryPdfListDto>> GetSiteSummaryPdfListAsync(SiteSummaryQuerySpec spec) =>
+            await _context.Facilities
+                .Include(e => e.County)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.LocationDetails)
+                .ThenInclude(e => e.LocationClass)
+                .Include(e => e.StatusDetails)
+                .ThenInclude(e => e.FundingSource)
+                .Where(e => e.Active)
+                .Where(e => e.FacilityStatus.Status == "Active")
+                .Where(e => e.FacilityType.Name == "HSI")
+                .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber == spec.FacilityNumber)
+                .Where(e => !spec.CountyId.HasValue || e.County.Id == spec.CountyId.Value)
+                .Where(e => !spec.ComplianceOfficerId.HasValue ||
+                            e.ComplianceOfficer.Id.Equals(spec.ComplianceOfficerId))
+                .Where(e => !spec.LocationClassId.HasValue ||
+                            e.LocationDetails.LocationClass.Id.Equals(spec.LocationClassId))
+                .Where(e => !spec.OrganizationalUnitId.HasValue ||
+                            e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
+                .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue ||
+                            e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
+                .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
+                .OrderBy(e => e.FacilityNumber)
+                .Select(e => new SiteSummaryPdfListDto(e))
+                .ToListAsync();
+
 
         #endregion
 
