@@ -1,6 +1,6 @@
 ﻿@page
 @using FMS.Domain.Dto
-@using FMS.Platform
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Reporting.SiteSummary.IndexModel
 
 @{
@@ -198,7 +198,17 @@
                             Export/Print List
                         </a>
                     </div>
-                </div>
+                    @if (User.IsInRole(UserRoles.SiteMaintenance))
+                        {
+                            <div class="col-auto d-print-none ms-2">
+                                <button id="ExportEsriButton"
+                                asp-page-handler="ExportEsriButton"
+                                class="btn btn-sm btn-primary mb-1">
+                                    Export List to Excel for ESRI
+                                </button>
+                            </div>
+                        }
+                    </div>
             </form>
         }
     </div>

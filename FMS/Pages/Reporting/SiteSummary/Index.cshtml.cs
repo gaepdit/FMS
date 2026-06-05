@@ -5,6 +5,7 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using FMS.Domain.Dto.Reports;
 
 namespace FMS.Pages.Reporting.SiteSummary
 {
@@ -76,6 +77,16 @@ namespace FMS.Pages.Reporting.SiteSummary
             IReadOnlyList<SiteSummaryListDto> facilityReportList = await _repository.GetSiteSummaryListAsync(Spec);
 
             return File(facilityReportList.ExportExcelAsByteArray(ExportHelper.ReportType.SiteSummaryList), "application/vnd.ms-excel", fileName);
+        }
+
+        public async Task<IActionResult> OnPostExportEsriButtonAsync()
+        {
+            var fileName = $"FMS_Site_Summary_ESRI_Pdf_List_export_{DateTime.Now:yyyy-MM-dd-HH-mm-ss.FFF}.xlsx";
+
+            // "FacilityReportList" Detailed Facility List to go to a report
+            IReadOnlyList<SiteSummaryPdfListDto> facilityReportList = await _repository.GetSiteSummaryPdfListAsync(Spec);
+
+            return File(facilityReportList.ExportExcelAsByteArray(ExportHelper.ReportType.SiteSummaryPdfList), "application/vnd.ms-excel", fileName);
         }
     }
 }
