@@ -44,7 +44,6 @@ namespace FMS.Domain.Dto.Reports
                 "SI" => "small_red",
                 _ => string.Empty
             };
-            //SiteSummaryUrl = SiteSummaryReportPathPdf + FacilityNumber + pdfSuffix;
         }
 
         [Display(Name = "HSI ID")]
@@ -107,20 +106,5 @@ namespace FMS.Domain.Dto.Reports
         [Display(Name = "Icon")]
         [XLColumn(Header = "Icon")]
         public string Icon { get; set; }
-
-        //public string SiteSummaryReportPathPdf
-        //{
-        //    get
-        //    {
-        //        // Determine the environment and return the appropriate URL
-        //        string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
-        //        return environment switch
-        //        {
-        //            "Development" => siteSummaryReportPathPdfDev,
-        //            "UAT" => siteSummaryReportPathPdfUat,
-        //            _ => siteSummaryReportPathPdfProd,
-        //        };
-        //    }
-        //}
     }
 }

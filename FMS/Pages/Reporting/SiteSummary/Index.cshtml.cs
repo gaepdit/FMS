@@ -5,7 +5,6 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Dto.Reports;
 
 namespace FMS.Pages.Reporting.SiteSummary
