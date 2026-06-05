@@ -571,9 +571,6 @@ namespace FMS
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
 
-                ws.Column(8).Style.NumberFormat.NumberFormatId =
-                    (int)XLPredefinedFormat.DateTime.DayMonthAbbrYear2WithDashes;
-
                 var urlColumn = table.DataRange.Column(3);
 
                 foreach (var cell in urlColumn.Cells())
@@ -597,6 +594,9 @@ namespace FMS
                 table = ws.Cell(1, 1).InsertTable(list);
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
+
+                ws.Column(8).Style.NumberFormat.NumberFormatId =
+                    (int)XLPredefinedFormat.DateTime.DayMonthAbbrYear2WithDashes;
 
                 var urlColumn = table.DataRange.Column(10);
 
