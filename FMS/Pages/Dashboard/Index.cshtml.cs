@@ -1,6 +1,7 @@
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
+using FMS.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,9 +14,8 @@ namespace FMS.Pages.Dashboard
         IFacilityRepository _repository) : PageModel
     {
         public UserView CurrentUser { get; private set; }
-
         public string UserName {  get; set; }
-
+        public IList<string> Roles { get; private set; }
         public IList<Facility> UserFacilities { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -23,9 +23,14 @@ namespace FMS.Pages.Dashboard
             if (User.Identity is not { IsAuthenticated: true })
                 return Challenge();
 
-            UserName = await userService.GetCurrentUserAsync() is UserView user ? user.DisplayName : "User";
+            CurrentUser = await userService.GetCurrentUserAsync()
+                ?? throw new Exception("Current user not found");
 
-            //UserFacilities = await _repository.GetFacilitiesForUserAsync(user.Id);
+            Roles = await userService.GetCurrentUserRolesAsync();
+
+            UserName = CurrentUser.DisplayName;
+
+            //UserFacilities = await _repository.GetFacilitiesForUserAsync(CurrentUser.Id);
 
             return Page();
         }
