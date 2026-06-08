@@ -1,16 +1,89 @@
 ﻿@page
+@using FMS.Platform.Authentication
 @model FMS.Pages.Account.LoginModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = Model.DisplayFailedLogin ? "Agency Login Failed" : "Agency Login";
 }
-<partial name="_AlertPartial" for="Message" />
 
-<div class="p-5 bg-light-subtle border rounded-3 mt-5 mb-5">
-    <h1 class="display-4">Sign in using your work account</h1>
-    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <button type="submit" class="btn btn-lg btn-outline-primary btn-img my-3 py-3 px-4" title="Sign in using your work account">
-            <img src="~/images/ms-symbol.svg" alt="" /> Sign in
-        </button>
-    </form>
+<h1>@ViewData["Title"]</h1>
+<p>
+    The Air Protection Branch Web Application (Air Web App) is a State of Georgia application.
+    It is provided for conducting official State business and is available for use by
+    State of Georgia employees only.
+</p>
+
+@if (Model.DisplayFailedLogin)
+{
+    <p class="lead text-danger-emphasis">
+        There was an error logging in. If you need assistance related to this error, please contact
+        <a asp-page="/Support">EPD-IT support</a>.
+    </p>
+    <div asp-validation-summary="All" class="alert alert-danger d-flex align-items-center" role="alert"></div>
+}
+
+<div class="my-3">
+    <div class="row g-4">
+        @if (Model.TestUserEnabled)
+        {
+            <div class="col-xl">
+                <div class="py-3 px-4 bg-light-subtle border rounded-3">
+                    <h1 class="display-6">Sign in as a test user</h1>
+
+                    <form asp-route-scheme="@LoginProviders.TestUserScheme" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <button type="submit" class="btn btn-lg btn-outline-primary btn-img icon-link my-3 py-3 px-4"
+                                title="Sign in as a test user">
+                            <svg class="bi" role="img" viewBox="0 0 16 16">
+                                <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492z" />
+                            </svg>
+                            <span class="ms-2">Sign in</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+
+        @if (Model.LoginProviderNames.Contains(LoginProviders.DuoScheme))
+        {
+            <div class="col-lg">
+                <div class="py-3 px-4 bg-light-subtle border rounded-3">
+                    <h1 class="display-6">Sign in using your Duo account</h1>
+
+                    <form asp-route-scheme="@LoginProviders.DuoScheme" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <button type="submit" class="btn btn-lg btn-outline-primary btn-img icon-link my-3 py-3 px-4"
+                                title="Sign in using your Duo account">
+                            <img src="~/images/duo-logo.svg" alt="" class="btn-img-bg me-1" /> Sign in
+                        </button>
+                    </form>
+                </div>
+            </div>
+        }
+
+        @if (Model.LoginProviderNames.Contains(LoginProviders.EntraIdScheme))
+        {
+            <div class="col-lg">
+                <div class="py-3 px-4 bg-light-subtle border rounded-3">
+                    <h1 class="display-6">Sign in using your SOG work account</h1>
+
+                    <form asp-route-scheme="@LoginProviders.EntraIdScheme" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <button type="submit" class="btn btn-lg btn-outline-primary btn-img icon-link my-3 py-3 px-4"
+                                title="Sign in using your SOG work account">
+                            <img src="~/images/ms-symbol.svg" alt="" class="btn-img-bg me-1" /> Sign in
+                        </button>
+                    </form>
+
+                    @if (Model.EntraIdPhaseOut.Enabled)
+                    {
+                        var cssClass = DateOnly.FromDateTime(DateTime.Today) > Model.EntraIdPhaseOut.EndDate.AddDays(-30) ? "callout-danger" : "callout-warning";
+                        <div class="callout @cssClass">
+                            The SOG work account login is being phased out for EPD-IT applications and will be
+                            completely removed by @Model.EntraIdPhaseOut.EndDate.ToLongDateString(). Information
+                            on a replacement will be provided when available. For more information or assistance,
+                            contact <a asp-page="/Support">EPD-IT support</a>.
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
 </div>

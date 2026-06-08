@@ -5,11 +5,12 @@ using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using FMS.Infrastructure.Repositories;
 using FMS.Infrastructure.Services;
+using FMS.Platform.Authentication;
 using FMS.Platform.Extensions.DevHelpers;
 using FMS.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Web;
 using Mindscape.Raygun4Net;
 using Mindscape.Raygun4Net.AspNetCore;
 
@@ -33,10 +34,8 @@ namespace FMS
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<FmsDbContext>();
 
-            // Configure authentication
-            // An Azure AD app must be registered and configured in the settings file.
-            services.AddAuthentication().AddMicrosoftIdentityWebApp(Configuration, cookieScheme: null);
-            // Note: `cookieScheme: null` is mandatory. See https://github.com/AzureAD/microsoft-identity-web/issues/133#issuecomment-739550416
+            // Configure authentication and authorization.
+            services.ConfigureAuthentication(Configuration).AddAuthorizationPolicies();
 
             // Persist data protection keys
             services.AddDataProtection();
@@ -65,26 +64,9 @@ namespace FMS
             });
             services.AddRaygunUserProvider();
 
-            // Configure authorization policies 
-            services.AddAuthorization(opts =>
-            {
-                opts.AddPolicy(UserPolicies.FileCreatorOrEditor, policy =>
-                    policy.RequireRole(UserRoles.FileCreator, UserRoles.FileEditor));
-                opts.AddPolicy(UserPolicies.FileCreator, policy =>
-                    policy.RequireRole(UserRoles.FileCreator));
-                opts.AddPolicy(UserPolicies.FileEditor, policy =>
-                    policy.RequireRole(UserRoles.FileEditor));
-                opts.AddPolicy(UserPolicies.SiteMaintenance, policy =>
-                    policy.RequireRole(UserRoles.SiteMaintenance));
-                opts.AddPolicy(UserPolicies.UserMaintenance, policy =>
-                    policy.RequireRole(UserRoles.UserMaintenance));
-                opts.AddPolicy(UserPolicies.ComplianceOfficer, policy =>
-                    policy.RequireRole(UserRoles.ComplianceOfficer));
-                opts.AddPolicy(UserPolicies.FileEditorOrComplianceOfficer, policy =>
-                    policy.RequireRole(UserRoles.FileEditor, UserRoles.ComplianceOfficer));
-            });
-
             // Configure dependencies
+            services.AddScoped<IClaimsTransformation, AppClaimsTransformation>();
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFacilityRepository, FacilityRepository>();
             services.AddScoped<IFileRepository, FileRepository>();
