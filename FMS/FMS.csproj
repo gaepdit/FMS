@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <RootNamespace>FMS</RootNamespace>
@@ -73,6 +73,11 @@
       <ObjectName>filePath</ObjectName>
       <AbsolutePath>web.config</AbsolutePath>
     </MsDeploySkipRules>
+      <MsDeploySkipRules Include="SkipReportingFolder">
+          <ObjectName>dirPath</ObjectName>
+          <AbsolutePath>wwwroot\\Reporting</AbsolutePath>
+          <XPath></XPath>
+      </MsDeploySkipRules>
   </ItemGroup>
 
 </Project>
