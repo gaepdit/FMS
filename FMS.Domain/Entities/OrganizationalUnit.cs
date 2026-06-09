@@ -10,6 +10,9 @@ namespace FMS.Domain.Entities
         public OrganizationalUnit(OrganizationalUnitCreateDto newOrganizationalUnit)
         {
             Name = newOrganizationalUnit.Name;
+            UserProgram = newOrganizationalUnit.UserProgram;
         }
+
+        public UserProgram UserProgram { get; set; }
     }
 }
