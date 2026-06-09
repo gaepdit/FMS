@@ -1,11 +1,9 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
-using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -17,8 +15,18 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> UserExistsAsync(Guid id) =>
             await _context.Users.AnyAsync(e => e.Id == id);
 
+        public async Task<ApplicationUser> GetApplicationUser (Guid id) =>
+            await _context.Users.SingleOrDefaultAsync(e => e.Id == id);
+    
+
         public async Task<List<DashboardUserFacilitiesDto>> GetUserFacilitiesById(Guid id, bool includeInactive = false)
         {
+            var currentUser = await GetApplicationUser(id);
+            if (currentUser.UserPosition.Name == "" )
+            {
+
+            }
+
             return await _context.Facilities.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.County)
@@ -32,7 +40,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.StatusDetails)
                 .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
-                .Where(e => e.ComplianceOfficerId == id)
+                .Where(e => e.ComplianceOfficerId == id || e.Events.Any(ev => ev.ComplianceOfficerId == id))
                 .OrderByDescending(e => e.Active)
                 .Select(e => new DashboardUserFacilitiesDto(e))
                 .ToListAsync();

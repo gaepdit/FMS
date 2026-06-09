@@ -23,10 +23,16 @@
         <input type="hidden" asp-for="OrganizationalUnit.Active" />
         <input type="hidden" asp-for="Id" />
         <div class="row mb-3">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <label asp-for="OrganizationalUnit.Name">@MaintenanceOptions.OrganizationalUnit Name <span class="text-danger">*</span></label>
                 <input asp-for="OrganizationalUnit.Name" class="form-control" />
                 <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserProgramId"></label>
+                <select asp-for="UserProgramId" asp-items="Model.UserPrograms" class="form-select">
+                    <option value=""></option>
+                </select>
             </div>
         </div>
         <hr />

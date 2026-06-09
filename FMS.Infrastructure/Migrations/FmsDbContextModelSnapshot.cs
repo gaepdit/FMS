@@ -1996,7 +1996,12 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("UpdateUser")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserProgramId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserProgramId");
 
                     b.ToTable("OrganizationalUnits");
                 });
@@ -3092,6 +3097,15 @@ namespace FMS.Infrastructure.Migrations
                         .HasForeignKey("SubstanceId");
 
                     b.Navigation("Substance");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.OrganizationalUnit", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.UserProgram", "UserProgram")
+                        .WithMany()
+                        .HasForeignKey("UserProgramId");
+
+                    b.Navigation("UserProgram");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.Parcel", b =>

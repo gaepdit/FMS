@@ -13,6 +13,7 @@ namespace FMS.Domain.Dto
         {
             Active = organizationalUnit.Active;
             Name = organizationalUnit.Name;
+            UserProgram = organizationalUnit.UserProgram;
         }
 
         public bool Active { get; set; }
@@ -20,6 +21,9 @@ namespace FMS.Domain.Dto
         [Required(ErrorMessage = "Organizational Unit Name is required.")]
         [Display(Name = "Organizational Unit")]
         public string Name { get; set; }
+
+        [Display(Name = "Program")]
+        public UserProgram UserProgram { get; set; }
 
         public void TrimAll()
         {

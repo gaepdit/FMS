@@ -14,10 +14,17 @@
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="row mb-3">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <label asp-for="OrganizationalUnit.Name">@MaintenanceOptions.OrganizationalUnit Name <span class="text-danger">*</span></label>
                 <input asp-for="OrganizationalUnit.Name" class="form-control" />
                 <span asp-validation-for="OrganizationalUnit.Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="OrganizationalUnit.UserProgram.Id">Program <span class="text-danger">*</span></label>
+                <select asp-for="OrganizationalUnit.UserProgram.Id" asp-items="Model.UserPrograms" class="form-select">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="OrganizationalUnit.UserProgram.Id" class="text-danger"></span>
             </div>
         </div>
         <hr />

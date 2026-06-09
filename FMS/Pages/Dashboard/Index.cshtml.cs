@@ -11,7 +11,7 @@ namespace FMS.Pages.Dashboard
     public class IndexModel(
         IAuthorizationService authorization, 
         IUserService userService, 
-        IFacilityRepository _repository) : PageModel
+        IDashboardRepository _repository) : PageModel
     {
         public UserView CurrentUser { get; private set; }
         public string UserName {  get; set; }
@@ -30,7 +30,7 @@ namespace FMS.Pages.Dashboard
 
             UserName = CurrentUser.DisplayName;
 
-            //UserFacilities = await _repository.GetFacilitiesForUserAsync(CurrentUser.Id);
+            //UserFacilities = await _repository.(CurrentUser.Id);
 
             return Page();
         }

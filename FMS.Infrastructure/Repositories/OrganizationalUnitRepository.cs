@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Dto;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
@@ -22,6 +23,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<OrganizationalUnitEditDto> GetOrganizationalUnitAsync(Guid id)
         {
             var organizationalUnit = await _context.OrganizationalUnits.AsNoTracking()
+                .Include(e => e.UserProgram)
                 .SingleOrDefaultAsync(e => e.Id == id);
 
             if (organizationalUnit == null)
@@ -34,6 +36,7 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<OrganizationalUnitSummaryDto>> GetOrganizationalUnitListAsync() =>
             await _context.OrganizationalUnits.AsNoTracking()
+            .Include(e => e.UserProgram)
             .OrderByDescending(e => e.Active)
             .ThenBy(e => e.Name)
             .Select(e => new OrganizationalUnitSummaryDto(e))
@@ -63,15 +66,15 @@ namespace FMS.Infrastructure.Repositories
         }
 
 
-        public Task UpdateOrganizationalUnitAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates)
+        public Task UpdateOrganizationalUnitAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates, Guid? programId)
         {
             Prevent.NullOrEmpty(organizationalUnitUpdates.Name, nameof(organizationalUnitUpdates.Name));
 
-            return UpdateOrganizationalUnitInternalAsync(id, organizationalUnitUpdates);
+            return UpdateOrganizationalUnitInternalAsync(id, organizationalUnitUpdates, programId);
         }
 
         private async Task UpdateOrganizationalUnitInternalAsync(Guid id,
-            OrganizationalUnitEditDto organizationalUnitUpdates)
+            OrganizationalUnitEditDto organizationalUnitUpdates, Guid? programId)
         {
             var organizationalUnit = await _context.OrganizationalUnits.FindAsync(id);
 
@@ -85,6 +88,10 @@ namespace FMS.Infrastructure.Repositories
                 throw new ArgumentException(
                     $"Organizational Unit Name '{organizationalUnitUpdates.Name}' already exists.");
             }
+
+            organizationalUnit.UserProgram = programId is null
+            ? null
+            : await _context.UserPrograms.FindAsync(programId.Value).ConfigureAwait(false);
 
             organizationalUnit.Name = organizationalUnitUpdates.Name;
 

@@ -9,6 +9,7 @@ namespace FMS.Domain.Dto
             Id = organizationalUnit.Id;
             Active = organizationalUnit.Active;
             Name = organizationalUnit.Name;
+            UserProgram = organizationalUnit.UserProgram;
         }
 
         public Guid Id { get; }
@@ -16,5 +17,8 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Organizational Unit")]
         public string Name { get; }
+
+        [Display(Name = "Program")]
+        public UserProgram UserProgram { get; }
     }
 }
