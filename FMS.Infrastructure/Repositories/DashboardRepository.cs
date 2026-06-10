@@ -21,12 +21,6 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<List<DashboardUserFacilitiesDto>> GetUserFacilitiesById(Guid id, bool includeInactive = false)
         {
-            var currentUser = await GetApplicationUser(id);
-            if (currentUser.UserPosition.Name == "" )
-            {
-
-            }
-
             return await _context.Facilities.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.County)
@@ -48,6 +42,8 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<List<DashboardUnitFacilitiesDto>> GetUnitFacilitiesById(Guid id, bool includeInactive = false)
         {
+            var currentUser = await GetApplicationUser(id);
+
             return await _context.Facilities.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.County)
@@ -61,7 +57,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.StatusDetails)
                 .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
-                .Where(e => e.OrganizationalUnitId == id)
+                .Where(e => e.OrganizationalUnitId == currentUser.UserUnit.Id)
                 .OrderByDescending(e => e.Active)
                 .Select(e => new DashboardUnitFacilitiesDto(e))
                 .ToListAsync();
