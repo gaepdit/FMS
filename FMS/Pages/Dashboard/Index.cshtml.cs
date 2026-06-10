@@ -1,3 +1,4 @@
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
@@ -16,7 +17,7 @@ namespace FMS.Pages.Dashboard
         public UserView CurrentUser { get; private set; }
         public string UserName {  get; set; }
         public IList<string> Roles { get; private set; }
-        public IList<Facility> UserFacilities { get; set; }
+        public IList<DashboardUserFacilitiesDto> UserFacilities { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -30,7 +31,7 @@ namespace FMS.Pages.Dashboard
 
             UserName = CurrentUser.DisplayName;
 
-            //UserFacilities = await _repository.(CurrentUser.Id);
+            UserFacilities = await _repository.GetUserFacilitiesById(CurrentUser.Id);
 
             return Page();
         }
