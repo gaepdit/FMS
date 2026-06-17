@@ -27,7 +27,7 @@ namespace FMS.Pages.Reporting.SiteSummary
         [BindProperty]
         public IReadOnlyList<FacilityBasicDto> SummaryList { get; set; } = [];
 
-        public string SiteSummaryURL { get; set; } = GlobalConstants.SiteSummaryReportPath;
+        public string SiteSummaryURL { get; set; }
 
         public bool ShowResults { get; private set; }
 

@@ -5,15 +5,7 @@ namespace FMS.Domain.Dto
 {
     public class SiteSummaryListDto
     {
-        private const string siteSummaryReportPathPdfDev = "https://dev-fms.gaepd.org/Reporting/SiteSummary/2026/26-";
-
-        private const string siteSummaryReportPathPdfProd = "https://fms.gaepd.org/Reporting/SiteSummary/2026/26-";
-
-        private const string siteSummaryReportPathPdfUat = "https://uat-fms.gaepd.org/Reporting/SiteSummary/2026/26-";
-
-        private const string pdfSuffix = ".pdf";
-
-        public SiteSummaryListDto(Facility facility) 
+        public SiteSummaryListDto(Facility facility)
         {
             FacilityNumber = facility.FacilityNumber;
             FacilityName = facility.Name;
@@ -47,9 +39,9 @@ namespace FMS.Domain.Dto
                 string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
                 return environment switch
                 {
-                    "Development" => siteSummaryReportPathPdfDev + FacilityNumber + pdfSuffix,
-                    "UAT" => siteSummaryReportPathPdfUat + FacilityNumber + pdfSuffix,
-                    _ => siteSummaryReportPathPdfProd + FacilityNumber + pdfSuffix,
+                    "Development" => DomainConstants.siteSummaryReportPathPdfDev + FacilityNumber + DomainConstants.pdfSuffix,
+                    "UAT" => DomainConstants.siteSummaryReportPathPdfUat + FacilityNumber + DomainConstants.pdfSuffix,
+                    _ => DomainConstants.siteSummaryReportPathPdfProd + FacilityNumber + DomainConstants.pdfSuffix,
                 };
             }
         }
