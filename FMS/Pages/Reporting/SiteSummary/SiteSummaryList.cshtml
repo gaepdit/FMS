@@ -5,7 +5,7 @@
 }
 
 @{
-    ViewData["Title"] = $"Site Summary List by {Model.Spec.SortBy.ToString()}";
+    ViewData["Title"] = $"Site Summary List by {Model.Spec.GetSiteSummarySortText(Model.Spec.SortBy)}";
 }
 <div class="page-wrapper">
     <h3 class="centered-content">@ViewData["Title"]</h3>

@@ -83,5 +83,27 @@
             Include,
             Exclude
         }
-    }
+
+        public string GetSiteSummarySortText(SiteSummarySortBy sortBy)
+        {
+            var title = "";
+            switch (sortBy)
+            {
+                case SiteSummarySortBy.Facility_Number:
+                    title += " Facility Number";
+                    break;
+                case SiteSummarySortBy.Facility_Name:
+                    title += " Facility Name";
+                    break;
+                case SiteSummarySortBy.County:
+                    title += " County";
+                    break;
+                case SiteSummarySortBy.Class:
+                    title += " Class";
+                    break;
+            }
+            
+            return title;
+        }
+}
 }
