@@ -26,5 +26,6 @@
 
 
         public const string SiteSummaryReportPath = "/Reporting/SiteSummary/Report/";
+
     }
 }

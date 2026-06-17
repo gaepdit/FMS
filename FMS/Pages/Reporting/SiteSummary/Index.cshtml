@@ -63,21 +63,27 @@
                     </p>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label>
-                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.FacilityNumber)
+                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.Facility_Number)
                             Facility Number
                         </label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <label>
+                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.Facility_Name)
+                            Facility Name
+                        </label>
+                    </div>
+                    <div class="col-md-3">
                         <label>
                             @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.County)
                             County
                         </label>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label>
-                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.LocationClass)
+                            @Html.RadioButtonFor(m => m.Spec.SortBy, SiteSummaryQuerySpec.SiteSummarySortBy.Class)
                             Class
                         </label>
                     </div>
@@ -178,6 +184,7 @@
                 <input type="hidden" asp-for="Spec.IsLandFill" />
                 <input type="hidden" asp-for="Spec.LocationClassId" />
                 <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
+                <input type="hidden" asp-for="Spec.SortBy" />
                 <div class="row">
                     <div class="col-auto">
                         <h3>Site Summary URL List</h3>
@@ -228,6 +235,7 @@
                         <th scope="col">Organizational Unit</th>
                         <th scope="col">Compliance Officer</th>
                         <th scope="col">County</th>
+                        <th scope="col">Class</th>
                         <th scope="col">Latitude/Longitude</th>
                     </tr>
                 </thead>
@@ -244,6 +252,7 @@
                             <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
                             <td>@Html.DisplayFor(m => item.County.Name, "StringOrNone")</td>
+                            <td>@Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")</td>
                             <td>
                                 @Html.DisplayFor(m => item.Latitude, "DecimalOrNone")/@Html.DisplayFor(m => item.Longitude, "DecimalOrNone")
                             </td>

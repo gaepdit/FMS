@@ -257,13 +257,17 @@ header {
 
 .summarylisthead {
     display: grid;
-    grid-template-columns: 100px 300px 400px;
+    grid-template-columns: 50px 210px 100px 40px 400px;
     font-weight: bold;
 }
 
 .summarylist {
     display: grid;
-    grid-template-columns: 100px 300px 400px;
+    grid-template-columns: 50px 210px 100px 40px 400px;
+}
+
+.centered-content {
+    text-align: center;
 }
 
 /* Footer */

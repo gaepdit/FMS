@@ -562,7 +562,7 @@ namespace FMS.Infrastructure.Repositories
                         .ThenBy(e => e.FacilityNumber)
                         .ToList();
                     break;
-                case SiteSummaryQuerySpec.SiteSummarySortBy.LocationClass:
+                case SiteSummaryQuerySpec.SiteSummarySortBy.Class:
                     siteSummarySorted = facilityList
                         .OrderBy(e => e.LocationDetails.LocationClass.Name)
                         .ThenBy(e => e.FacilityNumber)
@@ -632,12 +632,17 @@ namespace FMS.Infrastructure.Repositories
                         .ThenBy(e => e.FacilityNumber)
                         .ToList();
                     break;
-                case SiteSummaryQuerySpec.SiteSummarySortBy.LocationClass:
+                case SiteSummaryQuerySpec.SiteSummarySortBy.Class:
                     siteSummarySorted = siteSummaryUnsorted
                         .OrderBy(e => e.LocationClass.Name)
                         .ThenBy(e => e.FacilityNumber)
                         .ToList();
                     break;
+                    case SiteSummaryQuerySpec.SiteSummarySortBy.Facility_Name:
+                        siteSummarySorted = siteSummaryUnsorted
+                        .OrderBy(e => e.Name)
+                        .ToList();
+                        break;
                 default:
                     siteSummarySorted = siteSummaryUnsorted
                         .OrderBy(e => e.FacilityNumber)
@@ -706,8 +711,13 @@ namespace FMS.Infrastructure.Repositories
             return facility;
         }
 
-        public async Task<IReadOnlyList<SiteSummaryListDto>> GetSiteSummaryListAsync(SiteSummaryQuerySpec spec) =>
-            await _context.Facilities
+        public async Task<IReadOnlyList<SiteSummaryListDto>> GetSiteSummaryListAsync(SiteSummaryQuerySpec spec)
+        {
+            var facilities = await _context.Facilities
+                .Include(e => e.County)
+                .Include(e => e.HsrpFacilityProperties)
+                .Include(e => e.LocationDetails)
+                .ThenInclude(e => e.LocationClass)
                 .Where(e => e.Active)
                 .Where(e => e.FacilityStatus.Status == "Active")
                 .Where(e => e.FacilityType.Name == "HSI")
@@ -722,9 +732,38 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => !spec.AdditionalOrganizationalUnitId.HasValue ||
                             e.HsrpFacilityProperties.OrganizationalUnit.Id.Equals(spec.AdditionalOrganizationalUnitId))
                 .Where(e => !spec.IsLandFill || e.StatusDetails.LandFill)
-                .OrderBy(e => e.FacilityNumber)
                 .Select(e => new SiteSummaryListDto(e))
                 .ToListAsync();
+
+            List<SiteSummaryListDto> siteSummarySorted;
+            switch (spec.SortBy)
+            {
+                case SiteSummaryQuerySpec.SiteSummarySortBy.County:
+                    siteSummarySorted = facilities
+                        .OrderBy(e => e.County.ToString())
+                        .ThenBy(e => e.FacilityName)
+                        .ToList();
+                    break;
+                case SiteSummaryQuerySpec.SiteSummarySortBy.Class:
+                    siteSummarySorted = facilities
+                        .OrderBy(e => e.Class.ToString())
+                        .ThenBy(e => e.FacilityName)
+                        .ToList();
+                    break;
+                case SiteSummaryQuerySpec.SiteSummarySortBy.Facility_Name:
+                    siteSummarySorted = facilities
+                    .OrderBy(e => e.FacilityName)
+                    .ToList();
+                    break;
+                default:
+                    siteSummarySorted = facilities
+                        .OrderBy(e => e.FacilityNumber)
+                        .ToList();
+                    break;
+            }
+
+            return siteSummarySorted;
+        }
 
         public async Task<IReadOnlyList<SiteSummaryPdfListDto>> GetSiteSummaryPdfListAsync(SiteSummaryQuerySpec spec) =>
             await _context.Facilities

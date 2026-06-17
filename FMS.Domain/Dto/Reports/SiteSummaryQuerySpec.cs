@@ -8,7 +8,7 @@
         public SiteSummaryAddlOrgUnitInclusion Include { get; set; } = SiteSummaryAddlOrgUnitInclusion.All;
 
         [Display(Name = "Sort By")]
-        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.FacilityNumber;   
+        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.Facility_Number;   
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
@@ -71,9 +71,10 @@
 
         public enum SiteSummarySortBy
         {
-            FacilityNumber,
+            Facility_Number,
+            Facility_Name,
             County,
-            LocationClass
+            Class
         }
 
         public enum SiteSummaryAddlOrgUnitInclusion
@@ -82,5 +83,27 @@
             Include,
             Exclude
         }
-    }
+
+        public string GetSiteSummarySortText(SiteSummarySortBy sortBy)
+        {
+            var title = "";
+            switch (sortBy)
+            {
+                case SiteSummarySortBy.Facility_Number:
+                    title += " Facility Number";
+                    break;
+                case SiteSummarySortBy.Facility_Name:
+                    title += " Facility Name";
+                    break;
+                case SiteSummarySortBy.County:
+                    title += " County";
+                    break;
+                case SiteSummarySortBy.Class:
+                    title += " Class";
+                    break;
+            }
+            
+            return title;
+        }
+}
 }
