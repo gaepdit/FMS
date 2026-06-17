@@ -571,7 +571,7 @@ namespace FMS
                 table.ShowHeaderRow = true;
                 ws.Columns().AdjustToContents(1, 10000);
 
-                var urlColumn = table.DataRange.Column(3);
+                var urlColumn = table.DataRange.Column(5);
 
                 foreach (var cell in urlColumn.Cells())
                 {

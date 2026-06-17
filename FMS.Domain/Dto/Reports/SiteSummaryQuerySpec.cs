@@ -8,7 +8,7 @@
         public SiteSummaryAddlOrgUnitInclusion Include { get; set; } = SiteSummaryAddlOrgUnitInclusion.All;
 
         [Display(Name = "Sort By")]
-        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.FacilityNumber;   
+        public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.Facility_Number;   
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
@@ -71,9 +71,10 @@
 
         public enum SiteSummarySortBy
         {
-            FacilityNumber,
+            Facility_Number,
+            Facility_Name,
             County,
-            LocationClass
+            Class
         }
 
         public enum SiteSummaryAddlOrgUnitInclusion
