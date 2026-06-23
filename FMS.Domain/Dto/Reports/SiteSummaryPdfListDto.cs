@@ -31,9 +31,9 @@ namespace FMS.Domain.Dto.Reports
             {
                 "A" => "small_yellow",
                 "LE" => "small_green",
-                "LI" => "small_green",
+                "LI" => "small_red",
                 "P" => "small_red",
-                "SE" => "small_red",
+                "SE" => "small_green",
                 "SI" => "small_red",
                 _ => string.Empty
             };
