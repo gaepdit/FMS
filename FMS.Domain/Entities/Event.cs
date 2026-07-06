@@ -23,6 +23,7 @@ namespace FMS.Domain.Entities
         }
 
         public Guid FacilityId { get; set; }
+        public Facility Facility { get; set; }
 
         public Guid? ParentId { get; set; }
 

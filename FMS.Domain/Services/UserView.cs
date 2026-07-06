@@ -17,8 +17,8 @@ namespace FMS.Domain.Services
         }
 
         public Guid Id { get; }
-        private string GivenName { get; }
-        private string FamilyName { get; }
+        public string GivenName { get; }
+        public string FamilyName { get; }
         public string Email { get; }
         public UserProgram UserProgram { get; }
         public OrganizationalUnit UserUnit { get; }
@@ -26,5 +26,7 @@ namespace FMS.Domain.Services
 
         public string DisplayName =>
             string.Join(" ", new[] { GivenName, FamilyName }.Where(s => !string.IsNullOrEmpty(s)));
+
+        public string Name => string.Join(", ", new[] { FamilyName, GivenName }.Where(s => !string.IsNullOrEmpty(s)));
     }
 }
