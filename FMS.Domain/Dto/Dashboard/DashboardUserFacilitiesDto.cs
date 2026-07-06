@@ -21,6 +21,7 @@ namespace FMS.Domain.Dto
         }
 
         public Guid Id { get; set; }
+
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; }
 

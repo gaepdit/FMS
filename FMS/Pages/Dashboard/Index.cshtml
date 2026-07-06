@@ -1,5 +1,6 @@
 ﻿@page
 @using FMS.Pages.Dashboard
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Dashboard.IndexModel
 
 @{
@@ -15,162 +16,145 @@
                     @Model.UserName's Facilities
                 </button>
             </h3>
-            <div id="CurrentFacilities" class="accordion-collapse" aria-labelledby="Current Facilities List">
+            <div id="CurrentFacilities" class="accordion-collapse collapse" aria-labelledby="Current Facilities List">
                 <div class="accordion-body">
                     <div class="container bg-light-subtle p-3 m-1 rounded-3">
                         <form method="post">
                             <table class="table" aria-label="List of User Facilities">
-                                <h4>My Facilities</h4>
+                                <h4>Facilities for Compliance Officer: @Model.CurrentUser.DisplayName</h4>
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col" class="col">Name</th>
                                         <th scope="col" class="col">Number</th>
+                                        <th scope="col" class="col">Name</th>
                                         <th scope="col" class="col">Unit</th>
-                                        <th scope="col" class="col">C.O.</th>
                                         <th scope="col" class="col">County</th>
                                         <th scope="col" class="col">Class</th>
                                         <th scope="col" class="col">Add'l Org Unit</th>
-                                        <th scope="col" class="col">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.UserFacilities)
                                     {
                                         <tr class="@(!item.Active ? "table-warning" : "")">
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.Name, "StringOrNone")
-                                                @Html.DisplayFor(m => item.Active, "BoolRemoved")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.OrganizationalUnit, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.ComplianceOfficer, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.County, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.LocationClass, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.AddlOrgUnit, "StringOrNone")
-                                            </td>
                                             <td>
-                                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
                                                     @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
                                                 </a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.AddlOrgUnit.Name, "StringOrNone")
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
                         </form>
-                        <form method="post">
-                            <table class="table" aria-label="List of Unit Facilities">
-                                <h4>Active Unit Facilities</h4>
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col" class="col">Name</th>
-                                        <th scope="col" class="col">Number</th>
-                                        <th scope="col" class="col">Unit</th>
-                                        <th scope="col" class="col">C.O.</th>
-                                        <th scope="col" class="col">County</th>
-                                        <th scope="col" class="col">Class</th>
-                                        <th scope="col" class="col">Add'l Org Unit</th>
-                                        <th scope="col" class="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.UserFacilities)
-                                    {
-                                        <tr class="@(!item.Active ? "table-warning" : "")">
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.Name, "StringOrNone")
-                                                @Html.DisplayFor(m => item.Active, "BoolRemoved")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.OrganizationalUnit, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.ComplianceOfficer, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.County, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.LocationClass, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.AddlOrgUnit, "StringOrNone")
-                                            </td>
-                                            <td>
-                                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                                </a>
-                                            </td>
+                        @if (Model.CurrentUser.UserPosition.Name == "PM1")
+                        {
+                            <form method="post">
+                                <table class="table" aria-label="List of Unit Facilities">
+                                    <h4>Active Unit Facilities for Unit: @Model.CurrentUser.UserUnit.Name</h4>
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="col">Number</th>
+                                            <th scope="col" class="col">Name</th>
+                                            <th scope="col" class="col">C.O.</th>
+                                            <th scope="col" class="col">County</th>
+                                            <th scope="col" class="col">Class</th>
+                                            <th scope="col" class="col">Add'l Org Unit</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </form>
-                        <form method="post">
-                            <table class="table" aria-label="List of User Facilities">
-                                <h4>Active Program Facilities</h4>
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col" class="col">Name</th>
-                                        <th scope="col" class="col">Number</th>
-                                        <th scope="col" class="col">Unit</th>
-                                        <th scope="col" class="col">C.O.</th>
-                                        <th scope="col" class="col">County</th>
-                                        <th scope="col" class="col">Class</th>
-                                        <th scope="col" class="col">Add'l Org Unit</th>
-                                        <th scope="col" class="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.UserFacilities)
-                                    {
-                                        <tr class="@(!item.Active ? "table-warning" : "")">
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.Name, "StringOrNone")
-                                                @Html.DisplayFor(m => item.Active, "BoolRemoved")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.OrganizationalUnit, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.ComplianceOfficer, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.County, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.LocationClass, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.AddlOrgUnit, "StringOrNone")
-                                            </td>
-                                            <td>
-                                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                                </a>
-                                            </td>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.UnitFacilities)
+                                        {
+                                            <tr class="@(!item.Active ? "table-warning" : "")">
+                                                <td>
+                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.AddlOrgUnit.Name, "StringOrNone")
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </form>
+                        }
+                        @if (Model.CurrentUser.UserPosition.Name == "PM2")
+                        {
+                            <form method="post">
+                                <table class="table" aria-label="List of Program Facilities">
+                                    <h4>Active Program Facilities for Program: @Model.CurrentUser.UserProgram.Name</h4>
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="col">Number</th>
+                                            <th scope="col" class="col">Name</th>
+                                            <th scope="col" class="col">Unit</th>
+                                            <th scope="col" class="col">C.O.</th>
+                                            <th scope="col" class="col">County</th>
+                                            <th scope="col" class="col">Class</th>
+                                            <th scope="col" class="col">Add'l Org Unit</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </form>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.ProgramFacilities)
+                                        {
+                                            <tr class="@(!item.Active ? "table-warning" : "")">
+                                                <td>
+                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.AddlOrgUnit.Name, "StringOrNone")
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </form>
+                        }
                     </div>
                 </div>
             </div>
@@ -185,29 +169,184 @@
             <div id="CurrentUserEvents" class="accordion-collapse collapse" aria-labelledby="Current Events">
                 <div class="accordion-body">
                     <div class="container bg-light-subtle p-3 m-1 rounded-3">
-                        <div class="row">
-                            <p>Event Info</p>
-                        </div>
+                        <form method="post">
+                            <table class="table" aria-label="List of Events">
+                                <h4>Active Events for Compliance Officer: @Model.CurrentUser.Name</h4>
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" class="col">Facility Number</th>
+                                        <th scope="col" class="col">Event Type</th>
+                                        <th scope="col" class="col">Action Taken</th>
+                                        <th scope="col" class="col">Start Date</th>
+                                        <th scope="col" class="col">Due Date</th>
+                                        <th scope="col" class="col">Completion Date</th>
+                                        <th scope="col" class="col">Event Amount</th>
+                                        <th scope="col" class="col">Event Contractor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.UserEvents)
+                                    {
+                                        <tr class="@(!item.Active ? "table-warning" : "")">
+                                            <td>
+                                                <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                </a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(m => item.EventType.Name, "StringOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.ActionTaken.Name, "StringOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.StartDate, "DateOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.DueDate, "DateOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.CompletionDate, "DateOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.EventAmount, "DecimalOrNone")
+                                            </td>
+                                            <td class="text-nowrap">
+                                                @Html.DisplayFor(m => item.Contractor.Name, "StringOrNone")
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </form>
+                        @if (Model.CurrentUser.UserPosition.Name == "PM1")
+                        {
+                            <form method="post">
+                                <table class="table" aria-label="List of Events">
+                                    <h4>Active Events for Unit: @Model.CurrentUser.UserUnit.Name</h4>
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="col">Facility Number</th>
+                                            <th scope="col" class="col">Event Type</th>
+                                            <th scope="col" class="col">Action Taken</th>
+                                            <th scope="col" class="col">Start Date</th>
+                                            <th scope="col" class="col">Due Date</th>
+                                            <th scope="col" class="col">Completion Date</th>
+                                            <th scope="col" class="col">Event Amount</th>
+                                            <th scope="col" class="col">Event Contractor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.UserEvents)
+                                        {
+                                            <tr class="@(!item.Active ? "table-warning" : "")">
+                                                <td>
+                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.EventType.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.ActionTaken.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.StartDate, "DateOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.DueDate, "DateOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.CompletionDate, "DateOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.EventAmount, "DecimalOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.Contractor.Name, "StringOrNone")
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </form>
+                        }
+                        @if (Model.CurrentUser.UserPosition.Name == "PM2")
+                        {
+                            <form method="post">
+                                <table class="table" aria-label="List of Events">
+                                    <h4>Active Events for Program: @Model.CurrentUser.UserProgram.Name</h4>
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="col">Facility Number</th>
+                                            <th scope="col" class="col">Event Type</th>
+                                            <th scope="col" class="col">Action Taken</th>
+                                            <th scope="col" class="col">Start Date</th>
+                                            <th scope="col" class="col">Due Date</th>
+                                            <th scope="col" class="col">Completion Date</th>
+                                            <th scope="col" class="col">Event Amount</th>
+                                            <th scope="col" class="col">Event Contractor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.UserEvents)
+                                        {
+                                            <tr class="@(!item.Active ? "table-warning" : "")">
+                                                <td>
+                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.EventType.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.ActionTaken.Name, "StringOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.StartDate, "DateOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.DueDate, "DateOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.CompletionDate, "DateOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.EventAmount, "DecimalOrNone")
+                                                </td>
+                                                <td class="text-nowrap">
+                                                    @Html.DisplayFor(m => item.Contractor.Name, "StringOrNone")
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </form>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-    
-        <div class="accordion-item">
-            <h3 class="accordion-header" id="Data-Maintenance">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#DataMaintenance" aria-expanded="true" aria-controls="DataMaintenance">
-                    Data Maintenance
-                </button>
-            </h3>
-            <div id="DataMaintenance" class="accordion-collapse collapse" aria-labelledby="Data Maintenance">
-                <div class="accordion-body">
-                    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-                        <div class="row">
-                            <p>Data Maintenance Info</p>
+        @if (Model.CurrentUser.UserPosition.Name == "PM2" && Model.Roles.Contains(UserRoles.SiteMaintenance))
+        {
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="Data-Maintenance">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#DataMaintenance" aria-expanded="true" aria-controls="DataMaintenance">
+                        Data Maintenance
+                    </button>
+                </h3>
+                <div id="DataMaintenance" class="accordion-collapse collapse" aria-labelledby="Data Maintenance">
+                    <div class="accordion-body">
+                        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+                            <div class="row">
+                                <p>Data Maintenance Info</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 </div>
