@@ -1,6 +1,4 @@
 @using FMS.Domain.Entities.Users
-
-
 <nav class="navbar navbar-expand-sm bg-brand">
     <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerMain"
@@ -55,7 +53,7 @@
                         </li>
                         <li>
                             <form class="form-inline dropdown-item p-0" asp-page="/Account/Logout" method="post">
-                                <button type="submit" class="dropdown-item bg-danger  px-4 py-2">Sign out</button>
+                                <button type="submit" class="btn btn-danger d-block rounded-0 w-100 py-2 text-start">Sign out</button>
                             </form>
                         </li>
                     </ul>
@@ -64,7 +62,7 @@
                 <li class="nav-item dropdown bs-light-text">
                     <button class="nav-link dropdown-toggle text-white text-decoration-none" id="bd-theme" type="button"
                             aria-haspopup="menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" title="Toggle theme">
-                        <svg class="bi me-1 theme-icon-active invert-svg-color" width="18" height="18">
+                        <svg class="bi me-1 theme-icon-active" width="18" height="18">
                             <use href="#circle-half"></use>
                         </svg>
                         <span class="ms-2 visually-hidden" id="bd-theme-text">Toggle theme</span>

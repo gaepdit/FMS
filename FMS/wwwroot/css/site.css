@@ -1,5 +1,18 @@
-/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+/* Color modes
+-------------------------------------------------- */
+:root,
+[data-bs-theme="light"] {
+    --bs-body-bg: /*#C8E3E8;*/ #c8f8d5;
+    --callout-link: 10, 88, 202;
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: /*#507033;*/ #013901;
+    --callout-link: 110, 168, 254;
+}
+
+/* Base colors
+-------------------------------------------------- */
 
 a.navbar-brand {
     white-space: normal;
@@ -231,16 +244,40 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
-/* Login button 
+/* Button with image 
 -------------------------------------------------- */
 .btn-img {
     line-height: 1;
 }
 
 .btn-img img {
-    height: 25px;
+    height: 35px;
 }
 
+.btn-img-bg {
+    background: white;
+    box-shadow: 0 0 1px white;
+    padding: 2px;
+}
+
+.btn-img svg {
+    fill: #222;
+    transition: fill .15s ease-in-out;
+    border-radius: 4px;
+}
+
+[data-bs-theme="dark"] .btn-img svg {
+    fill: #fff;
+}
+
+.btn:hover svg,
+.btn:active svg,
+.btn:focus-visible svg {
+    fill: var(--bs-btn-hover-color);
+}
+
+/* Table caption
+-------------------------------------------------- */
 caption {
     caption-side: top;
 }
@@ -279,6 +316,64 @@ a[target]::after {
     box-shadow: 0 4px 8px rgba(130, 106, 15, 0.37);
 }
 
+/* Bootstrap Icons
+-------------------------------------------------- */
+.bi {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+    vertical-align: text-bottom;
+    overflow: visible !important;
+}
+
+/* Callouts
+-------------------------------------------------- */
+/* Adapted from the Bootstrap Docs (https://getbootstrap.com/).
+  Licensed under the Creative Commons Attribution 3.0 Unported License. */
+
+.callout {
+    --bs-link-color-rgb: var(--callout-link);
+    --callout-color: var(--bs-body-color);
+    --callout-bg: var(--bs-dark-bg-subtle);
+    --callout-border: var(--bs-dark-border-subtle);
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    color: var(--callout-color, inherit);
+    background-color: var(--callout-bg, var(--bs-gray-200));
+    border-left: 0.25rem solid var(--callout-border, var(--bs-gray-400));
+}
+
+.callout > :last-child {
+    margin-bottom: 0;
+}
+
+.callout + .callout {
+    margin-top: -.25rem;
+}
+
+.callout .highlight {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.callout-info {
+    --callout-color: var(--bs-info-text-emphasis);
+    --callout-bg: var(--bs-info-bg-subtle);
+    --callout-border: var(--bs-info-border-subtle);
+}
+
+.callout-warning {
+    --callout-color: var(--bs-warning-text-emphasis);
+    --callout-bg: var(--bs-warning-bg-subtle);
+    --callout-border: var(--bs-warning-border-subtle);
+}
+
+.callout-danger {
+    --callout-color: var(--bs-danger-text-emphasis);
+    --callout-bg: var(--bs-danger-bg-subtle);
+    --callout-border: var(--bs-danger-border-subtle);
+}
+
 /* Print styles
 -------------------------------------------------- */
 @media print {
@@ -292,19 +387,6 @@ a[target]::after {
     .banner-test-site::after {
         content: "—Not for public distribution";
     }
-}
-/* Bootstrap Icons
--------------------------------------------------- */
-.invert-svg-color {
-    -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
-    filter: invert(100%);
-}
-:root,
-[data-bs-theme=light] {
-    --bs-body-bg: /*#C8E3E8;*/ #c8f8d5;
-}
-[data-bs-theme=dark] {
-    --bs-body-bg: /*#507033;*/ #013901;
 }
 /* Chemical select box
 -------------------------------------------------- */
