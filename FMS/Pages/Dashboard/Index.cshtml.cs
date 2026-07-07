@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FMS.Pages.Dashboard
 {
@@ -27,7 +26,7 @@ namespace FMS.Pages.Dashboard
         public IList<DashboardUserEventsDto> UserEvents { get; set; } = new List<DashboardUserEventsDto>();
         public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = new List<DashboardUnitEventsDto>();
         public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = new List<DashboardProgramEventsDto>();
-        public IList<OrganizationalUnit> UserUnits { get; set; } 
+        public IList<OrganizationalUnit> UserUnits { get; set; } = new Collection<OrganizationalUnit>();
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -75,13 +74,20 @@ namespace FMS.Pages.Dashboard
             {
                 ProgramEvents = await _repository.GetProgramEventsByUserId(CurrentUser.Id);
 
-                UserUnits = [.. ProgramEvents
-                    .Where(programEvent => programEvent.Unit != null)
-                    .Select(programEvent => programEvent.Unit)
-                    .Distinct()
-                    .ToList()];
+                foreach (var programEvent in ProgramEvents)
+                {
+                    if (UserUnits.Contains(programEvent.Unit))
+                    {
+                        UserUnits.Add(programEvent.Unit);
+                    }
+                }
+
+                //UserUnits = [.. ProgramEvents
+                //    .Where(programEvent => programEvent.Unit != null)
+                //    .Select(programEvent => programEvent.Unit)
+                //    .Distinct()
+                //    .ToList()];
             }
-                    
 
             return Page();
         }
