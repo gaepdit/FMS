@@ -340,7 +340,7 @@
                                         <h4>Active Events for Program: @Model.CurrentUser.UserProgram.Name</h4>
                                         @foreach (var unit in Model.UserUnits)
                                         {
-                                            <h5>Unit Events: @unit.Name</h5>
+                                            <h5>Unit Events: @unit</h5>
                                             <form method="post">
                                                 <table class="table" aria-label="List of Events">
 
@@ -361,7 +361,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach (var item in Model.ProgramEvents.Where(e => e.Unit == unit))
+                                                        @foreach (var item in Model.ProgramEvents.Where(e => e.Unit?.Name == unit))
                                                         {
                                                             <tr class="@(!item.Active ? "table-warning" : "")">
                                                                 <td>
