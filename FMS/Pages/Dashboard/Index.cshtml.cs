@@ -81,12 +81,6 @@ namespace FMS.Pages.Dashboard
                         UserUnits.Add(programEvent.Unit?.Name);
                     }
                 }
-
-                //UserUnits = [.. ProgramEvents
-                //    .Where(programEvent => programEvent.Unit != null)
-                //    .Select(programEvent => programEvent.Unit)
-                //    .Distinct()
-                //    .ToList()];
             }
 
             return Page();
