@@ -26,7 +26,7 @@ namespace FMS.Pages.Dashboard
         public IList<DashboardUserEventsDto> UserEvents { get; set; } = new List<DashboardUserEventsDto>();
         public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = new List<DashboardUnitEventsDto>();
         public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = new List<DashboardProgramEventsDto>();
-        public IList<OrganizationalUnit> UserUnits { get; set; } = new Collection<OrganizationalUnit>();
+        public IList<string> UserUnits { get; set; } = new List<string>();
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -76,9 +76,9 @@ namespace FMS.Pages.Dashboard
 
                 foreach (var programEvent in ProgramEvents)
                 {
-                    if (UserUnits.Contains(programEvent.Unit))
+                    if (!UserUnits.Contains(programEvent.Unit?.Name) && programEvent.Unit?.Name != null)
                     {
-                        UserUnits.Add(programEvent.Unit);
+                        UserUnits.Add(programEvent.Unit?.Name);
                     }
                 }
 
