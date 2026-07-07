@@ -20,8 +20,7 @@ namespace FMS.Domain.Dto
             DueDate = facilityEvent.DueDate;
             CompletionDate = facilityEvent.CompletionDate;
             ComplianceOfficer = facilityEvent.ComplianceOfficer;
-            Contractor = facilityEvent.EventContractor;
-            EventAmount = facilityEvent.EventAmount;
+            Comment = facilityEvent.Comment?.Substring(0, Math.Min(facilityEvent.Comment.Length, 100));
             Active = facilityEvent.Active;
         }
 
@@ -50,11 +49,8 @@ namespace FMS.Domain.Dto
         [Display(Name = "Compliance Officer")]
         public ComplianceOfficer ComplianceOfficer { get; set; }
 
-        [Display(Name = "Contractor")]
-        public EventContractor Contractor { get; set; }
-
-        [Display(Name = "Event Amount")]
-        public Decimal? EventAmount { get; set; }
+        [Display(Name = "Comment")]
+        public string Comment { get; set; }
 
         public bool Active { get; set; }
     }
