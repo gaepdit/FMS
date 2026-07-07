@@ -161,7 +161,8 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.Facility.OrganizationalUnit.Id.Equals(currentUser.UserUnit.Id))
                 .Where(e => e.StartDate >= oneYearAgo)
-                .OrderByDescending(e => e.StartDate)
+                .OrderBy(e => e.ComplianceOfficer.FamilyName)
+                .ThenByDescending(e => e.StartDate)
                 .Select(e => new DashboardUnitEventsDto(e))
                 .ToListAsync();
         }
@@ -177,12 +178,13 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.EventContractor)
+                .Include(e => e.Facility.OrganizationalUnit)
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.Facility.OrganizationalUnit.UserProgram.Id.Equals(currentUser.UserProgram.Id))
                 .Where(e => e.StartDate >= oneYearAgo)
                 .OrderBy(e => e.Facility.OrganizationalUnit.Name)
                 .ThenBy(e => e.ComplianceOfficer.FamilyName)
-                .ThenBy(e => e.Facility.FacilityNumber)
+                .ThenByDescending(e => e.StartDate)
                 .Select(e => new DashboardProgramEventsDto(e))
                 .ToListAsync();
         }
