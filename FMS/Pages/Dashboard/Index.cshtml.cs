@@ -12,7 +12,6 @@ using System.Collections.ObjectModel;
 namespace FMS.Pages.Dashboard
 {
     public class IndexModel(
-        IAuthorizationService authorization,
         IUserService userService,
         IDashboardRepository _repository) : PageModel
     {
