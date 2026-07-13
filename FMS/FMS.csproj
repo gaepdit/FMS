@@ -26,7 +26,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Identity.Web" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" />
-    <PackageReference Include="Mindscape.Raygun4Net.AspNetCore" />
     <PackageReference Include="SonarAnalyzer.CSharp" Condition="'$(Configuration)' == 'Debug'">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
