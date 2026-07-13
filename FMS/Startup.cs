@@ -11,8 +11,6 @@ using FMS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Mindscape.Raygun4Net;
-using Mindscape.Raygun4Net.AspNetCore;
 
 namespace FMS
 {
@@ -45,24 +43,6 @@ namespace FMS
 
             // Configure HSTS
             services.AddHsts(opts => { opts.MaxAge = TimeSpan.FromDays(365 * 2); });
-
-            // Configure Raygun
-            services.AddSingleton(provider =>
-            {
-                var client = new RaygunClient(provider.GetService<RaygunSettings>()!,
-                    provider.GetService<IRaygunUserProvider>()!);
-                client.SendingMessage += (_, eventArgs) =>
-                    eventArgs.Message.Details.Tags.Add(WebHostEnvironment.EnvironmentName);
-                return client;
-            });
-            services.AddRaygun(opts =>
-            {
-                opts.ApiKey = Configuration["RaygunSettings:ApiKey"];
-                opts.ApplicationVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3);
-                opts.ExcludeErrorsFromLocal = true;
-                opts.IgnoreFormFieldNames = ["*Password"];
-            });
-            services.AddRaygunUserProvider();
 
             // Configure dependencies
             services.AddScoped<IClaimsTransformation, AppClaimsTransformation>();
@@ -127,14 +107,12 @@ namespace FMS
             {
                 // Dev web server
                 app.UseDeveloperExceptionPage();
-                app.UseRaygun();
             }
             else
             {
                 // Staging & Production web servers
                 app.UseExceptionHandler("/Error");
                 app.UseStatusCodePages();
-                app.UseRaygun();
                 app.UseHsts();
             }
 
