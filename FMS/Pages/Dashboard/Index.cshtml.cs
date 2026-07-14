@@ -1,13 +1,8 @@
 using FMS.Domain.Dto;
-using FMS.Domain.Entities;
-using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
-using FMS.Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.ObjectModel;
 
 namespace FMS.Pages.Dashboard
 {
@@ -26,6 +21,8 @@ namespace FMS.Pages.Dashboard
         public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = new List<DashboardUnitEventsDto>();
         public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = new List<DashboardProgramEventsDto>();
         public IList<string> UserUnits { get; set; } = new List<string>();
+
+        public IList<string> UserCOs { get; set; } = new List<string>();
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -84,5 +81,7 @@ namespace FMS.Pages.Dashboard
 
             return Page();
         }
+
+      
     }
 }

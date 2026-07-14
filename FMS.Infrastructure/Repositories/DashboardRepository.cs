@@ -1,5 +1,4 @@
 ﻿using FMS.Domain.Dto;
-using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
@@ -63,7 +62,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.ComplianceOfficerId == id)
                 .Where(e => e.FacilityType.Name == "HSI")
                 .Where(e => e.FacilityStatus.Status == "Active")
-                .OrderByDescending(e => e.Active)
+                .OrderBy(e => e.Name)
                 .Select(e => new DashboardUserFacilitiesDto(e))
                 .ToListAsync();
             return facilities;
@@ -92,7 +91,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.FacilityStatus.Status == "Active")
                 .Where(e => e.Events.Any(ev => ev.StartDate >= oneYearAgo))
                 .OrderBy(e => e.ComplianceOfficer.FamilyName)
-                .ThenBy(e => e.FacilityNumber)
+                .ThenBy(e => e.Name)
                 .Select(e => new DashboardUnitFacilitiesDto(e))
                 .ToListAsync();
         }
@@ -120,7 +119,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.Events.Any(ev => ev.StartDate >= oneYearAgo))
                 .OrderBy(e => e.OrganizationalUnit.Name)
                 .ThenBy(e => e.ComplianceOfficer.FamilyName)
-                .ThenBy(e => e.FacilityNumber)
+                .ThenBy(e => e.Name)
                 .Select(e => new DashboardProgramFacilitiesDto(e))
                 .ToListAsync();
         }
