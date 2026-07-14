@@ -14,15 +14,13 @@ namespace FMS.Pages.Dashboard
         public string UserName { get; set; }
         public Guid UserCOId { get; set; } = Guid.Empty;
         public IList<string> Roles { get; private set; }
-        public IList<DashboardUserFacilitiesDto> UserFacilities { get; set; } = new List<DashboardUserFacilitiesDto>();
-        public IList<DashboardUnitFacilitiesDto> UnitFacilities { get; set; } = new List<DashboardUnitFacilitiesDto>();
-        public IList<DashboardProgramFacilitiesDto> ProgramFacilities { get; set; } = new List<DashboardProgramFacilitiesDto>();
-        public IList<DashboardUserEventsDto> UserEvents { get; set; } = new List<DashboardUserEventsDto>();
-        public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = new List<DashboardUnitEventsDto>();
-        public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = new List<DashboardProgramEventsDto>();
-        public IList<string> UserUnits { get; set; } = new List<string>();
-
-        public IList<string> UserCOs { get; set; } = new List<string>();
+        public IList<DashboardUserFacilitiesDto> UserFacilities { get; set; } = [];
+        public IList<DashboardUnitFacilitiesDto> UnitFacilities { get; set; } = [];
+        public IList<DashboardProgramFacilitiesDto> ProgramFacilities { get; set; } = [];
+        public IList<DashboardUserEventsDto> UserEvents { get; set; } = [];
+        public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = [];
+        public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = [];
+        public IList<string> UserUnits { get; set; } = [];
 
         public async Task<IActionResult> OnGetAsync()
         {
