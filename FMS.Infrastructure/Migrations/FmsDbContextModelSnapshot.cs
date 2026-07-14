@@ -2653,9 +2653,9 @@ namespace FMS.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("ObjectId")
-                        .IsUnique()
-                        .HasFilter("[ObjectId] IS NOT NULL");
+                    //b.HasIndex("ObjectId")
+                    //    .IsUnique()
+                    //    .HasFilter("[ObjectId] IS NOT NULL");
 
                     b.HasIndex("UserPositionId");
 
