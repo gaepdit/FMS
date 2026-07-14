@@ -11,7 +11,6 @@ namespace FMS.Domain.Dto
         {
             Id = facility.Id;
             Name = facility.Name;
-            Name = facility.Name;
             FacilityNumber = facility.FacilityNumber;
             OrganizationalUnit = facility.OrganizationalUnit;
             ComplianceOfficer = facility.ComplianceOfficer;
@@ -42,6 +41,7 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Add'l Org Unit")]
         public OrganizationalUnit AddlOrgUnit { get; set; }
+
         public bool Active { get; set; }
     }
 }

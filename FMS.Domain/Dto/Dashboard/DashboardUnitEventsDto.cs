@@ -14,6 +14,7 @@ namespace FMS.Domain.Dto
             Id = facilityEvent.Id;
             FacilityId = facilityEvent.FacilityId;
             FacilityNumber = facilityEvent.Facility?.FacilityNumber;
+            FacilityName = facilityEvent.Facility?.Name;
             EventType = facilityEvent.EventType;
             ActionTaken = facilityEvent.ActionTaken;
             StartDate = facilityEvent.StartDate;
@@ -30,6 +31,9 @@ namespace FMS.Domain.Dto
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; }
+
+        [Display(Name = "Facility Name")]
+        public string FacilityName { get; set; }
 
         [Display(Name = "Event Type")]
         public EventType EventType { get; }
