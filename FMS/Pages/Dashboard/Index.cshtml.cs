@@ -21,6 +21,7 @@ namespace FMS.Pages.Dashboard
         public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = [];
         public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = [];
         public IList<string> UserUnits { get; set; } = [];
+        public IList<string> UserCOs { get; set; } = [];
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -62,6 +63,14 @@ namespace FMS.Pages.Dashboard
             if (CurrentUser.UserPosition.Name == "PM1")
             {
                 UnitEvents = await _repository.GetUnitEventsByUserId(CurrentUser.Id);
+
+                foreach (var unitEvent in UnitEvents)
+                {
+                    if (!UserCOs.Contains(unitEvent.ComplianceOfficer?.Name) && unitEvent.ComplianceOfficer?.Name != null)
+                    {
+                        UserCOs.Add(unitEvent.ComplianceOfficer?.Name);
+                    }
+                }
             }
 
             if (CurrentUser.UserPosition.Name == "PM2")
@@ -75,8 +84,17 @@ namespace FMS.Pages.Dashboard
                         UserUnits.Add(programEvent.Unit?.Name);
                     }
                 }
+
+                foreach (var programEvent in ProgramEvents)
+                {
+                    if (!UserCOs.Contains(programEvent.ComplianceOfficer?.Name) && programEvent.ComplianceOfficer?.Name != null)
+                    {
+                        UserCOs.Add(programEvent.ComplianceOfficer?.Name);
+                    }
+                }
             }
 
+            
             return Page();
         }
 
