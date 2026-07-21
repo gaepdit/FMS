@@ -360,7 +360,7 @@ namespace FMS.Infrastructure.Repositories
 
         private async Task<Guid> CreateFacilityInternalAsync(FacilityCreateDto newFacility)
         {
-            if (await FacilityNumberExists(newFacility.FacilityNumber))
+            if (await FacilityNumberExists(newFacility.FacilityNumber, newFacility.FacilityTypeId))
             {
                 throw new ArgumentException($"Facility Number '{newFacility.FacilityNumber}' already exists.");
             }
@@ -542,9 +542,10 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null) =>
+        public Task<bool> FacilityNumberExists(string facilityNumber, Guid facilityTypeId, Guid? ignoreId = null) =>
             _context.Facilities.AnyAsync(e =>
                 e.FacilityNumber == facilityNumber
+                && e.FacilityTypeId == facilityTypeId
                 && (!ignoreId.HasValue || e.Id != ignoreId.Value));
 
         public Task<bool> DuplicateFacilityNumberExists(string newFacilityNumber, Guid oldFacilityId,

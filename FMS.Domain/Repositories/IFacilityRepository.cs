@@ -17,7 +17,7 @@ namespace FMS.Domain.Repositories
         Task UpdateFacilityAsync(Guid id, FacilityEditDto facilityUpdates);
         Task DeleteFacilityAsync(Guid id);
         Task UndeleteFacilityAsync(Guid id);
-        Task<bool> FacilityNumberExists(string facilityNumber, Guid? ignoreId = null);
+        Task<bool> FacilityNumberExists(string facilityNumber, Guid facilityTypeId, Guid? ignoreId = null);
         Task<bool> DuplicateFacilityNumberExists(string newFacilityNumber, Guid oldFacilityId, Guid facilityTypeId);
         Task<bool> FileLabelExists(string fileLabel);
         Task<int> GetNextSequenceForCountyAsync(int countyId);

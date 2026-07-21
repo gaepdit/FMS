@@ -104,7 +104,7 @@ namespace FMS.Pages.Facilities
             }
 
             // When adding a new facility number, make sure the number doesn't already exist before trying to save.
-            if (await _repository.FacilityNumberExists(Facility.FacilityNumber))
+            if (await _repository.FacilityNumberExists(Facility.FacilityNumber, Facility.FacilityTypeId))
             {
                 ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists.");
             }
@@ -192,7 +192,7 @@ namespace FMS.Pages.Facilities
             }
 
             // When adding a new facility number, make sure the number doesn't already exist before trying to save.
-            if (await _repository.FacilityNumberExists(Facility.FacilityNumber))
+            if (await _repository.FacilityNumberExists(Facility.FacilityNumber, Facility.FacilityTypeId))
             {
                 ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists.");
             }
