@@ -45,6 +45,7 @@
                                         <th scope="col" class="col">Start Date</th>
                                         <th scope="col" class="col">Due Date</th>
                                         <th scope="col" class="col">Completion Date</th>
+                                        <th scope="col" class="col">Organizational Unit</th>
                                         <th scope="col" class="col">Comment</th>
                                         @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
                                         {
@@ -78,6 +79,9 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(m => item.CompletionDate, "DateOrNone")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(m => item.Comment, "StringOrNone")
@@ -122,6 +126,9 @@
                                                 @Html.DisplayFor(m => item.CompletionDate, "DateOrNone")
                                             </td>
                                             <td>
+                                                @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                            </td>
+                                            <td>
                                                 @Html.DisplayFor(m => item.Comment, "StringOrNone")
                                             </td>
                                             @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
@@ -163,6 +170,9 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(m => item.CompletionDate, "DateOrNone")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(m => item.Comment, "StringOrNone")
