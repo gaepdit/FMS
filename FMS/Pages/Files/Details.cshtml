@@ -48,6 +48,7 @@
                 <tr>
                     <th scope="col">Facility</th>
                     <th scope="col">Name</th>
+                    <th scope="col" class="text-center">Type</th>
                     <th scope="col">Address</th>
                 </tr>
             </thead>
@@ -62,6 +63,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(m => item.FacilityType.Name, "FacilityTypeIcon")
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.Address)<br />

@@ -134,10 +134,10 @@ namespace FMS.Pages.Facilities
                 }
             }
 
-            //for RN and HSI facilities, check for duplicate Facility Numbers
-            if ((Facility.FacilityTypeName == "RN" ||  Facility.FacilityTypeName == "HSI") && (await _repository.DuplicateFacilityNumberExists(Facility.FacilityNumber, Id, (Guid)Facility.FacilityTypeId)))
+            // check for duplicate Facility Numbers 
+            if (await _repository.DuplicateFacilityNumberExists(Facility.FacilityNumber, Id, (Guid)Facility.FacilityTypeId))
             {
-                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists for a different Facility");
+                ModelState.AddModelError("Facility.FacilityNumber", "Facility Number entered already exists for a different Facility of this Facility Type");
             }
 
             if (!ModelState.IsValid)

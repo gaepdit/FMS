@@ -35,6 +35,7 @@ namespace FMS.Infrastructure.Repositories
         {
             var file = await _context.Files.AsNoTracking()
                 .Include(e => e.Facilities)
+                .ThenInclude(e => e.FacilityType)
                 .SingleOrDefaultAsync(e => e.FileLabel == fileLabel);
 
             if (file == null) return null;
