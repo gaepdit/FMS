@@ -12,10 +12,11 @@ namespace FMS.Infrastructure.Repositories
         private readonly FmsDbContext _context;
         public DashboardRepository(FmsDbContext context) => _context = context;
 
-        public DateOnly GetFiscalYearStartDate()
+        public static DateOnly GetFiscalYearStartDate()
         {
             var today = DateTime.Today;
-            var fiscalYearStart = new DateTime(today.Month < 7 ? today.Year - 1 : today.Year, 7, 1);
+            DateTime fiscalYearStart = new(today.Month < 7 ? today.Year - 1 : today.Year, 7, 1, 0, 0, 0,
+                DateTimeKind.Local);
             return DateOnly.FromDateTime(fiscalYearStart);
         }
 
@@ -77,7 +78,6 @@ namespace FMS.Infrastructure.Repositories
         public async Task<List<DashboardUnitFacilitiesDto>> GetUnitHSIFacilitiesById(Guid id, bool includeInactive = false)
         {
             var currentUser = await GetApplicationUser(id);
-            var oneYearAgo = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1));
             var fiscalYearStart = GetFiscalYearStartDate();
 
             return await _context.Facilities.AsNoTracking()
@@ -105,7 +105,6 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<List<DashboardProgramFacilitiesDto>> GetProgramHSIFacilitiesById(Guid id, bool includeInactive = false)
         {
-            var oneYearAgo = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1));
             var fiscalYearStart = GetFiscalYearStartDate();
 
             return await _context.Facilities.AsNoTracking()
@@ -138,12 +137,12 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<List<DashboardUserEventsDto>> GetEventsByUserId(Guid id, bool includeInactive = false)
         {
-            var oneYearAgo = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-1));
             var fiscalYearStart = GetFiscalYearStartDate();
 
             return await _context.Events.AsNoTracking()
                 .Include(e => e.Facility)
                 .Include(e => e.ComplianceOfficer)
+                .Include(e => e.Facility.OrganizationalUnit)
                 .Include(e => e.EventType)
                 .Include(e => e.ActionTaken)
                 .Include(e => e.EventContractor)
@@ -151,6 +150,8 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.ComplianceOfficerId.Equals(id))
                 .Where(e => e.StartDate >= fiscalYearStart || e.CompletionDate >= fiscalYearStart || (e.CompletionDate == null && e.StartDate == null))
                 .OrderByDescending(e => e.StartDate)
+                .ThenByDescending(e => e.CompletionDate)
+                .ThenByDescending(e => e.DueDate)
                 .Select(e => new DashboardUserEventsDto(e))
                 .ToListAsync();
         }
@@ -171,6 +172,8 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.StartDate >= fiscalYearStart || e.CompletionDate >= fiscalYearStart || (e.CompletionDate == null && e.StartDate == null))
                 .OrderBy(e => e.ComplianceOfficer.FamilyName)
                 .ThenByDescending(e => e.StartDate)
+                .ThenByDescending(e => e.CompletionDate)
+                .ThenByDescending(e => e.DueDate)
                 .Select(e => new DashboardUnitEventsDto(e))
                 .ToListAsync();
         }
@@ -193,6 +196,8 @@ namespace FMS.Infrastructure.Repositories
                 .OrderBy(e => e.Facility.OrganizationalUnit.Name)
                 .ThenBy(e => e.ComplianceOfficer.FamilyName)
                 .ThenByDescending(e => e.StartDate)
+                .ThenByDescending(e => e.CompletionDate)
+                .ThenByDescending(e => e.DueDate)
                 .Select(e => new DashboardProgramEventsDto(e))
                 .ToListAsync();
         }
