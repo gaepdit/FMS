@@ -182,7 +182,7 @@ namespace FMS.Infrastructure.Repositories
             .Where(e => !spec.ShowPendingOnly || !e.DeterminationLetterDate.HasValue)
             .Where(e => string.IsNullOrEmpty(spec.FacilityNumber) || e.FacilityNumber.Contains(spec.FacilityNumber))
             .Where(e => !spec.FacilityStatusId.HasValue || e.FacilityStatus.Id.Equals(spec.FacilityStatusId))
-            .Where(e => spec.FacilityTypeId == null || spec.FacilityTypeId.Contains(e.FacilityType.Id))
+            .Where(e => spec.FacilityTypeId == null || spec.FacilityTypeId.Count == 0 || spec.FacilityTypeId.Contains(e.FacilityType.Id))
             .Where(e => !spec.BudgetCodeId.HasValue || e.BudgetCode.Id.Equals(spec.BudgetCodeId))
             .Where(e =>
                 !spec.OrganizationalUnitId.HasValue || e.OrganizationalUnit.Id.Equals(spec.OrganizationalUnitId))
@@ -337,7 +337,7 @@ namespace FMS.Infrastructure.Repositories
 
             // convert the List<RetentionRecord> to IEnumerable<RetentionRecordDetailDto>
             var returnList = from retentionRecord in retentionRecordsList
-                select new RetentionRecordDetailDto(retentionRecord);
+                             select new RetentionRecordDetailDto(retentionRecord);
 
             return returnList;
         }
