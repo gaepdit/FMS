@@ -93,7 +93,7 @@ namespace FMS.App.Tests.Facilities
             var pageModel = new EditModel(mockRepo, mockType, mockStatus, mockSelectListHelper)
             {
                 Id = id,
-                Facility = new FacilityEditDto { Latitude = 31, Longitude = -81, FacilityNumber = "a" },
+                Facility = new FacilityEditDto { Latitude = 31, Longitude = -81, FacilityNumber = "a", FacilityTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2") },
                 PageContext = pageContext,
             };
 

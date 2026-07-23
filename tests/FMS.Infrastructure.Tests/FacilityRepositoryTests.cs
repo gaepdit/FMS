@@ -284,7 +284,7 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityNumberExists_Unique_ReturnsFalse()
         {
             using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
-            var result = await repository.FacilityNumberExists("Unique");
+            var result = await repository.FacilityNumberExists("Unique", Guid.NewGuid());
             result.Should().BeFalse();
         }
 
@@ -292,8 +292,8 @@ namespace FMS.Infrastructure.Tests
         public async Task FacilityNumberExists_Duplicate_ReturnsTrue()
         {
             using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
-
-            var result = await repository.FacilityNumberExists("UTF8");
+            var facTypeId = new Guid("3FE94D7D-563E-4CA1-A094-BB6E217990D2");
+            var result = await repository.FacilityNumberExists("UTF8", facTypeId);
 
             result.Should().BeTrue();
         }
@@ -303,8 +303,9 @@ namespace FMS.Infrastructure.Tests
         {
             using var repository = (await CreateRepositoryHelperAsync()).GetFacilityRepository();
             var ignoreId = SeedData.GetFacilities()[0].Id;
+            var facTypeId = SeedData.GetFacilityTypes()[0].Id;
             var facName = SeedData.GetFacilities()[0].Name;
-            var result = await repository.FacilityNumberExists(facName, ignoreId);
+            var result = await repository.FacilityNumberExists(facName, facTypeId, ignoreId);
             result.Should().BeFalse();
         }
 
