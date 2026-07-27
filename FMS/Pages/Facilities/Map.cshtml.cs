@@ -13,6 +13,7 @@ namespace FMS.Pages.Facilities
         private readonly ISelectListHelper _listHelper;
 
         // "Spec" is the Facility DTO bound to the HTML Page elements
+        [BindProperty]
         public FacilityMapSpec Spec { get; set; }
 
         // List of facilities returned from the search
@@ -116,14 +117,7 @@ namespace FMS.Pages.Facilities
                     ShowNone = true;
                 }
 
-                ExportSpec = new FacilityMapSpec()
-                {
-                    Latitude = spec.Latitude,
-                    Longitude = spec.Longitude,
-                    ShowDeleted = spec.ShowDeleted,
-                    Radius = spec.Radius,
-                    FacilityTypeId = spec.FacilityTypeId
-                };
+                Spec = spec;
 
             }
             else
@@ -140,7 +134,7 @@ namespace FMS.Pages.Facilities
 
         {
             var fileName = $"FMS_Map_export{DateTime.Now:yyyy-MM-dd.HH-mm-ss.FFF}.xlsx";
-            IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(ExportSpec);
+            IReadOnlyList<FacilityMapSummaryDto> facilityMapSummaries = await _repository.GetFacilityListAsync(Spec);
             var facilityMapDetail = from p in facilityMapSummaries select new FacilityMapSummaryDtoScalar(p);
             return File(facilityMapDetail.ExportExcelAsByteArray(ExportHelper.ReportType.Map), "application/vnd.ms.excel", fileName);
         }

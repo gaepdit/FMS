@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <RootNamespace>FMS</RootNamespace>
@@ -6,6 +6,18 @@
     <UserSecretsId>9eaa6ee0-f5de-4484-8e00-194a201392e7</UserSecretsId>
     <AssemblyVersion>2023.4.13</AssemblyVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Helpers\Site summary-VS26-VB.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Shared\_HSIMenuPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Helpers\Site summary-VS26-VB.vb" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Helpers\BlankRequestForm.pdf">
@@ -61,6 +73,11 @@
       <ObjectName>filePath</ObjectName>
       <AbsolutePath>web.config</AbsolutePath>
     </MsDeploySkipRules>
+      <MsDeploySkipRules Include="SkipReportingFolder">
+          <ObjectName>dirPath</ObjectName>
+          <AbsolutePath>wwwroot\\Reporting</AbsolutePath>
+          <XPath></XPath>
+      </MsDeploySkipRules>
   </ItemGroup>
 
 </Project>

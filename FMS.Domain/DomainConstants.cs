@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FMS.Domain
+﻿namespace FMS.Domain
 {
-    public class DomainConstants
+    public static class DomainConstants
     {
         public const string SiteSummaryReportPath = "/Reporting/SiteSummary/Report/";
 

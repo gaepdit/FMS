@@ -9,7 +9,7 @@ namespace FMS.Domain.Repositories
         Task<OrganizationalUnitEditDto> GetOrganizationalUnitAsync(Guid id);
         Task<IReadOnlyList<OrganizationalUnitSummaryDto>> GetOrganizationalUnitListAsync();
         Task<Guid> CreateOrganizationalUnitAsync(OrganizationalUnitCreateDto organizationalUnit);
-        Task UpdateOrganizationalUnitAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates);
+        Task UpdateOrganizationalUnitAsync(Guid id, OrganizationalUnitEditDto organizationalUnitUpdates, Guid? programId);
         Task UpdateOrganizationalUnitStatusAsync(Guid id, bool active);
     }
 }

@@ -1,15 +1,53 @@
-@page
+@page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Account.IndexModel
 @{
     ViewData["Title"] = "Account Profile";
 }
 
+@section Scripts {
+    <script src="~/js/formIndex.js"></script>
+}
+
 <h1>@ViewData["Title"]</h1>
+<partial name="_AlertPartial" for="Message" id="alert" />
 <hr />
 
-<h2>@Model.CurrentUser.DisplayName</h2>
-<p>@Model.CurrentUser.Email</p>
+<h2>@Model.CurrentUser?.DisplayName</h2>
+<p>@Model.CurrentUser?.Email</p>
+
+<div class="p-3 rounded-3 bg-light-subtle">
+    <form method="post">
+        <div class="mb-3 row">
+            <div class="col-md-4">
+                <label asp-for="UserProgramId"></label>
+                <select asp-for="UserProgramId" asp-items="Model.UserPrograms" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserUnitId"></label>
+                <select asp-for="UserUnitId" asp-items="Model.UserUnits" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserPositionId"></label>
+                <select asp-for="UserPositionId" asp-items="Model.UserPositions" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" name="handler" value="UserDesignation" />
+                <button id="UserDesignationButton" type="submit" class="btn btn-primary me-2">Update User Designations</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 @if (Model.Roles != null && Model.Roles.Count > 0)
 {

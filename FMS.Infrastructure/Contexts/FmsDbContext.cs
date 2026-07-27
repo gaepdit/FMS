@@ -55,8 +55,10 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<GroundwaterScore> GroundwaterScores { get; set; }
         public DbSet<Substance> Substances { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        
+        public DbSet<UserProgram> UserPrograms { get; set; }
+        public DbSet<UserPosition> UserPositions { get; set; }
 
+        //public DbSet<UserInfo> UserInfo { get; set; }
 
         // The "Counties" table is only used to add County data to the database for database-side use.
         // Counties are stored in memory and never accessed from the database, but other entities
@@ -117,7 +119,12 @@ namespace FMS.Infrastructure.Contexts
                 builder.Entity(entityType).Property<string>(AuditProperties.InsertUser);
                 builder.Entity(entityType).Property<string>(AuditProperties.UpdateUser);
             }
-            
+
+            // Auto Include Identy Properties
+            builder.Entity<ApplicationUser>().Navigation(user => user.UserUnit).AutoInclude();
+            builder.Entity<ApplicationUser>().Navigation(user => user.UserProgram).AutoInclude();
+            builder.Entity<ApplicationUser>().Navigation(user => user.UserPosition).AutoInclude();
+
             // Fix primary key error for IdentityPasskeyData
             builder.Entity<IdentityPasskeyData>(e => e.HasNoKey());
         }

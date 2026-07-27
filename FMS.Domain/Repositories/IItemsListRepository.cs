@@ -32,6 +32,8 @@
         Task<IEnumerable<ListItem>> GetSoilStatusesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetSourceStatusesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetGapsAssessmentListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetUserProgramListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetUserPositionListAsync(bool includeInactive = false);
 
         #endregion
 
@@ -57,6 +59,8 @@
         Task<string> GetSoilStatusNameAsync(Guid? id);
         Task<string> GetSourceStatusNameAsync(Guid? id);
         Task<string> GetGAPSAssessmentNameAsync(Guid? id);
+        Task<string> GetUserProgramNameAsync(Guid? id);
+        Task<string> GetUserPositionNameAsync(Guid? id);
         #endregion
     }
 

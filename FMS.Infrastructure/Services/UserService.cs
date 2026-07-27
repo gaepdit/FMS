@@ -1,4 +1,6 @@
-﻿using FMS.Domain.Entities.Users;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using FMS.Domain.Entities;
+using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
 using FMS.Infrastructure.Contexts;
 using Microsoft.AspNetCore.Http;
@@ -87,6 +89,29 @@ namespace FMS.Infrastructure.Services
             }
 
             return IdentityResult.Success;
+        }
+
+        public async Task<IdentityResult> UpdateUserDesignationsAsync(Guid id, Guid? userProgramId, Guid? userUnitId, Guid? userPositionId)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return IdentityResult.Failed(_userManager.ErrorDescriber.DefaultError());
+            }
+
+            user.UserProgram = userProgramId is null
+            ? null
+            : await _context.UserPrograms.FindAsync(userProgramId.Value).ConfigureAwait(false);
+
+            user.UserUnit = userUnitId is null
+            ? null
+            : await _context.OrganizationalUnits.FindAsync(userUnitId.Value).ConfigureAwait(false);
+
+            user.UserPosition = userPositionId is null
+            ? null
+            : await _context.UserPositions.FindAsync(userPositionId.Value).ConfigureAwait(false);
+
+            return await _userManager.UpdateAsync(user);
         }
 
         // User search
