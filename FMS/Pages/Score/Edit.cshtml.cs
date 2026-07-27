@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
@@ -63,8 +64,14 @@ namespace FMS.Pages.Score
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if(Score.ScoredDate > DateOnly.FromDateTime(DateTime.Now))
+            {
+                ModelState.AddModelError("Score.ScoredDate", "Scored date cannot be in the future.");
+            }
             if (!ModelState.IsValid)
             {
+                Score = await _repository.GetScoreEditByFacilityIdAsync(Id);
+                Facility = await _facilityRepository.GetFacilityAsync(Score.FacilityId);
                 return Page();
             }
             
