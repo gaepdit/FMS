@@ -82,6 +82,15 @@ namespace FMS.Pages.Event
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if(NewEvent.StartDate > NewEvent.CompletionDate)
+            {
+                ModelState.AddModelError("NewEvent.CompletionDate", "Start date cannot be later than Completion date.");
+            }
+            if (NewEvent.CompletionDate > DateOnly.FromDateTime(DateTime.Now))
+            {
+                ModelState.AddModelError("NewEvent.CompletionDate", "Completion date cannot be in the future.");
+            }
+
             if (!ModelState.IsValid)
             {
                 Facility = await _facilityRepository.GetFacilityAsync(Id);
