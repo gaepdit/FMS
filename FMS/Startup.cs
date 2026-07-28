@@ -1,4 +1,3 @@
-using System.Reflection;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
@@ -16,15 +15,12 @@ namespace FMS
 {
     public class Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
     {
-        private IConfiguration Configuration { get; } = configuration;
-        private IWebHostEnvironment WebHostEnvironment { get; } = webHostEnvironment;
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Configure database
             services.AddDbContext<FmsDbContext>(opts =>
-                opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                opts.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                     x => x.EnableRetryOnFailure().MigrationsAssembly("FMS.Infrastructure")));
 
             // Configure Identity
@@ -33,7 +29,7 @@ namespace FMS
                 .AddEntityFrameworkStores<FmsDbContext>();
 
             // Configure authentication and authorization.
-            services.ConfigureAuthentication(Configuration).AddAuthorizationPolicies();
+            services.ConfigureAuthentication(configuration).AddAuthorizationPolicies();
 
             // Persist data protection keys
             services.AddDataProtection();
@@ -42,7 +38,22 @@ namespace FMS
             services.AddRazorPages();
 
             // Configure HSTS
-            services.AddHsts(opts => { opts.MaxAge = TimeSpan.FromDays(365 * 2); });
+            if (webHostEnvironment.IsDevelopment() || webHostEnvironment.IsLocalEnv())
+            {
+                services.AddHttpsRedirection(options =>
+                    options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect);
+            }
+            else
+            {
+                services
+                    .AddHsts(options => options.MaxAge = TimeSpan.FromDays(730))
+                    .AddHttpsRedirection(options =>
+                    {
+                        options.HttpsPort = 443;
+                        options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                    })
+                    .AddAntiforgery(options => options.Cookie.SecurePolicy = CookieSecurePolicy.Always);
+            }
 
             // Configure dependencies
             services.AddScoped<IClaimsTransformation, AppClaimsTransformation>();
