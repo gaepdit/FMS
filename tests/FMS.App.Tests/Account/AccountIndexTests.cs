@@ -17,12 +17,13 @@ namespace FMS.App.Tests.Account
                 GivenName = "Sample",
                 FamilyName = "User"
             });
+            var listHelper = Substitute.For<ISelectListHelper>();
 
             var mockUserService = Substitute.For<IUserService>();
             mockUserService.GetCurrentUserAsync().Returns(userView);
-            var pageModel = new IndexModel(mockUserService);
+            var pageModel = new IndexModel(mockUserService, listHelper);
 
-            var result = await pageModel.OnGetAsync().ConfigureAwait(false);
+            var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
             pageModel.CurrentUser.Email.Should().Be(userView.Email);

@@ -134,7 +134,7 @@ namespace FMS.Infrastructure.Tests
             await _context.SaveChangesAsync();
 
             var updateDto = new OrganizationalUnitEditDto { Name = "NEW_NAME" };
-            await _repository.UpdateOrganizationalUnitAsync(existingOU.Id, updateDto);
+            await _repository.UpdateOrganizationalUnitAsync(existingOU.Id, updateDto, null);
 
             var updatedOU= await _context.OrganizationalUnits.FindAsync(existingOU.Id);
             updatedOU.Name.Should().Be("NEW_NAME");
@@ -145,7 +145,7 @@ namespace FMS.Infrastructure.Tests
             var invalidId = Guid.NewGuid();
             var updateDto = new OrganizationalUnitEditDto { Name = "NON_EXISTENT" };
 
-            Func<Task> action = async () => await _repository.UpdateOrganizationalUnitAsync(invalidId, updateDto);
+            Func<Task> action = async () => await _repository.UpdateOrganizationalUnitAsync(invalidId, updateDto, null);
             await action.Should().ThrowAsync<ArgumentException>();
         }
 
