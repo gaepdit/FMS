@@ -99,7 +99,7 @@ namespace FMS.Infrastructure.Tests
         [Test]
         public async Task CreateParcelTypeAsync_CreateNewParcelType_WhenDataIsValid()
         {
-            var dto = new UserPositionCreateDto { Name = "VALID_PACRCELTYPE" };
+            var dto = new ParcelTypeCreateDto { Name = "VALID_PACRCELTYPE" };
 
             var newId = await _repository.CreateParcelTypeAsync(dto);
             var createdParcelType = await _context.ParcelTypes.FindAsync(newId);

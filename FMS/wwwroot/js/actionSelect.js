@@ -24,9 +24,6 @@ function setUpActionTypeDropdown(eventElementId, actionElementId, placeholder) {
             })
             .catch(function errorHandler(error) {
                 actionSelect.innerHTML = '<option value="">Error</option>';
-                if (error instanceof Error && typeof rg4js === "function") {
-                    rg4js('send', { error: error, tags: ['handled_promise_rejection'] });
-                }
             });
     });
 }

@@ -24,7 +24,6 @@
     <PackageVersion Include="Microsoft.Identity.Web" Version="4.13.2" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
     <PackageVersion Include="Microsoft.Web.LibraryManager.Build" Version="3.0.114" />
-    <PackageVersion Include="Mindscape.Raygun4Net.AspNetCore" Version="11.2.5" />
     <PackageVersion Include="NSubstitute" Version="6.0.0" />
     <PackageVersion Include="NSubstitute.Analyzers.CSharp" Version="1.0.17" />
     <PackageVersion Include="NUnit" Version="4.6.1" />

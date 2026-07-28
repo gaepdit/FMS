@@ -77,16 +77,36 @@ namespace FMS.Pages.HsrpFacilityProperties
 
         public async Task<IActionResult> OnPostAsync(Guid id)
         {
+            // Form Validation
             if (!HsrpFacilityProperties.BrownfieldDate.HasValue && HsrpFacilityProperties.BrownfieldTerminated)
             {
                 ModelState.AddModelError("HsrpFacilityProperties.BrownfieldTerminated",
                     "Date of Brownfield determination must be chosen.");
             }
-
             if (!HsrpFacilityProperties.VRPDate.HasValue && HsrpFacilityProperties.VRPTerminated)
             {
                 ModelState.AddModelError("HsrpFacilityProperties.VRPTerminated",
                     "Date of VRP determination must be chosen.");
+            }
+            if (HsrpFacilityProperties.DateDeListed.HasValue && HsrpFacilityProperties.DateDeListed > DateOnly.FromDateTime(DateTime.Now))
+            {
+                ModelState.AddModelError("HsrpFacilityProperties.DateDeListed",
+                    "Date of De-listing cannot be in the future.");
+            }
+            if (HsrpFacilityProperties.VRPDate.HasValue && HsrpFacilityProperties.VRPDate > DateOnly.FromDateTime(DateTime.Now))
+            {
+                ModelState.AddModelError("HsrpFacilityProperties.VRPDate",
+                    "Date of VRP determination cannot be in the future.");
+            }
+            if (HsrpFacilityProperties.BrownfieldDate.HasValue && HsrpFacilityProperties.BrownfieldDate > DateOnly.FromDateTime(DateTime.Now))
+            {
+                ModelState.AddModelError("HsrpFacilityProperties.BrownfieldDate",
+                    "Date of Brownfield determination cannot be in the future.");
+            }
+            if (HsrpFacilityProperties.DateDeListed.HasValue && HsrpFacilityProperties.DateDeListed < HsrpFacilityProperties.DateListed)
+            {
+                ModelState.AddModelError("HsrpFacilityProperties.DateDeListed",
+                    "Date of De-listing cannot be earlier than Date of Listing.");
             }
 
             if (!ModelState.IsValid)
@@ -97,6 +117,7 @@ namespace FMS.Pages.HsrpFacilityProperties
                 return Page();
             }
 
+            // Update the HSRP Facility Properties
             await _repository.UpdateHsrpFacilityPropertiesAsync(HsrpFacilityProperties.FacilityId,
                 HsrpFacilityProperties);
 

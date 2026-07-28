@@ -101,6 +101,7 @@ namespace FMS.Domain.Dto
                 { nameof(FirstPass), FirstPass.ToString() },
                 { nameof(LocationClassId), LocationClassId?.ToString() },
                 { nameof(AdditionalOrgUnitId), AdditionalOrgUnitId?.ToString() },
+                { nameof(UEC), UEC.ToString() },
                 { nameof(Liens), Liens.ToString() },
                 { nameof(FinancialAssurance), FinancialAssurance.ToString() },
                 { nameof(Landfills), Landfills.ToString() },
