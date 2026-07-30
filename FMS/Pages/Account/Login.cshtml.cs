@@ -1,6 +1,8 @@
+using System.Net;
 using FMS.Domain.Entities.Users;
 using FMS.Platform.Authentication;
 using FMS.Platform.Extensions;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +25,7 @@ public class LoginModel(
 
     public IActionResult OnGet(string returnUrl = null)
     {
-        ReturnUrl = returnUrl;
+        ReturnUrl = WebUtility.HtmlEncode(returnUrl);
         ConfigurePageVariables();
         if (User.Identity is not { IsAuthenticated: true }) return Page();
         return User.IsActive() ? LocalRedirectOrHome() : RedirectToPage("Logout");
@@ -46,7 +48,7 @@ public class LoginModel(
     public async Task<IActionResult> LogInAsTestUserAsync(string returnUrl = null)
     {
         if (!configuration.TestUserEnabled()) return BadRequest();
-        ReturnUrl = returnUrl;
+        ReturnUrl = WebUtility.HtmlEncode(returnUrl);
         await authenticationManager.LogInAsTestUserAsync();
         return LocalRedirectOrHome();
     }
@@ -54,7 +56,7 @@ public class LoginModel(
     // The callback method is called by the external login provider.
     public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
     {
-        ReturnUrl = returnUrl;
+        ReturnUrl = WebUtility.HtmlEncode(returnUrl);
         if (remoteError is not null)
             return LoginPageWithError($"Error from account provider: {remoteError}");
         var result = await authenticationManager.LogInUsingExternalProviderAsync();
@@ -90,6 +92,6 @@ public class LoginModel(
 
 public record EntraIdPhaseOut
 {
-    public bool Enabled { get; init; }
-    public DateOnly EndDate { get; init; }
+    public bool Enabled { get; [UsedImplicitly] init; }
+    public DateOnly EndDate { get; [UsedImplicitly] init; }
 }
