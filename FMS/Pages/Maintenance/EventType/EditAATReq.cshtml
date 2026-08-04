@@ -1,6 +1,15 @@
 ﻿@page "{id:Guid?}"
-using FMS.Pages.Maintenance
+@using FMS.Pages.Maintenance
 @model FMS.Pages.Maintenance.EventType.EditAATReqModel
+
 @{
+    ViewData["Title"] = $"Edit Date Requirements for Event Type: " + Model.EventTypeName + " and Action Taken: " + Model.ActionTakenName;
 }
-<h1>Edit Allowed Action Taken Date Requirements</h1>
+<a asp-page="EditAAT" asp-route-id="@Model.AllowedActionTakenSpec.EventTypeId">← Back</a>
+<h3>
+    @ViewData["Title"]
+</h3>
+
+<form method="post">
+
+</form>
