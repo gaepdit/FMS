@@ -10,11 +10,20 @@ namespace FMS.Domain.Dto
             Active = allowedActionTaken.Active;
             EventType = allowedActionTaken.EventType;
             ActionTaken = allowedActionTaken.ActionTaken;
+            StartDateRequired = allowedActionTaken.StartDateRequired;
+            DueDateRequired = allowedActionTaken.DueDateRequired;
+            CompletionDateRequired = allowedActionTaken.CompletionDateRequired;
         }
 
         public Guid Id { get; }
 
         public bool Active { get; }
+
+        public bool StartDateRequired { get; }
+
+        public bool DueDateRequired { get; }
+
+        public bool CompletionDateRequired { get; }
 
         public EventType EventType { get; }
 

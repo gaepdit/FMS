@@ -14,6 +14,9 @@ namespace FMS.Domain.Entities
             ActionTakenId = allowedActionTaken.ActionTakenId;
             ActionTaken = allowedActionTaken.ActionTaken;
             Active = allowedActionTaken.Active;
+            StartDateRequired = allowedActionTaken.StartDateRequired;
+            DueDateRequired = allowedActionTaken.DueDateRequired;
+            CompletionDateRequired = allowedActionTaken.CompletionDateRequired;
         }
 
         public Guid EventTypeId { get; set; }

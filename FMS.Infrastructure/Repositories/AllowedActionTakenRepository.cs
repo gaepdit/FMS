@@ -51,6 +51,9 @@ namespace FMS.Infrastructure.Repositories
                     EventTypeId = e.EventTypeId,
                     ActionTakenId = e.ActionTakenId,
                     EventTypeName = e.EventType.Name,
+                    StartDateRequired = e.StartDateRequired,
+                    DueDateRequired = e.DueDateRequired,
+                    CompletionDateRequired = e.CompletionDateRequired,
                     EventTypeActive = e.EventType.Active,
                     ActionTakenName = e.ActionTaken.Name,
                     ActionTakenActive = e.ActionTaken.Active,
@@ -74,6 +77,9 @@ namespace FMS.Infrastructure.Repositories
             {
                 ActionTakenId = allowedActionTaken.ActionTakenId,
                 EventTypeId = allowedActionTaken.EventTypeId,
+                StartDateRequired = allowedActionTaken.StartDateRequired,
+                DueDateRequired = allowedActionTaken.DueDateRequired,
+                CompletionDateRequired = allowedActionTaken.CompletionDateRequired,
                 Active = true
             };
             await _context.AllowedActionsTaken.AddAsync(newAllowedActionTaken);
