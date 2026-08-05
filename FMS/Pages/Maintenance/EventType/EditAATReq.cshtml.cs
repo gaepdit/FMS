@@ -11,12 +11,7 @@ namespace FMS.Pages.Maintenance.EventType
     {
         private readonly IAllowedActionTakenRepository _repository;
 
-        public EditAATReqModel(IAllowedActionTakenRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public DisplayMessage DisplayMessage { get; private set; }
+        public EditAATReqModel(IAllowedActionTakenRepository repository) => _repository = repository;
 
         public string ActionTakenName { get; private set; }
 
