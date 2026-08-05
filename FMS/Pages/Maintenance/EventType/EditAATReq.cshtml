@@ -1,15 +1,52 @@
 ﻿@page "{id:Guid?}"
-@using FMS.Pages.Maintenance
 @model FMS.Pages.Maintenance.EventType.EditAATReqModel
 
 @{
-    ViewData["Title"] = $"Edit Date Requirements for Event Type: " + Model.EventTypeName + " and Action Taken: " + Model.ActionTakenName;
+    ViewData["Title"] = $"Edit Date Requirements for Event Type: " + Model.EventTypeName;
 }
 <a asp-page="EditAAT" asp-route-id="@Model.AllowedActionTakenSpec.EventTypeId">← Back</a>
 <h3>
     @ViewData["Title"]
 </h3>
-
+<h3>
+    Allowed Action Taken: @Model.ActionTakenName
+</h3>
+<hr />
 <form method="post">
-
+    <input type="hidden" asp-for="@Model.AllowedActionTakenSpec.Id" />
+    <input type="hidden" asp-for="@Model.AllowedActionTakenSpec.EventTypeId" />
+    <input type="hidden" asp-for="@Model.AllowedActionTakenSpec.EventTypeName" />
+    <input type="hidden" asp-for="@Model.AllowedActionTakenSpec.ActionTakenId" />
+    <input type="hidden" asp-for="@Model.AllowedActionTakenSpec.ActionTakenName" />
+    <input type="hidden" asp-for="@Model.AllowedActionTakenSpec.ActionTakenActive" />
+    <input type="hidden" asp-for="@Model.AllowedActionTakenSpec.Active" />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-check">
+                <input asp-for="@Model.AllowedActionTakenSpec.StartDateRequired" />
+                <label asp-for="@Model.AllowedActionTakenSpec.StartDateRequired" class="form-check-label"></label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-check">
+                <input asp-for="@Model.AllowedActionTakenSpec.DueDateRequired" />
+                <label asp-for="@Model.AllowedActionTakenSpec.DueDateRequired" class="form-check-label"></label>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-check">
+                <input asp-for="@Model.AllowedActionTakenSpec.CompletionDateRequired" />
+                <label asp-for="@Model.AllowedActionTakenSpec.CompletionDateRequired" class="form-check-label"></label>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-4">
+            <button type="submit" name="actionTakenSpecId" value="@Model.AllowedActionTakenSpec.Id" class="btn btn-primary btn-sm">Save Changes</button>
+            <a asp-page="EditAAT" asp-route-id="@Model.AllowedActionTakenSpec.EventTypeId" class="btn btn-outline-secondary btn-sm">
+                Cancel
+            </a>
+        </div>
+    </div>
 </form>

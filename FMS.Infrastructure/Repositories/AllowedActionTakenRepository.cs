@@ -87,6 +87,26 @@ namespace FMS.Infrastructure.Repositories
             return newAllowedActionTaken.Id;
         }
 
+        public async Task<Guid> UpdateAllowedActionTakenAsync(AllowedActionTakenSpec allowedActionTaken)
+        {
+            Prevent.Null(allowedActionTaken, nameof(allowedActionTaken));
+            Prevent.NullOrEmpty(allowedActionTaken.Id, nameof(allowedActionTaken.Id));
+            if (!await AllowedActionTakenExistsAsync(allowedActionTaken.Id))
+            {
+                throw new ArgumentException($"Allowed Action Taken with Id {allowedActionTaken.Id} does not exist.");
+            }
+            var existingAllowedActionTaken = await _context.AllowedActionsTaken.FindAsync(allowedActionTaken.Id);
+
+            existingAllowedActionTaken.StartDateRequired = allowedActionTaken.StartDateRequired;
+            existingAllowedActionTaken.DueDateRequired = allowedActionTaken.DueDateRequired;
+            existingAllowedActionTaken.CompletionDateRequired = allowedActionTaken.CompletionDateRequired;
+
+            _context.AllowedActionsTaken.Update(existingAllowedActionTaken);
+            await _context.SaveChangesAsync();
+
+            return existingAllowedActionTaken.Id;
+        }
+
         public async Task<Guid> DeleteAllowedActionTakenAsync(Guid? id)
         {
             if(!await AllowedActionTakenExistsAsync(id.Value))
