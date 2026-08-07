@@ -62,7 +62,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Financial Assurance")]
         public bool FinancialAssurance { get; set; }
 
-        [Display(Name = "UEC (Uniform Environmental Covenant)")]
+        [Display(Name = "EC (Environmental Covenant)")]
         public bool UEC { get; set; }
 
         [Display(Name = "Cost Estimate")]
