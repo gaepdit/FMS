@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace FMS.Pages.Event
 {
@@ -36,14 +37,14 @@ namespace FMS.Pages.Event
         [BindProperty]
         public EventCreateDto NewEvent { get; set; }
 
-        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; }
+        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; } = new AllowedActionTakenSpec();
 
         public FacilityDetailDto Facility { get; set; }
 
         [BindProperty]
         public Guid? ParentEventId { get; set; } = Guid.Empty;
 
-        public IList<EventSummaryDto> Events { get; set; } = new List<EventSummaryDto>();
+        public IList<EventSummaryDto> Events { get; set; }
 
         public SelectList EventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
@@ -116,6 +117,9 @@ namespace FMS.Pages.Event
             if (!ModelState.IsValid)
             {
                 Facility = await _facilityRepository.GetFacilityAsync(Id);
+                Events = await _repository.GetEventsByFacilityIdAsync(Id);
+                Events = EventSortHelper.SortEvents(Events, SortBy);
+                AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -128,6 +132,9 @@ namespace FMS.Pages.Event
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the event.");
                 Facility = await _facilityRepository.GetFacilityAsync(Id);
+                Events = await _repository.GetEventsByFacilityIdAsync(Id);
+                Events = EventSortHelper.SortEvents(Events, SortBy);
+                AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
                 await PopulateSelectsAsync();
                 return Page();
             }
