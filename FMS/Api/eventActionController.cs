@@ -11,8 +11,9 @@ namespace FMS.Api
         ISelectListHelper _listHelper) : ControllerBase
     {
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetAllowedActionsAsync([FromRoute] Guid id) =>
+        public async Task<IActionResult> GetAllowedActionsAsync([FromRoute] Guid id) => 
             new JsonResult(await _listHelper.AllowedActionTakenSelectListAsync(id));
+            
     }
 }
 

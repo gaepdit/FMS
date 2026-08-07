@@ -20,12 +20,14 @@
     {
         <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
     }
-    @if (User.Equals(Model.Id) || User.IsInRole(UserRoles.UserMaintenance))
-    {
-        <a asp-page="/Account/Index" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit User Designations</a>
-    }
 </h2>
-<p>@Model.Email</p>
+
+<div class="p-3 rounded-3 bg-light-subtle">
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Program:</strong> @Model.CurrentUser.UserProgram.Name</p>
+    <p><strong>Unit:</strong> @Model.CurrentUser.UserUnit.Name</p>
+    <p><strong>Position:</strong> @Model.CurrentUser.UserPosition.Name</p>
+</div>
 
 @if (Model.Roles != null && Model.Roles.Count > 0)
 {

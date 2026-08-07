@@ -10,6 +10,27 @@
 <div class="container bg-light-subtle py-3 rounded-3">
     <form method="post">
         <p>Roles for: <strong>@Model.DisplayName</strong> (@Model.Email)</p>
+        <div class="mb-3 row">
+            <div class="col-md-4">
+                <label asp-for="UserProgramId"></label>
+                <select asp-for="UserProgramId" asp-items="Model.UserPrograms" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserUnitId"></label>
+                <select asp-for="UserUnitId" asp-items="Model.UserUnits" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserPositionId"></label>
+                <select asp-for="UserPositionId" asp-items="Model.UserPositions" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <br />
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
             User update failed:
         </div>
@@ -64,8 +85,10 @@
             </label>
         </div>
         <hr />
-        <input asp-for="UserId">
-        <button type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
+        <input asp-for="UserId" type="hidden" />
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" name="handler" value="UserDesignation" />
+        <button id="UserDesignationButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Save Changes</button>
         <a asp-page="./Details" asp-route-id="@Model.UserId" class="btn btn-outline-secondary">Cancel</a>
     </form>
 </div>

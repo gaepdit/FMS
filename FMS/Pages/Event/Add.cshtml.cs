@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace FMS.Pages.Event
 {
@@ -14,15 +15,18 @@ namespace FMS.Pages.Event
     public class AddModel : PageModel
     {
         private readonly IEventRepository _repository;
+        private readonly IAllowedActionTakenRepository _allowedActionTakenRepository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
 
         public AddModel(
             IEventRepository repository,
+            IAllowedActionTakenRepository allowedActionTakenRepository,
             IFacilityRepository facilityRepository,
             ISelectListHelper listHelper)
         {
             _repository = repository;
+            _allowedActionTakenRepository = allowedActionTakenRepository;
             _facilityRepository = facilityRepository;
             _listHelper = listHelper;
         }
@@ -32,6 +36,8 @@ namespace FMS.Pages.Event
 
         [BindProperty]
         public EventCreateDto NewEvent { get; set; }
+
+        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; } = new AllowedActionTakenSpec();
 
         public FacilityDetailDto Facility { get; set; }
 
@@ -91,9 +97,29 @@ namespace FMS.Pages.Event
                 ModelState.AddModelError("NewEvent.CompletionDate", "Completion date cannot be in the future.");
             }
 
+            AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
+            if(AllowedActionTakenSpec != null)
+            {
+                if(AllowedActionTakenSpec.StartDateRequired && NewEvent.StartDate == null)
+                {
+                    ModelState.AddModelError("NewEvent.StartDate", "Start date is required for the selected Action Taken.");
+                }
+                if(AllowedActionTakenSpec.DueDateRequired && NewEvent.DueDate == null)
+                {
+                    ModelState.AddModelError("NewEvent.DueDate", "Due date is required for the selected Action Taken.");
+                }
+                if(AllowedActionTakenSpec.CompletionDateRequired && NewEvent.CompletionDate == null)
+                {
+                    ModelState.AddModelError("NewEvent.CompletionDate", "Completion date is required for the selected Action Taken.");
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 Facility = await _facilityRepository.GetFacilityAsync(Id);
+                Events = await _repository.GetEventsByFacilityIdAsync(Id);
+                Events = EventSortHelper.SortEvents(Events, SortBy);
+                AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -106,6 +132,9 @@ namespace FMS.Pages.Event
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the event.");
                 Facility = await _facilityRepository.GetFacilityAsync(Id);
+                Events = await _repository.GetEventsByFacilityIdAsync(Id);
+                Events = EventSortHelper.SortEvents(Events, SortBy);
+                AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
                 await PopulateSelectsAsync();
                 return Page();
             }

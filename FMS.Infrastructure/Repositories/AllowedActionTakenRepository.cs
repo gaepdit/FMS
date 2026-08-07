@@ -37,6 +37,20 @@ namespace FMS.Infrastructure.Repositories
             return new AllowedActionTakenSpec(allowedActionTaken);
         }
 
+        public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByEventTypeAndActionTakenAsync(Guid eventTypeId, Guid actionTakenId)
+        {
+            if (!await AllowedActionTakenExistsAsync(eventTypeId, actionTakenId))
+            {
+                return null;
+            }
+            AllowedActionTaken allowedActionTaken = await _context.AllowedActionsTaken
+                .AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .SingleOrDefaultAsync(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId);
+            return new AllowedActionTakenSpec(allowedActionTaken);
+        }
+
         public async Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId)
         {
             return await _context.AllowedActionsTaken.AsNoTracking()
@@ -51,6 +65,9 @@ namespace FMS.Infrastructure.Repositories
                     EventTypeId = e.EventTypeId,
                     ActionTakenId = e.ActionTakenId,
                     EventTypeName = e.EventType.Name,
+                    StartDateRequired = e.StartDateRequired,
+                    DueDateRequired = e.DueDateRequired,
+                    CompletionDateRequired = e.CompletionDateRequired,
                     EventTypeActive = e.EventType.Active,
                     ActionTakenName = e.ActionTaken.Name,
                     ActionTakenActive = e.ActionTaken.Active,
@@ -74,11 +91,34 @@ namespace FMS.Infrastructure.Repositories
             {
                 ActionTakenId = allowedActionTaken.ActionTakenId,
                 EventTypeId = allowedActionTaken.EventTypeId,
+                StartDateRequired = allowedActionTaken.StartDateRequired,
+                DueDateRequired = allowedActionTaken.DueDateRequired,
+                CompletionDateRequired = allowedActionTaken.CompletionDateRequired,
                 Active = true
             };
             await _context.AllowedActionsTaken.AddAsync(newAllowedActionTaken);
             await _context.SaveChangesAsync();
             return newAllowedActionTaken.Id;
+        }
+
+        public async Task<Guid> UpdateAllowedActionTakenAsync(AllowedActionTakenSpec allowedActionTaken)
+        {
+            Prevent.Null(allowedActionTaken, nameof(allowedActionTaken));
+            Prevent.NullOrEmpty(allowedActionTaken.Id, nameof(allowedActionTaken.Id));
+            if (!await AllowedActionTakenExistsAsync(allowedActionTaken.Id))
+            {
+                throw new ArgumentException($"Allowed Action Taken with Id {allowedActionTaken.Id} does not exist.");
+            }
+            var existingAllowedActionTaken = await _context.AllowedActionsTaken.FindAsync(allowedActionTaken.Id);
+
+            existingAllowedActionTaken.StartDateRequired = allowedActionTaken.StartDateRequired;
+            existingAllowedActionTaken.DueDateRequired = allowedActionTaken.DueDateRequired;
+            existingAllowedActionTaken.CompletionDateRequired = allowedActionTaken.CompletionDateRequired;
+
+            _context.AllowedActionsTaken.Update(existingAllowedActionTaken);
+            await _context.SaveChangesAsync();
+
+            return existingAllowedActionTaken.Id;
         }
 
         public async Task<Guid> DeleteAllowedActionTakenAsync(Guid? id)

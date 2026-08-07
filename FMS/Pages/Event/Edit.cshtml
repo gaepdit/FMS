@@ -101,19 +101,23 @@
                 <span asp-validation-for="EditEvent.ActionTakenId" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="EditEvent.StartDate" class="form-label"></label>
+                <label asp-for="EditEvent.StartDate" class="form-label">
+                    Event Start Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.StartDateRequired ? "*" : "")</span>
+                </label>
                 <input asp-for="EditEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.StartDate" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="EditEvent.DueDate" class="form-label"></label>
+                <label asp-for="EditEvent.DueDate" class="form-label">Event Due Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span>
+                </label>
                 <input asp-for="EditEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.DueDate" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label asp-for="EditEvent.CompletionDate" class="form-label"></label>
+                <label asp-for="EditEvent.CompletionDate" class="form-label">Event Completion Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span>
+                </label>
                 <input asp-for="EditEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.CompletionDate" class="text-danger"></span>
             </div>

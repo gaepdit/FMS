@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace FMS.Pages.Maintenance.AllowedActionTaken
+namespace FMS.Pages.Maintenance.EventType
 {
     [Authorize(Roles = UserRoles.SiteMaintenance)]
-    public class EditModel : PageModel
+    public class EditAATModel : PageModel
     {
         private readonly IAllowedActionTakenRepository _repository;
         private readonly IEventTypeRepository _eventTypeRepository;
         private readonly IAllowedActionTakenHelper _allowedActionTakenHelper;
-        public EditModel(
+        public EditAATModel(
             IAllowedActionTakenRepository repository,
             IEventTypeRepository eventTypeRepository,
             IAllowedActionTakenHelper allowedActionTakenHelper)
@@ -96,7 +96,7 @@ namespace FMS.Pages.Maintenance.AllowedActionTaken
                     ? $"{MaintenanceOptions.AllowedActionTaken} \"{AllowedActionTakenSpec.ActionTakenName}\" successfully Deleted."
                     : $"{MaintenanceOptions.AllowedActionTaken} \"{AllowedActionTakenSpec.ActionTakenName}\" successfully Added.");
 
-            return RedirectToPage("Edit");   //, new { id = Id }
+            return RedirectToPage("EditAAT");   //, new { id = Id }
         }
     }
 }

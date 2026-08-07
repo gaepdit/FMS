@@ -2,12 +2,20 @@
 function setUpActionTypeDropdown(eventElementId, actionElementId, placeholder) {
 
     const eventSelect = document.getElementById(eventElementId);
+    const actionSelect = document.getElementById(actionElementId);
+    if (eventSelect.value === '') {
+        actionSelect.disabled = true;
+    }
+    else {
+        actionSelect.disabled = false;
+    }
 
     eventSelect.addEventListener("change", () => {
         const actionSelect = document.getElementById(actionElementId);
         actionSelect.innerHTML = `<option value="">${placeholder}</option>`;
-        actionSelect.disabled = false;
+
         if (eventSelect.value === '') return;
+        actionSelect.disabled = false;
 
         axios.get(`/api/${eventSelect.value}`)
             .then(function (response) {

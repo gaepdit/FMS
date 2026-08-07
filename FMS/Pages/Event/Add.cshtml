@@ -90,25 +90,31 @@
             </div>
             <div class="col">
                 <label asp-for="NewEvent.ActionTakenId">Action Taken <span class="text-danger">*</span></label>
-                <select asp-for="NewEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select" disabled>
+                <select asp-for="NewEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="NewEvent.ActionTakenId" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewEvent.StartDate" class="form-label"></label>
+                <label asp-for="NewEvent.StartDate" class="form-label">
+                    Event Start Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.StartDateRequired ? "*" : "")</span>
+                </label>
                 <input asp-for="NewEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="NewEvent.StartDate" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewEvent.DueDate" class="form-label"></label>
+                <label asp-for="NewEvent.DueDate" class="form-label">
+                    Due Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span>
+                </label>
                 <input asp-for="NewEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="NewEvent.DueDate" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label asp-for="NewEvent.CompletionDate" class="form-label"></label>
+                <label asp-for="NewEvent.CompletionDate" class="form-label">
+                    Completion Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span>
+                </label>
                 <input asp-for="NewEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="NewEvent.CompletionDate" class="text-danger"></span>
             </div>

@@ -63,7 +63,7 @@ namespace FMS.Domain.Dto
         [Display(Name = "Add'l Org. Unit")]
         public Guid? AdditionalOrgUnitId { get; set; }
 
-        [Display(Name = "UEC")]
+        [Display(Name = "EC")]
         public bool UEC { get; set; }
 
         [Display(Name = "Liens")]

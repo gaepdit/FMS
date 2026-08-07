@@ -19,7 +19,7 @@
         <input type="hidden" asp-for="EditStatus.FacilityId" />
         <input type="hidden" asp-for="EditStatus.Id" />
         <input type="hidden" asp-for="EditStatus.Active" />
-        <div class="row mb-3">
+        <div class="row mb-3 align-items-center">
             <div class="col mb-4">
                 <label asp-for="EditStatus.FundingSourceId" class="form-label"></label>
                 <select asp-for="EditStatus.FundingSourceId" asp-items="Model.FundingSources" class="form-select">
@@ -27,17 +27,17 @@
                 </select>
                 <span asp-validation-for="EditStatus.FundingSourceId" class="text-danger"></span>
             </div>
-            <div class="col-md-2 align-baseline" >
+            <div class="col-md-2">
                 <input asp-for="EditStatus.ISWQS" class="form-check-input" />
                 <label asp-for="EditStatus.ISWQS" class="form-check-label"></label>
                 <span asp-validation-for="EditStatus.ISWQS" class="text-danger"></span>
             </div>
             <div class="col-md-2">
-                <input asp-for="EditStatus.LandFill" class="form-check-input align-bottom" />
-                <label asp-for="EditStatus.LandFill" class="form-check-label align-bottom"></label>
-                <span asp-validation-for="EditStatus.LandFill" class="text-danger align-bottom"></span>
+                <input asp-for="EditStatus.LandFill" class="form-check-input" />
+                <label asp-for="EditStatus.LandFill" class="form-check-label"></label>
+                <span asp-validation-for="EditStatus.LandFill" class="text-danger"></span>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 align-content-start">
                 <label asp-for="EditStatus.SolidWastePermitNumber" class="form-label"></label>
                 <input asp-for="EditStatus.SolidWastePermitNumber" class="form-control" />
                 <span asp-validation-for="EditStatus.SolidWastePermitNumber" class="text-danger"></span>
@@ -191,7 +191,7 @@
                 <span asp-validation-for="EditStatus.UEC" class="text-danger"></span>
             </div>
             <div class="col-md-4">
-                <a href="https://epd.georgia.gov/properties-subject-uniform-environmental-covenants" class="btn btn-sm btn-primary" target="_blank">UEC Online Knack Table</a>
+                <a href="https://epd.georgia.gov/properties-subject-uniform-environmental-covenants" class="btn btn-sm btn-primary" target="_blank">EC Online Knack Table</a>
             </div>
         </div>
         <hr />
