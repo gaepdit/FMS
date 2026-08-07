@@ -2,6 +2,7 @@ using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
+using FMS.Infrastructure.Repositories;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,21 +15,27 @@ namespace FMS.Pages.Event
     public class EditModel : PageModel
     {
         private readonly IEventRepository _repository;
+        private readonly IAllowedActionTakenRepository _allowedActionTakenRepository;
         private readonly IFacilityRepository _facilityRepository;
         private readonly ISelectListHelper _listHelper;
 
         public EditModel(
             IEventRepository repository,
+            IAllowedActionTakenRepository allowedActionTakenRepository,
             IFacilityRepository facilityRepository,
             ISelectListHelper listHelper)
         {
             _repository = repository;
+            _allowedActionTakenRepository = allowedActionTakenRepository;
             _facilityRepository = facilityRepository;
             _listHelper = listHelper;
         }
 
         [BindProperty]
         public EventEditDto EditEvent { get; set; }
+
+        [BindProperty]
+        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; }    
 
         public FacilityDetailDto Facility { get; set; }
 
@@ -54,10 +61,13 @@ namespace FMS.Pages.Event
             Id = id;
             SortBy = sortBy;
             EditEvent = await _repository.GetEventByIdAsync(id);
+            
             if (EditEvent == null)
             {
                 return NotFound();
             }
+            AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync((Guid)EditEvent.EventTypeId, (Guid)EditEvent.ActionTakenId);
+
             Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
 
             Events = EventSortHelper.SortEvents(Facility.Events, sortBy);
@@ -76,6 +86,23 @@ namespace FMS.Pages.Event
             if(EditEvent.CompletionDate > DateOnly.FromDateTime(DateTime.Now))
             {
                 ModelState.AddModelError("EditEvent.CompletionDate", "Completion date cannot be in the future.");
+            }
+
+            AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync((Guid)EditEvent.EventTypeId, (Guid)EditEvent.ActionTakenId);
+            if (AllowedActionTakenSpec != null)
+            {
+                if (AllowedActionTakenSpec.StartDateRequired && EditEvent.StartDate == null)
+                {
+                    ModelState.AddModelError("EditEvent.StartDate", "Start date is required for the selected Action Taken.");
+                }
+                if (AllowedActionTakenSpec.DueDateRequired && EditEvent.DueDate == null)
+                {
+                    ModelState.AddModelError("EditEvent.DueDate", "Due date is required for the selected Action Taken.");
+                }
+                if (AllowedActionTakenSpec.CompletionDateRequired && EditEvent.CompletionDate == null)
+                {
+                    ModelState.AddModelError("EditEvent.CompletionDate", "Completion date is required for the selected Action Taken.");
+                }
             }
 
             if (!ModelState.IsValid)

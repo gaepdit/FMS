@@ -37,6 +37,20 @@ namespace FMS.Infrastructure.Repositories
             return new AllowedActionTakenSpec(allowedActionTaken);
         }
 
+        public async Task<AllowedActionTakenSpec> GetAllowedActionTakenByEventTypeAndActionTakenAsync(Guid eventTypeId, Guid actionTakenId)
+        {
+            if (!await AllowedActionTakenExistsAsync(eventTypeId, actionTakenId))
+            {
+                return null;
+            }
+            AllowedActionTaken allowedActionTaken = await _context.AllowedActionsTaken
+                .AsNoTracking()
+                .Include(e => e.EventType)
+                .Include(e => e.ActionTaken)
+                .SingleOrDefaultAsync(e => e.EventTypeId == eventTypeId && e.ActionTakenId == actionTakenId);
+            return new AllowedActionTakenSpec(allowedActionTaken);
+        }
+
         public async Task<IList<AllowedActionTakenSpec>> GetAllowedActionTakenListAsync(Guid eventTypeId)
         {
             return await _context.AllowedActionsTaken.AsNoTracking()

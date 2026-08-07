@@ -37,8 +37,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Facility.Events)
+                    @for (var i = 0; i < Model.Facility.Events.Count; i++)
                     {
+                        var item = Model.Facility.Events[i];
                         if (item.EventType.Name == "HWTF Master Project")
                         {
                             <tr class="@(!item.Active ? "text-muted table-warning" : "")">
@@ -96,19 +97,19 @@
                 <span asp-validation-for="NewEvent.ActionTakenId" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewEvent.StartDate" class="form-label"></label>
+                <label asp-for="NewEvent.StartDate" class="form-label">Start Date <span class="text-danger">@(Model.AllowedActionTakenSpec.StartDateRequired ? "*" : "")</span></label>
                 <input asp-for="NewEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="NewEvent.StartDate" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="NewEvent.DueDate" class="form-label"></label>
+                <label asp-for="NewEvent.DueDate" class="form-label">Due Date <span class="text-danger">@(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span></label>
                 <input asp-for="NewEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="NewEvent.DueDate" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label asp-for="NewEvent.CompletionDate" class="form-label"></label>
+                <label asp-for="NewEvent.CompletionDate" class="form-label">Completion Date <span class="text-danger">@(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span></label>
                 <input asp-for="NewEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="NewEvent.CompletionDate" class="text-danger"></span>
             </div>
@@ -142,11 +143,11 @@
         <hr />
         <p class="text-danger">* denotes a required field</p>
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Add Event</button>
-        <a asp-page="../Facilities/Details" 
-            asp-route-Id="@Model.NewEvent.FacilityId" 
-            asp-route-tab="Events"
-            asp-route-sortBy="@Model.SortBy"
-            asp-fragment="TabPages"
+        <a asp-page="../Facilities/Details"
+           asp-route-Id="@Model.NewEvent.FacilityId"
+           asp-route-tab="Events"
+           asp-route-sortBy="@Model.SortBy"
+           asp-fragment="TabPages"
            class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
             Cancel
         </a>
