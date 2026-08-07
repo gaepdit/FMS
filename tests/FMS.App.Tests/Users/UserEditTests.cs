@@ -13,12 +13,12 @@ namespace FMS.App.Tests.Users
         public async Task OnGet_PopulatesThePageModel()
         {
             var user = new UserView(UserTestData.ApplicationUsers[0]);
-
+            var listHelper = Substitute.For<ISelectListHelper>();
             var mockRepo = Substitute.For<IUserService>();
             mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
             mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(new List<string>());
 
-            var pageModel = new EditModel(mockRepo);
+            var pageModel = new EditModel(mockRepo, listHelper);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -48,7 +48,8 @@ namespace FMS.App.Tests.Users
             mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
             mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(roles);
 
-            var pageModel = new EditModel(mockRepo);
+            var listHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, listHelper);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -66,7 +67,8 @@ namespace FMS.App.Tests.Users
         public async Task OnGet_MissingId_ReturnsNotFound()
         {
             var mockRepo = Substitute.For<IUserService>();
-            var pageModel = new EditModel(mockRepo);
+            var listHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, listHelper);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 
@@ -79,7 +81,8 @@ namespace FMS.App.Tests.Users
         {
             var mockRepo = Substitute.For<IUserService>();
             mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns((UserView)null);
-            var pageModel = new EditModel(mockRepo);
+            var listHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, listHelper);
 
             var result = await pageModel.OnGetAsync(Guid.Empty).ConfigureAwait(false);
 
@@ -93,7 +96,8 @@ namespace FMS.App.Tests.Users
             var mockRepo = Substitute.For<IUserService>();
             mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(IdentityResult.Success);
 
-            var pageModel = new EditModel(mockRepo)
+            var listHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, listHelper)
             {
                 UserId = Guid.Empty
             };
@@ -110,7 +114,8 @@ namespace FMS.App.Tests.Users
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
         {
             var mockRepo = Substitute.For<IUserService>();
-            var pageModel = new EditModel(mockRepo);
+            var listHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, listHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
@@ -132,7 +137,8 @@ namespace FMS.App.Tests.Users
             mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
             mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(new List<string>());
 
-            var pageModel = new EditModel(mockRepo);
+            var listHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new EditModel(mockRepo, listHelper);
 
             var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 

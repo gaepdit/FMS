@@ -21,7 +21,7 @@ namespace FMS.App.Tests.Account
 
             var mockUserService = Substitute.For<IUserService>();
             mockUserService.GetCurrentUserAsync().Returns(userView);
-            var pageModel = new IndexModel(mockUserService, listHelper);
+            var pageModel = new IndexModel(mockUserService);
 
             var result = await pageModel.OnGetAsync(null).ConfigureAwait(false);
 

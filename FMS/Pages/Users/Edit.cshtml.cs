@@ -71,14 +71,20 @@ namespace FMS.Pages.Users
         {
             if (id != null)
             {
-                CurrentUser = await _userService.GetUserByIdAsync(id.Value)
-                 ?? throw new Exception("User not found");
+                CurrentUser = await _userService.GetUserByIdAsync(id.Value);
+                if(CurrentUser == null)
+                {
+                    return NotFound();
+                }
                 Id = CurrentUser.Id;
             }
             else
             {
-                CurrentUser = await _userService.GetCurrentUserAsync()
-                    ?? throw new Exception("Current user not found");
+                CurrentUser = await _userService.GetCurrentUserAsync();
+                if(CurrentUser == null)
+                {
+                    return NotFound();
+                }
                 Id = CurrentUser.Id;
             }
 

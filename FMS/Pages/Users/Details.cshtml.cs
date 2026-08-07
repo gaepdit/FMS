@@ -2,6 +2,7 @@ using FMS.Domain.Services;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NUglify.JavaScript.Syntax;
 
 namespace FMS.Pages.Users
 {
@@ -23,14 +24,20 @@ namespace FMS.Pages.Users
         {
             if (id != null)
             {
-                CurrentUser = await _userService.GetUserByIdAsync(id.Value)
-                 ?? throw new Exception("User not found");
+                CurrentUser = await _userService.GetUserByIdAsync(id.Value);
+                if(CurrentUser == null)
+                {
+                    return NotFound();
+                }
                 Id = CurrentUser.Id.ToString();
             }
             else
             {
-                CurrentUser = await _userService.GetCurrentUserAsync()
-                    ?? throw new Exception("Current user not found");
+                CurrentUser = await _userService.GetCurrentUserAsync();
+                if(CurrentUser == null)
+                {
+                    return NotFound();
+                }
                 Id = CurrentUser.Id.ToString();
             }
 
