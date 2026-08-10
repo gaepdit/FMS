@@ -20,8 +20,8 @@ namespace FMS.Pages.Facilities
         private readonly IFacilityRepository _repository;
         private readonly IEventRepository _eventRepository;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
-        public DetailsModel(IFacilityRepository repository, 
-            IEventRepository eventRepository, 
+        public DetailsModel(IFacilityRepository repository,
+            IEventRepository eventRepository,
             Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _repository = repository;
@@ -67,7 +67,9 @@ namespace FMS.Pages.Facilities
 
         public EventSort SortBy { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr,  string tab, EventSort sortBy = EventSort.StartDateDesc)
+        public bool IsVrpTracked { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, string tab, EventSort sortBy = EventSort.StartDateDesc)
         {
             if (id == null)
             {
@@ -92,11 +94,11 @@ namespace FMS.Pages.Facilities
                 HighlightRecord = hr.Value;
             }
 
-            if(FacilityDetail.FacilityType.Name == "HSI" || (FacilityDetail.FacilityType.Name == "NPL" && FacilityDetail.FacilityStatus.Name == "EPA Referred"))
+            if (FacilityDetail.FacilityType.Name == "HSI" || (FacilityDetail.FacilityType.Name == "NPL" && FacilityDetail.FacilityStatus.Name == "EPA Referred"))
             {
                 HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
             }
-            
+
             if (FacilityDetail.FacilityType.Name == "RN")
             {
                 if (FacilityDetail.DeterminationLetterDate.HasValue && string.IsNullOrEmpty(FacilityDetail.HSInumber))
@@ -107,14 +109,14 @@ namespace FMS.Pages.Facilities
                 {
                     PendingNotificationFolderLink = UrlHelper.GetPendingNotificationFolderLink(FacilityDetail.FacilityNumber);
                 }
-                if (FacilityDetail.FacilityStatus.Name == "COMPLAINT") 
+                if (FacilityDetail.FacilityStatus.Name == "COMPLAINT")
                 {
                     ComplaintsFolderLink = UrlHelper.GetComplaintsFolderLink(FacilityDetail.FacilityNumber);
                 }
                 else
                 {
                     RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
-                }  
+                }
             }
 
             ActiveTab = tab ?? "HSIProperties";
@@ -187,11 +189,22 @@ namespace FMS.Pages.Facilities
 
         public string GetGoogleMapsUrl(FacilityDetailDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0)
+            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
             {
                 return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
             return null;
+        }
+
+        public bool GetVrpTrackingStatus(FacilityDetailDto facility)
+        {
+            if (facility != null &&
+                facility.HsrpFacilityPropertyDetails.VRPDate != null &&
+                !facility.HsrpFacilityPropertyDetails.VRPTerminated)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
