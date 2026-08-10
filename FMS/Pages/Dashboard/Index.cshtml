@@ -347,7 +347,7 @@
                                                             }
                                                             @foreach (var item in Model.UnitEvents.Where(e => e.CompletionDate != null && e.ComplianceOfficer?.Name == co))
                                                             {
-                                                                <tr>
+                                                                <tr class="table-info">
                                                                     <td>
                                                                         <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
                                                                             @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
@@ -588,7 +588,7 @@
 
                                                                                 @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit && e.CompletionDate != null))
                                                                                 {
-                                                                                    <tr>
+                                                                                    <tr class="table-info">
                                                                                         <td>
                                                                                             <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
                                                                                                 @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
