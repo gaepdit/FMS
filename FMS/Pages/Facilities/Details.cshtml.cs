@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
 using FMS.Platform.Extensions;
@@ -66,6 +66,8 @@ namespace FMS.Pages.Facilities
         public string Lon { get; set; }
 
         public EventSort SortBy { get; set; }
+
+        public bool IsVrpTracked { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, string tab, EventSort sortBy = EventSort.StartDateDesc)
         {
@@ -187,11 +189,22 @@ namespace FMS.Pages.Facilities
 
         public string GetGoogleMapsUrl(FacilityDetailDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0)
+            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
             {
                 return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
             }
             return null;
+        }
+
+        public bool GetVrpTrackingStatus(FacilityDetailDto facility)
+        {
+            if (facility != null &&
+                facility.HsrpFacilityPropertyDetails.VRPDate != null &&
+                !facility.HsrpFacilityPropertyDetails.VRPTerminated)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
