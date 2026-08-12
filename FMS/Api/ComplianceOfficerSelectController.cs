@@ -17,14 +17,14 @@ namespace FMS.Api
         {
             if (id == Guid.Empty)
             {
-                return BadRequest("Invalid unit ID.");
+                return new JsonResult(await _listHelper.ComplianceOfficersSelectListAsync());
             }
             var complianceOfficers = await _complianceOfficerRepository.GetComplianceOfficerListByUnitAsync(id);
             var selectList = await _listHelper.ComplianceOfficersSelectListAsync(false, complianceOfficers);
 
             if(selectList == null || !selectList.Any())
             {
-                selectList = await _listHelper.ComplianceOfficersSelectListAsync(false);
+                selectList = await _listHelper.ComplianceOfficersSelectListAsync();
             }
             return new JsonResult(selectList);
         }
