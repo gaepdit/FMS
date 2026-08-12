@@ -8,14 +8,13 @@ function setUpComplianceOfficerDropdown(OrgUnitElementId, coElementId, placehold
         // const orgUnitSelect = document.getElementById(OrgUnitElementId);
 
         const coSelect = document.getElementById(coElementId);
-        // if (coSelect.value !== '') return;
+        if (coSelect.value !== '') return;
         coSelect.innerHTML = `<option value="">${placeholder}</option>`;
 
-        if (orgUnitSelect.value === null || orgUnitSelect.text === '' || orgUnitSelect.value === '') {
-            orgUnitSelect.value = '00000000-0000-0000-0000-000000000000';
-        }
+        const orgUnitId = orgUnitSelect.value || '00000000-0000-0000-0000-000000000000';
 
-        axios.get(`/api/compliance-officers/${orgUnitSelect.value}`)
+
+        axios.get(`/api/compliance-officers/${orgUnitId}`)
             .then(function (response) {
                 const data = response.data;
                 if (data == null || data.length === 0) return;
