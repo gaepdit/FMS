@@ -2,6 +2,8 @@
 {
     public class ComplianceOfficerCreateDto
     {
+        public Guid UserId { get; set; }
+
         public string GivenName { get; set; }
 
         public string FamilyName { get; set; }

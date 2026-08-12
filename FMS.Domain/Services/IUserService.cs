@@ -21,5 +21,9 @@ namespace FMS.Domain.Services
 
         // User search
         public Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role);
+
+        // User search based on Unit
+        public Task<List<UserView>> GetUsersInUnitAsync(Guid UnitId);
+        public Task<List<UserView>> GetUsersByUnitAsync(Guid? UnitId);
     }
 }

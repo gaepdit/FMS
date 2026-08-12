@@ -401,8 +401,8 @@ namespace FMS.Infrastructure.Repositories
                     FacilityName = e.Name,
                     City = e.City,
                     County = e.County.Name,
-                    AbndInac = e.StatusDetails.AbandonedInactive != null
-                        ? e.StatusDetails.AbandonedInactive.Name
+                    AbndInac = e.StatusDetails.OverallStatus != null
+                        ? e.StatusDetails.OverallStatus.Name
                         : "None",
                     GAPSModelDate = e.StatusDetails.GAPSModelDate,
                     GAPSScore = e.StatusDetails.GAPSScore,
@@ -483,6 +483,9 @@ namespace FMS.Infrastructure.Repositories
                     HSINumber = e.FacilityNumber,
                     FacilityName = e.Name,
                     County = e.County.Name,
+                    AbandonInactive = e.StatusDetails.OverallStatus != null
+                        ? e.StatusDetails.OverallStatus.Name
+                        : "None",
                     ClassName = e.LocationDetails.LocationClass.Name,
                     COName = e.ComplianceOfficer != null ? e.ComplianceOfficer.Name : "Unassigned",
                     GAPSScore = e.StatusDetails.GAPSScore,

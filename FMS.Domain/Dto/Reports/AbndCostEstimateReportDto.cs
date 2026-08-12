@@ -22,6 +22,10 @@ namespace FMS.Domain.Dto.Reports
         [Display(Name = "County")]
         public string County { get; set; }
 
+        [XLColumn(Header = "Aban/Inac")]
+        [Display(Name = "Aban/Inac")]
+        public string AbandonInactive { get; set; }
+
         [XLColumn(Header = "C.O.")]
         [Display(Name = "C.O.")]
         public string COName { get; set; }

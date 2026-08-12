@@ -9,10 +9,13 @@ namespace FMS.Domain.Entities
 
         public ComplianceOfficer(ComplianceOfficerCreateDto complianceOfficer)
         {
+            UserId = complianceOfficer.UserId;
             GivenName = complianceOfficer.GivenName;
             FamilyName = complianceOfficer.FamilyName;
             Email = complianceOfficer.Email;
         }
+
+        public Guid UserId { get; set; }
 
         public string GivenName { get; set; }
 

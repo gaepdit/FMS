@@ -34,6 +34,24 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Guid>> GetComplianceOfficerListByUnitAsync(Guid UnitId)
+        {
+            var UnitUsers = await _context.Users.AsNoTracking()
+                .Where(e => e.Active)
+                .Where(e => e.UserUnit.Id == UnitId)
+                .ToListAsync();
+
+            var UnitCOs = await _context.ComplianceOfficers.AsAsyncEnumerable()
+                .Where(e => UnitUsers.Any(u => u.GivenName == e.GivenName && u.FamilyName == e.FamilyName))
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.FamilyName)
+                .ThenBy(e => e.GivenName)
+                .Select(e => e.Id)
+                .ToListAsync();
+
+            return UnitCOs;
+        }
+
         public Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
         {
             Prevent.Null(complianceOfficer, nameof(complianceOfficer));

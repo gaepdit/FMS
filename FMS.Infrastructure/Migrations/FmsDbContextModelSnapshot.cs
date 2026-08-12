@@ -284,6 +284,9 @@ namespace FMS.Infrastructure.Migrations
                     b.Property<string>("UpdateUser")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("ComplianceOfficers");
