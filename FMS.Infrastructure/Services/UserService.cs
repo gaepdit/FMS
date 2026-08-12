@@ -141,5 +141,24 @@ namespace FMS.Infrastructure.Services
                 .Select(e => new UserView(e))
                 .ToList();
         }
+
+        public async Task<List<UserView>> GetUsersInUnitAsync(Guid UnitId)
+        {
+            var usersInUnit = await _context.Users.AsNoTracking()
+                .Where(m => m.UserUnit.Id == UnitId)
+                .OrderBy(m => m.FamilyName).ThenBy(m => m.GivenName)
+                .Select(e => new UserView(e))
+                .ToListAsync();
+            return usersInUnit;
+        }
+
+        public async Task<List<UserView>> GetUsersByUnitAsync(Guid? UnitId)
+        {
+            if (UnitId == Guid.Empty || UnitId == null)
+            {
+                return await GetUsersAsync(null, null);
+            }
+            return await GetUsersInUnitAsync(UnitId.Value);
+        }
     }
 }

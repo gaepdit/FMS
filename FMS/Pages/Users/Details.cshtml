@@ -21,12 +21,12 @@
         <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
     }
 </h2>
-
+<a asp-page="../Users/Index">← User Search</a>
 <div class="p-3 rounded-3 bg-light-subtle">
     <p><strong>Email:</strong> @Model.Email</p>
-    <p><strong>Program:</strong> @Model.CurrentUser.UserProgram.Name</p>
-    <p><strong>Unit:</strong> @Model.CurrentUser.UserUnit.Name</p>
-    <p><strong>Position:</strong> @Model.CurrentUser.UserPosition.Name</p>
+    <p><strong>Program:</strong> @Model.CurrentUser.UserProgram?.Name</p>
+    <p><strong>Unit:</strong> @Model.CurrentUser.UserUnit?.Name</p>
+    <p><strong>Position:</strong> @Model.CurrentUser.UserPosition?.Name</p>
 </div>
 
 @if (Model.Roles != null && Model.Roles.Count > 0)

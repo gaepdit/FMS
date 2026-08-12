@@ -6,7 +6,7 @@ namespace FMS
     public interface ISelectListHelper
     {
         Task<SelectList> BudgetCodesSelectListAsync(bool includeInactive = false);
-        Task<SelectList> ComplianceOfficersSelectListAsync(bool includeInactive = false);
+        Task<SelectList> ComplianceOfficersSelectListAsync(bool includeInactive = false, List<Guid> UnitCOs = null);
         Task<SelectList> FacilityStatusesSelectListAsync(bool includeInactive = false);
         Task<SelectList> FacilityTypesSelectListAsync(bool includeInactive = false);
         Task<SelectList> OrganizationalUnitsSelectListAsync(bool includeInactive = false, List<string> list = null);
@@ -40,8 +40,8 @@ namespace FMS
 
         public async Task<SelectList> BudgetCodesSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetBudgetCodesItemListAsync(includeInactive)).ToSelectList();
-        public async Task<SelectList> ComplianceOfficersSelectListAsync(bool includeInactive = false) =>
-            (await _listRepository.GetComplianceOfficersItemListAsync(includeInactive)).ToSelectList();
+        public async Task<SelectList> ComplianceOfficersSelectListAsync(bool includeInactive = false, List<Guid> UnitCOs = null) =>
+            (await _listRepository.GetComplianceOfficersItemListAsync(includeInactive, UnitCOs)).ToSelectList();
         public async Task<SelectList> FacilityStatusesSelectListAsync(bool includeInactive = false) =>
             (await _listRepository.GetFacilityStatusesItemListAsync(includeInactive)).ToSelectList();
         public async Task<SelectList> FacilityTypesSelectListAsync(bool includeInactive = false) =>

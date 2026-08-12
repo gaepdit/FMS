@@ -136,6 +136,7 @@ public sealed class AuthenticationManager(
     {
         var complianceOfficer = new ComplianceOfficerCreateDto
         {
+            UserId = user.Id,
             Email = user.Email,
             FamilyName = user.FamilyName,
             GivenName = user.GivenName,

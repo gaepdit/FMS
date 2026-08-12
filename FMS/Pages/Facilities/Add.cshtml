@@ -8,6 +8,13 @@
     <script src="~/js/mapGeocode.js"></script>
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/formAdd.js"></script>
+    <partial name="_CoSelectPartial" />
+    <script>
+        setUpComplianceOfficerDropdown(
+            "Facility_OrganizationalUnitId",
+            "Facility_ComplianceOfficerId",
+            "");
+    </script>
 }
 
 @{

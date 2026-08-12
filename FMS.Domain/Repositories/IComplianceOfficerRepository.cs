@@ -7,6 +7,7 @@ namespace FMS.Domain.Repositories
         Task<bool> ComplianceOfficerIdExistsAsync(Guid id);
         Task<ComplianceOfficerDetailDto> GetComplianceOfficerAsync(Guid id);
         Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync();
+        Task<List<Guid>> GetComplianceOfficerListByUnitAsync(Guid UnitId);
         Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer);
         Task UpdateComplianceOfficerStatusAsync(Guid id, bool active);
     }

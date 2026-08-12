@@ -10,7 +10,7 @@
         /// Get All List Items Lists
         ///
         Task<IEnumerable<ListItem>> GetBudgetCodesItemListAsync(bool includeInactive = false);
-        Task<IEnumerable<ListItem>> GetComplianceOfficersItemListAsync(bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetComplianceOfficersItemListAsync(bool includeInactive = false, List<Guid> UnitCOs = null);
         Task<IEnumerable<ListItem>> GetFacilityStatusesItemListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetFacilityTypesItemListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetOrganizationalUnitsItemListAsync(bool includeInactive = false, List<string> list = null);

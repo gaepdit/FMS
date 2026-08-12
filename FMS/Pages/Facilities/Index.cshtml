@@ -12,6 +12,13 @@
     <script src="~/js/formSearch.js"></script>
     <script src="~/js/formIndex.js"></script>
     <script src="~/js/multiSelect.js"></script>
+    <partial name="_CoSelectPartial" />
+    <script>
+        setUpComplianceOfficerDropdown(
+            "Spec_OrganizationalUnitId",
+            "Spec_ComplianceOfficerId",
+            "");
+    </script>
 }
 @section Styles
 {

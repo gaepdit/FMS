@@ -38,9 +38,10 @@ namespace FMS.Infrastructure.Repositories
         public async Task<IEnumerable<ListItem>> GetBudgetCodesItemListAsync(bool includeInactive = false) =>
             await GetItemListAsync<BudgetCode>(includeInactive);
 
-        public async Task<IEnumerable<ListItem>> GetComplianceOfficersItemListAsync(bool includeInactive = false) =>
+        public async Task<IEnumerable<ListItem>> GetComplianceOfficersItemListAsync(bool includeInactive = false, List<Guid> UnitCOs = null ) =>
             await _context.ComplianceOfficers.AsNoTracking()
                 .Where(e => e.Active || includeInactive)
+                .Where(e => UnitCOs == null || UnitCOs.Contains(e.Id))
                 .OrderByDescending(e => e.Active)
                 .ThenBy(e => e.FamilyName)
                 .ThenBy(e => e.GivenName)

@@ -2,7 +2,6 @@ using FMS.Domain.Services;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using NUglify.JavaScript.Syntax;
 
 namespace FMS.Pages.Users
 {
