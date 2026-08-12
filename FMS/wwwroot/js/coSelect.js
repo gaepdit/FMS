@@ -2,19 +2,14 @@
 function setUpComplianceOfficerDropdown(OrgUnitElementId, coElementId, placeholder) {
 
     const orgUnitSelect = document.getElementById(OrgUnitElementId);
-    // const coSelect = document.getElementById(coElementId);
 
     orgUnitSelect.addEventListener("change", () => {
-        // const orgUnitSelect = document.getElementById(OrgUnitElementId);
 
         const coSelect = document.getElementById(coElementId);
         if (coSelect.value !== '') return;
         coSelect.innerHTML = `<option value="">${placeholder}</option>`;
 
-        const orgUnitId = orgUnitSelect.value || '00000000-0000-0000-0000-000000000000';
-
-
-        axios.get(`/api/compliance-officers/${orgUnitId}`)
+        axios.get(`/api/compliance-officers/${orgUnitSelect.value}`)
             .then(function (response) {
                 const data = response.data;
                 if (data == null || data.length === 0) return;
