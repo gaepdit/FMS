@@ -15,7 +15,7 @@ function setUpComplianceOfficerDropdown(OrgUnitElementId, coElementId, placehold
         coSelect.innerHTML = `<option value="">${placeholder}</option>`;
 
         if (orgUnitSelect.value === '') return;
-        coSelect.disabled = false;
+        // coSelect.disabled = false;
 
         axios.get(`/api/compliance-officers/${orgUnitSelect.value}`)
             .then(function (response) {

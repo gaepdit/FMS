@@ -21,6 +21,7 @@ namespace FMS.Api
             }
             var complianceOfficers = await _complianceOfficerRepository.GetComplianceOfficerListByUnitAsync(id);
             var selectList = await _listHelper.ComplianceOfficersSelectListAsync(false, complianceOfficers);
+
             if(selectList == null || !selectList.Any())
             {
                 selectList = await _listHelper.ComplianceOfficersSelectListAsync(false);
