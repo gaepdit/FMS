@@ -124,7 +124,7 @@ namespace FMS.Infrastructure.Services
                 .Where(m => userProgramId == null || m.UserProgram?.Id == userProgramId)
                 .Where(m => userUnitId == null || m.UserUnit?.Id == userUnitId)
                 .Where(m => userPositionId == null || m.UserPosition?.Id == userPositionId)
-                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email == emailFilter)
+                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email.Contains(emailFilter, StringComparison.InvariantCultureIgnoreCase))
                 .OrderBy(m => m.FamilyName).ThenBy(m => m.GivenName)
                 .Select(e => new UserView(e))
                 .ToList();
@@ -145,7 +145,7 @@ namespace FMS.Infrastructure.Services
                 .Where(m => userProgramId == null || m.UserProgram?.Id == userProgramId)
                 .Where(m => userUnitId == null || m.UserUnit?.Id == userUnitId)
                 .Where(m => userPositionId == null || m.UserPosition?.Id == userPositionId)
-                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email == emailFilter)
+                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email.Contains(emailFilter, StringComparison.InvariantCultureIgnoreCase))
                 .OrderBy(m => m.FamilyName).ThenBy(m => m.GivenName)
                 .Select(e => new UserView(e))
                 .ToList();

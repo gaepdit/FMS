@@ -1,6 +1,4 @@
-﻿using FMS.Domain.Entities;
-using FMS.Domain.Entities.Users;
-using FMS.Domain.Repositories;
+﻿using FMS.Domain.Entities.Users;
 using FMS.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
