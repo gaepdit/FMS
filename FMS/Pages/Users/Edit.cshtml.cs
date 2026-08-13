@@ -153,9 +153,10 @@ namespace FMS.Pages.Users
             {
                 ModelState.AddModelError(string.Empty, string.Concat(err.Code, ": ", err.Description));
             }
-
+            TempData?.SetDisplayMessage(Context.Danger, $"Unable to update user.");
             if (!await GetUserDetails()) return NotFound();
             await GetUserRoles();
+            await PopulateSelectsAsync();
             return Page();
         }
 

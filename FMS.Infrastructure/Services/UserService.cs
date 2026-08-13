@@ -117,10 +117,10 @@ namespace FMS.Infrastructure.Services
         // User search
         private async Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, Guid? userProgramId, Guid? userUnitId, Guid? userPositionId)
         {
-            return (await _userManager.Users.ToListAsync())
+            return (await _context.Users.ToListAsync())
                 .Where(m => string.IsNullOrEmpty(nameFilter)
-                    || m.GivenName.Contains(nameFilter)
-                    || m.FamilyName.Contains(nameFilter))
+                    || m.GivenName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase)
+                    || m.FamilyName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase))
                 .Where(m => userProgramId == null || m.UserProgram?.Id == userProgramId)
                 .Where(m => userUnitId == null || m.UserUnit?.Id == userUnitId)
                 .Where(m => userPositionId == null || m.UserPosition?.Id == userPositionId)
@@ -140,8 +140,8 @@ namespace FMS.Infrastructure.Services
 
             return (await _userManager.GetUsersInRoleAsync(role))
                 .Where(m => string.IsNullOrEmpty(nameFilter)
-                    || m.GivenName.Contains(nameFilter)
-                    || m.FamilyName.Contains(nameFilter))
+                    || m.GivenName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase)
+                    || m.FamilyName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase))
                 .Where(m => userProgramId == null || m.UserProgram?.Id == userProgramId)
                 .Where(m => userUnitId == null || m.UserUnit?.Id == userUnitId)
                 .Where(m => userPositionId == null || m.UserPosition?.Id == userPositionId)
