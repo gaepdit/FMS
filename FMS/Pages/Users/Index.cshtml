@@ -21,12 +21,33 @@
             </div>
             <div class="col">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" aria-describedby="emailHelpBlock" />
+                <small id="emailHelpBlock" class="form-text text-muted">Must Contain @@ in address</small>
             </div>
             <div class="col">
                 <label asp-for="Role"></label>
                 <select asp-for="Role" asp-items="Model.RoleItems" class="form-select">
                     <option value="">(any)</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-md-4">
+                <label asp-for="UserProgramId"></label>
+                <select asp-for="UserProgramId" asp-items="Model.UserPrograms" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserUnitId"></label>
+                <select asp-for="UserUnitId" asp-items="Model.UserUnits" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserPositionId"></label>
+                <select asp-for="UserPositionId" asp-items="Model.UserPositions" class="form-select">
+                    <option value=""></option>
                 </select>
             </div>
         </div>

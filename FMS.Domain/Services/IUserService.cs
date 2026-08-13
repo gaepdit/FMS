@@ -20,7 +20,7 @@ namespace FMS.Domain.Services
         public Task<IdentityResult> UpdateUserDesignationsAsync(Guid id, Guid? userProgramId, Guid? userUnitId, Guid? userPositionId);
 
         // User search
-        public Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role);
+        public Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role, Guid? userProgramId, Guid? userUnitId, Guid? userPositionId);
 
         // User search based on Unit
         public Task<List<UserView>> GetUsersInUnitAsync(Guid UnitId);

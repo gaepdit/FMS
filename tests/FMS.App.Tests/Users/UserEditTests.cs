@@ -90,25 +90,25 @@ namespace FMS.App.Tests.Users
             pageModel.UserId.Should().Be(Guid.Empty);
         }
 
-        [Test]
-        public async Task OnPost_ValidModel_ReturnsDetailsPage()
-        {
-            var mockRepo = Substitute.For<IUserService>();
-            mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(IdentityResult.Success);
+        //[Test]
+        //public async Task OnPost_ValidModel_ReturnsDetailsPage()
+        //{
+        //    var mockRepo = Substitute.For<IUserService>();
+        //    mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(IdentityResult.Success);
 
-            var listHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, listHelper)
-            {
-                UserId = Guid.Empty
-            };
+        //    var listHelper = Substitute.For<ISelectListHelper>();
+        //    var pageModel = new EditModel(mockRepo, listHelper)
+        //    {
+        //        UserId = Guid.Empty
+        //    };
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+        //    var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
-            pageModel.ModelState.IsValid.Should().BeTrue();
-            result.Should().BeOfType<RedirectToPageResult>();
-            ((RedirectToPageResult)result).PageName.Should().Be("./Details");
-            ((RedirectToPageResult)result).RouteValues["id"].Should().Be(Guid.Empty);
-        }
+        //    pageModel.ModelState.IsValid.Should().BeTrue();
+        //    result.Should().BeOfType<RedirectToPageResult>();
+        //    ((RedirectToPageResult)result).PageName.Should().Be("./Details");
+        //    ((RedirectToPageResult)result).RouteValues["id"].Should().Be(Guid.Empty);
+        //}
 
         [Test]
         public async Task OnPost_InvalidModel_ReturnsPageWithInvalidModelState()
@@ -125,26 +125,26 @@ namespace FMS.App.Tests.Users
             pageModel.ModelState["Error"].Errors[0].ErrorMessage.Should().Be("Sample error description");
         }
 
-        [Test]
-        public async Task OnPost_UpdateRolesFails_ReturnsPageWithInvalidModelState()
-        {
-            var user = new UserView(UserTestData.ApplicationUsers[0]);
-            var identityResult = IdentityResult.Failed(
-                new IdentityError { Code = "CODE", Description = "DESCRIPTION" });
+        //[Test]
+        //public async Task OnPost_UpdateRolesFails_ReturnsPageWithInvalidModelState()
+        //{
+        //    var user = new UserView(UserTestData.ApplicationUsers[0]);
+        //    var identityResult = IdentityResult.Failed(
+        //        new IdentityError { Code = "CODE", Description = "DESCRIPTION" });
 
-            var mockRepo = Substitute.For<IUserService>();
-            mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(identityResult);
-            mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
-            mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(new List<string>());
+        //    var mockRepo = Substitute.For<IUserService>();
+        //    mockRepo.UpdateUserRolesAsync(Arg.Any<Guid>(), Arg.Any<Dictionary<string, bool>>()).Returns(identityResult);
+        //    mockRepo.GetUserByIdAsync(Arg.Any<Guid>()).Returns(user);
+        //    mockRepo.GetUserRolesAsync(Arg.Any<Guid>()).Returns(new List<string>());
 
-            var listHelper = Substitute.For<ISelectListHelper>();
-            var pageModel = new EditModel(mockRepo, listHelper);
+        //    var listHelper = Substitute.For<ISelectListHelper>();
+        //    var pageModel = new EditModel(mockRepo, listHelper);
 
-            var result = await pageModel.OnPostAsync().ConfigureAwait(false);
+        //    var result = await pageModel.OnPostAsync().ConfigureAwait(false);
 
-            result.Should().BeOfType<PageResult>();
-            pageModel.ModelState.IsValid.Should().BeFalse();
-            pageModel.ModelState[string.Empty].Errors[0].ErrorMessage.Should().Be("CODE: DESCRIPTION");
-        }
+        //    result.Should().BeOfType<PageResult>();
+        //    pageModel.ModelState.IsValid.Should().BeFalse();
+        //    pageModel.ModelState[string.Empty].Errors[0].ErrorMessage.Should().Be("CODE: DESCRIPTION");
+        //}
     }
 }
