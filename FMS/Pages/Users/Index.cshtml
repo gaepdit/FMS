@@ -30,6 +30,26 @@
                 </select>
             </div>
         </div>
+        <div class="mb-3 row">
+            <div class="col-md-4">
+                <label asp-for="UserProgramId"></label>
+                <select asp-for="UserProgramId" asp-items="Model.UserPrograms" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserUnitId"></label>
+                <select asp-for="UserUnitId" asp-items="Model.UserUnits" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="UserPositionId"></label>
+                <select asp-for="UserPositionId" asp-items="Model.UserPositions" class="form-select">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
         <input type="hidden" name="handler" value="search" />
         <button id="SearchButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Search</button>
         <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear Form</a>
