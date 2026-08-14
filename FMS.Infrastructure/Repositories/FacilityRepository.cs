@@ -318,6 +318,8 @@ namespace FMS.Infrastructure.Repositories
                 TypeList = JsonSerializer.Serialize(spec.FacilityTypeId);
             }
 
+
+
             return (await conn.QueryAsync<FacilityMapSummaryDto>("dbo.getNearbyFacilities",
                 new { Active = !spec.ShowDeleted, spec.Latitude, spec.Longitude, spec.Radius, TypeList },
                 commandType: CommandType.StoredProcedure)).ToList();
