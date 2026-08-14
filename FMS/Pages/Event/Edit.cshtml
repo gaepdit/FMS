@@ -39,30 +39,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Facility.Events)
+                        @for (var i = 0; i < Model.Events.Count; i++)
                         {
-                            if (item.EventType.Name == "HWTF Master Project")
+                            var item = Model.Events[i];
+                            if (item.EventType?.Name == "HWTF Master Project")
                             {
                                 <tr class="@(item.Id == Model.Id ? " table-danger" : "")">
                                     <td class="text-nowrap">
                                         <label>
                                             @Html.RadioButtonFor(m => m.EditEvent.ParentId, item.Id)
-                                            @Html.DisplayFor(m => item.EventType.Name)
+                                            @Html.DisplayFor(m => item.EventType.Name, "StringOrNone")
                                         </label>
                                     </td>
-                                    <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
-                                    <td>@Html.DisplayFor(m => item.StartDate)</td>
-                                    <td>@Html.DisplayFor(m => item.DueDate)</td>
-                                    <td>@Html.DisplayFor(m => item.CompletionDate)</td>
-                                    <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
-                                    <td>@Html.DisplayFor(m => item.EventAmount)</td>
+                                    <td>@Html.DisplayFor(m => item.ActionTaken.Name, "StringOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.StartDate, "DateOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.DueDate, "DateOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.CompletionDate, "DateOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.EventAmount, "DecimalOrNone")</td>
                                     <td>
                                         @if (item.EventContractor != null)
                                         {
-                                            @Html.DisplayFor(m => item.EventContractor.Name)
+                                            @Html.DisplayFor(m => item.EventContractor.Name, "StringOrNone")
                                         }
                                     </td>
-                                    <td>@Html.DisplayFor(m => item.Comment)</td>
+                                    <td>@Html.DisplayFor(m => item.Comment, "StringOrNone")</td>
                                 </tr>
                             }
                         }
@@ -239,27 +240,27 @@
                         @for (var i = 0; i < Model.Events.Count; i++)
                         {
                             var item = Model.Events[i];
-                            <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : "") + (item.Id == Model.Id ? " table-danger" : ""))">
+                            <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType?.Name == "HWTF Master Project" ? " table-info" : "") + (item.Id == Model.Id ? " table-danger" : ""))">
                                 <td>
                                     @if (item.ParentId != Guid.Empty)
                                     {
                                         <span class="badge text-bg-info"> ^ </span>
                                     }
-                                    @Html.DisplayFor(m => item.EventType.Name)
+                                    @Html.DisplayFor(m => item.EventType.Name, "StringOrNone")
                                 </td>
-                                <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
-                                <td>@Html.DisplayFor(m => item.StartDate)</td>
-                                <td>@Html.DisplayFor(m => item.DueDate)</td>
-                                <td>@Html.DisplayFor(m => item.CompletionDate)</td>
-                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
-                                <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount)</td>
+                                <td>@Html.DisplayFor(m => item.ActionTaken.Name, "StringOrNone")</td>
+                                <td>@Html.DisplayFor(m => item.StartDate, "DateOrNone")</td>
+                                <td>@Html.DisplayFor(m => item.DueDate, "DateOrNone")</td>
+                                <td>@Html.DisplayFor(m => item.CompletionDate, "DateOrNone")</td>
+                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
+                                <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount, "DecimalOrNone")</td>
                                 <td>
                                     @if (item.EventContractor != null)
                                     {
-                                        @Html.DisplayFor(m => item.EventContractor.Name)
+                                        @Html.DisplayFor(m => item.EventContractor.Name, "StringOrNone")
                                     }
                                 </td>
-                                <td>@Html.DisplayFor(m => item.Comment)</td>
+                                <td>@Html.DisplayFor(m => item.Comment, "StringOrNone")</td>
                             </tr>
                         }
                     </tbody>
