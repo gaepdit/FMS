@@ -38,7 +38,7 @@ namespace FMS.Pages.Event
         public EventEditDto EditEvent { get; set; }
 
         [BindProperty]
-        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; }    
+        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; }   
 
         public FacilityDetailDto Facility { get; set; }
 
@@ -71,7 +71,9 @@ namespace FMS.Pages.Event
             {
                 return NotFound();
             }
+
             AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync((Guid)EditEvent.EventTypeId, (Guid)EditEvent.ActionTakenId);
+            AllowedActionTakenSpec ??= new AllowedActionTakenSpec();
 
             Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
 

@@ -26,24 +26,24 @@ namespace FMS.Domain.Dto
         public bool Active { get; set; }
 
         [Display(Name = "Start Date Required")]
-        public bool StartDateRequired { get; set; }
+        public bool StartDateRequired { get; set; } = false;
 
         [Display(Name = "Due Date Required")]
-        public bool DueDateRequired { get; set; }
+        public bool DueDateRequired { get; set; } = false;
 
         [Display(Name = "Completion Date Required")]
-        public bool CompletionDateRequired { get; set; }
+        public bool CompletionDateRequired { get; set; } = false;
 
         public Guid EventTypeId { get; set; }
 
         public string EventTypeName { get; set; }
 
-        public bool EventTypeActive { get; set; }
+        public bool EventTypeActive { get; set; } = false;
 
         public Guid ActionTakenId { get; set; }
 
         public string ActionTakenName { get; set; } 
 
-        public bool ActionTakenActive { get; set; }
+        public bool ActionTakenActive { get; set; } = false;
     }
 }

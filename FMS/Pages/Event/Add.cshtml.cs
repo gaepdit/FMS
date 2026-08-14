@@ -133,6 +133,7 @@ namespace FMS.Pages.Event
                 Events = await _repository.GetEventsByFacilityIdAsync(Id);
                 Events = EventSortHelper.SortEvents(Events, SortBy);
                 AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
+                AllowedActionTakenSpec ??= new AllowedActionTakenSpec();
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -152,6 +153,7 @@ namespace FMS.Pages.Event
                 Events = await _repository.GetEventsByFacilityIdAsync(Id);
                 Events = EventSortHelper.SortEvents(Events, SortBy);
                 AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
+                AllowedActionTakenSpec ??= new AllowedActionTakenSpec();
                 await PopulateSelectsAsync();
                 return Page();
             }
