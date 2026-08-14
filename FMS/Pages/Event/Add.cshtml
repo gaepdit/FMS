@@ -52,12 +52,25 @@
                                 <td>@Html.DisplayFor(m => item.StartDate)</td>
                                 <td>@Html.DisplayFor(m => item.DueDate)</td>
                                 <td>@Html.DisplayFor(m => item.CompletionDate)</td>
-                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                                <td>
+                                    @if (item.ComplianceOfficer != null)
+                                    {
+                                        @Html.DisplayFor(m => item.ComplianceOfficer.Name)
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
+                                    }
+                                </td>
                                 <td>@Html.DisplayFor(m => item.EventAmount)</td>
                                 <td>
                                     @if (item.EventContractor != null)
                                     {
                                         @Html.DisplayFor(m => item.EventContractor.Name)
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
                                     }
                                 </td>
                                 <td>@Html.DisplayFor(m => item.Comment)</td>
@@ -233,12 +246,25 @@
                                 <td>@Html.DisplayFor(m => item.StartDate)</td>
                                 <td>@Html.DisplayFor(m => item.DueDate)</td>
                                 <td>@Html.DisplayFor(m => item.CompletionDate)</td>
-                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
+                                <td>
+                                    @if (item.ComplianceOfficer != null)
+                                    {
+                                        @Html.DisplayFor(m => item.ComplianceOfficer.Name)
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
+                                    }
+                                </td>
                                 <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount)</td>
                                 <td>
                                     @if (item.EventContractor != null)
                                     {
                                         @Html.DisplayFor(m => item.EventContractor.Name)
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">N/A</span>
                                     }
                                 </td>
                                 <td>@Html.DisplayFor(m => item.Comment)</td>
