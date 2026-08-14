@@ -714,7 +714,14 @@
                                                 @Html.DisplayFor(m => item.County.Name, "StringOrNone")
                                             </td>
                                             <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                @if (item.LocationClass == null)
+                                                {
+                                                    <span class="text-muted">None</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                }
                                             </td>
                                         </tr>
                                     }
@@ -775,7 +782,14 @@
                                                 @Html.DisplayFor(m => item.County.Name, "StringOrNone")
                                             </td>
                                             <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                @if (item.LocationClass == null)
+                                                {
+                                                    <span class="text-muted">None</span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                }
                                             </td>
                                         </tr>
                                     }
@@ -856,7 +870,14 @@
                                                                     @Html.DisplayFor(m => item.County.Name, "StringOrNone")
                                                                 </td>
                                                                 <td class="text-nowrap">
-                                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                    @if (item.LocationClass == null)
+                                                                    {
+                                                                        <span class="text-muted">None</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                    }
                                                                 </td>
                                                             </tr>
                                                         }
