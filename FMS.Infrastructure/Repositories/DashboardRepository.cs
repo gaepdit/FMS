@@ -63,12 +63,11 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.StatusDetails)
-                .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.ComplianceOfficerId == id)
                 .Where(e => e.FacilityType.Name != "RN")
-                .OrderBy(e => e.Name)
+                .OrderBy(e => e.FacilityType.Name)
+                .ThenBy(e => e.Name)
                 .Select(e => new DashboardUserFacilitiesDto(e))
                 .AsSplitQuery()
                 .ToListAsync();
@@ -79,27 +78,26 @@ namespace FMS.Infrastructure.Repositories
         {
             var currentUser = await GetApplicationUser(id);
 
-            return await _context.Facilities.AsNoTracking()
+            var facilities = await _context.Facilities.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.County)
-                .Include(e => e.Events)
                 .Include(e => e.FacilityStatus)
                 .Include(e => e.FacilityType)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.StatusDetails)
-                .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.OrganizationalUnitId == currentUser.UserUnit.Id)
                 .Where(e => e.ComplianceOfficer.Active)
                 .Where(e => e.FacilityType.Name != "RN")
-                .OrderBy(e => e.ComplianceOfficer.FamilyName)
+                .OrderBy(e => e.FacilityType.Name)
                 .ThenBy(e => e.Name)
                 .Select(e => new DashboardUnitFacilitiesDto(e))
                 .AsSplitQuery()
                 .ToListAsync();
+
+            return facilities;
         }
 
         public async Task<List<DashboardProgramFacilitiesDto>> GetProgramHSIFacilitiesById(Guid id, bool includeInactive = false)
@@ -114,14 +112,11 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.StatusDetails)
-                .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.OrganizationalUnit.UserProgram.Id == id)
                 .Where(e => e.ComplianceOfficer.Active)
                 .Where(e => e.FacilityType.Name != "RN")
-                .OrderBy(e => e.OrganizationalUnit.Name)
-                .ThenBy(e => e.ComplianceOfficer.FamilyName)
+                .OrderBy(e => e.FacilityType.Name)
                 .ThenBy(e => e.Name)
                 .Select(e => new DashboardProgramFacilitiesDto(e))
                 .AsSplitQuery()

@@ -24,18 +24,18 @@
                         <h3>My Events</h3>
                     </button>
                 </h3>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-md text-md-start text-sm-right small mb-1">
+                            @(Model.UserEvents.Count() > 0 ? $"My Total Events: {Model.UserEvents.Count()}" : "No Events Assigned")
+                        </div>
+                    </div>
+                </div>
                 <div id="MyEvents" class="accordion-collapse collapse" aria-labelledby="MyEventsList">
                     <div class="accordion-body">
                         <form method="post">
+
                             <table class="table" aria-label="List of Events">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h4>Active Events for Compliance Officer: @Model.CurrentUser.DisplayName</h4>
-                                    </div>
-                                    <div class="col-md text-md-end text-sm-right small mb-1">
-                                        @(Model.UserEvents.Count() > 0 ? $"Total Events: {Model.UserEvents.Count()}" : "No Events Assigned")
-                                    </div>
-                                </div>
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col" class="col">Facility Number</th>
@@ -204,19 +204,18 @@
             <div class="accordion-item">
                 <h3 class="accordion-header" id="MyUnitEventsList">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyUnitEvents" aria-expanded="true" aria-controls="MyUnitEvents">
-                        <h3>My Unit Events</h3>
+                        <h3>Unit Events</h3>
                     </button>
                 </h3>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-md text-md-start text-sm-right small mb-1">
+                            @(Model.UnitEvents.Count() > 0 ? $"Total Unit Events: {Model.UnitEvents.Count()}" : "No Events Assigned")
+                        </div>
+                    </div>
+                </div>
                 <div id="MyUnitEvents" class="accordion-collapse collapse" aria-labelledby="MyUnitEventsList">
                     <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <h4>Active Events for Unit: @Model.CurrentUser.UserUnit.Name</h4>
-                            </div>
-                            <div class="col-md text-md-end text-sm-right small mb-1">
-                                @(Model.UnitEvents.Count() > 0 ? $"Total Events: {Model.UnitEvents.Count()}" : "No Events Assigned")
-                            </div>
-                        </div>
                         @foreach (var co in Model.UserCOs)
                         {
                             if (Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0)
@@ -228,13 +227,13 @@
                                                 <h5>@co</h5>
                                             </button>
                                         </h3>
+                                        <div class="row">
+                                            <div class="col-md text-md-end text-sm-right small mb-1">
+                                                @(Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0 ? $"{Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count()} out of {Model.UnitEvents.Count()} Total Events: " : "No Events Assigned")
+                                            </div>
+                                        </div>
                                         <div id="MyCOUnitEvents+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOUnitEventsList+@Model.UserCOs.IndexOf(co)">
                                             <div class="accordion-body">
-                                                <div class="row">
-                                                    <div class="col-md text-md-end text-sm-right small mb-1">
-                                                        @(Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0 ? $"{Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count()} out of {Model.UnitEvents.Count()} Total Events: " : "No Events Assigned")
-                                                    </div>
-                                                </div>
                                                 <form method="post">
                                                     <table class="table" aria-label="List of Events">
                                                         <thead class="thead-light">
@@ -410,19 +409,18 @@
             <div class="accordion-item">
                 <h3 class="accordion-header" id="MyProgramEventsList">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyProgramEvents" aria-expanded="true" aria-controls="MyProgramEvents">
-                        <h3>My Program Events</h3>
+                        <h3>Program Events</h3>
                     </button>
                 </h3>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-md text-md-start text-sm-right small mb-1">
+                            @(Model.ProgramEvents.Count() > 0 ? $"Total Program Events: {Model.ProgramEvents.Count()}" : "No Events Assigned")
+                        </div>
+                    </div>
+                </div>
                 <div id="MyProgramEvents" class="accordion-collapse collapse" aria-labelledby="MyProgramEventsList">
                     <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <h4>Active Events for Program: @Model.CurrentUser.UserProgram.Name</h4>
-                            </div>
-                            <div class="col-md text-md-end text-sm-right small mb-1">
-                                @(Model.ProgramEvents.Count() > 0 ? $"Total Events: {Model.ProgramEvents.Count()}" : "No Events Assigned")
-                            </div>
-                        </div>
                         @foreach (var unit in Model.UserUnits)
                         {
                             <div class="accordion accordion-flush" id="Current-Events-Work+@Model.UserUnits.IndexOf(unit)">
@@ -432,13 +430,13 @@
                                             <h5>@unit</h5>
                                         </button>
                                     </h3>
+                                    <div class="row">
+                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                            @(Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
+                                        </div>
+                                    </div>
                                     <div id="MyProgramEvents+@Model.UserUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramEventsList+@Model.UserUnits.IndexOf(unit)">
                                         <div class="accordion-body">
-                                            <div class="row">
-                                                <div class="col-md text-md-end text-sm-right small mb-1">
-                                                    @(Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
-                                                </div>
-                                            </div>
                                             @foreach (var co in Model.UserCOs)
                                             {
                                                 if (Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count() > 0)
@@ -450,13 +448,14 @@
                                                                     <h5>@co</h5>
                                                                 </button>
                                                             </h3>
+                                                            <div class="row">
+                                                                <div class="col-md text-md-end text-sm-right small mb-1">
+                                                                    @(Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
+                                                                </div>
+                                                            </div>
                                                             <div id="MyCOProgramEvents+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOProgramEventsList+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
                                                                 <div class="accordion-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md text-md-end text-sm-right small mb-1">
-                                                                            @(Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
-                                                                        </div>
-                                                                    </div>
+
                                                                     <form method="post">
                                                                         <table class="table" aria-label="List of Events">
                                                                             <thead class="thead-light">
@@ -477,7 +476,7 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit &&  e.CompletionDate == null && e.StartDate == null))
+                                                                                @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit && e.CompletionDate == null && e.StartDate == null))
                                                                                 {
                                                                                     <tr class="table-warning">
                                                                                         <td>
@@ -531,7 +530,7 @@
                                                                                         }
                                                                                     </tr>
                                                                                 }
-                                                                                @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit &&  e.CompletionDate == null && e.StartDate != null))
+                                                                                @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit && e.CompletionDate == null && e.StartDate != null))
                                                                                 {
                                                                                     <tr class="table-light">
                                                                                         <td>
@@ -660,6 +659,7 @@
         </div>
     }
 </div>
+
 <div class="container bg-light-subtle p-1 m-1 rounded-3">
     @if (Model.CurrentUser.UserPosition.Name != "PM2")
     {
@@ -672,61 +672,186 @@
                                 <h3>My Facilities</h3>
                             </button>
                         </h3>
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col-md text-md-start text-sm-right small mb-1">
+                                    @(Model.UserFacilities.Count() > 0 ? $"My Total Facilities: {Model.UserFacilities.Count()}" : "No Facilities Assigned")
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="MyFacilities" class="accordion-collapse collapse" aria-labelledby="MyFacilityList">
                     <div class="accordion-body">
                         <form method="post">
-                            <table class="table" aria-label="List of User Facilities">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h4>Facilities for Compliance Officer: @Model.CurrentUser.DisplayName</h4>
-                                    </div>
-                                    <div class="col-md text-md-end text-sm-right small mb-1">
-                                        @(Model.UserFacilities.Count() > 0 ? $"Total Facilities: {Model.UserFacilities.Count()}" : "No Facilities Assigned")
-                                    </div>
+                            <div class="row">
+                                <div class="col-md text-md-end text-sm-right small mb-1">
+                                    @(Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
                                 </div>
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col" class="col">Number</th>
-                                        <th scope="col" class="col">Name</th>
-                                        <th scope="col" class="col">Unit</th>
-                                        <th scope="col" class="col">County</th>
-                                        <th scope="col" class="col">Class</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.UserFacilities)
-                                    {
-                                        <tr class="@(!item.Active ? "table-warning" : "")">
-                                            <td>
-                                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
-                                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                                </a>
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(m => item.Name, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.County.Name, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @if (item.LocationClass == null)
-                                                {
-                                                    <span class="text-muted">None</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
-                                                }
-                                            </td>
+                            </div>
+                            @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                            {
+                                <table class="table" aria-label="List of User Facilities">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" class="col">Number</th>
+                                            <th scope="col" class="col">Name</th>
+                                            <th scope="col" class="col">Unit</th>
+                                            <th scope="col" class="col">County</th>
+                                            <th scope="col" class="col">Class</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")))
+                                        {
+                                            <tr class="table-light">
+                                                <td>
+                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @if (item.LocationClass == null)
+                                                    {
+                                                        <span class="text-muted">None</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            <div class="row">
+                                <div class="col-md text-md-end text-sm-right small mb-1">
+                                    @(Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")).Count()}" : "")
+                                </div>
+                            </div>
+                            @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
+                            {
+                                <table class="table" aria-label="List of User Facilities">
+                                    <thead class="thead-warning">
+                                        <tr>
+                                            <th scope="col" class="col">Number</th>
+                                            <th scope="col" class="col">Name</th>
+                                            <th scope="col" class="col">Unit</th>
+                                            <th scope="col" class="col">County</th>
+                                            <th scope="col" class="col">Class</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")))
+                                        {
+                                            <tr class="table-warning">
+                                                <td>
+                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @if (item.LocationClass == null)
+                                                    {
+                                                        <span class="text-muted">None</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            <div class="row">
+                                <div class="col-md text-md-end text-sm-right small mb-1">
+                                    @(Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                </div>
+                            </div>
+                            @if (Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                            {
+                                <table class="table" aria-label="List of User Facilities">
+                                    <thead class="thead-danger">
+                                        <tr>
+                                            <th scope="col" class="col">Number</th>
+                                            <th scope="col" class="col">Name</th>
+                                            <th scope="col" class="col">Unit</th>
+                                            <th scope="col" class="col">County</th>
+                                            <th scope="col" class="col">Class</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")))
+                                        {
+                                            <tr class="table-danger">
+                                                <td>
+                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                </td>
+                                                <td>
+                                                    @if (item.LocationClass == null)
+                                                    {
+                                                        <span class="text-muted">None</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
                         </form>
                     </div>
                 </div>
@@ -739,63 +864,218 @@
             <div class="accordion-item">
                 <h3 class="accordion-header" id="MyUnitFacilityList">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyUnitFacilities" aria-expanded="true" aria-controls="MyUnitFacilities">
-                        <h3>My Unit Facilities</h3>
+                        <h3>Unit Facilities</h3>
                     </button>
                 </h3>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-md text-md-start text-sm-right small mb-1">
+                            @(Model.UnitFacilities.Count() > 0 ? $"Total Unit Facilities: {Model.UnitFacilities.Count()}" : "No Facilities Assigned")
+                        </div>
+                    </div>
+                </div>
                 <div id="MyUnitFacilities" class="accordion-collapse collapse" aria-labelledby="MyUnitFacilityList">
                     <div class="accordion-body">
-                        <form method="post">
-                            <table class="table" aria-label="List of Unit Facilities">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h4>Active Facilities for Unit: @Model.CurrentUser.UserUnit.Name</h4>
-                                    </div>
-                                    <div class="col-md text-md-end text-sm-right small mb-1">
-                                        @(Model.UnitFacilities.Count() > 0 ? $"Total Facilities: {Model.UnitFacilities.Count()}" : "No Facilities Assigned")
+                        @foreach (var co in Model.UserCOs)
+                        {
+                            if (Model.UnitFacilities.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0)
+                            {
+                                <div class="accordion accordion-flush" id="Current-CO-Unit-Facilities+@Model.UserCOs.IndexOf(co)">
+                                    <div class="accordion-item">
+                                        <h3 class="accordion-header" id="MyCOUnitFacilitiesList+@Model.UserCOs.IndexOf(co)">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyCOUnitFacilities+@Model.UserCOs.IndexOf(co)" aria-expanded="true" aria-controls="MyCOUnitFacilities+@Model.UserCOs.IndexOf(co)">
+                                                <h5>@co</h5>
+                                            </button>
+                                        </h3>
+                                        <div class="row">
+                                            <div class="col-md text-md-end text-sm-right small mb-1">
+                                                @(Model.UnitFacilities.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0 ? $"{Model.UnitFacilities.Where(e => e.ComplianceOfficer?.Name == co).Count()} out of {Model.UnitFacilities.Count()} Total Facilities: " : "No Facilities Assigned")
+                                            </div>
+                                        </div>
+                                        <div id="MyCOUnitFacilities+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOUnitFacilitesList+@Model.UserCOs.IndexOf(co)">
+                                            <div class="accordion-body">
+                                                <form method="post">
+                                                    <div class="row">
+                                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                                            @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                        </div>
+                                                    </div>
+                                                    @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                                    {
+                                                        <table class="table" aria-label="List of Unit Facilities">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col" class="col">Number</th>
+                                                                    <th scope="col" class="col">Name</th>
+                                                                    <th scope="col" class="col">Type</th>
+                                                                    <th scope="col" class="col">Status</th>
+                                                                    <th scope="col" class="col">Unit</th>
+                                                                    <th scope="col" class="col">County</th>
+                                                                    <th scope="col" class="col">Class</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")))
+                                                                {
+                                                                    <tr class="table-light">
+                                                                        <td>
+                                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @if (item.LocationClass == null)
+                                                                            {
+                                                                                <span class="text-muted">None</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                    <div class="row">
+                                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                                            @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count()}" : "")
+                                                        </div>
+                                                    </div>
+                                                    @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
+                                                    {
+                                                        <table class="table" aria-label="List of Unit Facilities">
+                                                            <thead class="thead-warning">
+                                                                <tr>
+                                                                    <th scope="col" class="col">Number</th>
+                                                                    <th scope="col" class="col">Name</th>
+                                                                    <th scope="col" class="col">Type</th>
+                                                                    <th scope="col" class="col">Status</th>
+                                                                    <th scope="col" class="col">Unit</th>
+                                                                    <th scope="col" class="col">County</th>
+                                                                    <th scope="col" class="col">Class</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")))
+                                                                {
+                                                                    <tr class="table-warning">
+                                                                        <td>
+                                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @if (item.LocationClass == null)
+                                                                            {
+                                                                                <span class="text-muted">None</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                    <div class="row">
+                                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                                            @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                        </div>
+                                                    </div>
+                                                    @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                                    {
+                                                        <table class="table" aria-label="List of Unit Facilities">
+                                                            <thead class="thead-danger">
+                                                                <tr>
+                                                                    <th scope="col" class="col">Number</th>
+                                                                    <th scope="col" class="col">Name</th>
+                                                                    <th scope="col" class="col">Type</th>
+                                                                    <th scope="col" class="col">Status</th>
+                                                                    <th scope="col" class="col">Unit</th>
+                                                                    <th scope="col" class="col">County</th>
+                                                                    <th scope="col" class="col">Class</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")))
+                                                                {
+                                                                    <tr class="table-danger">
+                                                                        <td>
+                                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @if (item.LocationClass == null)
+                                                                            {
+                                                                                <span class="text-muted">None</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col" class="col">Number</th>
-                                        <th scope="col" class="col">Name</th>
-                                        <th scope="col" class="col">C.O.</th>
-                                        <th scope="col" class="col">County</th>
-                                        <th scope="col" class="col">Class</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.UnitFacilities)
-                                    {
-                                        <tr class="@(!item.Active ? "table-warning" : "")">
-                                            <td>
-                                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
-                                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                                </a>
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(m => item.Name, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @Html.DisplayFor(m => item.County.Name, "StringOrNone")
-                                            </td>
-                                            <td class="text-nowrap">
-                                                @if (item.LocationClass == null)
-                                                {
-                                                    <span class="text-muted">None</span>
-                                                }
-                                                else
-                                                {
-                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
-                                                }
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </form>
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -807,19 +1087,18 @@
             <div class="accordion-item">
                 <h3 class="accordion-header" id="MyProgramFacilitiesList">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyProgramFacilities" aria-expanded="true" aria-controls="MyProgramFacilities">
-                        <h3>My Program Facilities</h3>
+                        <h3>Program Facilities</h3>
                     </button>
                 </h3>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-md text-md-start text-sm-right small mb-1">
+                            @(Model.ProgramFacilities.Count() > 0 ? $"Total Program Facilities: {Model.ProgramFacilities.Count()}" : "No Facilities Assigned")
+                        </div>
+                    </div>
+                </div>
                 <div id="MyProgramFacilities" class="accordion-collapse collapse" aria-labelledby="MyProgramFacilitiesList">
                     <div class="accordion-body">
-                        <div class="row">
-                            <div class="col-8">
-                                <h4>Active Facilities for Program: @Model.CurrentUser.UserProgram.Name</h4>
-                            </div>
-                            <div class="col-md text-md-end text-sm-right small mb-1">
-                                @(Model.ProgramFacilities.Count() > 0 ? $"Total Facilities: {Model.ProgramFacilities.Count()}" : "No Facilities Assigned")
-                            </div>
-                        </div>
                         @foreach (var unit in Model.UserUnits)
                         {
                             <div class="accordion accordion-flush" id="Current-Facility-Work+@Model.UserUnits.IndexOf(unit)">
@@ -829,61 +1108,211 @@
                                             <h5>@unit</h5>
                                         </button>
                                     </h3>
+                                    <div class="row">
+                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                            @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit).Count() > 0 ? $"{Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit).Count()} out of {Model.ProgramFacilities.Count()} Total Facilities" : "No Facilities Assigned")
+                                        </div>
+                                    </div>
                                     <div id="MyProgramFacilities+@Model.UserUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramFacilitiesList+@Model.UserUnits.IndexOf(unit)">
                                         <div class="accordion-body">
-                                            <div class="row">
-                                                <div class="col-md text-md-end text-sm-right small mb-1">
-                                                    @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit).Count() > 0 ? $"{Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit).Count()} out of {Model.ProgramFacilities.Count()} Total Facilities: " : "No Facilities Assigned")
+                                            @foreach (var co in Model.UserCOs.Where(co => Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.ComplianceOfficer?.Name == co).Count() > 0))
+                                            {
+
+                                                <div class="accordion accordion-flush" id="Current-CO-Program-Facilities+@Model.UserCOs.IndexOf(co)+@Model.UserUnits.IndexOf(unit)">
+                                                    <div class="accordion-item">
+                                                        <h3 class="accordion-header" id="MyCOProgramFacilitiesList+@Model.UserCOs.IndexOf(co)+@Model.UserUnits.IndexOf(unit)">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyCOProgramFacilities+@Model.UserCOs.IndexOf(co)+@Model.UserUnits.IndexOf(unit)" aria-expanded="true" aria-controls="MyCOProgramFacilities+@Model.UserCOs.IndexOf(co)+@Model.UserUnits.IndexOf(unit)">
+                                                                <h5>@co</h5>
+                                                            </button>
+                                                        </h3>
+                                                        <div class="row">
+                                                            <div class="col-md text-md-end text-sm-right small mb-1">
+                                                                @(Model.ProgramFacilities.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0 ? $"{Model.ProgramFacilities.Where(e => e.ComplianceOfficer?.Name == co).Count()} out of {Model.ProgramFacilities.Count()} Total Facilities" : "No Facilities Assigned")
+                                                            </div>
+                                                        </div>
+                                                        <div id="MyCOProgramFacilities+@Model.UserCOs.IndexOf(co)+@Model.UserUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyCOProgramFacilitiesList+@Model.UserCOs.IndexOf(co)+@Model.UserUnits.IndexOf(unit)">
+                                                            <div class="accordion-body">
+                                                                <form method="post">
+                                                                    <div class="row">
+                                                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                                                            @(Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                                        </div>
+                                                                    </div>
+                                                                    @if (Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                                                    {
+                                                                        <table class="table" aria-label="List of Program Facilities">
+                                                                            <thead class="thead-light">
+                                                                                <tr>
+                                                                                    <th scope="col" class="col">Number</th>
+                                                                                    <th scope="col" class="col">Name</th>
+                                                                                    <th scope="col" class="col">Type</th>
+                                                                                    <th scope="col" class="col">Status</th>
+                                                                                    <th scope="col" class="col">Unit</th>
+                                                                                    <th scope="col" class="col">County</th>
+                                                                                    <th scope="col" class="col">Class</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach (var item in Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")))
+                                                                                {
+                                                                                    <tr class="table-light">
+                                                                                        <td>
+                                                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if (item.LocationClass == null)
+                                                                                            {
+                                                                                                <span class="text-muted">None</span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                                            }
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                }
+                                                                            </tbody>
+                                                                        </table>
+                                                                    }
+                                                                    <div class="row">
+                                                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                                                            @(Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count()}" : "")
+                                                                        </div>
+                                                                    </div>
+                                                                    @if (Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
+                                                                    {
+                                                                        <table class="table" aria-label="List of Program Facilities">
+                                                                            <thead class="thead-warning">
+                                                                                <tr>
+                                                                                    <th scope="col" class="col">Number</th>
+                                                                                    <th scope="col" class="col">Name</th>
+                                                                                    <th scope="col" class="col">Type</th>
+                                                                                    <th scope="col" class="col">Status</th>
+                                                                                    <th scope="col" class="col">Unit</th>
+                                                                                    <th scope="col" class="col">County</th>
+                                                                                    <th scope="col" class="col">Class</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach (var item in Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")))
+                                                                                {
+                                                                                    <tr class="table-warning">
+                                                                                        <td>
+                                                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if (item.LocationClass == null)
+                                                                                            {
+                                                                                                <span class="text-muted">None</span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                                            }
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                }
+                                                                            </tbody>
+                                                                        </table>
+                                                                    }
+                                                                    <div class="row">
+                                                                        <div class="col-md text-md-end text-sm-right small mb-1">
+                                                                            @(Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                                        </div>
+                                                                    </div>
+                                                                    @if (Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                                                    {
+                                                                        <table class="table" aria-label="List of Program Facilities">
+                                                                            <thead class="thead-danger">
+                                                                                <tr>
+                                                                                    <th scope="col" class="col">Number</th>
+                                                                                    <th scope="col" class="col">Name</th>
+                                                                                    <th scope="col" class="col">Type</th>
+                                                                                    <th scope="col" class="col">Status</th>
+                                                                                    <th scope="col" class="col">Unit</th>
+                                                                                    <th scope="col" class="col">County</th>
+                                                                                    <th scope="col" class="col">Class</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach (var item in Model.ProgramFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")))
+                                                                                {
+                                                                                    <tr class="table-danger">
+                                                                                        <td>
+                                                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                                            </a>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if (item.LocationClass == null)
+                                                                                            {
+                                                                                                <span class="text-muted">None</span>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                                            }
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                }
+                                                                            </tbody>
+                                                                        </table>
+                                                                    }
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <form method="post">
-                                                <table class="table" aria-label="List of Program Facilities">
-                                                    <thead class="thead-light">
-                                                        <tr>
-                                                            <th scope="col" class="col">Number</th>
-                                                            <th scope="col" class="col">Name</th>
-                                                            <th scope="col" class="col">Unit</th>
-                                                            <th scope="col" class="col">C.O.</th>
-                                                            <th scope="col" class="col">County</th>
-                                                            <th scope="col" class="col">Class</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit))
-                                                        {
-                                                            <tr class="@(!item.Active ? "table-warning" : "")">
-                                                                <td>
-                                                                    <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
-                                                                        @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(m => item.Name, "StringOrNone")
-                                                                </td>
-                                                                <td class="text-nowrap">
-                                                                    @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
-                                                                </td>
-                                                                <td class="text-nowrap">
-                                                                    @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
-                                                                </td>
-                                                                <td class="text-nowrap">
-                                                                    @Html.DisplayFor(m => item.County.Name, "StringOrNone")
-                                                                </td>
-                                                                <td class="text-nowrap">
-                                                                    @if (item.LocationClass == null)
-                                                                    {
-                                                                        <span class="text-muted">None</span>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
-                                                                    }
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </form>
+                                            }
                                         </div>
                                     </div>
                                 </div>
