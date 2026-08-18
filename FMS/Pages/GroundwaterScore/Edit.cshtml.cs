@@ -6,6 +6,7 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using FMS.Helpers;
 
 namespace FMS.Pages.GroundwaterScore
 {

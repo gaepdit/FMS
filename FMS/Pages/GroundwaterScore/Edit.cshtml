@@ -1,9 +1,11 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Helpers
 @model FMS.Pages.GroundwaterScore.EditModel
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/tooltip.js"></script>
 }
 
 @{
@@ -28,6 +30,17 @@
             </div>
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.ChemName" class="form-label"></label>
+                <button id="ChemName-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="ChemName-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.ChemicalName">
+                    <svg class="bi" role="img" aria-label="ChemName help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input readonly asp-for="GroundwaterScore.ChemName" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.ChemName" class="text-danger"></span>
             </div>
@@ -40,21 +53,65 @@
         <div class="row mb-3">
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.GWScore" class="form-label"></label>
+                <button id="GW-Score-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="GW-Score-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.GWScore">
+                    <svg class="bi" role="img" aria-label="GW Score help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.GWScore" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.GWScore" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.A" class="form-label"></label>
+                <button id="A-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="A-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.AReleaseType">
+                    <svg class="bi" role="img" aria-label="A help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.A" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.A" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.B1" class="form-label"></label>
+                <button id="B1-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="B1-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.B1Susceptibility">
+                    <svg class="bi" role="img" aria-label="B1 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.B1" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.B1" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.B2" class="form-label"></label>
+                <button id="B2-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="B2-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.B2PhysicalState">
+                    <svg class="bi" role="img" aria-label="B2 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.B2" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.B2" class="text-danger"></span>
             </div>
@@ -62,21 +119,66 @@
         <div class="row mb-3">
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.C" class="form-label"></label>
+                <button id="C-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="C-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.CContainment">
+                    <svg class="bi" role="img" aria-label="C help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.C" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.C" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.D2" class="form-label"></label>
+                <button id="D2-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="D2-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.D2ToxVal">
+                    <svg class="bi" role="img" aria-label="D2 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.D2" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.D2" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.D3" class="form-label"></label>
+                <button id="D3-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="D3-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.D3Quantity">
+                    <svg class="bi" role="img" aria-label="D3 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.D3" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.D3" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="GroundwaterScore.E1" class="form-label"></label>
+                <button id="E1-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="E1-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-html="true"
+                        title="@GWToolTipHelper.E1Exposure">
+                    <svg class="bi" role="img" aria-label="E1 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.E1" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.E1" class="text-danger"></span>
             </div>
@@ -84,6 +186,17 @@
         <div class="row mb-3">
             <div class="col-3 mb-3">
                 <label asp-for="GroundwaterScore.E2" class="form-label"></label>
+                <button id="E2-help-button"
+                        type="button"
+                        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                        aria-details="E2-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@GWToolTipHelper.E2DistanceToWell">
+                    <svg class="bi" role="img" aria-label="E2 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="GroundwaterScore.E2" class="form-control" />
                 <span asp-validation-for="GroundwaterScore.E2" class="text-danger"></span>
             </div>
@@ -96,11 +209,11 @@
         <hr />
         <div class="row mb-3">
             <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
-            <a asp-page="../Facilities/Details" 
-                asp-route-id="@Model.Facility.Id"
-                asp-route-tab="Score"
-                asp-fragment="TabPages"
-                class="btn btn-outline-secondary col-md-2">
+            <a asp-page="../Facilities/Details"
+               asp-route-id="@Model.Facility.Id"
+               asp-route-tab="Score"
+               asp-fragment="TabPages"
+               class="btn btn-outline-secondary col-md-2">
                 Cancel
             </a>
         </div>

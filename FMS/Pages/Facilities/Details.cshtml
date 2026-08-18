@@ -1,11 +1,13 @@
 @page "{id:Guid?}"
 @using FMS.Domain.Dto
 @using FMS.Domain.Entities.Users
+@using FMS.Helpers
 @model FMS.Pages.Facilities.DetailsModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/formDetails.js"></script>
+    <script src="~/js/tooltip.js"></script>
 }
 
 @{
@@ -690,6 +692,19 @@
                                 <a asp-page="/Score/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit Score</a>
                             }
                         </h3>
+                        <button id="Score-help-button"
+                                type="button"
+                                style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                                aria-details="Score-tooltip-text"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                data-bs-html="true"
+                                title="@ScoreToolTipHelper.Score">
+                            <svg class="bi" role="img" aria-label="Score help">
+                                <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                            </svg>
+                            RQSM Score Sheet Calculator
+                        </button>
                         <hr />
                         <div class="row">
                             <div class="container bg-light-subtle m-1">
@@ -728,82 +743,92 @@
                                     </h4>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore)
+                                            <button id="GW-Score-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="GW-Score-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.GWScore"><svg class="bi" role="img" aria-label="GW Score help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.A)
+                                            <button id="A-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="A-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.AReleaseType"><svg class="bi" role="img" aria-label="A help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.A, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1)
+                                            <button id="B1-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="B1-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.B1Susceptibility"><svg class="bi" role="img" aria-label="B1 help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2)
+                                            <button id="B2-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="B2-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.B2PhysicalState"><svg class="bi" role="img" aria-label="B2 help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.C)
+                                            <button id="C-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="C-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.CContainment"><svg class="bi" role="img" aria-label="C help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.C, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName)
+                                            <button id="ChemName-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="ChemName-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.ChemicalName"><svg class="bi" role="img" aria-label="ChemName help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2)
+                                            <button id="D2-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="D2-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.D2ToxVal"><svg class="bi" role="img" aria-label="D2 help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3)
+                                            <button id="D3-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="D3-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.D3Quantity"><svg class="bi" role="img" aria-label="D3 help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5 ">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1)
+                                            <button id="E1-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="E1-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="@GWToolTipHelper.E1Exposure"><svg class="bi" role="img" aria-label="E1 help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2)
+                                            <button id="E2-help-button" type="button" style="border: none; padding: 0px; background: none; border-radius: 0px;" aria-details="E2-tooltip-text" data-bs-toggle="tooltip" data-bs-placement="top" title="@GWToolTipHelper.E2DistanceToWell"><svg class="bi" role="img" aria-label="E2 help"><use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use></svg></button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2, "Number")
                                         </dd>
                                     </dl>
@@ -1161,66 +1186,66 @@
                                             Event Type
                                             @Html.DisplayFor(m => m.SortBy, "EventSortArrow",
                                             new { up = EventSort.EventType, down = EventSort.EventTypeDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.ActionTaken ? EventSort.ActionTakenDesc : EventSort.ActionTaken)">
-                                        Action Taken
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ActionTaken, down = EventSort.ActionTakenDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.StartDate ? EventSort.StartDateDesc : EventSort.StartDate)">
-                                        Start Date
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.StartDate, down = EventSort.StartDateDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.DueDate ? EventSort.DueDateDesc : EventSort.DueDate)">
-                                        Due Date
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.DueDate, down = EventSort.DueDateDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.CompletionDate ? EventSort.CompletionDateDesc : EventSort.CompletionDate)">
-                                        Completion Date
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.CompletionDate, down = EventSort.CompletionDateDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.ComplianceOfficer ? EventSort.ComplianceOfficerDesc : EventSort.ComplianceOfficer)">
-                                        Done By
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ComplianceOfficer, down = EventSort.ComplianceOfficerDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap align-content-end">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.EventAmount ? EventSort.EventAmountDesc : EventSort.EventAmount)">
-                                        Event Amount
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventAmount, down = EventSort.EventAmountDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.EventContractor ? EventSort.EventContractorDesc : EventSort.EventContractor)">
-                                        Contractor
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventContractor, down = EventSort.EventContractorDesc })
-                                    </a>
-                                </th>
-                                <th scope="col">Comment</th>
-                                @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.ActionTaken ? EventSort.ActionTakenDesc : EventSort.ActionTaken)">
+                                            Action Taken
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ActionTaken, down = EventSort.ActionTakenDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.StartDate ? EventSort.StartDateDesc : EventSort.StartDate)">
+                                            Start Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.StartDate, down = EventSort.StartDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.DueDate ? EventSort.DueDateDesc : EventSort.DueDate)">
+                                            Due Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.DueDate, down = EventSort.DueDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.CompletionDate ? EventSort.CompletionDateDesc : EventSort.CompletionDate)">
+                                            Completion Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.CompletionDate, down = EventSort.CompletionDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.ComplianceOfficer ? EventSort.ComplianceOfficerDesc : EventSort.ComplianceOfficer)">
+                                            Done By
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ComplianceOfficer, down = EventSort.ComplianceOfficerDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap align-content-end">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.EventAmount ? EventSort.EventAmountDesc : EventSort.EventAmount)">
+                                            Event Amount
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventAmount, down = EventSort.EventAmountDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.EventContractor ? EventSort.EventContractorDesc : EventSort.EventContractor)">
+                                            Contractor
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventContractor, down = EventSort.EventContractorDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col">Comment</th>
+                                    @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
                                     }
