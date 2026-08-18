@@ -1,9 +1,11 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Helpers
 @model FMS.Pages.OnsiteScore.EditModel
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/tooltip.js"></script>
 }
 
 @{
@@ -28,6 +30,17 @@
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.ChemName1D" class="form-label"></label>
+                <button id="ChemName-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="ChemName-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.ChemicalName">
+                    <svg class="bi" role="img" aria-label="ChemName help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input readonly asp-for="OnsiteScore.ChemName1D" class="form-control" />
                 <span asp-validation-for="OnsiteScore.ChemName1D" class="text-danger"></span>
             </div>
@@ -40,21 +53,65 @@
         <div class="row mb-3">
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.OnsiteScoreValue" class="form-label"></label>
+                <button id="OSScore-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="OSScore-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.OSScore">
+                    <svg class="bi" role="img" aria-label="OSScore help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.OnsiteScoreValue" class="form-control" />
                 <span asp-validation-for="OnsiteScore.OnsiteScoreValue" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.A" class="form-label"></label>
+                <button id="A-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="A-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.AAccessToSite">
+                    <svg class="bi" role="img" aria-label="A help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.A" class="form-control" />
                 <span asp-validation-for="OnsiteScore.A" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.B" class="form-label"></label>
+                <button id="B-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="B-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.BReleaseType">
+                    <svg class="bi" role="img" aria-label="B help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.B" class="form-control" />
                 <span asp-validation-for="OnsiteScore.B" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.C" class="form-label"></label>
+                <button id="C-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="C-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.CContainment">
+                    <svg class="bi" role="img" aria-label="C help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.C" class="form-control" />
                 <span asp-validation-for="OnsiteScore.C" class="text-danger"></span>
             </div>
@@ -62,21 +119,65 @@
         <div class="row mb-3">
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.D2" class="form-label"></label>
+                <button id="D2-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="D2-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.D2ToxVal">
+                    <svg class="bi" role="img" aria-label="D2 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.D2" class="form-control" />
                 <span asp-validation-for="OnsiteScore.D2" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.D3" class="form-label"></label>
+                <button id="D3-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="D3-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.D3Quantity">
+                    <svg class="bi" role="img" aria-label="D3 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.D3" class="form-control" />
                 <span asp-validation-for="OnsiteScore.D3" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.E1" class="form-label"></label>
+                <button id="E1-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="E1-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.E1DistanceToResidence">
+                    <svg class="bi" role="img" aria-label="E1 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.E1" class="form-control" />
                 <span asp-validation-for="OnsiteScore.E1" class="text-danger"></span>
             </div>
             <div class="col mb-3">
                 <label asp-for="OnsiteScore.E2" class="form-label"></label>
+                <button id="E2-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="E2-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@OnsiteToolTipHelper.E2SensitiveEnvironment">
+                    <svg class="bi" role="img" aria-label="E2 help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="OnsiteScore.E2" class="form-control" />
                 <span asp-validation-for="OnsiteScore.E2" class="text-danger"></span>
             </div>
