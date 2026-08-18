@@ -33,7 +33,7 @@
                 </div>
                 <div id="MyEvents" class="accordion-collapse collapse" aria-labelledby="MyEventsList">
                     <div class="accordion-body">
-                        <form method="post">
+                        <form method="post" id="MyEvents">
 
                             <table class="table" aria-label="List of Events">
                                 <thead class="thead-light">
@@ -216,25 +216,26 @@
                 </div>
                 <div id="MyUnitEvents" class="accordion-collapse collapse" aria-labelledby="MyUnitEventsList">
                     <div class="accordion-body">
-                        @foreach (var co in Model.UserCOs)
-                        {
-                            if (Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0)
+                        <form method="post" id="UnitEvents">
+                            @foreach (var co in Model.UserCOs)
                             {
-                                <div class="accordion accordion-flush" id="Current-CO-Unit-Events-Work+@Model.UserCOs.IndexOf(co)">
-                                    <div class="accordion-item">
-                                        <h3 class="accordion-header" id="MyCOUnitEventsList+@Model.UserCOs.IndexOf(co)">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyCOUnitEvents+@Model.UserCOs.IndexOf(co)" aria-expanded="true" aria-controls="MyCOUnitEvents+@Model.UserCOs.IndexOf(co)">
-                                                <h5>@co</h5>
-                                            </button>
-                                        </h3>
-                                        <div class="row">
-                                            <div class="col-md text-md-end text-sm-right small mb-1">
-                                                @(Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0 ? $"{Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count()} out of {Model.UnitEvents.Count()} Total Events: " : "No Events Assigned")
+                                if (Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0)
+                                {
+                                    <div class="accordion accordion-flush" id="Current-CO-Unit-Events-Work+@Model.UserCOs.IndexOf(co)">
+                                        <div class="accordion-item">
+                                            <h3 class="accordion-header" id="MyCOUnitEventsList+@Model.UserCOs.IndexOf(co)">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyCOUnitEvents+@Model.UserCOs.IndexOf(co)" aria-expanded="true" aria-controls="MyCOUnitEvents+@Model.UserCOs.IndexOf(co)">
+                                                    <h5>@co</h5>
+                                                </button>
+                                            </h3>
+                                            <div class="row">
+                                                <div class="col-md text-md-end text-sm-right small mb-1">
+                                                    @(Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count() > 0 ? $"{Model.UnitEvents.Where(e => e.ComplianceOfficer?.Name == co).Count()} out of {Model.UnitEvents.Count()} Total Events: " : "No Events Assigned")
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div id="MyCOUnitEvents+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOUnitEventsList+@Model.UserCOs.IndexOf(co)">
-                                            <div class="accordion-body">
-                                                <form method="post">
+                                            <div id="MyCOUnitEvents+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOUnitEventsList+@Model.UserCOs.IndexOf(co)">
+                                                <div class="accordion-body">
+
                                                     <table class="table" aria-label="List of Events">
                                                         <thead class="thead-light">
                                                             <tr>
@@ -391,13 +392,14 @@
                                                             }
                                                         </tbody>
                                                     </table>
-                                                </form>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                }
                             }
-                        }
+                        </form>
                     </div>
                 </div>
             </div>
@@ -421,42 +423,43 @@
                 </div>
                 <div id="MyProgramEvents" class="accordion-collapse collapse" aria-labelledby="MyProgramEventsList">
                     <div class="accordion-body">
-                        @foreach (var unit in Model.UserUnits)
-                        {
-                            <div class="accordion accordion-flush" id="Current-Events-Work+@Model.UserUnits.IndexOf(unit)">
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header" id="MyProgramEventsList+@Model.UserUnits.IndexOf(unit)">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyProgramEvents+@Model.UserUnits.IndexOf(unit)" aria-expanded="true" aria-controls="MyProgramEvents+@Model.UserUnits.IndexOf(unit)">
-                                            <h5>@unit</h5>
-                                        </button>
-                                    </h3>
-                                    <div class="row">
-                                        <div class="col-md text-md-end text-sm-right small mb-1">
-                                            @(Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
+                        <form method="post" id="ProgramEvents">
+                            @foreach (var unit in Model.UserUnits)
+                            {
+                                <div class="accordion accordion-flush" id="Current-Events-Work+@Model.UserUnits.IndexOf(unit)">
+                                    <div class="accordion-item">
+                                        <h3 class="accordion-header" id="MyProgramEventsList+@Model.UserUnits.IndexOf(unit)">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyProgramEvents+@Model.UserUnits.IndexOf(unit)" aria-expanded="true" aria-controls="MyProgramEvents+@Model.UserUnits.IndexOf(unit)">
+                                                <h5>@unit</h5>
+                                            </button>
+                                        </h3>
+                                        <div class="row">
+                                            <div class="col-md text-md-end text-sm-right small mb-1">
+                                                @(Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="MyProgramEvents+@Model.UserUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramEventsList+@Model.UserUnits.IndexOf(unit)">
-                                        <div class="accordion-body">
-                                            @foreach (var co in Model.UserCOs)
-                                            {
-                                                if (Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count() > 0)
+                                        <div id="MyProgramEvents+@Model.UserUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramEventsList+@Model.UserUnits.IndexOf(unit)">
+                                            <div class="accordion-body">
+                                                @foreach (var co in Model.UserCOs)
                                                 {
-                                                    <div class="accordion accordion-flush" id="Current-CO-Events-Work+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
-                                                        <div class="accordion-item">
-                                                            <h3 class="accordion-header" id="MyCOProgramEventsList+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
-                                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyCOProgramEvents+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)" aria-expanded="true" aria-controls="MyCOProgramEvents+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
-                                                                    <h5>@co</h5>
-                                                                </button>
-                                                            </h3>
-                                                            <div class="row">
-                                                                <div class="col-md text-md-end text-sm-right small mb-1">
-                                                                    @(Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
+                                                    if (Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count() > 0)
+                                                    {
+                                                        <div class="accordion accordion-flush" id="Current-CO-Events-Work+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
+                                                            <div class="accordion-item">
+                                                                <h3 class="accordion-header" id="MyCOProgramEventsList+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
+                                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyCOProgramEvents+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)" aria-expanded="true" aria-controls="MyCOProgramEvents+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
+                                                                        <h5>@co</h5>
+                                                                    </button>
+                                                                </h3>
+                                                                <div class="row">
+                                                                    <div class="col-md text-md-end text-sm-right small mb-1">
+                                                                        @(Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count() > 0 ? $"{Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit).Count()} out of {Model.ProgramEvents.Count()} Total Events: " : "No Events Assigned")
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div id="MyCOProgramEvents+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOProgramEventsList+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
-                                                                <div class="accordion-body">
+                                                                <div id="MyCOProgramEvents+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOProgramEventsList+@Model.UserUnits.IndexOf(unit)+@Model.UserCOs.IndexOf(co)">
+                                                                    <div class="accordion-body">
 
-                                                                    <form method="post">
+                                                                    
                                                                         <table class="table" aria-label="List of Events">
                                                                             <thead class="thead-light">
                                                                                 <tr>
@@ -641,18 +644,18 @@
                                                                                 }
                                                                             </tbody>
                                                                         </table>
-                                                                    </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    }
                                                 }
-                                            }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </form>
                     </div>
                 </div>
             </div>
@@ -683,7 +686,7 @@
                 </div>
                 <div id="MyFacilities" class="accordion-collapse collapse" aria-labelledby="MyFacilityList">
                     <div class="accordion-body">
-                        <form method="post" id="UserFacilities">
+                        <form method="post" id="MyFacilities">
                             <div class="row">
                                 <div class="col-md text-md-end text-sm-right small mb-1">
                                     @(Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
@@ -1118,12 +1121,11 @@
                                         </div>
                                         <div id="MyProgramFacilities+@Model.UserUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramFacilitiesList+@Model.UserUnits.IndexOf(unit)">
                                             <div class="accordion-body">
-
-                                                @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("Active")).Count() > 0)
+                                                @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count() > 0)
                                                 {
                                                     <div class="row">
                                                         <div class="col-md text-md-end text-sm-right small mb-1">
-                                                            @(Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("Active")).Count()}" : "")
+                                                            @(Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count()}" : "")
                                                         </div>
                                                     </div>
                                                     <table class="table" aria-label="List of Program Facilities">
@@ -1139,10 +1141,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("Active")).Count() > 0)
+                                                            @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count() > 0)
                                                             {
                                                                 <tr class="table-light">
-                                                                    @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("Active")))
+                                                                    @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")))
                                                                     {
                                                                         <td>
                                                                             <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
@@ -1181,11 +1183,11 @@
                                                     </table>
                                                 }
 
-                                                @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("DELISTED")).Count() > 0)
+                                                @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
                                                 {
                                                     <div class="row">
                                                         <div class="col-md text-md-end text-sm-right small mb-1">
-                                                            @(Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("DELISTED")).Count()}" : "")
+                                                            @(Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")).Count()}" : "")
                                                         </div>
                                                     </div>
                                                     <table class="table" aria-label="List of Program Facilities">
@@ -1201,7 +1203,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Equals("DELISTED")))
+                                                            @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")))
                                                             {
                                                                 <tr class="table-warning">
                                                                     <td>
@@ -1240,11 +1242,11 @@
                                                     </table>
                                                 }
 
-                                                @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Equals("Active") && !e.FacilityStatus.Equals("DELISTED")).Count() > 0)
+                                                @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("Active") && !e.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
                                                 {
                                                     <div class="row">
                                                         <div class="col-md text-md-end text-sm-right small mb-1">
-                                                            @(Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Equals("DELISTED") && !e.FacilityStatus.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Equals("DELISTED") && !e.FacilityStatus.Equals("Active")).Count()}" : "")
+                                                            @(Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("DELISTED") && !e.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.UnitFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("DELISTED") && !e.FacilityStatus.Name.Equals("Active")).Count()}" : "")
                                                         </div>
                                                     </div>
                                                     <table class="table" aria-label="List of Program Facilities">
@@ -1260,7 +1262,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Equals("Active") && !e.FacilityStatus.Equals("DELISTED")))
+                                                            @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("Active") && !e.FacilityStatus.Name.Equals("DELISTED")))
                                                             {
                                                                 <tr class="table-danger">
                                                                     <td>
