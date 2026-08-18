@@ -15,6 +15,19 @@
     @ViewData["Title"]
 </h1>
 <hr />
+<button id="Score-help-button"
+        type="button"
+        style="border: none; padding: 5px; background: none; border-radius: 5px;"
+        aria-details="Score-tooltip-text"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        data-bs-html="true"
+        title="@ScoreToolTipHelper.Score">
+    <svg class="bi" role="img" aria-label="Score help">
+        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+    </svg>
+    RQSM Score Sheet Calculator
+</button>
 <div class="p-3 rounded-3 bg-light-subtle">
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
@@ -41,19 +54,6 @@
             </div>
         </div>
         <hr />
-        <button id="Score-help-button"
-                type="button"
-                style="border: none; padding: 5px; background: none; border-radius: 5px;"
-                aria-details="Score-tooltip-text"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                data-bs-html="true"
-                title="@ScoreToolTipHelper.Score">
-            <svg class="bi" role="img" aria-label="Score help">
-                <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
-            </svg>
-            RQSM Score Sheet Calculator
-        </button>
         <div class="row mb-3">
             <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
             <a asp-page="../Facilities/Details"

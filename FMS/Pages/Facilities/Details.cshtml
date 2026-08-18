@@ -843,76 +843,175 @@
                                     </h4>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue)
+                                            <button id="OSScore-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="OSScore-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.OSScore">
+                                                <svg class="bi" role="img" aria-label="OSScore help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.A)
+                                            <button id="A-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="A-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.AAccessToSite">
+                                                <svg class="bi" role="img" aria-label="A help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.A, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.B)
+                                            <button id="B-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="B-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.BReleaseType">
+                                                <svg class="bi" role="img" aria-label="B help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.B, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.C)
+                                            <button id="C-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="C-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.CContainment">
+                                                <svg class="bi" role="img" aria-label="C help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.C, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Description)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Description, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D)
+                                            <button id="ChemName-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="ChemName-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.ChemicalName">
+                                                <svg class="bi" role="img" aria-label="ChemName help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D2)
+                                            <button id="D2-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="D2-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.D2ToxVal">
+                                                <svg class="bi" role="img" aria-label="D2 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D2, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D3)
+                                            <button id="D3-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="D3-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.D3Quantity">
+                                                <svg class="bi" role="img" aria-label="D3 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D3, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E1)
+                                            <button id="E1-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="E1-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.E1DistanceToResidence">
+                                                <svg class="bi" role="img" aria-label="E1 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E1, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E2)
+                                            <button id="E2-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="E2-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.E2SensitiveEnvironment">
+                                                <svg class="bi" role="img" aria-label="E2 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E2, "Number")
                                         </dd>
                                     </dl>

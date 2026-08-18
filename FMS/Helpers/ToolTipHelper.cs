@@ -2,11 +2,11 @@
 
 namespace FMS.Helpers
 {
-    public class ScoreToolTipHelper
+    public static class ScoreToolTipHelper
     {
         public const string Score = "<a href='https://gets.sharepoint.com/:x:/r/sites/RRP-Templates/Shared%20Documents/Release_Notifications%20and%20HSI%20Listing/RQSM%20Scoresheet%20Calculator.xls?d=w40774f5702564932b0fd2b78055b9b6e&csf=1&web=1&e=AdKkR3' target='_blank'>Please see RQSM Score Sheet Calculator</a>";
     }
-    public class GWToolTipHelper
+    public static class GWToolTipHelper
     {
         public const string GWScore = "Score > 10 Site listed to HSI for impacts to groundwater";
         public const string AReleaseType = "(45) Known Release, (10) Suspected Release, (5) Potential Future Release";
@@ -18,5 +18,18 @@ namespace FMS.Helpers
         public const string D3Quantity = "Mass of the regulated substance released - (1) low, (2), (3), (4) default, (5), (6), (7), (8) high";
         public const string E1Exposure = "<a href='https://gets.sharepoint.com/:x:/r/sites/RRP-Templates/Shared%20Documents/Release_Notifications%20and%20HSI%20Listing/RQSM%20Scoresheet%20Calculator.xls?d=w40774f5702564932b0fd2b78055b9b6e&csf=1&web=1&e=AdKkR3' target='_blank'>Please see RQSM Score Sheet Calculator</a>";
         public const string E2DistanceToWell = "Distance from known location of regulated substance to drinking water well in presumed flowpath - (16) < 1/2 Mile, (9) 1/2-1 mile, (4) 1-2 miles, (1) 2-3 miles, (0) > 3 miles";
+    }
+
+    public static class OnsiteToolTipHelper
+    {
+        public const string OSScore = "Score > 20 Site listed to HSI for impacts to soil";
+        public const string AAccessToSite = "(0) Inaccessible, (2) Limited access, (4) Unlimited access";
+        public const string BReleaseType = "(25) Known Release, (15) Suspected Release, (0) No Release";
+        public const string CContainment = "(0) Covered by permanent non-earthern material, (1) Covered by engineered material, (2) Covered by loose earthen fill or native soil, (3) No Cover";
+        public const string ChemicalName = "Regulated substance used for on-site evaluation";
+        public const string D2ToxVal = "Toxicity Value of regulated substance - (1) None/low, (2), (4), (8), (16) High";
+        public const string D3Quantity = "Mass of the regulated substance released - (1) low, (2), (3), (4) default, (5), (6), (7), (8) high";
+        public const string E1DistanceToResidence = "Measured from outer edge of affected area to nearest residence, day care, school, playground - (8) < 300ft, (6) 301-1000ft,  (4) 1001-3000ft, (2) 3001-5280ft, (1) > 1 mile";
+        public const string E2SensitiveEnvironment = "Sensitive area must lie within the area of a regulated substance and be likely to be affected by the release - (1) Yes, (0) No";
     }
 }
