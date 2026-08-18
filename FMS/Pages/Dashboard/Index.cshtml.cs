@@ -43,8 +43,10 @@ namespace FMS.Pages.Dashboard
             UserName = CurrentUser.DisplayName;
 
             // Get Facilities for the current user based on their role and position
-
-            UserFacilities = await _repository.GetUserHSIFacilitiesById(UserCOId);
+            if(CurrentUser.UserPosition.Name != "PM2")
+            {
+                UserFacilities = await _repository.GetUserHSIFacilitiesById(UserCOId);
+            }
 
             if (CurrentUser.UserPosition.Name == "PM1")
             {
@@ -54,22 +56,23 @@ namespace FMS.Pages.Dashboard
             if (CurrentUser.UserPosition.Name == "PM2")
             {
                 ProgramFacilities = await _repository.GetProgramHSIFacilitiesById(CurrentUser.UserProgram.Id);
+
+
             }
 
             //Get Events for the current user based on their role and position
-
-            UserEvents = await _repository.GetEventsByUserId(UserCOId);
+            if(CurrentUser.UserPosition.Name != "PM2")
+            {
+                UserEvents = await _repository.GetEventsByUserId(UserCOId);
+            }
 
             if (CurrentUser.UserPosition.Name == "PM1")
             {
                 UnitEvents = await _repository.GetUnitEventsByUserId(CurrentUser.Id);
 
-                foreach (var unitEvent in UnitEvents)
+                foreach (var unitEvent in UnitEvents.Where(unitEvent => !UserCOs.Contains(unitEvent.ComplianceOfficer?.Name) && unitEvent.ComplianceOfficer?.Name != null))
                 {
-                    if (!UserCOs.Contains(unitEvent.ComplianceOfficer?.Name) && unitEvent.ComplianceOfficer?.Name != null)
-                    {
-                        UserCOs.Add(unitEvent.ComplianceOfficer?.Name);
-                    }
+                    UserCOs.Add(unitEvent.ComplianceOfficer?.Name);
                 }
             }
 
@@ -77,27 +80,18 @@ namespace FMS.Pages.Dashboard
             {
                 ProgramEvents = await _repository.GetProgramEventsByUserId(CurrentUser.Id);
 
-                foreach (var programEvent in ProgramEvents)
+                foreach (var programEvent in ProgramEvents.Where(programEvent => !UserUnits.Contains(programEvent.Unit?.Name) && programEvent.Unit?.Name != null))
                 {
-                    if (!UserUnits.Contains(programEvent.Unit?.Name) && programEvent.Unit?.Name != null)
-                    {
-                        UserUnits.Add(programEvent.Unit?.Name);
-                    }
+                    UserUnits.Add(programEvent.Unit?.Name);
                 }
 
-                foreach (var programEvent in ProgramEvents)
+                foreach (var programEvent in ProgramEvents.Where(programEvent => !UserCOs.Contains(programEvent.ComplianceOfficer?.Name) && programEvent.ComplianceOfficer?.Name != null))
                 {
-                    if (!UserCOs.Contains(programEvent.ComplianceOfficer?.Name) && programEvent.ComplianceOfficer?.Name != null)
-                    {
-                        UserCOs.Add(programEvent.ComplianceOfficer?.Name);
-                    }
+                    UserCOs.Add(programEvent.ComplianceOfficer?.Name);
                 }
             }
 
-            
             return Page();
         }
-
-      
     }
 }

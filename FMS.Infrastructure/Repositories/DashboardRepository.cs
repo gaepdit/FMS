@@ -63,14 +63,13 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.StatusDetails)
-                .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.ComplianceOfficerId == id)
-                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
-                .Where(e => e.FacilityStatus.Status == "Active")
-                .OrderBy(e => e.Name)
+                .Where(e => e.FacilityType.Name != "RN")
+                .OrderBy(e => e.FacilityType.Name)
+                .ThenBy(e => e.Name)
                 .Select(e => new DashboardUserFacilitiesDto(e))
+                .AsSplitQuery()
                 .ToListAsync();
             return facilities;
         }
@@ -78,35 +77,31 @@ namespace FMS.Infrastructure.Repositories
         public async Task<List<DashboardUnitFacilitiesDto>> GetUnitHSIFacilitiesById(Guid id, bool includeInactive = false)
         {
             var currentUser = await GetApplicationUser(id);
-            var fiscalYearStart = GetFiscalYearStartDate();
 
-            return await _context.Facilities.AsNoTracking()
+            var facilities = await _context.Facilities.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.County)
-                .Include(e => e.Events)
                 .Include(e => e.FacilityStatus)
                 .Include(e => e.FacilityType)
                 .Include(e => e.HsrpFacilityProperties)
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.StatusDetails)
-                .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.OrganizationalUnitId == currentUser.UserUnit.Id)
-                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
-                .Where(e => e.FacilityStatus.Status == "Active")
-                .Where(e => e.Events.Any(ev => ev.StartDate >= fiscalYearStart || ev.CompletionDate >= fiscalYearStart || (ev.CompletionDate == null && ev.StartDate == null)))
-                .OrderBy(e => e.ComplianceOfficer.FamilyName)
+                .Where(e => e.ComplianceOfficer.Active)
+                .Where(e => e.FacilityType.Name != "RN")
+                .OrderBy(e => e.FacilityType.Name)
                 .ThenBy(e => e.Name)
                 .Select(e => new DashboardUnitFacilitiesDto(e))
+                .AsSplitQuery()
                 .ToListAsync();
+
+            return facilities;
         }
 
         public async Task<List<DashboardProgramFacilitiesDto>> GetProgramHSIFacilitiesById(Guid id, bool includeInactive = false)
         {
-            var fiscalYearStart = GetFiscalYearStartDate();
-
             return await _context.Facilities.AsNoTracking()
                 .Include(e => e.ComplianceOfficer)
                 .Include(e => e.County)
@@ -117,17 +112,15 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
-                .Include(e => e.StatusDetails)
-                .ThenInclude(e => e.OverallStatus)
                 .Where(e => includeInactive || e.Active)
                 .Where(e => e.OrganizationalUnit.UserProgram.Id == id)
-                .Where(e => e.FacilityType.Name == "HSI" || e.FacilityType.Name == "VRP")
-                .Where(e => e.FacilityStatus.Status == "Active")
-                .Where(e => e.Events.Any(ev => ev.StartDate >= fiscalYearStart || ev.CompletionDate >= fiscalYearStart || (ev.CompletionDate == null && ev.StartDate == null)))
-                .OrderBy(e => e.OrganizationalUnit.Name)
-                .ThenBy(e => e.ComplianceOfficer.FamilyName)
+                .Where(e => e.ComplianceOfficer.Active)
+                .Where(e => e.FacilityType.Name != "RN")
+                .OrderBy(e => e.ComplianceOfficer.FamilyName)
+                .ThenBy(e => e.ComplianceOfficer.GivenName)
                 .ThenBy(e => e.Name)
                 .Select(e => new DashboardProgramFacilitiesDto(e))
+                .AsSplitQuery()
                 .ToListAsync();
         }
 
@@ -153,6 +146,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenByDescending(e => e.CompletionDate)
                 .ThenByDescending(e => e.DueDate)
                 .Select(e => new DashboardUserEventsDto(e))
+                .AsSplitQuery()
                 .ToListAsync();
         }
 
@@ -175,6 +169,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenByDescending(e => e.CompletionDate)
                 .ThenByDescending(e => e.DueDate)
                 .Select(e => new DashboardUnitEventsDto(e))
+                .AsSplitQuery()
                 .ToListAsync();
         }
 
@@ -199,9 +194,9 @@ namespace FMS.Infrastructure.Repositories
                 .ThenByDescending(e => e.CompletionDate)
                 .ThenByDescending(e => e.DueDate)
                 .Select(e => new DashboardProgramEventsDto(e))
+                .AsSplitQuery()
                 .ToListAsync();
         }
-
 
         #endregion
 
