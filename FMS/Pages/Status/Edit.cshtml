@@ -1,9 +1,11 @@
 ﻿@page "{id:Guid?}"
+@using FMS.Helpers
 @model FMS.Pages.Status.EditModel
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/tooltip.js"></script>
 }
 
 @{
@@ -22,6 +24,17 @@
         <div class="row mb-3 align-items-center">
             <div class="col mb-4">
                 <label asp-for="EditStatus.FundingSourceId" class="form-label"></label>
+                <button id="Funding-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="Funding-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.FundingSource">
+                    <svg class="bi" role="img" aria-label="Funding help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <select asp-for="EditStatus.FundingSourceId" asp-items="Model.FundingSources" class="form-select">
                     <option value=""></option>
                 </select>
@@ -30,6 +43,17 @@
             <div class="col-md-2">
                 <input asp-for="EditStatus.ISWQS" class="form-check-input" />
                 <label asp-for="EditStatus.ISWQS" class="form-check-label"></label>
+                <button id="ISWQS-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="ISWQS-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.ISWQS">
+                    <svg class="bi" role="img" aria-label="ISWQS help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <span asp-validation-for="EditStatus.ISWQS" class="text-danger"></span>
             </div>
             <div class="col-md-2">
@@ -61,6 +85,17 @@
         <div class="row mb-3">
             <div class="col-md-3">
                 <label asp-for="EditStatus.SourceStatusId" class="form-label"></label>
+                <button id="SourceStatus-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="SourceStatus-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.SourceStatus">
+                    <svg class="bi" role="img" aria-label="SourceStatus help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <select asp-for="EditStatus.SourceStatusId" asp-items="Model.SourceStatuses" class="form-select">
                     <option value=""></option>
                 </select>
@@ -75,6 +110,17 @@
             </div>
             <div class="col-md-3">
                 <label asp-for="EditStatus.SoilStatusId" class="form-label"></label>
+                <button id="SoilStatus-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="SoilStatus-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.SoilStatus">
+                    <svg class="bi" role="img" aria-label="SoilStatus help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <select asp-for="EditStatus.SoilStatusId" asp-items="Model.SoilStatuses" class="form-select">
                     <option value=""></option>
                 </select>
@@ -91,6 +137,17 @@
         <div class="row mb-3">
             <div class="col-md-3">
                 <label asp-for="EditStatus.GroundwaterStatusId" class="form-label"></label>
+                <button id="GroundwaterStatus-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="GroundwaterStatus-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.GroundwaterStatus">
+                    <svg class="bi" role="img" aria-label="GroundwaterStatus help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <select asp-for="EditStatus.GroundwaterStatusId" asp-items="Model.GroundwaterStatuses" class="form-select">
                     <option value=""></option>
                 </select>
@@ -105,6 +162,17 @@
             </div>
             <div class="col-md-3">
                 <label asp-for="EditStatus.OverallStatusId" class="form-label"></label>
+                <button id="OverallStatus-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="OverallStatus-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.OverallStatus">
+                    <svg class="bi" role="img" aria-label="OverallStatus help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <select asp-for="EditStatus.OverallStatusId" asp-items="Model.OverallStatuses" class="form-select">
                     <option value=""></option>
                 </select>
@@ -121,6 +189,17 @@
         <div class="row mb-3">
             <div class="col-md-3">
                 <label asp-for="EditStatus.GAPSScore" class="form-label"></label>
+                <button id="GAPSScore-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="GAPSScore-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.GAPSModelScore">
+                    <svg class="bi" role="img" aria-label="GAPSScore help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="EditStatus.GAPSScore" class="form-control" />
                 <span asp-validation-for="EditStatus.GAPSScore" class="text-danger"></span>
             </div>
@@ -136,6 +215,17 @@
             </div>
             <div class="col mb-3">
                 <label asp-for="EditStatus.GAPSAssessmentId" class="form-label"></label>
+                <button id="GAPSAssessment-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="GAPSAssessment-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.GAPSAssessment">
+                    <svg class="bi" role="img" aria-label="GAPSAssessment help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <select asp-for="EditStatus.GAPSAssessmentId" asp-items="Model.GAPSAssessments" class="form-select">
                     <option value=""></option>
                 </select>
@@ -145,6 +235,17 @@
         <div class="row mb-3">
             <div class="col-md-3">
                 <label asp-for="EditStatus.CostEstimate" class="form-label"></label>
+                <button id="CostEstimate-help-button"
+                        type="button"
+                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                        aria-details="CostEstimate-tooltip-text"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="@StatusToolTipHelper.CostEstimate">
+                    <svg class="bi" role="img" aria-label="CostEstimate help">
+                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                    </svg>
+                </button>
                 <input asp-for="EditStatus.CostEstimate" class="form-control" />
                 <span asp-validation-for="EditStatus.CostEstimate" class="text-danger"></span>
             </div>

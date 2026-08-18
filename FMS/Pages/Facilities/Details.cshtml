@@ -1184,12 +1184,34 @@
                         <dl class="row">
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                                <button id="ISWQS-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="ISWQS-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.ISWQS">
+                                    <svg class="bi" role="img" aria-label="ISWQS help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS, "BoolYesNo")
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
+                                <button id="Funding-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="Funding-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.FundingSource">
+                                    <svg class="bi" role="img" aria-label="Funding help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.DisplayName, "StringOrNone")
@@ -1223,6 +1245,17 @@
                             </div>
                             <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
+                                <button id="SourceStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="SourceStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.SourceStatus">
+                                    <svg class="bi" role="img" aria-label="SourceStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceStatus.Name, "StringOrNone")
@@ -1235,6 +1268,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilStatus)
+                                <button id="SoilStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="SoilStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.SoilStatus">
+                                    <svg class="bi" role="img" aria-label="SoilStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilStatus.Name, "StringOrNone")
@@ -1247,6 +1291,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus)
+                                <button id="GroundwaterStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="GroundwaterStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.GroundwaterStatus">
+                                    <svg class="bi" role="img" aria-label="GroundwaterStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus.Name, "StringOrNone")
@@ -1259,6 +1314,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallStatus)
+                                <button id="OverallStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="OverallStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.OverallStatus">
+                                    <svg class="bi" role="img" aria-label="OverallStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallStatus.Name, "StringOrNone")
@@ -1271,6 +1337,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSScore)
+                                <button id="GAPSScore-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="GAPSScore-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.GAPSModelScore">
+                                    <svg class="bi" role="img" aria-label="GAPSScore help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSScore, "NumberOrNone")
@@ -1289,12 +1366,34 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment)
+                                <button id="GAPSAssessment-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="GAPSAssessment-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.GAPSAssessment">
+                                    <svg class="bi" role="img" aria-label="GAPSAssessment help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Name)
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
+                                <button id="CostEstimate-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="CostEstimate-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.CostEstimate">
+                                    <svg class="bi" role="img" aria-label="CostEstimate help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimate)

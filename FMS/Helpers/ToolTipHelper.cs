@@ -32,4 +32,17 @@ namespace FMS.Helpers
         public const string E1DistanceToResidence = "Measured from outer edge of affected area to nearest residence, day care, school, playground - (8) < 300ft, (6) 301-1000ft,  (4) 1001-3000ft, (2) 3001-5280ft, (1) > 1 mile";
         public const string E2SensitiveEnvironment = "Sensitive area must lie within the area of a regulated substance and be likely to be affected by the release - (1) Yes, (0) No";
     }
+
+    public static class StatusToolTipHelper
+    {
+        public const string ISWQS = "Above In-Stream Water Quality Standards?";
+        public const string SourceStatus = "ABND - Abandoned, CIP - Cleanup in Progress, INAC - Inactive Site, INV - Investigation Phase, NAT - No Action Taken, NFA - No Further Action, RRS# - Meets Type # RRS";
+        public const string SoilStatus = "ABND - Abandoned, CIP - Cleanup in Progress, INAC - Inactive Site, INV - Investigation Phase, NAT - No Action Taken, NFA - No Further Action, RRS# - Meets Type # RRS";
+        public const string GroundwaterStatus = "ABND - Abandoned, CIP - Cleanup in Progress, INAC - Inactive Site, INV - Investigation Phase, NAT - No Action Taken, NFA - No Further Action, RRS# - Meets Type # RRS";
+        public const string OverallStatus = "ABND - Abandoned, CIP - Cleanup in Progress, INAC - Inactive Site, INV - Investigation Phase, NAT - No Action Taken, NFA - No Further Action, RRS# - Meets Type # RRS";
+        public const string GAPSModelScore = "110 or above = High Priority, 70-109 = Medium Priority, 30-69 = Low Priority, 0-30 = Discuss with Unit Coordinator";
+        public const string CostEstimate = "RACER estimate";
+        public const string FundingSource = "A- Abandoned, LE - Local Government Eligible, LI - Local Government Ineligible, P - Private Party, SE - State Government Eligible, SI - State Government Ineligible";
+        public const string GAPSAssessment = "Threat Site may pose to human health or the environment";
+    }
 }
