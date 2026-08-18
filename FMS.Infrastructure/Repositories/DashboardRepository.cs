@@ -116,7 +116,7 @@ namespace FMS.Infrastructure.Repositories
                 .Where(e => e.OrganizationalUnit.UserProgram.Id == id)
                 .Where(e => e.ComplianceOfficer.Active)
                 .Where(e => e.FacilityType.Name != "RN")
-                .OrderBy(e => e.FacilityType.Name)
+                .OrderBy(e => e.ComplianceOfficer.Name)
                 .ThenBy(e => e.Name)
                 .Select(e => new DashboardProgramFacilitiesDto(e))
                 .AsSplitQuery()

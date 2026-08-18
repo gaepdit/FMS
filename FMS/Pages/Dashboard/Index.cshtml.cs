@@ -43,8 +43,10 @@ namespace FMS.Pages.Dashboard
             UserName = CurrentUser.DisplayName;
 
             // Get Facilities for the current user based on their role and position
-
-            UserFacilities = await _repository.GetUserHSIFacilitiesById(UserCOId);
+            if(CurrentUser.UserPosition.Name != "PM2")
+            {
+                UserFacilities = await _repository.GetUserHSIFacilitiesById(UserCOId);
+            }
 
             if (CurrentUser.UserPosition.Name == "PM1")
             {
@@ -54,11 +56,15 @@ namespace FMS.Pages.Dashboard
             if (CurrentUser.UserPosition.Name == "PM2")
             {
                 ProgramFacilities = await _repository.GetProgramHSIFacilitiesById(CurrentUser.UserProgram.Id);
+
+
             }
 
             //Get Events for the current user based on their role and position
-
-            UserEvents = await _repository.GetEventsByUserId(UserCOId);
+            if(CurrentUser.UserPosition.Name != "PM2")
+            {
+                UserEvents = await _repository.GetEventsByUserId(UserCOId);
+            }
 
             if (CurrentUser.UserPosition.Name == "PM1")
             {
