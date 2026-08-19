@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <RootNamespace>FMS</RootNamespace>
-    <StartupObject>FMS.Program</StartupObject>
     <UserSecretsId>9eaa6ee0-f5de-4484-8e00-194a201392e7</UserSecretsId>
     <AssemblyVersion>2023.4.13</AssemblyVersion>
   </PropertyGroup>

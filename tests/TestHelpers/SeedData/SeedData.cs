@@ -5,7 +5,7 @@ namespace FMS.TestData.SeedData
 {
     public static partial class SeedData
     {
-        public static async Task SeedDataAsync(this FmsDbContext context, CancellationToken token)
+        public static async Task SeedDataAsync(this FmsDbContext context, CancellationToken token = default)
         {
             if (!await context.FacilityStatuses.AnyAsync(token))
                 await context.FacilityStatuses.AddRangeAsync(GetFacilityStatuses(), token);
