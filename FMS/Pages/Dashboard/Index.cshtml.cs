@@ -57,7 +57,8 @@ namespace FMS.Pages.Dashboard
             if (CurrentUser.UserPosition.Name == "PM2")
             {
                 ProgramFacilities = await _repository.GetProgramHSIFacilitiesById(CurrentUser.UserProgram.Id);
-                ProgramUnits = ProgramFacilities.Select(e => e.OrganizationalUnit?.Name).Distinct().ToList();
+
+                ProgramUnits = ProgramFacilities.Select(e => e.OrganizationalUnit?.Name).Distinct().OrderBy(name => name).ToList();
             }
 
             //Get Events for the current user based on their role and position
@@ -70,25 +71,16 @@ namespace FMS.Pages.Dashboard
             {
                 UnitEvents = await _repository.GetUnitEventsByUserId(CurrentUser.Id);
 
-                foreach (var unitEvent in UnitEvents.Where(unitEvent => !UserCOs.Contains(unitEvent.ComplianceOfficer?.Name) && unitEvent.ComplianceOfficer?.Name != null))
-                {
-                    UserCOs.Add(unitEvent.ComplianceOfficer?.Name);
-                }
+                UserCOs = UnitEvents.Select(e => e.ComplianceOfficer?.Name).Where(name => name != null).Distinct().OrderBy(name => name).ToList();
             }
 
             if (CurrentUser.UserPosition.Name == "PM2")
             {
                 ProgramEvents = await _repository.GetProgramEventsByUserId(CurrentUser.Id);
 
-                foreach (var programEvent in ProgramEvents.Where(programEvent => !UserUnits.Contains(programEvent.Unit?.Name) && programEvent.Unit?.Name != null))
-                {
-                    UserUnits.Add(programEvent.Unit?.Name);
-                }
+                UserUnits = ProgramEvents.Select(e => e.Unit?.Name).Where(name => name != null).Distinct().OrderBy(name => name).ToList();
 
-                foreach (var programEvent in ProgramEvents.Where(programEvent => !UserCOs.Contains(programEvent.ComplianceOfficer?.Name) && programEvent.ComplianceOfficer?.Name != null))
-                {
-                    UserCOs.Add(programEvent.ComplianceOfficer?.Name);
-                }
+                UserCOs = ProgramEvents.Select(e => e.ComplianceOfficer?.Name).Where(name => name != null).Distinct().OrderBy(name => name).ToList();
             }
 
             return Page();
