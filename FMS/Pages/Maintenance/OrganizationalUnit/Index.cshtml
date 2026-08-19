@@ -14,7 +14,7 @@
 <h1>
     @MaintenanceOptions.OrganizationalUnit <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
 </h1>
-<partial name="_AlertPartial" for="DisplayMessage" id="alert"/>
+<partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
 <form method="post">
     <table class="table" aria-label="List of organizational units">
@@ -34,7 +34,14 @@
                         @Html.DisplayFor(m => item.Active, "BoolRemoved")
                     </td>
                     <td class="text-nowrap">
-                        @Html.DisplayFor(m => item.UserProgram.Name, "StringOrNone")
+                        @if(item.UserProgram == null || item.UserProgram.Name == null)
+                        {
+                            <span class="text-muted">No program assigned</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(m => item.UserProgram.Name, "StringOrNone")
+                        }
                     </td>
                     <td class="text-nowrap">
                         <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
