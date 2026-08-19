@@ -20,6 +20,7 @@ namespace FMS.Pages.Dashboard
         public IList<DashboardUserEventsDto> UserEvents { get; set; } = [];
         public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = [];
         public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = [];
+        public IList<string> ProgramUnits { get; set; } = [];
         public IList<string> UserUnits { get; set; } = [];
         public IList<string> UserCOs { get; set; } = [];
 
@@ -56,8 +57,7 @@ namespace FMS.Pages.Dashboard
             if (CurrentUser.UserPosition.Name == "PM2")
             {
                 ProgramFacilities = await _repository.GetProgramHSIFacilitiesById(CurrentUser.UserProgram.Id);
-
-
+                ProgramUnits = ProgramFacilities.Select(e => e.OrganizationalUnit?.Name).Distinct().ToList();
             }
 
             //Get Events for the current user based on their role and position

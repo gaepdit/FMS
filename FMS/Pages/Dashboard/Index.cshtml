@@ -699,6 +699,8 @@
                                         <tr>
                                             <th scope="col" class="col">Number</th>
                                             <th scope="col" class="col">Name</th>
+                                            <th scope="col" class="col">Type</th>
+                                            <th scope="col" class="col">Status</th> 
                                             <th scope="col" class="col">Unit</th>
                                             <th scope="col" class="col">County</th>
                                             <th scope="col" class="col">Class</th>
@@ -1105,12 +1107,12 @@
                 <div id="MyProgramFacilities" class="accordion-collapse collapse" aria-labelledby="MyProgramFacilitiesList">
                     <div class="accordion-body">
                         <form method="post" id="ProgramFacilities">
-                            @foreach (var unit in Model.UserUnits)
+                            @foreach (var unit in Model.ProgramUnits)
                             {
-                                <div class="accordion accordion-flush" id="Current-Facility-Work+@Model.UserUnits.IndexOf(unit)">
+                                <div class="accordion accordion-flush" id="Current-Facility-Work+@Model.ProgramUnits.IndexOf(unit)">
                                     <div class="accordion-item">
-                                        <h3 class="accordion-header" id="MyProgramFacilitiesList+@Model.UserUnits.IndexOf(unit)">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyProgramFacilities+@Model.UserUnits.IndexOf(unit)" aria-expanded="true" aria-controls="MyProgramFacilities+@Model.UserUnits.IndexOf(unit)">
+                                        <h3 class="accordion-header" id="MyProgramFacilitiesList+@Model.ProgramUnits.IndexOf(unit)">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyProgramFacilities+@Model.ProgramUnits.IndexOf(unit)" aria-expanded="true" aria-controls="MyProgramFacilities+@Model.ProgramUnits.IndexOf(unit)">
                                                 <h5>@unit</h5>
                                             </button>
                                         </h3>
@@ -1119,7 +1121,7 @@
                                                 @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit).Count() > 0 ? $"{Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit).Count()} out of {Model.ProgramFacilities.Count()} Total Facilities" : "No Facilities Assigned")
                                             </div>
                                         </div>
-                                        <div id="MyProgramFacilities+@Model.UserUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramFacilitiesList+@Model.UserUnits.IndexOf(unit)">
+                                        <div id="MyProgramFacilities+@Model.ProgramUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramFacilitiesList+@Model.ProgramUnits.IndexOf(unit)">
                                             <div class="accordion-body">
                                                 @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count() > 0)
                                                 {
