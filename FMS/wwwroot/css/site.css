@@ -412,17 +412,17 @@ a[target]::after {
 /* Apply directly to your custom accordion or override globally */
 .accordion {
     --bs-accordion-bg: #c8f8d5; /* Body background */
-    /*--bs-accordion-color: #0d5f06;*/ /* Body text color */
+    /*--bs-accordion-color: #013901;*/ /* Body text color */
     --bs-accordion-btn-bg: #c8f8d5; /* Collapsed button background */
     --bs-accordion-btn-color: #212529; /* Collapsed button text */
     --bs-accordion-active-bg: #013901; /* Expanded button background */
-    --bs-accordion-active-color: #c8f8d5; /* Expanded button text */
+    --bs-accordion-active-color: #fff; /* Expanded button text */
     --bs-accordion-border-color: #09601d; /* Border color */
 }
 
 [data-bs-theme="dark"] .accordion {
     --bs-accordion-bg: #c8f8d5; /* Body background */
-    /*--bs-accordion-color: #0d5f06;*/ /* Body text color */
+    --bs-accordion-color: #c8f8d5; /* Body text color */
     --bs-accordion-btn-bg: #c8f8d5; /* Collapsed button background */
     --bs-accordion-btn-color: #212529; /* Collapsed button text */
     --bs-accordion-active-bg: #013901; /* Expanded button background */
