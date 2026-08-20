@@ -116,14 +116,14 @@
                 <label asp-for="EditEvent.StartDate" class="form-label">
                     Event Start Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.StartDateRequired ? "*" : "")</span>
                 </label>
-                <input asp-for="EditEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
+                <input asp-for="EditEvent.StartDate" class="form-control datepicker flashOutline is-valid" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.StartDate" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="EditEvent.DueDate" class="form-label">
                     Event Due Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span>
                 </label>
-                <input asp-for="EditEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
+                <input asp-for="EditEvent.DueDate" class="form-control datepicker flashOutline is-valid" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.DueDate" class="text-danger"></span>
             </div>
         </div>
@@ -132,12 +132,12 @@
                 <label asp-for="EditEvent.CompletionDate" class="form-label">
                     Event Completion Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span>
                 </label>
-                <input asp-for="EditEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
+                <input asp-for="EditEvent.CompletionDate" class="form-control datepicker flashOutline is-valid" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.CompletionDate" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="EditEvent.ComplianceOfficerId">Done By (CO) <span class="text-danger">*</span></label>
-                <select asp-for="EditEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                <select asp-for="EditEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select flashOutline is-valid">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="EditEvent.ComplianceOfficerId" class="text-danger"></span>
