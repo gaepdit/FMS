@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using FMS.Platform.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
-namespace FMS.Platform.Authentication;
+namespace FMS.Platform.AppConfiguration;
 
 public static class AuthenticationServices
 {
-    public static IServiceCollection ConfigureAuthentication(this IServiceCollection services,
-        IConfiguration configuration)
+    public static void ConfigureAuthentication(this IHostApplicationBuilder builder)
     {
-        var authenticationBuilder = services
+        var authenticationBuilder = builder.Services
             .ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = ".FMS.Identity";
@@ -19,6 +19,8 @@ public static class AuthenticationServices
             })
             .AddAuthentication(options => options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie();
+
+        var configuration = builder.Configuration;
 
         if (configuration.LoginProviderNames().Contains(LoginProviders.DuoScheme))
         {
@@ -54,6 +56,6 @@ public static class AuthenticationServices
             // Note: `cookieScheme: null` is mandatory. See https://github.com/AzureAD/microsoft-identity-web/issues/133#issuecomment-739550416
         }
 
-        return services;
+        builder.Services.AddAuthenticationAppServices();
     }
 }
