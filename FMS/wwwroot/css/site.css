@@ -420,20 +420,20 @@ a[target]::after {
     --bs-accordion-border-color: #09601d; /* Border color */
 }
 
- /*1. Header Button when EXPANDED (Active) */
+ /*1. Header Button when EXPANDED (Active)*/ 
 .accordion-button:not(.collapsed) {
     background-color: #013901;  /*Custom active background */
     color: #c8f8d5;  /*Custom active text color */
 }
 
- /*2. Remove or change the blue focus halo outline */
+ /*2. Remove or change the blue focus halo outline*/ 
 .accordion-button:focus {
-    box-shadow: inherit;
+    box-shadow: initial;
     border-color: #09601d;
 }
 
  /*3. The inner body background */
 .accordion-body {
-    background-color: #c8f8d5;
+    background-color: #013901;
 }
 
