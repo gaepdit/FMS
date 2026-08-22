@@ -1128,6 +1128,7 @@
                             {
                                 <a asp-page="/Substance/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Substance</a>
                             }
+                            <a asp-page="/Maintenance/Chemical/Detail" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary" target="_blank">See Chemical List</a>
                         </h3>
                         <hr />
                         <div class="row justify-content-evenly">
@@ -1169,9 +1170,6 @@
                                     }
                                 </tbody>
                             </table>
-                            <div>
-                                <a asp-page="/Maintenance/Chemical/Detail" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary" target="_blank">See Chemicals</a>
-                            </div>
                         </div>
                     </div>
 

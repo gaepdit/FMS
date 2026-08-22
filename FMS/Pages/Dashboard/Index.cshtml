@@ -42,7 +42,7 @@
                                 @if (Model.UserEvents.Where(f => f.CompletionDate == null && f.StartDate == null).Count() > 0)
                                 {
                                     <table class="table" aria-label="List of Pending Events">
-                                        <thead class="thead-light">
+                                        <thead class="thead-light position-sticky top-0">
                                             <tr>
                                                 <th scope="col" class="col">Facility Number</th>
                                                 <th scope="col" class="col">Facility Name</th>
@@ -116,7 +116,7 @@
                                 @if (Model.UserEvents.Where(f => f.CompletionDate == null && f.StartDate != null).Count() > 0)
                                 {
                                     <table class="table" aria-label="List of In Progress Events">
-                                        <thead class="thead-light">
+                                        <thead class="thead-light position-sticky top-0">
                                             <tr>
                                                 <th scope="col" class="col">Facility Number</th>
                                                 <th scope="col" class="col">Facility Name</th>
@@ -190,7 +190,7 @@
                                 @if (Model.UserEvents.Where(f => f.CompletionDate != null).Count() > 0)
                                 {
                                     <table class="table" aria-label="List of Completed Events">
-                                        <thead class="thead-light">
+                                        <thead class="thead-light position-sticky top-0">
                                             <tr>
                                                 <th scope="col" class="col">Facility Number</th>
                                                 <th scope="col" class="col">Facility Name</th>
@@ -312,7 +312,7 @@
                                                             @if (Model.UnitEvents.Where(f => f.CompletionDate == null && f.StartDate == null && f.ComplianceOfficer?.Name == co).Count() > 0)
                                                             {
                                                                 <table class="table" aria-label="List of Pending Events">
-                                                                    <thead class="thead-light">
+                                                                    <thead class="thead-light position-sticky top-0">
                                                                         <tr>
                                                                             <th scope="col" class="col">Facility Number</th>
                                                                             <th scope="col" class="col">Facility Name</th>
@@ -386,7 +386,7 @@
                                                             @if (Model.UnitEvents.Where(f => f.CompletionDate == null && f.StartDate != null && f.ComplianceOfficer?.Name == co).Count() > 0)
                                                             {
                                                                 <table class="table" aria-label="List of In Progress Events">
-                                                                    <thead class="thead-light">
+                                                                    <thead class="thead-light position-sticky top-0">
                                                                         <tr>
                                                                             <th scope="col" class="col">Facility Number</th>
                                                                             <th scope="col" class="col">Facility Name</th>
@@ -460,7 +460,7 @@
                                                             @if (Model.UnitEvents.Where(e => e.CompletionDate != null && e.ComplianceOfficer?.Name == co).Count() > 0)
                                                             {
                                                                 <table class="table" aria-label="List of Completed Events">
-                                                                    <thead class="thead-light">
+                                                                    <thead class="thead-light position-sticky top-0">
                                                                         <tr>
                                                                             <th scope="col" class="col">Facility Number</th>
                                                                             <th scope="col" class="col">Facility Name</th>
@@ -609,7 +609,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <table class="table" aria-label="List of Events">
-                                                                                            <thead class="thead-light">
+                                                                                            <thead class="thead-light position-sticky top-0">
                                                                                                 <tr>
                                                                                                     <th scope="col" class="col">Facility Number</th>
                                                                                                     <th scope="col" class="col">Facility Name</th>
@@ -692,7 +692,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <table class="table" aria-label="List of Events">
-                                                                                            <thead class="thead-light">
+                                                                                            <thead class="thead-light position-sticky top-0">
                                                                                                 <tr>
                                                                                                     <th scope="col" class="col">Facility Number</th>
                                                                                                     <th scope="col" class="col">Facility Name</th>
@@ -775,7 +775,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <table class="table" aria-label="List of Events">
-                                                                                            <thead class="thead-light">
+                                                                                            <thead class="thead-light position-sticky top-0">
                                                                                                 <tr>
                                                                                                     <th scope="col" class="col">Facility Number</th>
                                                                                                     <th scope="col" class="col">Facility Name</th>
@@ -905,7 +905,7 @@
                                 @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count() > 0)
                                 {
                                     <table class="table" aria-label="List of Active User Facilities">
-                                        <thead class="thead-light">
+                                        <thead class="thead-light position-sticky top-0">
                                             <tr>
                                                 <th scope="col" class="col">Number</th>
                                                 <th scope="col" class="col">Name</th>
@@ -963,7 +963,7 @@
                                 @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
                                 {
                                     <table class="table" aria-label="List of Delisted User Facilities">
-                                        <thead class="thead-warning">
+                                        <thead class="thead-warning position-sticky top-0">
                                             <tr>
                                                 <th scope="col" class="col">Number</th>
                                                 <th scope="col" class="col">Name</th>
@@ -1021,7 +1021,7 @@
                                 @if (Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0)
                                 {
                                     <table class="table" aria-label="List of Other User Facilities">
-                                        <thead class="thead-danger">
+                                        <thead class="thead-danger position-sticky top-0">
                                             <tr>
                                                 <th scope="col" class="col">Number</th>
                                                 <th scope="col" class="col">Name</th>
@@ -1127,7 +1127,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <table class="table" aria-label="List of Unit Facilities">
-                                                                    <thead class="thead-light">
+                                                                    <thead class="thead-light position-sticky top-0">
                                                                         <tr>
                                                                             <th scope="col" class="col">Number</th>
                                                                             <th scope="col" class="col">Name</th>
@@ -1185,7 +1185,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <table class="table" aria-label="List of Unit Facilities">
-                                                                    <thead class="thead-warning">
+                                                                    <thead class="thead-warning position-sticky top-0">
                                                                         <tr>
                                                                             <th scope="col" class="col">Number</th>
                                                                             <th scope="col" class="col">Name</th>
@@ -1243,7 +1243,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <table class="table" aria-label="List of Unit Facilities">
-                                                                    <thead class="thead-danger">
+                                                                    <thead class="thead-danger position-sticky top-0">
                                                                         <tr>
                                                                             <th scope="col" class="col">Number</th>
                                                                             <th scope="col" class="col">Name</th>
@@ -1354,7 +1354,7 @@
                                                                 </div>
                                                             </div>
                                                             <table class="table" aria-label="List of Program Facilities">
-                                                                <thead class="thead-light">
+                                                                <thead class="thead-light position-sticky top-0">
                                                                     <tr>
                                                                         <th scope="col" class="col">Number</th>
                                                                         <th scope="col" class="col">Name</th>
@@ -1412,7 +1412,7 @@
                                                                 </div>
                                                             </div>
                                                             <table class="table" aria-label="List of Program Facilities">
-                                                                <thead class="thead-warning">
+                                                                <thead class="thead-warning position-sticky top-0">
                                                                     <tr>
                                                                         <th scope="col" class="col">Number</th>
                                                                         <th scope="col" class="col">Name</th>
@@ -1471,7 +1471,7 @@
                                                                 </div>
                                                             </div>
                                                             <table class="table" aria-label="List of Program Facilities">
-                                                                <thead class="thead-danger">
+                                                                <thead class="thead-danger position-sticky top-0">
                                                                     <tr>
                                                                         <th scope="col" class="col">Number</th>
                                                                         <th scope="col" class="col">Name</th>

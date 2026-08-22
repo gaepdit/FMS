@@ -32,6 +32,46 @@
                 filteredList.appendChild(fragment);
                 countOutput.textContent = count > 0 ? ` (${count} found)` : ' (none found)';
             });
+
+            originalList.addEventListener('mouseup', (event) => {
+                if (event.target.tagName === 'A') {
+                    const selectedItem = event.target.closest('a');
+                    const casNo = selectedItem.getAttribute('data-casno');
+                    const chemicalName = selectedItem.getAttribute('data-chemicalname');
+                    const commonName = selectedItem.getAttribute('data-commonname');
+                    const toxValue = selectedItem.getAttribute('data-toxvalue');
+                    const mcls = selectedItem.getAttribute('data-mcls');
+                    const finalRc = selectedItem.getAttribute('data-finalrc');
+                    const rq = selectedItem.getAttribute('data-rq');
+                    document.getElementById('casno').value = casNo;
+                    document.getElementById('ChemicalName').value = chemicalName;
+                    document.getElementById('CommonName').value = commonName;
+                    document.getElementById('ToxValue').value = toxValue;
+                    document.getElementById('MCLs').value = mcls;
+                    document.getElementById('FinalRc').value = finalRc;
+                    document.getElementById('RQ').value = rq;
+                }
+            });
+
+            filteredList.addEventListener('mouseup', (event) => {
+                if (event.target.tagName === 'A') {
+                    const selectedItem = event.target.closest('a');
+                    const casNo = selectedItem.getAttribute('data-casno');
+                    const chemicalName = selectedItem.getAttribute('data-chemicalname');
+                    const commonName = selectedItem.getAttribute('data-commonname');
+                    const toxValue = selectedItem.getAttribute('data-toxvalue');
+                    const mcls = selectedItem.getAttribute('data-mcls');
+                    const finalRc = selectedItem.getAttribute('data-finalrc');
+                    const rq = selectedItem.getAttribute('data-rq');
+                    document.getElementById('casno').value = casNo;
+                    document.getElementById('ChemicalName').value = chemicalName;
+                    document.getElementById('CommonName').value = commonName;
+                    document.getElementById('ToxValue').value = toxValue;
+                    document.getElementById('MCLs').value = mcls;
+                    document.getElementById('FinalRc').value = finalRc;
+                    document.getElementById('RQ').value = rq;
+                }
+            });
         });
     </script>
 }
@@ -41,14 +81,14 @@
 }
 
 <h1>
-    @MaintenanceOptions.Chemical List <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
+    @MaintenanceOptions.Chemical
 </h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
-<div class="container-fluid">
+<div class="container-fluid position-sticky top-0">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <form class="container my-3">
-            <label class="visually-hidden" for="chemical-list-filter">Filter Chemical list</label>
+            <label for="chemical-list-filter" class="pb-2">Start typing CASNO or Chemical Name to filter the Chemical list</label>
             <div class="row row-cols-sm-auto align-items-center">
                 <input id="chemical-list-filter" class="form-control col-md-12 w-auto" placeholder="Filter chemical list" />
                 <span id="filtered-chemical-list-count" class="col-12 text-body-secondary">
@@ -56,6 +96,46 @@
                 </span>
             </div>
         </form>
+        <hr />
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <label asp-for="Chemical.CasNo">CasNo</label>
+                <input id="casno" asp-for="Chemical.CasNo" class="form-control" readonly aria-describedby="FileIdHelpBlock" />
+                <span asp-validation-for="Chemical.CasNo" class="text-danger"></span>
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Chemical.ChemicalName">@($"{MaintenanceOptions.Chemical} Name")</label>
+                <input id="ChemicalName" asp-for="Chemical.ChemicalName" class="form-control" readonly />
+                <span asp-validation-for="Chemical.ChemicalName" class="text-danger"></span>
+            </div>
+            <div class="col-md-5">
+                <label asp-for="Chemical.CommonName">Common Name</label>
+                <input id="CommonName" asp-for="Chemical.CommonName" class="form-control" readonly />
+                <span asp-validation-for="Chemical.CommonName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label asp-for="Chemical.ToxValue">Tox Value</label>
+                <input id="ToxValue" asp-for="Chemical.ToxValue" class="form-control" readonly />
+                <span asp-validation-for="Chemical.ToxValue" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.MCLs">MCLs</label>
+                <input id="MCLs" asp-for="Chemical.MCLs" class="form-control" readonly />
+                <span asp-validation-for="Chemical.MCLs" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.FinalRc">Final RC</label>
+                <input id="FinalRc" asp-for="Chemical.FinalRc" class="form-control" readonly />
+                <span asp-validation-for="Chemical.FinalRc" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Chemical.RQ">RQ</label>
+                <input id="RQ" asp-for="Chemical.RQ" class="form-control" readonly />
+                <span asp-validation-for="Chemical.RQ" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 </div>
 <div class="container-fluid">
@@ -64,21 +144,15 @@
             @for (var i = 0; i < Model.Chemicals.Count; i++)
             {
                 var item = Model.Chemicals[i];
-                <li class="d-flex align-items-center gap-2">
-                    @if (item.Active)
-                    {
-                        <form method="post" class="d-inline">
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-info btn-sm">Remove from list</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <form method="post" class="d-inline">
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
-                        </form>
-                    }
-                    <a asp-page="Edit" asp-route-id="@item.Id"
-                       class="link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover @(!item.Active ? "link-warning" : "link-primary ")">
+                <li class="d-flex align-items-center gap-2 text-decoration-underline">
+                    <a value="@item.Id"
+                       data-casno="@item.CasNo"
+                       data-chemicalname="@item.ChemicalName"
+                       data-commonname="@item.CommonName"
+                       data-toxvalue="@item.ToxValue"
+                       data-mcls="@item.MCLs"
+                       data-finalrc="@item.FinalRc"
+                       data-rq="@item.RQ" class="link-opacity-50 link-opacity-100-hover link-body-emphasis">
                         @item.CasNo <span class="link-body-emphasis">–</span> @item.ChemicalName
                     </a>
                 </li>

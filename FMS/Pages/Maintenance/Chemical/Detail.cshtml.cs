@@ -13,6 +13,9 @@ namespace FMS.Pages.Maintenance.Chemical
         public DetailModel(IChemicalRepository repository) => _repository = repository;
 
         public IReadOnlyList<ChemicalSummaryDto> Chemicals { get; private set; }
+
+        public ChemicalSummaryDto Chemical { get; }
+
         public DisplayMessage DisplayMessage { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
