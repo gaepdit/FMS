@@ -335,7 +335,6 @@
     }
 </div>
 
-
 <div class="container-fluid parent-container d-lg-inline-flex">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
@@ -1128,7 +1127,7 @@
                             {
                                 <a asp-page="/Substance/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Substance</a>
                             }
-                            <a asp-page="/Maintenance/Chemical/Detail" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary" target="_blank">See Chemical List</a>
+                            <a asp-page="/Maintenance/Chemical/Detail" class="btn btn-sm btn-outline-primary" target="_blank">See Chemical List</a>
                         </h3>
                         <hr />
                         <div class="row justify-content-evenly">
@@ -1153,7 +1152,21 @@
                                     {
                                         <tr class="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
                                             <td>@s.Chemical.CasNo</td>
-                                            <td>@s.Chemical.ChemicalName</td>
+                                            <td>
+                                                @s.Chemical.ChemicalName
+                                                <button id="Chemical-help-button"
+                                                        type="button"
+                                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                        aria-details="Chemical-tooltip-text"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"
+                                                        data-bs-html="true"
+                                                        title="@(new SubstanceToolTipHelper().GetChemicalHtml(s.Chemical))">
+                                                    <svg class="bi" role="img" aria-label="Chemical help">
+                                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                    </svg>
+                                                </button>
+                                            </td>
                                             <td>@s.Chemical.CommonName</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Groundwater, "BoolCheckbox")</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Soil, "BoolCheckbox")</td>
@@ -1477,7 +1490,7 @@
                     <hr />
                     <div class="row justify-content-evenly">
                         <table class="table table-sm" aria-label="Events">
-                            <thead class="thead-light">
+                            <thead class="thead-light position-sticky top-0">
                                 <tr>
                                     <th scope="col" class="text-nowrap">
                                         <a asp-fragment="TabPages"
