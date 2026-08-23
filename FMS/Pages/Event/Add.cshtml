@@ -158,7 +158,6 @@
                 <span asp-validation-for="NewEvent.Comment" class="text-danger"></span>
             </div>
         </div>
-        <hr />
         <p class="text-danger">* denotes a required field</p>
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Add Event</button>
         <a asp-page="../Facilities/Details" 
@@ -176,7 +175,7 @@
             <h3>Existing Events for @Model.Facility.FacilityNumber</h3>
             <div class="row justify-content-evenly">
                 <table class="table table-sm" aria-label="Events">
-                    <thead class="thead-light">
+                    <thead class="thead-light position-sticky top-0">
                         <tr>
                             <th scope="col" class="text-nowrap">
                                 <a asp-route-SortBy="@(Model.SortBy == EventSort.EventType ? EventSort.EventTypeDesc : EventSort.EventType)">

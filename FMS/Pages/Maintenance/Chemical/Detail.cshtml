@@ -140,11 +140,11 @@
 </div>
 <div class="container-fluid">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <ul id="chemical-list">
+        <ul id="chemical-list" class="list-group">
             @for (var i = 0; i < Model.Chemicals.Count; i++)
             {
                 var item = Model.Chemicals[i];
-                <li class="d-flex align-items-center gap-2 text-decoration-underline">
+                <li class="list-group-item list-group-item-action d-flex align-items-center gap-2">
                     <a value="@item.Id"
                        data-casno="@item.CasNo"
                        data-chemicalname="@item.ChemicalName"
@@ -158,6 +158,6 @@
                 </li>
             }
         </ul>
-        <ul id="filtered-chemical-list"></ul>
+        <ul id="filtered-chemical-list" class="list-group"></ul>
     </div>
 </div>
