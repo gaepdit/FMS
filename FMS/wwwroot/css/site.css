@@ -412,38 +412,50 @@ a[target]::after {
 /* Apply directly to your custom accordion or override globally */
 .accordion {
     --bs-accordion-bg: #c8f8d5; /* Body background */
-    /*--bs-accordion-color: #013901;*/ /* Body text color */
+    --bs-accordion-color: #212529; /* Body text color */
     --bs-accordion-btn-bg: #c8f8d5; /* Collapsed button background */
     --bs-accordion-btn-color: #212529; /* Collapsed button text */
-    --bs-accordion-active-bg: #013901; /* Expanded button background */
-    --bs-accordion-active-color: #fff; /* Expanded button text */
-    --bs-accordion-border-color: #09601d; /* Border color */
+    --bs-accordion-active-bg: #c8f8d5; /* Expanded button background */
+    --bs-accordion-active-color: #c8f8d5; /* Expanded button text */
+    --bs-accordion-border-color: #212529; /* Border color */
 }
 
 [data-bs-theme="dark"] .accordion {
     --bs-accordion-bg: #c8f8d5; /* Body background */
     --bs-accordion-color: #c8f8d5; /* Body text color */
-    --bs-accordion-btn-bg: #c8f8d5; /* Collapsed button background */
-    --bs-accordion-btn-color: #212529; /* Collapsed button text */
-    --bs-accordion-active-bg: #013901; /* Expanded button background */
-    --bs-accordion-active-color: #c8f8d5; /* Expanded button text */
-    --bs-accordion-border-color: #09601d; /* Border color */
+    --bs-accordion-btn-bg: #013901; /* Collapsed button background */
+    --bs-accordion-btn-color: #c8f8d5; /* Collapsed button text */
+    --bs-accordion-active-bg: #c8f8d5; /* Expanded button background */
+    --bs-accordion-active-color: #013901; /* Expanded button text */
+    --bs-accordion-border-color: #c8f8d5; /* Border color */
 }
 
 /*1. Header Button when EXPANDED (Active)*/
 .accordion-button:not(.collapsed) {
+    background-color: #c8f8d5; /*Custom active background */
+    color: #013901; /*Custom active text color */
+    border-color: #fff;
+}
+
+/*1. Header Button when EXPANDED (Active)*/
+[data-bs-theme="dark"] .accordion-button:not(.collapsed) {
     background-color: #013901; /*Custom active background */
     color: #c8f8d5; /*Custom active text color */
 }
 
 /*2. Remove or change the blue focus halo outline*/
-.accordion-button:focus {
+.accordion-button.focus {
     box-shadow: initial;
-    border-color: #09601d;
+    border-color: #013901;
 }
 
 /*3. The inner body background */
 .accordion-body {
+    background-color: #c8f8d5;
+}
+
+/*3. The inner body background */
+[data-bs-theme="dark"] .accordion-body {
     background-color: #013901;
 }
 

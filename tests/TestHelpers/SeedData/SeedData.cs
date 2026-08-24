@@ -9,6 +9,8 @@ namespace FMS.TestData.SeedData
         {
             await SeedIfEmpty(context.FacilityStatuses, GetFacilityStatuses());
             await SeedIfEmpty(context.FacilityTypes, GetFacilityTypes());
+            await SeedIfEmpty(context.UserPositions, GetUserPositions());
+            await SeedIfEmpty(context.UserPrograms, GetUserPrograms());
             await SeedIfEmpty(context.OrganizationalUnits, GetOrganizationalUnits());
             await SeedIfEmpty(context.BudgetCodes, GetBudgetCodes());
             await SeedIfEmpty(context.ComplianceOfficers, GetComplianceOfficers());
@@ -42,6 +44,7 @@ namespace FMS.TestData.SeedData
             await SeedIfEmpty(context.Substances, GetSubstances());
             await SeedIfEmpty(context.Statuses, GetStatuses());
             await SeedIfEmpty(context.Events, GetEvents());
+            
 
             await context.SaveChangesAsync(token);
             return;

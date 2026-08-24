@@ -28,6 +28,13 @@ namespace FMS.Infrastructure.Repositories
             return userPosition == null ? null : new UserPositionEditDto(userPosition);
         }
 
+        public async Task<UserPosition> GetPositionByNameAsync(string name)
+        {
+            var userPosition = await _context.UserPositions.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Name == name);
+            return userPosition == null ? null : userPosition;
+        }
+
         public async Task<IReadOnlyList<UserPositionSummaryDto>> GetUserPositionListAsync() =>
             await _context.UserPositions.AsNoTracking()
             .OrderByDescending(e => e.Active)

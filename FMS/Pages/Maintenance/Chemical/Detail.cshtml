@@ -85,7 +85,7 @@
 </h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
-<div class="container-fluid position-sticky top-0">
+<div class="container-fluid position-sticky top-0 z-3">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <form class="container my-3">
             <label for="chemical-list-filter" class="pb-2">Start typing CASNO or Chemical Name to filter the Chemical list</label>
@@ -141,10 +141,9 @@
 <div class="container-fluid">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <ul id="chemical-list" class="list-group">
-            @for (var i = 0; i < Model.Chemicals.Count; i++)
+            @foreach (var item in Model.Chemicals)
             {
-                var item = Model.Chemicals[i];
-                <li class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                <li class="list-group-item list-group-item-action">
                     <a value="@item.Id"
                        data-casno="@item.CasNo"
                        data-chemicalname="@item.ChemicalName"
@@ -152,8 +151,8 @@
                        data-toxvalue="@item.ToxValue"
                        data-mcls="@item.MCLs"
                        data-finalrc="@item.FinalRc"
-                       data-rq="@item.RQ" class="link-opacity-50 link-opacity-100-hover link-body-emphasis">
-                        @item.CasNo <span class="link-body-emphasis">–</span> @item.ChemicalName
+                       data-rq="@item.RQ" class="nav-link">
+                        @item.CasNo <span>___</span> @item.ChemicalName
                     </a>
                 </li>
             }

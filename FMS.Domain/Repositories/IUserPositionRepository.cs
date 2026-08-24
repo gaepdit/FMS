@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Repositories
 {
@@ -11,6 +12,8 @@ namespace FMS.Domain.Repositories
         Task<bool> UserPositionDescriptionExistsAsync(string description, Guid? ignoreId = null);
 
         Task<UserPositionEditDto> GetUserPositionAsync(Guid id);
+
+        Task<UserPosition> GetPositionByNameAsync(string name);
 
         Task<IReadOnlyList<UserPositionSummaryDto>> GetUserPositionListAsync();
 

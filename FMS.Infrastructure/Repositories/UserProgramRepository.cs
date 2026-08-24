@@ -29,6 +29,13 @@ namespace FMS.Infrastructure.Repositories
             return userProgram == null ? null : new UserProgramEditDto(userProgram);
         }
 
+        public async Task<UserProgram> GetUserProgramByNameAsync(string name)
+        {
+            var userProgram = await _context.UserPrograms.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Name == name);
+            return userProgram == null ? null : userProgram;
+        }
+
         public async Task<IReadOnlyList<UserProgramSummaryDto>> GetUserProgramListAsync() =>
             await _context.UserPrograms.AsNoTracking()
             .OrderByDescending(e => e.Active)

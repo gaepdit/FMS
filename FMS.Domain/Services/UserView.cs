@@ -20,9 +20,9 @@ namespace FMS.Domain.Services
         public string GivenName { get; }
         public string FamilyName { get; }
         public string Email { get; }
-        public UserProgram UserProgram { get; }
-        public OrganizationalUnit UserUnit { get; }
-        public UserPosition UserPosition { get; }
+        public UserProgram UserProgram { get; set; }
+        public OrganizationalUnit UserUnit { get; set; }
+        public UserPosition UserPosition { get; set; }
 
         public string DisplayName =>
             string.Join(" ", new[] { GivenName, FamilyName }.Where(s => !string.IsNullOrEmpty(s)));
