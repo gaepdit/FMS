@@ -1,6 +1,9 @@
+using DocumentFormat.OpenXml.Spreadsheet;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
+using FMS.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,7 +11,10 @@ namespace FMS.Pages.Dashboard
 {
     public class IndexModel(
         IUserService userService,
-        IDashboardRepository _repository) : PageModel
+        IDashboardRepository _repository,
+        IUserProgramRepository userProgramRepository,
+        IOrganizationalUnitRepository userUnitRepository,
+        IUserPositionRepository userPositionRepository) : PageModel
     {
         public UserView CurrentUser { get; private set; }
         public string UserName { get; set; }
@@ -35,6 +41,15 @@ namespace FMS.Pages.Dashboard
             Roles = await userService.GetCurrentUserRolesAsync();
 
             UserCOId = await _repository.GetCOIdFromUser(CurrentUser);
+
+            if (CurrentUser.DisplayName == "Test User")
+            {
+                // Add Test User Program, Unit and Position
+                CurrentUser.UserProgram = await userProgramRepository.GetUserProgramByNameAsync("Response and Remediation");
+                CurrentUser.UserUnit = await userUnitRepository.GetUnitByNameAsync("Response Development 1");
+                CurrentUser.UserPosition = await userPositionRepository.GetPositionByNameAsync("PM1");
+                await userService.UpdateUserDesignationsAsync(CurrentUser.Id, CurrentUser.UserProgram.Id, CurrentUser.UserUnit.Id, CurrentUser.UserPosition.Id);
+            }
 
             if (UserCOId == Guid.Empty || CurrentUser.UserPosition == null)
             {

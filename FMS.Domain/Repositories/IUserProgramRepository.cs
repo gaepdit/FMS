@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 
 namespace FMS.Domain.Repositories
 {
@@ -11,6 +12,8 @@ namespace FMS.Domain.Repositories
         Task<bool> UserProgramDescriptionExistsAsync(string description, Guid? ignoreId = null);
 
         Task<UserProgramEditDto> GetUserProgramAsync(Guid id);
+
+        Task<UserProgram> GetUserProgramByNameAsync(string name);
 
         Task<IReadOnlyList<UserProgramSummaryDto>> GetUserProgramListAsync();
 

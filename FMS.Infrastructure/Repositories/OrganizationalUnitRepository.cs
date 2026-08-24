@@ -34,6 +34,14 @@ namespace FMS.Infrastructure.Repositories
             return new OrganizationalUnitEditDto(organizationalUnit);
         }
 
+        public async Task<OrganizationalUnit> GetUnitByNameAsync(string name)
+        {
+            var organizationalUnit = await _context.OrganizationalUnits.AsNoTracking()
+                .Include(e => e.UserProgram)
+                .SingleOrDefaultAsync(e => e.Name == name);
+            return organizationalUnit == null ? null : organizationalUnit;
+        }
+
         public async Task<IReadOnlyList<OrganizationalUnitSummaryDto>> GetOrganizationalUnitListAsync() =>
             await _context.OrganizationalUnits.AsNoTracking()
             .Include(e => e.UserProgram)

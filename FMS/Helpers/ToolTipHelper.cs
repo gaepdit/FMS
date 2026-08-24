@@ -45,4 +45,9 @@ namespace FMS.Helpers
         public const string FundingSource = "A- Abandoned, LE - Local Government Eligible, LI - Local Government Ineligible, P - Private Party, SE - State Government Eligible, SI - State Government Ineligible";
         public const string GAPSAssessment = "Threat Site may pose to human health or the environment";
     }
+
+    public class SubstanceToolTipHelper
+    {
+        public string GetChemicalHtml(Chemical chemical) => $@"<b>CASNO:</b> {chemical.CasNo}<br /><b>Chemical Name:</b> {chemical.ChemicalName}<br /><b>Common Name:</b> {chemical.CommonName}<br /><b>Tox Value:</b> {chemical.ToxValue}<br /><b>MCLs:</b> {chemical.MCLs}<br /><b>Final RC:</b> {chemical.FinalRc}<br /><b>RQ:</b> {chemical.RQ}";
+    }
 }

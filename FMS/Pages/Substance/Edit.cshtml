@@ -38,26 +38,27 @@
         <div class="row mb-3">
             <div class="col-md-3">
                 <label asp-for="EditSubstance.Chemical.ToxValue">Tox Value</label>
-                <input asp-for="EditSubstance.Chemical.ToxValue" class="form-control" readonly="true" />
+                <input asp-for="EditSubstance.Chemical.ToxValue" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.ToxValue" class="text-danger"></span>
             </div>
             <div class="col-md-3">
                 <label asp-for="EditSubstance.Chemical.MCLs">MCLs</label>
-                <input asp-for="EditSubstance.Chemical.MCLs" class="form-control" readonly="true" />
+                <input asp-for="EditSubstance.Chemical.MCLs" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.MCLs" class="text-danger"></span>
             </div>
             <div class="col-md-3">
                 <label asp-for="EditSubstance.Chemical.FinalRc">Final RC</label>
-                <input asp-for="EditSubstance.Chemical.FinalRc" class="form-control" readonly="true" />
+                <input asp-for="EditSubstance.Chemical.FinalRc" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.FinalRc" class="text-danger"></span>
             </div>
             <div class="col-md-3">
                 <label asp-for="EditSubstance.Chemical.RQ">RQ</label>
-                <input asp-for="EditSubstance.Chemical.RQ" class="form-control" readonly="true" />
+                <input asp-for="EditSubstance.Chemical.RQ" class="form-control" readonly />
                 <span asp-validation-for="EditSubstance.Chemical.RQ" class="text-danger"></span>
             </div>
         </div>
-        <p class="text-danger"><small>Edit these values in Chemical List Only</small></p>
+        <p class="text-danger"><small>Edit these values in Chemical Site Maintenance Page Only.</small></p>
+        <a asp-page="/Maintenance/Chemical/Detail" class="btn btn-sm btn-outline-primary" target="_blank">See Chemical List</a>
         <hr />
         <div class="row mt-3">
             <div class="col">

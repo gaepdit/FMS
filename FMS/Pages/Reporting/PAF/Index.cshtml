@@ -14,13 +14,17 @@
 <br />
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 <form method="post">
-    <div class="form-group row">
-        <div class="col-md-2">
-            <button id="ExportButton"
-                    asp-page-handler="ExportButton"
-                    class="btn btn-sm btn-outline-primary mb-1">
-                Export to Excel
-            </button>
+    <div class="container-fluid position-sticky top-0 z-3">
+        <div class="container bg-light-subtle p-3 m-1 rounded-3">
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <button id="ExportButton"
+                            asp-page-handler="ExportButton"
+                            class="btn btn-sm btn-outline-primary mb-1">
+                        Export to Excel
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row justify-content-around">
