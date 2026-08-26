@@ -16,6 +16,7 @@ namespace FMS
         Task<SelectList> ActionTakenSelectListAsync(bool includeInactive = false);
         Task<SelectList> AbandonedInactiveSelectListAsync(bool includeInactive = false);
         Task<SelectList> AllowedActionTakenSelectListAsync(Guid? id, bool includeInactive = false);
+        Task<SelectList> AllowedEventTypesSelectListAsync(Guid? id, bool includeInactive = false);
         Task<SelectList> ChemicalsSelectListAsync(bool includeInactive = false);
         Task<SelectList> ContactTypesSelectListAsync(bool includeInactive = false);
         Task<SelectList> EventTypesSelectListAsync(bool includeInactive = false);
@@ -59,6 +60,8 @@ namespace FMS
             (await _listRepository.GetAbandonedInactiveListAsync(includeInactive)).ToSelectList();
 
         public async Task<SelectList> AllowedActionTakenSelectListAsync(Guid? id, bool includeInactive = false) => (await _listRepository.GetAllowedActionsTakenListAsync(id, includeInactive)).ToSelectList();
+        public async Task<SelectList> AllowedEventTypesSelectListAsync(Guid? id, bool includeInactive = false) => (await _listRepository.GetAllowedEventTypesListAsync(id, includeInactive)).ToSelectList();
+
         public async Task<SelectList> ChemicalsSelectListAsync(bool includeInactive = false) => (await _listRepository.GetChemicalListAsync(includeInactive)).ToSelectList();
 
         public async Task<SelectList> ContactTypesSelectListAsync(bool includeInactive = false) =>

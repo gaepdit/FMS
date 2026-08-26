@@ -12,7 +12,7 @@ namespace FMS.Domain.Repositories
 
         Task<AllowedEventTypeSpec> GetAllowedEventTypeByFacilityTypeAndEventTypeAsync(Guid FacilityTypeId, Guid eventTypeId);
 
-        Task<IList<AllowedEventTypeSpec>> GetAllowedEventTypeListAsync(Guid eventTypeId);
+        Task<IList<AllowedEventTypeSpec>> GetAllowedEventTypeListAsync(Guid facilityTypeId);
 
         Task<Guid> CreateAllowedEventTypeAsync(AllowedEventTypeSpec allowedEventType);
 

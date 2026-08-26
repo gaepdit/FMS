@@ -13,7 +13,6 @@ namespace FMS.Api
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetAllowedActionsAsync([FromRoute] Guid id) => 
             new JsonResult(await _listHelper.AllowedActionTakenSelectListAsync(id));
-            
     }
 }
 

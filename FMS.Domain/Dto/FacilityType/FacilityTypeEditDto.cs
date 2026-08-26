@@ -2,7 +2,7 @@
 
 namespace FMS.Domain.Dto
 {
-    public class FacilityTypeEditDto
+    public class FacilityTypeEditDto 
     {
         public FacilityTypeEditDto()
         {
@@ -11,10 +11,13 @@ namespace FMS.Domain.Dto
 
         public FacilityTypeEditDto(FacilityType facilityType)
         {
+            Id = facilityType.Id;
             Active = facilityType.Active;
             Name = facilityType.Name;
             Description = facilityType.Description;
         }
+
+        public Guid Id { get; set; }
 
         public bool Active { get; set; }
 

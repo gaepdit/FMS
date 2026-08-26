@@ -47,5 +47,6 @@ internal static class Repositories
         .AddScoped<IUserPositionRepository, UserPositionRepository>()
         .AddScoped<IUserProgramRepository, UserProgramRepository>()
         .AddScoped<IDashboardRepository, DashboardRepository>()
-        .AddScoped<IAllowedEventTypeRepository, AllowedEventTypeRepository>();
+        .AddScoped<IAllowedEventTypeRepository, AllowedEventTypeRepository>()
+        .AddScoped<IAllowedEventTypeHelper, AllowedEventTypeHelper>();
 }

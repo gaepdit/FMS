@@ -17,6 +17,14 @@ namespace FMS.Domain.Entities
             Description = newFacilityType.Description;
         }
 
+        public FacilityType(FacilityTypeEditDto facilityType)
+        {
+            Id = facilityType.Id;
+            Name = facilityType.Name;
+            Description = facilityType.Description;
+            Active = facilityType.Active;
+        }
+
         [StringLength(20)]
         public string Name { get; set; }
 

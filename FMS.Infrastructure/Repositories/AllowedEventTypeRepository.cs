@@ -50,12 +50,12 @@ namespace FMS.Infrastructure.Repositories
             return new AllowedEventTypeSpec(allowedEventType);
         }
 
-        public async Task<IList<AllowedEventTypeSpec>> GetAllowedEventTypeListAsync(Guid eventTypeId)
+        public async Task<IList<AllowedEventTypeSpec>> GetAllowedEventTypeListAsync(Guid facilityTypeId)
         {
             return await _context.AllowedEventTypes.AsNoTracking()
                .Include(e => e.EventType)
                .Include(e => e.FacilityType)
-               .Where(e => e.EventTypeId == eventTypeId)
+               .Where(e => e.FacilityTypeId == facilityTypeId)
                .OrderByDescending(e => e.Active)
                .ThenBy(e => e.FacilityType.Name)
                .Select(e => new AllowedEventTypeSpec()
@@ -78,7 +78,7 @@ namespace FMS.Infrastructure.Repositories
             Prevent.NullOrEmpty(allowedEventType.EventTypeId, nameof(allowedEventType.EventTypeId));
             Prevent.NullOrEmpty(allowedEventType.FacilityTypeId, nameof(allowedEventType.FacilityTypeId));
 
-            if (await AllowedEventTypeExistsAsync(allowedEventType.EventTypeId, allowedEventType.FacilityTypeId))
+            if (await AllowedEventTypeExistsAsync(allowedEventType.FacilityTypeId, allowedEventType.EventTypeId))
             {
                 throw new ArgumentException($"Allowed Event Type already exists.");
             }
