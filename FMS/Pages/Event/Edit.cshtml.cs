@@ -2,7 +2,6 @@ using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
-using FMS.Infrastructure.Repositories;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
