@@ -46,7 +46,7 @@ namespace FMS.Pages.Event
 
         public List<Guid> ComplianceOfficerGuidList { get; set; } = null;
 
-        public SelectList EventTypes { get; private set; }
+        public SelectList AllowedEventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
         public SelectList EventContractors { get; private set; }
@@ -185,7 +185,7 @@ namespace FMS.Pages.Event
 
         private async Task PopulateSelectsAsync()
         {
-            EventTypes = await _listHelper.EventTypesSelectListAsync();
+            AllowedEventTypes = await _listHelper.AllowedEventTypesSelectListAsync(Facility.FacilityType.Id);
             AllowedActionsTaken = await _listHelper.AllowedActionTakenSelectListAsync(EditEvent.EventTypeId);
             ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(false, ComplianceOfficerGuidList?.Count > 0 ? ComplianceOfficerGuidList : null);
             EventContractors = await _listHelper.EventContractorListAsync();
