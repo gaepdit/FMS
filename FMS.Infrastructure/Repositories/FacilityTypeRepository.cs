@@ -1,4 +1,5 @@
-﻿using FMS.Domain.Dto;
+﻿using DocumentFormat.OpenXml.Features;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
@@ -27,8 +28,11 @@ namespace FMS.Infrastructure.Repositories
         {
             var facilityType = await _context.FacilityTypes.AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == id);
-
-            return facilityType == null ? null : new FacilityTypeEditDto(facilityType);
+            if (facilityType == null)
+            {
+                return null;
+            }
+            return new FacilityTypeEditDto(facilityType);
         }
 
         public async Task<string> GetFacilityTypeNameAsync(Guid? id)

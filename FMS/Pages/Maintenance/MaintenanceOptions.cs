@@ -26,5 +26,6 @@
         public const string EventContractor = "Event Contractor";
         public const string UserProgram = "User Program";
         public const string UserPosition = "User Position";
+        public const string AllowedEventType = "Allowed Event Types";  
     }
 }
