@@ -52,6 +52,35 @@ namespace FMS.Infrastructure.Repositories
             return UnitCOs;
         }
 
+        public async Task<List<Guid>> GetComplianceOfficerListByProgramAsync(Guid UnitId, bool IncludeInactive = false)
+        {
+             var program = await _context.OrganizationalUnits.AsNoTracking()
+                .Where(e => e.Active || IncludeInactive)
+                .Where(e => e.Id == UnitId)
+                .Select(e => e.UserProgram)
+                .SingleOrDefaultAsync();
+
+            if (program == null) 
+            { 
+                return null;
+            }
+
+            var programUsers = await _context.Users.AsNoTracking()
+                .Where(e => e.Active || IncludeInactive)
+                .Where(e => e.UserProgram.Id == program.Id)
+                .ToListAsync();
+
+            var programCOs = await _context.ComplianceOfficers.AsAsyncEnumerable()
+                .Where(e => programUsers.Any(u => u.GivenName == e.GivenName && u.FamilyName == e.FamilyName))
+                .OrderByDescending(e => e.Active)
+                .ThenBy(e => e.FamilyName)
+                .ThenBy(e => e.GivenName)
+                .Select(e => e.Id)
+                .ToListAsync();
+
+            return programCOs;
+        }
+
         public Task<Guid?> TryCreateComplianceOfficerAsync(ComplianceOfficerCreateDto complianceOfficer)
         {
             Prevent.Null(complianceOfficer, nameof(complianceOfficer));

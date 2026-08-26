@@ -15,10 +15,11 @@ namespace FMS.App.Tests.Users
                 .ToList();
 
             var mockUserService = Substitute.For<IUserService>();
-            mockUserService.GetUsersAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>()).Returns(searchResults);
-            var pageModel = new IndexModel();
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            mockUserService.GetUsersAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<Guid?>(), Arg.Any<Guid?>(), Arg.Any<Guid?>()).Returns(searchResults);
+            var pageModel = new IndexModel(mockSelectListHelper);
 
-            var result = await pageModel.OnGetSearchAsync(mockUserService, name, email, role)
+            var result = await pageModel.OnGetSearchAsync(mockUserService, name, email, role, null, null, null)
                 .ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();
@@ -30,10 +31,11 @@ namespace FMS.App.Tests.Users
         public async Task OnSearch_IfInvalidModel_ReturnPageWithInvalidModelState()
         {
             var mockUserService = Substitute.For<IUserService>();
-            var pageModel = new IndexModel();
+            var mockSelectListHelper = Substitute.For<ISelectListHelper>();
+            var pageModel = new IndexModel(mockSelectListHelper);
             pageModel.ModelState.AddModelError("Error", "Sample error description");
 
-            var result = await pageModel.OnGetSearchAsync(mockUserService, null, null, null)
+            var result = await pageModel.OnGetSearchAsync(mockUserService, null, null, null, null, null, null)
                 .ConfigureAwait(false);
 
             result.Should().BeOfType<PageResult>();

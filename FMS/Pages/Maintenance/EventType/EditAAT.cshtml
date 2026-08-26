@@ -42,12 +42,12 @@
                     <td class="text-nowrap text-center">
                         @if (item.Active)
                         {
-                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-danger btn-sm">Delete from list</button>
+                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-danger btn-sm">Remove from list</button>
                             <a asp-page="EditAATReq" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit Date Requirements</a>
                         }
                         else
                         {
-                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-primary btn-sm">Add to list</button>
+                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-primary btn-sm">Restore to list</button>
                         }
                     </td>
                 </tr>

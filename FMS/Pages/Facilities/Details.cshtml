@@ -1,11 +1,13 @@
 @page "{id:Guid?}"
 @using FMS.Domain.Dto
 @using FMS.Domain.Entities.Users
+@using FMS.Helpers
 @model FMS.Pages.Facilities.DetailsModel
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/formDetails.js"></script>
+    <script src="~/js/tooltip.js"></script>
 }
 
 @{
@@ -333,7 +335,6 @@
     }
 </div>
 
-
 <div class="container-fluid parent-container d-lg-inline-flex">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
@@ -629,7 +630,7 @@
                                                     <div class="accordion-item">
                                                         <h3 class="accordion-header" id="PhoneList1">
                                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#PhoneNumberList+@c.Id" aria-expanded="true" aria-controls="PhoneNumberList+@c.Id">
-                                                                Phone Numbers
+                                                                <b>Phone Numbers</b>
                                                             </button>
                                                         </h3>
                                                         <div id="PhoneNumberList+@c.Id" class="accordion-collapse collapse" aria-labelledby="PhoneList1">
@@ -690,6 +691,19 @@
                                 <a asp-page="/Score/Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Edit Score</a>
                             }
                         </h3>
+                        <button id="Score-help-button"
+                                type="button"
+                                style="border: none; padding: 5px; background: none; border-radius: 5px;"
+                                aria-details="Score-tooltip-text"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                data-bs-html="true"
+                                title="@ScoreToolTipHelper.Score">
+                            <svg class="bi" role="img" aria-label="Score help">
+                                <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                            </svg>
+                            RQSM Score Sheet Calculator
+                        </button>
                         <hr />
                         <div class="row">
                             <div class="container bg-light-subtle m-1">
@@ -728,82 +742,193 @@
                                     </h4>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore)
+                                            <button id="GW-Score-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="GW-Score-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.GWScore">
+                                                <svg class="bi" role="img" aria-label="GW Score help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.GWScore, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.A)
+                                            <button id="A-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="A-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.AReleaseType">
+                                                <svg class="bi" role="img" aria-label="A help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.A, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1)
+                                            <button id="B1-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="B1-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.B1Susceptibility">
+                                                <svg class="bi" role="img" aria-label="B1 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B1, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2)
+                                            <button id="B2-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="B2-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.B2PhysicalState">
+                                                <svg class="bi" role="img" aria-label="B2 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.B2, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.C)
+                                            <button id="C-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="C-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.CContainment">
+                                                <svg class="bi" role="img" aria-label="C help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.C, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Description, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.CASNO, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName)
+                                            <button id="ChemName-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="ChemName-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.ChemicalName">
+                                                <svg class="bi" role="img" aria-label="ChemName help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.ChemName, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.Other, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2)
+                                            <button id="D2-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="D2-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.D2ToxVal">
+                                                <svg class="bi" role="img" aria-label="D2 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D2, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3)
+                                            <button id="D3-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="D3-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.D3Quantity">
+                                                <svg class="bi" role="img" aria-label="D3 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.D3, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5 ">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1)
+                                            <button id="E1-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="E1-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    data-bs-html="true"
+                                                    title="@GWToolTipHelper.E1Exposure">
+                                                <svg class="bi" role="img" aria-label="E1 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E1, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-5">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2)
+                                            <button id="E2-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="E2-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@GWToolTipHelper.E2DistanceToWell">
+                                                <svg class="bi" role="img" aria-label="E2 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-7">
                                             @Html.DisplayFor(model => model.FacilityDetail.GroundwaterScoreDetails.E2, "Number")
                                         </dd>
                                     </dl>
@@ -818,76 +943,175 @@
                                     </h4>
                                     <hr />
                                     <dl class="row">
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue)
+                                            <button id="OSScore-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="OSScore-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.OSScore">
+                                                <svg class="bi" role="img" aria-label="OSScore help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.OnsiteScoreValue, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.A)
+                                            <button id="A-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="A-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.AAccessToSite">
+                                                <svg class="bi" role="img" aria-label="A help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.A, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.B)
+                                            <button id="B-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="B-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.BReleaseType">
+                                                <svg class="bi" role="img" aria-label="B help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.B, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.C)
+                                            <button id="C-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="C-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.CContainment">
+                                                <svg class="bi" role="img" aria-label="C help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.C, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Description)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Description, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.CASNO, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D)
+                                            <button id="ChemName-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="ChemName-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.ChemicalName">
+                                                <svg class="bi" role="img" aria-label="ChemName help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.ChemName1D, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D)
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.Other1D, "StringOrNone")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D2)
+                                            <button id="D2-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="D2-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.D2ToxVal">
+                                                <svg class="bi" role="img" aria-label="D2 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D2, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.D3)
+                                            <button id="D3-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="D3-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.D3Quantity">
+                                                <svg class="bi" role="img" aria-label="D3 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.D3, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E1)
+                                            <button id="E1-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="E1-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.E1DistanceToResidence">
+                                                <svg class="bi" role="img" aria-label="E1 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E1, "Number")
                                         </dd>
-                                        <dt class="col-sm-4">
+                                        <dt class="col-sm-6">
                                             @Html.DisplayNameFor(model => model.FacilityDetail.OnsiteScoreDetails.E2)
+                                            <button id="E2-help-button"
+                                                    type="button"
+                                                    style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                    aria-details="E2-tooltip-text"
+                                                    data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"
+                                                    title="@OnsiteToolTipHelper.E2SensitiveEnvironment">
+                                                <svg class="bi" role="img" aria-label="E2 help">
+                                                    <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                </svg>
+                                            </button>
                                         </dt>
-                                        <dd class="col-sm-8">
+                                        <dd class="col-sm-6">
                                             @Html.DisplayFor(model => model.FacilityDetail.OnsiteScoreDetails.E2, "Number")
                                         </dd>
                                     </dl>
@@ -903,11 +1127,12 @@
                             {
                                 <a asp-page="/Substance/Add" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary">Add Substance</a>
                             }
+                            <a asp-page="/Maintenance/Chemical/Detail" class="btn btn-sm btn-outline-primary" target="_blank">See Chemical List</a>
                         </h3>
                         <hr />
                         <div class="row justify-content-evenly">
                             <table class="table table-sm" aria-label="Substances">
-                                <thead class="thead-light">
+                                <thead class="thead-light position-sticky top-0">
                                     <tr>
                                         <th scope="col">CAS Number</th>
                                         <th scope="col">Substance Name</th>
@@ -927,7 +1152,21 @@
                                     {
                                         <tr class="@(!s.Active || !s.Chemical.Active ? "text-muted table-warning" : "")">
                                             <td>@s.Chemical.CasNo</td>
-                                            <td>@s.Chemical.ChemicalName</td>
+                                            <td>
+                                                @s.Chemical.ChemicalName
+                                                <button id="Chemical-help-button"
+                                                        type="button"
+                                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                                        aria-details="Chemical-tooltip-text"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"
+                                                        data-bs-html="true"
+                                                        title="@(new SubstanceToolTipHelper().GetChemicalHtml(s.Chemical))">
+                                                    <svg class="bi" role="img" aria-label="Chemical help">
+                                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                                    </svg>
+                                                </button>
+                                            </td>
                                             <td>@s.Chemical.CommonName</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Groundwater, "BoolCheckbox")</td>
                                             <td class="text-center">@Html.DisplayFor(m => s.Soil, "BoolCheckbox")</td>
@@ -959,12 +1198,34 @@
                         <dl class="row">
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.ISWQS)
+                                <button id="ISWQS-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="ISWQS-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.ISWQS">
+                                    <svg class="bi" role="img" aria-label="ISWQS help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.ISWQS, "BoolYesNo")
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.FundingSource)
+                                <button id="Funding-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="Funding-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.FundingSource">
+                                    <svg class="bi" role="img" aria-label="Funding help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.FundingSource.DisplayName, "StringOrNone")
@@ -998,6 +1259,17 @@
                             </div>
                             <dt class="col-sm-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SourceStatus)
+                                <button id="SourceStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="SourceStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.SourceStatus">
+                                    <svg class="bi" role="img" aria-label="SourceStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SourceStatus.Name, "StringOrNone")
@@ -1010,6 +1282,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.SoilStatus)
+                                <button id="SoilStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="SoilStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.SoilStatus">
+                                    <svg class="bi" role="img" aria-label="SoilStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.SoilStatus.Name, "StringOrNone")
@@ -1022,6 +1305,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus)
+                                <button id="GroundwaterStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="GroundwaterStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.GroundwaterStatus">
+                                    <svg class="bi" role="img" aria-label="GroundwaterStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GroundwaterStatus.Name, "StringOrNone")
@@ -1034,6 +1328,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.OverallStatus)
+                                <button id="OverallStatus-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="OverallStatus-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.OverallStatus">
+                                    <svg class="bi" role="img" aria-label="OverallStatus help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.OverallStatus.Name, "StringOrNone")
@@ -1046,6 +1351,17 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSScore)
+                                <button id="GAPSScore-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="GAPSScore-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.GAPSModelScore">
+                                    <svg class="bi" role="img" aria-label="GAPSScore help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSScore, "NumberOrNone")
@@ -1064,12 +1380,34 @@
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment)
+                                <button id="GAPSAssessment-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="GAPSAssessment-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.GAPSAssessment">
+                                    <svg class="bi" role="img" aria-label="GAPSAssessment help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.GAPSAssessment.Name)
                             </dd>
                             <dt class="col-sm-3 pt-3">
                                 @Html.DisplayNameFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
+                                <button id="CostEstimate-help-button"
+                                        type="button"
+                                        style="border: none; padding: 0px; background: none; border-radius: 0px;"
+                                        aria-details="CostEstimate-tooltip-text"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="@StatusToolTipHelper.CostEstimate">
+                                    <svg class="bi" role="img" aria-label="CostEstimate help">
+                                        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+                                    </svg>
+                                </button>
                             </dt>
                             <dd class="col-sm-3 pt-3">
                                 @Html.DisplayFor(model => model.FacilityDetail.StatusDetails.CostEstimate)
@@ -1152,7 +1490,7 @@
                     <hr />
                     <div class="row justify-content-evenly">
                         <table class="table table-sm" aria-label="Events">
-                            <thead class="thead-light">
+                            <thead class="thead-light position-sticky top-0">
                                 <tr>
                                     <th scope="col" class="text-nowrap">
                                         <a asp-fragment="TabPages"
@@ -1161,66 +1499,66 @@
                                             Event Type
                                             @Html.DisplayFor(m => m.SortBy, "EventSortArrow",
                                             new { up = EventSort.EventType, down = EventSort.EventTypeDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.ActionTaken ? EventSort.ActionTakenDesc : EventSort.ActionTaken)">
-                                        Action Taken
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ActionTaken, down = EventSort.ActionTakenDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.StartDate ? EventSort.StartDateDesc : EventSort.StartDate)">
-                                        Start Date
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.StartDate, down = EventSort.StartDateDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.DueDate ? EventSort.DueDateDesc : EventSort.DueDate)">
-                                        Due Date
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.DueDate, down = EventSort.DueDateDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.CompletionDate ? EventSort.CompletionDateDesc : EventSort.CompletionDate)">
-                                        Completion Date
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.CompletionDate, down = EventSort.CompletionDateDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.ComplianceOfficer ? EventSort.ComplianceOfficerDesc : EventSort.ComplianceOfficer)">
-                                        Done By
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ComplianceOfficer, down = EventSort.ComplianceOfficerDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap align-content-end">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.EventAmount ? EventSort.EventAmountDesc : EventSort.EventAmount)">
-                                        Event Amount
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventAmount, down = EventSort.EventAmountDesc })
-                                    </a>
-                                </th>
-                                <th scope="col" class="text-nowrap">
-                                    <a asp-fragment="TabPages"
-                                       asp-route-tab="Events"
-                                       asp-route-SortBy="@(Model.SortBy == EventSort.EventContractor ? EventSort.EventContractorDesc : EventSort.EventContractor)">
-                                        Contractor
-                                        @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventContractor, down = EventSort.EventContractorDesc })
-                                    </a>
-                                </th>
-                                <th scope="col">Comment</th>
-                                @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.ActionTaken ? EventSort.ActionTakenDesc : EventSort.ActionTaken)">
+                                            Action Taken
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ActionTaken, down = EventSort.ActionTakenDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.StartDate ? EventSort.StartDateDesc : EventSort.StartDate)">
+                                            Start Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.StartDate, down = EventSort.StartDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.DueDate ? EventSort.DueDateDesc : EventSort.DueDate)">
+                                            Due Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.DueDate, down = EventSort.DueDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.CompletionDate ? EventSort.CompletionDateDesc : EventSort.CompletionDate)">
+                                            Completion Date
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.CompletionDate, down = EventSort.CompletionDateDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.ComplianceOfficer ? EventSort.ComplianceOfficerDesc : EventSort.ComplianceOfficer)">
+                                            Done By
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.ComplianceOfficer, down = EventSort.ComplianceOfficerDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap align-content-end">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.EventAmount ? EventSort.EventAmountDesc : EventSort.EventAmount)">
+                                            Event Amount
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventAmount, down = EventSort.EventAmountDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col" class="text-nowrap">
+                                        <a asp-fragment="TabPages"
+                                           asp-route-tab="Events"
+                                           asp-route-SortBy="@(Model.SortBy == EventSort.EventContractor ? EventSort.EventContractorDesc : EventSort.EventContractor)">
+                                            Contractor
+                                            @Html.DisplayFor(m => m.SortBy, "EventSortArrow", new { up = EventSort.EventContractor, down = EventSort.EventContractorDesc })
+                                        </a>
+                                    </th>
+                                    <th scope="col">Comment</th>
+                                    @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                     {
                                         <th scope="col" class="text-left">Actions</th>
                                     }

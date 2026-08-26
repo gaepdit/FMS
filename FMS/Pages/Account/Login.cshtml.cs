@@ -50,7 +50,7 @@ public class LoginModel(
         if (!configuration.TestUserEnabled()) return BadRequest();
         ReturnUrl = WebUtility.HtmlEncode(returnUrl);
         await authenticationManager.LogInAsTestUserAsync();
-        return LocalRedirectOrHome();
+        return RedirectToPage("/Index");
     }
 
     // The callback method is called by the external login provider.

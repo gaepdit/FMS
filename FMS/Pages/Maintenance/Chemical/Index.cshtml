@@ -45,10 +45,10 @@
 </h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
 
-<div class="container-fluid">
+<div class="container-fluid position-sticky top-0 z-3">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <form class="container my-3">
-            <label class="visually-hidden" for="chemical-list-filter">Filter Chemical list</label>
+            <label for="chemical-list-filter" class="pb-2">Start typing CASNO or Chemical Name to filter the Chemical list. Click Chemical Name to Edit Properties.</label>
             <div class="row row-cols-sm-auto align-items-center">
                 <input id="chemical-list-filter" class="form-control col-md-12 w-auto" placeholder="Filter chemical list" />
                 <span id="filtered-chemical-list-count" class="col-12 text-body-secondary">
@@ -60,11 +60,11 @@
 </div>
 <div class="container-fluid">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <ul id="chemical-list">
+        <ul id="chemical-list" class="list-group">
             @for (var i = 0; i < Model.Chemicals.Count; i++)
             {
                 var item = Model.Chemicals[i];
-                <li class="d-flex align-items-center gap-2">
+                <li class="list-group-item list-group-item-action">
                     @if (item.Active)
                     {
                         <form method="post" class="d-inline">
@@ -79,11 +79,11 @@
                     }
                     <a asp-page="Edit" asp-route-id="@item.Id"
                        class="link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover @(!item.Active ? "link-warning" : "link-primary ")">
-                        @item.CasNo <span class="link-body-emphasis">–</span> @item.ChemicalName
+                        @item.CasNo <span>___</span> @item.ChemicalName
                     </a>
                 </li>
             }
         </ul>
-        <ul id="filtered-chemical-list"></ul>
+        <ul id="filtered-chemical-list" class="list-group"></ul>
     </div>
 </div>

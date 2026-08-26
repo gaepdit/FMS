@@ -20,6 +20,7 @@
         Task<IEnumerable<ListItem>> GetActionsTakenListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetAbandonedInactiveListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetAllowedActionsTakenListAsync(Guid? id, bool includeInactive = false);
+        Task<IEnumerable<ListItem>> GetAllowedEventTypesListAsync(Guid? id, bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetChemicalListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetContactTypesListAsync(bool includeInactive = false);
         Task<IEnumerable<ListItem>> GetEventTypesListAsync(bool includeInactive = false);

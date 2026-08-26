@@ -16,17 +16,20 @@ namespace FMS.Pages.Event
         private readonly IEventRepository _repository;
         private readonly IAllowedActionTakenRepository _allowedActionTakenRepository;
         private readonly IFacilityRepository _facilityRepository;
+        private readonly IComplianceOfficerRepository _complianceOfficerRepository;
         private readonly ISelectListHelper _listHelper;
 
         public AddModel(
             IEventRepository repository,
             IAllowedActionTakenRepository allowedActionTakenRepository,
             IFacilityRepository facilityRepository,
+            IComplianceOfficerRepository complianceOfficerRepository,
             ISelectListHelper listHelper)
         {
             _repository = repository;
             _allowedActionTakenRepository = allowedActionTakenRepository;
             _facilityRepository = facilityRepository;
+            _complianceOfficerRepository = complianceOfficerRepository;
             _listHelper = listHelper;
         }
 
@@ -45,7 +48,9 @@ namespace FMS.Pages.Event
 
         public IList<EventSummaryDto> Events { get; set; }
 
-        public SelectList EventTypes { get; private set; }
+        public List<Guid> ComplianceOfficerGuidList { get; set; } = null;
+
+        public SelectList AllowedEventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
         public SelectList EventContractors { get; private set; }
@@ -67,6 +72,11 @@ namespace FMS.Pages.Event
             SortBy = sortBy;
 
             Facility = await _facilityRepository.GetFacilityAsync(Id);
+
+            if(Facility.OrganizationalUnit != null)
+            {
+                ComplianceOfficerGuidList = await _complianceOfficerRepository.GetComplianceOfficerListByProgramAsync(Facility.OrganizationalUnit.Id);
+            }
 
             Events = await _repository.GetEventsByFacilityIdAsync(Id);
 
@@ -116,9 +126,14 @@ namespace FMS.Pages.Event
             if (!ModelState.IsValid)
             {
                 Facility = await _facilityRepository.GetFacilityAsync(Id);
+                if (Facility.OrganizationalUnit != null)
+                {
+                    ComplianceOfficerGuidList = await _complianceOfficerRepository.GetComplianceOfficerListByProgramAsync(Facility.OrganizationalUnit.Id);
+                }
                 Events = await _repository.GetEventsByFacilityIdAsync(Id);
                 Events = EventSortHelper.SortEvents(Events, SortBy);
                 AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
+                AllowedActionTakenSpec ??= new AllowedActionTakenSpec();
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -131,9 +146,14 @@ namespace FMS.Pages.Event
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while creating the event.");
                 Facility = await _facilityRepository.GetFacilityAsync(Id);
+                if (Facility.OrganizationalUnit != null)
+                {
+                    ComplianceOfficerGuidList = await _complianceOfficerRepository.GetComplianceOfficerListByProgramAsync(Facility.OrganizationalUnit.Id);
+                }
                 Events = await _repository.GetEventsByFacilityIdAsync(Id);
                 Events = EventSortHelper.SortEvents(Events, SortBy);
                 AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync(NewEvent.EventTypeId, NewEvent.ActionTakenId);
+                AllowedActionTakenSpec ??= new AllowedActionTakenSpec();
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -146,9 +166,9 @@ namespace FMS.Pages.Event
 
         private async Task PopulateSelectsAsync()
         {
-            EventTypes = await _listHelper.EventTypesSelectListAsync();
+            AllowedEventTypes = await _listHelper.AllowedEventTypesSelectListAsync(Facility.FacilityType.Id);
             AllowedActionsTaken = await _listHelper.ActionTakenSelectListAsync();
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync();
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(false, ComplianceOfficerGuidList?.Count > 0 ? ComplianceOfficerGuidList : null);
             EventContractors = await _listHelper.EventContractorListAsync();
         }
     }

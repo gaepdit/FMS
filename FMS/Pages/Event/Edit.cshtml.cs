@@ -2,7 +2,6 @@ using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Helpers;
-using FMS.Infrastructure.Repositories;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +16,20 @@ namespace FMS.Pages.Event
         private readonly IEventRepository _repository;
         private readonly IAllowedActionTakenRepository _allowedActionTakenRepository;
         private readonly IFacilityRepository _facilityRepository;
+        private readonly IComplianceOfficerRepository _complianceOfficerRepository;
         private readonly ISelectListHelper _listHelper;
 
         public EditModel(
             IEventRepository repository,
             IAllowedActionTakenRepository allowedActionTakenRepository,
             IFacilityRepository facilityRepository,
+            IComplianceOfficerRepository complianceOfficerRepository,
             ISelectListHelper listHelper)
         {
             _repository = repository;
             _allowedActionTakenRepository = allowedActionTakenRepository;
             _facilityRepository = facilityRepository;
+            _complianceOfficerRepository = complianceOfficerRepository;
             _listHelper = listHelper;
         }
 
@@ -35,13 +37,15 @@ namespace FMS.Pages.Event
         public EventEditDto EditEvent { get; set; }
 
         [BindProperty]
-        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; }    
+        public AllowedActionTakenSpec AllowedActionTakenSpec { get; set; }   
 
         public FacilityDetailDto Facility { get; set; }
 
         public IList<EventSummaryDto> Events { get; set; }
 
-        public SelectList EventTypes { get; private set; }
+        public List<Guid> ComplianceOfficerGuidList { get; set; } = null;
+
+        public SelectList AllowedEventTypes { get; private set; }
         public SelectList AllowedActionsTaken { get; private set; }
         public SelectList ComplianceOfficers { get; private set; }
         public SelectList EventContractors { get; private set; }
@@ -66,9 +70,16 @@ namespace FMS.Pages.Event
             {
                 return NotFound();
             }
+
             AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync((Guid)EditEvent.EventTypeId, (Guid)EditEvent.ActionTakenId);
+            AllowedActionTakenSpec ??= new AllowedActionTakenSpec();
 
             Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
+
+            if (Facility.OrganizationalUnit != null)
+            {
+                ComplianceOfficerGuidList = await _complianceOfficerRepository.GetComplianceOfficerListByProgramAsync(Facility.OrganizationalUnit.Id);
+            }
 
             Events = EventSortHelper.SortEvents(Facility.Events, sortBy);
 
@@ -113,7 +124,10 @@ namespace FMS.Pages.Event
                     return NotFound();
                 }
                 Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
-
+                if (Facility.OrganizationalUnit != null)
+                {
+                    ComplianceOfficerGuidList = await _complianceOfficerRepository.GetComplianceOfficerListByProgramAsync(Facility.OrganizationalUnit.Id);
+                }
                 Events = EventSortHelper.SortEvents(Facility.Events, SortBy);
                 await PopulateSelectsAsync();
                 return Page();
@@ -124,7 +138,17 @@ namespace FMS.Pages.Event
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                EditEvent = await _repository.GetEventByIdAsync(Id);
+                if (EditEvent == null)
+                {
+                    return NotFound();
+                }
+                Facility = await _facilityRepository.GetFacilityAsync(EditEvent.FacilityId);
+                if (Facility.OrganizationalUnit != null)
+                {
+                    ComplianceOfficerGuidList = await _complianceOfficerRepository.GetComplianceOfficerListByProgramAsync(Facility.OrganizationalUnit.Id);
+                }
+                Events = EventSortHelper.SortEvents(Facility.Events, SortBy);
                 await PopulateSelectsAsync();
                 return Page();
             }
@@ -160,9 +184,9 @@ namespace FMS.Pages.Event
 
         private async Task PopulateSelectsAsync()
         {
-            EventTypes = await _listHelper.EventTypesSelectListAsync();
+            AllowedEventTypes = await _listHelper.AllowedEventTypesSelectListAsync(Facility.FacilityType.Id);
             AllowedActionsTaken = await _listHelper.AllowedActionTakenSelectListAsync(EditEvent.EventTypeId);
-            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(true);
+            ComplianceOfficers = await _listHelper.ComplianceOfficersSelectListAsync(false, ComplianceOfficerGuidList?.Count > 0 ? ComplianceOfficerGuidList : null);
             EventContractors = await _listHelper.EventContractorListAsync();
         }
     }

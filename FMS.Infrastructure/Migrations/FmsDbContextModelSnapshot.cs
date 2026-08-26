@@ -128,6 +128,42 @@ namespace FMS.Infrastructure.Migrations
                     b.ToTable("AllowedActionsTaken");
                 });
 
+            modelBuilder.Entity("FMS.Domain.Entities.AllowedEventType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("EventTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FacilityTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("InsertDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("InsertUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdateDateTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UpdateUser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventTypeId");
+
+                    b.HasIndex("FacilityTypeId");
+
+                    b.ToTable("AllowedEventTypes");
+                });
+
             modelBuilder.Entity("FMS.Domain.Entities.BudgetCode", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2932,6 +2968,25 @@ namespace FMS.Infrastructure.Migrations
                     b.Navigation("ActionTaken");
 
                     b.Navigation("EventType");
+                });
+
+            modelBuilder.Entity("FMS.Domain.Entities.AllowedEventType", b =>
+                {
+                    b.HasOne("FMS.Domain.Entities.EventType", "EventType")
+                        .WithMany()
+                        .HasForeignKey("EventTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FMS.Domain.Entities.FacilityType", "FacilityType")
+                        .WithMany()
+                        .HasForeignKey("FacilityTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EventType");
+
+                    b.Navigation("FacilityType");
                 });
 
             modelBuilder.Entity("FMS.Domain.Entities.Contact", b =>

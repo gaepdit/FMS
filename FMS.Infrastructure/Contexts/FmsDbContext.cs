@@ -57,6 +57,7 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<Status> Statuses { get; set; }
         public DbSet<UserProgram> UserPrograms { get; set; }
         public DbSet<UserPosition> UserPositions { get; set; }
+        public DbSet<AllowedEventType> AllowedEventTypes { get; set; }
 
         //public DbSet<UserInfo> UserInfo { get; set; }
 

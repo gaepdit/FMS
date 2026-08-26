@@ -14,6 +14,12 @@ namespace FMS.Domain.Entities
 
         public EventType(EventTypeEditDto eventType)
         {
+            Name = eventType.Name;
+            Active = eventType.Active;
+        }
+
+        public EventType(EventTypeSummaryDto eventType)
+        {
             Id = eventType.Id;
             Name = eventType.Name;
             Active = eventType.Active;

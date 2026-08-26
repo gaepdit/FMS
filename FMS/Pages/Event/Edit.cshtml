@@ -39,30 +39,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Facility.Events)
+                        @foreach (var item in Model.Events)
                         {
-                            if (item.EventType.Name == "HWTF Master Project")
+                            if (item.EventType?.Name == "HWTF Master Project")
                             {
                                 <tr class="@(item.Id == Model.Id ? " table-danger" : "")">
                                     <td class="text-nowrap">
                                         <label>
                                             @Html.RadioButtonFor(m => m.EditEvent.ParentId, item.Id)
-                                            @Html.DisplayFor(m => item.EventType.Name)
+                                            @Html.DisplayFor(m => item.EventType.Name, "StringOrNone")
                                         </label>
                                     </td>
-                                    <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
-                                    <td>@Html.DisplayFor(m => item.StartDate)</td>
-                                    <td>@Html.DisplayFor(m => item.DueDate)</td>
-                                    <td>@Html.DisplayFor(m => item.CompletionDate)</td>
-                                    <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
-                                    <td>@Html.DisplayFor(m => item.EventAmount)</td>
+                                    <td>@Html.DisplayFor(m => item.ActionTaken.Name, "StringOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.StartDate, "DateOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.DueDate, "DateOrNone")</td>
+                                    <td>@Html.DisplayFor(m => item.CompletionDate, "DateOrNone")</td>
+                                    <td>@if(item.ComplianceOfficer != null)
+                                        {
+                                            @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">None</span>
+                                        }   
+                                    </td>
+                                    <td>@Html.DisplayFor(m => item.EventAmount, "DecimalOrNone")</td>
                                     <td>
                                         @if (item.EventContractor != null)
                                         {
-                                            @Html.DisplayFor(m => item.EventContractor.Name)
+                                            @Html.DisplayFor(m => item.EventContractor.Name, "StringOrNone")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">None</span>
                                         }
                                     </td>
-                                    <td>@Html.DisplayFor(m => item.Comment)</td>
+                                    <td>@Html.DisplayFor(m => item.Comment, "StringOrNone")</td>
                                 </tr>
                             }
                         }
@@ -88,7 +100,7 @@
         <div class="row">
             <div class="col">
                 <label asp-for="EditEvent.EventTypeId">Event Type <span class="text-danger">*</span></label>
-                <select asp-for="EditEvent.EventTypeId" asp-items="Model.EventTypes" class="form-select">
+                <select asp-for="EditEvent.EventTypeId" asp-items="Model.AllowedEventTypes" class="form-select">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="EditEvent.EventTypeId" class="text-danger"></span>
@@ -104,26 +116,28 @@
                 <label asp-for="EditEvent.StartDate" class="form-label">
                     Event Start Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.StartDateRequired ? "*" : "")</span>
                 </label>
-                <input asp-for="EditEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
+                <input asp-for="EditEvent.StartDate" class="form-control datepicker flashOutline is-valid" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.StartDate" class="text-danger"></span>
             </div>
             <div class="col">
-                <label asp-for="EditEvent.DueDate" class="form-label">Event Due Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span>
+                <label asp-for="EditEvent.DueDate" class="form-label">
+                    Event Due Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span>
                 </label>
-                <input asp-for="EditEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
+                <input asp-for="EditEvent.DueDate" class="form-control datepicker flashOutline is-valid" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.DueDate" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <label asp-for="EditEvent.CompletionDate" class="form-label">Event Completion Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span>
+                <label asp-for="EditEvent.CompletionDate" class="form-label">
+                    Event Completion Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span>
                 </label>
-                <input asp-for="EditEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
+                <input asp-for="EditEvent.CompletionDate" class="form-control datepicker flashOutline is-valid" type="date" placeholder="" />
                 <span asp-validation-for="EditEvent.CompletionDate" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="EditEvent.ComplianceOfficerId">Done By (CO) <span class="text-danger">*</span></label>
-                <select asp-for="EditEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                <select asp-for="EditEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select flashOutline is-valid">
                     <option value=""></option>
                 </select>
                 <span asp-validation-for="EditEvent.ComplianceOfficerId" class="text-danger"></span>
@@ -148,15 +162,14 @@
                 <span asp-validation-for="EditEvent.Comment" class="text-danger"></span>
             </div>
         </div>
-        <hr />
         <p class="text-danger">* denotes a required field</p>
         <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Save Event</button>
-        <a asp-page="../Facilities/Details" 
-            asp-route-Id="@Model.EditEvent.FacilityId"
-            asp-route-tab="Events"
-            asp-route-sortBy = "@Model.SortBy"
+        <a asp-page="../Facilities/Details"
+           asp-route-Id="@Model.EditEvent.FacilityId"
+           asp-route-tab="Events"
+           asp-route-sortBy="@Model.SortBy"
            asp-fragment="TabPages"
-            class="btn btn-outline-secondary col-md-2">
+           class="btn btn-outline-secondary col-md-2">
             Cancel
         </a>
     </div>
@@ -171,17 +184,17 @@
                     <input type="hidden" asp-for="EditEvent.ParentId" />
                     <input type="hidden" asp-for="EditEvent.Id" />
                     <input type="hidden" asp-for="EditEvent.Active" />
-                    <button id="ExportButton" 
-                        asp-page-handler="ExportButton"
-                        asp-route-sortBy="@Model.SortBy" 
-                        class="btn btn-sm btn-outline-primary mb-1">
+                    <button id="ExportButton"
+                            asp-page-handler="ExportButton"
+                            asp-route-sortBy="@Model.SortBy"
+                            class="btn btn-sm btn-outline-primary mb-1">
                         Excel Export
                     </button>
                 </form>
             </h3>
             <div class="row justify-content-evenly">
                 <table class="table table-sm" aria-label="Events">
-                    <thead class="thead-light">
+                    <thead class="thead-light position-sticky top-0">
                         <tr>
                             <th scope="col" class="text-nowrap">
                                 <a asp-route-SortBy="@(Model.SortBy == EventSort.EventType ? EventSort.EventTypeDesc : EventSort.EventType)">
@@ -239,27 +252,40 @@
                         @for (var i = 0; i < Model.Events.Count; i++)
                         {
                             var item = Model.Events[i];
-                            <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : "") + (item.Id == Model.Id ? " table-danger" : ""))">
+                            <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType?.Name == "HWTF Master Project" ? " table-info" : "") + (item.Id == Model.Id ? " table-danger" : ""))">
                                 <td>
                                     @if (item.ParentId != Guid.Empty)
                                     {
                                         <span class="badge text-bg-info"> ^ </span>
                                     }
-                                    @Html.DisplayFor(m => item.EventType.Name)
+                                    @Html.DisplayFor(m => item.EventType.Name, "StringOrNone")
                                 </td>
-                                <td>@Html.DisplayFor(m => item.ActionTaken.Name)</td>
-                                <td>@Html.DisplayFor(m => item.StartDate)</td>
-                                <td>@Html.DisplayFor(m => item.DueDate)</td>
-                                <td>@Html.DisplayFor(m => item.CompletionDate)</td>
-                                <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name)</td>
-                                <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount)</td>
+                                <td>@Html.DisplayFor(m => item.ActionTaken.Name, "StringOrNone")</td>
+                                <td>@Html.DisplayFor(m => item.StartDate, "DateOrNone")</td>
+                                <td>@Html.DisplayFor(m => item.DueDate, "DateOrNone")</td>
+                                <td>@Html.DisplayFor(m => item.CompletionDate, "DateOrNone")</td>
+                                <td>
+                                    @if (item.ComplianceOfficer != null)
+                                    {
+                                        @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">None</span>
+                                    }
+                                </td>
+                                <td style="text-align:right">@Html.DisplayFor(m => item.EventAmount, "DecimalOrNone")</td>
                                 <td>
                                     @if (item.EventContractor != null)
                                     {
-                                        @Html.DisplayFor(m => item.EventContractor.Name)
+                                        @Html.DisplayFor(m => item.EventContractor.Name, "StringOrNone")
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">None</span>
                                     }
                                 </td>
-                                <td>@Html.DisplayFor(m => item.Comment)</td>
+                                <td>@Html.DisplayFor(m => item.Comment, "StringOrNone")</td>
                             </tr>
                         }
                     </tbody>

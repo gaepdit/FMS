@@ -5,7 +5,7 @@
         public const string BudgetCode = "Budget Code";
         public const string ComplianceOfficer = "Compliance Officer";
         public const string FacilityStatus = "Facility Status";
-        public const string FacilityType = "Type/Environmental Interest";
+        public const string FacilityType = "Facility Type/Environmental Interest";
         public const string OrganizationalUnit = "Organizational Unit";
         public const string ActionTaken = "Action Taken";
         public const string ContactTitle = "Contact Title";
@@ -26,5 +26,6 @@
         public const string EventContractor = "Event Contractor";
         public const string UserProgram = "User Program";
         public const string UserPosition = "User Position";
+        public const string AllowedEventType = "Allowed Event Types";  
     }
 }

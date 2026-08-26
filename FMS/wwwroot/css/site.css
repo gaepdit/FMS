@@ -93,9 +93,9 @@ a:focus {
     text-decoration: underline;
 }
 
-a:focus:not(.btn) {
-    text-decoration: none;
-}
+    a:focus:not(.btn) {
+        text-decoration: none;
+    }
 
 .btn-primary:focus {
     color: #fff;
@@ -159,7 +159,7 @@ a:focus:not(.btn) {
 
 .btn-outline-info {
     color: #fff;
-    background-color:  #17a2b8; /*#5BAFD1;*/ /*#507033;*/
+    background-color: #17a2b8; /*#5BAFD1;*/ /*#507033;*/
 }
 
 .btn-outline-warning:focus {
@@ -208,17 +208,17 @@ body {
     color: #008000;
 }
 
-.footer a:hover, .footer a:focus {
-    color: #106717;
-}
+    .footer a:hover, .footer a:focus {
+        color: #106717;
+    }
 
 .footer .bg-brand a {
     color: #ffff00;
 }
 
-.footer .bg-brand a:hover, .footer .bg-brand a:focus {
-    color: #d9d900;
-}
+    .footer .bg-brand a:hover, .footer .bg-brand a:focus {
+        color: #d9d900;
+    }
 
 /* Skip to content link
 -------------------------------------------------- */
@@ -234,15 +234,15 @@ body {
     z-index: 100;
 }
 
-.skipnav:focus {
-    background: #fff;
-    left: 0;
-    outline: 0;
-    box-shadow: 0 0 3px #1B98CA, 0 0 7px #1B98CA;
-    position: absolute;
-    top: 0;
-    transition: all 0.2s ease-in-out;
-}
+    .skipnav:focus {
+        background: #fff;
+        left: 0;
+        outline: 0;
+        box-shadow: 0 0 3px #1B98CA, 0 0 7px #1B98CA;
+        position: absolute;
+        top: 0;
+        transition: all 0.2s ease-in-out;
+    }
 
 /* Button with image 
 -------------------------------------------------- */
@@ -250,9 +250,9 @@ body {
     line-height: 1;
 }
 
-.btn-img img {
-    height: 35px;
-}
+    .btn-img img {
+        height: 35px;
+    }
 
 .btn-img-bg {
     background: white;
@@ -344,17 +344,17 @@ a[target]::after {
     border-left: 0.25rem solid var(--callout-border, var(--bs-gray-400));
 }
 
-.callout > :last-child {
-    margin-bottom: 0;
-}
+    .callout > :last-child {
+        margin-bottom: 0;
+    }
 
-.callout + .callout {
-    margin-top: -.25rem;
-}
+    .callout + .callout {
+        margin-top: -.25rem;
+    }
 
-.callout .highlight {
-    background-color: rgba(0, 0, 0, 0.05);
-}
+    .callout .highlight {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
 
 .callout-info {
     --callout-color: var(--bs-info-text-emphasis);
@@ -384,9 +384,9 @@ a[target]::after {
         border: 1px solid;
     }
 
-    .banner-test-site::after {
-        content: "—Not for public distribution";
-    }
+        .banner-test-site::after {
+            content: "—Not for public distribution";
+        }
 }
 /* Chemical select box
 -------------------------------------------------- */
@@ -408,3 +408,63 @@ a[target]::after {
     padding: 5px 10px;
 }
 
+/*Bootstrap Accordion colors*/
+/* Apply directly to your custom accordion or override globally */
+.accordion {
+    --bs-accordion-bg: #c8f8d5; /* Body background */
+    --bs-accordion-color: #212529; /* Body text color */
+    --bs-accordion-btn-bg: #c8f8d5; /* Collapsed button background */
+    --bs-accordion-btn-color: #212529; /* Collapsed button text */
+    --bs-accordion-active-bg: #c8f8d5; /* Expanded button background */
+    --bs-accordion-active-color: #c8f8d5; /* Expanded button text */
+    --bs-accordion-border-color: #212529; /* Border color */
+}
+
+[data-bs-theme="dark"] .accordion {
+    --bs-accordion-bg: #c8f8d5; /* Body background */
+    --bs-accordion-color: #c8f8d5; /* Body text color */
+    --bs-accordion-btn-bg: #013901; /* Collapsed button background */
+    --bs-accordion-btn-color: #c8f8d5; /* Collapsed button text */
+    --bs-accordion-active-bg: #c8f8d5; /* Expanded button background */
+    --bs-accordion-active-color: #013901; /* Expanded button text */
+    --bs-accordion-border-color: #c8f8d5; /* Border color */
+}
+
+/*1. Header Button when EXPANDED (Active)*/
+.accordion-button:not(.collapsed) {
+    background-color: #c8f8d5; /*Custom active background */
+    color: #013901; /*Custom active text color */
+    border-color: #fff;
+}
+
+/*1. Header Button when EXPANDED (Active)*/
+[data-bs-theme="dark"] .accordion-button:not(.collapsed) {
+    background-color: #013901; /*Custom active background */
+    color: #c8f8d5; /*Custom active text color */
+}
+
+/*2. Remove or change the blue focus halo outline*/
+.accordion-button.focus {
+    box-shadow: initial;
+    border-color: #013901;
+}
+
+/*3. The inner body background */
+.accordion-body {
+    background-color: #c8f8d5;
+}
+
+/*3. The inner body background */
+[data-bs-theme="dark"] .accordion-body {
+    background-color: #013901;
+}
+
+/* Valid form control styles for flashing boxes*/
+.form-control.is-valid, .was-validated .form-control:valid {
+    border-color: var(--bs-form-valid-border-color);
+    padding-right: calc(1.5em + .75rem);
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}

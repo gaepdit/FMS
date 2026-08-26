@@ -115,28 +115,37 @@ namespace FMS.Infrastructure.Services
         }
 
         // User search
-        private Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter) =>
-            _context.Users.AsNoTracking()
+        private async Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, Guid? userProgramId, Guid? userUnitId, Guid? userPositionId)
+        {
+            return (await _context.Users.ToListAsync())
                 .Where(m => string.IsNullOrEmpty(nameFilter)
-                    || m.GivenName.Contains(nameFilter)
-                    || m.FamilyName.Contains(nameFilter))
-                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email == emailFilter)
+                    || m.GivenName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase)
+                    || m.FamilyName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase))
+                .Where(m => userProgramId == null || m.UserProgram?.Id == userProgramId)
+                .Where(m => userUnitId == null || m.UserUnit?.Id == userUnitId)
+                .Where(m => userPositionId == null || m.UserPosition?.Id == userPositionId)
+                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email.Contains(emailFilter, StringComparison.InvariantCultureIgnoreCase))
                 .OrderBy(m => m.FamilyName).ThenBy(m => m.GivenName)
                 .Select(e => new UserView(e))
-                .ToListAsync();
+                .ToList();
 
-        public async Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role)
+        }
+
+        public async Task<List<UserView>> GetUsersAsync(string nameFilter, string emailFilter, string role, Guid? userProgramId, Guid? userUnitId, Guid? userPositionId)
         {
             if (string.IsNullOrEmpty(role))
             {
-                return await GetUsersAsync(nameFilter, emailFilter);
+                return await GetUsersAsync(nameFilter, emailFilter, userProgramId, userUnitId, userPositionId);
             }
 
             return (await _userManager.GetUsersInRoleAsync(role))
                 .Where(m => string.IsNullOrEmpty(nameFilter)
-                    || m.GivenName.Contains(nameFilter)
-                    || m.FamilyName.Contains(nameFilter))
-                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email == emailFilter)
+                    || m.GivenName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase)
+                    || m.FamilyName.Contains(nameFilter, StringComparison.InvariantCultureIgnoreCase))
+                .Where(m => userProgramId == null || m.UserProgram?.Id == userProgramId)
+                .Where(m => userUnitId == null || m.UserUnit?.Id == userUnitId)
+                .Where(m => userPositionId == null || m.UserPosition?.Id == userPositionId)
+                .Where(m => string.IsNullOrEmpty(emailFilter) || m.Email.Contains(emailFilter, StringComparison.InvariantCultureIgnoreCase))
                 .OrderBy(m => m.FamilyName).ThenBy(m => m.GivenName)
                 .Select(e => new UserView(e))
                 .ToList();
@@ -156,7 +165,7 @@ namespace FMS.Infrastructure.Services
         {
             if (UnitId == Guid.Empty || UnitId == null)
             {
-                return await GetUsersAsync(null, null);
+                return await GetUsersAsync(null, null, null, null, null, null);
             }
             return await GetUsersInUnitAsync(UnitId.Value);
         }

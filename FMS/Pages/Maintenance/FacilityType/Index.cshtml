@@ -18,11 +18,12 @@
 
 <form method="post">
     <table class="table" aria-label="List of facility types">
-        <thead class="thead-light">
+        <thead class="thead-light position-sticky top-0">
             <tr>
-                <th scope="col" class="col-md-4">Code</th>
-                <th scope="col" class="col-md-6">Description</th>
+                <th scope="col" class="col-md-3">Code</th>
+                <th scope="col" class="col-md-4">Description</th>
                 <th scope="col" class="col-md-2">Actions</th>
+                <th scope="col" class="col-md-3">Edit Allowed Event Types</th>
             </tr>
         </thead>
         <tbody>
@@ -38,12 +39,15 @@
                         <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
                         @if (item.Active)
                         {
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
+                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove</button>
                         }
                         else
                         {
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
+                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-info btn-sm">Restore</button>
                         }
+                    </td>
+                    <td class="text-nowrap">
+                        <a asp-page="EditAET" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit Allowed Event Types</a>
                     </td>
                 </tr>
             }
