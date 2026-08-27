@@ -1517,26 +1517,3 @@
         </div>
     }
 </div>
-@if (Model.CurrentUser.UserPosition.Name == "PM2" && Model.Roles.Contains(UserRoles.SiteMaintenance))
-{
-    <div class="container-fluid bg-light-subtle p-1 m-1 rounded-3">
-        <div class="accordion accordion" id="Current-Deleted-Items">
-            <div class="accordion-item">
-                <h3 class="accordion-header" id="Data-Maintenance">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#DataMaintenance" aria-expanded="true" aria-controls="DataMaintenance">
-                        <h4>Data Maintenance</h4>
-                    </button>
-                </h3>
-                <div id="DataMaintenance" class="accordion-collapse collapse" aria-labelledby="Data-Maintenance">
-                    <div class="accordion-body">
-                        <div class="container-fluid bg-light-subtle ps-1 m-0 rounded-0">
-                            <div class="row">
-                                <p>Data that is inactive and may be deleted</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
