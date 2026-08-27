@@ -613,15 +613,23 @@
                                             </td>
                                             <td><a href=@c.GetMailTo()>@c.Email</a></td>
                                             <td class="text-center">@Html.DisplayFor(m => c.Active, "BoolYesNo")</td>
-                                            @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
-                                            {
-                                                <td>
+                                            <td>
+                                                @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                                {
                                                     @if (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))
                                                     {
                                                         <a asp-page="/Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                     }
-                                                </td>
-                                            }
+                                                }
+                                                @if (Model.FacilityDetail.Active && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                                {
+                                                    <a asp-page="/Contact/Delete"
+                                                       asp-route-id="@c.Id"
+                                                       class="btn btn-sm btn-outline-danger">
+                                                        Delete
+                                                    </a>
+                                                }
+                                            </td>
                                         </tr>
 
                                         <tr class="offset-md-2">
@@ -660,12 +668,20 @@
                                                                                     <td>@p.PhoneType</td>
                                                                                     <td><a href=@p.GetTelTo()>@p.Number</a></td>
                                                                                     <td class="text-center">@Html.DisplayFor(m => p.Active, "BoolYesNo")</td>
-                                                                                    @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
-                                                                                    {
-                                                                                        <td class="text-center">
+                                                                                    <td class="text-center">
+                                                                                        @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                                                                        {
                                                                                             <a asp-page="/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                                        </td>
-                                                                                    }
+                                                                                        }
+                                                                                        @if (Model.FacilityDetail.Active && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                                                                        {
+                                                                                            <a asp-page="/Phone/Delete"
+                                                                                               asp-route-id="@p.Id"
+                                                                                               class="btn btn-sm btn-outline-danger">
+                                                                                                Delete
+                                                                                            </a>
+                                                                                        }
+                                                                                    </td>
                                                                                 </tr>
                                                                             }
                                                                         </tbody>
