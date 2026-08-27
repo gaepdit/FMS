@@ -2,7 +2,7 @@
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
 using FMS.Helpers;
-using FMS.Infrastructure.Services;
+using Microsoft.Extensions.Configuration;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,11 +21,11 @@ namespace FMS.Pages.Facilities
 
         private readonly IFacilityRepository _repository;
         private readonly IEventRepository _eventRepository;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         public DetailsModel(IFacilityRepository repository,
             IEventRepository eventRepository,
-            Microsoft.Extensions.Configuration.IConfiguration configuration,
+            IConfiguration configuration,
             IUserService userService)
         {
             _repository = repository;

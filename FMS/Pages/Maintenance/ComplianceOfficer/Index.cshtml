@@ -1,5 +1,6 @@
 ﻿@page
 @using FMS.Pages.Maintenance
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Maintenance.ComplianceOfficer.IndexModel
 
 @section Scripts {
@@ -21,9 +22,13 @@
     <table class="table" aria-label="List of compliance officers">
         <thead class="thead-light position-sticky top-0">
             <tr>
-                <th scope="col" class="col-md-4">Name</th>
-                <th scope="col" class="col-md-4">Email</th>
-                <th scope="col" class="col-md-4">Actions</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+                @if ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                {
+                    <th scope="col">Delete</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -45,6 +50,16 @@
                             <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
                         }
                     </td>
+                    @if ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                    {
+                        <td class="text-nowrap">
+                            <a asp-page="Delete"
+                               asp-route-id="@item.Id"
+                               class="btn btn-sm btn-outline-danger">
+                                Delete
+                            </a>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
