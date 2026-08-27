@@ -1,6 +1,8 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
+using FMS.Domain.Services;
 using FMS.Helpers;
+using FMS.Infrastructure.Services;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,14 +22,19 @@ namespace FMS.Pages.Facilities
         private readonly IFacilityRepository _repository;
         private readonly IEventRepository _eventRepository;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        private readonly IUserService _userService;
         public DetailsModel(IFacilityRepository repository,
             IEventRepository eventRepository,
-            Microsoft.Extensions.Configuration.IConfiguration configuration)
+            Microsoft.Extensions.Configuration.IConfiguration configuration,
+            IUserService userService)
         {
             _repository = repository;
             _eventRepository = eventRepository;
             _configuration = configuration;
+            _userService = userService;
         }
+
+        public UserView CurrentUser { get; private set; }
 
         public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
 
@@ -116,6 +123,9 @@ namespace FMS.Pages.Facilities
                     RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
                 }
             }
+
+            CurrentUser = await _userService.GetCurrentUserAsync()
+                ?? throw new InvalidOperationException("Current user not found", new Exception("User retrieval failed"));
 
             ActiveTab = tab ?? "HSIProperties";
             SortBy = sortBy;
