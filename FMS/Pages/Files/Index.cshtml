@@ -39,44 +39,45 @@
 
     @if (Model.FileList.CurrentCount > 0)
     {
-        <table class="table bg-light-subtle" aria-label="File search results">
-            <caption class="container border-top py-3">
-                <div class="row">
-                    <div class="col-md"></div>
-                    <div class="col-md">
-                        <partial name="_PaginationNav" model="(Model.FileList, Model.Spec.AsRouteValues)" />
+        <div class="container bg-light-subtle py-3 rounded-3">
+            <table class="table" aria-label="File search results">
+                <caption class="container py-3">
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md">
+                            <partial name="_PaginationNav" model="(Model.FileList, Model.Spec.AsRouteValues)" />
+                        </div>
+                        <div class="col-md text-md-end small">
+                            <partial name="_PaginatedResultsCount" model="Model.FileList" />
+                        </div>
                     </div>
-                    <div class="col-md text-md-end small">
-                        <partial name="_PaginatedResultsCount" model="Model.FileList" />
-                    </div>
-                </div>
-            </caption>
-            <thead class="thead-light position-sticky top-0">
-                <tr>
-                    <th scope="col">File Label</th>
-                    <th scope="col">Cabinets</th>
-                    <th scope="col">Facilities</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (FileDetailDto item in Model.FileList.Items)
-                {
-                    <tr class="@(!item.Active ? "table-secondary" : "")">
-                        <td>
-                            <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                                @Html.DisplayFor(m => item.FileLabel)
-                            </a>
-                            @Html.DisplayFor(m => item.Active, "BoolDeleted")
-                        </td>
-                        <td>@item.Cabinets.ConcatNonEmpty(", ")</td>
-                        <td>
-                            @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
-                        </td>
+                </caption>
+                <thead class="thead-light position-sticky top-0">
+                    <tr>
+                        <th scope="col">File Label</th>
+                        <th scope="col">Cabinets</th>
+                        <th scope="col">Facilities</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-
+                </thead>
+                <tbody>
+                    @foreach (FileDetailDto item in Model.FileList.Items)
+                    {
+                        <tr class="@(!item.Active ? "table-secondary" : "")">
+                            <td>
+                                <a asp-page="Details" asp-route-id="@item.FileLabel" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                                    @Html.DisplayFor(m => item.FileLabel)
+                                </a>
+                                @Html.DisplayFor(m => item.Active, "BoolDeleted")
+                            </td>
+                            <td>@item.Cabinets.ConcatNonEmpty(", ")</td>
+                            <td>
+                                @item.Facilities.Select(e => e.FacilityNumber).ConcatNonEmpty(", ")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <partial name="_PaginationNav" model="(Model.FileList, Model.Spec.AsRouteValues)" />
     }
     else

@@ -35,7 +35,7 @@
 <hr />
 <partial name="_AlertPartial" for="Message" id="alert" />
 
-<div class="container-fluid parent-container d-lg-inline-flex">
+<div class="container-fluid parent-container d-lg-inline-flex m-0 p-0">
     @if (Model.FacilityDetail.FacilityType.Name != "RN")
     {
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
@@ -335,7 +335,7 @@
     }
 </div>
 
-<div class="container-fluid parent-container d-lg-inline-flex">
+<div class="container-fluid parent-container d-lg-inline-flex m-0 p-0">
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <a class="btn btn-sm btn-primary" target="_blank" href=@Model.MapLink>Google Map</a>
         <a asp-page="/Facilities/Map" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-primary" target="_blank">Location Search</a>
@@ -380,32 +380,32 @@
 
 @if (Model.FacilityDetail.FacilityType.Name == "HSI" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")))
 {
-    <div class="container-fluid parent-container d-lg-inline-flex" id="TabPages">
+    <div class="container-fluid parent-container d-lg-inline-flex m-0 p-0" id="TabPages">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <nav class="navbar navbar-expand-sm">
                 <ul class="nav nav-tabs active" id="HSINavBar">
                     @if (Model.FacilityDetail.FacilityType.Name == "HSI")
                     {
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "HSIProperties" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#HSIProperties" type="text/html" role="tab" aria-controls="HSIProperties" aria-selected="@(Model.FacilityDetail.FacilityType.Name == "VRP" ? "false" : "true")" href="#HSIProperties">HSI Properties</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "Location" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Location" type="text/html" role="tab" aria-controls="Location" aria-selected="false" href="#Location">Location</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "Contacts" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Contacts" type="text/html" role="tab" aria-controls="Contacts" aria-selected="false" href="#Contacts">Contacts</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "Score" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Score" type="text/html" role="tab" aria-controls="Score" aria-selected="false" href="#Score">Score</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "Substances" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Substances" type="text/html" role="tab" aria-controls="Substances" aria-selected="false" href="#Substances">Substances</a>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                             <a class="nav-link @(Model.ActiveTab == "Status" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
                         </li>
                     }
-                    <li class="nav-item" role="presentation">
+                    <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                         <a class="nav-link @(Model.ActiveTab == "Events" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Events" type="text/html" role="tab" aria-controls="Events" aria-selected="@((((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "true" : "false")" href="#Events">Events</a>
                     </li>
                 </ul>
@@ -1637,7 +1637,7 @@
 
 @if (Model.FacilityDetail.FacilityType.Name != "RN")
 {
-    <div class="container-fluid parent-container d-lg-inline-flex">
+    <div class="container-fluid parent-container d-lg-inline-flex m-0 p-0">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <div class="accordion accordion-flush" id="retention-records">
                 <div class="accordion-item">

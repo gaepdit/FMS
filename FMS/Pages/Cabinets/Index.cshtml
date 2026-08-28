@@ -12,47 +12,48 @@
         <a class="btn btn-sm btn-outline-primary" asp-page="Add">Create New Cabinet</a>
     }
 </h1>
+<div class="container bg-light-subtle py-3 rounded-3">
+    <p>
+        <em>File Label Range</em> is used for displaying the storage cabinets used for each File or Facility. The range is
+        from the First File Label for the cabinet up to (but not including) the First File Label for the next cabinet.
+    </p>
 
-<p>
-    <em>File Label Range</em> is used for displaying the storage cabinets used for each File or Facility. The range is 
-    from the First File Label for the cabinet up to (but not including) the First File Label for the next cabinet.
-</p>
-
-@if (Model.Cabinets != null && Model.Cabinets.Count > 0)
-{
-    <table class="table" aria-label="List of cabinets">
-        <thead class="thead-light position-sticky top-0">
-        <tr>
-            <th scope="col">Cabinet</th>
-            <th scope="col">File Label Range</th>
-            @if (User.IsInRole(UserRoles.SiteMaintenance))
-            {
-                <th scope="col" class="text-center">Actions</th>
-            }
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in Model.Cabinets)
-        {
-            <tr>
-                <td>
-                    <a asp-page="Details" asp-route-id="@item.Name" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
-                        @item.Name @(item.Active ? "" : "(Deleted)")
-                    </a>
-                </td>
-                <td>@item.FirstFileLabel — (@item.LastFileLabel)</td>
-                @if (User.IsInRole(UserRoles.SiteMaintenance))
+    @if (Model.Cabinets != null && Model.Cabinets.Count > 0)
+    {
+        <table class="table" aria-label="List of cabinets">
+            <thead class="thead-light position-sticky top-0">
+                <tr>
+                    <th scope="col">Cabinet</th>
+                    <th scope="col">File Label Range</th>
+                    @if (User.IsInRole(UserRoles.SiteMaintenance))
+                    {
+                        <th scope="col" class="text-center">Actions</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Cabinets)
                 {
-                    <td class="text-center">
-                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                    </td>
+                    <tr>
+                        <td>
+                            <a asp-page="Details" asp-route-id="@item.Name" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
+                                @item.Name @(item.Active ? "" : "(Deleted)")
+                            </a>
+                        </td>
+                        <td>@item.FirstFileLabel — (@item.LastFileLabel)</td>
+                        @if (User.IsInRole(UserRoles.SiteMaintenance))
+                        {
+                            <td class="text-center">
+                                <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                            </td>
+                        }
+                    </tr>
                 }
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <p class="lead text-info">No cabinets found.</p>
-}
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="lead text-info">No cabinets found.</p>
+    }
+</div>
