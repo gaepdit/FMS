@@ -4,11 +4,14 @@
 @{
     ViewData["Title"] = $"Assignment List Reports";
 }
-<h1>@ViewData["Title"]</h1>
+
 <a asp-page="../Index">← Back to Reports</a>
-<hr />
-<p class="lead">Select a Report from the list</p>
-<div class="p-3 rounded-3 bg-light-subtle">
+<div class="container bg-light-subtle py-3 rounded-3">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <p class="lead">Select a Report from the list</p>
+    <hr />
     <form method="post">
         <div class="row">
             <div class="col-md-4">
