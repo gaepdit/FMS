@@ -20,8 +20,14 @@ namespace FMS.Domain.Services
         public string GivenName { get; }
         public string FamilyName { get; }
         public string Email { get; }
+
+        [Display(Name = "Program")]
         public UserProgram UserProgram { get; set; }
+
+        [Display(Name = "Unit")]
         public OrganizationalUnit UserUnit { get; set; }
+
+        [Display(Name = "Position")]
         public UserPosition UserPosition { get; set; }
 
         public string DisplayName =>

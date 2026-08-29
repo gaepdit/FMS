@@ -23,12 +23,12 @@
             <table class="table" aria-label="List of compliance officers">
                 <thead class="thead-light position-sticky top-0">
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" class="col text-center">Actions</th>
-                        @if ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                        <th scope="col" class="col-4">Name</th>
+                        <th scope="col" class="col-5">Email</th>
+                        <th scope="col" class="col-2 text-center">Actions</th>
+                        @if ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.SiteMaintenance) || User.IsInRole(UserRoles.UserMaintenance)))
                         {
-                            <th scope="col" class="col text-center">Delete</th>
+                            <th scope="col" class="col-1 text-center">Delete</th>
                         }
                     </tr>
                 </thead>
@@ -51,7 +51,7 @@
                                     <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
                                 }
                             </td>
-                            @if ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                            @if (((Model.CurrentUser.UserPosition.Name.Equals("PM1") && item.UserInfo?.UserUnit == Model.CurrentUser.UserUnit) || (Model.CurrentUser.UserPosition.Name.Equals("PM2") && (item.UserInfo?.UserProgram == Model.CurrentUser.UserProgram || !item.Active))) && (User.IsInRole(UserRoles.SiteMaintenance) || User.IsInRole(UserRoles.UserMaintenance)))
                             {
                                 <td class="text-nowrap text-center">
                                     <a asp-page="Delete"
@@ -59,6 +59,12 @@
                                        class="btn btn-sm btn-outline-danger">
                                         Delete
                                     </a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-nowrap text-center">
+                                    <span class="text-muted"></span>
                                 </td>
                             }
                         </tr>

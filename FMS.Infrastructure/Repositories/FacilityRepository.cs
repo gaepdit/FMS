@@ -1,7 +1,5 @@
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using Dapper;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Dto.PaginatedList;
@@ -10,6 +8,9 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -42,7 +43,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
 
-            if (facility.FacilityType.Name == "HSI")
+            if (facility.FacilityType.Name == "HSI" || (facility.FacilityType.Name == "VRP" && facility.FacilityStatus.Name == "Event Tracking On"))
             {
                 facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
                     .AsNoTracking()
@@ -308,6 +309,35 @@ namespace FMS.Infrastructure.Repositories
 
             return items;
         }
+
+        public async Task<List<FacilityDetailDto>> GetFacilityListForCoDeleteAsync(Guid complianceOfficerId)
+        {
+            var facilities = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.BudgetCode)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.ComplianceOfficer)
+                .Include(e => e.Events)
+                .ThenInclude(e => e.ComplianceOfficer)
+                .Where(e => e.ComplianceOfficerId == complianceOfficerId || e.HsrpFacilityProperties.ComplianceOfficerId == complianceOfficerId || e.Events.Any(ev => ev.ComplianceOfficerId == complianceOfficerId))
+                .OrderBy(e => e.Name)
+                .ToListAsync();
+
+            var facilityDetails = new List<FacilityDetailDto>();
+
+            foreach (var facility in facilities)
+            {
+                var facilityDetail = new FacilityDetailDto(facility);
+                facilityDetails.Add(facilityDetail);
+            }
+
+            return facilityDetails;
+        }
+
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {

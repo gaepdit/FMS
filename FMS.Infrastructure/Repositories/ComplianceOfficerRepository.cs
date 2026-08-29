@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
+using FMS.Domain.Services;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,6 @@ namespace FMS.Infrastructure.Repositories
     public class ComplianceOfficerRepository : IComplianceOfficerRepository
     {
         private readonly FmsDbContext _context;
-
         public ComplianceOfficerRepository(FmsDbContext context) => _context = context;
 
         public Task<bool> ComplianceOfficerIdExistsAsync(Guid id) =>
@@ -24,14 +24,54 @@ namespace FMS.Infrastructure.Repositories
             return complianceOfficer == null ? null : new ComplianceOfficerDetailDto(complianceOfficer);
         }
 
+        public async Task<ComplianceOfficerSummaryDto> GetComplianceOfficerSummaryAsync(Guid id)
+        {
+            var complianceOfficer = await _context.ComplianceOfficers.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (complianceOfficer == null)
+            {
+                return null;
+            }
+
+            var returnCo = new ComplianceOfficerSummaryDto(complianceOfficer);
+
+            var userCo = await _context.Users.AsNoTracking()
+                    .Where(e => e.GivenName == complianceOfficer.GivenName && e.FamilyName == complianceOfficer.FamilyName)
+                    .Select(e => new UserView(e))
+                    .FirstOrDefaultAsync();
+
+            if(userCo == null)
+            {
+                return null;
+            }
+
+            returnCo.UserInfo = userCo;
+
+            return returnCo;
+        }
+
         public async Task<IReadOnlyList<ComplianceOfficerSummaryDto>> GetComplianceOfficerListAsync()
         {
-            return await _context.ComplianceOfficers.AsNoTracking()
+            var co = await _context.ComplianceOfficers.AsNoTracking()
                 .OrderByDescending(e => e.Active)
                 .ThenBy(e => e.FamilyName)
                 .ThenBy(e => e.GivenName)
                 .Select(e => new ComplianceOfficerSummaryDto(e))
                 .ToListAsync();
+
+            var userCo = _context.Users.AsEnumerable()
+                .Where(e => e.Active)
+                .Where(e => co.Any(c => c.GivenName == e.GivenName && c.FamilyName == e.FamilyName))
+                .Select(e => new UserView(e))
+                .ToList();
+
+            foreach (var item in co)
+            {
+                item.UserInfo = userCo.FirstOrDefault(u => u.GivenName == item.GivenName && u.FamilyName == item.FamilyName);
+            }
+
+            return co;
         }
 
         public async Task<List<Guid>> GetComplianceOfficerListByUnitAsync(Guid UnitId)
@@ -54,14 +94,14 @@ namespace FMS.Infrastructure.Repositories
 
         public async Task<List<Guid>> GetComplianceOfficerListByProgramAsync(Guid UnitId, bool IncludeInactive = false)
         {
-             var program = await _context.OrganizationalUnits.AsNoTracking()
-                .Where(e => e.Active || IncludeInactive)
-                .Where(e => e.Id == UnitId)
-                .Select(e => e.UserProgram)
-                .SingleOrDefaultAsync();
+            var program = await _context.OrganizationalUnits.AsNoTracking()
+               .Where(e => e.Active || IncludeInactive)
+               .Where(e => e.Id == UnitId)
+               .Select(e => e.UserProgram)
+               .SingleOrDefaultAsync();
 
-            if (program == null) 
-            { 
+            if (program == null)
+            {
                 return null;
             }
 
@@ -115,6 +155,17 @@ namespace FMS.Infrastructure.Repositories
 
             complianceOfficer.Active = active;
 
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteComplianceOfficerAsync(Guid id)
+        {
+            var complianceOfficer = await _context.ComplianceOfficers.FindAsync(id);
+            if (complianceOfficer == null)
+            {
+                throw new ArgumentException("Compliance Officer ID not found");
+            }
+            _context.ComplianceOfficers.Remove(complianceOfficer);
             await _context.SaveChangesAsync();
         }
 

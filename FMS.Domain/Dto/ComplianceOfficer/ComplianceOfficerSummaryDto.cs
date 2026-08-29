@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Entities;
+using FMS.Domain.Services;
 
 namespace FMS.Domain.Dto
 {
@@ -19,6 +20,12 @@ namespace FMS.Domain.Dto
         public string FamilyName { get; }
         public string Email { get; }
 
+        public UserView UserInfo { get; set; }
+
+        [Display(Name = "Name")]
         public string Name => FamilyName + ", " + GivenName;
+
+        [Display(Name = "Name")]
+        public string DisplayName => GivenName + " " + FamilyName;
     }
 }
