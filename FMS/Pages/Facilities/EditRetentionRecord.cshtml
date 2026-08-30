@@ -8,12 +8,14 @@
 @{
     ViewData["Title"] = $"Edit Retention Record";
 }
-<h1>@ViewData["Title"]</h1>
 
-<div class="container bg-light-subtle py-3 rounded-3">
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
     <form method="post" asp-fragment="retention-records">
         <p>
-            For Facility <strong>@Html.DisplayFor(e => e.Facility.FacilityNumber):</strong> 
+            For Facility <strong>@Html.DisplayFor(e => e.Facility.FacilityNumber):</strong>
             @Html.DisplayFor(e => e.Facility.Name)
         </p>
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>

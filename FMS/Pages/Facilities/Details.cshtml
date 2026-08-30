@@ -13,26 +13,28 @@
 @{
     ViewData["Title"] = $"Facility {Model.FacilityDetail.FacilityNumber}";
 }
-<h1>
-    @ViewData["Title"]
-    @if (!Model.FacilityDetail.Active)
-    {
-        <span class="text-muted">(Deleted)</span>
-    }
-    @if (User.IsInRole(UserRoles.FileEditor))
-    {
-        @if (Model.FacilityDetail.Active)
+
+<div class="container-fluid bg-light-subtle p-3 mt-2 mx-0 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+        @if (!Model.FacilityDetail.Active)
         {
-            <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-            <a asp-page="Delete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+            <span class="text-muted">(Deleted)</span>
         }
-        else
+        @if (User.IsInRole(UserRoles.FileEditor))
         {
-            <a asp-page="Undelete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-warning">Undelete</a>
+            @if (Model.FacilityDetail.Active)
+            {
+                <a asp-page="Edit" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                <a asp-page="Delete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+            }
+            else
+            {
+                <a asp-page="Undelete" asp-route-id="@Model.FacilityDetail.Id" class="btn btn-sm btn-outline-warning">Undelete</a>
+            }
         }
-    }
-</h1>
-<hr />
+    </h1>
+</div>
 <partial name="_AlertPartial" for="Message" id="alert" />
 
 <div class="container-fluid parent-container d-lg-inline-flex m-0 p-0">
@@ -582,7 +584,7 @@
                         </h3>
                         <p class="text-danger" style="font-size: 1.0rem;">  * NOTE: Property Owner Contacts are listed on HSI Site Summary Sheets</p>
                         <hr />
-                        <div class="row">
+                        <div class="row m-1">
                             <table class="table table-sm" aria-label="Contacts">
                                 <thead class="thead-light">
                                     <tr>
@@ -631,8 +633,8 @@
                                                 }
                                             </td>
                                         </tr>
-
-                                        <tr class="offset-md-2">
+                                        <tr>
+                                            <td colspan="1"></td>
                                             <td colspan="4">
                                                 <div class="accordion accordion-flush" id="PhoneNumbers+@c.Id">
                                                     <div class="accordion-item">
@@ -643,55 +645,59 @@
                                                         </h3>
                                                         <div id="PhoneNumberList+@c.Id" class="accordion-collapse collapse" aria-labelledby="PhoneList1">
                                                             <div class="accordion-body">
-                                                                @if (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.ComplianceOfficer))
-                                                                {
-                                                                    <a asp-page="/Phone/Add" asp-route-Id="@c.Id" class="btn btn-sm btn-primary">Add Phone</a>
-                                                                }
-                                                                <table class="table table-sm" aria-label="Phone Numbers">
-                                                                    @if (c.Phones.Count > 0 && c.Active)
+                                                                <div class="container bg-light-subtle p-1 m-1 rounded-3">
+
+                                                                    @if (User.IsInRole(UserRoles.FileCreator) || User.IsInRole(UserRoles.ComplianceOfficer))
                                                                     {
-                                                                        <thead class="thead-light">
-                                                                            <tr>
-                                                                                <th scope="col">Phone Type</th>
-                                                                                <th scope="col">Number</th>
-                                                                                <th class="text-center" scope="col">Active</th>
-                                                                                @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
-                                                                                {
-                                                                                    <th scope="col" class="text-center">Actions</th>
-                                                                                }
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach (var p in c.Phones)
-                                                                            {
-                                                                                <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
-                                                                                    <td>@p.PhoneType</td>
-                                                                                    <td><a href=@p.GetTelTo()>@p.Number</a></td>
-                                                                                    <td class="text-center">@Html.DisplayFor(m => p.Active, "BoolYesNo")</td>
-                                                                                    <td class="text-center">
-                                                                                        @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
-                                                                                        {
-                                                                                            <a asp-page="/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                                                                        }
-                                                                                        @if (Model.FacilityDetail.Active && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
-                                                                                        {
-                                                                                            <a asp-page="/Phone/Delete"
-                                                                                               asp-route-id="@p.Id"
-                                                                                               class="btn btn-sm btn-outline-danger">
-                                                                                                Delete
-                                                                                            </a>
-                                                                                        }
-                                                                                    </td>
-                                                                                </tr>
-                                                                            }
-                                                                        </tbody>
+                                                                        <a asp-page="/Phone/Add" asp-route-Id="@c.Id" class="btn btn-sm btn-primary">Add Phone</a>
                                                                     }
-                                                                </table>
+                                                                    <table class="table table-sm" aria-label="Phone Numbers">
+                                                                        @if (c.Phones.Count > 0 && c.Active)
+                                                                        {
+                                                                            <thead class="thead-light">
+                                                                                <tr>
+                                                                                    <th scope="col">Phone Type</th>
+                                                                                    <th scope="col">Number</th>
+                                                                                    <th class="text-center" scope="col">Active</th>
+                                                                                    @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                                                                    {
+                                                                                        <th scope="col" class="text-center">Actions</th>
+                                                                                    }
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach (var p in c.Phones)
+                                                                                {
+                                                                                    <tr class="@(!p.Active ? "text-muted table-warning" : "") ">
+                                                                                        <td>@p.PhoneType</td>
+                                                                                        <td><a href=@p.GetTelTo()>@p.Number</a></td>
+                                                                                        <td class="text-center">@Html.DisplayFor(m => p.Active, "BoolYesNo")</td>
+                                                                                        <td class="text-center">
+                                                                                            @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                                                                            {
+                                                                                                <a asp-page="/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                                                            }
+                                                                                            @if (Model.FacilityDetail.Active && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                                                                            {
+                                                                                                <a asp-page="/Phone/Delete"
+                                                                                                   asp-route-id="@p.Id"
+                                                                                                   class="btn btn-sm btn-outline-danger">
+                                                                                                    Delete
+                                                                                                </a>
+                                                                                            }
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                }
+                                                                            </tbody>
+                                                                        }
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td colspan="3"></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -1146,7 +1152,7 @@
                             <a asp-page="/Maintenance/Chemical/Detail" class="btn btn-sm btn-outline-primary" target="_blank">See Chemical List</a>
                         </h3>
                         <hr />
-                        <div class="row justify-content-evenly">
+                        <div class="row justify-content-evenly mx-1">
                             <table class="table table-sm" aria-label="Substances">
                                 <thead class="thead-light position-sticky top-0">
                                     <tr>

@@ -5,11 +5,12 @@
     ViewData["Title"] = $"Restore Facility: {Model.FacilityDetail.FacilityNumber}";
 }
 
-<h1><em>Confirm</em> @ViewData["Title"]</h1>
-
-<div class="container-fluid">
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        <em>Confirm</em> @ViewData["Title"]
+    </h1>
     <p class="lead text-warning font-weight-medium">Are you sure you want to restore (undelete) this Facility?</p>
-    <div class="parent-container d-lg-inline-flex"> 
+    <div class="parent-container d-lg-inline-flex">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
             <dl class="row">
                 <dt class="col-sm-5">

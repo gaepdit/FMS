@@ -10,16 +10,16 @@
     ViewData["Title"] = $"File {Model.FileDetail.FileLabel}";
 }
 
-<h1>
-    @ViewData["Title"]
-    @if (!Model.FileDetail.Active)
-    {
-        <span class="text-muted">(Deleted)</span>
-    }
-</h1>
 <a asp-page="./Index">← Back to File Search</a>
 <partial name="_AlertPartial" for="Message" id="alert" />
-<div class="container bg-light-subtle py-3 rounded-3">
+<div class="container-fluid bg-light-subtle p-3 mt-1 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+        @if (!Model.FileDetail.Active)
+        {
+            <span class="text-muted">(Deleted)</span>
+        }
+    </h1>
     <div class="my-3">
         <dl class="row">
             <dt class="col-sm-2">Cabinets</dt>

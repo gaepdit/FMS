@@ -434,7 +434,7 @@ a[target]::after {
 .accordion-button:not(.collapsed) {
     background-color: #c8f8d5; /*Custom active background */
     color: #013901; /*Custom active text color */
-    border-color: #fff;
+    border-color: #013901;
 }
 
 /*1. Header Button when EXPANDED (Active)*/

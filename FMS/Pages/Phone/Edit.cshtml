@@ -8,9 +8,11 @@
 @{
     ViewData["Title"] = "Edit Phone";
 }
-<h1>@ViewData["Title"]</h1>
-<hr />
-<div class="p-3 rounded-3 bg-light-subtle">
+
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="EditPhone.ContactId" />
@@ -39,10 +41,10 @@
         <hr />
         <button type="submit" class="btn btn-primary">Save Changes</button>
         <a asp-page="../Facilities/Details"
-            asp-route-id="@Model.Contact.FacilityId"
-            asp-route-tab="Contacts"
+           asp-route-id="@Model.Contact.FacilityId"
+           asp-route-tab="Contacts"
            asp-fragment="TabPages"
-            class="btn btn-secondary">
+           class="btn btn-secondary">
             Cancel
         </a>
     </form>

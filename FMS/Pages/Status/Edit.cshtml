@@ -11,11 +11,11 @@
 @{
     ViewData["Title"] = "Edit Status";
 }
-<h1>
-    @ViewData["Title"]
-</h1>
-<hr />
-<div class="container bg-light-subtle py-3 rounded-3">
+
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="EditStatus.FacilityId" />
@@ -263,12 +263,12 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <input asp-for="EditStatus.Lien" class="form-check-input" />
                 <label asp-for="EditStatus.Lien" class="form-check-label"></label>
                 <span asp-validation-for="EditStatus.Lien" class="text-danger"></span>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <a href="https://gets.sharepoint.com/:f:/s/ResponseandRemediationProgram/EhLSMRi5lEZOquQ6pLKhLUwBEpMsALxr5BHdhIOp6kZYiw?e=5vWBcz" class="btn btn-sm btn-primary" target="_blank">Liens Filed with County</a>
             </div>
             <div class="col-md-3">
@@ -276,7 +276,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <input asp-for="EditStatus.FinancialAssurance" class="form-check-input" />
                 <label asp-for="EditStatus.FinancialAssurance" class="form-check-label"></label>
                 <span asp-validation-for="EditStatus.FinancialAssurance" class="text-danger"></span>
@@ -286,7 +286,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <input asp-for="EditStatus.UEC" class="form-check-input" />
                 <label asp-for="EditStatus.UEC" class="form-check-label"></label>
                 <span asp-validation-for="EditStatus.UEC" class="text-danger"></span>
@@ -296,15 +296,13 @@
             </div>
         </div>
         <hr />
-        <div class="row mb-3">
-            <button id="submitButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Update Status</button>
-            <a asp-page="../Facilities/Details"
-                asp-route-id="@Model.Facility.Id"
-                asp-route-tab="Status"
-               asp-fragment="TabPages"
-                class="btn btn-outline-secondary col-md-2">
-                Cancel
-            </a>
-        </div>
+        <button id="submitButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Update Status</button>
+        <a asp-page="../Facilities/Details"
+           asp-route-id="@Model.Facility.Id"
+           asp-route-tab="Status"
+           asp-fragment="TabPages"
+           class="btn btn-outline-secondary col-md-2">
+            Cancel
+        </a>
     </form>
 </div>

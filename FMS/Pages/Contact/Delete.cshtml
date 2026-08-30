@@ -4,12 +4,14 @@
 @{
     ViewData["Title"] = $"Delete Contact";
 }
-<h1><em>Confirm</em> @ViewData["Title"]</h1>
 
-<p class="lead text-danger font-weight-medium">Are you sure you want to delete this Contact and all the associated Phones?<br /><strong>This action cannot be undone.</strong></p>
-<div class="container bg-light-subtle p-3 m-1 rounded-3">
+<div class="container-fluid bg-warning-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        <em>Confirm</em> @ViewData["Title"]
+    </h1>
+    <p class="lead text-danger font-weight-medium">Are you sure you want to delete this Contact and all the associated Phones?<br /><strong>This action cannot be undone.</strong></p>
     <form method="post">
-        <div class="row justify-content-evenly">
+        <div class="row justify-content-evenly mx-1">
             <table class="table table-sm" aria-label="Events">
                 <thead class="thead-light">
                     <tr>
@@ -38,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="row justify-content-evenly">
+        <div class="row justify-content-evenly mx-1">
             <table class="table table-sm" aria-label="Phones">
                 <thead class="thead-light">
                     <tr>
@@ -49,12 +51,12 @@
                 </thead>
                 <tbody>
                     @foreach (var phone in Model.ContactDetail.Phones)
-                    { 
-                    <tr class="@(!phone.Active ? "text-muted table-warning" : "") ">
-                        <td>@Html.DisplayFor(m => phone.PhoneType, "StringOrNone")</td>
-                        <td><a href="@phone.GetTelTo()">@phone.Number</a></td>
-                        <td class="text-center">@Html.DisplayFor(m => phone.Active, "BoolYesNo")</td>
-                    </tr>
+                    {
+                        <tr class="@(!phone.Active ? "text-muted table-warning" : "") ">
+                            <td>@Html.DisplayFor(m => phone.PhoneType, "StringOrNone")</td>
+                            <td><a href="@phone.GetTelTo()">@phone.Number</a></td>
+                            <td class="text-center">@Html.DisplayFor(m => phone.Active, "BoolYesNo")</td>
+                        </tr>
                     }
                 </tbody>
             </table>

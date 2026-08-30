@@ -9,32 +9,35 @@
     <script src="~/js/formIndex.js"></script>
 }
 
-<h1>@ViewData["Title"]</h1>
-<hr />
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <hr />
+    <h2>
+        @Model.CurrentUser?.DisplayName
+    </h2>
+    <div class="container bg-primary-subtle p-3 rounded-3">
+        <p><strong>Email:</strong> @Model.CurrentUser?.Email</p>
+        <p><strong>Program:</strong> @Model.CurrentUser?.UserProgram?.Name</p>
+        <p><strong>Unit:</strong> @Model.CurrentUser?.UserUnit?.Name</p>
+        <p><strong>Position:</strong> @Model.CurrentUser?.UserPosition?.Name</p>
+    </div>
+    @if (Model.Roles != null && Model.Roles.Count > 0)
+    {
+        <h3>Roles</h3>
+        <dl>
+            @foreach (var role in Model.Roles)
+            {
+                <dt>@UserRoles.DisplayName(role)</dt>
+                <dd>
+                    <small class="text-muted">@UserRoles.Description(role)</small>
+                </dd>
+            }
+        </dl>
+    }
 
-<h2>@Model.CurrentUser?.DisplayName</h2>
-
-<div class="p-3 rounded-3 bg-light-subtle">
-    <p><strong>Email:</strong> @Model.CurrentUser?.Email</p>
-    <p><strong>Program:</strong> @Model.CurrentUser?.UserProgram?.Name</p>
-    <p><strong>Unit:</strong> @Model.CurrentUser?.UserUnit?.Name</p>
-    <p><strong>Position:</strong> @Model.CurrentUser?.UserPosition?.Name</p>
+    <form asp-page="./Logout" asp-route-returnUrl="@Url.Page("/")" method="post">
+        <button type="submit" class="btn btn-danger">Sign out</button>
+    </form>
 </div>
-
-@if (Model.Roles != null && Model.Roles.Count > 0)
-{
-    <h3>Roles</h3>
-    <dl>
-        @foreach (var role in Model.Roles)
-        {
-            <dt>@UserRoles.DisplayName(role)</dt>
-            <dd>
-                <small class="text-muted">@UserRoles.Description(role)</small>
-            </dd>
-        }
-    </dl>
-}
-
-<form asp-page="./Logout" asp-route-returnUrl="@Url.Page("/")" method="post">
-    <button type="submit" class="btn btn-danger">Sign out</button>
-</form>

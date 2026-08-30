@@ -20,11 +20,11 @@
 @{
     ViewData["Title"] = $"Edit Facility: {Model.Facility.FacilityNumber}";
 }
+
+<div class="container-fluid bg-light-subtle p-3 mt-2 rounded-3 ">
 <h1>
     @ViewData["Title"]
 </h1>
-
-<div class="p-3 rounded-3 bg-light-subtle">
     <form method="post" asp-fragment="ConfirmFacility">
         <input type="hidden" asp-for="Facility.Active" />
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
