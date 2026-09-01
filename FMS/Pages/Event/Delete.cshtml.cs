@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Event
 {
-    [Authorize(Policy = UserPolicies.FileEditorOrComplianceOfficer)]
+    [Authorize(Policy = UserPolicies.SiteMaintenance)]
     public class DeleteModel : PageModel
     {
         private readonly IEventRepository _repository;

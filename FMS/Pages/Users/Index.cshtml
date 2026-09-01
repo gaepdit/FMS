@@ -10,7 +10,7 @@
 }
 
 <br />
-<div class="container bg-light-subtle py-3 rounded-3 position-sticky top-0">
+<div class="container bg-light-subtle py-3 rounded-3 position-sticky top-0 bottom-0">
     <h1>
         FMS @ViewData["Title"]
     </h1>
@@ -62,11 +62,11 @@
 @if (Model.ShowResults)
 {
     <a id="SearchResults"></a>
-    <div class="container bg-light-subtle py-3 rounded-3">
+    <div class="container bg-light-subtle py-3 rounded">
         @if (Model.SearchResults is { Count: > 0 })
         {
             <table class="table" aria-label="User information">
-                <thead class="thead position-sticky top-0">
+                <thead class="thead">
                     <tr>
                         <th scope="col">@Html.DisplayNameFor(m => m.Name)</th>
                         <th scope="col">@Html.DisplayNameFor(m => m.Email)</th>

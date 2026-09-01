@@ -59,8 +59,6 @@ namespace FMS.Infrastructure.Contexts
         public DbSet<UserPosition> UserPositions { get; set; }
         public DbSet<AllowedEventType> AllowedEventTypes { get; set; }
 
-        //public DbSet<UserInfo> UserInfo { get; set; }
-
         // The "Counties" table is only used to add County data to the database for database-side use.
         // Counties are stored in memory and never accessed from the database, but other entities
         // store County Id as a foreign key.

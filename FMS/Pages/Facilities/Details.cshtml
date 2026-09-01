@@ -1,4 +1,4 @@
-@page "{id:Guid?}"
+@page "{id:Guid?}/{eventActive:bool?}"
 @using FMS.Domain.Dto
 @using FMS.Domain.Entities.Users
 @using FMS.Helpers
@@ -1590,7 +1590,7 @@
                                 @for (var i = 0; i < Model.FacilityDetail.Events.Count; i++)
                                 {
                                     var item = Model.FacilityDetail.Events[i];
-                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : ""))">
+                                    <tr class="@((item.ParentId != Guid.Empty ? "text-muted table-warning" : "") + (item.EventType.Name == "HWTF Master Project" ? " table-info" : "") + (item.Active ? "" : " table-secondary"))">
                                         <td>
                                             @if (item.ParentId != Guid.Empty)
                                             {
@@ -1612,7 +1612,7 @@
                                         </td>
                                         <td>@Html.DisplayFor(m => item.Comment)</td>
                                         <td>
-                                            @if (Model.FacilityDetail.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
+                                            @if (Model.FacilityDetail.Active && item.Active && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer)))
                                             {
                                                 <a asp-page="/Event/Edit"
                                                    asp-route-id="@item.Id"
@@ -1621,7 +1621,31 @@
                                                     Edit
                                                 </a>
                                             }
-                                            @if (Model.FacilityDetail.Active && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                            @if (Model.FacilityDetail.Active &&  ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                            {
+                                                <form method="get" asp-page="Details">
+                                                    
+                                                    @if (item.Active)
+                                                    {
+                                                        <input type="hidden" name="eventId" value="@item.Id" />
+                                                        <input type="hidden" name="facilityId" value="@Model.FacilityId" />
+                                                        <input type="hidden" name="sortBy" value="@Model.SortBy" />
+                                                        <input type="hidden" name="eventActive" value="false" />
+                                                        <input type="hidden" name="handler" value="EventToggle" />
+                                                        <button type="submit" class="btn btn-outline-warning btn-sm">Remove</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="hidden" name="eventId" value="@item.Id" />
+                                                        <input type="hidden" name="facilityId" value="@Model.FacilityId" />
+                                                        <input type="hidden" name="sortBy" value="@Model.SortBy" />
+                                                        <input type="hidden" name="eventActive" value="true" />
+                                                        <input type="hidden" name="handler" value="EventToggle" />
+                                                        <button type="submit" class="btn btn-outline-success btn-sm">Restore</button>
+                                                    }
+                                                </form>
+                                            }
+                                            @if (Model.FacilityDetail.Active && !item.Active && Model.CurrentUser.UserPosition.Name.Equals("PM2") && (User.IsInRole(UserRoles.SiteMaintenance)))
                                             {
                                                 <a asp-page="/Event/Delete"
                                                    asp-route-id="@item.Id"

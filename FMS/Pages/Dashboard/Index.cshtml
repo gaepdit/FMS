@@ -622,7 +622,7 @@
                                                                                         <tbody>
                                                                                             @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit && e.CompletionDate == null && e.StartDate == null))
                                                                                             {
-                                                                                                <tr class="table-warning">
+                                                                                                <tr class="@(item.Active ? "table-warning" : " table-secondary")">
                                                                                                     <td>
                                                                                                         <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
                                                                                                             @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
@@ -705,7 +705,7 @@
                                                                                         <tbody>
                                                                                             @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit && e.CompletionDate == null && e.StartDate != null))
                                                                                             {
-                                                                                                <tr class="table-light">
+                                                                                                <tr class="@(item.Active ? "table-light" : " table-secondary")">
                                                                                                     <td>
                                                                                                         <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
                                                                                                             @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
@@ -788,7 +788,7 @@
                                                                                         <tbody>
                                                                                             @foreach (var item in Model.ProgramEvents.Where(e => e.ComplianceOfficer?.Name == co && e.Unit?.Name == unit && e.CompletionDate != null))
                                                                                             {
-                                                                                                <tr class="table-info">
+                                                                                                <tr class="@(item.Active ? "table-info" : " table-secondary")">
                                                                                                     <td>
                                                                                                         <a asp-page="/Facilities/Details" asp-route-id="@item.FacilityId" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm">
                                                                                                             @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")

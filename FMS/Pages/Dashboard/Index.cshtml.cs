@@ -88,7 +88,7 @@ namespace FMS.Pages.Dashboard
 
             if (CurrentUser.UserPosition.Name == "PM2")
             {
-                ProgramEvents = await _repository.GetProgramEventsByUserId(CurrentUser.Id);
+                ProgramEvents = await _repository.GetProgramEventsByUserId(CurrentUser.Id, includeInactive: true);
 
                 UserUnits = ProgramEvents.Select(e => e.Unit?.Name).Where(name => name != null).Distinct().OrderBy(name => name).ToList();
 

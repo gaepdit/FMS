@@ -7,6 +7,7 @@ using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NUglify.Helpers;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace FMS.Pages.Facilities
 {
@@ -15,7 +16,7 @@ namespace FMS.Pages.Facilities
         [BindProperty]
         public RetentionRecordCreateDto RecordCreate { get; set; }
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         [HiddenInput]
         public Guid FacilityId { get; set; }
 
@@ -72,6 +73,8 @@ namespace FMS.Pages.Facilities
         [TempData]
         public string Lon { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        [HiddenInput]
         public EventSort SortBy { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id, Guid? hr, string tab, EventSort sortBy = EventSort.StartDateDesc)
@@ -136,6 +139,59 @@ namespace FMS.Pages.Facilities
             return Page();
         }
 
+        public async Task<IActionResult> OnGetEventToggleAsync(Guid eventId, bool eventActive)
+        {
+            FacilityDetail = await _repository.GetFacilityAsync(FacilityId);
+
+            await _eventRepository.UpdateEventStatusAsync(eventId, eventActive);
+
+            Spec = new SiteSummaryQuerySpec
+            {
+                FacilityNumber = FacilityDetail.FacilityNumber,
+                ShowHeader = true
+            };
+
+            if (FacilityDetail.FacilityType.Name == "HSI" || (FacilityDetail.FacilityType.Name == "NPL" && FacilityDetail.FacilityStatus.Name == "EPA Referred"))
+            {
+                HSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.FacilityNumber);
+            }
+
+            if (FacilityDetail.FacilityType.Name == "RN")
+            {
+                if (FacilityDetail.DeterminationLetterDate.HasValue && string.IsNullOrEmpty(FacilityDetail.HSInumber))
+                {
+                    NotificationFolderLink = UrlHelper.GetNotificationFolderLink(FacilityDetail.FacilityNumber);
+                }
+                else if (string.IsNullOrEmpty(FacilityDetail.HSInumber) && FacilityDetail.FacilityStatus.Name != "COMPLAINT")
+                {
+                    PendingNotificationFolderLink = UrlHelper.GetPendingNotificationFolderLink(FacilityDetail.FacilityNumber);
+                }
+                if (FacilityDetail.FacilityStatus.Name == "COMPLAINT")
+                {
+                    ComplaintsFolderLink = UrlHelper.GetComplaintsFolderLink(FacilityDetail.FacilityNumber);
+                }
+                else
+                {
+                    RNHSIFolderLink = UrlHelper.GetHSIFolderLink(FacilityDetail.HSInumber);
+                }
+            }
+
+            CurrentUser = await _userService.GetCurrentUserAsync()
+                ?? throw new InvalidOperationException("Current user not found", new Exception("User retrieval failed"));
+
+            ActiveTab = "Events";
+            MapLink = GetMapLink();
+            FacilityDetail.Events = EventSortHelper.SortEvents(FacilityDetail.Events, SortBy);
+            FacilityId = FacilityDetail.Id;
+            
+            TempData?.SetDisplayMessage(Context.Success,
+                eventActive
+                    ? $"Event successfully restored to list."
+                    : $"Event successfully removed from list.");
+
+            return RedirectToPage(pageName: "Details", routeValues: new { id = FacilityDetail.Id, hr = (Guid?)null, tab = "Events", sortBy = SortBy });
+        }
+
         public async Task<IActionResult> OnPostRetentionRecordAsync()
         {
             if (!ModelState.IsValid)
@@ -167,7 +223,7 @@ namespace FMS.Pages.Facilities
             }
 
             RecordCreate.TrimAll();
-            GetMapLink();
+            MapLink = GetMapLink();
             HighlightRecord = await _repository.CreateRetentionRecordAsync(FacilityId, RecordCreate);
 
             return RedirectToPage();
