@@ -59,13 +59,13 @@ namespace FMS.Pages.Event
             {
                 TempData?.SetDisplayMessage(Context.Success, "Event deleted.");
 
-                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab }, fragment: "TabPages");
+                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab });
             }
             else
             {
                 TempData?.SetDisplayMessage(Context.Danger, "Event could not be deleted.");
 
-                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab }, fragment: "TabPages");
+                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab });
             }
         }
     }

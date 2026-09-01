@@ -20,6 +20,7 @@ namespace FMS.Pages.Dashboard
         public IList<DashboardUserFacilitiesDto> UserFacilities { get; set; } = [];
         public IList<DashboardUnitFacilitiesDto> UnitFacilities { get; set; } = [];
         public IList<DashboardProgramFacilitiesDto> ProgramFacilities { get; set; } = [];
+        public IList<DashboardProgramFacilitiesWithDeletedItemsDto> ProgramFacilitiesWithDeletedItems { get; set; } = [];
         public IList<DashboardUserEventsDto> UserEvents { get; set; } = [];
         public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = [];
         public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = [];
@@ -69,6 +70,8 @@ namespace FMS.Pages.Dashboard
             if (CurrentUser.UserPosition.Name == "PM2")
             {
                 ProgramFacilities = await _repository.GetProgramHSIFacilitiesById(CurrentUser.UserProgram.Id);
+
+                ProgramFacilitiesWithDeletedItems = await _repository.GetProgramFacilitiesWithDeletedItems(CurrentUser.Id);
 
                 ProgramUnits = ProgramFacilities.Select(e => e.OrganizationalUnit?.Name).Distinct().OrderBy(name => name).ToList();
             }
