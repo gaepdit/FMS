@@ -53,13 +53,20 @@ namespace FMS.Pages.Event
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _repository.DeleteEventByIdAsync(Id);
-
-            TempData?.SetDisplayMessage(Context.Success, "Event deleted.");
-
             ActiveTab = "Events";
 
-            return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab }, fragment: "TabPages");
+            if ( await _repository.DeleteEventByIdAsync(Id))
+            {
+                TempData?.SetDisplayMessage(Context.Success, "Event deleted.");
+
+                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab }, fragment: "TabPages");
+            }
+            else
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "Event could not be deleted.");
+
+                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab }, fragment: "TabPages");
+            }
         }
     }
 }
