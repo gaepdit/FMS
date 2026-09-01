@@ -11,47 +11,48 @@
 }
 
 <a asp-page="./Index">← Back</a>
-<h3>
-    @ViewData["Title"]
-</h3>
-<partial name="_AlertPartial" for="DisplayMessage" id="alert" />
-
-<form method="post">
-    <table class="table" aria-label="List of Actions Taken codes">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col" class="col-md-3">Action Name</th>
-                <th scope="col" class="col-md-2 text-center">Action Active</th>
-                <th scope="col" class="col-md-2 text-center">Allowed Action Active</th>
-                <th scope="col" class="col-md-1 text-center">Start Date Required</th>
-                <th scope="col" class="col-md-1 text-center">Due Date Required</th>
-                <th scope="col" class="col-md-1 text-center">Completion Date Required</th>
-                <th scope="col" class="col-md-2 text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AllowedActionsTakenList)
-            {
+<div class="container-fluid bg-light-subtle p-3 rounded-3">
+    <h3>
+        @ViewData["Title"]
+    </h3>
+    <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
+    <form method="post">
+        <table class="table" aria-label="List of Actions Taken codes">
+            <thead class="thead-light">
                 <tr>
-                    <td class="text-nowrap">@Html.DisplayFor(m => item.ActionTakenName)</td>
-                    <td class="@(!item.ActionTakenActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.ActionTakenActive, "BoolCheckbox")</td>
-                    <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active, "BoolCheckbox")</td>
-                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.StartDateRequired, "BoolCheckbox")</td>
-                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.DueDateRequired, "BoolCheckbox")</td>
-                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.CompletionDateRequired, "BoolCheckbox")</td>
-                    <td class="text-nowrap text-center">
-                        @if (item.Active)
-                        {
-                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-danger btn-sm">Remove from list</button>
-                            <a asp-page="EditAATReq" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit Date Requirements</a>
-                        }
-                        else
-                        {
-                            <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-primary btn-sm">Restore to list</button>
-                        }
-                    </td>
+                    <th scope="col" class="col-md-3">Action Name</th>
+                    <th scope="col" class="col-md-2 text-center">Action Active</th>
+                    <th scope="col" class="col-md-2 text-center">Allowed Action Active</th>
+                    <th scope="col" class="col-md-1 text-center">Start Date Required</th>
+                    <th scope="col" class="col-md-1 text-center">Due Date Required</th>
+                    <th scope="col" class="col-md-1 text-center">Completion Date Required</th>
+                    <th scope="col" class="col-md-2 text-center">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</form>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AllowedActionsTakenList)
+                {
+                    <tr>
+                        <td class="text-nowrap">@Html.DisplayFor(m => item.ActionTakenName)</td>
+                        <td class="@(!item.ActionTakenActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.ActionTakenActive, "BoolCheckbox")</td>
+                        <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active, "BoolCheckbox")</td>
+                        <td class="text-nowrap text-center">@Html.DisplayFor(m => item.StartDateRequired, "BoolCheckbox")</td>
+                        <td class="text-nowrap text-center">@Html.DisplayFor(m => item.DueDateRequired, "BoolCheckbox")</td>
+                        <td class="text-nowrap text-center">@Html.DisplayFor(m => item.CompletionDateRequired, "BoolCheckbox")</td>
+                        <td class="text-nowrap text-center">
+                            @if (item.Active)
+                            {
+                                <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-danger btn-sm">Remove from list</button>
+                                <a asp-page="EditAATReq" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit Date Requirements</a>
+                            }
+                            else
+                            {
+                                <button type="submit" name="actionTakenId" value="@item.ActionTakenId" class="btn btn-outline-primary btn-sm">Restore to list</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>

@@ -10,21 +10,21 @@
     ViewData["Title"] = $"Cabinet {Model.CabinetSummary.Name}";
 }
 
-<h1>
-    @ViewData["Title"]
-    @if (!Model.CabinetSummary.Active)
-    {
-        <span class="text-muted">(Deleted)</span>
-    }
-    @if (User.IsInRole(UserRoles.SiteMaintenance))
-    {
-        <a asp-page="Edit" asp-route-id="@Model.CabinetSummary.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-    }
-</h1>
 <a asp-page="./Index">← Back to Cabinet List</a>
-<partial name="_AlertPartial" for="Message" id="alert"/>
-
-<div class="container bg-light-subtle rounded-3">
+<partial name="_AlertPartial" for="Message" id="alert" />
+<div class="container bg-light-subtle py-3 rounded-3">
+    <h1>
+        @ViewData["Title"]
+        @if (!Model.CabinetSummary.Active)
+        {
+            <span class="text-muted">(Deleted)</span>
+        }
+        @if (User.IsInRole(UserRoles.SiteMaintenance))
+        {
+            <a asp-page="Edit" asp-route-id="@Model.CabinetSummary.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+        }
+    </h1>
+    <hr />
     <p>
         <em>File Label Range</em> is used for displaying the storage cabinets used for each File or Facility. The range is
         from the First File Label for the cabinet up to (but not including) the First File Label for the next cabinet.
