@@ -2,12 +2,10 @@
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
 using FMS.Helpers;
-using Microsoft.Extensions.Configuration;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NUglify.Helpers;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace FMS.Pages.Facilities
 {
