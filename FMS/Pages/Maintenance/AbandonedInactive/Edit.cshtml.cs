@@ -54,10 +54,10 @@ namespace FMS.Pages.Maintenance.AbandonedInactive
                 ModelState.AddModelError("AbandonedInactive.Name", "Name entered already exists.");
             }
 
-            if (await _repository.AbandonedInactiveNameExistsAsync(AbandonedInactive.Description, Id))
-            {
-                ModelState.AddModelError("AbandonedInactive.Description", "Description entered already exists.");
-            }
+            //if (await _repository.AbandonedInactiveNameExistsAsync(AbandonedInactive.Description, Id))
+            //{
+            //    ModelState.AddModelError("AbandonedInactive.Description", "Description entered already exists.");
+            //}
 
             if (!ModelState.IsValid)
             {

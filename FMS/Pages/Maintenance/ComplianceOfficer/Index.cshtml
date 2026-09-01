@@ -1,5 +1,6 @@
 ﻿@page
 @using FMS.Pages.Maintenance
+@using FMS.Domain.Entities.Users
 @model FMS.Pages.Maintenance.ComplianceOfficer.IndexModel
 
 @section Scripts {
@@ -11,42 +12,65 @@
 }
 
 <a asp-page="../Index">← Site Maintenance</a>
-<h1>
-    @MaintenanceOptions.ComplianceOfficer
-</h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
-
-<p>New users are added to the Compliance Officers list the first time they sign into FMS.</p>
-<form method="post">
-    <table class="table" aria-label="List of compliance officers">
-        <thead class="thead-light position-sticky top-0">
-            <tr>
-                <th scope="col" class="col-md-4">Name</th>
-                <th scope="col" class="col-md-4">Email</th>
-                <th scope="col" class="col-md-4">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ComplianceOfficers)
-            {
-                <tr class="@(!item.Active ? "table-secondary" : "")">
-                    <td class="text-nowrap">
-                        @Html.DisplayFor(m => item.Name, "StringOrNone")
-                        @Html.DisplayFor(m => item.Active, "BoolRemoved")
-                    </td>
-                    <td>@Html.DisplayFor(m => item.Email)</td>
-                    <td class="text-nowrap">
-                        @if (item.Active)
+<div class="container-fluid bg-light-subtle p-3 rounded-3">
+    <h1>
+        @MaintenanceOptions.ComplianceOfficer
+    </h1>
+    <p>New users are added to the Compliance Officers list the first time they sign into FMS.</p>
+    <form method="post">
+        <div class="row d-flex justify-content-evenly">
+            <table class="table" aria-label="List of compliance officers">
+                <thead class="thead-light position-sticky top-0">
+                    <tr>
+                        <th scope="col" class="col-4">Name</th>
+                        <th scope="col" class="col-5">Email</th>
+                        <th scope="col" class="col-2 text-center">Actions</th>
+                        @if ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.SiteMaintenance) || User.IsInRole(UserRoles.UserMaintenance)))
                         {
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
+                            <th scope="col" class="col-1 text-center">Delete</th>
                         }
-                        else
-                        {
-                            <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</form>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ComplianceOfficers)
+                    {
+                        <tr class="@(!item.Active ? "table-secondary" : "")">
+                            <td class="text-nowrap">
+                                @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                @Html.DisplayFor(m => item.Active, "BoolRemoved")
+                            </td>
+                            <td>@Html.DisplayFor(m => item.Email)</td>
+                            <td class="text-nowrap text-center">
+                                @if (item.Active)
+                                {
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Remove from list</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
+                                }
+                            </td>
+                            @if ((User.IsInRole(UserRoles.SiteMaintenance) || User.IsInRole(UserRoles.UserMaintenance)) && !item.Active)
+                            {
+                                <td class="text-nowrap text-center">
+                                    <a asp-page="Delete"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-danger">
+                                        Delete
+                                    </a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-nowrap text-center">
+                                    <span class="text-muted"></span>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

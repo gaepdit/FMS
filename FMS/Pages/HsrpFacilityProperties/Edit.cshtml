@@ -9,11 +9,11 @@
 @{
     ViewData["Title"] = $"Edit HSI Facility Properties: {Model.Facility.FacilityNumber}";
 }
-<h1>
-    @ViewData["Title"]
-</h1>
-<hr />
-<div class="p-3 rounded-3 bg-light-subtle">
+
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="HsrpFacilityProperties.FacilityId" />
@@ -59,12 +59,12 @@
         <div class="row mb-3">
             <div class="col-4 mb-3">
                 <input asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-input" />
-                <label asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-label"></label><br/>
+                <label asp-for="HsrpFacilityProperties.BrownfieldTerminated" class="form-check-label"></label><br />
                 <span asp-validation-for="HsrpFacilityProperties.BrownfieldTerminated" class="text-danger"></span>
             </div>
             <div class="col-4 mb-3">
                 <input asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-input" />
-                <label asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-label"></label><br/>
+                <label asp-for="HsrpFacilityProperties.VRPTerminated" class="form-check-label"></label><br />
                 <span asp-validation-for="HsrpFacilityProperties.VRPTerminated" class="text-danger"></span>
             </div>
         </div>

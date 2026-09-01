@@ -153,15 +153,25 @@ namespace FMS.Infrastructure.Repositories
             return _context.SaveChangesAsync();
         }
 
-        public async Task DeleteEventByIdAsync(Guid id)
+        public async Task<bool> DeleteEventByIdAsync(Guid id)
         {
-            var eventToDelete = await _context.Events.FindAsync(id);
-            if (eventToDelete == null)
+            try
             {
-                throw new InvalidOperationException($"Event with ID {id} does not exist.");
+                var eventToDelete = await _context.Events.FindAsync(id);
+
+                if (eventToDelete == null)
+                {
+                    throw new InvalidOperationException($"Event with ID {id} does not exist.");
+                }
+                _context.Events.Remove(eventToDelete);
+                await _context.SaveChangesAsync();
             }
-            _context.Events.Remove(eventToDelete);
-            await _context.SaveChangesAsync();
+            catch (ArgumentException ex)
+            {
+                return false;
+            }
+               
+            return true;
         }
         
 

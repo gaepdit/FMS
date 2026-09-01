@@ -15,33 +15,37 @@
 @{
     ViewData["Title"] = "Add Substance";
 }
-<h1>@ViewData["Title"]</h1>
 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-<form method="get" asp-fragment="SearchResults" runat="server">
-    <div id="Chemical" class="@(!Model.ResultsActive ? "container bg-light-subtle py-3 rounded-3" : "d-none")">
-        <input type="hidden" asp-for="NewSubstance.FacilityId" />
-        <input type="hidden" asp-for="NewSubstance.Active" />
-        <div class="row">
-            <div class="col">
-                <label asp-for="NewSubstance.Chemical.Id">Start typing CASNO or Chemical Name</label>
-                <select id="combobox" asp-for="NewSubstance.Chemical.Id" asp-items="Model.Chemicals" class="form-control ui-widget-content">
-                    <option value=""></option>
-                </select>
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <form method="get" asp-fragment="SearchResults" runat="server">
+        <div id="Chemical" class="@(!Model.ResultsActive ? "container bg-light-subtle py-3 rounded-3" : "d-none")">
+            <input type="hidden" asp-for="NewSubstance.FacilityId" />
+            <input type="hidden" asp-for="NewSubstance.Active" />
+            <div class="row">
+                <div class="col">
+                    <label asp-for="NewSubstance.Chemical.Id">Start typing CASNO or Chemical Name</label>
+                    <select id="combobox" asp-for="NewSubstance.Chemical.Id" asp-items="Model.Chemicals" class="form-control ui-widget-content">
+                        <option value=""></option>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="ChemicaLButtons" class="@(!Model.ResultsActive ? "container bg-light-subtle py-3 rounded-3" : "d-none")">
-        <input type="hidden" name="handler" value="search" />
-        <button id="SearchButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Choose Chemical</button>
-        <a asp-page="../Facilities/Details"
-           asp-route-tab="Substances"
-            asp-route-Id="@Model.NewSubstance.FacilityId" 
-            asp-fragment="TabPages"
-            class="btn btn-outline-secondary col-md-2">
-            Cancel
-        </a>
-    </div>
-</form>
+        <div id="ChemicaLButtons" class="@(!Model.ResultsActive ? "container bg-light-subtle py-3 rounded-3" : "d-none")">
+            <input type="hidden" name="handler" value="search" />
+            <button id="SearchButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Choose Chemical</button>
+            <a asp-page="../Facilities/Details"
+               asp-route-tab="Substances"
+               asp-route-Id="@Model.NewSubstance.FacilityId"
+               asp-fragment="TabPages"
+               class="btn btn-outline-secondary col-md-2">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
 
 @if (Model.ResultsActive)
 {
@@ -91,7 +95,7 @@
                 </div>
             </div>
             <p class="text-danger"><small>Edit these values in Chemical List Only</small></p>
-            <hr/>
+            <hr />
             <div class="row mt-3">
                 <div class="col">
                     <input asp-for="NewSubstance.Groundwater" class="form-check-input" type="checkbox" />
@@ -114,11 +118,11 @@
             <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">
                 Add Substance
             </button>
-            <a asp-page="../Facilities/Details" 
-                asp-route-Id="@Model.NewSubstance.FacilityId"
-                asp-route-tab="Substances"
-                asp-fragment="TabPages"
-                class="btn btn-outline-secondary col-md-2">
+            <a asp-page="../Facilities/Details"
+               asp-route-Id="@Model.NewSubstance.FacilityId"
+               asp-route-tab="Substances"
+               asp-fragment="TabPages"
+               class="btn btn-outline-secondary col-md-2">
                 Cancel
             </a>
         </form>
@@ -126,7 +130,7 @@
 }
 <div id="Substances" class="container bg-light-subtle py-3 rounded-3">
     <h5>Existing Substances</h5>
-    <div class="row justify-content-evenly">
+    <div class="row justify-content-evenly mx-2">
         <table class="table table-sm" aria-label="Parcels">
             <thead class="thead-light">
                 <tr>

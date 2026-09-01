@@ -39,7 +39,7 @@
         [Display(Name = "File Label")]
         public string FileLabel { get; set; }
 
-        [Display(Name = "Location Description")]
+        [Display(Name = "Location Description/Tax Parcel ID")]
         public string Location { get; set; }
 
         [Required]

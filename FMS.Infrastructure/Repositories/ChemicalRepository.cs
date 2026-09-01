@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
@@ -117,6 +117,7 @@ namespace FMS.Infrastructure.Repositories
             chemical.FinalRc = chemicalUpdates.FinalRc;
             chemical.RQ = chemicalUpdates.RQ;
 
+            _context.Chemicals.Update(chemical);
             await _context.SaveChangesAsync();
         }
 

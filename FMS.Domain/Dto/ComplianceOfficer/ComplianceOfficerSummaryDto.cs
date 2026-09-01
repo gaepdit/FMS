@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Entities;
+using FMS.Domain.Services;
 
 namespace FMS.Domain.Dto
 {
@@ -8,7 +9,6 @@ namespace FMS.Domain.Dto
         {
             Id = complianceOfficer.Id;
             Active = complianceOfficer.Active;
-            //UserId = complianceOfficer.UserId;
             GivenName = complianceOfficer.GivenName;
             FamilyName = complianceOfficer.FamilyName;
             Email = complianceOfficer.Email;
@@ -16,11 +16,16 @@ namespace FMS.Domain.Dto
 
         public Guid Id { get; }
         public bool Active { get; }
-        //public Guid? UserId { get; }
         public string GivenName { get; }
         public string FamilyName { get; }
         public string Email { get; }
 
+        public UserView UserInfo { get; set; }
+
+        [Display(Name = "Name")]
         public string Name => FamilyName + ", " + GivenName;
+
+        [Display(Name = "Name")]
+        public string DisplayName => GivenName + " " + FamilyName;
     }
 }

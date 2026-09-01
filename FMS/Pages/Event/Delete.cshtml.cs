@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FMS.Pages.Event
 {
-    [Authorize(Policy = UserPolicies.FileEditorOrComplianceOfficer)]
+    [Authorize(Policy = UserPolicies.SiteMaintenance)]
     public class DeleteModel : PageModel
     {
         private readonly IEventRepository _repository;
@@ -53,13 +53,20 @@ namespace FMS.Pages.Event
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _repository.DeleteEventByIdAsync(Id);
-
-            TempData?.SetDisplayMessage(Context.Success, "Event deleted.");
-
             ActiveTab = "Events";
 
-            return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab }, fragment: "TabPages");
+            if ( await _repository.DeleteEventByIdAsync(Id))
+            {
+                TempData?.SetDisplayMessage(Context.Success, "Event deleted.");
+
+                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab });
+            }
+            else
+            {
+                TempData?.SetDisplayMessage(Context.Danger, "Event could not be deleted.");
+
+                return RedirectToPage("../Facilities/Details", null, new { id = FacilityId, tab = ActiveTab });
+            }
         }
     }
 }

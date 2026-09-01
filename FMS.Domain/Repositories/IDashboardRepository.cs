@@ -13,6 +13,7 @@ namespace FMS.Domain.Repositories
         Task<List<DashboardUserFacilitiesDto>> GetUserHSIFacilitiesById(Guid id, bool includeInactive = false);
         Task<List<DashboardUnitFacilitiesDto>> GetUnitHSIFacilitiesById(Guid id, bool includeInactive = false);
         Task<List<DashboardProgramFacilitiesDto>> GetProgramHSIFacilitiesById(Guid id, bool includeInactive = false);
+        Task<List<DashboardProgramFacilitiesWithDeletedItemsDto>> GetProgramFacilitiesWithDeletedItems(Guid id);
         Task<List<DashboardUserEventsDto>> GetEventsByUserId(Guid id, bool includeInactive = false);
         Task<List<DashboardUnitEventsDto>> GetUnitEventsByUserId(Guid id, bool includeInactive = false);
         Task<List<DashboardProgramEventsDto>> GetProgramEventsByUserId(Guid id, bool includeInactive = false);

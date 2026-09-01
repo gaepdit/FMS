@@ -13,10 +13,14 @@ namespace FMS.Domain.Repositories
 
         Task<IEnumerable<Contact>> GetContactsByFacilityIdAndTypeAsync(Guid facilityId, Guid contactTypeId);
 
+        Task<ContactSummaryDto> GetContactSummaryByIdAsync(Guid id);
+
         Task<Guid> CreateContactAsync(ContactCreateDto contactCreate);
 
         Task UpdateContactAsync(Guid id, ContactEditDto contact);
 
         Task UpdateContactActiveAsync(Guid id, bool active);
+
+        Task<bool> DeleteContactByIdAsync(Guid id);
     }
 }

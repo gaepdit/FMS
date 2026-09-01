@@ -1,6 +1,7 @@
 ﻿using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Domain.Services;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,19 @@ namespace FMS.Pages.Maintenance.ComplianceOfficer
     public class IndexModel : PageModel
     {
         private readonly IComplianceOfficerRepository _repository;
-        public IndexModel(IComplianceOfficerRepository repository) => _repository = repository;
-
+        private readonly IUserService _userService;
+        public IndexModel(IComplianceOfficerRepository repository, IUserService userService)
+        {
+            _repository = repository;
+            _userService = userService;
+        }
+        public UserView CurrentUser { get; private set; }
         public IReadOnlyList<ComplianceOfficerSummaryDto> ComplianceOfficers { get; private set; }
         public DisplayMessage DisplayMessage { get; private set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
+            CurrentUser = await _userService.GetCurrentUserAsync();
             ComplianceOfficers = await _repository.GetComplianceOfficerListAsync();
             DisplayMessage = TempData?.GetDisplayMessage();
             return Page();

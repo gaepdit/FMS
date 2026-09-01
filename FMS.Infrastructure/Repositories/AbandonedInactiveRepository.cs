@@ -1,4 +1,4 @@
-﻿using FMS.Domain.Dto;
+using FMS.Domain.Dto;
 using FMS.Domain.Entities;
 using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
@@ -60,9 +60,7 @@ namespace FMS.Infrastructure.Repositories
         }
 
         public async Task UpdateAbandonedInactiveAsync(Guid id, AbandonedInactiveEditDto abandonedInactive)
-        {
-            Prevent.Null(abandonedInactive, nameof(abandonedInactive));
-            Prevent.NullOrEmpty(abandonedInactive.Name, nameof(abandonedInactive.Name));
+        { 
             var existingAI = await _context.AbandonedInactives.
                 SingleOrDefaultAsync(e => e.Id == id);
             if (existingAI == null)
@@ -78,6 +76,7 @@ namespace FMS.Infrastructure.Repositories
             existingAI.Description = abandonedInactive.Description;
             existingAI.Active = abandonedInactive.Active;
 
+            _context.AbandonedInactives.Update(existingAI);
             await _context.SaveChangesAsync();
         }
         public async Task UpdateAbandonedInactiveStatusAsync(Guid id, bool active)

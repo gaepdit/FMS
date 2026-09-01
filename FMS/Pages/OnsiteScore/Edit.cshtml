@@ -11,11 +11,11 @@
 @{
     ViewData["Title"] = "Edit Onsite Score Properties";
 }
-<h1>
-    @ViewData["Title"]
-</h1>
-<hr />
-<div class="p-3 rounded-3 bg-light-subtle">
+
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="OnsiteScore.FacilityId" />
@@ -190,13 +190,13 @@
             </div>
         </div>
         <hr />
-        <div class="row mb-3">
-            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
-            <a asp-page="../Facilities/Details" 
-                asp-route-id="@Model.Facility.Id"
-                asp-route-tab="Score"
-                asp-fragment="TabPages"
-                class="btn btn-outline-secondary col-md-2">
+        <div class="row m-1">
+            <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 me-2 mb-sm-0">Update</button>
+            <a asp-page="../Facilities/Details"
+               asp-route-id="@Model.Facility.Id"
+               asp-route-tab="Score"
+               asp-fragment="TabPages"
+               class="btn btn-outline-secondary col-md-2">
                 Cancel
             </a>
         </div>

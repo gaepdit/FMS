@@ -20,11 +20,11 @@
 @{
     ViewData["Title"] = $"Edit Facility: {Model.Facility.FacilityNumber}";
 }
+
+<div class="container-fluid bg-light-subtle p-3 mt-2 rounded-3 ">
 <h1>
     @ViewData["Title"]
 </h1>
-
-<div class="p-3 rounded-3 bg-light-subtle">
     <form method="post" asp-fragment="ConfirmFacility">
         <input type="hidden" asp-for="Facility.Active" />
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
@@ -100,7 +100,7 @@
         <div class="mb-3 row">
             <div class="col">
                 <label asp-for="Facility.Location"></label>
-                <input asp-for="Facility.Location" class="form-control" disabled="@Model.ConfirmFacility" />
+                <input asp-for="Facility.Location" class="form-control" disabled="@Model.ConfirmFacility" placeholder="Optional location description to describe surroundings. (ex: Across from Center City shopping center) or Tax Parcel ID" />
                 <span asp-validation-for="Facility.Location" class="text-danger"></span>
             </div>
         </div>
@@ -132,12 +132,12 @@
         <div class="mb-3 row">
             <div class="col">
                 <label asp-for="Facility.Latitude">Latitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Latitude" class="form-control" disabled="@Model.ConfirmFacility" />
+                <input asp-for="Facility.Latitude" class="form-control" disabled="@Model.ConfirmFacility" placeholder="Latitude will be auto-filled from Geo-Coding" />
                 <span asp-validation-for="Facility.Latitude" class="text-danger"></span>
             </div>
             <div class="col">
                 <label asp-for="Facility.Longitude">Longitude <span class="text-danger">*</span></label>
-                <input asp-for="Facility.Longitude" class="form-control" disabled="@Model.ConfirmFacility" />
+                <input asp-for="Facility.Longitude" class="form-control" disabled="@Model.ConfirmFacility" placeholder="Longitude will be auto-filled from Geo-Coding" />
                 <span asp-validation-for="Facility.Longitude" class="text-danger"></span>
             </div>
             <div class="col-md-3">

@@ -10,6 +10,8 @@ namespace FMS.Domain.Repositories
 
         Task<PhoneEditDto> GetPhoneByIdAsync(Guid id);
 
+        Task<PhoneSummaryDto> GetPhoneSummaryByIdAsync(Guid id);
+
         Task<PhoneEditDto> GetPhoneByIdAndContactIdAsync(Guid id, Guid contactId);
 
         Task<IReadOnlyList<PhoneSummaryDto>> GetPhoneListByContactIdAsync(Guid contactId);
@@ -19,5 +21,7 @@ namespace FMS.Domain.Repositories
         Task UpdatePhoneAsync(Guid id, PhoneEditDto phoneUpdates);
 
         Task UpdatePhoneStatusAsync(Guid id, bool active);
+
+        Task<bool> DeletePhoneByIdAsync(Guid id);
     }
 }

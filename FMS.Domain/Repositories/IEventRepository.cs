@@ -20,6 +20,6 @@ namespace FMS.Domain.Repositories
 
         Task UpdateEventStatusAsync(Guid id, bool active);
 
-        Task DeleteEventByIdAsync(Guid id);
+        Task<bool> DeleteEventByIdAsync(Guid id);
     }
 }
