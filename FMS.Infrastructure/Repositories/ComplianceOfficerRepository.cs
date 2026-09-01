@@ -43,7 +43,7 @@ namespace FMS.Infrastructure.Repositories
 
             if(userCo == null)
             {
-                return null;
+                return returnCo;
             }
 
             returnCo.UserInfo = userCo;

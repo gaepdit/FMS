@@ -889,10 +889,10 @@
                                 <form method="post" id="MyFacilities">
                                     <div class="row">
                                         <div class="col-md text-md-end text-sm-right mb-1">
-                                            @(Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                            @(Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0 ? $"Total Active Facilities: {Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count()}" : "")
                                         </div>
                                     </div>
-                                    @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                    @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0)
                                     {
                                         <table class="table" aria-label="List of Active User Facilities">
                                             <thead class="thead-light position-sticky top-0">
@@ -907,7 +907,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var item in Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active")))
+                                                @foreach (var item in Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null))
                                                 {
                                                     <tr class="table-light">
                                                         <td>
@@ -947,10 +947,10 @@
                                     }
                                     <div class="row">
                                         <div class="col-md text-md-end text-sm-right mb-1">
-                                            @(Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")).Count()}" : "")
+                                            @(Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null).Count() > 0 ? $"Total Delisted Facilities: {Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null).Count()}" : "")
                                         </div>
                                     </div>
-                                    @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
+                                    @if (Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null).Count() > 0)
                                     {
                                         <table class="table" aria-label="List of Delisted User Facilities">
                                             <thead class="thead-warning position-sticky top-0">
@@ -965,7 +965,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var item in Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED")))
+                                                @foreach (var item in Model.UserFacilities.Where(f => f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null))
                                                 {
                                                     <tr class="table-warning">
                                                         <td>
@@ -1005,10 +1005,10 @@
                                     }
                                     <div class="row">
                                         <div class="col-md text-md-end text-sm-right mb-1">
-                                            @(Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                            @(Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0 ? $"Total Other Facilities: {Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count()}" : "")
                                         </div>
                                     </div>
-                                    @if (Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                    @if (Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0)
                                     {
                                         <table class="table" aria-label="List of Other User Facilities">
                                             <thead class="thead-danger position-sticky top-0">
@@ -1023,7 +1023,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var item in Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")))
+                                                @foreach (var item in Model.UserFacilities.Where(f => !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null))
                                                 {
                                                     <tr class="table-danger">
                                                         <td>
@@ -1045,6 +1045,70 @@
                                                         </td>
                                                         <td>
                                                             @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                        </td>
+                                                        <td>
+                                                            @if (item.LocationClass == null)
+                                                            {
+                                                                <span class="text-muted">None</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    @if (Model.UserFacilities.Where(f => f.AddlOrgUnit != null).Any())
+                                    {
+                                        <table class="table" aria-label="List of User Facilities with Additional Org Unit">
+                                            <thead class="thead-light position-sticky top-0">
+                                                <tr>
+                                                    <th scope="col" class="col">Number</th>
+                                                    <th scope="col" class="col">Name</th>
+                                                    <th scope="col" class="col">Type</th>
+                                                    <th scope="col" class="col">Status</th>
+                                                    <th scope="col" class="col">C.O.</th>
+                                                    <th scope="col" class="col">County</th>
+                                                    <th scope="col" class="col">Add'l Org Unit</th>
+                                                    <th scope="col" class="col">Class</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.UserFacilities.Where(f => f.AddlOrgUnit != null))
+                                                {
+                                                    <tr class="table-info">
+                                                        <td>
+                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                        </td>
+                                                        <td>
+                                                            @if (item.AddlOrgUnit == null)
+                                                            {
+                                                                <span class="text-muted">None</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DisplayFor(m => item.AddlOrgUnit.Name, "StringOrNone")
+                                                            }
                                                         </td>
                                                         <td>
                                                             @if (item.LocationClass == null)
@@ -1107,11 +1171,11 @@
                                                 </div>
                                                 <div id="MyCOUnitFacilities+@Model.UserCOs.IndexOf(co)" class="accordion-collapse collapse" aria-labelledby="MyCOUnitFacilitesList+@Model.UserCOs.IndexOf(co)">
                                                     <div class="accordion-body">
-                                                        @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                                        @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0)
                                                         {
                                                             <div class="row">
                                                                 <div class="col-md text-md-end text-sm-right mb-1">
-                                                                    @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                                    @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0 ? $"Total Active Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count()}" : "")
                                                                 </div>
                                                             </div>
                                                             <table class="table" aria-label="List of Unit Facilities">
@@ -1127,7 +1191,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active")))
+                                                                    @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null))
                                                                     {
                                                                         <tr class="table-light">
                                                                             <td>
@@ -1165,11 +1229,11 @@
                                                                 </tbody>
                                                             </table>
                                                         }
-                                                        @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
+                                                        @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null).Count() > 0)
                                                         {
                                                             <div class="row">
                                                                 <div class="col-md text-md-end text-sm-right mb-1">
-                                                                    @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")).Count()}" : "")
+                                                                    @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null).Count() > 0 ? $"Total Delisted Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null).Count()}" : "")
                                                                 </div>
                                                             </div>
                                                             <table class="table" aria-label="List of Unit Facilities">
@@ -1185,7 +1249,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED")))
+                                                                    @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.FacilityStatus.Name.Equals("DELISTED") && f.AddlOrgUnit == null))
                                                                     {
                                                                         <tr class="table-warning">
                                                                             <td>
@@ -1223,11 +1287,11 @@
                                                                 </tbody>
                                                             </table>
                                                         }
-                                                        @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                                        @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0)
                                                         {
                                                             <div class="row">
                                                                 <div class="col-md text-md-end text-sm-right mb-1">
-                                                                    @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                                    @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count() > 0 ? $"Total Other Facilities: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null).Count()}" : "")
                                                                 </div>
                                                             </div>
                                                             <table class="table" aria-label="List of Unit Facilities">
@@ -1243,7 +1307,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active")))
+                                                                    @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && !f.FacilityStatus.Name.Equals("DELISTED") && !f.FacilityStatus.Name.Equals("Active") && f.AddlOrgUnit == null))
                                                                     {
                                                                         <tr class="table-danger">
                                                                             <td>
@@ -1265,6 +1329,75 @@
                                                                             </td>
                                                                             <td>
                                                                                 @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                            </td>
+                                                                            <td>
+                                                                                @if (item.LocationClass == null)
+                                                                                {
+                                                                                    <span class="text-muted">None</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        @if (Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.AddlOrgUnit != null).Any())
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-md text-md-end text-sm-right mb-1">
+                                                                    @(Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.AddlOrgUnit != null).Count() > 0 ? $"Total Facilities with Add'l Org Unit: {Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.AddlOrgUnit != null).Count()}" : "")
+                                                                </div>
+                                                            </div>
+                                                            <table class="table" aria-label="List of Unit Facilities with Additional Org Unit">
+                                                                <thead class="thead-light position-sticky top-0">
+                                                                    <tr>
+                                                                        <th scope="col" class="col">Number</th>
+                                                                        <th scope="col" class="col">Name</th>
+                                                                        <th scope="col" class="col">Type</th>
+                                                                        <th scope="col" class="col">Status</th>
+                                                                        <th scope="col" class="col">C.O.</th>
+                                                                        <th scope="col" class="col">County</th>
+                                                                        <th scope="col" class="col">Add'l Org Unit</th>
+                                                                        <th scope="col" class="col">Class</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var item in Model.UnitFacilities.Where(f => f.ComplianceOfficer?.Name == co && f.AddlOrgUnit != null))
+                                                                    {
+                                                                        <tr class="table-info">
+                                                                            <td>
+                                                                                <a asp-page="/Facilities/Details" asp-route-id="@item.Id" asp-fragment="TabPages" asp-route-tab="Events" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                    @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                                </a>
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                            </td>
+                                                                            <td>
+                                                                                @if (item.AddlOrgUnit == null)
+                                                                                {
+                                                                                    <span class="text-muted">None</span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.DisplayFor(m => item.AddlOrgUnit.Name, "StringOrNone")
+                                                                                }
                                                                             </td>
                                                                             <td>
                                                                                 @if (item.LocationClass == null)
@@ -1330,11 +1463,11 @@
                                             </div>
                                             <div id="MyProgramFacilities+@Model.ProgramUnits.IndexOf(unit)" class="accordion-collapse collapse" aria-labelledby="MyProgramFacilitiesList+@Model.ProgramUnits.IndexOf(unit)">
                                                 <div class="accordion-body">
-                                                    @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count() > 0)
+                                                    @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active") && e.AddlOrgUnit == null).Count() > 0)
                                                     {
                                                         <div class="row">
                                                             <div class="col-md text-md-end text-sm-right mb-1">
-                                                                @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Active Facilities: {Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                                @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active") && e.AddlOrgUnit == null).Count() > 0 ? $"Total Active Facilities: {Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active") && e.AddlOrgUnit == null).Count()}" : "")
                                                             </div>
                                                         </div>
                                                         <table class="table" aria-label="List of Program Facilities">
@@ -1350,7 +1483,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active")))
+                                                                @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("Active") && e.AddlOrgUnit == null))
                                                                 {
                                                                     <tr class="table-light">
                                                                         <td>
@@ -1388,11 +1521,11 @@
                                                             </tbody>
                                                         </table>
                                                     }
-                                                    @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
+                                                    @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED") && e.AddlOrgUnit == null).Count() > 0)
                                                     {
                                                         <div class="row">
                                                             <div class="col-md text-md-end text-sm-right mb-1">
-                                                                @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")).Count() > 0 ? $"Total Delisted Facilities: {Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")).Count()}" : "")
+                                                                @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED") && e.AddlOrgUnit == null).Count() > 0 ? $"Total Delisted Facilities: {Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED") && e.AddlOrgUnit == null).Count()}" : "")
                                                             </div>
                                                         </div>
                                                         <table class="table" aria-label="List of Program Facilities">
@@ -1408,7 +1541,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED")))
+                                                                @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.FacilityStatus.Name.Equals("DELISTED") && e.AddlOrgUnit == null))
                                                                 {
                                                                     <tr class="table-warning">
                                                                         <td>
@@ -1446,12 +1579,12 @@
                                                             </tbody>
                                                         </table>
                                                     }
-
-                                                    @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("Active") && !e.FacilityStatus.Name.Equals("DELISTED")).Count() > 0)
+                                                    @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("Active") && !e.FacilityStatus.Name.Equals("DELISTED") &&
+                                                        e.AddlOrgUnit == null).Count() > 0)
                                                     {
                                                         <div class="row">
                                                             <div class="col-md text-md-end text-sm-right mb-1">
-                                                                @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("DELISTED") && !e.FacilityStatus.Name.Equals("Active")).Count() > 0 ? $"Total Other Facilities: {Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("DELISTED") && !e.FacilityStatus.Name.Equals("Active")).Count()}" : "")
+                                                                @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("DELISTED") && !e.FacilityStatus.Name.Equals("Active") && e.AddlOrgUnit == null).Count() > 0 ? $"Total Other Facilities: {Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("DELISTED") && !e.FacilityStatus.Name.Equals("Active") && e.AddlOrgUnit == null).Count()}" : "")
                                                             </div>
                                                         </div>
                                                         <table class="table" aria-label="List of Program Facilities">
@@ -1467,7 +1600,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("Active") && !e.FacilityStatus.Name.Equals("DELISTED")))
+                                                                @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && !e.FacilityStatus.Name.Equals("Active") && !e.FacilityStatus.Name.Equals("DELISTED") && e.AddlOrgUnit == null))
                                                                 {
                                                                     <tr class="table-danger">
                                                                         <td>
@@ -1505,6 +1638,75 @@
                                                             </tbody>
                                                         </table>
                                                     }
+                                                    @if (Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.AddlOrgUnit != null).Any())
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md text-md-end text-sm-right mb-1">
+                                                                @(Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.AddlOrgUnit != null).Any() ? $"Total Facilities with Additional Organizational Unit: {Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.AddlOrgUnit != null).Count()}" : "")
+                                                            </div>
+                                                        </div>
+                                                        <table class="table" aria-label="List of Program Facilities">
+                                                            <thead class="thead-light position-sticky top-0">
+                                                                <tr>
+                                                                    <th scope="col" class="col">Number</th>
+                                                                    <th scope="col" class="col">Name</th>
+                                                                    <th scope="col" class="col">Type</th>
+                                                                    <th scope="col" class="col">Status</th>
+                                                                    <th scope="col" class="col">C.O.</th>
+                                                                    <th scope="col" class="col">County</th>
+                                                                    <th scope="col" class="col">Add'l Org Unit</th>
+                                                                    <th scope="col" class="col">Class</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var item in Model.ProgramFacilities.Where(e => e.OrganizationalUnit?.Name == unit && e.AddlOrgUnit != null))
+                                                                {
+                                                                    <tr class="table-info">
+                                                                        <td>
+                                                                            <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                                                @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                                            </a>
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.DisplayFor(m => item.County.Name, "StringOrNone")
+                                                                        </td>
+                                                                        <td>
+                                                                            @if (item.AddlOrgUnit == null)
+                                                                            {
+                                                                                <span class="text-muted">None</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DisplayFor(m => item.AddlOrgUnit.Name, "StringOrNone")
+                                                                            }
+                                                                        </td>
+                                                                        <td>
+                                                                            @if (item.LocationClass == null)
+                                                                            {
+                                                                                <span class="text-muted">None</span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -1517,4 +1719,85 @@
             </div>
         }
     </div>
+    @if (Model.CurrentUser.UserPosition.Name == "PM2")
+    {
+        <div class="container-fluid bg-light-subtle p-1 m-1 rounded-3">
+            <div class="accordion accordion" id="Current-InActive-Facilities-Work">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="MyInActiveFacilitiesList">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#MyInActiveFacilities" aria-expanded="true" aria-controls="MyInActiveFacilities">
+                            <h3>Program Facilities with Inactive Items</h3>
+                        </button>
+                    </h3>
+                    <div class="container bg-light-subtle ps-1 m-0 rounded-3">
+                        <div class="row">
+                            <div class="col-md text-md-start text-sm-right mb-1">
+                                @(Model.ProgramFacilitiesWithDeletedItems.Count() > 0 ? $"Total Facilities with Inactive Items: {Model.ProgramFacilitiesWithDeletedItems.Count()}" : "No Facilities with Inactive Items")
+                            </div>
+                        </div>
+                    </div>
+                    <div id="MyInActiveFacilities" class="accordion-collapse collapse" aria-labelledby="MyInActiveFacilitiesList">
+                        <div class="accordion-body">
+                            <form method="post" id="MyInActiveFacilities">
+                                @if (Model.ProgramFacilitiesWithDeletedItems.Count() > 0)
+                                {
+                                    <table class="table" aria-label="List of Facilities with Inactive Items">
+                                        <thead class="thead-light position-sticky top-0">
+                                            <tr>
+                                                <th scope="col" class="col">Facility Number</th>
+                                                <th scope="col" class="col">Facility Name</th>
+                                                <th scope="col" class="col">Facility Type</th>
+                                                <th scope="col" class="col">Facility Status</th>
+                                                <th scope="col" class="col">Unit</th>
+                                                <th scope="col" class="col">C.O.</th>
+                                                <th scope="col" class="col">Inactive Contacts</th>
+                                                <th scope="col" class="col">Inactive Events</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ProgramFacilitiesWithDeletedItems)
+                                            {
+                                                <tr class="table-light">
+                                                    <td>
+                                                        <a asp-page="/Facilities/Details" asp-route-id="@item.Id" target="_blank" class="btn @(item.Active ? "btn-outline-info" : "btn-outline-secondary") btn-sm text-nowrap">
+                                                            @Html.DisplayFor(m => item.FacilityNumber, "StringOrNone")
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.Name, "StringOrNone")
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.FacilityType.Name, "StringOrNone")
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.FacilityStatus.Name, "StringOrNone")
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @Html.DisplayFor(m => item.InactiveContacts, "BoolCheckbox")
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @Html.DisplayFor(m => item.InactiveEvents, "BoolCheckbox")
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <p>None</p>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

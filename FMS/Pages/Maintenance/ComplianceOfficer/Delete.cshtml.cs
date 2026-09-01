@@ -17,6 +17,7 @@ namespace FMS.Pages.Maintenance.ComplianceOfficer
         public ComplianceOfficerSummaryDto ComplianceOfficer { get; set; }
         public List<FacilityDetailDto> FacilityDetailList { get; set; }
         public bool HasFacilities => FacilityDetailList != null && FacilityDetailList.Count > 0;
+        public string ScreenMessage {  get; set; }
 
         private readonly IComplianceOfficerRepository _repository;
         private readonly IFacilityRepository _facilityRepository;
@@ -30,7 +31,8 @@ namespace FMS.Pages.Maintenance.ComplianceOfficer
         {
             if (id == null)
             {
-                return NotFound();
+                ScreenMessage = "The Compliance Officer you are trying to delete does not exist or has already been deleted.";
+                return Page();
             }
 
             Id = id.Value;
@@ -39,7 +41,13 @@ namespace FMS.Pages.Maintenance.ComplianceOfficer
 
             if (ComplianceOfficer == null)
             {
-                return NotFound();
+                ScreenMessage = "The Compliance Officer you are trying to delete does not exist or has already been deleted.";
+                return Page();
+            }
+
+            if (ComplianceOfficer.UserInfo == null)
+            {
+                ScreenMessage = "This Compliance Officer does not have an associated user account. Deleting this Compliance Officer will not affect any user accounts.";
             }
 
             FacilityDetailList = await _facilityRepository.GetFacilityListForCoDeleteAsync(ComplianceOfficer.Id);

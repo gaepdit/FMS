@@ -30,17 +30,23 @@ namespace FMS.Pages.Contact
         [TempData]
         public string ActiveTab { get; set; }
 
+        public string ScreenMessage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
             {
-                return NotFound();
+                ContactDetail = null;
+                ScreenMessage = "Contact ID Is Not Found.";
+                return Page();
             }
 
             ContactDetail = await _repository.GetContactSummaryByIdAsync(id.Value);
             if (ContactDetail == null)
             {
-                return NotFound();
+                ContactDetail = null;
+                ScreenMessage = "Contact Information Is Not Found.";
+                return Page();
             }
 
             FacilityId = ContactDetail.FacilityId;

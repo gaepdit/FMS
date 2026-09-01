@@ -5,71 +5,91 @@
     ViewData["Title"] = $"Delete Contact";
 }
 
-<div class="container-fluid bg-warning-subtle p-3 mt-3 rounded-3 ">
-    <h1>
-        <em>Confirm</em> @ViewData["Title"]
-    </h1>
-    <p class="lead text-danger font-weight-medium">Are you sure you want to delete this Contact and all the associated Phones?<br /><strong>This action cannot be undone.</strong></p>
-    <form method="post">
-        <div class="row justify-content-evenly mx-1">
-            <table class="table table-sm" aria-label="Events">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Contact Type</th>
-                        <th scope="col">Company</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Email</th>
-                        <th scope="col" class="text-center">Active</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>@Model.ContactDetail.GivenName&nbsp;@Model.ContactDetail.FamilyName</td>
-                        <td>@Model.ContactDetail.ContactType?.Name</td>
-                        <td>@Model.ContactDetail.Company</td>
-                        <td>@Model.ContactDetail.ContactTitle</td>
-                        <td>
-                            @Model.ContactDetail.Address<br />
-                            @Model.ContactDetail.City, @Model.ContactDetail.State&nbsp;@Model.ContactDetail.PostalCode
-                        </td>
-                        <td><a href=@Model.ContactDetail.GetMailTo()>@Model.ContactDetail.Email</a></td>
-                        <td class="text-center">@Html.DisplayFor(m => Model.ContactDetail.Active, "BoolYesNo")</td>
-                    </tr>
-                </tbody>
-            </table>
+@if (Model.ContactDetail == null)
+{
+    <div class="container-fluid bg-warning-subtle p-3 mt-3 rounded-3 ">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Contact Not Found</h4>
+            <p>@Model.ScreenMessage</p>
+            <hr />
+            <a asp-page="../Facilities/Details"
+               asp-route-Id="@Model.FacilityId"
+               asp-route-tab="Contacts"
+               asp-fragment="TabPages"
+               class="btn btn-outline-secondary">
+                Back to Facility Contacts
+            </a>
         </div>
-        <div class="row justify-content-evenly mx-1">
-            <table class="table table-sm" aria-label="Phones">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Phone Type</th>
-                        <th scope="col">Number</th>
-                        <th class="text-center" scope="col">Active</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var phone in Model.ContactDetail.Phones)
-                    {
-                        <tr class="@(!phone.Active ? "text-muted table-warning" : "") ">
-                            <td>@Html.DisplayFor(m => phone.PhoneType, "StringOrNone")</td>
-                            <td><a href="@phone.GetTelTo()">@phone.Number</a></td>
-                            <td class="text-center">@Html.DisplayFor(m => phone.Active, "BoolYesNo")</td>
+    </div>
+}
+else
+{
+    <div class="container-fluid bg-warning-subtle p-3 mt-3 rounded-3 ">
+        <h1>
+            <em>Confirm</em> @ViewData["Title"]
+        </h1>
+        <p class="lead text-danger font-weight-medium">Are you sure you want to delete this Contact and all the associated Phones?<br /><strong>This action cannot be undone.</strong></p>
+        <form method="post">
+            <div class="row justify-content-evenly mx-1">
+                <table class="table table-sm" aria-label="Events">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Contact Type</th>
+                            <th scope="col">Company</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Email</th>
+                            <th scope="col" class="text-center">Active</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <input type="hidden" asp-for="ContactDetail.Id" />
-        <input type="hidden" asp-for="@Model.FacilityId" />
-        <button type="submit" class="btn btn-danger col-sm-4 col-md-3 mb-3 mb-sm-0">Confirm Delete</button>
-        <a asp-page="../Facilities/Details"
-           asp-route-Id="@Model.FacilityId"
-           asp-route-tab="Contacts"
-           asp-fragment="TabPages"
-           class="btn btn-outline-secondary col-md-2">
-            Cancel
-        </a>
-    </form>
-</div>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.ContactDetail.GivenName&nbsp;@Model.ContactDetail.FamilyName</td>
+                            <td>@Model.ContactDetail.ContactType?.Name</td>
+                            <td>@Model.ContactDetail.Company</td>
+                            <td>@Model.ContactDetail.ContactTitle</td>
+                            <td>
+                                @Model.ContactDetail.Address<br />
+                                @Model.ContactDetail.City, @Model.ContactDetail.State&nbsp;@Model.ContactDetail.PostalCode
+                            </td>
+                            <td><a href=@Model.ContactDetail.GetMailTo()>@Model.ContactDetail.Email</a></td>
+                            <td class="text-center">@Html.DisplayFor(m => Model.ContactDetail.Active, "BoolYesNo")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-evenly mx-1">
+                <table class="table table-sm" aria-label="Phones">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Phone Type</th>
+                            <th scope="col">Number</th>
+                            <th class="text-center" scope="col">Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var phone in Model.ContactDetail.Phones)
+                        {
+                            <tr class="@(!phone.Active ? "text-muted table-warning" : "") ">
+                                <td>@Html.DisplayFor(m => phone.PhoneType, "StringOrNone")</td>
+                                <td><a href="@phone.GetTelTo()">@phone.Number</a></td>
+                                <td class="text-center">@Html.DisplayFor(m => phone.Active, "BoolYesNo")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <input type="hidden" asp-for="ContactDetail.Id" />
+            <input type="hidden" asp-for="@Model.FacilityId" />
+            <button type="submit" class="btn btn-danger col-sm-4 col-md-3 mb-3 mb-sm-0">Confirm Delete</button>
+            <a asp-page="../Facilities/Details"
+               asp-route-Id="@Model.FacilityId"
+               asp-route-tab="Contacts"
+               asp-fragment="TabPages"
+               class="btn btn-outline-secondary col-md-2">
+                Cancel
+            </a>
+        </form>
+    </div>
+}

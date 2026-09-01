@@ -623,7 +623,7 @@
                                                         <a asp-page="/Contact/Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                     }
                                                 }
-                                                @if (Model.FacilityDetail.Active && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                                @if (Model.FacilityDetail.Active && !c.Active && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2"))))
                                                 {
                                                     <a asp-page="/Contact/Delete"
                                                        asp-route-id="@c.Id"

@@ -34,11 +34,11 @@
             {
                 <tr>
                     <td class="text-nowrap">@Html.DisplayFor(m => item.ActionTakenName)</td>
-                    <td class="@(!item.ActionTakenActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.ActionTakenActive)</td>
-                    <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active)</td>
-                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.StartDateRequired)</td>
-                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.DueDateRequired)</td>
-                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.CompletionDateRequired)</td>
+                    <td class="@(!item.ActionTakenActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.ActionTakenActive, "BoolCheckbox")</td>
+                    <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active, "BoolCheckbox")</td>
+                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.StartDateRequired, "BoolCheckbox")</td>
+                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.DueDateRequired, "BoolCheckbox")</td>
+                    <td class="text-nowrap text-center">@Html.DisplayFor(m => item.CompletionDateRequired, "BoolCheckbox")</td>
                     <td class="text-nowrap text-center">
                         @if (item.Active)
                         {
