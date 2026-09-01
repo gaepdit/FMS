@@ -10,35 +10,40 @@
     ViewData["Title"] = "User Profile: " + Model.DisplayName;
 }
 
-<h1>FMS User Profile</h1>
-<hr />
-<partial name="_AlertPartial" for="Message" id="alert" />
-
-<h2>
-    @Model.DisplayName
-    @if (User.IsInRole(UserRoles.UserMaintenance))
-    {
-        <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
-    }
-</h2>
 <a asp-page="../Users/Index">← User Search</a>
-<div class="p-3 rounded-3 bg-light-subtle">
-    <p><strong>Email:</strong> @Model.Email</p>
-    <p><strong>Program:</strong> @Model.CurrentUser.UserProgram?.Name</p>
-    <p><strong>Unit:</strong> @Model.CurrentUser.UserUnit?.Name</p>
-    <p><strong>Position:</strong> @Model.CurrentUser.UserPosition?.Name</p>
-</div>
+<div class="container bg-light-subtle py-3 rounded-3">
+    <h1>
+        FMS User Profile
+    </h1>
+    <hr />
+    <partial name="_AlertPartial" for="Message" id="alert" />
 
-@if (Model.Roles != null && Model.Roles.Count > 0)
-{
-    <h3>Roles</h3>
-    <dl>
-        @foreach (var role in Model.Roles)
+    <h2>
+        @Model.DisplayName
+        @if (User.IsInRole(UserRoles.UserMaintenance))
         {
-            <dt>@UserRoles.DisplayName(role)</dt>
-            <dd>
-                <small class="text-muted">@UserRoles.Description(role)</small>
-            </dd>
+            <a asp-page="./Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit Roles</a>
         }
-    </dl>
-}
+    </h2>
+
+    <div class="p-3 rounded-3 bg-info-subtle">
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Program:</strong> @Model.CurrentUser.UserProgram?.Name</p>
+        <p><strong>Unit:</strong> @Model.CurrentUser.UserUnit?.Name</p>
+        <p><strong>Position:</strong> @Model.CurrentUser.UserPosition?.Name</p>
+    </div>
+
+    @if (Model.Roles != null && Model.Roles.Count > 0)
+    {
+        <h3>Roles</h3>
+        <dl>
+            @foreach (var role in Model.Roles)
+            {
+                <dt>@UserRoles.DisplayName(role)</dt>
+                <dd>
+                    <small class="text-muted">@UserRoles.Description(role)</small>
+                </dd>
+            }
+        </dl>
+    }
+</div>
