@@ -407,7 +407,7 @@
                             <a class="nav-link @(Model.ActiveTab == "Status" ? "active" : "")" data-bs-toggle="tab" data-bs-target="#Status" type="text/html" role="tab" aria-controls="Status" aria-selected="false" href="#Status">Status</a>
                         </li>
                     }
-                    <li class="nav-item" role="presentation">
+                    <li class="nav-item border border-secondary-subtle rounded" role="presentation">
                         <a class="nav-link @(Model.ActiveTab == "Events" ? "active" : "")"
                         @* || (((Model.FacilityDetail.FacilityType.Name= ="RN" || Model.FacilityDetail.FacilityType.Name= ="VRP" ) && (Model.FacilityDetail.FacilityStatus.Name= ="COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name= ="Event Tracking On" )) || (Model.FacilityDetail.FacilityType.Name= ="NPL" && Model.FacilityDetail.FacilityStatus.Name= ="EPA Referred" )) ? "active" : "" )" *@
                            data-bs-toggle="tab"
