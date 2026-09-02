@@ -9,8 +9,7 @@
     <script src="~/js/formSearch.js"></script>
 }
 
-<br />
-<div class="container bg-light-subtle py-3 rounded-3 position-sticky top-0 bottom-0">
+<div class="container bg-light-subtle p-3 mt-3 rounded-3 position-sticky top-0 bottom-0">
     <h1>
         FMS @ViewData["Title"]
     </h1>
@@ -62,7 +61,7 @@
 @if (Model.ShowResults)
 {
     <a id="SearchResults"></a>
-    <div class="container bg-light-subtle py-3 rounded">
+    <div class="container bg-light-subtle p-3 rounded">
         @if (Model.SearchResults is { Count: > 0 })
         {
             <table class="table" aria-label="User information">

@@ -5,20 +5,24 @@
     ViewData["Title"] = Model.DisplayFailedLogin ? "Agency Login Failed" : "Agency Login";
 }
 
-<h1>@ViewData["Title"]</h1>
-<p>
-    The File Management System Web Application (FMS) is a State of Georgia application.
-    It is provided for conducting official State business and is available for use by
-    State of Georgia employees only.
-</p>
-
+<div class="container bg-light-subtle py-3 rounded-3 mt-3">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <p>
+        The File Management System Web Application (FMS) is a State of Georgia application.
+        It is provided for conducting official State business and is available for use by
+        State of Georgia employees only.
+    </p>
+</div>
 @if (Model.DisplayFailedLogin)
 {
-    <p class="lead text-danger-emphasis">
-        There was an error logging in. If you need assistance related to this error, please contact
-        <a asp-page="/Support">EPD-IT support</a>.
-    </p>
-    <div asp-validation-summary="All" class="alert alert-danger d-flex align-items-center" role="alert"></div>
+    <div class="container bg-light-subtle py-3 rounded-3 mt-3">
+        <p class="lead text-danger-emphasis">
+            There was an error logging in. If you need assistance related to this error, please contact
+            <a asp-page="/Support">EPD-IT support</a>.
+        </p>
+    </div><div asp-validation-summary="All" class="alert alert-danger d-flex align-items-center" role="alert"></div>
 }
 
 <div class="my-3">

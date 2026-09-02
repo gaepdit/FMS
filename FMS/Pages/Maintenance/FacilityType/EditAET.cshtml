@@ -11,40 +11,41 @@
 }
 
 <a asp-page="./Index">← Back</a>
-<h3>
-    @ViewData["Title"]
-</h3>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
-
-<form method="post">
-    <table class="table" aria-label="List of Event Type Codes">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col" class="col-md-3">Event Type Name</th>
-                <th scope="col" class="col-md-2 text-center">Event Type Active</th>
-                <th scope="col" class="col-md-2 text-center">Allowed Event Type Active</th>
-                <th scope="col" class="col-md-2 text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AllowedEventTypeList)
-            {
+<div class="container bg-light-subtle py-3 rounded-3 mt-1">
+    <h3>
+        @ViewData["Title"]
+    </h3>
+    <form method="post">
+        <table class="table" aria-label="List of Event Type Codes">
+            <thead class="thead-light">
                 <tr>
-                    <td class="text-nowrap">@Html.DisplayFor(m => item.EventTypeName)</td>
-                    <td class="@(!item.EventTypeActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.EventTypeActive)</td>
-                    <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active)</td>
-                    <td class="text-nowrap text-center">
-                        @if (item.Active)
-                        {
-                            <button type="submit" name="eventTypeId" value="@item.EventTypeId" class="btn btn-outline-danger btn-sm">Remove from list</button>
-                        }
-                        else
-                        {
-                            <button type="submit" name="eventTypeId" value="@item.EventTypeId" class="btn btn-outline-primary btn-sm">Restore to list</button>
-                        }
-                    </td>
+                    <th scope="col" class="col-md-3">Event Type Name</th>
+                    <th scope="col" class="col-md-2 text-center">Event Type Active</th>
+                    <th scope="col" class="col-md-2 text-center">Allowed Event Type Active</th>
+                    <th scope="col" class="col-md-2 text-center">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</form>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.AllowedEventTypeList)
+                {
+                    <tr>
+                        <td class="text-nowrap">@Html.DisplayFor(m => item.EventTypeName)</td>
+                        <td class="@(!item.EventTypeActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.EventTypeActive)</td>
+                        <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active)</td>
+                        <td class="text-nowrap text-center">
+                            @if (item.Active)
+                            {
+                                <button type="submit" name="eventTypeId" value="@item.EventTypeId" class="btn btn-outline-danger btn-sm">Remove from list</button>
+                            }
+                            else
+                            {
+                                <button type="submit" name="eventTypeId" value="@item.EventTypeId" class="btn btn-outline-primary btn-sm">Restore to list</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>

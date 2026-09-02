@@ -39,13 +39,12 @@
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.Chemical}";
 }
 
-<a asp-page="../Index">← Site Maintenance</a>
-<h1>
-    @MaintenanceOptions.Chemical List <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
-</h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
-
+<a asp-page="../Index">← Site Maintenance</a>
 <div class="container bg-light-subtle p-3 m-1 rounded-3 position-sticky top-0 z-3">
+    <h1>
+        @MaintenanceOptions.Chemical List <a asp-page="Add" class="btn btn-outline-primary btn-sm">Create New</a>
+    </h1>
     <form class="container my-3">
         <label for="chemical-list-filter" class="pb-2">Start typing CASNO or Chemical Name to filter the Chemical list. Click Chemical Name to Edit Properties.</label>
         <div class="row row-cols-sm-auto align-items-center">

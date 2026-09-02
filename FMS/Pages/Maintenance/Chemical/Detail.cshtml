@@ -80,83 +80,79 @@
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.Chemical}";
 }
 
-<h1>
-    @MaintenanceOptions.Chemical
-</h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
-
-<div class="container-fluid position-sticky top-0 z-3">
-    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <form class="container my-3">
-            <label for="chemical-list-filter" class="pb-2">Start typing CASNO or Chemical Name to filter the Chemical list</label>
-            <div class="row row-cols-sm-auto align-items-center">
-                <input id="chemical-list-filter" class="form-control col-md-12 w-auto" placeholder="Filter chemical list" />
-                <span id="filtered-chemical-list-count" class="col-12 text-body-secondary">
-                    (@(Model.Chemicals.Count > 0 ? Model.Chemicals.Count.ToString() : "none") found)
-                </span>
-            </div>
-        </form>
-        <hr />
-        <div class="row mb-3">
-            <div class="col-md-2">
-                <label asp-for="Chemical.CasNo">CasNo</label>
-                <input id="casno" asp-for="Chemical.CasNo" class="form-control" readonly aria-describedby="FileIdHelpBlock" />
-                <span asp-validation-for="Chemical.CasNo" class="text-danger"></span>
-            </div>
-            <div class="col-md-5">
-                <label asp-for="Chemical.ChemicalName">@($"{MaintenanceOptions.Chemical} Name")</label>
-                <input id="ChemicalName" asp-for="Chemical.ChemicalName" class="form-control" readonly />
-                <span asp-validation-for="Chemical.ChemicalName" class="text-danger"></span>
-            </div>
-            <div class="col-md-5">
-                <label asp-for="Chemical.CommonName">Common Name</label>
-                <input id="CommonName" asp-for="Chemical.CommonName" class="form-control" readonly />
-                <span asp-validation-for="Chemical.CommonName" class="text-danger"></span>
-            </div>
+<div class="container bg-light-subtle p-3 mt-3 rounded-3 position-sticky top-0 bottom-0 z-1">
+    <h1>
+        @MaintenanceOptions.Chemical
+    </h1>
+    <form class="mx-3">
+        <label for="chemical-list-filter" class="pb-2">Start typing CASNO or Chemical Name to filter the Chemical list</label>
+        <div class="row row-cols-sm-auto align-items-center">
+            <input id="chemical-list-filter" class="form-control col-md-12 w-auto" placeholder="Filter chemical list" />
+            <span id="filtered-chemical-list-count" class="col-12 text-body-secondary">
+                (@(Model.Chemicals.Count > 0 ? Model.Chemicals.Count.ToString() : "none") found)
+            </span>
         </div>
-        <div class="row mb-3">
-            <div class="col-md-3">
-                <label asp-for="Chemical.ToxValue">Tox Value</label>
-                <input id="ToxValue" asp-for="Chemical.ToxValue" class="form-control" readonly />
-                <span asp-validation-for="Chemical.ToxValue" class="text-danger"></span>
-            </div>
-            <div class="col-md-3">
-                <label asp-for="Chemical.MCLs">MCLs</label>
-                <input id="MCLs" asp-for="Chemical.MCLs" class="form-control" readonly />
-                <span asp-validation-for="Chemical.MCLs" class="text-danger"></span>
-            </div>
-            <div class="col-md-3">
-                <label asp-for="Chemical.FinalRc">Final RC</label>
-                <input id="FinalRc" asp-for="Chemical.FinalRc" class="form-control" readonly />
-                <span asp-validation-for="Chemical.FinalRc" class="text-danger"></span>
-            </div>
-            <div class="col-md-3">
-                <label asp-for="Chemical.RQ">RQ</label>
-                <input id="RQ" asp-for="Chemical.RQ" class="form-control" readonly />
-                <span asp-validation-for="Chemical.RQ" class="text-danger"></span>
-            </div>
+    </form>
+    <hr />
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label asp-for="Chemical.CasNo">CasNo</label>
+            <input id="casno" asp-for="Chemical.CasNo" class="form-control" readonly aria-describedby="FileIdHelpBlock" />
+            <span asp-validation-for="Chemical.CasNo" class="text-danger"></span>
+        </div>
+        <div class="col-md-5">
+            <label asp-for="Chemical.ChemicalName">@($"{MaintenanceOptions.Chemical} Name")</label>
+            <input id="ChemicalName" asp-for="Chemical.ChemicalName" class="form-control" readonly />
+            <span asp-validation-for="Chemical.ChemicalName" class="text-danger"></span>
+        </div>
+        <div class="col-md-5">
+            <label asp-for="Chemical.CommonName">Common Name</label>
+            <input id="CommonName" asp-for="Chemical.CommonName" class="form-control" readonly />
+            <span asp-validation-for="Chemical.CommonName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label asp-for="Chemical.ToxValue">Tox Value</label>
+            <input id="ToxValue" asp-for="Chemical.ToxValue" class="form-control" readonly />
+            <span asp-validation-for="Chemical.ToxValue" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Chemical.MCLs">MCLs</label>
+            <input id="MCLs" asp-for="Chemical.MCLs" class="form-control" readonly />
+            <span asp-validation-for="Chemical.MCLs" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Chemical.FinalRc">Final RC</label>
+            <input id="FinalRc" asp-for="Chemical.FinalRc" class="form-control" readonly />
+            <span asp-validation-for="Chemical.FinalRc" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Chemical.RQ">RQ</label>
+            <input id="RQ" asp-for="Chemical.RQ" class="form-control" readonly />
+            <span asp-validation-for="Chemical.RQ" class="text-danger"></span>
         </div>
     </div>
 </div>
-<div class="container-fluid">
-    <div class="container bg-light-subtle p-3 m-1 rounded-3">
-        <ul id="chemical-list" class="list-group">
-            @foreach (var item in Model.Chemicals)
-            {
-                <li class="list-group-item list-group-item-action">
-                    <a value="@item.Id"
-                       data-casno="@item.CasNo"
-                       data-chemicalname="@item.ChemicalName"
-                       data-commonname="@item.CommonName"
-                       data-toxvalue="@item.ToxValue"
-                       data-mcls="@item.MCLs"
-                       data-finalrc="@item.FinalRc"
-                       data-rq="@item.RQ" class="nav-link">
-                        @item.CasNo <span>___</span> @item.ChemicalName
-                    </a>
-                </li>
-            }
-        </ul>
-        <ul id="filtered-chemical-list" class="list-group"></ul>
-    </div>
+
+<div class="container bg-light-subtle p-3 rounded-3">
+    <ul id="chemical-list" class="list-group">
+        @foreach (var item in Model.Chemicals)
+        {
+            <li class="list-group-item list-group-item-action">
+                <a value="@item.Id"
+                   data-casno="@item.CasNo"
+                   data-chemicalname="@item.ChemicalName"
+                   data-commonname="@item.CommonName"
+                   data-toxvalue="@item.ToxValue"
+                   data-mcls="@item.MCLs"
+                   data-finalrc="@item.FinalRc"
+                   data-rq="@item.RQ" class="nav-link">
+                    @item.CasNo <span>___</span> @item.ChemicalName
+                </a>
+            </li>
+        }
+    </ul>
+    <ul id="filtered-chemical-list" class="list-group"></ul>
 </div>

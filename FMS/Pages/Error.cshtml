@@ -4,13 +4,15 @@
     ViewData["Title"] = "Error";
 }
 
-<h1 class="text-danger">@ViewData["Title"]</h1>
-<p class="lead">An error occurred while processing your request.</p>
-<p>If you need assistance related to this error, please contact EPD IT support.</p>
+<div class="container bg-light-subtle py-3 rounded-3 mt-3">
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="lead">An error occurred while processing your request.</p>
+    <p>If you need assistance related to this error, please contact EPD IT support.</p>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        Request ID: <code class="text-info">@Model.RequestId</code>
-    </p>
-}
+    @if (Model.ShowRequestId)
+    {
+        <p>
+            Request ID: <code class="text-info">@Model.RequestId</code>
+        </p>
+    }
+</div>
