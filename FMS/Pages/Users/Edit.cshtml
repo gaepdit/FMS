@@ -5,9 +5,11 @@
     ViewData["Title"] = "Edit User Roles";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="container bg-light-subtle py-3 rounded-3">
+<div class="container bg-light-subtle py-3 rounded-3 mt-3">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <hr />
     <form method="post">
         <p>Roles for: <strong>@Model.DisplayName</strong> (@Model.Email)</p>
         <div class="mb-3 row">
