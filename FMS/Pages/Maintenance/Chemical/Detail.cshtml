@@ -80,12 +80,11 @@
     ViewData["Title"] = $"Site Maintenance: {MaintenanceOptions.Chemical}";
 }
 
-<h1>
-    @MaintenanceOptions.Chemical
-</h1>
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
-
-<div class="container-fluid position-sticky top-0 z-3">
+<div class="container bg-light-subtle py-3 rounded-3 mt-3">
+    <h1>
+        @MaintenanceOptions.Chemical
+    </h1>
     <div class="container bg-light-subtle p-3 m-1 rounded-3">
         <form class="container my-3">
             <label for="chemical-list-filter" class="pb-2">Start typing CASNO or Chemical Name to filter the Chemical list</label>
