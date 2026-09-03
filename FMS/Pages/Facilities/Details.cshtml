@@ -408,15 +408,13 @@
                         </li>
                     }
                     <li class="nav-item border border-secondary-subtle rounded" role="presentation">
-                        <a class="nav-link @(Model.ActiveTab == "Events" ? "active" : "")"
-                        @* || (((Model.FacilityDetail.FacilityType.Name= ="RN" || Model.FacilityDetail.FacilityType.Name= ="VRP" ) && (Model.FacilityDetail.FacilityStatus.Name= ="COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name= ="Event Tracking On" )) || (Model.FacilityDetail.FacilityType.Name= ="NPL" && Model.FacilityDetail.FacilityStatus.Name= ="EPA Referred" )) ? "active" : "" )" *@
+                        <a class="nav-link @(Model.ActiveTab == "Events" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP" ) && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On" )) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred" )) ? "active" : "" )"
                            data-bs-toggle="tab"
                            data-bs-target="#Events"
                            type="text/html"
                            role="tab"
                            aria-controls="Events"
-                           aria-selected=" @(Model.ActiveTab == "Events" ? "active" : "")"
-                        @* ((((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "true" : "false")" *@ href="#Events">Events</a>
+                           aria-selected="@(Model.ActiveTab == "Events" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "true" : "" )" href="#Events">Events</a>
                     </li>
                 </ul>
             </nav>
