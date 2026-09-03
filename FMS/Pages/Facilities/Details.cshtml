@@ -380,7 +380,14 @@
 </div>
 
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI" || (((Model.FacilityDetail.FacilityType.Name == "RN" || Model.FacilityDetail.FacilityType.Name == "VRP") && (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || (Model.FacilityDetail.FacilityType.Name == "NPL" && Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")))
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" || 
+((Model.FacilityDetail.FacilityType.Name == "RN" && 
+(Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || 
+Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || 
+(Model.FacilityDetail.FacilityType.Name == "NPL" && 
+Model.FacilityDetail.FacilityStatus.Name == "EPA Referred") ||
+(Model.FacilityDetail.FacilityType.Name == "VRP" &&
+Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
 {
     <div class="container-fluid parent-container d-lg-inline-flex m-0 p-0" id="TabPages">
         <div class="container bg-light-subtle p-3 m-1 rounded-3">
