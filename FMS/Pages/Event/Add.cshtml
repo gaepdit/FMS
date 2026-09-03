@@ -17,11 +17,14 @@
 @{
     ViewData["Title"] = "Add Event";
 }
-<h1>@ViewData["Title"]</h1>
-<form method="post">
-    <div class="container bg-light-subtle py-3 rounded-3">
+
+<div class="container-fluid bg-light-subtle p-2 mt-3 rounded-3">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <form method="post">
         <p>Select a Master Project as the Parent for this new Event, if applicable.</p>
-        <div class="row justify-content-evenly">
+        <div class="row justify-content-evenly m-1">
             <table class="table table-sm" aria-label="Events">
                 <thead class="thead-light">
                     <tr>
@@ -88,92 +91,91 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="container bg-light-subtle py-3 my-3 rounded-3">
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-        <input type="hidden" asp-for="NewEvent.FacilityId" />
-        <input type="hidden" asp-for="NewEvent.ParentId" />
-        <div class="row">
-            <div class="col">
-                <label asp-for="NewEvent.EventTypeId">Event Type <span class="text-danger">*</span></label>
-                <select asp-for="NewEvent.EventTypeId" asp-items="Model.AllowedEventTypes" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="NewEvent.EventTypeId" class="text-danger"></span>
+        <div class="container bg-light-subtle py-3 my-3 rounded-3">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <input type="hidden" asp-for="NewEvent.FacilityId" />
+            <input type="hidden" asp-for="NewEvent.ParentId" />
+            <div class="row">
+                <div class="col">
+                    <label asp-for="NewEvent.EventTypeId">Event Type <span class="text-danger">*</span></label>
+                    <select asp-for="NewEvent.EventTypeId" asp-items="Model.AllowedEventTypes" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="NewEvent.EventTypeId" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewEvent.ActionTakenId">Action Taken <span class="text-danger">*</span></label>
+                    <select asp-for="NewEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="NewEvent.ActionTakenId" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewEvent.StartDate" class="form-label">
+                        Event Start Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.StartDateRequired ? "*" : "")</span>
+                    </label>
+                    <input asp-for="NewEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
+                    <span asp-validation-for="NewEvent.StartDate" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewEvent.DueDate" class="form-label">
+                        Due Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span>
+                    </label>
+                    <input asp-for="NewEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
+                    <span asp-validation-for="NewEvent.DueDate" class="text-danger"></span>
+                </div>
             </div>
-            <div class="col">
-                <label asp-for="NewEvent.ActionTakenId">Action Taken <span class="text-danger">*</span></label>
-                <select asp-for="NewEvent.ActionTakenId" asp-items="Model.AllowedActionsTaken" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="NewEvent.ActionTakenId" class="text-danger"></span>
+            <div class="row">
+                <div class="col">
+                    <label asp-for="NewEvent.CompletionDate" class="form-label">
+                        Completion Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span>
+                    </label>
+                    <input asp-for="NewEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
+                    <span asp-validation-for="NewEvent.CompletionDate" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewEvent.ComplianceOfficerId">Done By (CO) <span class="text-danger">*</span></label>
+                    <select asp-for="NewEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="NewEvent.ComplianceOfficerId" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewEvent.EventAmount"></label>
+                    <input asp-for="NewEvent.EventAmount" class="form-control" />
+                    <span asp-validation-for="NewEvent.EventAmount" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="NewEvent.EventContractorId"></label>
+                    <select asp-for="NewEvent.EventContractorId" asp-items="Model.EventContractors" class="form-select">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="NewEvent.EventContractorId" class="text-danger"></span>
+                </div>
             </div>
-            <div class="col">
-                <label asp-for="NewEvent.StartDate" class="form-label">
-                    Event Start Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.StartDateRequired ? "*" : "")</span>
-                </label>
-                <input asp-for="NewEvent.StartDate" class="form-control datepicker" type="date" placeholder="" />
-                <span asp-validation-for="NewEvent.StartDate" class="text-danger"></span>
+            <div class="row">
+                <div class="mb-3">
+                    <label asp-for="NewEvent.Comment" class="form-label"></label>
+                    <textarea asp-for="NewEvent.Comment" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="NewEvent.Comment" class="text-danger"></span>
+                </div>
             </div>
-            <div class="col">
-                <label asp-for="NewEvent.DueDate" class="form-label">
-                    Due Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.DueDateRequired ? "*" : "")</span>
-                </label>
-                <input asp-for="NewEvent.DueDate" class="form-control datepicker" type="date" placeholder="" />
-                <span asp-validation-for="NewEvent.DueDate" class="text-danger"></span>
-            </div>
+            <p class="text-danger">* denotes a required field</p>
+            <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Add Event</button>
+            <a asp-page="../Facilities/Details"
+               asp-route-Id="@Model.NewEvent.FacilityId"
+               asp-route-tab="Events"
+               asp-route-sortBy="@Model.SortBy"
+               asp-fragment="TabPages"
+               class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
+                Cancel
+            </a>
         </div>
-        <div class="row">
-            <div class="col">
-                <label asp-for="NewEvent.CompletionDate" class="form-label">
-                    Completion Date <span class="text-danger"> @(Model.AllowedActionTakenSpec.CompletionDateRequired ? "*" : "")</span>
-                </label>
-                <input asp-for="NewEvent.CompletionDate" class="form-control datepicker" type="date" placeholder="" />
-                <span asp-validation-for="NewEvent.CompletionDate" class="text-danger"></span>
-            </div>
-            <div class="col">
-                <label asp-for="NewEvent.ComplianceOfficerId">Done By (CO) <span class="text-danger">*</span></label>
-                <select asp-for="NewEvent.ComplianceOfficerId" asp-items="Model.ComplianceOfficers" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="NewEvent.ComplianceOfficerId" class="text-danger"></span>
-            </div>
-            <div class="col">
-                <label asp-for="NewEvent.EventAmount"></label>
-                <input asp-for="NewEvent.EventAmount" class="form-control" />
-                <span asp-validation-for="NewEvent.EventAmount" class="text-danger"></span>
-            </div>
-            <div class="col">
-                <label asp-for="NewEvent.EventContractorId"></label>
-                <select asp-for="NewEvent.EventContractorId" asp-items="Model.EventContractors" class="form-select">
-                    <option value=""></option>
-                </select>
-                <span asp-validation-for="NewEvent.EventContractorId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="mb-3">
-                <label asp-for="NewEvent.Comment" class="form-label"></label>
-                <textarea asp-for="NewEvent.Comment" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="NewEvent.Comment" class="text-danger"></span>
-            </div>
-        </div>
-        <p class="text-danger">* denotes a required field</p>
-        <button type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Add Event</button>
-        <a asp-page="../Facilities/Details" 
-            asp-route-Id="@Model.NewEvent.FacilityId" 
-            asp-route-tab="Events"
-            asp-route-sortBy="@Model.SortBy"
-            asp-fragment="TabPages"
-           class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
-            Cancel
-        </a>
-    </div>
-    @if (Model.Facility.Events.Count > 0)
-    {
-        <div class="container bg-light-subtle py-3 rounded-3">
+        @if (Model.Facility.Events.Count > 0)
+        {
+            <hr />
             <h3>Existing Events for @Model.Facility.FacilityNumber</h3>
-            <div class="row justify-content-evenly">
+            <div class="row justify-content-evenly m-1">
                 <table class="table table-sm" aria-label="Events">
                     <thead class="thead-light position-sticky top-0">
                         <tr>
@@ -272,6 +274,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    }
-</form>
+        }
+    </form>
+</div>
