@@ -1,4 +1,4 @@
-﻿namespace FMS.Domain.Dto
+namespace FMS.Domain.Dto
 {
     public class SiteSummaryQuerySpec
     {
@@ -9,6 +9,9 @@
 
         [Display(Name = "Sort By")]
         public SiteSummarySortBy SortBy { get; set; } = SiteSummarySortBy.Facility_Number;   
+
+        [Display(Name = "Export To")]
+        public SiteSummaryExportTo ExportTo { get; set; } = SiteSummaryExportTo.Local;
 
         [Display(Name = "Facility Number")]
         public string FacilityNumber { get; set; }
@@ -46,6 +49,8 @@
         [Display(Name = "Show Header at top of reports")]
         public bool ShowHeader { get; set; } = false;
 
+        public bool IsPdf { get; set; } = false;
+
         public IDictionary<string, string> AsRouteValues() => new Dictionary<string, string?>
         {
             { nameof(FacilityNumber), FacilityNumber },
@@ -61,7 +66,8 @@
             { nameof(AllOrgUnits), AllOrgUnits.ToString() },
             { nameof(ShowHeader), ShowHeader.ToString() },
             { nameof(SortBy), SortBy.ToString() },
-            { nameof(Include), Include.ToString() }
+            { nameof(Include), Include.ToString() },
+            { nameof(ExportTo), ExportTo.ToString()  }
         };
 
         public void TrimAll()
@@ -83,27 +89,6 @@
             Include,
             Exclude
         }
-
-        public string GetSiteSummarySortText(SiteSummarySortBy sortBy)
-        {
-            var title = "";
-            switch (sortBy)
-            {
-                case SiteSummarySortBy.Facility_Number:
-                    title += " Facility Number";
-                    break;
-                case SiteSummarySortBy.Facility_Name:
-                    title += " Facility Name";
-                    break;
-                case SiteSummarySortBy.County:
-                    title += " County";
-                    break;
-                case SiteSummarySortBy.Class:
-                    title += " Class";
-                    break;
-            }
-            
-            return title;
-        }
+    }
 }
 }

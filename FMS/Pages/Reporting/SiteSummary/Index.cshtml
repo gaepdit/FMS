@@ -1,4 +1,4 @@
-﻿@page
+@page
 @using FMS.Domain.Dto
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Reporting.SiteSummary.IndexModel
@@ -137,10 +137,10 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <input type="hidden" name="handler" value="Preview" />
-                <button id="PreviewButton" type="submit" class="btn btn-primary me-2">Preview Report List</button>
-                <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-2">Clear</a>
+                <button id="PreviewButton" type="submit" class="btn btn-primary col-sm-3 col-md-3">Preview Report List</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary col-sm-3 col-md-3">Clear</a>
             </div>
         </div>
     </form>
@@ -170,6 +170,16 @@
                     Total results: @Html.DisplayFor(m => Model.SummaryList.Count)
                 </div>
             }
+            @if (Model.SummaryList.Count > 0)
+            {
+                <div class="col-auto d-print-none ms-2">
+                    <a asp-page="IndexPdf" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
+                           class="btn btn-primary">
+                        Generate Site Summary PDFs
+                    </a>
+                </div>
+            }
+            
         </div>
     </div>
     <div class="container-fluid bg-light-subtle p-3 rounded-3">
@@ -201,7 +211,7 @@
                             <svg class="bi">
                                 <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
                             </svg>
-                            Export/Print List
+                            Export/Print Site Summary List
                         </a>
                     </div>
                     @if (User.IsInRole(UserRoles.SiteMaintenance))
