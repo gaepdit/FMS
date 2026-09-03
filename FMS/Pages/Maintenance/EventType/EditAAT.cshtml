@@ -17,6 +17,7 @@
     </h3>
     <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
     <form method="post">
+        <input type="hidden" asp-for="@Model.Id" />
         <table class="table" aria-label="List of Actions Taken codes">
             <thead class="thead-light">
                 <tr>

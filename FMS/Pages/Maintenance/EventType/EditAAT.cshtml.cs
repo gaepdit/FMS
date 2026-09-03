@@ -24,7 +24,7 @@ namespace FMS.Pages.Maintenance.EventType
             _eventTypeRepository = eventTypeRepository;
             _allowedActionTakenHelper = allowedActionTakenHelper;
         }
-        public IList<AllowedActionTakenSpec> AllowedActionsTakenList { get; set; }
+        public IList<AllowedActionTakenSpec> AllowedActionsTakenList { get; set; } = new List<AllowedActionTakenSpec>();
 
         public DisplayMessage DisplayMessage { get; private set; }
 
@@ -59,18 +59,26 @@ namespace FMS.Pages.Maintenance.EventType
 
             AllowedActionsTakenList = await _allowedActionTakenHelper.GetAllowedActionTakenListByEventIdAsync(Id);
 
-            AllowedActionTakenSpec = AllowedActionsTakenList
-                .Any(e => e.ActionTakenId == actionTakenId)
-                ? AllowedActionsTakenList.First(e => e.ActionTakenId == actionTakenId)
-                : new AllowedActionTakenSpec()
+            if (AllowedActionsTakenList.Any(e => e.ActionTakenId == actionTakenId))
+            {
+                AllowedActionTakenSpec = AllowedActionsTakenList.First(e => e.ActionTakenId == actionTakenId);
+            }
+            else
+            {
+                AllowedActionTakenSpec = new AllowedActionTakenSpec()
                 {
                     EventTypeId = Id,
                     ActionTakenId = actionTakenId,
                     Active = true
                 };
+            }
 
             if (!await _repository.AllowedActionTakenExistsAsync(AllowedActionTakenSpec.EventTypeId, AllowedActionTakenSpec.ActionTakenId))
             {
+                if(AllowedActionTakenSpec.EventTypeId == Guid.Empty)
+                {
+                    AllowedActionTakenSpec.EventTypeId = Id;
+                }
                 await _repository.CreateAllowedActionTakenAsync(AllowedActionTakenSpec);
             }
             else
