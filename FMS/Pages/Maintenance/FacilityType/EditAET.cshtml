@@ -31,8 +31,8 @@
                 {
                     <tr>
                         <td class="text-nowrap">@Html.DisplayFor(m => item.EventTypeName)</td>
-                        <td class="@(!item.EventTypeActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.EventTypeActive)</td>
-                        <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active)</td>
+                        <td class="@(!item.EventTypeActive ? "table-info" : "") text-center">@Html.DisplayFor(m => item.EventTypeActive, "BoolCheckbox")</td>
+                        <td class="@(!item.Active ? "table-warning" : "") text-center">@Html.DisplayFor(m => item.Active, "BoolCheckbox")</td>
                         <td class="text-nowrap text-center">
                             @if (item.Active)
                             {
