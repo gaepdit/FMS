@@ -380,11 +380,11 @@
 </div>
 
 
-@if (Model.FacilityDetail.FacilityType.Name == "HSI" || 
-((Model.FacilityDetail.FacilityType.Name == "RN" && 
-(Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" || 
-Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) || 
-(Model.FacilityDetail.FacilityType.Name == "NPL" && 
+@if (Model.FacilityDetail.FacilityType.Name == "HSI" ||
+((Model.FacilityDetail.FacilityType.Name == "RN" &&
+(Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ||
+Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ||
+(Model.FacilityDetail.FacilityType.Name == "NPL" &&
 Model.FacilityDetail.FacilityStatus.Name == "EPA Referred") ||
 (Model.FacilityDetail.FacilityType.Name == "VRP" &&
 Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
@@ -1511,11 +1511,11 @@ Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
                     </div>
                 }
                 <div class="tab-pane @(Model.ActiveTab == "Events" ||
-                     ((Model.FacilityDetail.FacilityType.Name == "RN" &&
-                     (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ||
-                     Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ||
-                     (Model.FacilityDetail.FacilityType.Name == "NPL" &&
-                     Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "active" : "" )"
+                                                             ((Model.FacilityDetail.FacilityType.Name == "RN" &&
+                                                             (Model.FacilityDetail.FacilityStatus.Name == "COMPLAINT" ||
+                                                             Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")) ||
+                                                             (Model.FacilityDetail.FacilityType.Name == "NPL" &&
+                                                             Model.FacilityDetail.FacilityStatus.Name == "EPA Referred")) ? "active" : "" )"
                      id="Events"
                      role="tabpanel"
                      aria-labelledby="Events-tab">
