@@ -85,6 +85,16 @@
                 </small>
             </label>
         </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasEpdAssociateRole" class="form-check-input" aria-describedby="EpdAssociateRoleHelpBlock">
+            <label asp-for="HasEpdAssociateRole" class="form-check-label font-weight-bold">
+                <strong>@UserRoles.DisplayName(UserRoles.EpdAssociate)</strong>
+                <br />
+                <small id="EpdAssociateRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.EpdAssociate)
+                </small>
+            </label>
+        </div>
         <hr />
         <input asp-for="UserId" type="hidden" />
         <input type="hidden" asp-for="Id" />

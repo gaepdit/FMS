@@ -15,9 +15,10 @@ namespace FMS.Domain.Entities.Users
         public const string FileCreator = "FileCreator";
         public const string FileEditor = "FileEditor";
         public const string ComplianceOfficer = "ComplianceOfficer";
+        public const string EpdAssociate = "EPDAssociate";
 
         public static readonly ImmutableArray<string> AllRoles =
-            ImmutableArray.Create(UserMaintenance, SiteMaintenance, FileCreator, FileEditor, ComplianceOfficer);
+            ImmutableArray.Create(UserMaintenance, SiteMaintenance, FileCreator, FileEditor, ComplianceOfficer, EpdAssociate);
 
         public static string DisplayName(string role) =>
             role switch
@@ -27,6 +28,7 @@ namespace FMS.Domain.Entities.Users
                 FileCreator => "Facility Creator",
                 FileEditor => "Facility Editor",
                 ComplianceOfficer => "Compliance Officer",
+                EpdAssociate => "EPD Associate",
                 _ => role,
             };
 
@@ -36,7 +38,7 @@ namespace FMS.Domain.Entities.Users
                 UserMaintenance => "Users with the User Maintenance role are able to add and remove " + "roles for other users.",
                 SiteMaintenance =>
                     "Users with the Site Maintenance role are able to update values in lookup " +
-                    "tables (drop-down lists) and create new cabinets" + ", select different File Label, and edit Facility Number." ,
+                    "tables (drop-down lists) and create new cabinets" + ", select different File Label, and edit Facility Number.",
                 FileCreator =>
                     "Users with the Facility Creator role are able to add new facilities, files, " +
                     "and retention records.",
@@ -45,6 +47,7 @@ namespace FMS.Domain.Entities.Users
                     "retention records, and delete files." + " Excludes edits to existing File Label and Facility Number.",
                 ComplianceOfficer => "Users with the Compliance Officer role are able to view reports and dashboards " +
                     "and are able to add and edit Facility Contacts and Events.",
+                EpdAssociate => "Users that need just Read-Only Access for information or reporting purposes.",
                 _ => DisplayName(role),
             };
     }

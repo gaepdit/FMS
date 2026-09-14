@@ -39,6 +39,9 @@ namespace FMS.Pages.Users
         [BindProperty]
         public bool HasComplianceOfficerRole { get; set; }
 
+        [BindProperty]
+        public bool HasEpdAssociateRole { get; set; }
+
         public string DisplayName { get; private set; }
         public string Email { get; private set; }
 
@@ -72,7 +75,7 @@ namespace FMS.Pages.Users
             if (id != null)
             {
                 CurrentUser = await _userService.GetUserByIdAsync(id.Value);
-                if(CurrentUser == null)
+                if (CurrentUser == null)
                 {
                     return NotFound();
                 }
@@ -81,7 +84,7 @@ namespace FMS.Pages.Users
             else
             {
                 CurrentUser = await _userService.GetCurrentUserAsync();
-                if(CurrentUser == null)
+                if (CurrentUser == null)
                 {
                     return NotFound();
                 }
@@ -139,14 +142,15 @@ namespace FMS.Pages.Users
                 {UserRoles.SiteMaintenance, HasSiteMaintenanceRole},
                 {UserRoles.FileCreator, HasFileCreatorRole},
                 {UserRoles.FileEditor, HasFileEditorRole},
-                {UserRoles.ComplianceOfficer, HasComplianceOfficerRole}
+                {UserRoles.ComplianceOfficer, HasComplianceOfficerRole},
+                {UserRoles.EpdAssociate, HasEpdAssociateRole}
             };
             var result = await _userService.UpdateUserRolesAsync(UserId, roleSettings);
 
             if (result.Succeeded)
             {
                 TempData?.SetDisplayMessage(Context.Success, "User roles successfully updated.");
-                return RedirectToPage("./Details", new {id = UserId});
+                return RedirectToPage("./Details", new { id = UserId });
             }
 
             foreach (var err in result.Errors)
@@ -182,6 +186,7 @@ namespace FMS.Pages.Users
             HasFileCreatorRole = roles.Contains(UserRoles.FileCreator);
             HasFileEditorRole = roles.Contains(UserRoles.FileEditor);
             HasComplianceOfficerRole = roles.Contains(UserRoles.ComplianceOfficer);
+            HasEpdAssociateRole = roles.Contains(UserRoles.EpdAssociate);
         }
 
         private async Task PopulateSelectsAsync()

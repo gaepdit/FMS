@@ -16,6 +16,7 @@ namespace FMS.Domain.Entities.Users
         public const string UserMaintenance = nameof(UserMaintenance);
         public const string ComplianceOfficer = nameof(ComplianceOfficer);
         public const string FileEditorOrComplianceOfficer = nameof(FileEditorOrComplianceOfficer);
+        public const string EpdAssociate = nameof(EpdAssociate);
 
         public static void AddAuthorizationPolicies(this IServiceCollection services)
         {
@@ -26,7 +27,8 @@ namespace FMS.Domain.Entities.Users
                 .AddPolicy(nameof(SiteMaintenance), SiteMaintenancePolicy)
                 .AddPolicy(nameof(UserMaintenance), UserMaintenancePolicy)
                 .AddPolicy(nameof(ComplianceOfficer), ComplianceOfficerPolicy)
-                .AddPolicy(nameof(FileEditorOrComplianceOfficer), FileEditorOrComplianceOfficerPolicy);
+                .AddPolicy(nameof(FileEditorOrComplianceOfficer), FileEditorOrComplianceOfficerPolicy)
+                .AddPolicy(nameof(EpdAssociate), EpdAssociatePolicy);
         }
 
         // Default policy builder
@@ -54,5 +56,8 @@ namespace FMS.Domain.Entities.Users
 
         private static AuthorizationPolicy FileEditorOrComplianceOfficerPolicy { get; } = ActiveUserPolicyBuilder
             .RequireRole(UserRoles.FileEditor, UserRoles.ComplianceOfficer).Build();
+
+        private static AuthorizationPolicy EpdAssociatePolicy { get; } = ActiveUserPolicyBuilder
+            .RequireRole(UserRoles.EpdAssociate).Build();
     }
 }
