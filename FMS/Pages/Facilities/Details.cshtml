@@ -695,7 +695,7 @@ Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
                                                                                             {
                                                                                                 <a asp-page="/Phone/Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Edit</a>
                                                                                             }
-                                                                                            @if ((Model.FacilityDetail.Active && Model.CurrentUser.UserPosition != null) && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                                                                            @if (Model.FacilityDetail.Active &&  User.IsInRole(UserRoles.DeleteAuthority))
                                                                                             {
                                                                                                 <a asp-page="/Phone/Delete"
                                                                                                    asp-route-id="@p.Id"
@@ -1650,7 +1650,7 @@ Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
                                                     Edit
                                                 </a>
                                             }
-                                            @if ((Model.FacilityDetail.Active && Model.CurrentUser.UserPosition != null) && ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.FileEditor) || User.IsInRole(UserRoles.ComplianceOfficer))))
+                                            @if (Model.FacilityDetail.Active &&  User.IsInRole(UserRoles.DeleteAuthority))
                                             {
                                                 <form method="get" asp-page="Details">
 
@@ -1674,7 +1674,7 @@ Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
                                                     }
                                                 </form>
                                             }
-                                            @if ((Model.FacilityDetail.Active && Model.CurrentUser.UserPosition != null) && !item.Active && Model.CurrentUser.UserPosition.Name.Equals("PM2") && (User.IsInRole(UserRoles.SiteMaintenance)))
+                                            @if (Model.FacilityDetail.Active && User.IsInRole(UserRoles.DeleteAuthority) && !item.Active)
                                             {
                                                 <a asp-page="/Event/Delete"
                                                    asp-route-id="@item.Id"

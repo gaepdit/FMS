@@ -56,6 +56,16 @@
             </label>
         </div>
         <div class="form-check mb-3">
+            <input asp-for="HasDeleteAuthorityRole" class="form-check-input" aria-describedby="DeleteAuthorityRoleHelpBlock">
+            <label asp-for="HasDeleteAuthorityRole" class="form-check-label font-weight-bold">
+                <strong>@UserRoles.DisplayName(UserRoles.DeleteAuthority)</strong>
+                <br />
+                <small id="DeleteAuthorityRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.DeleteAuthority)
+                </small>
+            </label>
+        </div>
+        <div class="form-check mb-3">
             <input asp-for="HasFileCreatorRole" class="form-check-input" aria-describedby="CreatorRoleHelpBlock">
             <label asp-for="HasFileCreatorRole" class="form-check-label font-weight-bold">
                 <strong>@UserRoles.DisplayName(UserRoles.FileCreator)</strong>

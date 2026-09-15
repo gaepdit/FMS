@@ -16,9 +16,10 @@ namespace FMS.Domain.Entities.Users
         public const string FileEditor = "FileEditor";
         public const string ComplianceOfficer = "ComplianceOfficer";
         public const string EpdAssociate = "EPDAssociate";
+        public const string DeleteAuthority = "DeleteAuthority";
 
         public static readonly ImmutableArray<string> AllRoles =
-            ImmutableArray.Create(UserMaintenance, SiteMaintenance, FileCreator, FileEditor, ComplianceOfficer, EpdAssociate);
+            ImmutableArray.Create(UserMaintenance, SiteMaintenance, FileCreator, FileEditor, ComplianceOfficer, EpdAssociate, DeleteAuthority);
 
         public static string DisplayName(string role) =>
             role switch
@@ -29,6 +30,7 @@ namespace FMS.Domain.Entities.Users
                 FileEditor => "Facility Editor",
                 ComplianceOfficer => "Compliance Officer",
                 EpdAssociate => "EPD Associate",
+                DeleteAuthority => "Delete Authority",
                 _ => role,
             };
 
@@ -48,6 +50,7 @@ namespace FMS.Domain.Entities.Users
                 ComplianceOfficer => "Users with the Compliance Officer role are able to view reports and dashboards " +
                     "and are able to add and edit Facility Contacts and Events.",
                 EpdAssociate => "Users that need just Read-Only Access for information or reporting purposes.",
+                DeleteAuthority => "Users with the Delete Authority role are able to delete Contacts and Events.",
                 _ => DisplayName(role),
             };
     }

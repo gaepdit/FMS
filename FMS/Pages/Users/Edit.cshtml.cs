@@ -29,6 +29,9 @@ namespace FMS.Pages.Users
 
         [BindProperty]
         public bool HasSiteMaintenanceRole { get; set; }
+        
+        [BindProperty]
+        public bool HasDeleteAuthorityRole { get; set; }
 
         [BindProperty]
         public bool HasFileCreatorRole { get; set; }
@@ -143,7 +146,8 @@ namespace FMS.Pages.Users
                 {UserRoles.FileCreator, HasFileCreatorRole},
                 {UserRoles.FileEditor, HasFileEditorRole},
                 {UserRoles.ComplianceOfficer, HasComplianceOfficerRole},
-                {UserRoles.EpdAssociate, HasEpdAssociateRole}
+                {UserRoles.EpdAssociate, HasEpdAssociateRole},
+                {UserRoles.DeleteAuthority, HasDeleteAuthorityRole}
             };
             var result = await _userService.UpdateUserRolesAsync(UserId, roleSettings);
 
@@ -187,6 +191,7 @@ namespace FMS.Pages.Users
             HasFileEditorRole = roles.Contains(UserRoles.FileEditor);
             HasComplianceOfficerRole = roles.Contains(UserRoles.ComplianceOfficer);
             HasEpdAssociateRole = roles.Contains(UserRoles.EpdAssociate);
+            HasDeleteAuthorityRole = roles.Contains(UserRoles.DeleteAuthority);
         }
 
         private async Task PopulateSelectsAsync()
