@@ -2,6 +2,7 @@
     <ItemGroup>
         <PackageReference Include="Dapper" />
         <PackageReference Include="JetBrains.Annotations" />
+        <PackageReference Include="Markdig" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">

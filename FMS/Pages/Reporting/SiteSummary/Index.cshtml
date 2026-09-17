@@ -149,12 +149,17 @@
 {
     <div id="SearchResults" class="container-fluid bg-light-subtle p-3 rounded-3">
         <div class="row">
-            <div class="col-1">
-                <h3>Results</h3>
+            <div class="col-auto align-text-top">
+                <h3>
+                    Results:
+                </h3>
             </div>
             @if (Model.SummaryList.Count > 0)
             {
-                <div class="col-2 d-print-none ms-2">
+                <div class="col-2 text-end d-flex align-items-center">
+                    @Html.DisplayFor(m => Model.SummaryList.Count) Total results
+                </div>
+                <div class="col-auto d-print-none ms-2">
                     <a asp-page="Report" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
                        class="btn btn-sm btn-primary icon-link">
                         <svg class="bi">
@@ -162,12 +167,6 @@
                         </svg>
                         Export/Print Reports
                     </a>
-                </div>
-            }
-            @if (Model.SummaryList.Count > 0)
-            {
-                <div class="col-auto text-md-end align-text-bottom mb-1">
-                    Total results: @Html.DisplayFor(m => Model.SummaryList.Count)
                 </div>
             }
         </div>
@@ -185,8 +184,17 @@
                 <input type="hidden" asp-for="Spec.OrganizationalUnitId" />
                 <input type="hidden" asp-for="Spec.SortBy" />
                 <div class="row">
-                    <div class="col-5">
-                        <h5>Lists of URLs to Site Summary Reports</h5>
+                    <div class="col-auto">
+                        <h5>Lists of URLs to Site Summary Reports:</h5>
+                    </div>
+                    <div class="col-auto align-right d-print-none ms-2">
+                        <a asp-page="SiteSummaryList" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
+                           class="btn btn-sm btn-success icon-link">
+                            <svg class="bi">
+                                <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
+                            </svg>
+                            Export/Print List
+                        </a>
                     </div>
                     <div class="col-auto align-right d-print-none ms-2">
                         <button id="ExportButton"
@@ -194,15 +202,6 @@
                                 class="btn btn-sm btn-outline-success mb-1">
                             Export Site Summary List to Excel
                         </button>
-                    </div>
-                    <div class="col-auto align-right d-print-none ms-2">
-                        <a asp-page="SiteSummaryList" asp-all-route-data="Model.Spec.AsRouteValues()" target="_blank"
-                           class="btn btn-sm btn-outline-success icon-link">
-                            <svg class="bi">
-                                <use href="@Url.Content("~/images/app-icons.svg")#app-icon-printer-fill"></use>
-                            </svg>
-                            Export/Print List
-                        </a>
                     </div>
                     @if (User.IsInRole(UserRoles.SiteMaintenance))
                     {
@@ -226,15 +225,18 @@
         else
         {
             <table class="table" aria-label="Facility search results">
-                <thead class="thead-dark position-sticky top-0">
+                <thead class="position-sticky top-0">
                     <tr>
                         <th scope="col" class="text-center">HSI Number</th>
-                        <th scope="col">Facility Name <span class="text-muted">(click for individual report)</span></th>
-                        <th scope="col">Organizational Unit</th>
-                        <th scope="col">Compliance Officer</th>
-                        <th scope="col">County</th>
-                        <th scope="col">Class</th>
-                        <th scope="col">Latitude/Longitude</th>
+                        <th scope="col" class="text-center" style="white-space: pre-line">
+                            <span class="text-muted">(click for individual report)</span>
+                            Facility Name
+                        </th>
+                        <th scope="col" class="text-center">Organizational Unit</th>
+                        <th scope="col" class="text-center">Compliance Officer</th>
+                        <th scope="col" class="text-center">County</th>
+                        <th scope="col" class="text-center">Class</th>
+                        <th scope="col" class="text-center">Latitude/Longitude</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -247,18 +249,18 @@
                                 </a>
                             </td>
                             <td><a href="@Model.SiteSummaryURL@item.FacilityNumber" target="_blank">@Html.DisplayFor(m => item.Name, "StringOrNone")</a></td>
-                            <td>@Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")</td>
-                            <td>@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
-                            <td>@Html.DisplayFor(m => item.County.Name, "StringOrNone")</td>
+                            <td class="text-center">@Html.DisplayFor(m => item.OrganizationalUnit.Name, "StringOrNone")</td>
+                            <td class="text-center">@Html.DisplayFor(m => item.ComplianceOfficer.Name, "StringOrNone")</td>
+                            <td class="text-center">@Html.DisplayFor(m => item.County.Name, "StringOrNone")</td>
                             @if (item.LocationClass == null)
                             {
                                 <td>None</td>
                             }
                             else
                             {
-                                <td>@Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")</td>
+                                <td class="text-center">@Html.DisplayFor(m => item.LocationClass.Name, "StringOrNone")</td>
                             }
-                            <td>
+                            <td class="text-center">
                                 @Html.DisplayFor(m => item.Latitude, "DecimalOrNone")/@Html.DisplayFor(m => item.Longitude, "DecimalOrNone")
                             </td>
                         </tr>

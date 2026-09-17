@@ -51,7 +51,7 @@
                                     <button type="submit" name="itemId" value="@item.Id" class="btn btn-outline-warning btn-sm">Restore to list</button>
                                 }
                             </td>
-                            @if ((Model.CurrentUser.UserPosition.Name.Equals("PM1") || Model.CurrentUser.UserPosition.Name.Equals("PM2")) && (User.IsInRole(UserRoles.SiteMaintenance) || User.IsInRole(UserRoles.UserMaintenance)) && !item.Active)
+                            @if ((User.IsInRole(UserRoles.SiteMaintenance) || User.IsInRole(UserRoles.UserMaintenance)) && !item.Active)
                             {
                                 <td class="text-nowrap text-center">
                                     <a asp-page="Delete"

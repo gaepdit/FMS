@@ -56,6 +56,16 @@
             </label>
         </div>
         <div class="form-check mb-3">
+            <input asp-for="HasDeleteAuthorityRole" class="form-check-input" aria-describedby="DeleteAuthorityRoleHelpBlock">
+            <label asp-for="HasDeleteAuthorityRole" class="form-check-label font-weight-bold">
+                <strong>@UserRoles.DisplayName(UserRoles.DeleteAuthority)</strong>
+                <br />
+                <small id="DeleteAuthorityRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.DeleteAuthority)
+                </small>
+            </label>
+        </div>
+        <div class="form-check mb-3">
             <input asp-for="HasFileCreatorRole" class="form-check-input" aria-describedby="CreatorRoleHelpBlock">
             <label asp-for="HasFileCreatorRole" class="form-check-label font-weight-bold">
                 <strong>@UserRoles.DisplayName(UserRoles.FileCreator)</strong>
@@ -82,6 +92,16 @@
                 <br />
                 <small id="ComplianceOfficerRoleHelpBlock" class="form-text text-muted">
                     @UserRoles.Description(UserRoles.ComplianceOfficer)
+                </small>
+            </label>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasEpdAssociateRole" class="form-check-input" aria-describedby="EpdAssociateRoleHelpBlock">
+            <label asp-for="HasEpdAssociateRole" class="form-check-label font-weight-bold">
+                <strong>@UserRoles.DisplayName(UserRoles.EpdAssociate)</strong>
+                <br />
+                <small id="EpdAssociateRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.EpdAssociate)
                 </small>
             </label>
         </div>
