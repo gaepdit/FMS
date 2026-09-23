@@ -1,8 +1,12 @@
 using FMS.Domain.Entities.Users;
 using FMS.Platform.AppConfiguration;
+using ZLogger;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
+
+// Configure logging.
+builder.Logging.ClearProviders().AddZLoggerConsole(options => options.UseJsonFormatter());
 
 // Configure basic settings
 builder.AddHttpSecurity();

@@ -4,6 +4,7 @@ using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using ZLogger;
 
 namespace FMS.Platform.Authentication;
 
@@ -38,9 +39,7 @@ public sealed class AuthenticationManager(
         if (!configuration.ValidateLoginProviderId(loginProvider, identityProviderId))
             return InvalidLoginProvider(loginProvider, identityProviderId);
 
-        if (logger.IsEnabled(LogLevel.Information))
-            logger.LogInformation("User with ID {ProviderKey} in provider {LoginProvider} successfully authenticated",
-                providerKey, loginProvider);
+        logger.ZLogInformation($"User with ID {providerKey} in provider {loginProvider} successfully authenticated");
 
         // Find a user account using the external login provider.
         // If none, then find an account with the given username.
@@ -96,8 +95,7 @@ public sealed class AuthenticationManager(
             await CreateComplianceOfficeAsync(user);
         }
 
-        if (logger.IsEnabled(LogLevel.Information))
-            logger.LogInformation("Local user with ID {UserId} signed in", userId);
+        logger.ZLogInformation($"Local user with ID {userId} signed in");
 
         await signInManager.SignInWithClaimsAsync(user, isPersistent: false,
             additionalClaims: [new Claim(ClaimTypes.AuthenticationMethod, LoginProviders.TestUserScheme)]);
@@ -123,8 +121,7 @@ public sealed class AuthenticationManager(
 
         await SeedRolesAsync(user);
 
-        if (logger.IsEnabled(LogLevel.Information))
-            logger.LogInformation("Created new user with ID {InfoProviderKey}", info.ProviderKey);
+        logger.ZLogInformation($"Created new user with ID {info.ProviderKey}");
 
         // Add user to Compliance Officers list.
         await CreateComplianceOfficeAsync(user);
@@ -143,8 +140,7 @@ public sealed class AuthenticationManager(
         };
         var coId = await repository.TryCreateComplianceOfficerAsync(complianceOfficer);
 
-        if (logger.IsEnabled(LogLevel.Information))
-            logger.LogInformation("Created new compliance officer {Id}", coId);
+        logger.ZLogInformation($"Created new compliance officer {coId}");
     }
 
     private async Task SeedRolesAsync(ApplicationUser user)
@@ -154,8 +150,7 @@ public sealed class AuthenticationManager(
             .Get<string[]>().AsEnumerable();
         if (seedAdminUsers.Contains(user.Email, StringComparer.InvariantCultureIgnoreCase))
         {
-            if (logger.IsEnabled(LogLevel.Information))
-                logger.LogInformation("Seeding roles for new user with ID {UserId}", user.Id);
+            logger.ZLogInformation($"Seeding roles for new user with ID {user.Id}");
             await userManager.AddToRoleAsync(user, UserRoles.UserMaintenance);
             await userManager.AddToRoleAsync(user, UserRoles.SiteMaintenance);
             await userManager.AddToRoleAsync(user, UserRoles.FileEditor);
@@ -170,9 +165,7 @@ public sealed class AuthenticationManager(
         if (!addLoginResult.Succeeded)
             return UnableToAddLoginProvider(info.LoginProvider, info.ProviderKey);
 
-        if (logger.IsEnabled(LogLevel.Information))
-            logger.LogInformation("Login provider {InfoLoginProvider} added for user with ID {InfoProviderKey}",
-                info.LoginProvider, info.ProviderKey);
+        logger.ZLogInformation($"Login provider {info.LoginProvider} added for user with ID {info.ProviderKey}");
 
         // Update auditing info.
         user.MostRecentLogin = DateTimeOffset.Now;
@@ -194,9 +187,8 @@ public sealed class AuthenticationManager(
 
     private async Task<IdentityResult> RefreshUserInfoAndSignInAsync(ApplicationUser user, ExternalLoginInfo info)
     {
-        if (logger.IsEnabled(LogLevel.Information))
-            logger.LogInformation("Existing user with ID {InfoProviderKey} logged in with {InfoLoginProvider} provider",
-                info.ProviderKey, info.LoginProvider);
+        logger.ZLogInformation(
+            $"Existing user with ID {info.ProviderKey} logged in with {info.LoginProvider} provider");
 
         var previousValues = new ApplicationUser
         {
@@ -233,7 +225,7 @@ public sealed class AuthenticationManager(
             Code = nameof(MissingExternalLoginInfo),
             Description = $"{description}.",
         };
-        logger.LogWarning($"{description}");
+        logger.ZLogWarning($"{description}");
         return IdentityResult.Failed(error);
     }
 
@@ -244,8 +236,7 @@ public sealed class AuthenticationManager(
             Code = nameof(InvalidLoginProvider),
             Description = $"Invalid login provider '{loginProvider}' with ID '{identityProviderId}'.",
         };
-        logger.LogWarning("Invalid login provider '{LoginProvider}' with ID '{IdentityProviderId}'", loginProvider,
-            identityProviderId);
+        logger.ZLogWarning($"Invalid login provider '{loginProvider}' with ID '{identityProviderId}'");
         return IdentityResult.Failed(error);
     }
 
@@ -256,7 +247,7 @@ public sealed class AuthenticationManager(
             Code = nameof(UnableToCreateUser),
             Description = $"Failed to create new user with subject ID {subjectId}.",
         };
-        logger.LogWarning("Failed to create new user with subject ID {SubjectId}", subjectId);
+        logger.ZLogWarning($"Failed to create new user with subject ID {subjectId}");
         return IdentityResult.Failed(error);
     }
 
@@ -267,8 +258,7 @@ public sealed class AuthenticationManager(
             Code = nameof(UnableToAddLoginProvider),
             Description = $"Failed to add login provider {loginProvider} for user with ID {providerKey}.",
         };
-        logger.LogWarning("Failed to add login provider {LoginProvider} for user with ID {ProviderKey}", loginProvider,
-            providerKey);
+        logger.ZLogWarning($"Failed to add login provider {loginProvider} for user with ID {providerKey}");
         return IdentityResult.Failed(error);
     }
 
@@ -279,7 +269,7 @@ public sealed class AuthenticationManager(
             Code = nameof(InactiveUser),
             Description = $"Inactive user with subject ID {subjectId}.",
         };
-        logger.LogWarning("Inactive user with subject ID {SubjectId}", subjectId);
+        logger.ZLogWarning($"Inactive user with subject ID {subjectId}");
         return IdentityResult.Failed(error);
     }
 
@@ -290,7 +280,7 @@ public sealed class AuthenticationManager(
             Code = nameof(UserNotAllowed),
             Description = $"User with subject ID {subjectId} is not allowed.",
         };
-        logger.LogWarning("User with subject ID {SubjectId} is not allowed", subjectId);
+        logger.ZLogWarning($"User with subject ID {subjectId} is not allowed");
         return IdentityResult.Failed(error);
     }
 
