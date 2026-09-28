@@ -6,7 +6,11 @@
     <AssemblyVersion>2023.4.13</AssemblyVersion>
   </PropertyGroup>
 
-  <ItemGroup>
+	<PropertyGroup>
+		<MapDir>D:\FMS\Maps</MapDir>
+	</PropertyGroup>
+
+	<ItemGroup>
     <Compile Remove="Helpers\Site summary-VS26-VB.cs" />
   </ItemGroup>
 

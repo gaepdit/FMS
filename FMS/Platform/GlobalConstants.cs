@@ -27,5 +27,7 @@
 
         public const string SiteSummaryReportPath = "/Reporting/SiteSummary/Report/";
 
+        public const string MapDirectory = Environment.GetEnvironmentVariable("MAP_DIR") ?? "/Reporting/Map/";
+
     }
 }
