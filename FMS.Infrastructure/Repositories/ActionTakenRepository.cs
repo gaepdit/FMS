@@ -76,6 +76,7 @@ namespace FMS.Infrastructure.Repositories
 
             actionTaken.Name = actionTakenUpdates.Name;
 
+            _context.ActionsTaken.Update(actionTaken);
             await _context.SaveChangesAsync();
 
             // Ensure all code paths return a value

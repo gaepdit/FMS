@@ -34,38 +34,38 @@ namespace FMS.Helpers
             this IEnumerable<EventSummaryDto> events, EventSort sortBy) =>
             sortBy switch
             {
-                EventSort.EventType => events.OrderBy(e => e.EventType.Name)
+                EventSort.EventType => events.OrderByDescending(e => e.Active).ThenBy(e => e.EventType.Name)
                     .ThenByDescending(e => e.StartDate),
-                EventSort.EventTypeDesc => events.OrderByDescending(e => e.EventType.Name)
+                EventSort.EventTypeDesc => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.EventType.Name)
                     .ThenByDescending(e => e.StartDate),
-                EventSort.ActionTaken => events.OrderBy(e => e.ActionTaken.Name)
+                EventSort.ActionTaken => events.OrderByDescending(e => e.Active).ThenBy(e => e.ActionTaken.Name)
                     .ThenBy(e => e.StartDate),
-                EventSort.ActionTakenDesc => events.OrderByDescending(e => e.ActionTaken.Name)
+                EventSort.ActionTakenDesc => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.ActionTaken.Name)
                     .ThenByDescending(e => e.StartDate),
-                EventSort.StartDateDesc => events.OrderByDescending(e => e.StartDate)
+                EventSort.StartDateDesc => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.StartDate)
                     .ThenByDescending(e => e.DueDate),
-                EventSort.DueDate => events.OrderBy(e => e.DueDate)
+                EventSort.DueDate => events.OrderByDescending(e => e.Active).ThenBy(e => e.DueDate)
                     .ThenBy(e => e.StartDate),
-                EventSort.DueDateDesc => events.OrderByDescending(e => e.DueDate)
+                EventSort.DueDateDesc => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.DueDate)
                     .ThenBy(e => e.StartDate),
-                EventSort.CompletionDate => events.OrderByDescending(e => e.CompletionDate)
+                EventSort.CompletionDate => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.CompletionDate)
                     .ThenBy(e => e.EventType.Name),
-                EventSort.CompletionDateDesc => events.OrderBy(e => e.CompletionDate)
+                EventSort.CompletionDateDesc => events.OrderByDescending(e => e.Active).ThenBy(e => e.CompletionDate)
                     .ThenBy(e => e.EventType.Name),
-                EventSort.ComplianceOfficer => events.OrderBy(e => e.ComplianceOfficer.Name)
+                EventSort.ComplianceOfficer => events.OrderByDescending(e => e.Active).ThenBy(e => e.ComplianceOfficer.Name)
                     .ThenBy(e => e.EventType.Name),
-                EventSort.ComplianceOfficerDesc => events.OrderByDescending(e => e.ComplianceOfficer.Name)
+                EventSort.ComplianceOfficerDesc => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.ComplianceOfficer.Name)
                     .ThenBy(e => e.EventType.Name),
-                EventSort.EventAmount => events.OrderBy(e => e.EventAmount)
+                EventSort.EventAmount => events.OrderByDescending(e => e.Active).ThenBy(e => e.EventAmount)
                     .ThenBy(e => e.EventType.Name),
-                EventSort.EventAmountDesc => events.OrderByDescending(e => e.EventAmount)
+                EventSort.EventAmountDesc => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.EventAmount)
                     .ThenByDescending(e => e.EventType.Name),
-                EventSort.EventContractor => events.OrderByDescending(e => e.EventContractor?.Name)
+                EventSort.EventContractor => events.OrderByDescending(e => e.Active).ThenByDescending(e => e.EventContractor?.Name)
                     .ThenBy(e => e.EventType.Name),
-                EventSort.EventContractorDesc => events.OrderBy(e => e.EventContractor?.Name)
+                EventSort.EventContractorDesc => events.OrderByDescending(e => e.Active).ThenBy(e => e.EventContractor?.Name)
                     .ThenBy(e => e.EventType.Name),
                 // EventSort.StartDate
-                _ => events.OrderBy(e => e.StartDate)
+                _ => events.OrderByDescending(e => e.Active).ThenBy(e => e.StartDate)
                     .ThenByDescending(e => e.DueDate)
             };
 

@@ -26,6 +26,13 @@ namespace FMS.Infrastructure.Repositories
             return phone == null ? null : new PhoneEditDto(phone);
         }
 
+        public async Task<PhoneSummaryDto> GetPhoneSummaryByIdAsync(Guid id)
+        {
+            var phone = await _context.Phones.AsNoTracking()
+                .SingleOrDefaultAsync(e => e.Id == id);
+            return phone == null ? null : new PhoneSummaryDto(phone);
+        }
+
         public async Task<PhoneEditDto> GetPhoneByIdAndContactIdAsync(Guid id, Guid contactId)
         {
             var phone = await _context.Phones.AsNoTracking()
@@ -122,6 +129,20 @@ namespace FMS.Infrastructure.Repositories
 
             _context.Phones.Update(phone);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeletePhoneByIdAsync(Guid id)
+        {
+            Prevent.NullOrEmpty(id, nameof(id));
+            var phone = await _context.Phones
+                .SingleOrDefaultAsync(e => e.Id == id);
+            if (phone == null)
+            {
+                return false;
+            }
+            _context.Phones.Remove(phone);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         #region IDisposable Support

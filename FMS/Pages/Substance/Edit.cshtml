@@ -9,9 +9,11 @@
 @{
     ViewData["Title"] = "Edit Substance";
 }
-<h1>@ViewData["Title"]</h1>
-<hr />
-<div class="container bg-light-subtle py-3 rounded-3">
+
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="EditSubstance.Id" />
@@ -81,11 +83,11 @@
         <div class="row mt-3">
             <div class="col">
                 <button id="submitButton" type="submit" class="btn btn-primary col-sm-3 mb-3 mb-sm-0">Update Substance</button>
-                <a asp-page="../Facilities/Details" 
-                    asp-route-id="@Model.EditSubstance.FacilityId"
-                    asp-route-tab="Substances"
-                    asp-fragment="TabPages"
-                    class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
+                <a asp-page="../Facilities/Details"
+                   asp-route-id="@Model.EditSubstance.FacilityId"
+                   asp-route-tab="Substances"
+                   asp-fragment="TabPages"
+                   class="btn btn-outline-secondary col-md-2 mb-3 mb-sm-0">
                     Cancel
                 </a>
             </div>

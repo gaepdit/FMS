@@ -35,7 +35,7 @@ namespace FMS
             EventTypeEditDto currentEventTypeEditDto = await _eventTypeRepository.GetEventTypeByIdAsync(eventTypeId);
 
             if (currentEventTypeEditDto == null)
-            {   
+            {
                 throw new ArgumentException($"Event Type with ID {eventTypeId} does not exist.", nameof(eventTypeId));
             }
 
@@ -45,7 +45,7 @@ namespace FMS
             {
                 throw new InvalidOperationException("No action taken records found.");
             }
-            
+
             IList<AllowedActionTakenSpec> allowedActionsTaken = await _repository.GetAllowedActionTakenListAsync(eventTypeId);
 
             if (allowedActionsTaken == null)
@@ -54,25 +54,38 @@ namespace FMS
             }
 
             EventType newEventType = new(currentEventTypeEditDto);
+            var returnAllowedActionTakenSpecList = new List<AllowedActionTakenSpec>(allowedActionsTaken);
 
             foreach (var actionTaken in actionTakenList)
             {
                 var newActionTaken = new ActionTaken(actionTaken);
-
-                if (!allowedActionsTaken.Any(e => e.EventTypeId == newEventType.Id && e.ActionTakenId == newActionTaken.Id))
+                var newAAT = new AllowedActionTaken
                 {
-                    var newAAT = new AllowedActionTaken
+                    Id = Guid.NewGuid(),
+                    Active = false,
+                    ActionTaken = newActionTaken,
+                    EventType = newEventType
+                };
+                var newSpecAAT = new AllowedActionTakenSpec(newAAT);
+                bool found = false;
+
+                foreach (var allowedAction in allowedActionsTaken)
+                {
+                    if (allowedAction.ActionTakenId == newSpecAAT.ActionTakenId)
                     {
-                        Id = Guid.NewGuid(),
-                        Active = false,
-                        ActionTaken = newActionTaken,
-                        EventType = newEventType
-                    };
-                    allowedActionsTaken.Add(new AllowedActionTakenSpec(newAAT));
+                        found = true;
+                        break;
+                    }
                 }
+
+                if (!found)
+                {
+                    returnAllowedActionTakenSpecList.Add(newSpecAAT);
+                }
+
             }
 
-            return allowedActionsTaken
+            return returnAllowedActionTakenSpecList
                 .OrderByDescending(e => e.Active)
                 .ThenBy(e => e.ActionTakenName)
                 .ThenBy(e => e.EventTypeActive)

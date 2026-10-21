@@ -1,9 +1,6 @@
-using DocumentFormat.OpenXml.Spreadsheet;
 using FMS.Domain.Dto;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
-using FMS.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -23,6 +20,7 @@ namespace FMS.Pages.Dashboard
         public IList<DashboardUserFacilitiesDto> UserFacilities { get; set; } = [];
         public IList<DashboardUnitFacilitiesDto> UnitFacilities { get; set; } = [];
         public IList<DashboardProgramFacilitiesDto> ProgramFacilities { get; set; } = [];
+        public IList<DashboardProgramFacilitiesWithDeletedItemsDto> ProgramFacilitiesWithDeletedItems { get; set; } = [];
         public IList<DashboardUserEventsDto> UserEvents { get; set; } = [];
         public IList<DashboardUnitEventsDto> UnitEvents { get; set; } = [];
         public IList<DashboardProgramEventsDto> ProgramEvents { get; set; } = [];
@@ -73,6 +71,8 @@ namespace FMS.Pages.Dashboard
             {
                 ProgramFacilities = await _repository.GetProgramHSIFacilitiesById(CurrentUser.UserProgram.Id);
 
+                ProgramFacilitiesWithDeletedItems = await _repository.GetProgramFacilitiesWithDeletedItems(CurrentUser.Id);
+
                 ProgramUnits = ProgramFacilities.Select(e => e.OrganizationalUnit?.Name).Distinct().OrderBy(name => name).ToList();
             }
 
@@ -91,7 +91,7 @@ namespace FMS.Pages.Dashboard
 
             if (CurrentUser.UserPosition.Name == "PM2")
             {
-                ProgramEvents = await _repository.GetProgramEventsByUserId(CurrentUser.Id);
+                ProgramEvents = await _repository.GetProgramEventsByUserId(CurrentUser.Id, includeInactive: true);
 
                 UserUnits = ProgramEvents.Select(e => e.Unit?.Name).Where(name => name != null).Distinct().OrderBy(name => name).ToList();
 

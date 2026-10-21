@@ -85,9 +85,9 @@ namespace FMS.Domain.Dto.Reports
                 string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
                 return environment switch
                 {
-                    "Development" => DomainConstants.siteSummaryReportPathPdfDev + FacilityNumber + DomainConstants.pdfSuffix,
-                    "UAT" => DomainConstants.siteSummaryReportPathPdfUat + FacilityNumber + DomainConstants.pdfSuffix,
-                    _ => DomainConstants.siteSummaryReportPathPdfProd + FacilityNumber + DomainConstants.pdfSuffix,
+                    "Development" => DomainConstants.SiteSummaryReportPathPdfDev + FacilityNumber + DomainConstants.pdfSuffix,
+                    "UAT" => DomainConstants.SiteSummaryReportPathPdfUat + FacilityNumber + DomainConstants.pdfSuffix,
+                    _ => DomainConstants.SiteSummaryReportPathPdfProd + FacilityNumber + DomainConstants.pdfSuffix,
                 };
             }
         }

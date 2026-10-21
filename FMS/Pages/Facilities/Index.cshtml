@@ -22,15 +22,16 @@
 }
 @section Styles
 {
-    <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" />  
+    <link href="~/lib/select2/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/multiSelect.css" asp-append-version="true" />
 }
+<div class="container-fluid bg-light-subtle rounded-3 p-3 mt-3">
+    <h1>
+        @ViewData["Title"]
+    </h1>
 
-<h1>@ViewData["Title"]</h1>
+    <partial name="_AlertPartial" for="Message" id="alert" />
 
-<partial name="_AlertPartial" for="Message" id="alert" />
-
-<div class="p-3 rounded-3 bg-light-subtle">
     <form method="get" asp-fragment="SearchResults">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <div class="mb-3 row">
@@ -273,7 +274,7 @@
                         </div>
                     </div>
                 </caption>
-                <thead class="thead-dark">
+                <thead class="thead-light position-sticky sticky-top">
                     <tr>
                         <th scope="col" class="text-nowrap">
                             <a asp-fragment="SearchResults"
@@ -283,39 +284,39 @@
                                 Facility
                                 @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
                                 new { up = FacilitySort.FacilityNumber, down = FacilitySort.FacilityNumberDesc })
-                    </a>
-                </th>
-                <th scope="col" class="text-nowrap">
-                    <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
-                       asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
-                        File Label
-                        @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                                new { up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc })
-                    </a>
-                </th>
-                <th scope="col" class="text-nowrap">
-                    <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
-                       asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Name ? FacilitySort.NameDesc : FacilitySort.Name)">
-                        Name
-                        @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                                new { up = FacilitySort.Name, down = FacilitySort.NameDesc })
-                    </a>
-                </th>
-                <th scope="col" class="text-nowrap">
-                    <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
-                       asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Address ? FacilitySort.AddressDesc : FacilitySort.Address)">
-                        Address
-                        @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
-                                                new { up = FacilitySort.Address, down = FacilitySort.AddressDesc })
-                    </a>
-                </th>
-                <th scope="col" class="text-center">Type</th>
-                <th scope="col">Online</th>
-                <th scope="col">Records</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (FacilitySummaryDto item in Model.FacilityList.Items)
+                            </a>
+                        </th>
+                        <th scope="col" class="text-nowrap">
+                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                               asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.FileLabel ? FacilitySort.FileLabelDesc : FacilitySort.FileLabel)">
+                                File Label
+                                @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                                        new { up = FacilitySort.FileLabel, down = FacilitySort.FileLabelDesc })
+                            </a>
+                        </th>
+                        <th scope="col" class="text-nowrap">
+                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                               asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Name ? FacilitySort.NameDesc : FacilitySort.Name)">
+                                Name
+                                @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                                        new { up = FacilitySort.Name, down = FacilitySort.NameDesc })
+                            </a>
+                        </th>
+                        <th scope="col" class="text-nowrap">
+                            <a asp-fragment="SearchResults" asp-all-route-data="Model.Spec.AsRouteValues" asp-route-handler="search"
+                               asp-route-SortBy="@(Model.Spec.SortBy == FacilitySort.Address ? FacilitySort.AddressDesc : FacilitySort.Address)">
+                                Address
+                                @Html.DisplayFor(m => m.Spec.SortBy, "SortArrow",
+                                                        new { up = FacilitySort.Address, down = FacilitySort.AddressDesc })
+                            </a>
+                        </th>
+                        <th scope="col" class="text-center">Type</th>
+                        <th scope="col">Online</th>
+                        <th scope="col">Records</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (FacilitySummaryDto item in Model.FacilityList.Items)
                     {
                         <tr class="@(!item.Active ? "table-warning" : "")">
                             <td>

@@ -1,4 +1,5 @@
 ﻿using FMS.Domain.Dto;
+using FMS.Domain.Entities;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
 using FMS.Domain.Services;
@@ -23,7 +24,7 @@ namespace FMS.Infrastructure.Repositories
         public async Task<bool> UserExistsAsync(Guid id) =>
             await _context.Users.AnyAsync(e => e.Id == id);
 
-        public async Task<ApplicationUser> GetApplicationUser (Guid id) =>
+        public async Task<ApplicationUser> GetApplicationUser(Guid id) =>
             await _context.Users.SingleOrDefaultAsync(e => e.Id == id);
 
         public async Task<Guid> GetCOIdFromUser(UserView user)
@@ -60,6 +61,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.FacilityStatus)
                 .Include(e => e.FacilityType)
                 .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.OrganizationalUnit)
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
@@ -84,6 +86,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.FacilityStatus)
                 .Include(e => e.FacilityType)
                 .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.OrganizationalUnit)
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
@@ -109,6 +112,7 @@ namespace FMS.Infrastructure.Repositories
                 .Include(e => e.FacilityStatus)
                 .Include(e => e.FacilityType)
                 .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.OrganizationalUnit)
                 .Include(e => e.LocationDetails)
                 .ThenInclude(e => e.LocationClass)
                 .Include(e => e.OrganizationalUnit)
@@ -123,6 +127,54 @@ namespace FMS.Infrastructure.Repositories
                 .Select(e => new DashboardProgramFacilitiesDto(e))
                 .AsSplitQuery()
                 .ToListAsync();
+        }
+
+        public async Task<List<DashboardProgramFacilitiesWithDeletedItemsDto>> GetProgramFacilitiesWithDeletedItems(Guid id)
+        {
+            var currentUser = await GetApplicationUser(id);
+
+            var dashboardFacilitiesList = await _context.Facilities.AsNoTracking()
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.OrganizationalUnit)
+                .Include(e => e.LocationDetails)
+                .ThenInclude(e => e.LocationClass)
+                .Include(e => e.OrganizationalUnit)
+                .ThenInclude(e => e.UserProgram)
+                .Include(e => e.Contacts)
+                .Include(e => e.Events)
+                .Where(e => e.OrganizationalUnit.UserProgram.Id == currentUser.UserProgram.Id)
+                .Where(e => e.FacilityType.Name != "RN")
+                .OrderBy(e => e.OrganizationalUnit.Name)
+                .ThenBy(e => e.ComplianceOfficer.FamilyName)
+                .ThenBy(e => e.ComplianceOfficer.GivenName)
+                .ThenBy(e => e.Name)
+                .Select(e => new DashboardProgramFacilitiesWithDeletedItemsDto(e))
+                .AsSplitQuery()
+                .ToListAsync();
+
+            var returnDashboardFacilitiesList = new List<DashboardProgramFacilitiesWithDeletedItemsDto>();
+
+            foreach (var facility in dashboardFacilitiesList)
+            {
+                if (facility.Contacts != null && facility.Contacts.Any(c => !c.Active))
+                {
+                    facility.InactiveContacts = true;
+                }
+                if (facility.Events != null && facility.Events.Any(ev => !ev.Active))
+                {
+                    facility.InactiveEvents = true;
+                }
+                if (facility.InactiveContacts || facility.InactiveEvents)
+                {
+                    returnDashboardFacilitiesList.Add(facility);
+                }
+            }
+
+            return returnDashboardFacilitiesList;
         }
 
         #endregion

@@ -5,9 +5,11 @@
     ViewData["Title"] = "Edit User Roles";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="container bg-light-subtle py-3 rounded-3">
+<div class="container bg-light-subtle py-3 rounded-3 mt-3">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <hr />
     <form method="post">
         <p>Roles for: <strong>@Model.DisplayName</strong> (@Model.Email)</p>
         <div class="mb-3 row">
@@ -26,7 +28,6 @@
             <div class="col-md-4">
                 <label asp-for="UserPositionId"></label>
                 <select asp-for="UserPositionId" asp-items="Model.UserPositions" class="form-select">
-                    <option value=""></option>
                 </select>
             </div>
         </div>
@@ -51,6 +52,16 @@
                 <br />
                 <small id="SiteMaintenanceRoleHelpBlock" class="form-text text-muted">
                     @UserRoles.Description(UserRoles.SiteMaintenance)
+                </small>
+            </label>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasDeleteAuthorityRole" class="form-check-input" aria-describedby="DeleteAuthorityRoleHelpBlock">
+            <label asp-for="HasDeleteAuthorityRole" class="form-check-label font-weight-bold">
+                <strong>@UserRoles.DisplayName(UserRoles.DeleteAuthority)</strong>
+                <br />
+                <small id="DeleteAuthorityRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.DeleteAuthority)
                 </small>
             </label>
         </div>
@@ -81,6 +92,16 @@
                 <br />
                 <small id="ComplianceOfficerRoleHelpBlock" class="form-text text-muted">
                     @UserRoles.Description(UserRoles.ComplianceOfficer)
+                </small>
+            </label>
+        </div>
+        <div class="form-check mb-3">
+            <input asp-for="HasEpdAssociateRole" class="form-check-input" aria-describedby="EpdAssociateRoleHelpBlock">
+            <label asp-for="HasEpdAssociateRole" class="form-check-label font-weight-bold">
+                <strong>@UserRoles.DisplayName(UserRoles.EpdAssociate)</strong>
+                <br />
+                <small id="EpdAssociateRoleHelpBlock" class="form-text text-muted">
+                    @UserRoles.Description(UserRoles.EpdAssociate)
                 </small>
             </label>
         </div>

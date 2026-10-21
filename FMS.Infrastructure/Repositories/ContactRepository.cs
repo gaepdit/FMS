@@ -55,6 +55,16 @@ namespace FMS.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<ContactSummaryDto> GetContactSummaryByIdAsync(Guid id)
+        {
+            var contact = await _context.Contacts
+                .AsNoTracking()
+                .Include(e => e.ContactType)
+                .Include(e => e.Phones)
+                .SingleOrDefaultAsync(e => e.Id == id);
+            return contact == null ? null : new ContactSummaryDto(contact);
+        }
+
         public Task<Guid> CreateContactAsync(ContactCreateDto contactCreate)
         {
             Prevent.Null(contactCreate, nameof(contactCreate));
@@ -131,6 +141,20 @@ namespace FMS.Infrastructure.Repositories
 
             _context.Contacts.Update(contact);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteContactByIdAsync(Guid id)
+        {
+            Prevent.NullOrEmpty(id, nameof(id));
+            var contact = await _context.Contacts
+                .SingleOrDefaultAsync(e => e.Id == id);
+            if (contact == null)
+            {
+                return false;
+            }
+            _context.Contacts.Remove(contact);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         #region IDisposable Implementation

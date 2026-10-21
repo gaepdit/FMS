@@ -258,6 +258,7 @@ namespace FMS.Infrastructure.Repositories
             }
             return null;
         }
+
         public async Task<string> GetAbandonedInactiveNameAsync(Guid? id)
         {
             if (id.HasValue)
@@ -268,6 +269,7 @@ namespace FMS.Infrastructure.Repositories
             }
             return null;
         }
+
         public async Task<string> GetChemicalNameAsync(Guid? id)
         {
             if (id.HasValue)

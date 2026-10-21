@@ -1,11 +1,11 @@
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
+using FMS.Domain.Dto.Reports;
 using FMS.Domain.Repositories;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using FMS.Domain.Dto.Reports;
 
 namespace FMS.Pages.Reporting.SiteSummary
 {

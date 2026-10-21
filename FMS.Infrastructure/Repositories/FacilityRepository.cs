@@ -1,6 +1,3 @@
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using Dapper;
 using FMS.Domain.Data;
 using FMS.Domain.Dto;
@@ -10,6 +7,9 @@ using FMS.Domain.Repositories;
 using FMS.Domain.Utils;
 using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace FMS.Infrastructure.Repositories
 {
@@ -42,7 +42,7 @@ namespace FMS.Infrastructure.Repositories
                 .ThenBy(e => e.EndYear)
                 .ThenBy(e => e.BoxNumber).ToList();
 
-            if (facility.FacilityType.Name == "HSI")
+            if (facility.FacilityType.Name == "HSI" || (facility.FacilityType.Name == "VRP" && facility.FacilityStatus.Name == "Event Tracking On"))
             {
                 facility.HsrpFacilityProperties = await _context.HsrpFacilityProperties
                     .AsNoTracking()
@@ -78,50 +78,53 @@ namespace FMS.Infrastructure.Repositories
                     .ThenBy(e => e.GivenName)
                     .ToListAsync();
 
-                facility.ScoreDetails = await _context.Scores
-                    .AsNoTracking()
-                    .Where(e => e.FacilityId == id)
-                    .FirstOrDefaultAsync();
-                if (facility.ScoreDetails == null)
+                if (facility.FacilityType.Name == "HSI")
                 {
-                    facility.ScoreDetails = new Score(facility.Id);
-                    await _context.Scores.AddAsync(facility.ScoreDetails);
-                    await _context.SaveChangesAsync();
-                }
+                    facility.ScoreDetails = await _context.Scores
+                        .AsNoTracking()
+                        .Where(e => e.FacilityId == id)
+                        .FirstOrDefaultAsync();
+                    if (facility.ScoreDetails == null)
+                    {
+                        facility.ScoreDetails = new Score(facility.Id);
+                        await _context.Scores.AddAsync(facility.ScoreDetails);
+                        await _context.SaveChangesAsync();
+                    }
 
-                facility.Substances = await _context.Substances
-                    .AsNoTracking()
-                    .Include(e => e.Chemical)
-                    .Where(e => e.FacilityId == id)
-                    .OrderByDescending(e => e.Active)
-                    .ThenByDescending(e => e.Chemical.Active)
-                    .ThenBy(e => e.Chemical.CommonName)
-                    .ToListAsync();
+                    facility.Substances = await _context.Substances
+                        .AsNoTracking()
+                        .Include(e => e.Chemical)
+                        .Where(e => e.FacilityId == id)
+                        .OrderByDescending(e => e.Active)
+                        .ThenByDescending(e => e.Chemical.Active)
+                        .ThenBy(e => e.Chemical.CommonName)
+                        .ToListAsync();
 
-                facility.GroundwaterScoreDetails = await _context.GroundwaterScores
-                    .AsNoTracking()
-                    .Where(e => e.FacilityId == id)
-                    .Include(e => e.Substance)
-                    .Include(e => e.Substance.Chemical)
-                    .FirstOrDefaultAsync();
-                if (facility.GroundwaterScoreDetails == null)
-                {
-                    facility.GroundwaterScoreDetails = new GroundwaterScore(facility.Id);
-                    await _context.GroundwaterScores.AddAsync(facility.GroundwaterScoreDetails);
-                    await _context.SaveChangesAsync();
-                }
+                    facility.GroundwaterScoreDetails = await _context.GroundwaterScores
+                        .AsNoTracking()
+                        .Where(e => e.FacilityId == id)
+                        .Include(e => e.Substance)
+                        .Include(e => e.Substance.Chemical)
+                        .FirstOrDefaultAsync();
+                    if (facility.GroundwaterScoreDetails == null)
+                    {
+                        facility.GroundwaterScoreDetails = new GroundwaterScore(facility.Id);
+                        await _context.GroundwaterScores.AddAsync(facility.GroundwaterScoreDetails);
+                        await _context.SaveChangesAsync();
+                    }
 
-                facility.OnsiteScoreDetails = await _context.OnsiteScores
-                    .AsNoTracking()
-                    .Where(e => e.FacilityId == id)
-                    .Include(e => e.Substance)
-                    .Include(e => e.Substance.Chemical)
-                    .FirstOrDefaultAsync();
-                if (facility.OnsiteScoreDetails == null)
-                {
-                    facility.OnsiteScoreDetails = new OnsiteScore(facility.Id);
-                    await _context.OnsiteScores.AddAsync(facility.OnsiteScoreDetails);
-                    await _context.SaveChangesAsync();
+                    facility.OnsiteScoreDetails = await _context.OnsiteScores
+                        .AsNoTracking()
+                        .Where(e => e.FacilityId == id)
+                        .Include(e => e.Substance)
+                        .Include(e => e.Substance.Chemical)
+                        .FirstOrDefaultAsync();
+                    if (facility.OnsiteScoreDetails == null)
+                    {
+                        facility.OnsiteScoreDetails = new OnsiteScore(facility.Id);
+                        await _context.OnsiteScores.AddAsync(facility.OnsiteScoreDetails);
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
                 facility.StatusDetails = await _context.Statuses
@@ -308,6 +311,35 @@ namespace FMS.Infrastructure.Repositories
 
             return items;
         }
+
+        public async Task<List<FacilityDetailDto>> GetFacilityListForCoDeleteAsync(Guid complianceOfficerId)
+        {
+            var facilities = await _context.Facilities.AsNoTracking()
+                .Include(e => e.County)
+                .Include(e => e.FacilityStatus)
+                .Include(e => e.FacilityType)
+                .Include(e => e.BudgetCode)
+                .Include(e => e.OrganizationalUnit)
+                .Include(e => e.ComplianceOfficer)
+                .Include(e => e.HsrpFacilityProperties)
+                .ThenInclude(e => e.ComplianceOfficer)
+                .Include(e => e.Events)
+                .ThenInclude(e => e.ComplianceOfficer)
+                .Where(e => e.ComplianceOfficerId == complianceOfficerId || e.HsrpFacilityProperties.ComplianceOfficerId == complianceOfficerId || e.Events.Any(ev => ev.ComplianceOfficerId == complianceOfficerId))
+                .OrderBy(e => e.Name)
+                .ToListAsync();
+
+            var facilityDetails = new List<FacilityDetailDto>();
+
+            foreach (var facility in facilities)
+            {
+                var facilityDetail = new FacilityDetailDto(facility);
+                facilityDetails.Add(facilityDetail);
+            }
+
+            return facilityDetails;
+        }
+
 
         public async Task<IReadOnlyList<FacilityMapSummaryDto>> GetFacilityListAsync(FacilityMapSpec spec)
         {

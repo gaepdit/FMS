@@ -9,15 +9,15 @@
 @{
     ViewData["Title"] = $"Edit {MaintenanceOptions.EventType}: {Model.EventType.Name}";
 }
-<h1>
-    @ViewData["Title"]
-    @if (!Model.EventType.Active)
-    {
-        <span class="text-muted">(Removed)</span>
-    }
-</h1>
 
 <div class="container bg-light-subtle py-3 rounded-3">
+    <h1>
+        @ViewData["Title"]
+        @if (!Model.EventType.Active)
+        {
+            <span class="text-muted">(Removed)</span>
+        }
+    </h1>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="EventType.Active" />

@@ -10,11 +10,11 @@
 @{
     ViewData["Title"] = $"Edit Location Properties: {Model.Facility.FacilityNumber}";
 }
-<h1>
-    @ViewData["Title"]
-</h1>
-<hr />
-<div class="container-fluid parent-container d-lg-inline-flex bg-light-subtle p-3 rounded-3">
+
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
     <form method="get">
         <div class="row">
             <p>
@@ -54,8 +54,7 @@
         </div>
     </form>
 </div>
-<hr />
-<div id="MapResults" class="container-fluid parent-container d-lg-inline-flex bg-light-subtle p-3 rounded-3">
+<div id="MapResults" class="container-fluid parent-container d-lg-inline-flex bg-light-subtle p-3 mt-3 rounded-3">
     <div class="row">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
@@ -79,13 +78,13 @@
             </div>
             <input type="hidden" asp-for="Location.MapZoom" />
             <input type="hidden" asp-for="Location.MapType" />
-            <div class="row mb-3">
-                <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
+            <div class="row m-1">
+                <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 me-2 mb-sm-0">Update</button>
                 <a asp-page="../Facilities/Details"
-                       asp-route-id="@Model.Facility.Id"
-                       asp-route-tab="Location"
-                       asp-fragment="TabPages"
-                       class="btn btn-outline-secondary col-md-2">
+                   asp-route-id="@Model.Facility.Id"
+                   asp-route-tab="Location"
+                   asp-fragment="TabPages"
+                   class="btn btn-outline-secondary col-md-2">
                     Cancel
                 </a>
             </div>

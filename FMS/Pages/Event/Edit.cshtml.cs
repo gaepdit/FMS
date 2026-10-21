@@ -90,18 +90,17 @@ namespace FMS.Pages.Event
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (EditEvent.StartDate > EditEvent.CompletionDate)
-            {
-                ModelState.AddModelError("EditEvent.CompletionDate", "Start date cannot be later than Completion date.");
-            }
-            if(EditEvent.CompletionDate > DateOnly.FromDateTime(DateTime.Now))
-            {
-                ModelState.AddModelError("EditEvent.CompletionDate", "Completion date cannot be in the future.");
-            }
-
             AllowedActionTakenSpec = await _allowedActionTakenRepository.GetAllowedActionTakenByEventTypeAndActionTakenAsync((Guid)EditEvent.EventTypeId, (Guid)EditEvent.ActionTakenId);
             if (AllowedActionTakenSpec != null)
             {
+                if (EditEvent.StartDate > EditEvent.CompletionDate)
+                {
+                    ModelState.AddModelError("EditEvent.CompletionDate", "Start date cannot be later than Completion date.");
+                }
+                if (EditEvent.CompletionDate > DateOnly.FromDateTime(DateTime.Now))
+                {
+                    ModelState.AddModelError("EditEvent.CompletionDate", "Completion date cannot be in the future.");
+                }
                 if (AllowedActionTakenSpec.StartDateRequired && EditEvent.StartDate == null)
                 {
                     ModelState.AddModelError("EditEvent.StartDate", "Start date is required for the selected Action Taken.");

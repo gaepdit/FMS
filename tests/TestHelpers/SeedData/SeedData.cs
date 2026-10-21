@@ -1,5 +1,6 @@
 ﻿using FMS.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
+using FMS.Domain.Entities.Users;    
 
 namespace FMS.TestData.SeedData
 {
@@ -44,7 +45,7 @@ namespace FMS.TestData.SeedData
             await SeedIfEmpty(context.Substances, GetSubstances());
             await SeedIfEmpty(context.Statuses, GetStatuses());
             await SeedIfEmpty(context.Events, GetEvents());
-            
+
 
             await context.SaveChangesAsync(token);
             return;

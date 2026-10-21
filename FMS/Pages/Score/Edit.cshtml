@@ -11,37 +11,37 @@
 @{
     ViewData["Title"] = "Edit Score Properties";
 }
-<h1>
-    @ViewData["Title"]
-</h1>
-<hr />
-<button id="Score-help-button"
-        type="button"
-        style="border: none; padding: 5px; background: none; border-radius: 5px;"
-        aria-details="Score-tooltip-text"
-        data-bs-toggle="tooltip"
-        data-bs-placement="top"
-        data-bs-html="true"
-        title="@ScoreToolTipHelper.Score">
-    <svg class="bi" role="img" aria-label="Score help">
-        <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
-    </svg>
-    RQSM Score Sheet Calculator
-</button>
-<div class="p-3 rounded-3 bg-light-subtle">
+
+<div class="container-fluid bg-light-subtle p-3 mt-3 rounded-3 ">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <button id="Score-help-button"
+            type="button"
+            style="border: none; padding: 5px; background: none; border-radius: 5px;"
+            aria-details="Score-tooltip-text"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            data-bs-html="true"
+            title="@ScoreToolTipHelper.Score">
+        <svg class="bi" role="img" aria-label="Score help">
+            <use href="@Url.Content("~/images/app-icons.svg")#app-icon-question-circle"></use>
+        </svg>
+        RQSM Score Sheet Calculator
+    </button>
     <form method="post">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
         <input type="hidden" asp-for="Score.FacilityId" />
         <input type="hidden" asp-for="Score.Id" />
         <input type="hidden" asp-for="Score.Active" />
         <div class="row mb-3">
-            <div class="col-md-3 mb-3">
+            <div class="col-md-3 mb-3 align-bottom">
                 <label asp-for="Score.ScoredDate" class="form-label"></label>
                 <input asp-for="Score.ScoredDate" class="form-control datepicker" type="date" placeholder="" />
                 <span asp-validation-for="Score.ScoredDate" class="text-danger"></span>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3 mx-1">
             <label asp-for="Score.Comments" class="form-label"></label>
             <textarea asp-for="Score.Comments" class="form-control" rows="3"></textarea>
             <span asp-validation-for="Score.Comments" class="text-danger"></span>
@@ -54,7 +54,6 @@
             </div>
         </div>
         <hr />
-        <div class="row mb-3">
             <button id="SubmitButton" type="submit" class="btn btn-primary col-sm-4 col-md-3 mb-3 mb-sm-0">Update</button>
             <a asp-page="../Facilities/Details"
                asp-fragment="TabPages"
@@ -63,7 +62,6 @@
                class="btn btn-outline-secondary col-md-2">
                 Cancel
             </a>
-        </div>
     </form>
 </div>
 

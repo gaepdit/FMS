@@ -8,86 +8,85 @@
 @{
     ViewData["Title"] = $"PAF Report";
 }
-<h1>@ViewData["Title"]</h1>
+
 <a asp-page="../Index">← Back to Reports</a>
-<br />
-<br />
 <partial name="_AlertPartial" for="DisplayMessage" id="alert" />
-<form method="post">
-    <div class="container-fluid position-sticky top-0 z-3">
-        <div class="container bg-light-subtle p-3 m-1 rounded-3">
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <button id="ExportButton"
-                            asp-page-handler="ExportButton"
-                            class="btn btn-sm btn-outline-primary mb-1">
-                        Export to Excel
-                    </button>
-                </div>
+<div class="container bg-light-subtle p-3 m-1 rounded-3 position-sticky top-0">
+    <h1>
+        @ViewData["Title"]
+    </h1>
+    <form method="post">
+        <div class="form-group row">
+            <div class="col-md-2">
+                <button id="ExportButton"
+                        asp-page-handler="ExportButton"
+                        class="btn btn-sm btn-outline-primary mb-1">
+                    Export to Excel
+                </button>
             </div>
         </div>
-    </div>
-    <div class="row justify-content-around">
-        <table class="table" aria-label="PAF Report">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col" class="col">HSI ID</th>
-                    <th scope="col" class="col">Site Name</th>
-                    <th scope="col" class="col">PAF Issue Date</th>
-                    <th scope="col" class="col">PAF Amount</th>
-                    <th scope="col" class="col">Project Officer</th>
-                    <th scope="col" class="col">Contractor</th>
-                    <th scope="col" class="col">RAW Received</th>
-                    <th scope="col" class="col">RAW Due</th>
-                    <th scope="col" class="col">RAW Approved</th>
-                    <th scope="col" class="col">RAR Received</th>
-                    <th scope="col" class="col">RAR Due</th>
-                    <th scope="col" class="col">RAR Approved</th>
-                    <th scope="col" class="col">Project Complete Due</th>
-                    <th scope="col" class="col">Project Complete Actual</th>
-                    <th scope="col" class="col">Project Comments</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var p in Model.PAFReport)
-                {
+        <div class="row justify-content-around">
+            <table class="table" aria-label="PAF Report">
+                <thead class="thead-light position-sticky top-0">
                     <tr>
-                        <td>@p.HSIId</td>
-                        <td>@p.SiteName</td>
-                        <td>@p.PAFIssueDate</td>
-                        <td>$@p.PAFAmount</td>
-                        <td>@p.ProjectOfficer</td>
-                        <td>@p.Contractor</td>
-                        <td>@p.RAWReceived</td>
-                        <td>@p.RAWDue</td>
-                        <td>@p.RAWApproved</td>
-                        <td>@p.RARReceived</td>
-                        <td>@p.RARDue</td>
-                        <td>@p.RARApproved</td>
-                        <td>@p.ProjectCompleteDue</td>
-                        <td>@p.ProjectCompleteActual</td>
-                        <td>@(p.ProjectComments.Length > 50 ? p.ProjectComments.Substring(0, 50) : p.ProjectComments)</td>
+                        <th scope="col" class="col">HSI ID</th>
+                        <th scope="col" class="col">Site Name</th>
+                        <th scope="col" class="col">PAF Issue Date</th>
+                        <th scope="col" class="col">PAF Amount</th>
+                        <th scope="col" class="col">Project Officer</th>
+                        <th scope="col" class="col">Contractor</th>
+                        <th scope="col" class="col">RAW Received</th>
+                        <th scope="col" class="col">RAW Due</th>
+                        <th scope="col" class="col">RAW Approved</th>
+                        <th scope="col" class="col">RAR Received</th>
+                        <th scope="col" class="col">RAR Due</th>
+                        <th scope="col" class="col">RAR Approved</th>
+                        <th scope="col" class="col">Project Complete Due</th>
+                        <th scope="col" class="col">Project Complete Actual</th>
+                        <th scope="col" class="col">Project Comments</th>
                     </tr>
-                }
-                <hr />
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Total Amt&#8681;<br />$@Model.PAFAmtTotal</td>
-                    <td class="text-center">P.O.s&#8681;<br />@Model.UniqueCO</td>
-                    <td class="text-center">Contractors&#8681;<br />@Model.UniqueContractor</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</form>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.PAFReport)
+                    {
+                        <tr>
+                            <td>@p.HSIId</td>
+                            <td>@p.SiteName</td>
+                            <td>@p.PAFIssueDate</td>
+                            <td>$@p.PAFAmount</td>
+                            <td>@p.ProjectOfficer</td>
+                            <td>@p.Contractor</td>
+                            <td>@p.RAWReceived</td>
+                            <td>@p.RAWDue</td>
+                            <td>@p.RAWApproved</td>
+                            <td>@p.RARReceived</td>
+                            <td>@p.RARDue</td>
+                            <td>@p.RARApproved</td>
+                            <td>@p.ProjectCompleteDue</td>
+                            <td>@p.ProjectCompleteActual</td>
+                            <td>@(p.ProjectComments.Length > 50 ? p.ProjectComments.Substring(0, 50) : p.ProjectComments)</td>
+                        </tr>
+                    }
+                    <hr />
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total Amt&#8681;<br />$@Model.PAFAmtTotal</td>
+                        <td class="text-center">P.O.s&#8681;<br />@Model.UniqueCO</td>
+                        <td class="text-center">Contractors&#8681;<br />@Model.UniqueContractor</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
