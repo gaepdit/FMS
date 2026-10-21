@@ -9,6 +9,7 @@ var services = builder.Services;
 builder.Logging.ClearProviders().AddZLoggerConsole(options => options.UseJsonFormatter());
 
 // Configure basic settings
+builder.AddKeyVault();
 builder.AddHttpSecurity();
 services.AddDataProtection();
 
