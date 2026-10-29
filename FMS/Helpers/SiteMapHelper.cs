@@ -4,15 +4,16 @@ namespace FMS.Helpers
 {
     public class SiteMapHelper
     {
-        public static string GetSiteSummaryUrl(string facilityNumber)
+        private readonly string MapDirectory = Environment.GetEnvironmentVariable("MAP_DIR") ?? "/Reporting/Map/";
+        public string GetSiteMap(string facilityNumber)
         {
             // Determine the environment and return the appropriate URL
             string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
             return environment switch
             {
-                "Development" => GlobalConstants.MapDirectory,
-                "UAT" => GlobalConstants.MapDirectory,
-                _ => GlobalConstants.MapDirectory,
+                "Development" => MapDirectory,
+                "UAT" => MapDirectory,
+                _ => MapDirectory,
             };
         }
     }
