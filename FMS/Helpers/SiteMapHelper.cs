@@ -8,13 +8,14 @@ namespace FMS.Helpers
         public string GetSiteMap(string facilityNumber)
         {
             // Determine the environment and return the appropriate URL
-            string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
-            return environment switch
+            if (MapImageExists(facilityNumber))
             {
-                "Development" => MapDirectory,
-                "UAT" => MapDirectory,
-                _ => MapDirectory,
-            };
+
+            }
+            else
+            {
+
+            }
         }
     }
 }
