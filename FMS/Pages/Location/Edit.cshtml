@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <img src="@Model.GetGoogleMapsUrl(Model.Facility)" alt="Site Map for @Model.Facility.Name" height="250" width="250" />
+                <img src="@Model.GetMapImage(Model.Facility)" alt="Site Map for @Model.Facility.Name" height="250" width="250" />
             </div>
         </div>
         <input type="hidden" asp-for="Location.Id" />

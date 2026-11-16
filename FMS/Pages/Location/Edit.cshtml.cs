@@ -2,6 +2,7 @@ using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,8 +31,6 @@ namespace FMS.Pages.Location
             _configuration = configuration;
         }
 
-        public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
-
         [BindProperty]
         public LocationEditDto Location { get; set; }
 
@@ -39,6 +38,9 @@ namespace FMS.Pages.Location
 
         [BindProperty]
         public Guid Id { get; set; }
+
+        [BindProperty]
+        public bool Edited { get; set; } 
 
         public SelectList Classes { get; set; }
         public SelectList MapTypes => new(Data.MapTypes);
@@ -80,7 +82,7 @@ namespace FMS.Pages.Location
         public async Task<IActionResult> OnGetPreviewAsync(LocationEditDto location)
         {
             Location = location;
-
+            Edited = true;
             Facility = await _facilityRepository.GetFacilityAsync(Location.FacilityId);
             if (Facility == null)
             {
@@ -122,15 +124,16 @@ namespace FMS.Pages.Location
             Classes = await _listHelper.LocationClassesSelectListAsync();
         }
 
-        public string GetGoogleMapsUrl(FacilityDetailDto facility)
+        public string GetMapImage(FacilityDetailDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0)
-            {
-                return
-                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
-            }
+            var MapProps = new MapProperties(
+                facility.FacilityNumber,
+                facility.Latitude,
+                facility.Longitude,
+                Location.MapZoom,
+                Location.MapType);
 
-            return null;
+            return new MapHelper(_configuration).GetMapImage(MapProps, Edited);
         }
     }
 }
