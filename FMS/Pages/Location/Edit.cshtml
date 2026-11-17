@@ -39,7 +39,11 @@
                 </div>
             </div>
             <div class="col-3">
-                <img src="@Model.GetMapImage(Model.Facility)" alt="Site Map for @Model.Facility.Name" height="250" width="250" />
+                <img src="@Url.Page("./Edit", "MapImage", new { id = Model.Location.FacilityId, edited = Model.Edited })"
+                     alt="Site Map for @Model.Facility.Name"
+                     height="250"
+                     width="250"
+                     class="img-fluid border rounded" />
             </div>
         </div>
         <input type="hidden" asp-for="Location.Id" />

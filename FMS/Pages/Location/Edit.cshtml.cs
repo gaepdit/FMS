@@ -124,16 +124,42 @@ namespace FMS.Pages.Location
             Classes = await _listHelper.LocationClassesSelectListAsync();
         }
 
-        public string GetMapImage(FacilityDetailDto facility)
+        public async Task<IActionResult> OnGetMapImageAsync(Guid id, bool edited = false)
         {
-            var MapProps = new MapProperties(
+            var location = await _repository.GetLocationByFacilityIdAsync(id);
+
+            if (location == null)
+                return NotFound();
+
+            var facility = await _facilityRepository.GetFacilityAsync(id);
+
+            if (facility == null)
+                return NotFound();
+
+            var mapProps = new MapProperties(
                 facility.FacilityNumber,
                 facility.Latitude,
                 facility.Longitude,
-                Location.MapZoom,
-                Location.MapType);
+                location.MapZoom,
+                location.MapType);
 
-            return new MapHelper(_configuration).GetMapImage(MapProps, Edited);
+            var mapHelper = new MapHelper(_configuration);
+
+            var imagePath = mapHelper.GetStoredMapImagePath(mapProps);
+
+            if (!System.IO.File.Exists(imagePath) || edited)
+            {
+                var success = await mapHelper.SaveStoredMapImage(mapProps);
+
+                if (!success)
+                    return NotFound("Unable to generate map image.");
+            }
+
+            if (!System.IO.File.Exists(imagePath))
+                return NotFound();
+
+            return PhysicalFile(imagePath, "image/png");
         }
+
     }
 }

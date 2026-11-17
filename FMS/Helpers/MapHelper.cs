@@ -50,18 +50,19 @@
             {
                 using var client = new HttpClient();
                 byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
-                System.IO.Directory.CreateDirectory(directoryPath); // Ensure the directory exists
-                await System.IO.File.Create(imagePath).DisposeAsync();
-                await System.IO.File.WriteAllBytesAsync(imagePath, imageBytes);
+                Directory.CreateDirectory(directoryPath);
+                await File.WriteAllBytesAsync(imagePath, imageBytes); ;
                 return true;
             }
-            catch (HttpRequestException ex)
-            {
-                // Show the exception occured in The Page Message
+            catch (HttpRequestException)
+            {               
                 return false;
             }
-        }
-
+            catch (IOException)
+            {
+                return false;
+            }
+        }       
         public string GetMapDirPath() => Path.Combine(MapDrive, AppPath, MapDirectory);
 
         public string GetStoredMapImagePath(MapProperties mapProperties) => Path.Combine(MapDrive, AppPath, MapDirectory, $"{mapProperties.FacilityNumber}.png");
