@@ -540,13 +540,15 @@ Model.FacilityDetail.FacilityStatus.Name == "Event Tracking On")))
                                 </div>
                             </div>
                             <div class="col-3">
-                                <img src="@Url.Page("/Location/Edit", "MapImage", new
+                                <img src="?handler=Image&id=@Model.FacilityId" alt="Site Map for @Model.FacilityDetail.Name" height="250" width="250" />
+
+                                @* <img src="@Url.Page("/Location/Edit", "MapImage", new
                                      {
                                          id = Model.FacilityDetail.Id,
                                          mapZoom = Model.FacilityDetail.LocationDetails.MapZoom,
                                          mapType = Model.FacilityDetail.LocationDetails.MapType,
                                          edited = false
-                                     })"
+                                     })" *@
                              alt="Site Map for @Model.FacilityDetail.Name"
                              height="250"
                              width="250" />

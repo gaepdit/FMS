@@ -131,6 +131,13 @@ namespace FMS.Pages.Location
             return null;
         }
 
+        public string GetMapImage(FacilityDetailDto facility)
+        {
+            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+
+            return new MapHelper(_configuration).GetMapImage(MapProps);
+        }
+
         private async Task PopulateSelectsAsync()
         {
             Classes = await _listHelper.LocationClassesSelectListAsync();
