@@ -260,6 +260,18 @@ namespace FMS.Pages.Facilities
         //    return null;
         //}
 
+        public async Task<IActionResult> OnGetImage(Guid id)
+        {
+            FacilityDetail = await _repository.GetFacilityAsync(id);
+            var imageFile = GetMapImage(FacilityDetail);
+
+            if (!string.IsNullOrWhiteSpace(imageFile))
+            {
+               return PhysicalFile(imageFile, "image/png");
+            }
+            return null;
+        }
+
         public string GetMapImage(FacilityDetailDto facility)
         {
             var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);

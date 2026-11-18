@@ -119,6 +119,18 @@ namespace FMS.Pages.Location
                 fragment: "TabPages");
         }
 
+        public async Task<IActionResult> OnGetImage(Guid id)
+        {
+            Facility = await _facilityRepository.GetFacilityAsync(id);
+            var imageFile = GetMapImage(Facility);
+
+            if (!string.IsNullOrWhiteSpace(imageFile))
+            {
+                return PhysicalFile(imageFile, "image/png");
+            }
+            return null;
+        }
+
         private async Task PopulateSelectsAsync()
         {
             Classes = await _listHelper.LocationClassesSelectListAsync();

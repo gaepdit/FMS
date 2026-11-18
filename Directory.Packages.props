@@ -14,6 +14,7 @@
     <PackageVersion Include="EfCore.TestSupport" Version="10.0.0" />
     <PackageVersion Include="FluentMermaid" Version="0.1.0" />
     <PackageVersion Include="FreeSpire.PDF" Version="12.4.0" />
+    <PackageVersion Include="GaEpd.FileService" Version="3.5.0" />
     <PackageVersion Include="JetBrains.Annotations" Version="2026.2.0" />
     <PackageVersion Include="jQuery" Version="1.9.1" />
     <PackageVersion Include="libphonenumber-csharp" Version="9.0.20" />
