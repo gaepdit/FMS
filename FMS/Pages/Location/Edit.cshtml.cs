@@ -2,6 +2,7 @@ using FMS.Domain.Data;
 using FMS.Domain.Dto;
 using FMS.Domain.Entities.Users;
 using FMS.Domain.Repositories;
+using FMS.Helpers;
 using FMS.Platform.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,8 +31,6 @@ namespace FMS.Pages.Location
             _configuration = configuration;
         }
 
-        public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
-
         [BindProperty]
         public LocationEditDto Location { get; set; }
 
@@ -39,6 +38,9 @@ namespace FMS.Pages.Location
 
         [BindProperty]
         public Guid Id { get; set; }
+
+        [BindProperty]
+        public bool Edited { get; set; } 
 
         public SelectList Classes { get; set; }
         public SelectList MapTypes => new(Data.MapTypes);
@@ -80,7 +82,7 @@ namespace FMS.Pages.Location
         public async Task<IActionResult> OnGetPreviewAsync(LocationEditDto location)
         {
             Location = location;
-
+            Edited = true;
             Facility = await _facilityRepository.GetFacilityAsync(Location.FacilityId);
             if (Facility == null)
             {
@@ -117,20 +119,66 @@ namespace FMS.Pages.Location
                 fragment: "TabPages");
         }
 
+        public async Task<IActionResult> OnGetImage(Guid id)
+        {
+            Facility = await _facilityRepository.GetFacilityAsync(id);
+            var imageFile = GetMapImage(Facility);
+
+            if (!string.IsNullOrWhiteSpace(imageFile))
+            {
+                return PhysicalFile(imageFile, "image/png");
+            }
+            return null;
+        }
+
+        public string GetMapImage(FacilityDetailDto facility)
+        {
+            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+
+            return new MapHelper(_configuration).GetMapImage(MapProps);
+        }
+
         private async Task PopulateSelectsAsync()
         {
             Classes = await _listHelper.LocationClassesSelectListAsync();
         }
 
-        public string GetGoogleMapsUrl(FacilityDetailDto facility)
+        public async Task<IActionResult> OnGetMapImageAsync(Guid id, bool edited = false)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0)
+            var location = await _repository.GetLocationByFacilityIdAsync(id);
+
+            if (location == null)
+                return NotFound();
+
+            var facility = await _facilityRepository.GetFacilityAsync(id);
+
+            if (facility == null)
+                return NotFound();
+
+            var mapProps = new MapProperties(
+                facility.FacilityNumber,
+                facility.Latitude,
+                facility.Longitude,
+                location.MapZoom,
+                location.MapType);
+
+            var mapHelper = new MapHelper(_configuration);
+
+            var imagePath = mapHelper.GetStoredMapImagePath(mapProps);
+
+            if (!System.IO.File.Exists(imagePath) || edited)
             {
-                return
-                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={Location.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={Location.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+                var success = await mapHelper.SaveStoredMapImage(mapProps);
+
+                if (!success)
+                    return NotFound("Unable to generate map image.");
             }
 
-            return null;
+            if (!System.IO.File.Exists(imagePath))
+                return NotFound();
+
+            return PhysicalFile(imagePath, "image/png");
         }
+
     }
 }

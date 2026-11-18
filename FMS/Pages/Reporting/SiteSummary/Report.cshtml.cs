@@ -58,14 +58,21 @@ namespace FMS.Pages.Reporting.SiteSummary
             return Page();
         }
 
-        public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
+        //public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
+        //{
+        //    if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
+        //    {
+        //        return
+        //            $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails?.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+        //    }
+        //    return null;
+        //}
+
+        public string GetMapImage(SiteSummaryReportDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
-            {
-                return
-                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails?.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
-            }
-            return null;
+            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+
+            return new MapHelper(_configuration).GetMapImage(MapProps);
         }
 
         public string GetStatusLanguage(SiteSummaryReportDto facility) =>

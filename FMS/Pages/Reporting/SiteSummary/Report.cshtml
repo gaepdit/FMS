@@ -100,13 +100,13 @@ else
                     </div>
                 </div>
                 <div>
-                    <img class="sitemap" src="@Model.GetGoogleMapsUrl(report)" alt="Site Map for @report.Name" />
+                    <img class="sitemap" src="@Model.GetMapImage(report)" alt="Site Map for @report.Name" />
                 </div>
             </div>
             @if(Model.HasSublistedParcels(report))
             {
                 <div class="subparcelhead">
-                     EPD received notification of a release to the following property(s), and determined on the indicated date that the property should be subisted as part of this site.
+                     EPD received notification of a release to the following property(s), and determined on the indicated date that the property should be sublisted as part of this site.
                 </div>
                 <div class="subparceltablehead">
                     <div>PARCEL NAME</div>

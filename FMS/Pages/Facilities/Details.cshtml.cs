@@ -251,13 +251,32 @@ namespace FMS.Pages.Facilities
             return string.Empty;
         }
 
-        public string GetGoogleMapsUrl(FacilityDetailDto facility)
+        //public string GetGoogleMapsUrl(FacilityDetailDto facility)
+        //{
+        //    if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
+        //    {
+        //        return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+        //    }
+        //    return null;
+        //}
+
+        public async Task<IActionResult> OnGetImage(Guid id)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
+            FacilityDetail = await _repository.GetFacilityAsync(id);
+            var imageFile = GetMapImage(FacilityDetail);
+
+            if (!string.IsNullOrWhiteSpace(imageFile))
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+               return PhysicalFile(imageFile, "image/png");
             }
             return null;
+        }
+
+        public string GetMapImage(FacilityDetailDto facility)
+        {
+            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+
+            return new MapHelper(_configuration).GetMapImage(MapProps);
         }
 
         public bool GetVrpTrackingStatus(FacilityDetailDto facility)
