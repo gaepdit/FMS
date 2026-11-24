@@ -16,11 +16,11 @@
             GoogleMapsApiKey = _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
         }
 
-        public string GetMapImage(MapProperties mapProperties, bool edited = false)
+        public string GetMapImage(MapProperties mapProperties)
         {
             var imagePath = GetStoredMapImagePath(mapProperties);
 
-            if (System.IO.File.Exists(imagePath) && !edited)
+            if (System.IO.File.Exists(imagePath) && !mapProperties.Edited)
             {
                 return imagePath;
             }
@@ -51,7 +51,7 @@
                 using var client = new HttpClient();
                 byte[] imageBytes = await client.GetByteArrayAsync(imageUrl);
                 Directory.CreateDirectory(directoryPath);
-                await File.WriteAllBytesAsync(imagePath, imageBytes); ;
+                await File.WriteAllBytesAsync(imagePath, imageBytes);
                 return true;
             }
             catch (HttpRequestException)
@@ -76,22 +76,23 @@
 
     public class MapProperties
     {
-        public MapProperties()
-        {
-            FacilityNumber = string.Empty;
-            Latitude = 0;
-            Longitude = 0;
-            MapZoom = "15";
-            MapType = "roadmap";
-        }
+        //public MapProperties()
+        //{
+        //    FacilityNumber = string.Empty;
+        //    Latitude = 0;
+        //    Longitude = 0;
+        //    MapZoom = "15";
+        //    MapType = "roadmap";
+        //}
 
-        public MapProperties(string facilityNumber, decimal latitude, decimal longitude, string mapZoom, string mapType)
+        public MapProperties(string facilityNumber, decimal latitude, decimal longitude, string mapZoom, string mapType, bool edited)
         {
             FacilityNumber = facilityNumber;
             Latitude = latitude;
             Longitude = longitude;
-            MapZoom = mapZoom;
-            MapType = mapType;
+            MapZoom = mapZoom ?? "15";
+            MapType = mapType ?? "roadmap";
+            Edited = edited;
         }
 
         public string FacilityNumber { get; set; }
@@ -99,6 +100,7 @@
         public decimal Longitude { get; set; }
         public string MapZoom { get; set; }
         public string MapType { get; set; }
+        public bool Edited { get; set; }
     }
 }
   

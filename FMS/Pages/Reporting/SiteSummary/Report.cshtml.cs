@@ -70,7 +70,7 @@ namespace FMS.Pages.Reporting.SiteSummary
 
         public string GetMapImage(SiteSummaryReportDto facility)
         {
-            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false);
 
             return new MapHelper(_configuration).GetMapImage(MapProps);
         }

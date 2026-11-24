@@ -251,16 +251,7 @@ namespace FMS.Pages.Facilities
             return string.Empty;
         }
 
-        //public string GetGoogleMapsUrl(FacilityDetailDto facility)
-        //{
-        //    if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
-        //    {
-        //        return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
-        //    }
-        //    return null;
-        //}
-
-        public async Task<IActionResult> OnGetImage(Guid id)
+        public async Task<IActionResult> OnGetImageAsync(Guid id)
         {
             FacilityDetail = await _repository.GetFacilityAsync(id);
             var imageFile = GetMapImage(FacilityDetail);
@@ -274,12 +265,12 @@ namespace FMS.Pages.Facilities
 
         public string GetMapImage(FacilityDetailDto facility)
         {
-            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false);
 
             return new MapHelper(_configuration).GetMapImage(MapProps);
         }
 
-        public bool GetVrpTrackingStatus(FacilityDetailDto facility)
+        public static bool GetVrpTrackingStatus(FacilityDetailDto facility)
         {
             if (facility != null &&
                 facility.HsrpFacilityPropertyDetails.VRPDate != null &&

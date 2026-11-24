@@ -119,10 +119,10 @@ namespace FMS.Pages.Location
                 fragment: "TabPages");
         }
 
-        public async Task<IActionResult> OnGetImage(Guid id)
+        public async Task<IActionResult> OnGetImageAsync(Guid id)
         {
             Facility = await _facilityRepository.GetFacilityAsync(id);
-            var imageFile = GetMapImage(Facility);
+            var imageFile = GetMapImage(Facility, Edited);
 
             if (!string.IsNullOrWhiteSpace(imageFile))
             {
@@ -131,9 +131,9 @@ namespace FMS.Pages.Location
             return null;
         }
 
-        public string GetMapImage(FacilityDetailDto facility)
+        public string GetMapImage(FacilityDetailDto facility, bool edited)
         {
-            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType);
+            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, edited);
 
             return new MapHelper(_configuration).GetMapImage(MapProps);
         }
@@ -160,7 +160,8 @@ namespace FMS.Pages.Location
                 facility.Latitude,
                 facility.Longitude,
                 location.MapZoom,
-                location.MapType);
+                location.MapType,
+                edited);
 
             var mapHelper = new MapHelper(_configuration);
 
