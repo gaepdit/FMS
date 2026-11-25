@@ -20,15 +20,18 @@ namespace FMS.Pages.Facilities
 
         private readonly IFacilityRepository _repository;
         private readonly IEventRepository _eventRepository;
+        private readonly ILocationRepository _locationRepository;
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         public DetailsModel(IFacilityRepository repository,
             IEventRepository eventRepository,
+            ILocationRepository locationRepository,
             IConfiguration configuration,
             IUserService userService)
         {
             _repository = repository;
             _eventRepository = eventRepository;
+            _locationRepository = locationRepository;
             _configuration = configuration;
             _userService = userService;
         }
@@ -254,7 +257,7 @@ namespace FMS.Pages.Facilities
         public async Task<IActionResult> OnGetImageAsync(Guid id)
         {
             FacilityDetail = await _repository.GetFacilityAsync(id);
-            var imageFile = GetMapImage(FacilityDetail);
+            var imageFile = await GetMapImage(FacilityDetail);
 
             if (!string.IsNullOrWhiteSpace(imageFile))
             {
@@ -263,11 +266,17 @@ namespace FMS.Pages.Facilities
             return null;
         }
 
-        public string GetMapImage(FacilityDetailDto facility)
+        public async Task<string> GetMapImage(FacilityDetailDto facility)
         {
-            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false);
+            bool updateMapProperties = false;
+            if (facility.LocationDetails.MapType == null || facility.LocationDetails.MapZoom == null)
+            {
+                updateMapProperties = true;
+            }
 
-            return new MapHelper(_configuration).GetMapImage(MapProps);
+            var MapProps = new MapProperties(facility.LocationDetails.Id, facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false, updateMapProperties);
+
+            return await new MapHelper(_configuration, _locationRepository).GetMapImage(MapProps);
         }
 
         public static bool GetVrpTrackingStatus(FacilityDetailDto facility)

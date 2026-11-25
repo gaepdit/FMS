@@ -31,7 +31,7 @@ namespace FMS.Pages.Location
             _configuration = configuration;
         }
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public LocationEditDto Location { get; set; }
 
         public FacilityDetailDto Facility { get; set; }
@@ -39,7 +39,7 @@ namespace FMS.Pages.Location
         [BindProperty]
         public Guid Id { get; set; }
 
-        [BindProperty]
+        [BindProperty(SupportsGet = true)]
         public bool Edited { get; set; } 
 
         public SelectList Classes { get; set; }
@@ -122,7 +122,7 @@ namespace FMS.Pages.Location
         public async Task<IActionResult> OnGetImageAsync(Guid id)
         {
             Facility = await _facilityRepository.GetFacilityAsync(id);
-            var imageFile = GetMapImage(Facility, Edited);
+            var imageFile = await GetMapImage(true);
 
             if (!string.IsNullOrWhiteSpace(imageFile))
             {
@@ -131,11 +131,17 @@ namespace FMS.Pages.Location
             return null;
         }
 
-        public string GetMapImage(FacilityDetailDto facility, bool edited)
+        public async Task<string> GetMapImage(bool edited = false)
         {
-            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, edited);
+            bool updateMapProperties = false;
+            if (Location.MapType == null || Location.MapZoom == null)
+            {
+                updateMapProperties = true;
+            }
 
-            return new MapHelper(_configuration).GetMapImage(MapProps);
+            var MapProps = new MapProperties(Location.Id, Facility.FacilityNumber, Facility.Latitude, Facility.Longitude, Location.MapZoom, Location.MapType, edited, updateMapProperties);
+
+            return await new MapHelper(_configuration, _repository).GetMapImage(MapProps);
         }
 
         private async Task PopulateSelectsAsync()
@@ -143,43 +149,44 @@ namespace FMS.Pages.Location
             Classes = await _listHelper.LocationClassesSelectListAsync();
         }
 
-        public async Task<IActionResult> OnGetMapImageAsync(Guid id, bool edited = false)
-        {
-            var location = await _repository.GetLocationByFacilityIdAsync(id);
+        //public async Task<IActionResult> OnGetMapImageAsync(Guid id, bool edited = false)
+        //{
+        //    var location = await _repository.GetLocationByFacilityIdAsync(id);
 
-            if (location == null)
-                return NotFound();
+        //    if (location == null)
+        //        return NotFound();
 
-            var facility = await _facilityRepository.GetFacilityAsync(id);
+        //    var facility = await _facilityRepository.GetFacilityAsync(id);
 
-            if (facility == null)
-                return NotFound();
+        //    if (facility == null)
+        //        return NotFound();
 
-            var mapProps = new MapProperties(
-                facility.FacilityNumber,
-                facility.Latitude,
-                facility.Longitude,
-                location.MapZoom,
-                location.MapType,
-                edited);
+        //    var mapProps = new MapProperties(
+        //        facility.FacilityNumber,
+        //        facility.Latitude,
+        //        facility.Longitude,
+        //        location.MapZoom,
+        //        location.MapType,
+        //        edited,
+        //        updateMapProperties);
 
-            var mapHelper = new MapHelper(_configuration);
+        //    var mapHelper = new MapHelper(_configuration, _repository);
 
-            var imagePath = mapHelper.GetStoredMapImagePath(mapProps);
+        //    var imagePath = mapHelper.GetStoredMapImagePath(mapProps);
 
-            if (!System.IO.File.Exists(imagePath) || edited)
-            {
-                var success = await mapHelper.SaveStoredMapImage(mapProps);
+        //    if (!System.IO.File.Exists(imagePath) || edited)
+        //    {
+        //        var success = await mapHelper.SaveStoredMapImage(mapProps);
 
-                if (!success)
-                    return NotFound("Unable to generate map image.");
-            }
+        //        if (!success)
+        //            return NotFound("Unable to generate map image.");
+        //    }
 
-            if (!System.IO.File.Exists(imagePath))
-                return NotFound();
+        //    if (!System.IO.File.Exists(imagePath))
+        //        return NotFound();
 
-            return PhysicalFile(imagePath, "image/png");
-        }
+        //    return PhysicalFile(imagePath, "image/png");
+        //}
 
     }
 }

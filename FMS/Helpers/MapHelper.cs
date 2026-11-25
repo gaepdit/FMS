@@ -1,23 +1,32 @@
-﻿namespace FMS.Helpers
+﻿using FMS.Domain.Repositories;
+
+namespace FMS.Helpers
 {
     public class MapHelper
     {
         private readonly IConfiguration _configuration;
+        private readonly ILocationRepository _locationRepository;
         private readonly string MapDirectory;
         private readonly string GoogleMapsApiKey;
         private readonly string MapDrive;
         private readonly string AppPath;
-        public MapHelper(IConfiguration configuration)
+        public MapHelper(IConfiguration configuration, ILocationRepository locationRepository)
         {
             _configuration = configuration;
+            _locationRepository = locationRepository;
             MapDrive = _configuration["StorageSettings:MapDrive"];
             AppPath = _configuration["StorageSettings:AppPath"];
             MapDirectory = _configuration["StorageSettings:MapDirectory"];
             GoogleMapsApiKey = _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
         }
 
-        public string GetMapImage(MapProperties mapProperties)
+        public async Task<string> GetMapImage(MapProperties mapProperties)
         {
+            if(mapProperties.UpdateMapProperties)
+            {
+                await _locationRepository.UpdateMapPropertiesAsync(mapProperties.LocationId, mapProperties.MapType, mapProperties.MapZoom);
+            }
+
             var imagePath = GetStoredMapImagePath(mapProperties);
 
             if (System.IO.File.Exists(imagePath) && !mapProperties.Edited)
@@ -27,7 +36,7 @@
             else
             {
                 // If the image doesn't exist, generate it and save it
-                var success = SaveStoredMapImage(mapProperties).Result;
+                var success = await SaveStoredMapImage(mapProperties);
                 if (success)
                 {
                     return imagePath;
@@ -76,31 +85,26 @@
 
     public class MapProperties
     {
-        //public MapProperties()
-        //{
-        //    FacilityNumber = string.Empty;
-        //    Latitude = 0;
-        //    Longitude = 0;
-        //    MapZoom = "15";
-        //    MapType = "roadmap";
-        //}
-
-        public MapProperties(string facilityNumber, decimal latitude, decimal longitude, string mapZoom, string mapType, bool edited)
+        public MapProperties(Guid locationId, string facilityNumber, decimal latitude, decimal longitude, string mapZoom, string mapType, bool edited, bool updateMapProperties)
         {
+            LocationId = locationId;
             FacilityNumber = facilityNumber;
             Latitude = latitude;
             Longitude = longitude;
             MapZoom = mapZoom ?? "15";
             MapType = mapType ?? "roadmap";
             Edited = edited;
+            UpdateMapProperties = updateMapProperties;
         }
 
+        public Guid LocationId { get; set; }
         public string FacilityNumber { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public string MapZoom { get; set; }
         public string MapType { get; set; }
         public bool Edited { get; set; }
+        public bool UpdateMapProperties { get; set; }
     }
 }
   

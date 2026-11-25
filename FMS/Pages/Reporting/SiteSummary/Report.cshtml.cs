@@ -12,11 +12,13 @@ namespace FMS.Pages.Reporting.SiteSummary
     {
         private readonly IReportingRepository _repository;
         private readonly IConfiguration _configuration;
+        private readonly ILocationRepository _locationRepository;
 
-        public ReportModel(IReportingRepository repository, IConfiguration configuration)
+        public ReportModel(IReportingRepository repository, IConfiguration configuration, ILocationRepository locationRepository)
         {
             _repository = repository;
             _configuration = configuration;
+            _locationRepository = locationRepository;
         }
 
         public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
@@ -68,11 +70,16 @@ namespace FMS.Pages.Reporting.SiteSummary
         //    return null;
         //}
 
-        public string GetMapImage(SiteSummaryReportDto facility)
+        public async Task<string> GetMapImage(SiteSummaryReportDto facility)
         {
-            var MapProps = new MapProperties(facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false);
+            bool updateMapProperties = false;
+            if (facility.LocationDetails.MapType == null || facility.LocationDetails.MapZoom == null)
+            {
+                updateMapProperties = true;
+            }
+            var MapProps = new MapProperties(facility.LocationDetails.Id, facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false, updateMapProperties);
 
-            return new MapHelper(_configuration).GetMapImage(MapProps);
+            return await new MapHelper(_configuration, _locationRepository).GetMapImage(MapProps);
         }
 
         public string GetStatusLanguage(SiteSummaryReportDto facility) =>
