@@ -122,6 +122,23 @@ namespace FMS.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateMapPropertiesAsync(Guid locationId, string mapType, string mapZoom)
+        {
+            Prevent.NullOrEmpty(locationId, nameof(locationId));
+            Prevent.NullOrEmpty(mapType, nameof(mapType));
+            Prevent.NullOrEmpty(mapZoom, nameof(mapZoom));
+            var existingLocation = await _context.Locations
+                .SingleOrDefaultAsync(e => e.Id == locationId);
+            if (existingLocation == null)
+            {
+                throw new KeyNotFoundException($"Location with ID '{locationId}' not found.");
+            }
+            existingLocation.MapType = mapType;
+            existingLocation.MapZoom = mapZoom;
+            _context.Locations.Update(existingLocation);
+            await _context.SaveChangesAsync();
+        }
+
         #region IDisposable Implementation
 
         private bool _disposed = false;

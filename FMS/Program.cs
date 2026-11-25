@@ -1,5 +1,8 @@
 using FMS.Domain.Entities.Users;
 using FMS.Platform.AppConfiguration;
+using GaEpd.FileService;
+using GaEpd.FileService.Implementations;
+using System.ComponentModel;
 using ZLogger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,7 @@ var services = builder.Services;
 builder.Logging.ClearProviders().AddZLoggerConsole(options => options.UseJsonFormatter());
 
 // Configure basic settings
+builder.AddKeyVault();
 builder.AddHttpSecurity();
 services.AddDataProtection();
 
@@ -24,6 +28,10 @@ services.AddWebOptimizer();
 
 // Add data stores and initialize the database
 await builder.ConfigureDataPersistenceAsync();
+
+// Add File Services to Use GaEpd.FileService NuGet Package
+//builder.AddFileServices();
+//builder.Services.AddSingleton<IFileService, AzureBlobStorage>(_ => new AzureBlobStorage(accountName, container, basePath, tenantId));
 
 // Build the application
 var app = builder.Build();

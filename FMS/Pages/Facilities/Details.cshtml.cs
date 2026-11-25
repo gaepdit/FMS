@@ -20,15 +20,18 @@ namespace FMS.Pages.Facilities
 
         private readonly IFacilityRepository _repository;
         private readonly IEventRepository _eventRepository;
+        private readonly ILocationRepository _locationRepository;
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         public DetailsModel(IFacilityRepository repository,
             IEventRepository eventRepository,
+            ILocationRepository locationRepository,
             IConfiguration configuration,
             IUserService userService)
         {
             _repository = repository;
             _eventRepository = eventRepository;
+            _locationRepository = locationRepository;
             _configuration = configuration;
             _userService = userService;
         }
@@ -251,16 +254,32 @@ namespace FMS.Pages.Facilities
             return string.Empty;
         }
 
-        public string GetGoogleMapsUrl(FacilityDetailDto facility)
+        public async Task<IActionResult> OnGetImageAsync(Guid id)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
+            FacilityDetail = await _repository.GetFacilityAsync(id);
+            var imageFile = await GetMapImage(FacilityDetail);
+
+            if (!string.IsNullOrWhiteSpace(imageFile))
             {
-                return $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype={facility.LocationDetails.MapType}&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+               return PhysicalFile(imageFile, "image/png");
             }
             return null;
         }
 
-        public bool GetVrpTrackingStatus(FacilityDetailDto facility)
+        public async Task<string> GetMapImage(FacilityDetailDto facility)
+        {
+            bool updateMapProperties = false;
+            if (facility.LocationDetails.MapType == null || facility.LocationDetails.MapZoom == null)
+            {
+                updateMapProperties = true;
+            }
+
+            var MapProps = new MapProperties(facility.LocationDetails.Id, facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false, updateMapProperties);
+
+            return await new MapHelper(_configuration, _locationRepository).GetMapImage(MapProps);
+        }
+
+        public static bool GetVrpTrackingStatus(FacilityDetailDto facility)
         {
             if (facility != null &&
                 facility.HsrpFacilityPropertyDetails.VRPDate != null &&

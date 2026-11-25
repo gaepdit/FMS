@@ -1,4 +1,4 @@
-﻿@page "{id:Guid?}"
+@page "{id:Guid?}"
 @using FMS.Domain.Entities.Users
 @model FMS.Pages.Location.EditModel
 
@@ -39,12 +39,18 @@
                 </div>
             </div>
             <div class="col-3">
-                <img src="@Model.GetGoogleMapsUrl(Model.Facility)" alt="Site Map for @Model.Facility.Name" height="250" width="250" />
+                <img src="?handler=Image&id=@Model.Location.FacilityId" alt="Site Map for @Model.Facility.Name" height="250" width="250" />
+                @* <img src="@Url.Page("./Edit", "MapImage", new { id = Model.Location.FacilityId, edited = Model.Edited })"
+                     alt="Site Map for @Model.Facility.Name"
+                     height="250"
+                     width="250"
+                     class="img-fluid border rounded" /> *@
             </div>
         </div>
         <input type="hidden" asp-for="Location.Id" />
         <input type="hidden" asp-for="Location.FacilityId" />
         <input type="hidden" asp-for="Location.LocationClassId" />
+       @*  <input type="hidden" asp-for="Edited" /> *@
         <div class="row">
             <div class="col-md-6">
                 <input type="hidden" name="handler" value="Preview" />

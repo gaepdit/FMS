@@ -17,5 +17,7 @@ namespace FMS.Domain.Repositories
         Task UpdateLocationAsync(Guid facilityId, LocationEditDto locationUpdates);
 
         Task UpdateLocationStatusAsync(Guid id, bool active);
+
+        Task UpdateMapPropertiesAsync(Guid locationId, string mapType, string mapZoom);
     }
 }

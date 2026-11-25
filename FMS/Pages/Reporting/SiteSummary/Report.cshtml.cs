@@ -12,11 +12,13 @@ namespace FMS.Pages.Reporting.SiteSummary
     {
         private readonly IReportingRepository _repository;
         private readonly IConfiguration _configuration;
+        private readonly ILocationRepository _locationRepository;
 
-        public ReportModel(IReportingRepository repository, IConfiguration configuration)
+        public ReportModel(IReportingRepository repository, IConfiguration configuration, ILocationRepository locationRepository)
         {
             _repository = repository;
             _configuration = configuration;
+            _locationRepository = locationRepository;
         }
 
         public string GoogleMapsApiKey => _configuration["GoogleMapSettings:ApiKey"] ?? string.Empty;
@@ -58,14 +60,26 @@ namespace FMS.Pages.Reporting.SiteSummary
             return Page();
         }
 
-        public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
+        //public string GetGoogleMapsUrl(SiteSummaryReportDto facility)
+        //{
+        //    if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
+        //    {
+        //        return
+        //            $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails?.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+        //    }
+        //    return null;
+        //}
+
+        public async Task<string> GetMapImage(SiteSummaryReportDto facility)
         {
-            if (facility.Latitude != 0 && facility.Longitude != 0 && facility.LocationDetails != null)
+            bool updateMapProperties = false;
+            if (facility.LocationDetails.MapType == null || facility.LocationDetails.MapZoom == null)
             {
-                return
-                    $"https://maps.googleapis.com/maps/api/staticmap?center={facility.Latitude},{facility.Longitude}&zoom={facility.LocationDetails?.MapZoom}&size=250x250&markers=color:red|{facility.Latitude},{facility.Longitude}&maptype=roadmap&key={GoogleMapsApiKey}&style=feature:poi|visibility:off";
+                updateMapProperties = true;
             }
-            return null;
+            var MapProps = new MapProperties(facility.LocationDetails.Id, facility.FacilityNumber, facility.Latitude, facility.Longitude, facility.LocationDetails.MapZoom, facility.LocationDetails.MapType, false, updateMapProperties);
+
+            return await new MapHelper(_configuration, _locationRepository).GetMapImage(MapProps);
         }
 
         public string GetStatusLanguage(SiteSummaryReportDto facility) =>
